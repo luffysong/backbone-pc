@@ -16,14 +16,14 @@ var config = {
 	devtool:'source-map',
 	module:{
 		loaders:[
-			{
-				test: require.resolve('jquery'),
-				loader: 'exports?window.$!jquery'
-			},
-			{
-				test: require.resolve('backbone'),
-				loader: 'exports?window.Backbone!backbone'
-			},
+			// {
+			// 	test: require.resolve('jquery'),
+			// 	loader: 'module.exports?window.jQuery'
+			// },
+			// {
+			// 	test: require.resolve('backbone'),
+			// 	loader: 'exports?window.Backbone'
+			// },
 			{
 				test:/\.html$/,
 				loader:'raw',
@@ -41,11 +41,12 @@ var config = {
 		]
 	},
 	plugins:plugins,
-	resolve:{
-		alias:{
-			"jquery":path.resolve(__dirname,'./node_modules/jquery/dist/jquery.js'),
-			"backbone":path.resolve(__dirname,'./node_modules/backbone/backbone.js')
-		}
-	}
+	// resolve:{
+	// 	alias:{
+	// 		"$":path.resolve(__dirname,'node_modules/jquery/dist/jquery.js'),
+	// 		"backbone":path.resolve(__dirname,'node_modules/backbone/backbone.js')
+	// 	}
+	// }
 }
+// console.log(path.resolve(__dirname,'node_modules/jquery/dist/jquery.js'))
 module.exports = config;
