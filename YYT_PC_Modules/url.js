@@ -114,6 +114,24 @@
 		extname: function(p) {
 			var _p = p.split('.');
 			return _p[_p.length - 1] || '';
+		},
+		/**
+		 * [parseSearch 将search参数转换为obj]
+		 * @param  {[type]} query [description]
+		 * @return {[type]}       [description]
+		 */
+		parseSearch:function(query){
+			var _query = {};
+			var seg = query.replace(/^\?/, '').split('&'),
+				leng = seg.length,
+				i = 0,
+				target;
+			for (; i < leng; i++) {
+				if (!seg[i]) continue;
+				target = seg[i].split('=');
+				_query[target[0]] = target[1];
+			}
+			return _query;
 		}
 	}
 });

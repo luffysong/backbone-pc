@@ -9,8 +9,9 @@
  * @info {实现的功能}
  */
 
-var BaseView = require('../../YYT_PC_Modules/baseView'); //View的基类
+var BaseView = require('BaseView'); //View的基类
 var IndexModel = require('../model/index.model');
+var url = require('url');
 
 var View = BaseView.extend({
 	el:'#index', //设置View对象作用于的根元素，比如id
@@ -19,11 +20,12 @@ var View = BaseView.extend({
 		return template; 
 	},
 	events:{ //监听事件
-
+		'click #goto':'gotoHandler'
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
 		console.log(this);
+		this.query = url.parseSearch(window.location.search);
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -44,6 +46,10 @@ var View = BaseView.extend({
 		var data = this.indexModel.$get();
 		var html = this.compileHTML(this.indexTemplate,data);
 		this.$el.html(html);
+	},
+	gotoHandler:function(e){
+		console.log(e);
+		window.location.href = "http://www.163.com"
 	}
 });
 

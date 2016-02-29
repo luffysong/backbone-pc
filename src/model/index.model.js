@@ -4,7 +4,7 @@
  * @info {实现的功能}
  */
 
-var BaseModel = require('../../YYT_PC_Modules/baseModel');
+var BaseModel = require('BaseModel');
 var Model = BaseModel.extend({
 	url:'{{url_prefix}}/mock/index.json',//填写请求地址
 	beforeEmit:function(options){

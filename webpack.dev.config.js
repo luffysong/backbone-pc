@@ -41,12 +41,17 @@ var config = {
 		]
 	},
 	plugins:plugins,
-	// resolve:{
-	// 	alias:{
-	// 		"$":path.resolve(__dirname,'node_modules/jquery/dist/jquery.js'),
-	// 		"backbone":path.resolve(__dirname,'node_modules/backbone/backbone.js')
-	// 	}
-	// }
+	resolve:{
+		alias:{
+			"BaseModel":path.resolve(__dirname,'YYT_PC_Modules/baseModel'),
+			"BaseView":path.resolve(__dirname,'YYT_PC_Modules/baseView'),
+			"cookie":path.resolve(__dirname,'YYT_PC_Modules/cookie'),
+			"store":path.resolve(__dirname,'YYT_PC_Modules/locationStore'),
+			"url":path.resolve(__dirname,'YYT_PC_Modules/url'),
+			"tools":path.resolve(__dirname,'YYT_PC_Modules/tools'),
+			"RequestModel":path.resolve(__dirname,'src/lib/request.model')
+		}
+	}
 }
 // console.log(path.resolve(__dirname,'node_modules/jquery/dist/jquery.js'))
 module.exports = config;
