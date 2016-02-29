@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+</head>
+<body>
+	<header id="header"></header>
+
+	<div class="am-container">
+		<form id='formFile'>
+    		<input type='file' id="fileUp"/>
+    	</form>
+	</div>
+	<script type="text/javascript" src="./link/base.library.js"></script>
+	<script type="text/javascript" src="./YYT_PC_Component/feature/YYTUploadImage.js"></script>
+	<script type="text/javascript">
+		//
+		//
+		var upload = new ICEPlugs.YYTUploadImage({
+			el:'#formFile',
+			url:'http://pitayaswift.sinaapp.com/pitaya.php',
+			success:function(){
+
+			},
+			error:function(){
+
+			}
+		});
+		$('#fileUp').on('change',function(e){
+			console.log(e);
+			upload.start();
+		});
+		
+	</script>
+</body>
+</html>

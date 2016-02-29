@@ -1,0 +1,42 @@
+{
+	"title":"Default Test",
+	"items":[
+		"DOM Breakpoints",
+		"XHR Breakpoints",
+		"Event Listener Breakpoints",
+		"Scope",
+		"Event Listeners"
+	],
+	"filter":[
+		{
+			"id":3,
+			"name":{
+				"id":3
+			}
+		},
+		{
+			"id":0,
+			"name":{
+				"id":0
+			}
+		},
+		{
+			"id":2,
+			"name":{
+				"id":1
+			}
+		},
+		{
+			"id":1,
+			"name":{
+				"id":2
+			}
+		},
+		{
+			"id":4,
+			"name":{
+				"id":4
+			}
+		}
+	]
+}
