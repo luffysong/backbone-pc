@@ -51,6 +51,11 @@ var config = {
 			"tools":path.resolve(__dirname,'YYT_PC_Modules/tools'),
 			"RequestModel":path.resolve(__dirname,'src/lib/request.model')
 		}
+	},
+	externals:{
+		jquery:'window.jQuery',
+		backbone:'window.Backbone',
+		underscore:'window._'
 	}
 }
 // console.log(path.resolve(__dirname,'node_modules/jquery/dist/jquery.js'))

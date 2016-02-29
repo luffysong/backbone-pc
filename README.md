@@ -1,6 +1,6 @@
 ## Live Video 业务细节
 
-**模块载入Alias列表
+**模块载入Alias列表**
 
     alias:{
         "BaseModel":path.resolve(__dirname,'YYT_PC_Modules/baseModel'),
