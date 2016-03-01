@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var parseSearch = function(query){
+			var _query = {};
+			var seg = query.replace(/^\?/, '').split('&'),
+				leng = seg.length,
+				i = 0,
+				target;
+			for (; i < leng; i++) {
+				if (!seg[i]) continue;
+				target = seg[i].split('=');
+				_query[target[0]] = target[1];
+			}
+			return _query;
+		} 
+		var query = parseSearch(window.location.search)
+	</script>
+</body>
+</html>
