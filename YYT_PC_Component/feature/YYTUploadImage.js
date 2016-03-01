@@ -42,7 +42,7 @@
 			};
 			this.$el.attr('method',options.method || 'POST');
 			var cmd = '<input type="hidden" name="cmd" value=\''+JSON.stringify(options.data)+' \'/>';
-			var iframeUrl = 'http://localhost:4000/'+options.redirect+'?key=1234';
+			var iframeUrl = 'http://localhost:4000/';
 			var redirect = '<input type="hidden" name="redirect" value="'+iframeUrl+'"/>';
 			var file = '<input type="file" name="'+options.filename+'" />';
 			var iframeId = 'icepy'+(++uid);
