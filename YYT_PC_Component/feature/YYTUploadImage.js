@@ -56,6 +56,11 @@
 				var cw = this.contentWindow;
 				var search = cw.location.search;
 				var query = url.parseSearch(search);
+				if(query.images){
+					var imagesMsg = '';
+					imagesMsg = query.images.replace(/%22/g,"'");
+					query.images = eval(imagesMsg);
+				}
 				options.success(query);
 			});
 		}else{
@@ -64,19 +69,34 @@
 				return false;
 			}
 			//处理FormData
-			this._ajax = {
-				url:options.url,
-				type:options.method || 'POST',
-				processData:false,
-				contentType:false,
-				data:new FormData(this.$el[0]),
-				success:options.success,
-				error:options.error
-			};
+			var cmd = '<input type="hidden" name="cmd" value=\''+JSON.stringify(options.data)+' \'/>';
+			var iframeUrl = 'http://localhost:4000/';
+			var redirect = '<input type="hidden" name="redirect" value="'+iframeUrl+'"/>';
+			var file = '<input type="file" name="'+options.filename+'" />';
+			this.$el.attr('action',options.url);
+			this.$el.attr('enctype','multipart/form-data');
+			this.$el.attr('target',options.name);
+			this.$el.append(cmd+redirect+file);
+			var file = this.$el.find('input[type=file]');
+			file.change(function(event) {
+				var oFd = new FormData(this.$el[0]);
+				self._ajax = {
+					url:options.url,
+					type:options.method || 'POST',
+					processData:false,
+					contentType:false,
+					dataType:'jsonp',
+					data:oFd,
+					success:options.success,
+					error:options.error
+				};
+			});
+
 		}
 	};
 	YYTUploadImage.prototype.submit = function(){
 		if (this.$instruct === 'iframe') {
+			console.log('use iframe');
 			this.$el.submit();
 		}else{
 			if (fd) {

@@ -24,9 +24,12 @@
 			filename:'img',
 			url:'http://image.yinyuetai.com/edit',
 			instruct:'iframe',
-			success:function(response){
+			success:function(res){
 				console.log('success');
-				console.log(response);
+				console.log(res);
+				if(res.state == 'SUCCESS'){
+					alert(res.images);
+				};
 			},
 			error:function(e){
 				console.log(e);
@@ -35,7 +38,6 @@
 		$('#submit').on('click',function(){
 			upload.submit();
 		})
-		console.log(upload)
 		// var obj = {};
 		// Object.defineProperty(obj,"node",{
 		// 	get:function(){
