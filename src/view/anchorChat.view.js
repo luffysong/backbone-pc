@@ -10,11 +10,14 @@
  */
 
 var BaseView = require('BaseView'); //View的基类
+var StartModel = require('../model/anchorStart.model');
+var EndModel = require('../model/anchorEnd.model');
+
 
 var View = BaseView.extend({
-	el:'', //设置View对象作用于的根元素，比如id
+	el:'#anchor_ctrl_chat', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
-		var template = require('../template/index');
+		var template = require('../template/chat.html');
 		return template; 
 	},
 	events:{ //监听事件
@@ -26,7 +29,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-
+		
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
