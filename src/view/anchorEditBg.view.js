@@ -32,9 +32,6 @@ var View = BaseView.extend({
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
-
-
-		console.log(1);
 		this.editBgModel.execute(function(response){
 			console.log(response);
 			var items = this.$get('items');
