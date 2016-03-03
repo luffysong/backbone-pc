@@ -13,9 +13,6 @@ $(function(){
 	var ChatView = require('./view/anchorChat.view');
 	var chatView = new ChatView();
 
-
-
 	//载入CSS
-	
-	require('../style/less/index.less');   
+	require('../style/less/anchor.less');   
 });

@@ -4,8 +4,8 @@ var plugins = [];
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var optimize = webpack.optimize
 var extractLESS = new ExtractTextPlugin('../style/[name].css');
-plugins.push(new optimize.CommonsChunkPlugin('common.js'));
 plugins.push(extractLESS);
+plugins.push(new optimize.CommonsChunkPlugin('common.js'));
 var sourceMap = require('./map.json').source;
 var config = {
 	entry:sourceMap,

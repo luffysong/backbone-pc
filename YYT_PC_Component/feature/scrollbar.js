@@ -20,7 +20,7 @@
 		root.ICEPlugs.scrollbar = factory();
 	};
 })(function() {
-	var uid = 999;
+	var uid = 1000;
 	         
 
 	         

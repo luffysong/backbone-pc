@@ -94,6 +94,10 @@
 			};
 		});
 	};
+	/**
+	 * [submit 提交文件]
+	 * @return {[type]} [description]
+	 */
 	UploadFile.prototype.submit = function(){
 		this._iframeLoadState = true;
 		if (typeof this._before === 'function' ) {
