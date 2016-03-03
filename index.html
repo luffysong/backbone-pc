@@ -11,31 +11,46 @@
 <body>
 	<form id='formFile'></form>
 	<button id="submit">提交图片</button>
+	<br/>
+	<br/>
+	<p>-----------------------------分割线----------------------------</p>
+	<br/>
+	<br/>
+	<form id="formFile1"></form>
+	<button id="submit1">提交图片1</button>
+
 	<script type="text/javascript" src="./link/base.library.js"></script>
 	<script type="text/javascript" src="./YYT_PC_Modules/url.js"></script>
-	<script type="text/javascript" src="./YYT_PC_Component/feature/YYTUploadImage.js"></script>
+	<script type="text/javascript" src="./YYT_PC_Modules/tools.js"></script>
+	<script type="text/javascript" src="./YYT_PC_Component/feature/uploadFile.js"></script>
 	<script type="text/javascript">
-		var ctrlData = [
-			{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
-		];
-		var upload = new ICEPlugs.YYTUploadImage({
+		var ctrlData = {
+			"cmd":[
+				{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
+			],
+			"redirect":"http://localhost:4000/upload.html"
+		};
+		
+		var uploadFile = ICEPlugs.uploadFile;		
+		var upload = uploadFile({
 			el:'#formFile',
+			url:'http://image.yinyuetai.com/edit',
 			data:ctrlData,
 			filename:'img',
-			url:'http://image.yinyuetai.com/edit',
-			instruct:'iframe',
+			before:function(){
+				console.log(this);
+			},
 			success:function(response){
-				console.log('success');
 				console.log(response);
 			},
-			error:function(e){
-				console.log(e);
+			failure:function(){
+
 			}
 		});
 		$('#submit').on('click',function(){
 			upload.submit();
 		})
-		console.log(upload)
+		// console.log(upload)
 		// var obj = {};
 		// Object.defineProperty(obj,"node",{
 		// 	get:function(){

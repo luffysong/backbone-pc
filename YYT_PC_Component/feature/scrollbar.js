@@ -12,12 +12,12 @@
 	if(typeof exports === 'object' && typeof module === 'object'){
 		module.exports = factory();
 	}else if(typeof exports === 'object'){
-		exports['YYTScrollBar'] = factory()
+		exports['scrollbar'] = factory()
 	}else{
 		if (!root.ICEPlugs) {
 			root.ICEPlugs = {};
 		};
-		root.ICEPlugs.YYTScrollBar = factory();
+		root.ICEPlugs.scrollbar = factory();
 	};
 })(function() {
 	var uid = 999;
