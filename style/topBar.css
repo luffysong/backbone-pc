@@ -1,0 +1,24 @@
+.conWidth {
+  width: 1200px;
+}
+.p-pf {
+  position: fixed;
+}
+.p-pa {
+  position: absolute;
+}
+.p-pr {
+  position: relative;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.topBar {
+  width: 10px;
+}
+.topBar .stance {
+  height: 10px;
+}

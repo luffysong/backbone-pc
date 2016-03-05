@@ -7,6 +7,7 @@ var clean = require('gulp-clean');
 var gulpif = require('gulp-if');
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
+var less = require('gulp-less');
 //var rename = require('gulp-rename');
 //var concat = require('gulp-concat');
 //var size = require('gulp-size');
@@ -76,4 +77,12 @@ gulp.task('build:move',['clean'], function() {
     })))
     .pipe(gulpif('*.css',minifycss()))
     .pipe(gulp.dest('./dist/'));
+});
+gulp.task('less',function () {
+  return  gulp.src(['./style/less/*.less'])
+          .pipe(less())
+          .pipe(gulp.dest('./style'));
+});
+gulp.task('watchLess',function () {
+  gulp.watch('./style/less/*.less',['less']);
 });
