@@ -16,7 +16,7 @@ if (!Backbone) {
 	throw new Error("import Backbone");
 };
 var tplEng = require('../link/template');
-var warn = require('./warn');
+var warn = require('./util/warn');
 
 var BaseView = Backbone.View.extend({
 	initialize:function(options){	

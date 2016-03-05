@@ -125,11 +125,16 @@
 			var seg = query.replace(/^\?/, '').split('&'),
 				leng = seg.length,
 				i = 0,
+				value,
 				target;
 			for (; i < leng; i++) {
 				if (!seg[i]) continue;
 				target = seg[i].split('=');
-				_query[target[0]] = target[1];
+				value = target[1];
+				if ((/^\[/.test(value) && /\]$/.test(value)) || (/^{/.test(value) || /\}$/.test(value))) {
+					value = JSON.parse(value);
+				};
+				_query[target[0]] = value;
 			}
 			return _query;
 		}

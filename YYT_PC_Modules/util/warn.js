@@ -6,7 +6,7 @@
 
 'use strict';
 
-var Config = require('../src/config');
+var Config = require('config');
 var Debug = require('./debug');
 
 var warn = function(msg,e){

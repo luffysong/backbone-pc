@@ -20,11 +20,11 @@ var Backbone = _win.Backbone
 if (!Backbone) {
 	throw new Error("import Backbone");
 };
-var Store = require('./locationStore');
-var Url = require('./url');
-var Config = require('../src/config');
-var Tools = require('./tools');
-var warn = require('./warn');
+var Store = require('./store/locationStore');
+var Url = require('./util/url');
+var Config = require('config');
+var Tools = require('./util/tools');
+var warn = require('./util/warn');
 var uid = 1314;
 var expiration = Store.expiration;
 var baseModelSort = [];
