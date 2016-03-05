@@ -46,7 +46,7 @@ var config = {
 			"BaseModel":path.resolve(__dirname,'YYT_PC_Modules/baseModel'),
 			"BaseView":path.resolve(__dirname,'YYT_PC_Modules/baseView'),
 			"store":path.resolve(__dirname,'YYT_PC_Modules/store/locationStore'),
-			"cookie":path.resolve(__dirname,'YYT_PC_Modules/util/cookie'),
+			"cookie":path.resolve(__dirname,'YYT_PC_Modules/store/cookie'),
 			"url":path.resolve(__dirname,'YYT_PC_Modules/util/url'),
 			"tools":path.resolve(__dirname,'YYT_PC_Modules/util/tools'),
 			"uploadFile":path.resolve(__dirname,'YYT_PC_Component/feature/uploadFile'),

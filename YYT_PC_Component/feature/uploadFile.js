@@ -44,9 +44,9 @@
 			console.warn('配置上传URL');
 			return;
 		}
-		this.init();
+		this._init();
 	};
-	UploadFile.prototype.init = function(){
+	UploadFile.prototype._init = function(){
 		this._createElement();
 		this._createIframe();
 		this._addEvent();
