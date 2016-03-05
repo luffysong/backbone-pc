@@ -37,7 +37,11 @@ var config = {
 			{
 				test: /\.less$/i,
 				loader: extractLESS.extract(['css','less'])
-			}
+			},
+			{ 
+				test: /\.(png|jpg)$/, 
+				loader: 'url-loader?limit=8192' 
+			} 
 		]
 	},
 	plugins:plugins,
