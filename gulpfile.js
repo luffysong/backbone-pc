@@ -7,12 +7,16 @@ var clean = require('gulp-clean');
 var gulpif = require('gulp-if');
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
-var less = require('gulp-less');
-//var rename = require('gulp-rename');
-//var concat = require('gulp-concat');
-//var size = require('gulp-size');
+var rename = require('gulp-rename');
+var concat = require('gulp-concat');
+var size = require('gulp-size');
 var minifycss = require('gulp-minify-css');
-
+var revReplace = require('gulp-rev-replace');
+var useref = require('gulp-useref');
+var rev = require('gulp-rev');
+var filter = require('gulp-filter');
+var pkg = require('./package.json');
+var header = require('gulp-header');
 // 配置本地服务器
 var browser = require('browser-sync');
 var browserSync = browser.create();
@@ -43,12 +47,51 @@ gulp.task('clean', function() {
       return gulp.src(['./dist/'],{read:false}).pipe(clean());
 });
 
-
+gulp.task('build:rename',['build'],function(){
+      return gulp.src('./dist/web/*.html')
+        
+})
 
 //进入build
 gulp.task('build',['build:move'],function(){
-  // content
-      
+      // content
+       var libraryFilter = filter('./dist/link/base.library.js',{
+          restore:true
+       });
+       var cssFilter = filter('./dist/style/*.css',{
+          restore:true
+       }); 
+       var jsFilter = filter('./dist/js/*.js',{
+          restore:true
+       });
+       var date = new Date();
+       var times = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+'   '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+       var banner = [
+              '/**',
+              ' * @project <%= pkg.name %>',
+              ' * @description <%=pkg.description%>',
+              ' * @version v<%= pkg.version %>',
+              ' * @time '+ times,
+              ' * @author <%= pkg.author %>',
+              ' * @copy <%= pkg.homepage %>',
+              ' */',
+              ''
+       ].join('\n');
+       return gulp.src('./dist/web/*.html')
+              .pipe(clean())
+              .pipe(useref({
+                  noAssets:false
+              }))
+              .pipe(libraryFilter)
+              .pipe(libraryFilter.restore)
+              .pipe(cssFilter)
+              .pipe(cssFilter.restore)
+              .pipe(jsFilter)
+              .pipe(jsFilter.restore)
+              .pipe(rev())
+              .pipe(revReplace())
+              .pipe(gulpif('*.js',header(banner,{pkg:pkg})))
+              .pipe(gulp.dest('./dist/web/'))
 });
 
 gulp.task('build:move',['clean'], function() {
@@ -57,6 +100,8 @@ gulp.task('build:move',['clean'], function() {
     var movePath = './';
     return gulp.src([
       movePath+'link/base.library.js',
+      movePath+'link/webim.js',
+      movePath+'link/json2.js',
       movePath+'img/*.*',
       movePath+'web/*.*',
       movePath+'style/*.css',
@@ -77,12 +122,4 @@ gulp.task('build:move',['clean'], function() {
     })))
     .pipe(gulpif('*.css',minifycss()))
     .pipe(gulp.dest('./dist/'));
-});
-gulp.task('less',function () {
-  return  gulp.src(['./style/less/*.less'])
-          .pipe(less())
-          .pipe(gulp.dest('./style'));
-});
-gulp.task('watchLess',function () {
-  gulp.watch('./style/less/*.less',['less']);
 });

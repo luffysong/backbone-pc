@@ -1,13 +1,14 @@
 {
-  "name": "generate-backbone-pc",
+  "name": "yinyuetai_pc_live_video",
   "version": "1.0.0",
-  "description": "pc 版脚手架",
+  "description": "音悦台直播PC版",
+  "homepage": "http://www.yinyuetai.com",
   "main": "index.js",
   "scripts": {
     "test": "test",
     "start": "gulp server",
     "dev": "webpack --watch --config webpack.dev.config.js",
-    "build": "gulp build"
+    "build": "gulp build:rename"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "devDependencies": {
     "backbone": "^1.2.3",
     "browser-sync": "^2.11.1",
+    "chai": "^3.5.0",
     "css-loader": "^0.23.1",
     "eslint": "^2.2.0",
     "eslint-loader": "^1.3.0",
@@ -26,11 +28,16 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.6.0",
+    "gulp-filter": "^4.0.0",
+    "gulp-header": "^1.7.1",
     "gulp-if": "^2.0.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-rename": "^1.2.2",
+    "gulp-rev": "^7.0.0",
+    "gulp-rev-replace": "^0.4.3",
     "gulp-size": "^2.0.0",
     "gulp-uglify": "^1.5.3",
+    "gulp-useref": "^3.0.7",
     "jquery": "^1.12.0",
     "less-loader": "^2.2.2",
     "raw-loader": "^0.5.1",
