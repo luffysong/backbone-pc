@@ -1,5 +1,43 @@
+.com {
+  width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+}
+.topBar {
+  height: 90px;
+  width: 100%;
+  background: #0c0b0b;
+}
+.topBarCon {
+  width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+}
+.topBarCon .log {
+  width: 97px;
+  height: 35px;
+}
+.clearfix:before {
+  display: block;
+  content: "";
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+a {
+  color: #000;
+  text-decoration: none;
+}
 h1 {
   color: #ccc;
+  width: 20px;
 }
 
 /*# sourceMappingURL=anchor.main.css.map*/
