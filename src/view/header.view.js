@@ -9,12 +9,13 @@
  * @info {实现的功能}
  */
 
+var HomeModel = require('../model/header.model')
 var BaseView = require('BaseView'); //View的基类
 
 var View = BaseView.extend({
-	el:'#topBar', //设置View对象作用于的根元素，比如id
+	el:'#homepage', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
-		var template = require('../template/topBar');
+		var template = require('../template/homepage.html');
 		return template; 
 	},
 	events:{ //监听事件
