@@ -64,20 +64,21 @@
 	</div>
 	<br/>
 	<br/>
-	<script type="text/javascript" src="./link/base.library.js"></script>
-	<script type="text/javascript" src="./YYT_PC_Modules/util/url.js"></script>
-	<script type="text/javascript" src="./YYT_PC_Modules/util/tools.js"></script>
-	<script type="text/javascript" src="./YYT_PC_Component/feature/uploadFile.js"></script>
+	<script type="text/javascript" src="../link/base.library.js"></script>
+	<script type="text/javascript" src="../YYT_PC_Modules/util/url.js"></script>
+	<script type="text/javascript" src="../YYT_PC_Modules/util/tools.js"></script>
+	<script type="text/javascript" src="../YYT_PC_Component/feature/AjaxForm.js"></script>
+	<script type="text/javascript" src="../YYT_PC_Component/feature/UploadFile.js"></script>
 	<script type="text/javascript">
 		var ctrlData = {
 			"cmd":[
 				{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
 			],
-			"redirect":"http://localhost:4000/upload.html"
+			"redirect":"http://localhost:4000/web/upload.html"
 		};
 		
-		var uploadFile = ICEPlugs.uploadFile;		
-		var upload = uploadFile({
+		var UploadFile = ICEPlugs.UploadFile;		
+		var upload = UploadFile.classInstanceUploadFile({
 			el:'#formFile',
 			url:'http://image.yinyuetai.com/edit',
 			data:ctrlData,
@@ -98,7 +99,7 @@
 			upload.submit();
 		});
 
-		var upload1 = uploadFile({
+		var upload1 = UploadFile.classInstanceUploadFile({
 			el:'#formFile1',
 			url:'http://image.yinyuetai.com/edit',
 			data:ctrlData,
@@ -131,7 +132,7 @@
 		// });
 		// obj.node = 123;
 	</script>
-	<script type="text/javascript" src="./YYT_PC_Component/feature/scrollbar.js"></script>
+	<script type="text/javascript" src="../YYT_PC_Component/feature/scrollbar.js"></script>
 	<script type="text/javascript">
 		var scrollbar = ICEPlugs.scrollbar;
 		var scroll = scrollbar({
@@ -160,7 +161,6 @@
 
 			}
 		});
-		console.log(scroll);
 	</script>
 </body>
 </html>

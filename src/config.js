@@ -2,7 +2,7 @@ var config = {
 	scheme: 'alpha',
 	env:{
 		alpha:{
-			'url_prefix':'http://localhost:4000'
+			'url_prefix':'http://beta.yinyuetai.com:9019'
 		},
 		release:{
 			'url_prefix':''

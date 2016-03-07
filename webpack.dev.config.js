@@ -47,14 +47,20 @@ var config = {
 	plugins:plugins,
 	resolve:{
 		alias:{
+			"tplEng":path.resolve(__dirname,'link/template'),  //模板引擎
 			"BaseModel":path.resolve(__dirname,'YYT_PC_Modules/baseModel'),
 			"BaseView":path.resolve(__dirname,'YYT_PC_Modules/baseView'),
 			"store":path.resolve(__dirname,'YYT_PC_Modules/store/locationStore'),
 			"cookie":path.resolve(__dirname,'YYT_PC_Modules/store/cookie'),
 			"url":path.resolve(__dirname,'YYT_PC_Modules/util/url'),
 			"tools":path.resolve(__dirname,'YYT_PC_Modules/util/tools'),
-			"uploadFile":path.resolve(__dirname,'YYT_PC_Component/feature/uploadFile'),
-			"scrollbar":path.resolve(__dirname,'YYT_PC_Component/feature/scrollbar'),
+			"pwdencrypt":path.resolve(__dirname,'YYT_PC_Modules/crypto/pwdencrypt'),
+			"secret":path.resolve(__dirname,'YYT_PC_Modules/crypto/secret'),
+			"UploadFile":path.resolve(__dirname,'YYT_PC_Component/feature/UploadFile'),
+			"AjaxForm":path.resolve(__dirname,'YYT_PC_Component/feature/AjaxForm'),
+			"Scrollbar":path.resolve(__dirname,'YYT_PC_Component/feature/Scrollbar'),
+			"UserModel":path.resolve(__dirname,'YYT_PC_Component/business/UserModel/'),
+			"ui.Dialog":path.resolve(__dirname,'YYT_PC_Component/ui/dialog/'),
 			"config":path.resolve(__dirname,'src/config')
 		}
 	},

@@ -12,15 +12,14 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-
+var LoginBox = require('../../YYT_PC_Component/business/loginBox/');
 var View = BaseView.extend({
-	el:'', //设置View对象作用于的根元素，比如id
+	el:'#topBar', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
-		var template = require('../template/index');
-		return template; 
+		return ''; 
 	},
 	events:{ //监听事件
-
+		'click #login':'loginHandler'
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
@@ -32,7 +31,17 @@ var View = BaseView.extend({
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
-		
+		this.loginBox = LoginBox();
+		this._dialog = this.loginBox.dialog;
+	},
+	loginHandler:function(e){
+		e.preventDefault();
+		var status = this._dialog.status();
+		if (status === 'hide') {
+			this._dialog.trigger('show');
+		}else{
+			this._dialog.trigger('hide');
+		}
 	}
 });
 
