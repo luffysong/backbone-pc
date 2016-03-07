@@ -1,22 +1,100 @@
-@tBColor : #0c0b0b;
-
+@tbC : #0c0b0b;
+@b2 : #b2b2b2;
+@c-27:#272727;
+@a-hover : #690;
 // 共有样式
 .com{
 	width: 1200px;
 	margin:0 auto;
 	height: 100%;
 }
+.bb50{
+	border-radius: 50%;
+	overflow: hidden;
+}
 //样式
 .topBar{
 	height: 90px;
 	width: 100%;
-	background: @tBColor;
+	background: @tbC;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 200;
 }
 .topBarCon{
 	.com;
 	.log{
 		width: 97px;
 		height: 35px;
-		background-image: url('../../../img/logo.png');
+		background: url('../../../img/logo.png') no-repeat center;
+	}
+
+	
+}
+.anchorPc{
+	padding-top: 24px;
+	.avator{
+		width: 40px;
+		height: 40px;
+		.bb50;
+	}
+	.PcMsg{
+		padding-top: 8px;
+		color:@b2;
+		margin-left: 14px;
+		position: relative;
+		a{
+			color:@b2;
+			float: left;
+		}
+		span{
+			border:5px solid transparent;
+			border-top: 5px solid @b2;
+			float: right;
+			margin-top: 10px;
+			margin-left: 8px;
+		}
+		ul{
+			display: none;
+			position: absolute;
+			top: 38px;
+			width: 90px;
+			left: -10px;
+			padding: 0;
+		}
+		li{
+			text-align: center;
+			width: 100%;
+			a{
+				display: block;
+				height: 32px;
+				width: 100%;
+				line-height: 32px;
+				background: @c-27;
+			}
+			a:hover{
+				background: #01ceb5;
+			}
+		}
+	}
+	.on{
+		ul{
+			display: block;
+		}
+		span{
+			border-top: 5px solid transparent;
+			border-bottom: 5px solid @b2;
+			margin-top: 3px;
+		}
+	}
+	.goHome{
+		margin-top: 10px;
+		padding-left: 13px;
+		color:@b2;
+
+	}
+	.goHome:hover{
+		color:#27d5bf;
 	}
 }
