@@ -24,7 +24,6 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
-		console.log(this);
 		this.query = url.parseSearch(window.location.search);
 	},
 	//当模板挂载到元素之后
@@ -36,8 +35,7 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
-		this.indexModel.execu
-		te(function(response){
+		this.indexModel.execute(function(response){
 			self.demoRender();
 		},function(e){
 
@@ -49,7 +47,6 @@ var View = BaseView.extend({
 		this.$el.html(html);
 	},
 	gotoHandler:function(e){
-		console.log(e);
 		window.location.href = "http://www.163.com"
 	}
 });

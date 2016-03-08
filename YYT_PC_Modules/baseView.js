@@ -17,19 +17,19 @@ if (!Backbone) {
 };
 var tplEng = require('../link/template');
 var warn = require('./util/warn');
-
+var tools = require('./util/tools')
 var BaseView = Backbone.View.extend({
 	initialize:function(options){	
-		if (this.beforeMount && typeof this.beforeMount === 'function') {
-			this.beforeMount();
-		}else{
-			warn('你应该创建beforeMount钩子方法，在此方法中获取DOM元素，并初始化一些自定义的属性')
-		};
 		//默认开启客户端渲染模式
 		if (this.clientRender === undefined && this.clientRender !== false) {
 			this.clientRender = true;
 		};
 		this._ICEOptions = options || {};
+		if (this.beforeMount && typeof this.beforeMount === 'function') {
+			this.beforeMount();
+		}else{
+			warn('你应该创建beforeMount钩子方法，在此方法中获取DOM元素，并初始化一些自定义的属性')
+		};
 		this._ICEinit();
 		return this;
 	},
@@ -41,6 +41,7 @@ var BaseView = Backbone.View.extend({
 				self.$el.append(self._template);
 				self._ICEAfterMount();
 				self._ICEObject();
+				
 			}else{
 				warn('使用templateUrl设置模板文件URL或者使用rawLoader方法返回一个模板字符串，如果你的页面是服务端渲染HTML，可将clientRender设置为false');
 			}
@@ -57,7 +58,9 @@ var BaseView = Backbone.View.extend({
 		};
 	},
 	_ICEObject:function(){
-		this._ICEinitEvent();
+		if (this.clientRender) {
+			this._ICEinitEvent();
+		};
 		this._ICEinitNode();
 		this._store = {};
 		this.__YYTPC__ = true;
@@ -70,7 +73,7 @@ var BaseView = Backbone.View.extend({
 	},
 	_ICEinitNode:function(){
 		this.$parent = this._ICEOptions.parent;
-		this.$children = [];
+		this.$children  = [];
 		this.$root = this.$parent ? this.$parent.$root : this;
 		if (this.$parent) {
 			this.$parent.$children.push(this);
@@ -93,13 +96,14 @@ var BaseView = Backbone.View.extend({
 	broadcast:function(event){
 		var isString = typeof event === 'string';
 		event = isString ? event : event.name;
+		var p = tools.toArray(arguments,1);
 		var children = this.$children;
 		var i = 0;
 		var j = children.length;
 		for(;i<j;i++){
 			var child = children[i];
-			child.trigger.call(child,event);
-			child.broadcast.call(child,event);
+			child.trigger.apply(child,p);
+			child.broadcast.apply(child,p);
 		}
 		return this;
 	},
@@ -111,9 +115,10 @@ var BaseView = Backbone.View.extend({
 	dispatch:function(event){
 		var isString = typeof event === 'string';
 		event = isString ? event : event.name;
+		var p = tools.toArray(arguments,1);
 		var parent = this.$parent;
 		while(parent){
-			parent.trigger.call(parent,event);
+			parent.trigger.apply(parent,p);
 			parent = parent.$parent;
 		}
 	}

@@ -31,13 +31,16 @@ var baseModelSort = [];
 var BaseModel = Backbone.Model.extend({
 	options:{},
 	initialize:function(options){
-		this._ICESetEnv();
 		this._store = {};
 		this._view = null;
 		this._onQueue = [];
 		this._original = null;
 		if (typeof this.beforeEmit === 'function') {
 			this.beforeEmit(options);
+		};
+		this._url = this.url;
+		if (!this.setEnv) { //默认使用内置{url_prefix}处理
+			this._ICESetEnv();
 		};
 	},
 	_ICESetEnv:function(){
@@ -275,6 +278,7 @@ var BaseModel = Backbone.Model.extend({
 			jsonpCallback:'_YYTPC_',
 		});
 		jsonpXHR.done(function(data,state,xhr){
+
 			success.call(self,data);
 		});
 		jsonpXHR.fail(function(xhr,state,errors){
