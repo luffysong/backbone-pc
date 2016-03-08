@@ -12,6 +12,7 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
+var cookie = require('cookie');
 var LoginBox = require('../../YYT_PC_Component/business/loginBox/');
 var View = BaseView.extend({
 	el:'#topBar', //设置View对象作用于的根元素，比如id
@@ -27,7 +28,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-
+		console.log(cookie.get('token'));
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
