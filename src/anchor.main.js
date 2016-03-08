@@ -14,5 +14,5 @@ $(function(){
 	var chatView = new ChatView();
 
 	//载入CSS
-	require('../style/less/anchor.less');   
+	require('../style/less/anchor.less');  
 });

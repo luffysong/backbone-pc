@@ -13,7 +13,7 @@
 
 var BaseView = require('BaseView'); //View的基类
 var cookie = require('cookie');
-var LoginBox = require('../../YYT_PC_Component/business/loginBox/');
+var LoginBox = require('LoginBox');
 var View = BaseView.extend({
 	el:'#topBar', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版

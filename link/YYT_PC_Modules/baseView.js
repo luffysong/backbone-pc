@@ -15,7 +15,7 @@ var Backbone = _win.Backbone
 if (!Backbone) {
 	throw new Error("import Backbone");
 };
-var tplEng = require('../link/template');
+var tplEng = require('tplEng');
 var warn = require('./util/warn');
 var tools = require('./util/tools')
 var BaseView = Backbone.View.extend({
