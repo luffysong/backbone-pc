@@ -278,7 +278,6 @@ var BaseModel = Backbone.Model.extend({
 			jsonpCallback:'_YYTPC_',
 		});
 		jsonpXHR.done(function(data,state,xhr){
-
 			success.call(self,data);
 		});
 		jsonpXHR.fail(function(xhr,state,errors){
