@@ -126,6 +126,9 @@ a {
   color: #000;
   text-decoration: none;
 }
+img {
+  vertical-align: top;
+}
 .common_con {
   width: 1200px;
   margin: 0 auto;
