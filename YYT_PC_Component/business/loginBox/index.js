@@ -192,7 +192,7 @@ module.exports = function(){
 		});
 	});
 	dialog.on('hide',function(){
-		var form = self.dialog.$el.find('form');
+		var form = dialog.$el.find('form');
 		form.find('.errorinfo').css('visibility', 'hidden');
 		form.find('[name=email],[name=password]').parent().removeClass('emailerror').removeClass('error');
 		//去掉悦单播放页面中下载悦单的active效果

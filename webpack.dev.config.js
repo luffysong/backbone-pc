@@ -59,7 +59,7 @@ var config = {
 			"UploadFile":path.resolve(__dirname,'YYT_PC_Component/feature/UploadFile'),
 			"AjaxForm":path.resolve(__dirname,'YYT_PC_Component/feature/AjaxForm'),
 			"Scrollbar":path.resolve(__dirname,'YYT_PC_Component/feature/Scrollbar'),
-			"UserModel":path.resolve(__dirname,'YYT_PC_Component/business/UserModel/'),
+			"UserModel":path.resolve(__dirname,'YYT_PC_Component/business/UserModel'),
 			"ui.Dialog":path.resolve(__dirname,'YYT_PC_Component/ui/dialog/'),
 			"config":path.resolve(__dirname,'src/config')
 		}
