@@ -1,6 +1,7 @@
 {
 	"source":{
 		"index.main":"./src/index.main.js",
-		"anchor.main":"./src/anchor.main.js"
+		"anchor.main":"./src/anchor.main.js",
+		"anchorPc.main":"./src/anchorPc.main.js"
 	}
 }
