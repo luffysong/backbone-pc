@@ -1,6 +1,6 @@
 $(function(){
-	// var IndexView = require('./view/index.view');
-	// var indexView = new IndexView();
+	var IndexView = require('./view/index.view');
+	var indexView = new IndexView();
 
 	var TopbarView = require('./view/topbar.view');
 	var topbarView = new TopbarView();

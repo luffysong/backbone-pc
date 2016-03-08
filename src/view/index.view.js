@@ -38,7 +38,7 @@ var View = BaseView.extend({
 		this.indexModel.execute(function(response){
 			self.demoRender();
 		},function(e){
-
+			console.log(e);
 		});
 	},
 	demoRender:function(){
