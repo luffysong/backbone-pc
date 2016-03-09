@@ -1,7 +1,27 @@
+// 页面布局
 .anPc-container{
 	height: 1685px;
 	padding-top: 90px;
 	background: #fff;
+}
+.title{
+	position: relative;
+	.editorBg_btn{
+		width: 84px;
+		height: 32px;
+		line-height: 32px;
+		background: #27d5bf;
+		font-size: 12px;
+		text-align: center;
+		color:#fff;
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		cursor: pointer;
+	}
+	.editorBg_btn:hover{
+		background: #5bdfcd;
+	}
 }
 .anchorMsg_con{
 	height: 120px;
@@ -13,6 +33,7 @@
 		top: -57px;
 		background: #fff;
 		margin-right: 16px;
+
 	}
 	.anchorrMsg{
 		width: 300px;
@@ -60,11 +81,19 @@
 		z-index: 2;
 	}
 	.anPc-list{
-		width: 996px;
-		height: 1210px;
+		width: 969px;
+		padding-left: 27px;
+		padding-top: 17px;
+		height: 1200px;
 		border:1px solid #ededf0;
 		position: relative;
 		z-index: 1;
+		>div{
+			display: none;
+		}
+		>div.show{
+			display: block;
+		}
 	}
 }
 .subnav{
@@ -77,16 +106,500 @@
 		border-bottom: 1px solid #ededf0;
 		background: #f6f6f7;
 		position: relative;
+		cursor: pointer;
 		span{
 			position: absolute;
 			right: 30px;
+			font-size: 20px;
+			font-weight: lighter;
+			font-family: 'arail';
+			top: 2px;
+			display: none;
 		}
 	}
-	li.on{
+	li:hover,li.on{
 		font-size: 14px;
 		color: #666;
 		width: 201px;
 		background: #fff;
 		border-right: 0;
+		span{
+			display: block;
+		}
+	}
+}
+.page{
+	padding: 40px 27px 0 0;
+	overflow: hidden;
+}
+.setting{
+	.setContrl{
+		border-bottom: 1px solid #e1e1e1;
+		li{
+			width: 132px;
+			height: 41px;
+			line-height: 41px;
+			background: #f1f1f1;
+			color:#999;
+			text-align: center;
+			font-size: 12px;
+			margin-right: 1px;
+			margin-bottom: 1px;
+			cursor: pointer;
+		}
+		li.on{
+			background: #34d7c3;
+			color:#fff;
+		}
+	}
+	.set_Con{
+		>div{
+			display: none;
+		}
+		>div.show{
+			display: block;
+		}
+	}
+}
+// mylive
+.myLiveBox{
+	.Mylive{
+		>div{
+			display: none;
+		}
+		>div.show{
+			display: block;
+		}
+	}
+	.myLiveControls{
+		border-bottom: 1px solid #e1e1e1;
+		li{
+			width: 132px;
+			height: 41px;
+			line-height: 41px;
+			background: #f1f1f1;
+			color:#999;
+			text-align: center;
+			font-size: 12px;
+			margin-right: 1px;
+			margin-bottom: 1px;
+			cursor: pointer;
+		}
+		li.on{
+			background: #34d7c3;
+			color:#fff;
+		}
+	}
+}
+// prelive
+.preLive{
+	ul{
+		height: 1038px;
+	}
+	li{
+		overflow: hidden;
+		padding:24px 0;
+		border-bottom: 1px solid #e1e1e1;
+	}
+	.uploadAd{
+		margin-right: 19px;
+	}
+	.preLiveMsg{
+		height: 124px;
+		width: 330px;
+	}
+	dt{
+		font-size: 14px;
+		color:#333;
+		line-height: 23px;
+		margin-bottom: 4px;
+	}
+	dd{
+		font-size: 12px;
+		color:#999;
+		line-height: 26px;
+		.copy{
+			color:#34d7c3;
+			float: right;
+		}
+		.copy:hover{
+			text-decoration: underline;
+		}
+	}
+	dd.ctl{
+		overflow: hidden;
+		a{
+			margin-top: 15px;
+			width: 64px;
+			height: 25px;
+			line-height: 25px;
+			text-align: center;
+			color:#fff;
+			background: #34d7c3;
+			display: inline-block;
+			margin-right: 25px;
+		}
+		a.doing{
+			background: #d3d1d1;
+		}
+	}
+}
+// 分页
+.PageBox{
+	float: right;
+	a{
+		width: 37px;
+		height: 37px;
+		line-height: 37px;
+		text-align: center;
+		color: #acacac;
+		background: #f8f8f8;
+		float: left;
+		margin-right: 1px;
+	}
+	>span{
+		float: left;
+		line-height: 35px;
+		letter-spacing: 1px;
+		font-size: 12px;
+		font-family: lighter;
+		padding:0 10px;
+	}
+	a:hover{
+		color: #fff;
+		background: #27d5bf;
+	}
+	a.on{
+		color: #fff;
+		background: #27d5bf;
+		cursor: default;
+	}
+	.pre,.next{
+		width: 54px;
+		height: 37px;
+		line-height: 37px;
+		text-align: center;
+		font-family: 'arail';
+		font-size: 26px;
+	}
+	.pre{
+		color: #fff;
+		background: #27d5bf;
+	}
+	p{
+		clear: both;
+		text-align: right;
+		color:#acacac;
+		padding-top: 7px;
+		span{
+			color:#5c5c5c;
+			margin:0 5px;
+		}
+	}
+}
+// 历史直播
+.liveHistory{
+	ul{
+		height: 1038px;
+	}
+	li{
+		overflow: hidden;
+		padding:24px 0;
+		border-bottom: 1px solid #e1e1e1;
+	}
+	.uploadAd{
+		margin-right: 19px;
+	}
+	.preLiveMsg{
+		height: 124px;
+		width: 330px;
+	}
+	dt{
+		font-size: 14px;
+		color:#333;
+		line-height: 23px;
+		margin-bottom: 4px;
+	}
+	dd{
+		font-size: 12px;
+		color:#999;
+		padding:7px 0;
+	}
+	.popularity{
+		margin-bottom: 13px;
+		span{
+			display: inline;
+			margin: 0 12px 0 5px;
+		}
+	}
+	.Pbar{
+		padding: 0;
+		position: relative;
+		width: 140px;
+		height: 5px;
+		border-radius: 5px;
+		background: #434343;
+		span{
+			height: 100%;
+			width: 50px;
+			border-radius: 5px;
+			background: #27d5bf;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+	.pop{
+		span{
+			color:#3d3938;
+			font-size: 12px;
+		}
+	}
+}
+.creatLive{
+	padding:35px 0 0 41px;
+	width: 790px;
+	input{
+		width: 278px;
+		height: 32px;
+		line-height: 32px;
+		text-indent: 1em;
+		border:1px solid #dadada;
+	}
+	input:hover{
+		border-color: #27d5bf;
+	}
+	.Inp_name,.Inp_artist{
+		height: 34px;
+		line-height: 34px;
+		margin-bottom: 18px;
+		span{
+			color:red;
+		}
+	}
+	.Inp_artist{
+		position: relative;
+		ul{
+			display: none;
+			position: absolute;
+			width: 280px;
+			left: 69px;
+			top: 34px;
+			z-index: 40;
+		}
+		li{
+			width: 100%;
+			height: 32px;
+			line-height: 32px;
+			text-indent: 1em;
+			background: #f6f4f4;
+			color:#7a7a7a;
+		}
+		li:hover{
+			background: #5bdfcd;
+			color:#fff;
+		}
+	}
+	.Inp_time{
+		>span{
+			color:red;
+		}
+		em{
+			margin: 0 9px 0 10px;
+		}
+		line-height: 34px;
+		padding-bottom: 150px;
+	}
+	.select{
+		cursor: pointer;
+		display: inline-block;
+		width: 63px;
+		height: 22px;
+		line-height: 22px;
+		margin-bottom: 20px;
+		padding:5px ;
+		padding-left: 0;
+		border:1px solid #dadada;
+		position: relative;
+		span{
+			display: inline-block;
+			width: 36px;
+			text-align: center;
+		}
+		img{
+			float: right;
+		}
+		ul{
+			display: none;
+			position: absolute;
+			top: 33px;
+			left: -1px;
+			width: 70px;
+			z-index: 30;
+		}
+		li{
+			height: 32px;
+			line-height: 32px;
+			width: 100%;
+			text-align: center;
+			background: #f6f4f4;
+			color:#7a7a7a;
+			cursor: pointer;
+		}
+		li:hover{
+			background: #5bdfcd;
+			color:#fff;
+		}
+	}
+	.submit{
+		width: 361px;
+		height: 54px;
+		line-height: 54px;
+		margin:0 auto;
+		text-align: center;
+		font-size: 16px;
+		color:#fff;
+		background: #27d5bf;
+	}
+	.submit:hover{
+		background: #5bdfcd;
+	}
+}
+//个人资料
+.personInfo{
+	padding:63px 0 0 23px;
+	li{
+		overflow: hidden;
+	}
+	.uploadAvator{
+		padding-bottom: 77px;
+		.avatorNow{
+			width: 180px;
+			height: 180px;
+		}
+	}
+	.PiTitle{
+		width: 60px;
+		line-height: 34px;
+		i{
+			color:red;
+			margin-right: 9px;
+		}
+	}
+	.uploadform{
+		padding-top: 4px;
+		width: 316px;
+		text-align: center;
+		position: relative;
+		div{
+			width: 120px;
+			height: 38px;
+			line-height: 38px;
+			text-align: center;
+			font-size: 14px;
+			margin:0 auto;
+			color:#fff;
+			background: #27d5bf;
+			margin-bottom: 14px;
+			cursor: pointer;
+		}
+		#file{
+			width: 120px;
+			height: 38px;
+			background: blue;
+			opacity: 0;
+			position: absolute;
+			top: 4px;
+			left: 97px;
+			cursor: pointer;
+		}
+		p{
+			color: #bcbbbb;
+		}
+	}
+	.Inp_Pc_name{
+		padding-bottom: 27px;
+		input{
+			width: 278px;
+			height: 32px;
+			border:1px solid #dadada;
+			text-indent: 1em;
+		}
+		input:hover{
+			border-color: #27d5bf;
+		}
+		.tips{
+			color:#f91772;
+			// display: none;
+		}
+		img{
+			margin: 10px 3px 0 15px;
+		}
+	}
+	.tags{
+		input{
+			width: 278px;
+			height: 32px;
+			border:1px solid #dadada;
+			text-indent: 1em;
+			margin-bottom: 15px;
+		}
+		input:hover{
+			border-color: #27d5bf;
+		}
+	}
+	.save{
+		width: 360px;
+		height: 54px;
+		line-height: 54px;
+		text-align: center;
+		font-size:16px;
+		background: #27d5bf;
+		color:#fff;
+		margin:110px 0 0 230px;
+	}
+	.save:hover{
+		background: #5bdfcd;
+	}
+}
+//修改密码
+.modifyPwd{
+	padding:63px 0 0 22px;
+	li{
+		overflow: hidden;
+		margin-bottom: 18px;
+	}
+	.PiTitle{
+		width: 80px;
+		margin-right: 20px;
+		text-align: right;
+		height: 34px;
+		line-height: 34px;
+		color:#7a7a7a;
+		i{
+			color:red;
+
+		}
+	}
+	input{
+		width: 280px;
+		height: 34px;
+		border:1px solid #dadada;
+	}
+	input:hover{
+		border-color: #27d5bf;
+	}
+	.save{
+		width: 360px;
+		height: 54px;
+		line-height: 54px;
+		text-align: center;
+		font-size:16px;
+		background: #27d5bf;
+		color:#fff;
+		margin:110px 0 0 230px;
+	}
+	.save:hover{
+		background: #5bdfcd;
 	}
 }
