@@ -20,7 +20,10 @@ var View = BaseView.extend({
 		return template; 
 	},
 	events:{ //监听事件
-
+		'click .id': 'handler'
+	},
+	elements:{
+		'#id': 'xxBtn'
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
@@ -28,7 +31,8 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-
+		//修改背景按钮
+		this.changeBgBtn = $('.edit_bg_btn');
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
@@ -38,6 +42,7 @@ var View = BaseView.extend({
 		},function(e){
 
 		});
+
 	}
 });
 
