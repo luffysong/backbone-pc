@@ -15,10 +15,9 @@ var EditTtitleModel = require('../model/anchorEditTitle.model');
 
 
 var View = BaseView.extend({
-	el:'#set_Anchor_info', //设置View对象作用于的根元素，比如id
+	el:'#current-anchor-info', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
-		var template = require('../template/info.html');
-		return template; 
+		return require('../template/info.html');
 	},
 	events:{ //监听事件
 

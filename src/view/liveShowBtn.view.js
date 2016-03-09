@@ -4,20 +4,20 @@
 
 
 /**
- * @time {时间}
- * @author {编写者}
- * @info {实现的功能}
+ * @time 2016-3-9
+ * @author  YuanXuJia
+ * @info 直播按钮控制
  */
 
-var BaseView = require('BaseView'); //View的基类
-var StartModel = require('../model/anchorStart.model');
-var EndModel = require('../model/anchorEnd.model');
+'use strict';
 
+var BaseView = require('BaseView'); //View的基类
+var LiveShowModel = require('../model/liveShowBtn.model'); //View的基类
 
 var View = BaseView.extend({
-  el: '#anchor_ctrl_chat', //设置View对象作用于的根元素，比如id
+  el: '#live-show-btn-wraper', //设置View对象作用于的根元素，比如id
   rawLoader: function () { //可用此方法返回字符串模版
-    return require('../template/chat.html');
+    return require('../template/liveShowBtn.html');
   },
   events: { //监听事件
 
@@ -32,6 +32,7 @@ var View = BaseView.extend({
   },
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
+    var s = 1;
 
   }
 });

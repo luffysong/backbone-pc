@@ -4,20 +4,21 @@
 
 
 /**
- * @time {时间}
- * @author {编写者}
- * @info {实现的功能}
+ * @time 2016-3-9
+ * @author YuanXuJia
+ * @info 公告模块
  */
 
-var BaseView = require('BaseView'); //View的基类
-var StartModel = require('../model/anchorStart.model');
-var EndModel = require('../model/anchorEnd.model');
+'use strict';
 
+var BaseView = require('BaseView'); //View的基类
+var NoticeModel = require('../model/notice.model');
 
 var View = BaseView.extend({
-  el: '#anchor_ctrl_chat', //设置View对象作用于的根元素，比如id
+  el: '#notice-wraper', //设置View对象作用于的根元素，比如id
   rawLoader: function () { //可用此方法返回字符串模版
-    return require('../template/chat.html');
+    var template = require('../template/notice.html');
+    return template;
   },
   events: { //监听事件
 
