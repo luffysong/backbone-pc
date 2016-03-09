@@ -6,11 +6,10 @@
 
 'use strict';
 
-var BaseView = require('BaseView'); //View的基类
 var Dialog = require('ui.Dialog'); //Diglog类
 var AjaxForm = require('AjaxForm');
-var UserModel = require('UserModel');
 var pwdencrypt = require('pwdencrypt');
+var url =  require('url');
 var loginBoxTemp = require('./template/loginBox.html');
 var tplEng = require('tplEng');
 var secret = require('secret');
@@ -26,8 +25,9 @@ var email;
 var password;
 var loginBoxForm;
 var ajaxForm;
+var dialog;
 var requrest = true;
-
+var user;
 //验证成功
 window.gt_custom_ajax = function (result, selector) {
 	if (result) {
@@ -38,22 +38,28 @@ window.gt_custom_ajax = function (result, selector) {
 		}
 	}
 };
-
+//初始化登录表单
 function _initForm(){
 	errorinfo = loginBoxForm.find('.errorinfo');
 	email = loginBoxForm.find('[name=email]');
 	password = loginBoxForm.find('.pwd');
 	_setFocusEffect(email);
 	_setFocusEffect(password);
+	var UserModel = require('UserModel');
+	user = UserModel.sharedInstanceUserModel();
 	ajaxForm = AjaxForm.classInstanceAjaxForm(loginBoxForm,{
-		success:function(response){
-			console.log(response);
+		success:function(){
+			var cw = this.contentWindow;
+			var loc = cw.location;
+			var search = decodeURIComponent(cw.location.search);
+			var response = url.parseSearch(search);
+			response = response.json;
 			if (!response.error) {
 				if (response.platFormRef) {
 					location.href = 'http://login.yinyuetai.com/platform';
 				} else {
-					//user.set(data);
-					loginBox.trigger('hide');
+					user.$set(response);
+					dialog.trigger('hide');
 				}
 			} else {
 				errorinfo.text(response.message).css('visibility', 'visible');
@@ -65,7 +71,7 @@ function _initForm(){
 		}
 	});
 };
-
+//加密字段
 function _setFocusEffect(input){
 	if (input.attr('name') === 'email') {
 		input.focus(function() {
@@ -83,11 +89,11 @@ function _setFocusEffect(input){
 		});
 	};
 };
-
+//加密字段
 function cryptoParam (){
 	return [$.trim(email.val()) + $.trim(password.val())];
 };
-
+//模拟submit
 function loginSubmit(e){
 	e.preventDefault();
 	var _crytoP = cryptoParam();
@@ -97,7 +103,7 @@ function loginSubmit(e){
 		this.submit();
 	}
 };
-
+//验证码
 function refreshGeetest (){
 	Geetest.refresh();
 	isGeetest = false;
@@ -164,44 +170,46 @@ function compileHTML(tplStr,data){
 };
 
 module.exports = function(){
-	var dialogHTML = compileHTML(loginBoxTemp,{
-		"url":"http://login.yinyuetai.com"
-	});
-	var dialog = Dialog.classInstanceDialog(dialogHTML,{
-		width : 691,
-		height : 342,
-		isRemoveAfterHide : false,
-		isAutoShow : false
-	});
-	loginBoxForm = dialog.$el.find('#loginBoxForm');
-	dialog.on('show',function(){
-		if(!Geetest){
-			/*添加验证框*/
-			Geetest = new window.Geetest({
-				"gt":"cc34bd7df5c42f7d9c3f540fdfb671cf",
-				"product":"float"
-			})
-			Geetest.appendTo("#captcha");
-		}
-		_initForm();
-		//UA_Opt.reload();
-		$.getJSON('http://www.yinyuetai.com/partner/get-partner-code?placeIds=reg_window&callback=?', function(data){
-			if(data && data.reg_window){
-				self.dialog.$el.find('.loginbox-placehold').html(data.reg_window);
-			}
+	if (!dialog) {
+		var dialogHTML = compileHTML(loginBoxTemp,{
+			"url":"http://login.yinyuetai.com"
 		});
-	});
-	dialog.on('hide',function(){
-		var form = dialog.$el.find('form');
-		form.find('.errorinfo').css('visibility', 'hidden');
-		form.find('[name=email],[name=password]').parent().removeClass('emailerror').removeClass('error');
-		//去掉悦单播放页面中下载悦单的active效果
-		$('.J_pop_download').removeClass('v_button_curv');
-		setTimeout(function(){
-			refreshGeetest();
-		},500);
-	});
-	loginBoxForm.on('submit',loginSubmit);
+		dialog = Dialog.classInstanceDialog(dialogHTML,{
+			width : 691,
+			height : 342,
+			isRemoveAfterHide : false,
+			isAutoShow : false
+		});
+		loginBoxForm = dialog.$el.find('#loginBoxForm');
+		dialog.on('show',function(){
+			if(!Geetest){
+				/*添加验证框*/
+				Geetest = new window.Geetest({
+					"gt":"cc34bd7df5c42f7d9c3f540fdfb671cf",
+					"product":"float"
+				})
+				Geetest.appendTo("#captcha");
+			}
+			_initForm();
+			//UA_Opt.reload();
+			$.getJSON('http://www.yinyuetai.com/partner/get-partner-code?placeIds=reg_window&callback=?', function(data){
+				if(data && data.reg_window){
+					self.dialog.$el.find('.loginbox-placehold').html(data.reg_window);
+				}
+			});
+		});
+		dialog.on('hide',function(){
+			var form = dialog.$el.find('form');
+			form.find('.errorinfo').css('visibility', 'hidden');
+			form.find('[name=email],[name=password]').parent().removeClass('emailerror').removeClass('error');
+			//去掉悦单播放页面中下载悦单的active效果
+			$('.J_pop_download').removeClass('v_button_curv');
+			setTimeout(function(){
+				refreshGeetest();
+			},500);
+		});
+		loginBoxForm.on('submit',loginSubmit);
+	};
 	return {
 		"dialog":dialog
 	}

@@ -7,7 +7,7 @@
   "scripts": {
     "test": "test",
     "start": "gulp server",
-    "dev": "webpack --watch --config webpack.dev.config.js",
+    "dev": "webpack --watch --colors --config webpack.dev.config.js",
     "build": "gulp build:rename"
   },
   "repository": {

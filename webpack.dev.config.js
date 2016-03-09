@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var fs = require('fs');
 var plugins = [];
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var optimize = webpack.optimize
@@ -35,6 +36,14 @@ var config = {
 			{ 
 				test: /\.(png|jpg)$/, 
 				loader: 'url-loader?limit=8192' 
+			},
+			{
+				test:/\.htm$/,
+				loader:'html'
+			},
+			{ 	
+				test: /\.yyt$/, 
+				loaders: ['file?name=[name].[ext]', 'extricate', 'html'] 
 			}
 		]
 	},
@@ -53,8 +62,8 @@ var config = {
 			"UploadFile":path.resolve(__dirname,YYT_PC_Component+'feature/UploadFile'),
 			"AjaxForm":path.resolve(__dirname,YYT_PC_Component+'feature/AjaxForm'),
 			"Scrollbar":path.resolve(__dirname,YYT_PC_Component+'feature/Scrollbar'),
-			"UserModel":path.resolve(__dirname,YYT_PC_Component+'business/UserModel'),
 			"LoginBox":path.resolve(__dirname,YYT_PC_Component+'business/LoginBox/'),
+			"UserModel":path.resolve(__dirname,YYT_PC_Component+'business/UserModel/'),
 			"ui.Dialog":path.resolve(__dirname,YYT_PC_Component+'ui/dialog/'),
 			"config":path.resolve(__dirname,'src/config')
 		}

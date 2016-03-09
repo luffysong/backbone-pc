@@ -132,6 +132,25 @@ var BaseModel = Backbone.Model.extend({
 			}
 		});
 	},
+	_ICEJSONP:function(success,error){
+		var self = this;
+		var jsonpXHR = $.ajax({
+			url:this.url,
+			dataType:'jsonp',
+			jsonp:'callback',
+			jsonpCallback:'_YYTPC_',
+		});
+		jsonpXHR.done(function(data,state,xhr){
+			if (typeof success === 'function') {
+				success.call(self,data,state,xhr);
+			};
+		});
+		jsonpXHR.fail(function(xhr,state,errors){
+			if (typeof error === 'function') {
+				error.call(self,xhr,state,errors);
+			};
+		});
+	},
 	_ICESendHelper:function(message){
 		var success = message.success;
 		var error = message.error;
@@ -148,6 +167,9 @@ var BaseModel = Backbone.Model.extend({
 				break;
 			case 'DELETE':
 				this._ICEDestroy(success,error);
+				break;
+			case 'JSONP':
+				this._ICEJSONP(success,error);
 				break;
 			default:
 				this._ICEFetch(success,error);
@@ -270,19 +292,12 @@ var BaseModel = Backbone.Model.extend({
 	 * @return {[type]}         [description]
 	 */
 	executeJSONP:function(success,error){
-		var self = this;
-		var jsonpXHR = $.ajax({
-			url:this.url,
-			dataType:'jsonp',
-			jsonp:'callback',
-			jsonpCallback:'_YYTPC_',
-		});
-		jsonpXHR.done(function(data,state,xhr){
-			success.call(self,data);
-		});
-		jsonpXHR.fail(function(xhr,state,errors){
-			error.call(self,errors);
-		});
+		var message = {
+			type:'JSONP',
+			success:success,
+			error:error
+		};
+		this._ICESendMessage(message);
 	},
 	/**
 	 * [setChangeURL 辅助拼接URL参数]
@@ -359,7 +374,16 @@ var BaseModel = Backbone.Model.extend({
 	 * @param {[type]} expression [description]
 	 * @param {[type]} value      [description]
 	 */
-	$set:function(expression,value){
+	$set:function(expression,value,options){
+		if (expression == null) {
+			return this;
+		};
+		if (Tools.isPlainObject(expression)) {
+			this._store = null;
+			this._store = expression;
+			this.set(this._store);
+			return false;
+		}
 		var attrNodes = expression.split('.');
 		var lh = attrNodes.length;
 		if (lh > 0) {
@@ -376,23 +400,30 @@ var BaseModel = Backbone.Model.extend({
 					}
 				}
 			}
+			//var oldValue;
+			//var newValue;
 			switch(Tools.toType(store)){
 				case '[object Object]':
+					//oldValue = store[node];
 					store[node] = value;
 					break;
 				case '[object Array]':
+					//oldValue = store[Tools.exportToNumber(node)];
 					store[Tools.exportToNumber(node)] = value;
 					break;
 				default:
+					//oldValue = store;
 					store = value;
 					break;
-			}
-			if (this._view && this._view.__YYTPC__) {
-				var j = this._onQueue.length;
-				while(j--){
-					this._view.trigger(this._onQueue[j]);
-				}
-			}
+			};
+			//newValue = value;
+			//this.trigger('change:'+expression,oldValue,newValue);
+			// if (this._view && this._view.__YYTPC__) {
+			// 	var j = this._onQueue.length;
+			// 	while(j--){
+			// 		this._view.trigger(this._onQueue[j]);
+			// 	}
+			// }
 		}
 	},
 	/**
