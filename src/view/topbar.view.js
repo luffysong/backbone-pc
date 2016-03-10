@@ -12,24 +12,18 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-var UserModel = require('UserModel');
-var cookie = require('cookie');
-var user = UserModel.sharedInstanceUserModel();
-var LoginBox = require('LoginBox');
+var LoginUserView = require('./loginUser.view');
 var IndexModel = require('../model/index.model');
 var View = BaseView.extend({
+	clientRender:false,
 	el:'#topBar', //设置View对象作用于的根元素，比如id
-	rawLoader:function(){ //可用此方法返回字符串模版
-		return ''; 
-	},
 	events:{ //监听事件
-		'click #login':'loginHandler',
 		'click .show-drop-menu': 'showDropMenu'
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
-		this._dialog = null;
 		this.indexModel = new IndexModel();
+		this.loginUserView = new LoginUserView();
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -37,34 +31,14 @@ var View = BaseView.extend({
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
-		var self = this;
-		// this.loginBox = LoginBox();
-		// this._dialog = this.loginBox.dialog;
-		// this.indexModel.execute(function(res){
-		// 	self.renders();
-		// },function(e){
-
-		// });
-		this.loginBox = LoginBox();
-		this._dialog = this.loginBox.dialog;
 		this.showDropMenuEle = $('.PcMsg .pcNav');
 		this.hideDropMenu();
-	},
-	loginHandler:function(e){
-		e.preventDefault();
-		var status = this._dialog.status();
-		if (status === 'hide') {
-			this._dialog.trigger('show');
-		}else{
-			this._dialog.trigger('hide');
-		}
 	},
 	/**
 	 * 显示下拉菜单
 	 */
 	showDropMenu: function (e) {
 		e.preventDefault();
-		console.log(123);
 		this.showDropMenuEle.toggle();
 		return false;
 	},

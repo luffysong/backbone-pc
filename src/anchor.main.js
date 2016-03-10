@@ -1,6 +1,6 @@
 $(function(){
 
-	var TopbarView = require('./view/topbar.view');
+	var TopbarView = require('./view/topBar.view');
 	new TopbarView();
 
 	//组件一，编辑背景图片
