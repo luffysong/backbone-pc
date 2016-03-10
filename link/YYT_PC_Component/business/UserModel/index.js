@@ -81,7 +81,11 @@ var UserModel = BaseModel.extend({
 				}
 			};
 			var email = this.$get('isEmailVerified');
+			if (!callback) {
+				callback = key;
+			};
 			if (email) {
+
 				if(typeof callback === 'function'){
 					value = getParam();
 					callback.call(this,value);
@@ -181,8 +185,9 @@ var UserModel = BaseModel.extend({
 		u_inf = decodeURIComponent(u_inf);
 		var users = u_inf.split(splitChar);
 		this.$set({
-			userId : users[0] * 1,
-			userName : users[1]
+			userId : ~~users[0],
+			userName : users[1],
+			bigheadImg:users[4]
 		});
 	},
 	/**

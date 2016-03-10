@@ -12,7 +12,7 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-var LoginUserView = require('LoginUser');
+var LoginUserView = require('./loginUser.view');
 var IndexModel = require('../model/index.model');
 var View = BaseView.extend({
 	clientRender:false,
@@ -23,7 +23,7 @@ var View = BaseView.extend({
 	//当模板挂载到元素之前
 	beforeMount:function(){
 		this.indexModel = new IndexModel();
-		this.loginUserView = new LoginUserView()
+		this.loginUserView = new LoginUserView();
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -39,7 +39,6 @@ var View = BaseView.extend({
 	 */
 	showDropMenu: function (e) {
 		e.preventDefault();
-		console.log(123);
 		this.showDropMenuEle.toggle();
 		return false;
 	},

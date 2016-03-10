@@ -12,11 +12,12 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-var sginHTML = require('./template/sgin.html');
-var loginedTemp = require('./template/logined.html');
 var UserModel = require('UserModel');
-var user = UserModel.sharedInstanceUserModel();
 var LoginBox = require('LoginBox');
+var user = UserModel.sharedInstanceUserModel();
+var sginHTML = require('../template/sgin.html');
+var loginedTemp = require('../template/logined.html');
+var win = window;
 var View = BaseView.extend({
 	clientRender:false,
 	el:'#loginUser', //设置View对象作用于的根元素，比如id
@@ -36,26 +37,36 @@ var View = BaseView.extend({
 	ready:function(){
 		var self = this;
 		if (user.isLogined()) { //已经登录
-			
+			this.fetchUserInfo();
 		}else{
 			//未登录
 			this.$el.html(sginHTML);
-			this._dialog.once('hide', function() {
-				self.loginedRender();
+			user.login(function(){
+				self.fetchUserInfo();
 			});
 		}
 	},
 	loginHandler:function(e){
 		e.preventDefault();
+		var self = this;
 		var status = this._dialog.status();
 		if (status === 'hide') {
 			this._dialog.trigger('show');
+			this._dialog.once('hide',function(){
+				if (user.isLogined()) {
+					self.fetchUserInfo();
+				};
+			});
 		}else{
 			this._dialog.trigger('hide');
 		}
 	},
-	loginedRender:function(){
-		console.log('1');
+	fetchUserInfo:function(){
+		var loginedHTML = this.compileHTML(loginedTemp,{
+			'userName':user.$get('userName'),
+			'bigheadImg':user.$get('bigheadImg')
+		});
+		this.$el.html(loginedHTML);
 	}
 });
 

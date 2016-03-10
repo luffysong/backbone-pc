@@ -55,10 +55,9 @@ var config = {
 			"AjaxForm":path.resolve(__dirname,YYT_PC_Component+'feature/AjaxForm'),
 			"Scrollbar":path.resolve(__dirname,YYT_PC_Component+'feature/Scrollbar'),
 			"LoginBox":path.resolve(__dirname,YYT_PC_Component+'business/LoginBox/'),
-			"LoginUser":path.resolve(__dirname,YYT_PC_Component+'business/LoginUser/'),
 			"UserModel":path.resolve(__dirname,YYT_PC_Component+'business/UserModel/'),
 			"ui.Dialog":path.resolve(__dirname,YYT_PC_Component+'ui/dialog/'),
-			"config":path.resolve(__dirname,'src/config')
+			"config":path.resolve(__dirname,'src/lib/config')
 		}
 	},
 	externals:{
