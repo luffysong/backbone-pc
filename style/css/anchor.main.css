@@ -34,24 +34,25 @@
   padding-top: 24px;
 }
 .anchorPc .avator {
-  margin-top: -8px;
   margin-right: 9px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
 }
-.anchorPc .signin {
+.anchorPc .avator img {
+  width: 100%;
+}
+.anchorPc .PcMsg {
   padding-top: 10px;
 }
-.anchorPc .signin a {
+.anchorPc .PcMsg a {
   color: #b2b2b2;
 }
-.anchorPc .signin a:hover {
+.anchorPc .PcMsg a:hover {
   color: #27d5bf;
 }
-.anchorPc .logined {
-  display: none;
+.anchorPc .PcMsg {
   float: left;
   padding-top: 8px;
   color: #b2b2b2;
@@ -59,20 +60,20 @@
   position: relative;
   min-width: 70px;
 }
-.anchorPc .logined a {
+.anchorPc .PcMsg a {
   color: #b2b2b2;
   float: left;
   line-height: 22px;
   height: 22px;
 }
-.anchorPc .logined span {
+.anchorPc .PcMsg span {
   border: 5px solid transparent;
   border-top: 5px solid #b2b2b2;
   float: right;
   margin-top: 7px;
   margin-left: 8px;
 }
-.anchorPc .logined ul {
+.anchorPc .PcMsg .pcNav {
   display: none;
   position: absolute;
   top: 38px;
@@ -81,11 +82,11 @@
   left: -10px;
   padding: 0;
 }
-.anchorPc .logined li {
+.anchorPc .PcMsg li {
   text-align: center;
   width: 100%;
 }
-.anchorPc .logined li a {
+.anchorPc .PcMsg li a {
   display: block;
   height: 32px;
   width: 100%;
@@ -93,7 +94,53 @@
   background: #272727;
   margin-top: 0;
 }
-.anchorPc .logined li a:hover {
+.anchorPc .PcMsg li a:hover {
+  background: #01ceb5;
+  color: #ffffff;
+}
+.anchorPc .loginMsg {
+  float: left;
+  padding-top: 8px;
+  color: #b2b2b2;
+  margin-left: 14px;
+  position: relative;
+  min-width: 70px;
+}
+.anchorPc .loginMsg a {
+  color: #b2b2b2;
+  float: left;
+  line-height: 22px;
+  height: 22px;
+}
+.anchorPc .loginMsg span {
+  border: 5px solid transparent;
+  border-top: 5px solid #b2b2b2;
+  float: right;
+  margin-top: 10px;
+  margin-left: 8px;
+}
+.anchorPc .loginMsg .pcNav {
+  display: none;
+  position: absolute;
+  top: 38px;
+  min-width: 90px;
+  width: 100%;
+  left: -10px;
+  padding: 0;
+}
+.anchorPc .loginMsg li {
+  text-align: center;
+  width: 100%;
+}
+.anchorPc .loginMsg li a {
+  display: block;
+  height: 32px;
+  width: 100%;
+  line-height: 32px;
+  background: #272727;
+  margin-top: 0;
+}
+.anchorPc .loginMsg li a:hover {
   background: #01ceb5;
   color: #ffffff;
 }

@@ -18,7 +18,7 @@ var View = BaseView.extend({
 	clientRender:false,
 	el:'#topBar', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
-		'click .show-drop-menu': 'showDropMenu'
+
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
@@ -31,25 +31,7 @@ var View = BaseView.extend({
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
-		this.showDropMenuEle = $('.PcMsg .pcNav');
-		this.hideDropMenu();
-	},
-	/**
-	 * 显示下拉菜单
-	 */
-	showDropMenu: function (e) {
-		e.preventDefault();
-		this.showDropMenuEle.toggle();
-		return false;
-	},
-	/**
-	 * 隐藏下拉菜单
-	 */
-	hideDropMenu: function () {
-		var self = this;
-		$(document).on('click', function () {
-			self.showDropMenuEle.hide();
-		});
+		
 	}
 });
 

@@ -39,13 +39,15 @@
 .anchorPc{
 	padding-top: 24px;
 	.avator{
-		margin-top: -8px;
 		margin-right: 9px;
 		width: 40px;
 		height: 40px;
 		.bb50;
+		img{
+			width: 100%;
+		}
 	}
-	.signin{
+	.PcMsg{
 		padding-top: 10px;
 		a{
 			color:@b2;
@@ -55,8 +57,8 @@
 			color:#27d5bf;
 		}
 	}
-	.logined{
-		display: none;
+	.PcMsg{
+		// display: none;
 		.fl;
 		padding-top: 8px;
 		color:@b2;
@@ -76,7 +78,53 @@
 			margin-top: 7px;
 			margin-left: 8px;
 		}
-		ul{
+		.pcNav{
+			display: none;
+			position: absolute;
+			top: 38px;
+			min-width: 90px;
+			width:100%;
+			left: -10px;
+			padding: 0;
+		}
+		li{
+			text-align: center;
+			width: 100%;
+			a{
+				display: block;
+				height: 32px;
+				width: 100%;
+				line-height: 32px;
+				background: @c-27;
+				margin-top: 0;
+			}
+			a:hover{
+				background: #01ceb5;
+				color: #ffffff;
+			}
+		}
+	}
+	.loginMsg{
+		.fl;
+		padding-top: 8px;
+		color:@b2;
+		margin-left: 14px;
+		position: relative;
+		min-width: 70px;
+		a{
+			color:@b2;
+			float: left;
+			line-height: 22px;
+			height:22px;
+		}
+		span{
+			border:5px solid transparent;
+			border-top: 5px solid @b2;
+			float: right;
+			margin-top: 10px;
+			margin-left: 8px;
+		}
+		.pcNav{
 			display: none;
 			position: absolute;
 			top: 38px;
