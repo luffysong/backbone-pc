@@ -12,16 +12,15 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-var LoginUserView = require('./loginUser.view');
+var profile = require('../template/anchorSettingProfile.html');
 var View = BaseView.extend({
-	clientRender:false,
-	el:'#topBar', //设置View对象作用于的根元素，比如id
+	el:'#anchorSettingProfile', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
 
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
-		this.loginUserView = new LoginUserView();
+		
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -33,11 +32,4 @@ var View = BaseView.extend({
 	}
 });
 
-var shared = null;
-View.sharedInstanceTopBarView = function(){
-	if (!shared) {
-		shared = new View();
-	};
-	return shared;
-};
 module.exports = View;
