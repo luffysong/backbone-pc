@@ -58,10 +58,12 @@ var View = BaseView.extend({
   //清屏
   clearHandler: function () {
     console.log('清');
+    YYTIMServer.clearScreen();
   },
   //锁屏
   lockHandler: function () {
     console.log('锁');
+    YYTIMServer.lockScreen();
   },
   //单击某用户发送的消息
   messageClickHandler: function (e) {
@@ -92,9 +94,9 @@ var View = BaseView.extend({
     var target = $(e.target);
     console.log(target.text());
     if (target.text() === '禁言') {
-
+      YYTIMServer.disableSendMsg();
     } else if (target.text() === '踢出') {
-
+      YYTIMServer.removeUserFromGroup();
     }
   },
   onMsgNotify: function (notifyInfo) {
@@ -106,8 +108,15 @@ var View = BaseView.extend({
   },
   groupSystemNotifys: function (notifyInfo) {
     console.log('groupSystemNotifys');
-  }
+  },
+  /**
+   * 添加消息
+   * @constructor
+   */
+  AddMessage: function(data) {
 
+
+  }
 });
 
 module.exports = View;

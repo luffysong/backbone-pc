@@ -20,7 +20,8 @@ var View = BaseView.extend({
     return require('../template/liveShowBtn.html');
   },
   events: { //监听事件
-
+    'click .endLive': 'endLiveShow',
+    'click .startLive': 'startLiveShow'
   },
   //当模板挂载到元素之前
   beforeMount: function () {
@@ -28,12 +29,33 @@ var View = BaseView.extend({
   },
   //当模板挂载到元素之后
   afterMount: function () {
-
+    this.btnEndLive = $('.endLive');
   },
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
     var s = 1;
 
+  },
+  /**
+   * 开启直播
+   */
+  startLiveShow: function(e) {
+    var current = $(e.target);
+    if(current.hasClass('m_disabled')){
+      return null;
+    }
+    current.addClass('m_disabled');
+    this.btnEndLive.removeClass('m_disabled');
+  },
+  /**
+   * 结束直播
+   */
+  endLiveShow: function (e) {
+    var current = $(e.target);
+    if(current.hasClass('m_disabled')){
+      return null;
+    }
+    current.addClass('m_disabled');
   }
 });
 

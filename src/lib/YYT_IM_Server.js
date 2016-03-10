@@ -23,6 +23,9 @@ YYTIMServer.init = function(options) {
   this.options = options;
   this.setting = _.extend(this.setting, options);
 
+  //腾讯IM初始化
+  webim.init({}, this.setting.listeners, null);
+
   setTimeout(function(){
     console.log(122);
     onMsgNotify();
@@ -35,28 +38,28 @@ YYTIMServer.init = function(options) {
  * 清屏
  */
 YYTIMServer.clearScreen = function(){
-
+  console.log('IM clear');
 };
 
 /**
  * 锁屏
  */
 YYTIMServer.lockScreen = function () {
-
+  console.log('IM lock');
 };
 
 /**
  * 禁言
  */
 YYTIMServer.disableSendMsg = function() {
-
+  console.log('IM disbale msg');
 };
 
 /**
  * 踢人
  */
 YYTIMServer.removeUserFromGroup = function () {
-
+  console.log('IM remove user');
 };
 
 /**

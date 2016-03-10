@@ -4406,7 +4406,7 @@ body {
     border-color: #33e1a7;
 }
 .m_disabled {
-    background-color: #E0E0E0;
+    background-color: #E0E0E0!important;
 }
 .get_code {
     height: 30px;
