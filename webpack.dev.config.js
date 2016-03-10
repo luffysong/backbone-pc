@@ -36,14 +36,6 @@ var config = {
 			{ 
 				test: /\.(png|jpg)$/, 
 				loader: 'url-loader?limit=8192' 
-			},
-			{
-				test:/\.htm$/,
-				loader:'html'
-			},
-			{ 	
-				test: /\.yyt$/, 
-				loaders: ['file?name=[name].[ext]', 'extricate', 'html'] 
 			}
 		]
 	},
@@ -63,6 +55,7 @@ var config = {
 			"AjaxForm":path.resolve(__dirname,YYT_PC_Component+'feature/AjaxForm'),
 			"Scrollbar":path.resolve(__dirname,YYT_PC_Component+'feature/Scrollbar'),
 			"LoginBox":path.resolve(__dirname,YYT_PC_Component+'business/LoginBox/'),
+			"LoginUser":path.resolve(__dirname,YYT_PC_Component+'business/LoginUser/'),
 			"UserModel":path.resolve(__dirname,YYT_PC_Component+'business/UserModel/'),
 			"ui.Dialog":path.resolve(__dirname,YYT_PC_Component+'ui/dialog/'),
 			"config":path.resolve(__dirname,'src/config')

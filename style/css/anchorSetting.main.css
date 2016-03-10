@@ -40,23 +40,28 @@
   color: #b2b2b2;
   margin-left: 14px;
   position: relative;
+  min-width: 70px;
 }
 .anchorPc .PcMsg a {
   color: #b2b2b2;
   float: left;
+  margin-top: 3px;
+  line-height: 22px;
+  height: 22px;
 }
 .anchorPc .PcMsg span {
   border: 5px solid transparent;
   border-top: 5px solid #b2b2b2;
   float: right;
-  margin-top: 10px;
+  margin-top: 7px;
   margin-left: 8px;
 }
 .anchorPc .PcMsg ul {
   display: none;
   position: absolute;
   top: 38px;
-  width: 90px;
+  min-width: 90px;
+  width: 100%;
   left: -10px;
   padding: 0;
 }
@@ -70,9 +75,11 @@
   width: 100%;
   line-height: 32px;
   background: #272727;
+  margin-top: 0;
 }
 .anchorPc .PcMsg li a:hover {
   background: #01ceb5;
+  color: #ffffff;
 }
 .anchorPc .on ul {
   display: block;
@@ -762,4 +769,4 @@ img {
   background: #5bdfcd;
 }
 
-/*# sourceMappingURL=anchorPc.main.css.map*/
+/*# sourceMappingURL=anchorSetting.main.css.map*/

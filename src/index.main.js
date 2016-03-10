@@ -6,6 +6,4 @@ $(function(){
 	var topbarView = new TopbarView();
 	//载入CSS
 	require('../style/less/index.less');
-
-	require('../html/index.htm');
 });

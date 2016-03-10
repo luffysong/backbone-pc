@@ -56,7 +56,6 @@ var UserModel = BaseModel.extend({
 			callback.call(this);
 		}else{
 			this.on('login', callback);
-			
 			loginbox.trigger('show');
 			loginbox.once('hide', function() {
 				self.off('login');

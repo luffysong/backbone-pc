@@ -43,7 +43,7 @@ var BaseView = Backbone.View.extend({
 				self._ICEObject();
 				
 			}else{
-				warn('使用templateUrl设置模板文件URL或者使用rawLoader方法返回一个模板字符串，如果你的页面是服务端渲染HTML，可将clientRender设置为false');
+				warn('使用rawLoader方法返回一个模板字符串，如果你的页面是服务端渲染HTML，可将clientRender设置为false');
 			}
 		}else{
 			self._ICEAfterMount();
