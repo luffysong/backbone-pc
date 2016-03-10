@@ -1,9 +1,14 @@
 <div class="controls clearfix">
-  <div class="fl"><img src="../img/clear.png" alt="">清屏</div>
-  <div class="fl"><img src="../img/clock.png" alt="" class="lock">锁屏</div>
+  <div id="btn-clear" class="fl"><img src="../img/clear.png" alt="">清屏</div>
+  <div id="btn-lock" class="fl"><img src="../img/clock.png" alt="" class="lock">锁屏</div>
 </div>
-<div class="chatCon">
-  <ul>
+<div class="chatCon" id="chat-history">
+  <div id="control-btns" class="controls_forbid_reject">
+    <a href="#" class="forbid">禁言</a>
+    <a href="#" class="reject">踢出</a>
+  </div>
+  <!--聊天记录-->
+  <ul id="msg-list">
     <li class="clearfix">
       <img src="../img/visitor_avator.jpg" alt="" class="fl visitor_avator">
       <p class="visitor_chat fl">

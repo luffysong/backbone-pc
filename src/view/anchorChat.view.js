@@ -12,6 +12,7 @@
 var BaseView = require('BaseView'); //View的基类
 var StartModel = require('../model/anchorStart.model');
 var EndModel = require('../model/anchorEnd.model');
+var YYTIMServer = require('../lib/YYT_IM_Server');
 
 
 var View = BaseView.extend({
@@ -20,6 +21,9 @@ var View = BaseView.extend({
     return require('../template/chat.html');
   },
   events: { //监听事件
+    'click #btn-clear': 'clearHandler',
+    'click #btn-lock': 'lockHandler',
+    'click #msg-list': 'messageClickHandler'
 
   },
   //当模板挂载到元素之前
@@ -28,12 +32,61 @@ var View = BaseView.extend({
   },
   //当模板挂载到元素之后
   afterMount: function () {
+    //this.btnClear = $('#btn-clear');
+    //背景图片元素
+    this.themeBgEle = $('#anchor-container-bg');
 
+    this.messageTpl = '';
+    this.controlBtns = $('#control-btns');
+    this.msgList = $('#msg-list');
   },
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
 
+  },
+  //清屏
+  clearHandler: function () {
+    console.log('清');
+  },
+  //锁屏
+  lockHandler: function () {
+    console.log('锁');
+  },
+  //单击某用户发送的消息
+  messageClickHandler: function (e) {
+    var control, li;
+    control = $(e.target).parent();
+    if (control.hasClass('controls_forbid_reject')) {
+      this.msgControlHandler(e);
+    } else {
+      li = $(e.target).parents('li');
+      this.showMsgControlMenu(li);
+    }
+
+  },
+  //显示,隐藏禁言/提出按钮
+  showMsgControlMenu: function (target) {
+    if (target.length <= 0) return;
+    var control = target.find('.controls_forbid_reject'),
+      index = $('#msg-list li').index(target);
+
+    $('.controls_forbid_reject').not(control).hide();
+    if (index === 0) {
+      control.css('margin-top', '33px');
+    }
+    control.toggle();
+  },
+  //禁言,或者踢出
+  msgControlHandler: function (e) {
+    var target = $(e.target);
+    console.log(target.text());
+    if (target.text() === '禁言') {
+
+    } else if (target.text() === '踢出') {
+
+    }
   }
+
 });
 
 module.exports = View;
