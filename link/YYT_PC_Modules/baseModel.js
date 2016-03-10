@@ -201,6 +201,7 @@ var BaseModel = Backbone.Model.extend({
 	},
 	_ICEProcessData:function(response,before){
 		this._store = response;
+		this.set(this._store);
 		//如果自定义了formatter方法，先对数据进行格式化
 		if (typeof this.formatter === 'function') {
 			response = this.formatter(response);
@@ -312,9 +313,9 @@ var BaseModel = Backbone.Model.extend({
 		for(var key in parameter){
 			var value = parameter[key];
 			if (!url.length) {
-				url = this._url.replace('{'+key+'}',value);
+				url = this._url.replace('{{'+key+'}}',value);
 			}else{
-				url = url.replace('{'+key+'}',value);
+				url = url.replace('{{'+key+'}}',value);
 			};
 		}
 		this.url = url;
