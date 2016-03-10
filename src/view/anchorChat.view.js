@@ -39,9 +39,20 @@ var View = BaseView.extend({
     this.messageTpl = '';
     this.controlBtns = $('#control-btns');
     this.msgList = $('#msg-list');
+
+    //注册IM事件处理
+    YYTIMServer.init({
+      listeners: {
+        onMsgNotify: this.onMsgNotify,
+        onGroupInfoChangeNotify: this.onGroupInfoChangeNotify,
+        groupSystemNotifys: this.groupSystemNotifys
+      }
+    });
   },
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
+
+
 
   },
   //清屏
@@ -85,6 +96,16 @@ var View = BaseView.extend({
     } else if (target.text() === '踢出') {
 
     }
+  },
+  onMsgNotify: function (notifyInfo) {
+    console.log('onMsgNotify');
+
+  },
+  onGroupInfoChangeNotify: function (notifyInfo) {
+    console.log('onGroupInfoChangeNotify');
+  },
+  groupSystemNotifys: function (notifyInfo) {
+    console.log('groupSystemNotifys');
   }
 
 });

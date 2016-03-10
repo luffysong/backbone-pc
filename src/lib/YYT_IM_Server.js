@@ -14,12 +14,21 @@ var YYTIMServer = {
     }
   }
 };
-console.log(YYTIMServer);
-//var setting = {};
+
+/**
+ * 初始化
+ * @param options
+ */
 YYTIMServer.init = function(options) {
   this.options = options;
   this.setting = _.extend(this.setting, options);
 
+  setTimeout(function(){
+    console.log(122);
+    onMsgNotify();
+    onGroupInfoChangeNotify();
+    groupSystemNotifys();
+  }, 3000);
 };
 
 /**
