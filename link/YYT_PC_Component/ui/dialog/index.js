@@ -13,7 +13,7 @@
 
 var BaseView = require('BaseView'); //View的基类
 var Mask = require('./mask.js');
-var mask = Mask.classInstanceMask();
+var mask;
 var View = BaseView.extend({
 	clientRender:false,
 	events:{ //监听事件
@@ -21,6 +21,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
+
 		this.options = {
 			width: '',    //box宽度
 			height: '',   //box高度
@@ -153,6 +154,9 @@ var View = BaseView.extend({
 var shared = null;
 View.sharedInstanceDialog = function(options){
 	if (!shared) {
+		if (!mask) {
+			mask = Mask.classInstanceMask();
+		};
 		shared = new View(options || {});
 	}
 	return shared;
@@ -160,6 +164,9 @@ View.sharedInstanceDialog = function(options){
 View.classInstanceDialog = function(content, options){
 	options = options || {};
 	options.el = content || '<b></b>';
+	if (!mask) {
+		mask = Mask.classInstanceMask();
+	};
 	return new View(options);
 };
 module.exports = View;

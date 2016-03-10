@@ -4,9 +4,9 @@ var LoginBox = require('LoginBox');
 var cookie = require('cookie');
 var Config = require('config'); 
 var domains = Config.domains;
-var loginbox = LoginBox().dialog;
 var checkEmailTemplate = require('./template/email.html');
 var checkEmailHTML = checkEmailTemplate.replace('{homeSite}',domains.homeSite);
+var loginbox = LoginBox().dialog;
 var CheckVIPModel = BaseModel.extend({
 	url:'http://vip.yinyuetai.com/vip/check-vip',
 	setEnv:true, //自己定义环境变量，不使用config配置文件
@@ -56,6 +56,7 @@ var UserModel = BaseModel.extend({
 			callback.call(this);
 		}else{
 			this.on('login', callback);
+			
 			loginbox.trigger('show');
 			loginbox.once('hide', function() {
 				self.off('login');

@@ -28,36 +28,27 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
+		this._dialog = null;
 		this.indexModel = new IndexModel();
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-		var token = user.getToken();
-		console.log(token);
-		console.log(user.isVIPUser());
-		user.login(function(){
-			console.log(this.$get());
-		});
+
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
+		// this.loginBox = LoginBox();
+		// this._dialog = this.loginBox.dialog;
+		// this.indexModel.execute(function(res){
+		// 	self.renders();
+		// },function(e){
+
+		// });
 		this.loginBox = LoginBox();
 		this._dialog = this.loginBox.dialog;
-		this.indexModel.execute(function(res){
-			self.renders();
-		},function(e){
-
-		});
-
 		this.showDropMenuEle = $('.PcMsg .pcNav');
-
 		this.hideDropMenu();
-	},
-	renders:function(){
-		// var g = this.indexModel.$filter('id','test');
-		var h = this.indexModel.$get('id.0.test');
-		console.log(h);
 	},
 	loginHandler:function(e){
 		e.preventDefault();
