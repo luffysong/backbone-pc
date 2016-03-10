@@ -40,14 +40,10 @@ var View = BaseView.extend({
 		var self = this;
 		if (user.isLogined()) { //已经登录
 			this.fetchUserInfo();
-			this.showDropMenuEle = $('.loginMsg .pcNav');
+			
 		}else{
 			//未登录
 			this.$el.html(sginHTML);
-			user.login(function(){
-				self.fetchUserInfo();
-			});
-			
 		}
 		this.hideDropMenu();
 	},
@@ -72,6 +68,7 @@ var View = BaseView.extend({
 			'bigheadImg':user.$get('bigheadImg')
 		});
 		this.$el.html(loginedHTML);
+		this.showDropMenuEle = $('.loginMsg .pcNav');
 	},
 	/**
 	 * 显示下拉菜单
@@ -87,7 +84,7 @@ var View = BaseView.extend({
 	hideDropMenu: function () {
 		var self = this;
 		$(document).on('click', function () {
-			self.showDropMenuEle.hide();
+			self.showDropMenuEle&&self.showDropMenuEle.hide();
 		});
 	}
 });
