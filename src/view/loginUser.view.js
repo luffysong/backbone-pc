@@ -23,6 +23,7 @@ var View = BaseView.extend({
 	el:'#loginUser', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
 		'click #login':'loginHandler',
+		'click .show-drop-menu': 'showDropMenu'
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
@@ -32,19 +33,23 @@ var View = BaseView.extend({
 	afterMount:function(){
 		this.loginBox = LoginBox();
 		this._dialog = this.loginBox.dialog;
+
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
 		if (user.isLogined()) { //已经登录
 			this.fetchUserInfo();
+			this.showDropMenuEle = $('.loginMsg .pcNav');
 		}else{
 			//未登录
 			this.$el.html(sginHTML);
 			user.login(function(){
 				self.fetchUserInfo();
 			});
+			
 		}
+		this.hideDropMenu();
 	},
 	loginHandler:function(e){
 		e.preventDefault();
@@ -67,6 +72,23 @@ var View = BaseView.extend({
 			'bigheadImg':user.$get('bigheadImg')
 		});
 		this.$el.html(loginedHTML);
+	},
+	/**
+	 * 显示下拉菜单
+	 */
+	showDropMenu: function (e) {
+		e.preventDefault();
+		this.showDropMenuEle.toggle();
+		return false;
+	},
+	/**
+	 * 隐藏下拉菜单
+	 */
+	hideDropMenu: function () {
+		var self = this;
+		$(document).on('click', function () {
+			self.showDropMenuEle.hide();
+		});
 	}
 });
 
