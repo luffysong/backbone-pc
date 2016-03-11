@@ -14,8 +14,8 @@
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var TopBarView = require('./topBar.view');
-var IMModel = require('../lib/IMModel');
+var TopBarView = require('../topbar/topbar.view');
+var IMModel = require('../../lib/IMModel');
 var store = require('store');
 
 var View = BaseView.extend({
@@ -60,13 +60,13 @@ var View = BaseView.extend({
 	initRender:function(){
 		console.log('initRender');
 
-		var ProfileView = require('./anchor-setting/profile.view');
+		var ProfileView = require('./profile.view');
 		new ProfileView();
 
-		var PageContentView = require('./anchor-setting/page-content.view');
+		var PageContentView = require('./page-content.view');
 		new PageContentView();
 
-		var CreateLiveView = require('./anchor-setting/create-live.view');
+		var CreateLiveView = require('./create-live.view');
 		new CreateLiveView();
 
 	},

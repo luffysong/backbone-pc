@@ -10,8 +10,6 @@
  */
 
 var BaseView = require('BaseView'); //View的基类
-var StartModel = require('../../model/anchorStart.model');
-var EndModel = require('../../model/anchorEnd.model');
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 
 

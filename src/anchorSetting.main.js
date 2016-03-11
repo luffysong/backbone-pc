@@ -4,7 +4,7 @@
 
 $(function(){
 
-	var AnchorSettingView = require('./view/anchorSettingContent.view');
+	var AnchorSettingView = require('./view/anchor-setting/main.view');
 	new AnchorSettingView();
 	// 载入less
 	require('../style/less/anchorSetting.less');

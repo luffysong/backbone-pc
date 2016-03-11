@@ -10,7 +10,6 @@
  */
 
 var BaseView = require('BaseView'); //View的基类
-var InfoModel = require('../../model/anchorInfo.model');
 var EditTtitleModel = require('../../model/anchor/anchorEditTitle.model');
 
 var View = BaseView.extend({
