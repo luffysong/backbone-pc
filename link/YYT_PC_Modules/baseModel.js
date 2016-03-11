@@ -200,8 +200,6 @@ var BaseModel = Backbone.Model.extend({
 		};
 	},
 	_ICEProcessData:function(response,before){
-		this._store = response;
-		this.set(this._store);
 		//如果自定义了formatter方法，先对数据进行格式化
 		if (typeof this.formatter === 'function') {
 			response = this.formatter(response);
@@ -212,6 +210,7 @@ var BaseModel = Backbone.Model.extend({
 				expiration.set(this.url,response,this.expiration);
 			};
 		};
+		this.$set(response);
 		return response;
 	},
 	/**

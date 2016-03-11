@@ -12,26 +12,36 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-
+var IMModel = require('../../lib/IMModel');
+var UserModel = require('UserModel');
+var profileTemp = require('../../template/anchor-setting/profile.html');
+var imModel = IMModel.sharedInstanceIMModel();
+var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
-	el:'#anchorSettingProfile', //设置View对象作用于的根元素，比如id
-	rawLoader:function(){ //可用此方法返回字符串模版
-		return require('../../template/anchor-setting/profile.html');
-	},
+	clientRender:false,
+	el:'#settingProfile', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
 
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
-
+		this.data = {
+			'nickName':imModel.$get('data.nickName'),
+			'bigheadImg':user.$get('bigheadImg'),
+			'anchor':imModel.$get('data.anchor')		
+		};
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-
+		
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
-		
+		this.initRender();
+	},
+	initRender:function(){
+		var profileHTML = this.compileHTML(profileTemp,this.data);
+		this.$el.html(profileHTML);
 	}
 });
 

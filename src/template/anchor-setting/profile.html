@@ -1,18 +1,15 @@
 <div  class="fl avatorBg">
-	<img src="../img/aP-avator.png" alt="">
+	<img src="{{bigheadImg}}" alt="">
 </div>
 <div class="fl anchorrMsg">
 	<h2>
-		<span class="fl name">EXO</span>
-		<span class="fl aPnum">主持直播：<i>55</i>场</span>
+		<span class="fl name">{{nickName}}</span>
+		<span class="fl aPnum">主持直播：<i>{{anchor.liveCount}}</i>场</span>
 	</h2>
 	<p>
 		标签：
-		<span>EXO</span>
-		<span>全在中</span>
-		<span>朴宥天</span>
-		<span>朴宥天</span>
-		<span>朴宥天</span>
-		<span>朴宥天</span>
+		{{each anchor.tags as item}}
+			<span>{{item}}</span>
+		{{/each}}
 	</p>
 </div>
