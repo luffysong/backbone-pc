@@ -19,10 +19,12 @@ var IMModel = require('../../lib/IMModel');
 var store = require('store');
 
 var View = BaseView.extend({
-	clientRender:false,
 	el:'#anchorSettingContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
 		'click #editBgBtn':'editBgHandler'
+	},
+	rawLoader:function(){
+		return require('../../template/anchor-setting/setting-body.html')
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
