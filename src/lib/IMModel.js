@@ -42,7 +42,8 @@ var Model = BaseModel.extend({
         var imSig = store.get('imSig');
         if (imSig) {
             if (typeof callback === 'function') {
-                callback(imSig);
+                    this.$set({data:imSig});
+                    callback(imSig);
             }
             return;
         }

@@ -13,11 +13,13 @@
 
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
-var user = UserModel.sharedInstanceUserModel();
 var TopBarView = require('../topbar/topbar.view');
 var IMModel = require('../../lib/IMModel');
 var store = require('store');
-
+var SettingBgView = require('./edit-bg.view');
+var ProfileView = require('./profile.view');
+var imModel = IMModel.sharedInstanceIMModel();
+var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
 	el:'#settingContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
@@ -29,7 +31,6 @@ var View = BaseView.extend({
 	//当模板挂载到元素之前
 	beforeMount:function(){
 		this.topbarView = new TopBarView();
-		this.imModel = IMModel.sharedInstanceIMModel();
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -43,7 +44,7 @@ var View = BaseView.extend({
 			store.remove('imSig');
 			//跳转走人
 		}else{
-			this.imModel.fetchIMUserSig(function(sig){
+			imModel.fetchIMUserSig(function(sig){
 				if (!sig.anchor) {
 					console.log('跳转走人');
 					store.remove('imSig');
@@ -54,15 +55,14 @@ var View = BaseView.extend({
 				}
 			},function(e){
 				//处理请求错误
+				
 			});	
 		}		
 	},
 	//渲染界面
 	initRender:function(){
-		console.log('initRender');
-
-		var ProfileView = require('./profile.view');
-		new ProfileView();
+		this.settingBgView = new SettingBgView();
+		this.profileView = new ProfileView();
 
 		var PageContentView = require('./page-content.view');
 		new PageContentView();
