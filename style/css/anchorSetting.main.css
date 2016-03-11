@@ -334,7 +334,6 @@ img {
   width: 969px;
   padding-left: 27px;
   padding-top: 17px;
-  height: 1200px;
   border: 1px solid #ededf0;
   position: relative;
   z-index: 1;
@@ -344,6 +343,10 @@ img {
 }
 .content .anPc-list > div.show {
   display: block;
+}
+.content .tab-panel {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
 }
 .subnav li {
   font-size: 12px;
@@ -533,9 +536,6 @@ img {
 .PageBox p span {
   color: #5c5c5c;
   margin: 0 5px;
-}
-.liveHistory ul {
-  height: 1038px;
 }
 .liveHistory li {
   overflow: hidden;

@@ -58,12 +58,16 @@ var View = BaseView.extend({
 	},
 	//渲染界面
 	initRender:function(){
+		console.log('initRender');
 
 		var ProfileView = require('./anchor-setting/profile.view');
 		new ProfileView();
 
 		var PageContentView = require('./anchor-setting/page-content.view');
 		new PageContentView();
+
+		var CreateLiveView = require('./anchor-setting/create-live.view');
+		new CreateLiveView();
 
 	},
 	//渲染主播信息

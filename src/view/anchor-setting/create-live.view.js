@@ -12,18 +12,21 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
+var YYTIMServer = require('../../lib/YYT_IM_Server');
 
 var View = BaseView.extend({
-	el:'#page-content', //设置View对象作用于的根元素，比如id
+	el:'#tab-create', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
-		return require('../../template/anchor-setting/page-content.html');
+		return require('../../template/anchor-setting/create-live.html');
 	},
 	events:{ //监听事件
-		'click #tab-menu-ctrl>li': 'menuChanged'
+
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
+		YYTIMServer.init({
 
+		});
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -32,20 +35,7 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		
-	},
-	/**
-	 * 切换菜单
-	 */
-	menuChanged: function(e) {
-		var target = $(e.target);
-		if(target){
-			target.parent().children('li').removeClass('on');
-			target.addClass('on');
-			$('.tab-panel').hide();
-			$('#' + target.attr('data-panel')).show();
-		}
 	}
-
 });
 
 module.exports = View;
