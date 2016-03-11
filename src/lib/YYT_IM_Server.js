@@ -3,7 +3,7 @@
  */
 
 'use strict';
-
+var IMModel = require('./IMModel');
 
 var YYTIMServer = {
   setting: {
