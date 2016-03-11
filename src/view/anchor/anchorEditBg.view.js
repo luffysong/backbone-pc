@@ -42,6 +42,9 @@ var View = BaseView.extend({
 
     });
 
+    this.on('event-name', function(args){
+      
+    });
   }
 });
 
