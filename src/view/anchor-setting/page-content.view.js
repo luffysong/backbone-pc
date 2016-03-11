@@ -14,7 +14,7 @@
 var BaseView = require('BaseView'); //View的基类
 
 var View = BaseView.extend({
-	el:'#page-content', //设置View对象作用于的根元素，比如id
+	el:'#pageContent', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
 		return require('../../template/anchor-setting/page-content.html');
 	},

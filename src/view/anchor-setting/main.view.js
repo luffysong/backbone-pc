@@ -19,9 +19,9 @@ var IMModel = require('../../lib/IMModel');
 var store = require('store');
 
 var View = BaseView.extend({
-	el:'#anchorSettingContent', //设置View对象作用于的根元素，比如id
+	el:'#settingContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
-		'click #editBgBtn':'editBgHandler'
+
 	},
 	rawLoader:function(){
 		return require('../../template/anchor-setting/setting-body.html')
@@ -33,7 +33,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-		this.profileBg = this.$el.find('#profileBg');
+		
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
@@ -45,7 +45,6 @@ var View = BaseView.extend({
 		}else{
 			this.imModel.fetchIMUserSig(function(sig){
 				if (!sig.anchor) {
-					
 					console.log('跳转走人');
 					store.remove('imSig');
 					//跳转走人
@@ -71,14 +70,6 @@ var View = BaseView.extend({
 		var CreateLiveView = require('./create-live.view');
 		new CreateLiveView();
 
-	},
-	//渲染主播信息
-	profileRender:function(){
-
-	},
-	//编辑背景
-	editBgHandler:function(e){
-		console.log(e);
 	}
 });
 
