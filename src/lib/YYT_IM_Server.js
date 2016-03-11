@@ -4,88 +4,120 @@
 
 'use strict';
 var IMModel = require('./IMModel');
+var store = require('store');
 
 var YYTIMServer = {
-  setting: {
-    listeners: {
-      onMsgNotify:null,
-      onGroupInfoChangeNotify: null,
-      groupSystemNotifys: null
+    setting: {
+        listeners: {
+            onMsgNotify: null,
+            onGroupInfoChangeNotify: null,
+            groupSystemNotifys: null
+        }
     }
-  }
 };
 
 /**
  * 初始化
  * @param options
  */
-YYTIMServer.init = function(options) {
-  this.options = options;
-  this.setting = _.extend(this.setting, options);
+YYTIMServer.init = function (options) {
+    this.options = options;
+    this.setting = _.extend(this.setting, options);
 
-  //腾讯IM初始化
-  webim.init({}, this.setting.listeners, null);
-
-  setTimeout(function(){
-    console.log(122);
-    onMsgNotify();
-    onGroupInfoChangeNotify();
-    groupSystemNotifys();
-  }, 3000);
+    var imSig = store.get('imSig');
+    if (imSig && options) {
+        //腾讯IM初始化
+        webim.init({
+            sdkAppID: imSig.imAppid, //用户所属应用id
+            appIDAt3rd: imSig.imAppid, //用户所属应用id
+            accountType: imSig.imAccountType, //用户所属应用帐号类型
+            identifier: imSig.imIdentifier, //当前用户ID
+            userSig: imSig.userSig //当前用户身份凭证
+        }, this.setting.listeners, null);
+    }
 };
 
 /**
  * 清屏
  */
-YYTIMServer.clearScreen = function(){
-  console.log('IM clear');
+YYTIMServer.clearScreen = function () {
+    console.log('IM clear');
 };
 
 /**
  * 锁屏
  */
 YYTIMServer.lockScreen = function () {
-  console.log('IM lock');
+    console.log('IM lock');
 };
 
 /**
  * 禁言
  */
-YYTIMServer.disableSendMsg = function() {
-  console.log('IM disbale msg');
+YYTIMServer.disableSendMsg = function () {
+    console.log('IM disbale msg');
 };
 
 /**
  * 踢人
  */
 YYTIMServer.removeUserFromGroup = function () {
-  console.log('IM remove user');
+    console.log('IM remove user');
 };
 
 /**
  * 消息通知回调
  */
-YYTIMServer.msgNotify = function(callback) {
+YYTIMServer.msgNotify = function (callback) {
 
 };
 
 /**
  * 获取群组消息
  */
-YYTIMServer.getRoomMsgs = function(callback){
-  var data = [];
-  var i = 1;
-  while(true){
-    if(i++ > 20){
-      break;
+YYTIMServer.getRoomMsgs = function (callback) {
+    var data = [];
+    var i = 1;
+    while (true) {
+        if (i++ > 20) {
+            break;
+        }
+        data.push({
+            name: 'Aaron-' + i,
+            msg: 'asdfasdfasfjaslfjasklfasdklf' + i
+        });
     }
-    data.push({
-      name: 'Aaron-'+ i,
-      msg: 'asdfasdfasfjaslfjasklfasdklf'+ i
-    });
-  }
-  callback && callback.call(this,data);
+    callback && callback.call(this, data);
 };
+
+/**
+ * 创建聊天群
+ */
+YYTIMServer.createIMChatRoom = function(okFn, errFn) {
+    var imSig = store.get('imSig');
+    var options = {
+        'Owner_Account': imSig.imIdentifier,
+        'Type': 'ChatRoom', //Private/Public/ChatRoom
+        'Name': '测试聊天室',
+        //'FaceUrl': '',
+        'Notification': '',
+        'Introduction': '',
+        'MemberList': []
+    };
+
+    webim.createGroup(
+        options,
+        function (resp) {
+            console.log(resp);
+            okFn && okFn(resp);
+        },
+        function (err) {
+            console.log(err.ErrorInfo);
+            errFn&& errFn(err);
+        }
+    );
+};
+
 
 /**
  * 腾讯IM收到消息通知的回调函数
@@ -93,7 +125,7 @@ YYTIMServer.getRoomMsgs = function(callback){
  */
 function onMsgNotify(notifyInfo) {
 
-  YYTIMServer.setting.listeners.onMsgNotify && YYTIMServer.setting.listeners.onMsgNotify(notifyInfo);
+    YYTIMServer.setting.listeners.onMsgNotify && YYTIMServer.setting.listeners.onMsgNotify(notifyInfo);
 
 }
 
@@ -104,7 +136,7 @@ function onMsgNotify(notifyInfo) {
  */
 function onGroupInfoChangeNotify(notifyInfo) {
 
-  YYTIMServer.setting.listeners.onGroupInfoChangeNotify && YYTIMServer.setting.listeners.onGroupInfoChangeNotify(notifyInfo);
+    YYTIMServer.setting.listeners.onGroupInfoChangeNotify && YYTIMServer.setting.listeners.onGroupInfoChangeNotify(notifyInfo);
 }
 
 /**
@@ -112,7 +144,7 @@ function onGroupInfoChangeNotify(notifyInfo) {
  * @param notifyInfo
  */
 function groupSystemNotifys(notifyInfo) {
-  YYTIMServer.setting.listeners.groupSystemNotifys && YYTIMServer.setting.listeners.groupSystemNotifys(notifyInfo);
+    YYTIMServer.setting.listeners.groupSystemNotifys && YYTIMServer.setting.listeners.groupSystemNotifys(notifyInfo);
 }
 
 
