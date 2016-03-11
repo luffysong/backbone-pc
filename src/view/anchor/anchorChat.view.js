@@ -96,7 +96,7 @@ var View = BaseView.extend({
     showMsgControlMenu: function (target) {
         if (target.length <= 0) return;
         var control = target.find('.controls_forbid_reject'),
-            index = $('#msg-list li').index(target);
+            index = $('#msgList li').index(target);
 
         $('.controls_forbid_reject').not(control).hide();
         if (index === 0) {
