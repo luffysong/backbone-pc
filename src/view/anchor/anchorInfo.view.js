@@ -10,14 +10,14 @@
  */
 
 var BaseView = require('BaseView'); //View的基类
-var InfoModel = require('../model/anchorInfo.model');
-var EditTtitleModel = require('../model/anchorEditTitle.model');
+var InfoModel = require('../../model/anchorInfo.model');
+var EditTtitleModel = require('../../model/anchorEditTitle.model');
 
 
 var View = BaseView.extend({
 	el:'#current-anchor-info', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
-		return require('../template/info.html');
+		return require('../../template/info.html');
 	},
 	events:{ //监听事件
 

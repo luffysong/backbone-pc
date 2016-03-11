@@ -6,19 +6,19 @@
 /**
  * @time {时间}
  * @author {编写者}
- * @info {实现的功能}
+ * @info 聊天控制
  */
 
 var BaseView = require('BaseView'); //View的基类
-var StartModel = require('../model/anchorStart.model');
-var EndModel = require('../model/anchorEnd.model');
-var YYTIMServer = require('../lib/YYT_IM_Server');
+var StartModel = require('../../model/anchorStart.model');
+var EndModel = require('../../model/anchorEnd.model');
+var YYTIMServer = require('../../lib/YYT_IM_Server');
 
 
 var View = BaseView.extend({
   el: '#anchor_ctrl_chat', //设置View对象作用于的根元素，比如id
   rawLoader: function () { //可用此方法返回字符串模版
-    return require('../template/chat.html');
+    return require('../../template/chat.html');
   },
   events: { //监听事件
     'click #btn-clear': 'clearHandler',

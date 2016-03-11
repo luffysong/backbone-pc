@@ -12,12 +12,12 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-var LiveShowModel = require('../model/liveShowBtn.model'); //View的基类
+var LiveShowModel = require('../../model/liveShowBtn.model'); //View的基类
 
 var View = BaseView.extend({
   el: '#live-show-btn-wraper', //设置View对象作用于的根元素，比如id
   rawLoader: function () { //可用此方法返回字符串模版
-    return require('../template/liveShowBtn.html');
+    return require('../../template/liveShowBtn.html');
   },
   events: { //监听事件
     'click .endLive': 'endLiveShow',
