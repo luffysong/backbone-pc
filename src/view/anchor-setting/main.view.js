@@ -18,6 +18,7 @@ var IMModel = require('../../lib/IMModel');
 var store = require('store');
 var SettingBgView = require('./edit-bg.view');
 var ProfileView = require('./profile.view');
+var PageContentView = require('./page-content.view');
 var imModel = IMModel.sharedInstanceIMModel();
 var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
@@ -63,13 +64,7 @@ var View = BaseView.extend({
 	initRender:function(){
 		this.settingBgView = new SettingBgView();
 		this.profileView = new ProfileView();
-
-		var PageContentView = require('./page-content.view');
-		new PageContentView();
-
-		var CreateLiveView = require('./create-live.view');
-		new CreateLiveView();
-
+		this.pageContentView = new PageContentView();
 	}
 });
 

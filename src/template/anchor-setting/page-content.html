@@ -1,62 +1,21 @@
 <ul id="tab-menu-ctrl" class="subnav fl" style="height: inherit;">
        <li data-panel="tab-my-live" class="on">我的直播<span>&gt;</span></li>
-       <li data-panel="tab-create">创建直播<span>&gt;</span></li>
-       <li data-panel="tab-setting">个人设置<span>&gt;</span></li>
+       <li data-panel="createLiveVideo">创建直播<span>&gt;</span></li>
+       <li data-panel="tabSetting">个人设置<span>&gt;</span></li>
        <li data-panel="">退出<span>&gt;</span></li>
 </ul>
 <div class="anPc-list fl tab-panel-wraper">
        <div id="tab-my-live" class="tab-panel myLiveBox show">
-              <ol class="myLiveControls clearfix">
-                     <li class="fl on">未开通</li>
-                     <li class="fl ">历史直播</li>
+              <ol class="myLiveControls clearfix" id="liveState">
+                     <li class="fl on" data-state="0">未开通</li>
+                     <li class="fl"  data-state="1">历史直播</li>
               </ol>
               <div class="Mylive">
-                     <div class="preLive show">
-                            <ul>
-                                   <li>
-                                          <div class="uploadAd fl">
-                                                 <img src="../img/aP-list-ad.png" alt="">
-                                          </div>
-                                          <dl class="preLiveMsg fl">
-                                                 <dt>EXO 签售 exo 签售直播 EXO I啊活动</dt>
-                                                 <dd>直播时间：<span>2016/3/18 19:00</span></dd>
-                                                 <dd>视频连接：<span>http:v.yinyuetai.com/playlist/1234567</span><a href="javascript:;" class="copy">复制</a></dd>
-                                                 <dd class="ctl">
-                                                        <a href="javascript:;">查看</a>
-                                                        <a href="javascript:;" class="doing">已发布</a>
-                                                        <a href="javascript:;">删除</a>
-                                                 </dd>
-                                          </dl>
-                                   </li>
-                                   <li>
-                                          <div class="uploadAd fl">
-                                                 <img src="../img/aP-list-ad.png" alt="">
-                                          </div>
-                                          <dl class="preLiveMsg fl">
-                                                 <dt>EXO 签售 exo 签售直播 EXO I啊活动</dt>
-                                                 <dd>直播时间：<span>2016/3/18 19:00</span></dd>
-                                                 <dd>视频连接：<span>http:v.yinyuetai.com/playlist/1234567</span><a href="javascript:;" class="copy">复制</a></dd>
-                                                 <dd class="ctl">
-                                                        <a href="javascript:;">查看</a>
-                                                        <a href="javascript:;">发布</a>
-                                                        <a href="javascript:;">删除</a>
-                                                 </dd>
-                                          </dl>
-                                   </li>
-                            </ul>
-                            <div class="page">
-                                   <div class="PageBox">
-                                          <a href="javascript:;" class="pre">&lt;</a>
-                                          <a href="javascript:;">1</a>
-                                          <a href="javascript:;" class="on">2</a>
-                                          <a href="javascript:;">3</a>
-                                          <span>.....</span>
-                                          <a href="javascript:;" class="next">&gt;</a>
-                                          <p>共<span>112</span>页</p>
-                                   </div>
-                            </div>
+                     <div class="preLive show" id="noOpenListLive">
+                            <ul id="noOpenContent"></ul>
+                            <div class="page" id="noOpenPageBox"></div>
                      </div>
-                     <div class="liveHistory">
+                     <div class="liveHistory" id="historyLive">
                             <ul>
                                    <li>
                                           <div class="uploadAd fl">
@@ -89,15 +48,15 @@
                      </div>
               </div>
        </div>
-       <div id="tab-create" class="tab-panel creatLive">
+       <div  class="tab-panel creatLive" id="createLiveVideo">
        </div>
-       <div id="tab-setting" class="tab-panel setting">
-              <ol class="setContrl clearfix">
-                     <li class="fl on">个人资料</li>
-                     <li class="fl">修改密码</li>
+       <div  class="tab-panel setting" id="tabSetting">
+              <ol class="setContrl clearfix" id="profileSate">
+                     <li class="fl on" data-state="0">个人资料</li>
+                     <li class="fl" data-state="1">修改密码</li>
               </ol>
               <div class="set_Con">
-                     <div class="personInfo">
+                     <div class="personInfo show" id="editProfile">
                             <ul>
                                    <li class="uploadAvator">
                                           <span class="fl PiTitle"><i>*</i>头像：</span>
@@ -136,7 +95,7 @@
                                    <li class="save">保存</li>
                             </ul>
                      </div>
-                     <div class="modifyPwd show">
+                     <div class="modifyPwd" id="accountSettings">
                             <ul>
                                    <li class="Inp_Pc_name">
                                           <span class="fl PiTitle"><i>*</i>旧密码：</span>

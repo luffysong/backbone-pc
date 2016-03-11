@@ -18,4 +18,11 @@ var Model = BaseModel.extend({
 	//		//formatter方法可以格式化数据
 	// }
 });
+var shared = null;
+Model.sharedInstanceNoOpenListModel = function(){
+	if (!shared) {
+		shared = new Model();
+	};
+	return shared;
+};
 module.exports = Model;
