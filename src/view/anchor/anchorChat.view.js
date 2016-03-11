@@ -21,7 +21,7 @@ var View = BaseView.extend({
     events: { //监听事件
         'click #btn-clear': 'clearHandler',
         'click #btn-lock': 'lockHandler',
-        'click #msg-list': 'messageClickHandler'
+        'click #msgList': 'messageClickHandler'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
