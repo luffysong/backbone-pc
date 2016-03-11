@@ -59,6 +59,12 @@ var View = BaseView.extend({
 	//渲染界面
 	initRender:function(){
 
+		var ProfileView = require('./anchor-setting/profile.view');
+		new ProfileView();
+
+		var PageContentView = require('./anchor-setting/page-content.view');
+		new PageContentView();
+
 	},
 	//渲染主播信息
 	profileRender:function(){
