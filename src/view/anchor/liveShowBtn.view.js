@@ -46,6 +46,9 @@ var View = BaseView.extend({
     }
     current.addClass('m_disabled');
     this.btnEndLive.removeClass('m_disabled');
+    console.log(this);
+    $(document).trigger('eventStartLiveShow',{a:1});
+
   },
   /**
    * 结束直播
