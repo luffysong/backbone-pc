@@ -384,14 +384,14 @@ img {
 #set_Anchor_info .anchor_control .startLive:hover {
   background: #5fe0cf;
 }
-#anchor_ctrl_chat {
+#anchorCtrlChat {
   width: 305px;
 }
-#anchor_ctrl_chat .controls {
+#anchorCtrlChat .controls {
   padding: 15px 0 14px 19px;
   background: #e2dfdf;
 }
-#anchor_ctrl_chat .controls div {
+#anchorCtrlChat .controls div {
   width: 61px;
   height: 46px;
   line-height: 46px;
@@ -402,56 +402,56 @@ img {
   padding-left: 65px;
   cursor: pointer;
 }
-#anchor_ctrl_chat .controls div:hover {
+#anchorCtrlChat .controls div:hover {
   background: #5fe0cf;
 }
-#anchor_ctrl_chat .controls img {
+#anchorCtrlChat .controls img {
   position: absolute;
   left: 19px;
   top: 7px;
 }
-#anchor_ctrl_chat .controls img.lock {
+#anchorCtrlChat .controls img.lock {
   top: 9px;
 }
-#anchor_ctrl_chat .chatCon {
+#anchorCtrlChat .chatCon {
   background: #fff;
   height: 653px;
   overflow: auto;
 }
-#anchor_ctrl_chat .chatCon li {
+#anchorCtrlChat .chatCon li {
   padding: 6px 20px 6px 12px;
   background: #fff;
   border-bottom: 1px solid #eee;
   position: relative;
   cursor: pointer;
 }
-#anchor_ctrl_chat .chatCon li:hover {
+#anchorCtrlChat .chatCon li:hover {
   background: #01ceb5;
 }
-#anchor_ctrl_chat .chatCon li:hover .visitorName {
+#anchorCtrlChat .chatCon li:hover .visitorName {
   color: #ffffff;
 }
-#anchor_ctrl_chat .chatCon p {
+#anchorCtrlChat .chatCon p {
   width: 230px;
   line-height: 20px;
   padding-top: 6px;
   padding-left: 5px;
   color: #666;
 }
-#anchor_ctrl_chat .chatCon .visitorName {
+#anchorCtrlChat .chatCon .visitorName {
   color: #01ceb5;
   margin-right: 7px;
 }
-#anchor_ctrl_chat .chatCon .time {
+#anchorCtrlChat .chatCon .time {
   color: #ccc;
 }
-#anchor_ctrl_chat .chatCon .controls_forbid_reject {
+#anchorCtrlChat .chatCon .controls_forbid_reject {
   display: none;
   position: absolute;
   right: 18px;
   top: -33px;
 }
-#anchor_ctrl_chat .chatCon .controls_forbid_reject a {
+#anchorCtrlChat .chatCon .controls_forbid_reject a {
   width: 73px;
   height: 33px;
   line-height: 33px;
@@ -460,10 +460,10 @@ img {
   color: #fff;
   display: inline-block;
 }
-#anchor_ctrl_chat .chatCon .controls_forbid_reject a:hover {
+#anchorCtrlChat .chatCon .controls_forbid_reject a:hover {
   background: #ff1d66;
 }
-#anchor_ctrl_chat .visitor_avator {
+#anchorCtrlChat .visitor_avator {
   width: 35px;
   height: 35px;
   background: blue;
