@@ -39,7 +39,7 @@ var Model = BaseModel.extend({
      */
     fetchIMUserSig: function(callback, error) {
         //先获取本地签名
-        var imSig = null; //store.get('imSig');
+        var imSig = store.get('imSig');
         if (imSig) {
             if (typeof callback === 'function') {
                 callback(imSig);
