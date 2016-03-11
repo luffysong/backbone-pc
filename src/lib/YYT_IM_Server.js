@@ -70,6 +70,24 @@ YYTIMServer.msgNotify = function(callback) {
 };
 
 /**
+ * 获取群组消息
+ */
+YYTIMServer.getRoomMsgs = function(callback){
+  var data = [];
+  var i = 1;
+  while(true){
+    if(i++ > 20){
+      break;
+    }
+    data.push({
+      name: 'Aaron-'+ i,
+      msg: 'asdfasdfasfjaslfjasklfasdklf'+ i
+    });
+  }
+  callback && callback.call(this,data);
+};
+
+/**
  * 腾讯IM收到消息通知的回调函数
  * @param notifyInfo
  */

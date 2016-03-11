@@ -37,8 +37,8 @@ var View = BaseView.extend({
     this.themeBgEle = $('#anchor-container-bg');
 
     this.messageTpl = '';
-    this.controlBtns = $('#control-btns');
     this.msgList = $('#msg-list');
+    this.chatHistory = $('#chat-history');
 
     //注册IM事件处理
     YYTIMServer.init({
@@ -52,7 +52,10 @@ var View = BaseView.extend({
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
 
+    YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
 
+
+    //this.autoAddMsg();
 
   },
   //清屏
@@ -99,6 +102,15 @@ var View = BaseView.extend({
       YYTIMServer.removeUserFromGroup();
     }
   },
+  renderGroupMsgs: function (datas) {
+    var self = this;
+    if (datas && datas.length > 0) {
+
+    }
+    for (var i = 0, j = datas.length; i < j; i++) {
+      self.addMessage(datas[i]);
+    }
+  },
   onMsgNotify: function (notifyInfo) {
     console.log('onMsgNotify');
 
@@ -110,12 +122,29 @@ var View = BaseView.extend({
     console.log('groupSystemNotifys');
   },
   /**
+   * 获取消息模板
+   * @returns {*}
+   */
+  getMessageTpl: function () {
+    return require('../../template/anchor/chat-message-tpl.html');
+  },
+  /**
    * 添加消息
    * @constructor
    */
-  AddMessage: function(data) {
-
-
+  addMessage: function (data) {
+    var tpl = _.template(this.getMessageTpl());
+    this.msgList.append(tpl(data));
+    this.chatHistory.scrollTop(this.msgList.height());
+  },
+  autoAddMsg: function () {
+    var self = this;
+    setInterval(function () {
+      self.addMessage({
+        name: '123123',
+        msg: 'ppppp'
+      });
+    }, 1500);
   }
 });
 
