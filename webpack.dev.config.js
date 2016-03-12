@@ -58,6 +58,7 @@ var config = {
 			"LoginBox":path.resolve(__dirname,YYT_PC_Component+'business/LoginBox/'),
 			"UserModel":path.resolve(__dirname,YYT_PC_Component+'business/UserModel/'),
 			"ui.Dialog":path.resolve(__dirname,YYT_PC_Component+'ui/dialog/'),
+			"ui.MsgBox":path.resolve(__dirname,YYT_PC_Component+'ui/msgBox/'),
 			"config":path.resolve(__dirname,'src/lib/config')
 		}
 	},
