@@ -80,7 +80,7 @@ var View = BaseView.extend({
         new EditBgView();
 
         //组件二，主播信息
-        var InfoView = require('./anchorInfo.view');
+        var InfoView = require('./anchor-info.view');
         new InfoView();
 
 
@@ -93,7 +93,7 @@ var View = BaseView.extend({
         new NoticeView();
 
         //直播开始,结束控制
-        var LiveShowBtnView = require('./liveShowBtn.view');
+        var LiveShowBtnView = require('./live-show-btn.view');
         new LiveShowBtnView();
     },
     goBack: function () {
