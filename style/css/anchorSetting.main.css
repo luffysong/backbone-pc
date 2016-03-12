@@ -616,7 +616,6 @@ img {
   position: relative;
 }
 .creatLive .Inp_artist ul {
-  display: none;
   position: absolute;
   width: 280px;
   left: 69px;
@@ -672,6 +671,8 @@ img {
   left: -1px;
   width: 70px;
   z-index: 30;
+  height: 200px;
+  overflow: auto;
 }
 .creatLive .select li {
   height: 32px;

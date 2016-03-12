@@ -49,6 +49,7 @@ var config = {
 			"cookie":path.resolve(__dirname,YYT_PC_Modules+'store/cookie'),
 			"url":path.resolve(__dirname,YYT_PC_Modules+'util/url'),
 			"tools":path.resolve(__dirname,YYT_PC_Modules+'util/tools'),
+			"DateTime":path.resolve(__dirname,YYT_PC_Modules+'util/DateTime'),
 			"pwdencrypt":path.resolve(__dirname,YYT_PC_Modules+'crypto/pwdencrypt'),
 			"secret":path.resolve(__dirname,YYT_PC_Modules+'crypto/secret'),
 			"UploadFile":path.resolve(__dirname,YYT_PC_Component+'feature/UploadFile'),

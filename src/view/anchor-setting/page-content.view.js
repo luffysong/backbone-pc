@@ -59,7 +59,7 @@ var View = BaseView.extend({
         */
        liveStateChanged:function(e){
        	var target = $(e.currentTarget);
-       	var state = target.attr('data-state');
+       	var state = target.data('state');
        	this.liveStateDOMS.removeClass('on');
        	target.addClass('on');
        	if (~~state) {
@@ -77,7 +77,7 @@ var View = BaseView.extend({
         */
        profileStateChanged:function(e){
        	var target = $(e.currentTarget);
-       	var state = target.attr('data-state');
+       	var state = target.data('state');
        	this.profileStateDOMS.removeClass('on');
        	target.addClass('on');
        	if (~~state) {
