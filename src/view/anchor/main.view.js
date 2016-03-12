@@ -76,7 +76,7 @@ var View = BaseView.extend({
      */
     renderPage: function () {
         //组件一，编辑背景图片
-        var EditBgView = require('./anchorEditBg.view');
+        var EditBgView = require('./anchor-edit-bg.view');
         new EditBgView();
 
         //组件二，主播信息
@@ -85,7 +85,7 @@ var View = BaseView.extend({
 
 
         //组件三，主播控制消息
-        var ChatView = require('./anchorChat.view');
+        var ChatView = require('./anchor-chat.view');
         new ChatView();
 
         //公告组件

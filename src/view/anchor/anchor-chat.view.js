@@ -183,6 +183,11 @@ var View = BaseView.extend({
             self.startLiveShowHandler(data);
         });
 
+        //成功获取房间信息
+        $(document).on('event:roomInfoReady', function(e, data){
+            console.log('chat', data);
+        });
+
     }
 });
 
