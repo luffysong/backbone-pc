@@ -93,7 +93,7 @@ YYTIMServer.getRoomMsgs = function (callback) {
 /**
  * 创建聊天群
  */
-YYTIMServer.createIMChatRoom = function(okFn, errFn) {
+YYTIMServer.createIMChatRoom = function (okFn, errFn) {
     var imSig = store.get('imSig');
     var options = {
         'Owner_Account': imSig.imIdentifier,
@@ -108,16 +108,60 @@ YYTIMServer.createIMChatRoom = function(okFn, errFn) {
     webim.createGroup(
         options,
         function (resp) {
-            console.log(resp);
             okFn && okFn(resp);
         },
         function (err) {
             console.log(err.ErrorInfo);
-            errFn&& errFn(err);
+            errFn && errFn(err);
         }
     );
 };
 
+/**
+ * 获取群组消息
+ * @param groupId
+ * @param okFn
+ * @param errFn
+ */
+YYTIMServer.getGroupInfo = function(groupId, okFn, errFn){
+    var options = {
+        'GroupIdList': [
+            group_id
+        ],
+        'GroupBaseInfoFilter': [
+            'Type',
+            'Name',
+            'Introduction',
+            'Notification',
+            'FaceUrl',
+            'CreateTime',
+            'Owner_Account',
+            'LastInfoTime',
+            'LastMsgTime',
+            'NextMsgSeq',
+            'MemberNum',
+            'MaxMemberNum',
+            'ApplyJoinOption'
+        ],
+        'MemberInfoFilter': [
+            'Account',
+            'Role',
+            'JoinTime',
+            'LastSendMsgTime',
+            'ShutUpUntil'
+        ]
+    };
+    webim.getGroupInfo(
+        options,
+        function (resp) {
+            okFn && okFn(resp);
+        },
+        function (err) {
+            alert(err.ErrorInfo);
+            errFn && errFn(err);
+        }
+    );
+};
 
 /**
  * 腾讯IM收到消息通知的回调函数

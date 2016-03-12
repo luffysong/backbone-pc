@@ -11,7 +11,9 @@
 
 var BaseView = require('BaseView'); //View的基类
 var YYTIMServer = require('../../lib/YYT_IM_Server');
+var RoomMessageModel = require('../../model/anchor/room-message.model');
 var URL = require('url');
+var msgBox = require('ui.MsgBox');
 
 
 var View = BaseView.extend({
@@ -26,6 +28,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之前
     beforeMount: function () {
+        this.roomMsgModel = new RoomMessageModel();
 
     },
     //当模板挂载到元素之后
@@ -161,17 +164,32 @@ var View = BaseView.extend({
         }, 1500);
     },
     /**
+     * 开始直播按钮点击,创建群后开始直播
+     */
+    startLiveClick: function (data) {
+        var self = this;
+
+        console.log(data);
+        if (!this.roomInfo) {
+            console.log('没有获取到房间信息');
+            return '';
+        }
+        //if (!this.roomInfo.imGroupid) {
+            YYTIMServer.createIMChatRoom(function (res) {
+                self.startLive(res);
+            }, function (err) {
+
+            });
+        //} else {
+        //
+        //}
+
+    },
+    /**
      * 开始直播
      */
-    startLiveShowHandler: function (data) {
-        console.log(data);
-        console.log(this);
+    startLive: function (res) {
 
-        YYTIMServer.createIMChatRoom(function (res) {
-
-        }, function (err) {
-
-        });
     },
     /**
      * 定义对外公布的事件
@@ -180,15 +198,21 @@ var View = BaseView.extend({
         var self = this;
         //定义直播事件
         $(document).on('eventStartLiveShow', function (e, data) {
-            self.startLiveShowHandler(data);
+            self.startLiveClick(data);
         });
 
         //成功获取房间信息
-        $(document).on('event:roomInfoReady', function(e, data){
+        $(document).on('event:roomInfoReady', function (e, data) {
+            if (data) {
+                self.roomInfo = data;
+            }
             console.log('chat', data);
         });
+    },
+    getMessageFromServer: function () {
 
     }
+
 });
 
 module.exports = View;
