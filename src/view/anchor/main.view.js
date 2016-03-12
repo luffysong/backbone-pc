@@ -12,9 +12,9 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-var IMModel = require('../../lib/IMModel');
 var UserModel = require('UserModel');
-var store = require('store');
+var RoomDetailModel = require('../../model/anchor/room-detail.model');
+var URL = require('url');
 
 var user = UserModel.sharedInstanceUserModel();
 
@@ -26,19 +26,22 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之前
     beforeMount: function () {
-
-        this.imModel = IMModel.sharedInstanceIMModel();
+        var url = URL.parse(location.href);
+        this.roomId = url.query['roomId'] | 1;
+        if (!this.roomId) {
+            this.goBack();
+        }
+        this.roomDetail = new RoomDetailModel();
 
     },
     //当模板挂载到元素之后
     afterMount: function () {
 
-        this.userVerify();
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
 
-        this.renderPage();
+        this.userVerify();
     },
     /**
      * 校验用户
@@ -46,17 +49,27 @@ var View = BaseView.extend({
     userVerify: function () {
         var self = this;
         if (user.isLogined()) {
-            var a = store.get('imSig');
-            console.log(a);
-            //self.imModel.fetchIMUserSig(function (info) {
-            //  console.log(info);
-            //
-            //});
+            this.roomDetail.setChangeURL({
+                accessToken: user.getToken(),
+                roomId: this.roomId
+            });
 
+            self.initRoom();
+            self.renderPage();
         } else {
-            //alert('尚未登录');
-            window.location.href = '/web/anchor-setting.html';
+            self.goBack();
         }
+    },
+    /**
+     * 获取房间信息
+     */
+    initRoom: function () {
+        var self = this;
+        this.roomDetail.executeGET(function (data) {
+            $(document).trigger('event:roomInfoReady', data.data);
+        }, function (err) {
+
+        });
     },
     /**
      * 载入页面其他视图
@@ -82,7 +95,9 @@ var View = BaseView.extend({
         //直播开始,结束控制
         var LiveShowBtnView = require('./liveShowBtn.view');
         new LiveShowBtnView();
-
+    },
+    goBack: function () {
+        window.location.href = '/web/anchor-setting.html';
     }
 
 

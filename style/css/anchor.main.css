@@ -640,7 +640,6 @@ img {
   font-family: '\5FAE\8F6F\96C5\9ED1';
   font-weight: lighter;
   letter-spacing: 2px;
-  margin-bottom: 40px;
 }
 .edit_annmoucement_con .editCon p {
   text-align: center;
@@ -658,6 +657,9 @@ img {
 .edit_annmoucement_con .editCon a:hover {
   background: #27d5bf;
   color: #fff;
+}
+.errTip {
+  color: #FF005B;
 }
 .footer {
   height: 226px;

@@ -4,13 +4,14 @@
 
 
 /**
- * @time {时间}
- * @author {编写者}
+ * @time 2016-3-11
+ * @author YuanXuJia
  * @info 聊天控制
  */
 
 var BaseView = require('BaseView'); //View的基类
 var YYTIMServer = require('../../lib/YYT_IM_Server');
+var URL = require('url');
 
 
 var View = BaseView.extend({
@@ -162,23 +163,23 @@ var View = BaseView.extend({
     /**
      * 开始直播
      */
-    startLiveShowHandler: function(data){
+    startLiveShowHandler: function (data) {
         console.log(data);
         console.log(this);
 
-        YYTIMServer.createIMChatRoom(function(res){
+        YYTIMServer.createIMChatRoom(function (res) {
 
-        }, function(err){
+        }, function (err) {
 
         });
     },
     /**
      * 定义对外公布的事件
      */
-    defineEventInterface: function(){
+    defineEventInterface: function () {
         var self = this;
         //定义直播事件
-        $(document).on('eventStartLiveShow',function(e,data){
+        $(document).on('eventStartLiveShow', function (e, data) {
             self.startLiveShowHandler(data);
         });
 
