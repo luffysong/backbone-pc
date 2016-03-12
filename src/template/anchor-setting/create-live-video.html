@@ -1,63 +1,46 @@
 <ul>
-       <li class="Inp_name">
-              <span>*</span>直播名称：
-              <input type="text" maxlength="15" placeholder="输入直播名"><i>限15个字以内</i>
-       </li>
-       <li class="Inp_artist">
-              <span>*</span>选择艺人：
-              <input type="text" placeholder="输入文字">
-              <ul id="selectorActor">
-                      <script type="text/html" id="selectorActorTemp">
-                            {{each items as item}}
-                                <li>{{item}}</li>
-                            {{/each}}
-                      </script>
-              </ul>
-       </li>
-       <li class="Inp_time">
-              <span>*</span>直播时间：
-              <div class="select">
-                     <span>2016</span><img src="../img/select-ico.jpg" alt="">
-                     <ul style="display: none;">
-                            <li>2016</li>
-                            <li>2016</li>
-                            <li>2016</li>
-                     </ul>
-              </div>
-              <em>年</em>
-              <div class="select">
-                     <span>01</span><img src="../img/select-ico.jpg" alt="">
-                     <ul>
-                            <li>02</li>
-                            <li>03</li>
-                            <li>04</li>
-                     </ul>
-              </div><em>月</em>
-              <div class="select">
-                     <span>01</span><img src="../img/select-ico.jpg" alt="">
-                     <ul>
-                            <li>02</li>
-                            <li>03</li>
-                            <li>04</li>
-                     </ul>
-              </div><em>日</em>
-              <br>
-              <div class="select" style="margin-left: 68px;">
-                     <span>01</span><img src="../img/select-ico.jpg" alt="">
-                     <ul>
-                            <li>02</li>
-                            <li>03</li>
-                            <li>04</li>
-                     </ul>
-              </div><em>时</em>
-              <div class="select">
-                     <span>01</span><img src="../img/select-ico.jpg" alt="">
-                     <ul>
-                            <li>02</li>
-                            <li>03</li>
-                            <li>04</li>
-                     </ul>
-              </div><em>分</em>
-       </li>
-       <div class="submit m_disabled" id="createVideo">创建</div>
+	<li class="Inp_name">
+		<span>*</span>直播名称：
+		<input type="text" maxlength="15" placeholder="输入直播名" id="liveVideoName"><i>限15个字以内</i>
+	</li>
+	<li class="Inp_artist">
+		<span>*</span>选择艺人：
+		<input type="text" placeholder="输入文字" id="inputActorName">
+		<ul id="selectorActor">
+			 <script type="text/html" id="selectorActorTemp">
+				{{each items as item}}
+				      <li data-id="{{item[0]}}">{{item[1]}}</li>
+				{{/each}}
+			 </script>
+		</ul>
+	</li>
+	<li class="Inp_time">
+		<span>*</span>直播时间：
+		<div id="liveTime">
+			<script type="text/html" id="liveTimeTemp">
+				{{each items as item i}}
+					<div class="select" style="{{item.style}}" data-index="{{i}}">
+						<span class="date">{{item.cur}}</span>
+						<img src="../img/select-ico.jpg" alt="">
+						<ul class="selectDate" data-index="{{i}}" data-tag="{{item.tag}}">
+							{{each item.cells as cell}}
+								<li>{{cell}}</li>
+							{{/each}}
+						</ul>
+					</div>
+					<em>{{item.name}}</em>
+					{{if division}}
+						<br/>
+					{{/if}}
+				{{/each}}
+			</script>
+			<script type="text/html" id="cellsTemp">
+				{{each cells as cell}}
+					<li>{{cell}}</li>
+				{{/each}}
+			</script>
+		</div>
+		
+	</li>
+	<div class="submit m_disabled" id="createVideo">创建</div>
 </ul>
