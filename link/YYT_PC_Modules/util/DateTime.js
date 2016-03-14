@@ -22,9 +22,9 @@
 	};
 })(function() {
 				
-	var DateTime = function(){
+	var DateTime = function(long){
 		this.temp = new Date();
-		this.setCurNewDate();
+		this.setCurNewDate(long);
 	};
 	/**
 	 * [changeYear 改变临时年份]
@@ -145,10 +145,13 @@
 	/**
 	 * [setCurNewDate 设置一个当前新的时间对象]
 	 */
-	DateTime.prototype.setCurNewDate = function(){
+	DateTime.prototype.setCurNewDate = function(long){
 		this.date = null;
+		this.date = long ? new Date(long) : new Date();
+		this._setAttrs();
+	};
+	DateTime.prototype._setAttrs = function(){
 		this.attrs = null;
-		this.date = new Date();
 		this.attrs = {
 			'year':this.date.getFullYear(),
 			'month':this.date.getMonth() + 1,
