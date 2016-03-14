@@ -50,8 +50,8 @@ var View = BaseView.extend({
      */
     userVerify: function () {
         var self = this;
-        user.getUserInfo(function(u){
-            console.log('user:',u);
+        user.getUserInfo(function (u) {
+            console.log('user:', u);
         });
         if (user.isLogined()) {
             this.roomDetail.setChangeURL({
@@ -76,10 +76,10 @@ var View = BaseView.extend({
             uiConfirm.show({
                 title: '提示',
                 content: '获取房间数据失败!',
-                okFn: function(){
+                okFn: function () {
                     self.goBack();
                 },
-                cancelFn: function(){
+                cancelFn: function () {
                     self.goBack();
                 }
             });

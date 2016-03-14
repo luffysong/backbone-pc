@@ -29,7 +29,7 @@ var View = BaseView.extend({
     },
     events: { //监听事件
         'click #btn-clear': 'clearHandler',
-        'click #btn-lock': 'lockHandler',
+        'click #btn-lock': 'lockClickHandler',
         'click #msgList': 'messageClickHandler'
     },
     //当模板挂载到元素之前
@@ -40,7 +40,8 @@ var View = BaseView.extend({
         this.roomMsgModel = new RoomMessageModel();
         //标记是否开始直播
         this.isLiveShowing = false;
-
+        //禁言用户列表
+        this.forbidUsers = [];
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -51,6 +52,7 @@ var View = BaseView.extend({
         this.messageTpl = '';
         this.msgList = $('#msgList');
         this.chatHistory = $('#chatHistory');
+        this.btnLock = $('#btn-lock');
 
         this.defineEventInterface();
 
@@ -97,20 +99,50 @@ var View = BaseView.extend({
         });
     },
     //锁屏
-    lockHandler: function (e) {
+    lockClickHandler: function () {
         console.log('锁');
-        var target = $(e.target).children('span');
+        var target = this.btnLock.children('span'),
+            self = this;
         if (target.text() == '锁屏') {
             uiConfirm.show({
                 content: '您确定要锁定屏幕吗?',
                 okFn: function () {
-                    target.text('解屏');
+                    self.lockIMHandler(true);
                 }
             });
         } else {
-            target.text('锁屏');
+            self.lockIMHandler(false);
         }
-        YYTIMServer.lockScreen();
+    },
+    lockIMHandler: function (isLock) {
+        var self = this,
+            options = {
+                GroupId: this.roomInfo.imGroupid
+            };
+        if (isLock == true) {
+            options.Introduction = JSON.stringify({
+                blockState: !!isLock,
+                alert: '播主设定锁定屏幕，不能发送弹幕及礼物'
+            });
+        } else {
+            options.Introduction = JSON.stringify({
+                blockState: false
+            });
+        }
+
+        YYTIMServer.modifyGroupInfo(options, function (result) {
+            var txt = isLock == true ? '锁屏' : '解屏';
+            if (result && result.ActionStatus == 'OK') {
+                self.btnLock.children('span').text(isLock == true ? '解屏' : '锁屏');
+                msgBox.showOK(txt + '成功!');
+            } else {
+                msgBox.showError(txt + '操作失败,请稍后重试');
+            }
+
+        }, function (err) {
+            console.log('modifyGroupInfo err', err);
+            msgBox.showError(txt + '操作失败,请稍后重试');
+        });
     },
     //清空消息
     clearMessageList: function () {
@@ -194,15 +226,15 @@ var View = BaseView.extend({
         }
     },
     onMsgNotify: function (notifyInfo) {
-        console.log('onMsgNotify');
+        console.log('onMsgNotify', notifyInfo);
 
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
-        console.log('onGroupInfoChangeNotify');
+        console.log('onGroupInfoChangeNotify', notifyInfo);
     },
+
     groupSystemNotifys: function (notifyInfo) {
-        console.log('groupSystemNotifys');
-        console.log(notifyInfo);
+        console.log('groupSystemNotifys', notifyInfo);
     },
     /**
      * 获取消息模板
@@ -318,7 +350,7 @@ var View = BaseView.extend({
     /**
      *
      */
-    roomInfoReady: function(){
+    roomInfoReady: function () {
         var self = this;
         self.getMessageFromServer();
         self.getGroupInfo();
@@ -344,12 +376,23 @@ var View = BaseView.extend({
             console.log(err);
         });
     },
-    getGroupInfo: function(){
+    /**
+     * 获取群组公告以及介绍
+     */
+    getGroupInfo: function () {
         var self = this;
 
-        YYTIMServer.getGroupInfo(self.roomInfo.imGroupid, function(result){
+        YYTIMServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
             console.log('getGroupInfo', result);
-        }, function(err){
+            if(result && result.ActionStatus === 'OK'){
+                if(result.GroupInfo && result.GroupInfo[0]){
+                    var intro = JSON.parse(result.GroupInfo[0].Introduction);
+                    if(intro && intro.blockState == true){
+                        self.btnLock.children('span').text('解屏');
+                    }
+                }
+            }
+        }, function (err) {
             console.log(err);
             msgBox.showError(err.msg || '获取群组消息失败!');
         });
