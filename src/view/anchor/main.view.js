@@ -13,10 +13,10 @@
 
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
 
-var user = UserModel.sharedInstanceUserModel();
 
 var View = BaseView.extend({
     clientRender: false,
@@ -48,6 +48,9 @@ var View = BaseView.extend({
      */
     userVerify: function () {
         var self = this;
+        user.getUserInfo(function(u){
+            console.log('user:',u);
+        });
         if (user.isLogined()) {
             this.roomDetail.setChangeURL({
                 accessToken: user.getToken(),
