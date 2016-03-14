@@ -208,6 +208,42 @@
 	}
 	.uploadAd{
 		margin-right: 19px;
+		width: 210px;
+		height: 118px;
+		img{
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.uploadForm{
+		text-align: center;
+		height: 103px;
+		background: #f6f6f7;
+		position: relative;
+		padding-top: 15px;
+		.zanweitu{
+			width: 55px;
+			height: 55px;
+			background: url('../../../img/upload-img-anchor-setting.png') no-repeat center;
+			background-size: 100%;
+			-webkit-background-size: 100%;
+			display: block;
+			margin:0 auto;
+		}
+		p{
+			font-size: 12px;
+			padding-top: 20px;
+			color:#c3c3c3;
+		}
+		.file{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			top: 0;
+			left: 0;
+			cursor: pointer;
+		}
 	}
 	.preLiveMsg{
 		height: 124px;
@@ -233,7 +269,7 @@
 	}
 	dd.ctl{
 		overflow: hidden;
-		a{
+		a,span{
 			margin-top: 15px;
 			width: 64px;
 			height: 25px;
@@ -243,9 +279,11 @@
 			background: #34d7c3;
 			display: inline-block;
 			margin-right: 25px;
+			cursor: pointer;
 		}
-		a.doing{
+		.disable{
 			background: #d3d1d1;
+			cursor: default;
 		}
 	}
 }
@@ -318,6 +356,12 @@
 	}
 	.uploadAd{
 		margin-right: 19px;
+		width: 320px;
+		height: 180px;
+		img{
+			width: 100%;
+			height: 100%;
+		}
 	}
 	.preLiveMsg{
 		height: 124px;
