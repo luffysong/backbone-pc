@@ -160,6 +160,24 @@
 			'minutes':this.date.getMinutes()
 		};
 	};
+	/**
+	 * [difference 根据一个毫秒差返回一个时分秒对象]
+	 * @param  {[type]} duration [description]
+	 * @return {[type]}          [description]
+	 */
+	DateTime.difference = function(duration){
+		var result = {};
+		var leave1 = duration%(24*3600*1000);
+		var hour = Math.floor(leave1/(3600*1000));
+		result.hours = hour < 10 ? '0'+hour : hour;
+		var leave2 = leave1%(3600*1000);
+		var minutes = Math.floor(leave2/(60*1000));
+		result.minutes = minutes < 10 ? '0'+minutes : minutes;
+		var leave3 = leave2%(60*1000);
+		var seconds = Math.floor(leave3/1000);
+		result.seconds = seconds < 10 ? '0'+seconds : seconds;
+		return result;
+	};
 	var shared = null;
 	DateTime.sharedInstanceDateTime = function(){
 		if (!shared) {

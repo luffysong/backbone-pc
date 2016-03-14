@@ -28,16 +28,25 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
+		var token = user.getToken();
 		this.listTemp = require('../../template/anchor-setting/no-open-list.html');
-		this.noOpenModel = new NoOpenListModel();
-		this.modelParameter = {
+		this.noOpenParameter = {
 			'order':'',
 			'offset':0,
 			'size':10,
-			'access_token':user.getToken()
+			'access_token':token
+		};
+		this.removeParameter = {
+			'roomId':'',
+			'access_token':token
+		};
+		this.releaseParameter = {
+			'roomId':'',
+			'access_token':token
 		};
 		this.removeLock = true;
 		this.releaseLock = true;
+		this.noOpenModel = new NoOpenListModel();
 		this.releaseModel = new ReleaseModel();
 		this.removeModel = new RemoveModel();
 	},
@@ -48,16 +57,15 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
-		this.noOpenModel.setChangeURL(this.modelParameter);
+		this.noOpenModel.setChangeURL(this.noOpenParameter);
 		this.noOpenModel.execute(function(response){
-			console.log(response)
 			var data = response.data;
 			var roomList = data.roomList;
-			var count = Math.ceil(data.totalCount/self.modelParameter.size);
+			var count = Math.ceil(data.totalCount/self.noOpenParameter.size);
 			if (count > 1) {
 				self.initPageBox({
-					'offset':self.modelParameter.offset+1,
-					'size':self.modelParameter.size,
+					'offset':self.noOpenParameter.offset,
+					'size':self.noOpenParameter.size,
 					'count':count
 				});
 			};
@@ -67,14 +75,25 @@ var View = BaseView.extend({
 		});
 	},
 	initPageBox:function(prop){
+		var self = this;
 		this.pageBoxView = new NoOpenPageBoxView({
+			id:'#noOpenPageBox',
 			props:prop,
-			listModel:this.noOpenModel
+			listModel:this.noOpenModel,
+			listRender:function(response){
+				var data = response.data;
+				var roomList = data.roomList;
+				self.initRender(roomList);
+			}
 		});
-		this.pageBoxView.on('initRender',this.initRender);
 	},
 	initRender:function(items){
-		var html = this.compileHTML(this.listTemp,{'items':items});
+		var html = '';
+		if (items.length) {
+			html = this.compileHTML(this.listTemp,{'items':items});
+		}else{
+			html = '<h1>暂无数据</h1>';
+		};
 		this.$el.html(html);
 	},
 	checkLiveVideoHandler:function(e){
@@ -84,7 +103,6 @@ var View = BaseView.extend({
 		var state = span.data('state');
 		var id = el.attr('data-id');
 		if (state) {
-			
 			switch(state){
 				case 2:
 					//发布
@@ -93,9 +111,8 @@ var View = BaseView.extend({
 					};
 					if (this.releaseLock) {
 						this.releaseLock = false;
-						this.releaseModel.setChangeURL({
-							roomId:id
-						});
+						this.removeParameter.roomId = id;
+						this.releaseModel.setChangeURL(this.removeParameter);
 						this.releaseModel.execute(function(response){
 							this.releaseLock = true;
 							span.addClass('disable');
@@ -107,10 +124,8 @@ var View = BaseView.extend({
 				case 3:
 					if (this.removeLock) {
 						this.removeLock = false;
-						//删除
-						this.removeModel.setChangeURL({
-							roomId:id
-						});
+						this.removeParameter.roomId = id;
+						this.removeModel.setChangeURL(this.removeParameter);
 						this.removeModel.execute(function(response){
 							self.removeLock = true;
 							console.log(response);
@@ -126,5 +141,4 @@ var View = BaseView.extend({
 
 	}
 });
-
 module.exports = View;

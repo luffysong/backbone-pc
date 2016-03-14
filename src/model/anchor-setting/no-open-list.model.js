@@ -38,6 +38,7 @@ var Model = BaseModel.extend({
 			value.liveVideoTime = year+'/'+month+'/'+day+' '+hours+':'+minutes;
 			value.lookUrl = '/web/anchor.html?roomId='+value.id;
 		};
+		response.data.totalCount = 23;
 		return response;
 	}
 });

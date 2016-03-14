@@ -30,6 +30,9 @@ var BaseView = Backbone.View.extend({
 		}else{
 			warn('你应该创建beforeMount钩子方法，在此方法中获取DOM元素，并初始化一些自定义的属性')
 		};
+		if (this._ICEOptions.id) {
+			this.$el = $(this._ICEOptions.id);
+		};
 		this._ICEinit();
 		return this;
 	},
@@ -67,7 +70,7 @@ var BaseView = Backbone.View.extend({
 		this._store = {};
 		this.__YYTPC__ = true;
 		if (typeof this.ready === 'function') {
-			this.ready();
+			this.ready(this._ICEOptions);
 		};
 	},
 	_ICEinitEvent:function(){
