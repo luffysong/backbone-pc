@@ -55,14 +55,28 @@ YYTIMServer.lockScreen = function () {
  * 禁言
  */
 YYTIMServer.disableSendMsg = function () {
-    console.log('IM disbale msg');
+    console.log('禁言中.....');
 };
 
 /**
  * 踢人
+ * options : {GroupId: '', MemberToDel_Account: []}
  */
-YYTIMServer.removeUserFromGroup = function () {
-    console.log('IM remove user');
+YYTIMServer.removeUserFromGroup = function (options, okFn, errFn) {
+    if (!options || !options.GroupId || options.MemberToDel_Account.length <= 0) {
+        errFn && errFn({
+            msg: '参数不正确'
+        });
+    }
+    webim.deleteGroupMember(
+        options,
+        function (resp) {
+            okFn && okFn(resp);
+        },
+        function (err) {
+            errFn && errFn(err);
+        }
+    );
 };
 
 /**
@@ -123,10 +137,10 @@ YYTIMServer.createIMChatRoom = function (okFn, errFn) {
  * @param okFn
  * @param errFn
  */
-YYTIMServer.getGroupInfo = function(groupId, okFn, errFn){
+YYTIMServer.getGroupInfo = function (groupId, okFn, errFn) {
     var options = {
         'GroupIdList': [
-            group_id
+            groupId
         ],
         'GroupBaseInfoFilter': [
             'Type',
@@ -162,6 +176,25 @@ YYTIMServer.getGroupInfo = function(groupId, okFn, errFn){
         }
     );
 };
+
+/**
+ * 修改群组消息
+ * @param options {GroupId: xx, Name: 'xx', Notification: '', Introduction: ''}
+ * @param okFn
+ * @param errFn
+ */
+YYTIMServer.modifyGroupInfo = function (options, okFn, errFn) {
+    webim.modifyGroupBaseInfo(
+        options,
+        function (resp) {
+            okFn && okFn(resp);
+        },
+        function (err) {
+            errFn && errFn(err);
+        }
+    );
+};
+
 
 /**
  * 腾讯IM收到消息通知的回调函数

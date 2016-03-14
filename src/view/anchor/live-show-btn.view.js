@@ -63,7 +63,6 @@ var View = BaseView.extend({
             title: '消息',
             content: '您确定要结束直播吗',
             okFn: function () {
-                console.log('ok');
                 $(document).trigger('event:endLiveShow');
                 current.addClass('m_disabled');
             },

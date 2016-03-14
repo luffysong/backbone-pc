@@ -16,6 +16,8 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
+var msgBox = require('ui.MsgBox');
+var uiConfirm = require('ui.Confirm');
 
 
 var View = BaseView.extend({
@@ -48,8 +50,8 @@ var View = BaseView.extend({
      */
     userVerify: function () {
         var self = this;
-        user.getUserInfo(function(u){
-            console.log('user:',u);
+        user.getUserInfo(function (u) {
+            console.log('user:', u);
         });
         if (user.isLogined()) {
             this.roomDetail.setChangeURL({
@@ -71,7 +73,16 @@ var View = BaseView.extend({
         this.roomDetail.executeGET(function (data) {
             $(document).trigger('event:roomInfoReady', data.data);
         }, function (err) {
-
+            uiConfirm.show({
+                title: '提示',
+                content: '获取房间数据失败!',
+                okFn: function () {
+                    self.goBack();
+                },
+                cancelFn: function () {
+                    self.goBack();
+                }
+            });
         });
     },
     /**

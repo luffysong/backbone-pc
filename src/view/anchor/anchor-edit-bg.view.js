@@ -21,9 +21,6 @@ var View = BaseView.extend({
     events: { //监听事件
         'click .id': 'handler'
     },
-    elements: {
-        '#id': 'xxBtn'
-    },
     //当模板挂载到元素之前
     beforeMount: function () {
         this.editBgModel = new EditBgModel();
@@ -32,9 +29,14 @@ var View = BaseView.extend({
     afterMount: function () {
         //修改背景按钮
         this.changeBgBtn = $('.edit_bg_btn');
+        this.txtPopularity = $('#txtPopularity');
+        this.txtRoomName = $('#txtRoomName');
+
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        this.defineEventInterface();
+
         this.editBgModel.execute(function (response) {
             console.log(response);
             var items = this.$get('items');
@@ -45,6 +47,19 @@ var View = BaseView.extend({
         this.on('event-name', function (args) {
 
         });
+    },
+    /**
+     * 定义事件
+     */
+    defineEventInterface: function () {
+        var self = this;
+        $(document).on('event:roomInfoReady', function (e, data) {
+            if (data) {
+                self.roomInfo = data;
+                self.txtRoomName.text(data.roomName || '');
+                self.txtPopularity.text(data.popularity || 0);
+            }
+        })
     }
 });
 

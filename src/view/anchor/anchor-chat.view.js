@@ -14,7 +14,8 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomMessageModel = require('../../model/anchor/room-message.model');
 var StartLiveModel = require('../../model/anchor/start-live.model');
 var EndLiveModel = require('../../model/anchor/end-live.model');
-var confirm = require('ui.Confirm');
+var RoomMsgModel = require('../../model/anchor/room-message.model');
+var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
@@ -28,7 +29,7 @@ var View = BaseView.extend({
     },
     events: { //监听事件
         'click #btn-clear': 'clearHandler',
-        'click #btn-lock': 'lockHandler',
+        'click #btn-lock': 'lockClickHandler',
         'click #msgList': 'messageClickHandler'
     },
     //当模板挂载到元素之前
@@ -36,10 +37,15 @@ var View = BaseView.extend({
         this.roomMsgModel = new RoomMessageModel();
         this.startLiveModel = new StartLiveModel();
         this.endLiveModel = new EndLiveModel();
-
+        this.roomMsgModel = new RoomMessageModel();
+        //标记是否开始直播
+        this.isLiveShowing = false;
+        //禁言用户列表
+        this.forbidUsers = [];
     },
     //当模板挂载到元素之后
     afterMount: function () {
+        var self = this;
         //this.btnClear = $('#btn-clear');
         //背景图片元素
         this.themeBgEle = $('#anchorContainerBg');
@@ -47,28 +53,38 @@ var View = BaseView.extend({
         this.messageTpl = '';
         this.msgList = $('#msgList');
         this.chatHistory = $('#chatHistory');
+        this.btnLock = $('#btn-lock');
 
         this.defineEventInterface();
+
+
+        function callback(notifyInfo) {
+            self.groupSystemNotifys(notifyInfo);
+        }
 
 
         //注册IM事件处理
         YYTIMServer.init({
             listeners: {
-                onMsgNotify: this.onMsgNotify,
-                onGroupInfoChangeNotify: this.onGroupInfoChangeNotify,
+                onMsgNotify: function (notifyInfo) {
+                    self.onMsgNotify(notifyInfo);
+                },
+                onGroupInfoChangeNotify: function (notifyInfo) {
+                    self.onGroupInfoChangeNotify(notifyInfo);
+                },
                 groupSystemNotifys: {
-                    "1": this.groupSystemNotifys, //申请加群请求（只有管理员会收到）
-                    "2": this.groupSystemNotifys, //申请加群被同意（只有申请人能够收到）
-                    "3": this.groupSystemNotifys, //申请加群被拒绝（只有申请人能够收到）
-                    "4": this.groupSystemNotifys, //被管理员踢出群(只有被踢者接收到)
-                    "5": this.groupSystemNotifys, //群被解散(全员接收)
-                    "6": this.groupSystemNotifys, //创建群(创建者接收)
-                    "7": this.groupSystemNotifys, //邀请加群(被邀请者接收)
-                    "8": this.groupSystemNotifys, //主动退群(主动退出者接收)
-                    "9": this.groupSystemNotifys, //设置管理员(被设置者接收)
-                    "10": this.groupSystemNotifys, //取消管理员(被取消者接收)
-                    "11": this.groupSystemNotifys, //群已被回收(全员接收)
-                    "255": this.groupSystemNotifys//用户自定义通知(默认全员接收,暂不支持)
+                    "1": callback, //申请加群请求（只有管理员会收到）
+                    "2": callback, //申请加群被同意（只有申请人能够收到）
+                    "3": callback, //申请加群被拒绝（只有申请人能够收到）
+                    "4": callback, //被管理员踢出群(只有被踢者接收到)
+                    "5": callback, //群被解散(全员接收)
+                    "6": callback, //创建群(创建者接收)
+                    "7": callback, //邀请加群(被邀请者接收)
+                    "8": callback, //主动退群(主动退出者接收)
+                    "9": callback, //设置管理员(被设置者接收)
+                    "10": callback, //取消管理员(被取消者接收)
+                    "11": callback, //群已被回收(全员接收)
+                    "255": callback//用户自定义通知(默认全员接收,暂不支持)
                 }
             }
         });
@@ -76,20 +92,66 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
 
-        YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
+        //YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
 
         //this.autoAddMsg();
-
     },
     //清屏
     clearHandler: function () {
-        console.log('清');
-        YYTIMServer.clearScreen();
+        var self = this;
+        uiConfirm.show({
+            content: '您确定要清屏吗?',
+            okFn: function () {
+                self.clearMessageList();
+                YYTIMServer.clearScreen();
+            }
+        });
     },
     //锁屏
-    lockHandler: function () {
-        console.log('锁');
-        YYTIMServer.lockScreen();
+    lockClickHandler: function () {
+        var target = this.btnLock.children('span'),
+            self = this,
+            txt = target.text() == '锁屏' ? '锁定屏幕' : '解开屏幕';
+        uiConfirm.show({
+            content: '您确定要' + txt + '吗?',
+            okFn: function () {
+                self.lockIMHandler(target.text() == '锁屏');
+            }
+        });
+    },
+    lockIMHandler: function (isLock) {
+        var self = this,
+            options = {
+                GroupId: this.roomInfo.imGroupid
+            };
+        if (isLock == true) {
+            options.Introduction = JSON.stringify({
+                blockState: !!isLock,
+                alert: '播主设定锁定屏幕，不能发送弹幕及礼物'
+            });
+        } else {
+            options.Introduction = JSON.stringify({
+                blockState: false
+            });
+        }
+
+        YYTIMServer.modifyGroupInfo(options, function (result) {
+            var txt = isLock == true ? '锁屏' : '解屏';
+            if (result && result.ActionStatus == 'OK') {
+                self.btnLock.children('span').text(isLock == true ? '解屏' : '锁屏');
+                msgBox.showOK(txt + '成功!');
+            } else {
+                msgBox.showError(txt + '操作失败,请稍后重试');
+            }
+
+        }, function (err) {
+            console.log('modifyGroupInfo err', err);
+            msgBox.showError(txt + '操作失败,请稍后重试');
+        });
+    },
+    //清空消息
+    clearMessageList: function () {
+        this.msgList.children().remove();
     },
     //单击某用户发送的消息
     messageClickHandler: function (e) {
@@ -117,13 +179,75 @@ var View = BaseView.extend({
     },
     //禁言,或者踢出
     msgControlHandler: function (e) {
-        var target = $(e.target);
-        console.log(target.text());
+        var target = $(e.target), li;
+        li = target.parents('li');
 
         if (target.text() === '禁言') {
-            YYTIMServer.disableSendMsg();
+            this.disableSendMsgConfirm({
+                name: li.attr('data-name'),
+                id: 1
+            });
         } else if (target.text() === '踢出') {
-            YYTIMServer.removeUserFromGroup();
+            this.removeUserFromRoom({
+                name: li.attr('data-name'),
+                id: 1
+            });
+        }
+    },
+    /**
+     * 禁止用户发言确认提示框
+     */
+    disableSendMsgConfirm: function (user) {
+        var self = this;
+        uiConfirm.show({
+            content: '您确定要禁止用户:<b>' + user.name + '</b>发言吗?',
+            okFn: function () {
+                self.disableSendMsgHandler(user);
+            }
+        });
+    },
+    disableSendMsgHandler: function(user){
+        var self = this;
+        if(self.forbidUsers.length > 200){
+           self.forbidUsers.shift();
+        }
+        self.forbidUsers.push(user.id);
+        var options = {
+            GroupId: self.roomInfo.imGroupid,
+            Notification: JSON.stringify({
+                forbidUsers: self.forbidUsers
+            })
+        };
+
+        console.log('options', options);
+        YYTIMServer.modifyGroupInfo(options, function (result) {
+            console.log('disableSendMsgHandler', result);
+        });
+    },
+    /**
+     * 将用户从房间中移除
+     */
+    removeUserFromRoom: function (data) {
+        var self = this,
+            errTip = '将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试';
+        uiConfirm.show({
+            content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
+            okFn: function () {
+                YYTIMServer.removeUserFromGroup({
+                    GroupId: self.roomInfo.imGroupid,
+                    MemberToDel_Account: [data.id]
+                }, okFn, function (err) {
+                    msgBox.showError(errTip);
+                });
+            }
+        });
+
+        function okFn(resp) {
+            if (resp.ActionStatus == 'OK') {
+                msgBox.showError('成功将用户:<b>' + data.name + '</b>踢出房间');
+            } else {
+                msgBox.showError(errTip);
+            }
         }
     },
     renderGroupMsgs: function (datas) {
@@ -136,15 +260,15 @@ var View = BaseView.extend({
         }
     },
     onMsgNotify: function (notifyInfo) {
-        console.log('onMsgNotify');
+        console.log('onMsgNotify', notifyInfo);
 
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
-        console.log('onGroupInfoChangeNotify');
+        console.log('onGroupInfoChangeNotify', notifyInfo);
     },
+
     groupSystemNotifys: function (notifyInfo) {
-        console.log('groupSystemNotifys');
-        console.log(notifyInfo);
+        console.log('groupSystemNotifys', notifyInfo);
     },
     /**
      * 获取消息模板
@@ -204,10 +328,12 @@ var View = BaseView.extend({
             roomId: self.roomInfo.id,
             imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
         });
-        self.startLiveModel.executeGET(function(result){
+        self.startLiveModel.executeGET(function (result) {
             console.log('start live', result);
+            self.isLiveShowing = true;
             msgBox.showOK('成功开启直播');
-        }, function(err){
+
+        }, function (err) {
             console.log(err);
             msgBox.showError(err.msg);
         });
@@ -216,17 +342,18 @@ var View = BaseView.extend({
      * 点击结束直播
      * @param data
      */
-    endLiveClick: function(data){
+    endLiveClick: function (data) {
         var self = this;
         self.endLiveModel.setChangeURL({
             accessToken: user.getToken(),
             roomId: self.roomInfo.id
         });
 
-        self.endLiveModel.executeGET(function(result){
+        self.endLiveModel.executeGET(function (result) {
             console.log('endLiveClick = ', result);
+            self.isLiveShowing = false;
             $(document).trigger('event:liveShowEnded');
-        }, function(err){
+        }, function (err) {
             console.log(err);
             msgBox.showError(err.msg);
         });
@@ -241,7 +368,7 @@ var View = BaseView.extend({
             self.startLiveClick(data);
         });
         //结束直播
-        $(document).on('event:endLiveShow', function(e, data){
+        $(document).on('event:endLiveShow', function (e, data) {
             self.endLiveClick(data);
         });
 
@@ -249,6 +376,7 @@ var View = BaseView.extend({
         $(document).on('event:roomInfoReady', function (e, data) {
             if (data) {
                 self.roomInfo = data;
+                self.roomInfoReady();
             }
             console.log('chat', data);
         });
@@ -256,8 +384,52 @@ var View = BaseView.extend({
     /**
      *
      */
-    getMessageFromServer: function () {
+    roomInfoReady: function () {
+        var self = this;
+        self.getMessageFromServer();
+        self.getGroupInfo();
 
+    },
+    /**
+     *
+     */
+    getMessageFromServer: function () {
+        var self = this;
+        self.roomMsgModel.setChangeURL({
+            accessToken: user.getToken(),
+            limit: 100,
+            endTime: 0,
+            startTime: 0,
+            cursor: '',
+            roomId: self.roomInfo.id
+        });
+
+        self.roomMsgModel.executeGET(function (result) {
+            console.log('roomMsgModel', result);
+        }, function (err) {
+            console.log(err);
+        });
+    },
+    /**
+     * 获取群组公告以及介绍
+     */
+    getGroupInfo: function () {
+        var self = this;
+
+        YYTIMServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
+            console.log('getGroupInfo', result);
+            if (result && result.ActionStatus === 'OK') {
+                if (result.GroupInfo && result.GroupInfo[0]) {
+                    var intro = JSON.parse(result.GroupInfo[0].Introduction);
+                    if (intro && intro.blockState == true) {
+                        self.btnLock.children('span').text('解屏');
+                    }
+                }
+            }
+        }, function (err) {
+            console.log(err);
+            msgBox.showError(err.msg || '获取群组消息失败!');
+        });
     }
 
 });

@@ -37,12 +37,10 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
         $(document).on('event:roomInfoReady', function (e, data) {
-            console.log('info', data);
-
+            console.log('roomInfoReady = ', data);
             var tpl = _.template(self.infoTpl);
             var html = tpl(data);
             self.roomInfoWrap.append(html);
-
         });
     }
 

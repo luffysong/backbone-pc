@@ -107,14 +107,15 @@ var View = BaseView.extend({
             if (data) {
                 self.roomInfo = data;
             }
-            //self.noticeWrap.text(data.desc || '暂无公告');
-            //self.txtNotice.val(data.desc);
             self.getNoticeInfo();
             if (data.imageUrl) {
                 self.imgRoomPic.attr('src', data.imageUrl);
             }
         })
     },
+    /**
+     * 获取公告信息
+     */
     getNoticeInfo: function(){
         var self = this;
         this.noticeGetModel.setChangeURL({
@@ -122,17 +123,20 @@ var View = BaseView.extend({
             accessToken: user.getToken()
         });
         this.noticeGetModel.executeGET(function(res){
-            console.log('res', res);
+            console.log('noticeGetModel', res);
             if(res && res.data){
                 var notice = null;
                 res.data.placards && (notice = res.data.placards[0]);
                 if(notice){
                     self.noticeWrap.text(notice.content || '暂无公告');
                     self.txtNotice.val(notice.content);
+                }else{
+                    self.noticeWrap.text('暂无公告');
                 }
             }
         }, function(err){
-
+            console.log(err);
+            msgBox.showErr(err.msg || '获取公告失败');
         });
     }
 
