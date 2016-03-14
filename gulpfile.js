@@ -25,7 +25,7 @@ var browserSync = browser.create();
 
 // origin dev
 
-var PORT = 9019;
+var PORT = 4000;
 var loadMap = [
   'modules/*.*',
   './src/**/*.*',
