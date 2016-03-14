@@ -164,6 +164,25 @@ YYTIMServer.getGroupInfo = function(groupId, okFn, errFn){
 };
 
 /**
+ * 修改群组消息
+ * @param options {GroupId: xx, Name: 'xx', Notification: '', Introduction: ''}
+ * @param okFn
+ * @param errFn
+ */
+YYTIMServer.modifyGroupInfo = function(options, okFn, errFn) {
+    webim.modifyGroupBaseInfo(
+        options,
+        function (resp) {
+            okFn && okFn(resp);
+        },
+        function (err) {
+            errFn && errFn(err);
+        }
+    );
+};
+
+
+/**
  * 腾讯IM收到消息通知的回调函数
  * @param notifyInfo
  */

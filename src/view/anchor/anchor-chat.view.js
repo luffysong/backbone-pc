@@ -14,7 +14,7 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomMessageModel = require('../../model/anchor/room-message.model');
 var StartLiveModel = require('../../model/anchor/start-live.model');
 var EndLiveModel = require('../../model/anchor/end-live.model');
-var confirm = require('ui.Confirm');
+var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
@@ -36,6 +36,8 @@ var View = BaseView.extend({
         this.roomMsgModel = new RoomMessageModel();
         this.startLiveModel = new StartLiveModel();
         this.endLiveModel = new EndLiveModel();
+        //标记是否开始直播
+        this.isLiveShowing = false;
 
     },
     //当模板挂载到元素之后
@@ -83,13 +85,34 @@ var View = BaseView.extend({
     },
     //清屏
     clearHandler: function () {
-        console.log('清');
-        YYTIMServer.clearScreen();
+        var self = this;
+        uiConfirm.show({
+            content: '您确定要清屏吗?',
+            okFn: function () {
+                self.clearMessageList();
+                YYTIMServer.clearScreen();
+            }
+        });
     },
     //锁屏
-    lockHandler: function () {
+    lockHandler: function (e) {
         console.log('锁');
+        var target = $(e.target).children('span');
+        if (target.text() == '锁屏') {
+            uiConfirm.show({
+                content: '您确定要锁定屏幕吗?',
+                okFn: function () {
+                    target.text('解屏');
+                }
+            });
+        } else {
+            target.text('锁屏');
+        }
         YYTIMServer.lockScreen();
+    },
+    //清空消息
+    clearMessageList: function () {
+        this.msgList.children().remove();
     },
     //单击某用户发送的消息
     messageClickHandler: function (e) {
@@ -117,14 +140,47 @@ var View = BaseView.extend({
     },
     //禁言,或者踢出
     msgControlHandler: function (e) {
-        var target = $(e.target);
-        console.log(target.text());
+        var target = $(e.target), li;
+        li = target.parents('li');
 
         if (target.text() === '禁言') {
-            YYTIMServer.disableSendMsg();
+            this.disableSendMsgHandler({
+                name: li.attr('data-name')
+            });
         } else if (target.text() === '踢出') {
-            YYTIMServer.removeUserFromGroup();
+            this.removeUserFromRoom({
+                name: li.attr('data-name')
+            });
         }
+    },
+    /**
+     * 禁止用户发言
+     * @param data
+     */
+    disableSendMsgHandler: function (data) {
+        var self = this;
+        uiConfirm.show({
+            content: '您确定要禁止用户:<b>' + data.name + '</b>发言吗?',
+            okFn: function () {
+                YYTIMServer.disableSendMsg({
+                    GroupId: self.roomInfo.imGroupid
+                });
+            }
+        });
+    },
+    /**
+     * 将用户从房间中移除
+     */
+    removeUserFromRoom: function(data){
+        var self = this;
+        uiConfirm.show({
+            content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
+            okFn: function () {
+                YYTIMServer.removeUserFromGroup({
+                    GroupId: self.roomInfo.imGroupid
+                });
+            }
+        });
     },
     renderGroupMsgs: function (datas) {
         var self = this;
@@ -204,10 +260,12 @@ var View = BaseView.extend({
             roomId: self.roomInfo.id,
             imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
         });
-        self.startLiveModel.executeGET(function(result){
+        self.startLiveModel.executeGET(function (result) {
             console.log('start live', result);
+            self.isLiveShowing = true;
             msgBox.showOK('成功开启直播');
-        }, function(err){
+
+        }, function (err) {
             console.log(err);
             msgBox.showError(err.msg);
         });
@@ -216,17 +274,18 @@ var View = BaseView.extend({
      * 点击结束直播
      * @param data
      */
-    endLiveClick: function(data){
+    endLiveClick: function (data) {
         var self = this;
         self.endLiveModel.setChangeURL({
             accessToken: user.getToken(),
             roomId: self.roomInfo.id
         });
 
-        self.endLiveModel.executeGET(function(result){
+        self.endLiveModel.executeGET(function (result) {
             console.log('endLiveClick = ', result);
+            self.isLiveShowing = false;
             $(document).trigger('event:liveShowEnded');
-        }, function(err){
+        }, function (err) {
             console.log(err);
             msgBox.showError(err.msg);
         });
@@ -241,7 +300,7 @@ var View = BaseView.extend({
             self.startLiveClick(data);
         });
         //结束直播
-        $(document).on('event:endLiveShow', function(e, data){
+        $(document).on('event:endLiveShow', function (e, data) {
             self.endLiveClick(data);
         });
 
