@@ -32,10 +32,10 @@ var View = BaseView.extend({
     afterMount: function () {
         this.btnEndLive = $('.endLive');
         this.btnStartLive = $('.startLive');
+        this.defineEventInterface();
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-
     },
     /**
      * 开启直播
@@ -71,10 +71,6 @@ var View = BaseView.extend({
                 console.log('cancel');
             }
         });
-        //if(confirm('您确定要结束直播吗')){
-        //    $(document).trigger('event:endLiveShow');
-        //    current.addClass('m_disabled');
-        //}
     },
     defineEventInterface: function () {
         var self = this;
