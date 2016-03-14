@@ -57,7 +57,7 @@ var View = BaseView.extend({
 			};
 			self.initRender(roomList);
 		},function(e){
-
+			
 		});
 	},
 	initPageBox:function(prop){
