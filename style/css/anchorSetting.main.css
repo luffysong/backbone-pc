@@ -497,7 +497,7 @@ img {
   float: left;
   margin-right: 1px;
 }
-.PageBox > span {
+.PageBox .ellipsis {
   float: left;
   line-height: 35px;
   letter-spacing: 1px;
@@ -509,13 +509,12 @@ img {
   color: #fff;
   background: #27d5bf;
 }
-.PageBox a.on {
+.PageBox a.now {
   color: #fff;
   background: #27d5bf;
   cursor: default;
 }
-.PageBox .pre,
-.PageBox .next {
+.PageBox .upDown {
   width: 54px;
   height: 37px;
   line-height: 37px;
@@ -526,6 +525,10 @@ img {
 .PageBox .pre {
   color: #fff;
   background: #27d5bf;
+}
+.PageBox .disable:hover {
+  color: #acacac;
+  background: #f8f8f8;
 }
 .PageBox p {
   clear: both;

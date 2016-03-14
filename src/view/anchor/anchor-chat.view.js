@@ -253,6 +253,9 @@ var View = BaseView.extend({
             console.log('chat', data);
         });
     },
+    /**
+     *
+     */
     getMessageFromServer: function () {
 
     }
