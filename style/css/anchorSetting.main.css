@@ -638,7 +638,11 @@ img {
   line-height: 34px;
   padding-bottom: 150px;
 }
-.creatLive .Inp_time > span {
+.creatLive .Inp_time .tit {
+  float: left;
+  margin-right: 4px;
+}
+.creatLive .Inp_time .redX {
   color: red;
 }
 .creatLive .Inp_time em {

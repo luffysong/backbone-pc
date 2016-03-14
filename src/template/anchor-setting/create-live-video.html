@@ -15,7 +15,7 @@
 		</ul>
 	</li>
 	<li class="Inp_time">
-		<span>*</span>直播时间：
+		<div class="tit"><span class="redX">*</span>直播时间：</div>
 		<div id="liveTime">
 			<script type="text/html" id="liveTimeTemp">
 				{{each items as item i}}
@@ -29,7 +29,7 @@
 						</ul>
 					</div>
 					<em>{{item.name}}</em>
-					{{if division}}
+					{{if item.division}}
 						<br/>
 					{{/if}}
 				{{/each}}

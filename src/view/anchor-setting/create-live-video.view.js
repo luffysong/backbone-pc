@@ -118,12 +118,12 @@ var View = BaseView.extend({
 					d.name = '月';
 					break;
 				case 'day':
-					d.division = true;
-					d.style = 'margin-left: 68px;'
 					d.cells = this.dateTime.downDay();
 					d.name = '日';
+					d.division = true;
 					break
 				case 'hours':
+					d.style = 'margin-left: 68px;'
 					d.cells = this.dateTime.downHours();
 					d.name = '时';
 					break
