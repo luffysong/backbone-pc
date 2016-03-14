@@ -14,6 +14,7 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomMessageModel = require('../../model/anchor/room-message.model');
 var StartLiveModel = require('../../model/anchor/start-live.model');
 var EndLiveModel = require('../../model/anchor/end-live.model');
+var confirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
@@ -118,6 +119,7 @@ var View = BaseView.extend({
     msgControlHandler: function (e) {
         var target = $(e.target);
         console.log(target.text());
+
         if (target.text() === '禁言') {
             YYTIMServer.disableSendMsg();
         } else if (target.text() === '踢出') {

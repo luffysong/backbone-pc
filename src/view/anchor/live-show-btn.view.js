@@ -13,6 +13,7 @@
 
 var BaseView = require('BaseView'); //View的基类
 var LiveShowModel = require('../../model/anchor/live-show-btn.model'); //View的基类
+var uiConfirm = require('ui.Confirm');
 
 var View = BaseView.extend({
     el: '#liveShowBtnWraper', //设置View对象作用于的根元素，比如id
@@ -58,14 +59,26 @@ var View = BaseView.extend({
         if (current.hasClass('m_disabled')) {
             return null;
         }
-        if(confirm('您确定要结束直播吗')){
-            $(document).trigger('event:endLiveShow');
-            current.addClass('m_disabled');
-        }
+        uiConfirm.show({
+            title: '消息',
+            content: '您确定要结束直播吗',
+            okFn: function () {
+                console.log('ok');
+                $(document).trigger('event:endLiveShow');
+                current.addClass('m_disabled');
+            },
+            cancelFn: function () {
+                console.log('cancel');
+            }
+        });
+        //if(confirm('您确定要结束直播吗')){
+        //    $(document).trigger('event:endLiveShow');
+        //    current.addClass('m_disabled');
+        //}
     },
     defineEventInterface: function () {
         var self = this;
-        $(document).on('event:liveShowEnded', function(e,data){
+        $(document).on('event:liveShowEnded', function (e, data) {
             self.btnStartLive.removeClass('m_disabled');
         });
     }
