@@ -30,6 +30,7 @@ var View = BaseView.extend({
     //当模板挂载到元素之后
     afterMount: function () {
         this.btnEndLive = $('.endLive');
+        this.btnStartLive = $('.startLive');
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -46,7 +47,7 @@ var View = BaseView.extend({
         current.addClass('m_disabled');
         this.btnEndLive.removeClass('m_disabled');
         console.log(this);
-        $(document).trigger('eventStartLiveShow', {a: 1});
+        $(document).trigger('eventStartLiveShow');
 
     },
     /**
@@ -57,7 +58,16 @@ var View = BaseView.extend({
         if (current.hasClass('m_disabled')) {
             return null;
         }
-        current.addClass('m_disabled');
+        if(confirm('您确定要结束直播吗')){
+            $(document).trigger('event:endLiveShow');
+            current.addClass('m_disabled');
+        }
+    },
+    defineEventInterface: function () {
+        var self = this;
+        $(document).on('event:liveShowEnded', function(e,data){
+            self.btnStartLive.removeClass('m_disabled');
+        });
     }
 });
 

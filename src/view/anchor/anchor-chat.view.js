@@ -12,7 +12,11 @@
 var BaseView = require('BaseView'); //View的基类
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomMessageModel = require('../../model/anchor/room-message.model');
-var URL = require('url');
+var StartLiveModel = require('../../model/anchor/start-live.model');
+var EndLiveModel = require('../../model/anchor/end-live.model');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+
 var msgBox = require('ui.MsgBox');
 
 
@@ -29,6 +33,8 @@ var View = BaseView.extend({
     //当模板挂载到元素之前
     beforeMount: function () {
         this.roomMsgModel = new RoomMessageModel();
+        this.startLiveModel = new StartLiveModel();
+        this.endLiveModel = new EndLiveModel();
 
     },
     //当模板挂载到元素之后
@@ -169,27 +175,59 @@ var View = BaseView.extend({
     startLiveClick: function (data) {
         var self = this;
 
-        console.log(data);
         if (!this.roomInfo) {
             console.log('没有获取到房间信息');
             return '';
         }
-        //if (!this.roomInfo.imGroupid) {
+        if (!this.roomInfo.imGroupid) {
             YYTIMServer.createIMChatRoom(function (res) {
-                self.startLive(res);
+                console.log('createIMChatRoom=', res);
+                self.roomInfo.imGroupid = res.GroupId;
+                self.startLive();
             }, function (err) {
 
             });
-        //} else {
-        //
-        //}
+        } else {
+            self.startLive();
+        }
 
     },
     /**
      * 开始直播
      */
-    startLive: function (res) {
+    startLive: function () {
+        var self = this;
+        self.startLiveModel.setChangeURL({
+            accessToken: user.getToken(),
+            roomId: self.roomInfo.id,
+            imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
+        });
+        self.startLiveModel.executeGET(function(result){
+            console.log('start live', result);
+            msgBox.showOK('成功开启直播');
+        }, function(err){
+            console.log(err);
+            msgBox.showError(err.msg);
+        });
+    },
+    /**
+     * 点击结束直播
+     * @param data
+     */
+    endLiveClick: function(data){
+        var self = this;
+        self.endLiveModel.setChangeURL({
+            accessToken: user.getToken(),
+            roomId: self.roomInfo.id
+        });
 
+        self.endLiveModel.executeGET(function(result){
+            console.log('endLiveClick = ', result);
+            $(document).trigger('event:liveShowEnded');
+        }, function(err){
+            console.log(err);
+            msgBox.showError(err.msg);
+        });
     },
     /**
      * 定义对外公布的事件
@@ -199,6 +237,10 @@ var View = BaseView.extend({
         //定义直播事件
         $(document).on('eventStartLiveShow', function (e, data) {
             self.startLiveClick(data);
+        });
+        //结束直播
+        $(document).on('event:endLiveShow', function(e, data){
+            self.endLiveClick(data);
         });
 
         //成功获取房间信息
