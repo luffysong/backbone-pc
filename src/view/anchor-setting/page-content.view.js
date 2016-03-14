@@ -13,6 +13,7 @@
 
 var BaseView = require('BaseView'); //View的基类
 var CreateLiveView = require('./create-live-video.view');
+var NoOpenListView = require('./no-open-list.view');
 var View = BaseView.extend({
        el: '#pageContent', //设置View对象作用于的根元素，比如id
        rawLoader: function() { //可用此方法返回字符串模版
@@ -39,6 +40,7 @@ var View = BaseView.extend({
        //当事件监听器，内部实例初始化完成，模板挂载到文档之后
        ready: function() {
        	this.createLiveView = new CreateLiveView();
+       	this.noopenListView = new NoOpenListView();        
        },
        /**
         * 切换菜单

@@ -13,6 +13,8 @@
 
 var BaseView = require('BaseView'); //View的基类
 var DateTime = require('DateTime');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
 var CreateLiveModel = require('../../model/anchor-setting/create-live-video.model');
 var ArtistCompleteModel = require('../../model/anchor-setting/artist-autocomplete.model');
 var lighten;    
@@ -48,7 +50,8 @@ var View = BaseView.extend({
 			'roomName':'',
 			'roomDesc':'',
 			'artistId':'',
-			'liveTime':0
+			'liveTime':0,
+			'access_token':user.getToken()
 		};
 		this.createDate = {};
 	},
@@ -240,8 +243,13 @@ var View = BaseView.extend({
 			this.createLock = false;
 			this.createData.roomName = this.actorName.val();
 			this.createData.liveTime = this.dateTime.getTime(this.createDate);
-			console.log(this.createData);
-			window.location.reload();
+			this.createModel.setChangeURL(this.createData);
+			this.createModel.execute(function(response){
+				console.log(response);
+			},function(e){
+				console.log(e);
+			});
+			
 		}
 	}
 });
