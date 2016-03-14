@@ -290,15 +290,17 @@
 // 分页
 .PageBox{
 	float: right;
-	a{
+	span{
 		width: 37px;
 		height: 37px;
+		display: inline-block;
 		line-height: 37px;
 		text-align: center;
 		color: #acacac;
 		background: #f8f8f8;
 		float: left;
 		margin-right: 1px;
+		cursor: pointer;
 	}
 	.ellipsis{
 		float: left;
@@ -308,11 +310,11 @@
 		font-family: lighter;
 		padding:0 10px;
 	}
-	a:hover{
+	span:hover{
 		color: #fff;
 		background: #27d5bf;
 	}
-	a.now{
+	span.now{
 		color: #fff;
 		background: #27d5bf;
 		cursor: default;
@@ -338,7 +340,7 @@
 		text-align: right;
 		color:#acacac;
 		padding-top: 7px;
-		span{
+		i{
 			color:#5c5c5c;
 			margin:0 5px;
 		}
