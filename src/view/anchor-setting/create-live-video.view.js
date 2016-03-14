@@ -238,18 +238,30 @@ var View = BaseView.extend({
 		this.selectorActor.hide();
 	},
 	createVideoHandler:function(e){
+		var self = this;
 		if (this.createClick && this.createLock) {
 			clearInterval(lighten);
+			var date = new Date();
+			var time = date.getTime()+(1000*60*60*1);
 			this.createLock = false;
 			this.createData.roomName = this.actorName.val();
 			this.createData.liveTime = this.dateTime.getTime(this.createDate);
+			if (this.createData.liveTime < time) {
+				alert('直播时间至少为一小时之后');
+				self.initListener(); 
+				return;
+			};
 			this.createModel.setChangeURL(this.createData);
 			this.createModel.execute(function(response){
-				console.log(response);
+				var code = ~~response.code;
+				var data = response.data;
+				console.log(data.message);
+				if (!code) {
+					window.location.reload();
+				};
 			},function(e){
-				console.log(e);
+				self.initListener();
 			});
-			
 		}
 	}
 });

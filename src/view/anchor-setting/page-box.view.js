@@ -87,7 +87,7 @@ var View = BaseView.extend({
 		this.listModel.setChangeURL(this.modelParameter);
 		this.listModel.execute(function(response,model){
 			var data = response.data;
-			
+			self.trigger('initRender',data);
 		},function(e){
 			if (self.offset !== 0) {
 				self.offset--;

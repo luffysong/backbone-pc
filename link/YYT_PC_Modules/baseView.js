@@ -38,7 +38,9 @@ var BaseView = Backbone.View.extend({
 		if (this.clientRender) {
 			if (typeof this.rawLoader === 'function') {
 				self._template = this.rawLoader();
-				self.$el.append(self._template);
+				if (self._template) {
+					self.$el.append(self._template);
+				};
 				self._ICEAfterMount();
 				self._ICEObject();
 				

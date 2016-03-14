@@ -1,16 +1,22 @@
 {{each items as item}}
-     <li data-id="{{item.id}}">
-            <div class="uploadAd fl">
+     <li  data-id="{{item.id}}">
+            <div class="uploadAd fl uploadImage">
                    <img src="{{item.imageUrl}}" alt="">
             </div>
             <dl class="preLiveMsg fl">
                    <dt>{{item.roomName}}</dt>
                    <dd>直播时间：<span>{{item.liveVideoTime}}</span></dd>
                    <dd>视频连接：<span>{{item.url}}</span><a href="javascript:;" class="copy">复制</a></dd>
-                   <dd class="ctl">
-                          <a href="javascript:;">查看</a>
-                          <a href="javascript:;" class="doing">已发布</a>
-                          <a href="javascript:;">删除</a>
+                   <dd class="ctl noOpenItem">
+                        <a href="{{item.lookUrl}}" data-state="1">查看</a>
+                        {{if item.status === 1}}
+                  		<a href="" class="doing" data-state="2">已发布</a>  
+                        {{else }}
+                        	{{if item.status === 0}}
+						<a href="" data-state="2">发布</a>
+					{{/if}}
+                        {{/if}}
+                        <a href="" data-state="3">删除</a>
                    </dd>
             </dl>
      </li>
