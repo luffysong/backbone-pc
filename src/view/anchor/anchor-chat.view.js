@@ -45,6 +45,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之后
     afterMount: function () {
+        var self = this;
         //this.btnClear = $('#btn-clear');
         //背景图片元素
         this.themeBgEle = $('#anchorContainerBg');
@@ -57,24 +58,33 @@ var View = BaseView.extend({
         this.defineEventInterface();
 
 
+        function callback(notifyInfo) {
+            self.groupSystemNotifys(notifyInfo);
+        }
+
+
         //注册IM事件处理
         YYTIMServer.init({
             listeners: {
-                onMsgNotify: this.onMsgNotify,
-                onGroupInfoChangeNotify: this.onGroupInfoChangeNotify,
+                onMsgNotify: function (notifyInfo) {
+                    self.onMsgNotify(notifyInfo);
+                },
+                onGroupInfoChangeNotify: function (notifyInfo) {
+                    self.onGroupInfoChangeNotify(notifyInfo);
+                },
                 groupSystemNotifys: {
-                    "1": this.groupSystemNotifys, //申请加群请求（只有管理员会收到）
-                    "2": this.groupSystemNotifys, //申请加群被同意（只有申请人能够收到）
-                    "3": this.groupSystemNotifys, //申请加群被拒绝（只有申请人能够收到）
-                    "4": this.groupSystemNotifys, //被管理员踢出群(只有被踢者接收到)
-                    "5": this.groupSystemNotifys, //群被解散(全员接收)
-                    "6": this.groupSystemNotifys, //创建群(创建者接收)
-                    "7": this.groupSystemNotifys, //邀请加群(被邀请者接收)
-                    "8": this.groupSystemNotifys, //主动退群(主动退出者接收)
-                    "9": this.groupSystemNotifys, //设置管理员(被设置者接收)
-                    "10": this.groupSystemNotifys, //取消管理员(被取消者接收)
-                    "11": this.groupSystemNotifys, //群已被回收(全员接收)
-                    "255": this.groupSystemNotifys//用户自定义通知(默认全员接收,暂不支持)
+                    "1": callback, //申请加群请求（只有管理员会收到）
+                    "2": callback, //申请加群被同意（只有申请人能够收到）
+                    "3": callback, //申请加群被拒绝（只有申请人能够收到）
+                    "4": callback, //被管理员踢出群(只有被踢者接收到)
+                    "5": callback, //群被解散(全员接收)
+                    "6": callback, //创建群(创建者接收)
+                    "7": callback, //邀请加群(被邀请者接收)
+                    "8": callback, //主动退群(主动退出者接收)
+                    "9": callback, //设置管理员(被设置者接收)
+                    "10": callback, //取消管理员(被取消者接收)
+                    "11": callback, //群已被回收(全员接收)
+                    "255": callback//用户自定义通知(默认全员接收,暂不支持)
                 }
             }
         });
@@ -85,7 +95,6 @@ var View = BaseView.extend({
         //YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
 
         //this.autoAddMsg();
-
     },
     //清屏
     clearHandler: function () {
@@ -100,19 +109,15 @@ var View = BaseView.extend({
     },
     //锁屏
     lockClickHandler: function () {
-        console.log('锁');
         var target = this.btnLock.children('span'),
-            self = this;
-        if (target.text() == '锁屏') {
-            uiConfirm.show({
-                content: '您确定要锁定屏幕吗?',
-                okFn: function () {
-                    self.lockIMHandler(true);
-                }
-            });
-        } else {
-            self.lockIMHandler(false);
-        }
+            self = this,
+            txt = target.text() == '锁屏' ? '锁定屏幕' : '解开屏幕';
+        uiConfirm.show({
+            content: '您确定要' + txt + '吗?',
+            okFn: function () {
+                self.lockIMHandler(target.text() == '锁屏');
+            }
+        });
     },
     lockIMHandler: function (isLock) {
         var self = this,
@@ -178,43 +183,72 @@ var View = BaseView.extend({
         li = target.parents('li');
 
         if (target.text() === '禁言') {
-            this.disableSendMsgHandler({
-                name: li.attr('data-name')
+            this.disableSendMsgConfirm({
+                name: li.attr('data-name'),
+                id: 1
             });
         } else if (target.text() === '踢出') {
             this.removeUserFromRoom({
-                name: li.attr('data-name')
+                name: li.attr('data-name'),
+                id: 1
             });
         }
     },
     /**
-     * 禁止用户发言
-     * @param data
+     * 禁止用户发言确认提示框
      */
-    disableSendMsgHandler: function (data) {
+    disableSendMsgConfirm: function (user) {
         var self = this;
         uiConfirm.show({
-            content: '您确定要禁止用户:<b>' + data.name + '</b>发言吗?',
+            content: '您确定要禁止用户:<b>' + user.name + '</b>发言吗?',
             okFn: function () {
-                YYTIMServer.disableSendMsg({
-                    GroupId: self.roomInfo.imGroupid
-                });
+                self.disableSendMsgHandler(user);
             }
+        });
+    },
+    disableSendMsgHandler: function(user){
+        var self = this;
+        if(self.forbidUsers.length > 200){
+           self.forbidUsers.shift();
+        }
+        self.forbidUsers.push(user.id);
+        var options = {
+            GroupId: self.roomInfo.imGroupid,
+            Notification: JSON.stringify({
+                forbidUsers: self.forbidUsers
+            })
+        };
+
+        console.log('options', options);
+        YYTIMServer.modifyGroupInfo(options, function (result) {
+            console.log('disableSendMsgHandler', result);
         });
     },
     /**
      * 将用户从房间中移除
      */
     removeUserFromRoom: function (data) {
-        var self = this;
+        var self = this,
+            errTip = '将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试';
         uiConfirm.show({
             content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
             okFn: function () {
                 YYTIMServer.removeUserFromGroup({
-                    GroupId: self.roomInfo.imGroupid
+                    GroupId: self.roomInfo.imGroupid,
+                    MemberToDel_Account: [data.id]
+                }, okFn, function (err) {
+                    msgBox.showError(errTip);
                 });
             }
         });
+
+        function okFn(resp) {
+            if (resp.ActionStatus == 'OK') {
+                msgBox.showError('成功将用户:<b>' + data.name + '</b>踢出房间');
+            } else {
+                msgBox.showError(errTip);
+            }
+        }
     },
     renderGroupMsgs: function (datas) {
         var self = this;
@@ -384,10 +418,10 @@ var View = BaseView.extend({
 
         YYTIMServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
             console.log('getGroupInfo', result);
-            if(result && result.ActionStatus === 'OK'){
-                if(result.GroupInfo && result.GroupInfo[0]){
+            if (result && result.ActionStatus === 'OK') {
+                if (result.GroupInfo && result.GroupInfo[0]) {
                     var intro = JSON.parse(result.GroupInfo[0].Introduction);
-                    if(intro && intro.blockState == true){
+                    if (intro && intro.blockState == true) {
                         self.btnLock.children('span').text('解屏');
                     }
                 }

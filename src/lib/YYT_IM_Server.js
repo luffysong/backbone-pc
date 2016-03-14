@@ -55,14 +55,28 @@ YYTIMServer.lockScreen = function () {
  * 禁言
  */
 YYTIMServer.disableSendMsg = function () {
-    console.log('IM disbale msg');
+    console.log('禁言中.....');
 };
 
 /**
  * 踢人
+ * options : {GroupId: '', MemberToDel_Account: []}
  */
-YYTIMServer.removeUserFromGroup = function () {
-    console.log('IM remove user');
+YYTIMServer.removeUserFromGroup = function (options, okFn, errFn) {
+    if (!options || !options.GroupId || options.MemberToDel_Account.length <= 0) {
+        errFn && errFn({
+            msg: '参数不正确'
+        });
+    }
+    webim.deleteGroupMember(
+        options,
+        function (resp) {
+            okFn && okFn(resp);
+        },
+        function (err) {
+            errFn && errFn(err);
+        }
+    );
 };
 
 /**
