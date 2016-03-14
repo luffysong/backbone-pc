@@ -123,10 +123,10 @@ YYTIMServer.createIMChatRoom = function (okFn, errFn) {
  * @param okFn
  * @param errFn
  */
-YYTIMServer.getGroupInfo = function(groupId, okFn, errFn){
+YYTIMServer.getGroupInfo = function (groupId, okFn, errFn) {
     var options = {
         'GroupIdList': [
-            group_id
+            groupId
         ],
         'GroupBaseInfoFilter': [
             'Type',
@@ -169,7 +169,7 @@ YYTIMServer.getGroupInfo = function(groupId, okFn, errFn){
  * @param okFn
  * @param errFn
  */
-YYTIMServer.modifyGroupInfo = function(options, okFn, errFn) {
+YYTIMServer.modifyGroupInfo = function (options, okFn, errFn) {
     webim.modifyGroupBaseInfo(
         options,
         function (resp) {

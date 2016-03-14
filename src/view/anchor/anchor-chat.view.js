@@ -14,6 +14,7 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomMessageModel = require('../../model/anchor/room-message.model');
 var StartLiveModel = require('../../model/anchor/start-live.model');
 var EndLiveModel = require('../../model/anchor/end-live.model');
+var RoomMsgModel = require('../../model/anchor/room-message.model');
 var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
@@ -36,6 +37,7 @@ var View = BaseView.extend({
         this.roomMsgModel = new RoomMessageModel();
         this.startLiveModel = new StartLiveModel();
         this.endLiveModel = new EndLiveModel();
+        this.roomMsgModel = new RoomMessageModel();
         //标记是否开始直播
         this.isLiveShowing = false;
 
@@ -78,7 +80,7 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
 
-        YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
+        //YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
 
         //this.autoAddMsg();
 
@@ -171,7 +173,7 @@ var View = BaseView.extend({
     /**
      * 将用户从房间中移除
      */
-    removeUserFromRoom: function(data){
+    removeUserFromRoom: function (data) {
         var self = this;
         uiConfirm.show({
             content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
@@ -308,6 +310,7 @@ var View = BaseView.extend({
         $(document).on('event:roomInfoReady', function (e, data) {
             if (data) {
                 self.roomInfo = data;
+                self.roomInfoReady();
             }
             console.log('chat', data);
         });
@@ -315,8 +318,41 @@ var View = BaseView.extend({
     /**
      *
      */
-    getMessageFromServer: function () {
+    roomInfoReady: function(){
+        var self = this;
+        self.getMessageFromServer();
+        self.getGroupInfo();
 
+    },
+    /**
+     *
+     */
+    getMessageFromServer: function () {
+        var self = this;
+        self.roomMsgModel.setChangeURL({
+            accessToken: user.getToken(),
+            limit: 100,
+            endTime: 0,
+            startTime: 0,
+            cursor: '',
+            roomId: self.roomInfo.id
+        });
+
+        self.roomMsgModel.executeGET(function (result) {
+            console.log('roomMsgModel', result);
+        }, function (err) {
+            console.log(err);
+        });
+    },
+    getGroupInfo: function(){
+        var self = this;
+
+        YYTIMServer.getGroupInfo(self.roomInfo.imGroupid, function(result){
+            console.log('getGroupInfo', result);
+        }, function(err){
+            console.log(err);
+            msgBox.showError(err.msg || '获取群组消息失败!');
+        });
     }
 
 });
