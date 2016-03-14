@@ -24,24 +24,39 @@
 				
 	var DateTime = function(){
 		this.temp = new Date();
-		this.date = new Date();
-		this.attrs = {
-			'year':this.date.getFullYear(),
-			'month':this.date.getMonth() + 1,
-			'day':this.date.getDate(),
-			'hours':this.date.getHours(),
-			'minutes':this.date.getMinutes()
-		};
-		this.temp.setMonth(this.attrs.month);
-		this.temp.setDate(0);
+		this.setCurNewDate();
 	};
+	/**
+	 * [changeYear 改变临时年份]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	DateTime.prototype.changeYear = function(value){
+		this.temp.setFullYear(value);
+	}; 
+	/**
+	 * [getCountDays 根据月份获取当前月的总天数]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
 	DateTime.prototype.getCountDays = function(value){
-
+		this.temp.setMonth(value);
+		this.temp.setDate(0);
 		return this.temp.getDate();
 	};
+	/**
+	 * [$get 获取当前的年月日时分]
+	 * @param  {[type]} key [description]
+	 * @return {[type]}     [description]
+	 */
 	DateTime.prototype.$get = function(key){
 		return this.attrs[key];
 	};
+	/**
+	 * [ceilYear 向下获取年份]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
 	DateTime.prototype.ceilYear = function(value){
 		value = ~~value;
 		var i = 0;
@@ -62,7 +77,7 @@
 				end = 12;
 				break;
 			case 'day':
-				end = this.getCountDays();
+				end = this.getCountDays(this.$get('month'));
 				break;
 			case 'hours':
 				end = 23;
@@ -76,18 +91,47 @@
 		}
 		return result;
 	};
+	/**
+	 * [downMonth 向下获取月份]
+	 * @return {[type]} [description]
+	 */
 	DateTime.prototype.downMonth = function(){
 		return this._downDisplacement('month');
 	};
+	/**
+	 * [downDay 向下获取天数]
+	 * @return {[type]} [description]
+	 */
 	DateTime.prototype.downDay = function(){
 		return this._downDisplacement('day');
 	};
+	/**
+	 * [downHours 向下获取小时]
+	 * @return {[type]} [description]
+	 */
 	DateTime.prototype.downHours = function(){
 		return this._downDisplacement('hours');
 	};
+	/**
+	 * [downMinutes 向下获取分钟]
+	 * @return {[type]} [description]
+	 */
 	DateTime.prototype.downMinutes = function(){
 		return this._downDisplacement('minutes');
 	};
+	/**
+	 * [down 向下获取函数式]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	DateTime.prototype.down = function(value){
+		return this._downDisplacement(value);
+	};
+	/**
+	 * [getTime 根据一个对象拼装一个时间对象获取时间毫秒]
+	 * @param  {[type]} obj [description]
+	 * @return {[type]}     [description]
+	 */
 	DateTime.prototype.getTime = function(obj){
 		var val = '';
 		var month = obj.month < 10 ? '0'+obj.month : obj.month;
@@ -97,6 +141,21 @@
 		val += obj.year+'-'+month+ '-'+day+' ';
 		val += hours+':'+minutes+ ':00';
 		return new Date(val.replace(/-/g, '/')).getTime();
+	};
+	/**
+	 * [setCurNewDate 设置一个当前新的时间对象]
+	 */
+	DateTime.prototype.setCurNewDate = function(){
+		this.date = null;
+		this.attrs = null;
+		this.date = new Date();
+		this.attrs = {
+			'year':this.date.getFullYear(),
+			'month':this.date.getMonth() + 1,
+			'day':this.date.getDate(),
+			'hours':this.date.getHours(),
+			'minutes':this.date.getMinutes()
+		};
 	};
 	var shared = null;
 	DateTime.sharedInstanceDateTime = function(){

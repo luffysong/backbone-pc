@@ -38,7 +38,6 @@ var View = BaseView.extend({
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
-		var self = this;
 		if (user.isLogined()) { //已经登录
 			this.fetchUserInfo();
 		}else{
@@ -61,6 +60,7 @@ var View = BaseView.extend({
 			this._dialog.once('hide',function(){
 				if (user.isLogined()) {
 					self.fetchUserInfo();
+					self.trigger('topbar-logined');
 				};
 			});
 		}else{

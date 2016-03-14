@@ -62,6 +62,8 @@ var View = BaseView.extend({
 		this.liveTime = this.$el.find('#liveTime');
 		this.liveTimeTemp = this.$el.find('#liveTimeTemp').html();
 		this.cellsTemp = this.$el.find('#cellsTemp').html();
+		this.hours = this.compileHTML(this.cellsTemp,{'cells':this.eachMost(0,23)});
+		this.minutes = this.compileHTML(this.cellsTemp,{'cells':this.eachMost(0,59)});
 	},     
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready: function() {
@@ -76,7 +78,7 @@ var View = BaseView.extend({
 		this.liveTime.html(dateHTML);
 		this.liveTimeUl = this.liveTime.find('.select>ul');
 		this.liveTimeSpan = this.liveTime.find('.date');
-		this.liveLength = this.liveTimeUl.length;
+		this.liveLength = this.liveTimeUl.length - 1;
 	},
 	initListener:function(){
 		var self = this;
@@ -108,7 +110,7 @@ var View = BaseView.extend({
 			this.createDate[key] = d.cur;
 			switch(key){
 				case 'year':
-					d.cells = this.dateTime.ceilYear(2);
+					d.cells = this.dateTime.ceilYear(0);
 					d.name = '年';
 					break;
 				case 'month':
@@ -152,11 +154,56 @@ var View = BaseView.extend({
 		if (_val === val) {
 			return;
 		};
+		val = ~~val;
 		span.text(val);
 		this.createDate[tag] = val;
-		var start = this.liveLength 
-		console.log(index);
-		console.log(this.liveLength)
+		var start = index+1;
+		var defaD = 1;
+		var defaHM = 0;
+		var html;
+		var days;
+		var curs;
+		var downs;
+		if (tag === 'month' &&val === this.dateTime.$get('month')) {
+			this.dateTime.setCurNewDate();
+			curs = true;
+		};
+		for(;start<=this.liveLength;start++){
+			var curUl = $(this.liveTimeUl[start]);
+			var curSpan = $(this.liveTimeSpan[start]);
+			var _tag = curUl.data('tag');
+			downs = null;
+			if (curs) {
+				downs = this.dateTime.down(_tag);
+				html = this.compileHTML(this.cellsTemp,{'cells':downs});
+				curSpan.text(downs[0]);
+				curUl.html(html);
+				continue;
+			};
+			switch(_tag){
+				case 'day':
+					days = this.dateTime.getCountDays(val);
+					html = this.compileHTML(this.cellsTemp,{'cells':this.eachMost(1,days)});
+					curSpan.text(defaD);
+					curUl.html(html);	
+					break;
+				case 'hours':
+					curUl.html(this.hours);
+					curSpan.text(defaHM);
+					break;
+				default:
+					curUl.html(this.minutes);
+					curSpan.text(defaHM);
+					break;
+			};
+		};
+	},
+	eachMost:function(start,end){
+		var result = [];
+		for(;start<=end;start++){
+			result.push(start);
+		};
+		return result;
 	},
 	actorNameHandler:function(e){
 		var el = $(e.currentTarget);
@@ -183,7 +230,7 @@ var View = BaseView.extend({
 	selectorActorHandler:function(e){
 		var el = $(e.currentTarget);
 		var inputVal = el.text();
-		this.createData.artistId = el.attr('data-id');
+		this.createData.artistId = ~~el.attr('data-id');
 		this.actorName.val(inputVal);
 		this.selectorActor.hide();
 	},
@@ -194,6 +241,7 @@ var View = BaseView.extend({
 			this.createData.roomName = this.actorName.val();
 			this.createData.liveTime = this.dateTime.getTime(this.createDate);
 			console.log(this.createData);
+			window.location.reload();
 		}
 	}
 });

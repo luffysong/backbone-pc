@@ -43,21 +43,12 @@ var View = BaseView.extend({
 		if (!user.isLogined()) {
 			//把签名清除一次
 			store.remove('imSig');
+			this.topbarView.on('logined',function(){
+				self.fetchIMUserSig();
+			});
 			//跳转走人
 		}else{
-			imModel.fetchIMUserSig(function(sig){
-				if (!sig.anchor) {
-					console.log('跳转走人');
-					store.remove('imSig');
-					//跳转走人
-				}else{
-					//继续处理主播
-					self.initRender();
-				}
-			},function(e){
-				//处理请求错误
-				
-			});	
+			this.fetchIMUserSig();
 		}		
 	},
 	//渲染界面
@@ -65,6 +56,22 @@ var View = BaseView.extend({
 		this.settingBgView = new SettingBgView();
 		this.profileView = new ProfileView();
 		this.pageContentView = new PageContentView();
+	},
+	fetchIMUserSig:function(){
+		var self = this;
+		imModel.fetchIMUserSig(function(sig){
+			if (!sig.anchor) {
+				console.log('跳转走人');
+				store.remove('imSig');
+				//跳转走人
+			}else{
+				//继续处理主播
+				self.initRender();
+			}
+		},function(e){
+			//处理请求错误
+
+		});
 	}
 });
 
