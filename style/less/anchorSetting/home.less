@@ -88,10 +88,10 @@
 		border:1px solid #ededf0;
 		position: relative;
 		z-index: 1;
-		>div{
+		.myLiveBox,.creatLive,.setting{
 			display: none;
 		}
-		>div.show{
+		.show{
 			display: block;
 		}
 	}
@@ -158,10 +158,10 @@
 		}
 	}
 	.set_Con{
-		>div{
+		.personInfo,.modifyPwd{
 			display: none;
 		}
-		>div.show{
+		.show{
 			display: block;
 		}
 	}
@@ -169,10 +169,10 @@
 // mylive
 .myLiveBox{
 	.Mylive{
-		>div{
+		.preLive,.liveHistory{
 			display: none;
 		}
-		>div.show{
+		.show{
 			display: block;
 		}
 	}
@@ -327,13 +327,16 @@
 		font-family: 'arail';
 		font-size: 26px;
 	}
-	.pre{
-		color: #fff;
-		background: #27d5bf;
-	}
-	.disable:hover{
+	.pre,.next{
+		width: 54px;
 		color: #acacac;
 		background: #f8f8f8;
+		font-size: 20px;
+		font-family: 'arail';
+	}
+	.on{
+		color: #fff;
+		background: #27d5bf;
 	}
 	p{
 		clear: both;

@@ -338,10 +338,12 @@ img {
   position: relative;
   z-index: 1;
 }
-.content .anPc-list > div {
+.content .anPc-list .myLiveBox,
+.content .anPc-list .creatLive,
+.content .anPc-list .setting {
   display: none;
 }
-.content .anPc-list > div.show {
+.content .anPc-list .show {
   display: block;
 }
 .content .tab-panel {
@@ -403,16 +405,18 @@ img {
   background: #34d7c3;
   color: #fff;
 }
-.setting .set_Con > div {
+.setting .set_Con .personInfo,
+.setting .set_Con .modifyPwd {
   display: none;
 }
-.setting .set_Con > div.show {
+.setting .set_Con .show {
   display: block;
 }
-.myLiveBox .Mylive > div {
+.myLiveBox .Mylive .preLive,
+.myLiveBox .Mylive .liveHistory {
   display: none;
 }
-.myLiveBox .Mylive > div.show {
+.myLiveBox .Mylive .show {
   display: block;
 }
 .myLiveBox .myLiveControls {
@@ -563,13 +567,17 @@ img {
   font-family: 'arail';
   font-size: 26px;
 }
-.PageBox .pre {
-  color: #fff;
-  background: #27d5bf;
-}
-.PageBox .disable:hover {
+.PageBox .pre,
+.PageBox .next {
+  width: 54px;
   color: #acacac;
   background: #f8f8f8;
+  font-size: 20px;
+  font-family: 'arail';
+}
+.PageBox .on {
+  color: #fff;
+  background: #27d5bf;
 }
 .PageBox p {
   clear: both;
