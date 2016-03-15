@@ -537,7 +537,8 @@ img {
   cursor: pointer;
 }
 .preLive dd.ctl .disable {
-  background: #fff;
+  color: #fff;
+  background: #d3d1d1;
   cursor: default;
 }
 .PageBox {
