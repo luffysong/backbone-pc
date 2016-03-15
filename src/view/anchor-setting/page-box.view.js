@@ -50,6 +50,7 @@ var View = BaseView.extend({
 		for(;i<this.count;i++){
 			this.renderData.items.push(i+1);
 		};
+		
 		this.lock = true;
 	},
 	//当模板挂载到元素之后
@@ -88,6 +89,9 @@ var View = BaseView.extend({
 		if ((page-1) === this.offset) {
 			return;
 		};
+		var spans = this.nav.find('span');
+		spans.removeClass('now');
+		el.addClass('now');
 		var num = ~~el.text();
 		this.offset = num - 1;
 		this.openRequest();

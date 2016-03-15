@@ -31,16 +31,19 @@ var View = BaseView.extend({
 		var token = user.getToken();
 		this.listTemp = require('../../template/anchor-setting/no-open-list.html');
 		this.noOpenParameter = {
+			'deviceinfo':'{"aid":"30001001"}',
 			'order':'',
 			'offset':0,
-			'size':10,
+			'size':6,
 			'access_token':token
 		};
 		this.removeParameter = {
+			'deviceinfo':'{"aid":"30001001"}',
 			'roomId':'',
 			'access_token':token
 		};
 		this.releaseParameter = {
+			'deviceinfo':'{"aid":"30001001"}',
 			'roomId':'',
 			'access_token':token
 		};
