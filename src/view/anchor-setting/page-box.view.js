@@ -12,7 +12,7 @@
 'use strict';
 var navTemp = 
 	'{{each items as item i}}'
-		+'<span class="{{if item == num }}now{{/if}}" data-page="{{item}}">{{item}}</span>'
+		+'<span class="{{if item == num }}now{{/if}}" data-page="{{item}}" data-indice="{{i}}">{{item}}</span>'
 	+'{{/each}}';
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
@@ -50,6 +50,7 @@ var View = BaseView.extend({
 			this.items.push(i+1);
 		};
 		this.lock = true;
+		this.translation = 0;
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -101,6 +102,7 @@ var View = BaseView.extend({
 		el.addClass('now');
 		var num = ~~el.text();
 		this.offset = num - 1;
+		this.translation = ~~el.attr('data-indice');
 		this.openRequest();
 	},
 	initRequest:function(state){
@@ -141,16 +143,23 @@ var View = BaseView.extend({
 		var base = this.sectionBase - 1;
 		var boundary = this.offset + (base);
 		var temp = this.items.concat();
-		if (boundary <= temp[temp.length - 1] ) {
-			temp = temp.splice(this.offset,boundary);
-			this.sectionRender(temp);
+		if (temp[boundary] <= temp[temp.length - 1] ) {
+			temp = temp.splice(this.offset,this.sectionBase);
+			this.sectionRender(temp,temp[0]);
 		}else{
-
+			this.translation++;
+			if (this.translation > base) {
+				return;
+			};
+			this.spans.removeClass('now');
+			var span = this.spans[this.translation];
+			$(span).addClass('now');
 		};
 	},
-	sectionRender:function(items){
-		var html = this.compileHTML(navTemp,{'items':items,'num':0});
+	sectionRender:function(items,state){
+		var html = this.compileHTML(navTemp,{'items':items,'num':state});
 		this.nav.html(html);
+		this.spans = this.nav.find('span');
 	}
 });
 module.exports = View;
