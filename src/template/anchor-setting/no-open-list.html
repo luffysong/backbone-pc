@@ -6,7 +6,19 @@
             <dl class="preLiveMsg fl">
                    <dt>{{item.roomName}}</dt>
                    <dd>直播时间：<span>{{item.liveVideoTime}}</span></dd>
-                   <dd>视频连接：<span>{{item.livePushStreamUrl}}</span><a href="javascript:;" class="copy">复制</a></dd>
+                   <dd>
+                        <h4 class="tit">视频连接：</h4>
+                        <div>
+                                <span>{{item.livePushStreamUrl}}</span>
+                                <a href="javascript:;" class="copy">复制</a>
+                        </div>
+                   <dd>
+                        <h4 class="tit">视频连接：</h4>
+                        <div>
+                              <span>{{item.streamName}}</span>
+                              <a href="javascript:;" class="copy">复制</a>
+                        </div>
+                  </dd>
                    <dd class="ctl">
                         <a href="{{item.lookUrl}}">查看</a>
                         {{if item.status === 1}}
