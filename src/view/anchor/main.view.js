@@ -30,7 +30,7 @@ var View = BaseView.extend({
     //当模板挂载到元素之前
     beforeMount: function () {
         var url = URL.parse(location.href);
-        this.roomId = url.query['roomId'] | 1;
+        this.roomId = url.query['roomId'] || 1;
         if (!this.roomId) {
             this.goBack();
         }
