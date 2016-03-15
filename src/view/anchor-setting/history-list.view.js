@@ -27,9 +27,10 @@ var View = BaseView.extend({
 		var token = user.getToken();
 		this.listTemp = require('../../template/anchor-setting/history-list.html');
 		this.historyParameter = {
+			'deviceinfo':'{"aid":"30001001"}',
 			'order':'',
 			'offset':0,
-			'size':10,
+			'size':6,
 			'access_token':token
 		};
 		this.historyModel = new HistoryListModel();

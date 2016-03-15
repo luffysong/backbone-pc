@@ -42,6 +42,9 @@ var BaseModel = Backbone.Model.extend({
 		if (!this.setEnv) { //默认使用内置{url_prefix}处理
 			this._ICESetEnv();
 		};
+		if (typeof this.url === 'string') {
+			this.url = this.url.split('?')[0];
+		};
 	},
 	_ICESetEnv:function(){
 		var env = Config.env[Config.scheme];
@@ -304,9 +307,8 @@ var BaseModel = Backbone.Model.extend({
 	 * @param {[type]} parameter [description]
 	 */
 	setChangeURL:function(parameter){
-		var url = '';
+		var url = ''
 		if (!parameter) {
-			this.url = this._url;
 			return;
 		};
 		for(var key in parameter){
@@ -316,7 +318,7 @@ var BaseModel = Backbone.Model.extend({
 			}else{
 				url = url.replace('{{'+key+'}}',value);
 			};
-		}
+		};
 		this.url = url;
 	},
 	/**

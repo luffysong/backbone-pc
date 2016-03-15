@@ -47,6 +47,7 @@ var View = BaseView.extend({
 			'minutes'
 		];
 		this.createData = {
+			'deviceinfo':'{"aid":"30001001"}',
 			'roomName':'',
 			'roomDesc':'',
 			'artistId':'',
@@ -217,7 +218,8 @@ var View = BaseView.extend({
 		};
 		var self = this;
 		this.artistModel.setChangeURL({
-			'keyword':val
+			'keyword':val,
+			'deviceinfo':'{"aid":"30001001"}'
 		});
 		this.artistModel.execute(function(response){
 			var items = response.data.list;

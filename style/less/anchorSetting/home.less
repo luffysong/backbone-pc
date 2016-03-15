@@ -1,11 +1,12 @@
 // 页面布局
 .anPc-container{
-	height: 1685px;
+	height: 1730px;
 	padding-top: 90px;
-	background: #fff;
+	background: #333 top center no-repeat;
 }
 .title{
 	position: relative;
+	height: 240px;
 	.editorBg_btn{
 		width: 84px;
 		height: 32px;
@@ -71,8 +72,14 @@
 		}
 	}
 }
+.contentBox{
+	background: #fff;
+	padding-bottom: 60px;
+}
 .content{
-	.subnav{
+	background: #fff;
+	.subnav1{
+		background: blue;
 		width: 200px;
 		border:1px solid #ededf0;
 		border-bottom: 0 none;
@@ -84,14 +91,14 @@
 		width: 969px;
 		padding-left: 27px;
 		padding-top: 17px;
-		//height: 1200px;
+		background: #fff;
 		border:1px solid #ededf0;
 		position: relative;
 		z-index: 1;
-		>div{
+		.myLiveBox,.creatLive,.setting{
 			display: none;
 		}
-		>div.show{
+		.show{
 			display: block;
 		}
 	}
@@ -101,7 +108,8 @@
 		margin-bottom: 16px;
 	}
 }
-.subnav{
+.subnav1{
+	background: #fff;
 	li{
 		font-size: 12px;
 		color: #999;
@@ -134,7 +142,7 @@
 	}
 }
 .page{
-	padding: 40px 27px 0 0;
+	padding: 40px 27px 35px 0;
 	overflow: hidden;
 }
 .setting{
@@ -158,10 +166,10 @@
 		}
 	}
 	.set_Con{
-		>div{
+		.personInfo,.modifyPwd{
 			display: none;
 		}
-		>div.show{
+		.show{
 			display: block;
 		}
 	}
@@ -169,10 +177,10 @@
 // mylive
 .myLiveBox{
 	.Mylive{
-		>div{
+		.preLive,.liveHistory{
 			display: none;
 		}
-		>div.show{
+		.show{
 			display: block;
 		}
 	}
@@ -282,7 +290,7 @@
 			cursor: pointer;
 		}
 		.disable{
-			background: #d3d1d1;
+			background: #fff;
 			cursor: default;
 		}
 	}
@@ -327,13 +335,16 @@
 		font-family: 'arail';
 		font-size: 26px;
 	}
-	.pre{
-		color: #fff;
-		background: #27d5bf;
-	}
-	.disable:hover{
+	.pre,.next{
+		width: 54px;
 		color: #acacac;
 		background: #f8f8f8;
+		font-size: 20px;
+		font-family: 'arail';
+	}
+	.on{
+		color: #fff;
+		background: #27d5bf;
 	}
 	p{
 		clear: both;
@@ -344,6 +355,16 @@
 			color:#5c5c5c;
 			margin:0 5px;
 		}
+	}
+	.disabled{
+		background: #fff;
+		color:#acacac;
+		width: 30px;
+		letter-spacing: 1px;
+	}
+	.disabled:hover{
+		background:#fff;
+		color:#acacac;
 	}
 }
 // 历史直播
