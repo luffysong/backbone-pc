@@ -16,6 +16,7 @@ var ReleaseModel = require('../../model/anchor-setting/release-video.model');
 var RemoveModel = require('../../model/anchor-setting/remove-video.model');
 var NoOpenPageBoxView = require('./page-box.view');
 var MsgBox = require('ui.MsgBox');
+var Confirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
@@ -128,16 +129,22 @@ var View = BaseView.extend({
 					break;
 				case 3:
 					if (this.removeLock) {
-						this.removeLock = false;
-						this.removeParameter.roomId = id;
-						this.removeModel.setChangeURL(this.removeParameter);
-						this.removeModel.execute(function(response){
-							self.removeLock = true;
-							console.log(response);
-						},function(e){
-							self.removeLock = true;
-							MsgBox.showError('删除失败');
-						});
+						Confirm.show({
+							content:'是否确认删除',
+							okFn:function(){
+								self.removeLock = false;
+								self.removeParameter.roomId = id;
+								self.removeModel.setChangeURL(self.removeParameter);
+								self.removeModel.execute(function(response){
+									self.removeLock = true;
+									console.log(response);
+								},function(e){
+									self.removeLock = true;
+									MsgBox.showError('删除失败');
+								});
+							}
+						})
+						
 					};
 					break;
 			};
