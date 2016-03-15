@@ -42,6 +42,42 @@ var View = BaseView.extend({
         this.isLiveShowing = false;
         //禁言用户列表
         this.forbidUsers = [];
+
+        var self = this;
+
+        function callback(notifyInfo) {
+            self.groupSystemNotifys(notifyInfo);
+        }
+
+        //注册IM事件处理
+        //YYTIMServer.init({
+        //    listeners: {
+        //        'onConnNotify': function(notifyInfo){
+        //            console.log('1-onConnNotify', notifyInfo);
+        //        },
+        //        'onMsgNotify': function (notifyInfo) {
+        //            alert(1);
+        //            self.onMsgNotify(notifyInfo);
+        //        },
+        //        'onGroupInfoChangeNotify': function (notifyInfo) {
+        //            self.onGroupInfoChangeNotify(notifyInfo);
+        //        },
+        //        'groupSystemNotifys': {
+        //            "1": callback, //申请加群请求（只有管理员会收到）
+        //            "2": callback, //申请加群被同意（只有申请人能够收到）
+        //            "3": callback, //申请加群被拒绝（只有申请人能够收到）
+        //            "4": callback, //被管理员踢出群(只有被踢者接收到)
+        //            "5": callback, //群被解散(全员接收)
+        //            "6": callback, //创建群(创建者接收)
+        //            "7": callback, //邀请加群(被邀请者接收)
+        //            "8": callback, //主动退群(主动退出者接收)
+        //            "9": callback, //设置管理员(被设置者接收)
+        //            "10": callback, //取消管理员(被取消者接收)
+        //            "11": callback, //群已被回收(全员接收)
+        //            "255": callback//用户自定义通知(默认全员接收,暂不支持)
+        //        }
+        //    }
+        //});
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -58,39 +94,6 @@ var View = BaseView.extend({
         this.defineEventInterface();
 
 
-        function callback(notifyInfo) {
-            self.groupSystemNotifys(notifyInfo);
-        }
-
-
-        //注册IM事件处理
-        YYTIMServer.init({
-            listeners: {
-                'onConnNotify': function(notifyInfo){
-                    console.log('1-onConnNotify', notifyInfo);
-                },
-                'onMsgNotify': function (notifyInfo) {
-                    self.onMsgNotify(notifyInfo);
-                },
-                'onGroupInfoChangeNotify': function (notifyInfo) {
-                    self.onGroupInfoChangeNotify(notifyInfo);
-                },
-                'groupSystemNotifys': {
-                    "1": callback, //申请加群请求（只有管理员会收到）
-                    "2": callback, //申请加群被同意（只有申请人能够收到）
-                    "3": callback, //申请加群被拒绝（只有申请人能够收到）
-                    "4": callback, //被管理员踢出群(只有被踢者接收到)
-                    "5": callback, //群被解散(全员接收)
-                    "6": callback, //创建群(创建者接收)
-                    "7": callback, //邀请加群(被邀请者接收)
-                    "8": callback, //主动退群(主动退出者接收)
-                    "9": callback, //设置管理员(被设置者接收)
-                    "10": callback, //取消管理员(被取消者接收)
-                    "11": callback, //群已被回收(全员接收)
-                    "255": callback//用户自定义通知(默认全员接收,暂不支持)
-                }
-            }
-        });
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -138,8 +141,8 @@ var View = BaseView.extend({
             });
         }
 
+        var txt = isLock === true ? '锁屏' : '解屏';
         YYTIMServer.modifyGroupInfo(options, function (result) {
-            var txt = isLock === true ? '锁屏' : '解屏';
             if (result && result.ActionStatus == 'OK') {
                 self.btnLock.children('span').text(isLock === true ? '解屏' : '锁屏');
                 msgBox.showOK(txt + '成功!');
@@ -209,10 +212,10 @@ var View = BaseView.extend({
             }
         });
     },
-    disableSendMsgHandler: function(user){
+    disableSendMsgHandler: function (user) {
         var self = this;
-        if(self.forbidUsers.length > 200){
-           self.forbidUsers.shift();
+        if (self.forbidUsers.length > 200) {
+            self.forbidUsers.shift();
         }
         self.forbidUsers.push(user.id);
         var options = {
@@ -327,6 +330,7 @@ var View = BaseView.extend({
     startLive: function () {
         var self = this;
         self.startLiveModel.setChangeURL({
+            deviceinfo: JSON.stringify({"aid": "30001001"}),
             accessToken: user.getToken(),
             roomId: self.roomInfo.id,
             imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
@@ -348,6 +352,7 @@ var View = BaseView.extend({
     endLiveClick: function (data) {
         var self = this;
         self.endLiveModel.setChangeURL({
+            deviceinfo: JSON.stringify({"aid": "30001001"}),
             accessToken: user.getToken(),
             roomId: self.roomInfo.id
         });
@@ -377,12 +382,28 @@ var View = BaseView.extend({
 
         //成功获取房间信息
         $(document).on('event:roomInfoReady', function (e, data) {
+
             if (data) {
                 self.roomInfo = data;
                 self.roomInfoReady();
             }
             console.log('chat', data);
         });
+
+        $(document).on('event:onConnNotify', function (e, notifyInfo) {
+
+            //self.onConnNotify(notifyInfo);
+        });
+        $(document).on('event:onMsgNotify', function (e, notifyInfo) {
+            self.onMsgNotify(notifyInfo);
+        });
+        $(document).on('event:onGroupInfoChangeNotify', function (e, notifyInfo) {
+            self.onGroupInfoChangeNotify(notifyInfo);
+        });
+        $(document).on('event:groupSystemNotifys', function (e, notifyInfo) {
+            self.groupSystemNotifys(notifyInfo);
+        });
+
     },
     /**
      *
@@ -399,6 +420,7 @@ var View = BaseView.extend({
     getMessageFromServer: function () {
         var self = this;
         self.roomMsgModel.setChangeURL({
+            deviceinfo: JSON.stringify({"aid": "30001001"}),
             accessToken: user.getToken(),
             limit: 100,
             endTime: 0,

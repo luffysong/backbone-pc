@@ -119,6 +119,7 @@ var View = BaseView.extend({
     getNoticeInfo: function(){
         var self = this;
         this.noticeGetModel.setChangeURL({
+            deviceinfo: JSON.stringify({"aid":"30001001"}),
             roomId: this.roomInfo.id,
             accessToken: user.getToken()
         });
