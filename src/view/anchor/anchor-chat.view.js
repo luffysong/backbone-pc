@@ -18,6 +18,7 @@ var RoomMsgModel = require('../../model/anchor/room-message.model');
 var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var DateTime = require('DateTime');
 
 var msgBox = require('ui.MsgBox');
 
@@ -191,12 +192,12 @@ var View = BaseView.extend({
         if (target.text() === '禁言') {
             this.disableSendMsgConfirm({
                 name: li.attr('data-name'),
-                id: 1
+                id: li.attr('data-id')
             });
         } else if (target.text() === '踢出') {
             this.removeUserFromRoom({
                 name: li.attr('data-name'),
-                id: '40549673$0'
+                id: li.attr('data-id')
             });
         }
     },
@@ -218,6 +219,7 @@ var View = BaseView.extend({
             self.forbidUsers.shift();
         }
         self.forbidUsers.push(user.id);
+        console.log('self.forbidUsers', self.forbidUsers);
         var options = {
             GroupId: self.roomInfo.imGroupid,
             Notification: JSON.stringify({
@@ -225,8 +227,8 @@ var View = BaseView.extend({
             })
         };
 
-        console.log('options', options);
         YYTIMServer.modifyGroupInfo(options, function (result) {
+
             console.log('disableSendMsgHandler', result);
         });
     },
@@ -253,7 +255,7 @@ var View = BaseView.extend({
 
         function okFn(resp) {
             if (resp.ActionStatus == 'OK') {
-                msgBox.showError('成功将用户:<b>' + data.name + '</b>踢出房间');
+                msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
             } else {
                 msgBox.showError(errTip);
             }
@@ -293,20 +295,26 @@ var View = BaseView.extend({
      * @constructor
      */
     addMessage: function (data) {
-        //var msgObj = {};
-        //if (data.elems && data.elems.length > 0) {
-        //    msgObj = data.elems[0].content.text;
-        //    msgObj = JSON.parse(msgObj);
-        //}
-        //
-        //console.log(msgObj);
-        //
-        //var tpl = _.template(this.getMessageTpl());
-        //var msg = {
-        //    fromAccount: data.fromAccount
-        //};
-        //this.msgList.append(tpl(data));
-        //this.chatHistory.scrollTop(this.msgList.height());
+        var self = this;
+        console.log(data);
+        var msgObj = {};
+        if (data.elems && data.elems.length > 0) {
+            msgObj = data.elems[0].content.text + '';
+            msgObj = msgObj.replace(/&quot;/g, '\'');
+            eval('msgObj = ' + msgObj);
+            msgObj = _.extend({
+                nickName: '匿名',
+                content: '',
+                url: '',
+                time: self.getDateStr(new Date())
+            },msgObj);
+            if (msgObj && msgObj.content) {
+                msgObj.fromAccount = data.fromAccount;
+                var tpl = _.template(this.getMessageTpl());
+                this.msgList.append(tpl(msgObj));
+                this.chatHistory.scrollTop(this.msgList.height());
+            }
+        }
     },
     autoAddMsg: function () {
         var self = this;
@@ -471,6 +479,10 @@ var View = BaseView.extend({
             console.log(err);
             msgBox.showError(err.msg || '获取群组消息失败!');
         });
+    },
+    getDateStr: function(dateInt){
+        var date = new Date(dateInt);
+        return date.Format('hh:MM:ss');
     }
 
 });
