@@ -4,26 +4,29 @@
 	padding-top: 90px;
 	background: #333 top center no-repeat;
 }
-.title{
-	position: relative;
-	height: 240px;
-	.editorBg_btn{
-		width: 84px;
-		height: 32px;
-		line-height: 32px;
-		background: #27d5bf;
-		font-size: 12px;
-		text-align: center;
-		color:#fff;
-		position: absolute;
-		right: 20px;
-		top: 20px;
-		cursor: pointer;
-	}
-	.editorBg_btn:hover{
-		background: #5bdfcd;
+.anPc-container{
+	.title{
+		position: relative;
+		height: 240px;
+		.editorBg_btn{
+			width: 84px;
+			height: 32px;
+			line-height: 32px;
+			background: #27d5bf;
+			font-size: 12px;
+			text-align: center;
+			color:#fff;
+			position: absolute;
+			right: 20px;
+			top: 20px;
+			cursor: pointer;
+		}
+		.editorBg_btn:hover{
+			background: #5bdfcd;
+		}
 	}
 }
+
 .anchorMsg_con{
 	height: 120px;
 	padding-left: 47px;
@@ -207,7 +210,7 @@
 // prelive
 .preLive{
 	ul{
-		height: 1038px;
+		// height: 1038px;
 	}
 	li{
 		overflow: hidden;
@@ -254,8 +257,16 @@
 		}
 	}
 	.preLiveMsg{
-		height: 124px;
-		width: 330px;
+		width: 720px;
+		h4{
+			width: 60px;
+			.fl;
+		}
+		div{
+			.fl;
+			max-width: 660px;
+			word-break:break-all
+		}
 	}
 	dt{
 		font-size: 14px;
@@ -264,12 +275,13 @@
 		margin-bottom: 4px;
 	}
 	dd{
+		overflow: hidden;
 		font-size: 12px;
 		color:#999;
 		line-height: 26px;
 		.copy{
 			color:#34d7c3;
-			float: right;
+			margin-left: 20px;
 		}
 		.copy:hover{
 			text-decoration: underline;
@@ -342,6 +354,7 @@
 		background: #f8f8f8;
 		font-size: 20px;
 		font-family: 'arail';
+		.fl;
 	}
 	.on{
 		color: #fff;
@@ -389,7 +402,6 @@
 		}
 	}
 	.preLiveMsg{
-		height: 124px;
 		width: 330px;
 	}
 	dt{

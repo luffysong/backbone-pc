@@ -352,7 +352,7 @@ var View = BaseView.extend({
     endLiveClick: function (data) {
         var self = this;
         self.endLiveModel.setChangeURL({
-            deviceinfo: JSON.stringify({"aid": "30001001"}),
+            deviceinfo: '{"aid": "30001001"}',
             accessToken: user.getToken(),
             roomId: self.roomInfo.id
         });
@@ -420,7 +420,7 @@ var View = BaseView.extend({
     getMessageFromServer: function () {
         var self = this;
         self.roomMsgModel.setChangeURL({
-            deviceinfo: JSON.stringify({"aid": "30001001"}),
+            deviceinfo: '{"aid": "30001001"}',
             accessToken: user.getToken(),
             limit: 100,
             endTime: 0,
