@@ -96,9 +96,8 @@ var View = BaseView.extend({
 
             self.initWebIM();
 
-            //setTimeout(function () {
             self.roomDetail.setChangeURL({
-                deviceinfo: JSON.stringify({"aid": "30001001"}),
+                deviceinfo: '{"aid": "30001001"}',
                 accessToken: user.getToken(),
                 roomId: this.roomId
             });
@@ -106,7 +105,6 @@ var View = BaseView.extend({
             self.initRoom();
             self.renderPage();
 
-            //}, 1000);
 
         } else {
             self.goBack();
