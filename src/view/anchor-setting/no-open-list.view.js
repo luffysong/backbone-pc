@@ -18,6 +18,7 @@ var NoOpenPageBoxView = require('./page-box.view');
 var MsgBox = require('ui.MsgBox');
 var Confirm = require('ui.Confirm');
 var UserModel = require('UserModel');
+var UploadFileDialog = require('UploadFileDialog');
 var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
 	el:'#noOpenContent', //设置View对象作用于的根元素，比如id
@@ -62,6 +63,7 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
+		// this.uploadImage = new UploadFileDialog();
 		this.noOpenModel.setChangeURL(this.noOpenParameter);
 		this.noOpenModel.execute(function(response){
 			var data = response.data;
