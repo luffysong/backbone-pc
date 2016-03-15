@@ -256,11 +256,11 @@ img {
   padding-top: 90px;
   background: #333 top center no-repeat;
 }
-.title {
+.anPc-container .title {
   position: relative;
   height: 240px;
 }
-.title .editorBg_btn {
+.anPc-container .title .editorBg_btn {
   width: 84px;
   height: 32px;
   line-height: 32px;
@@ -273,7 +273,7 @@ img {
   top: 20px;
   cursor: pointer;
 }
-.title .editorBg_btn:hover {
+.anPc-container .title .editorBg_btn:hover {
   background: #5bdfcd;
 }
 .anchorMsg_con {
@@ -451,9 +451,6 @@ img {
   background: #34d7c3;
   color: #fff;
 }
-.preLive ul {
-  height: 1038px;
-}
 .preLive li {
   overflow: hidden;
   padding: 24px 0;
@@ -499,8 +496,16 @@ img {
   cursor: pointer;
 }
 .preLive .preLiveMsg {
-  height: 124px;
-  width: 330px;
+  width: 720px;
+}
+.preLive .preLiveMsg h4 {
+  width: 60px;
+  float: left;
+}
+.preLive .preLiveMsg div {
+  float: left;
+  max-width: 660px;
+  word-break: break-all;
 }
 .preLive dt {
   font-size: 14px;
@@ -509,13 +514,14 @@ img {
   margin-bottom: 4px;
 }
 .preLive dd {
+  overflow: hidden;
   font-size: 12px;
   color: #999;
   line-height: 26px;
 }
 .preLive dd .copy {
   color: #34d7c3;
-  float: right;
+  margin-left: 20px;
 }
 .preLive dd .copy:hover {
   text-decoration: underline;
@@ -588,6 +594,7 @@ img {
   background: #f8f8f8;
   font-size: 20px;
   font-family: 'arail';
+  float: left;
 }
 .PageBox .on {
   color: #fff;
@@ -629,7 +636,6 @@ img {
   height: 100%;
 }
 .liveHistory .preLiveMsg {
-  height: 124px;
   width: 330px;
 }
 .liveHistory dt {
