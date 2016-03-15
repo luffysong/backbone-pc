@@ -607,6 +607,7 @@ img {
   color: #acacac;
   width: 30px;
   letter-spacing: 1px;
+  cursor: default;
 }
 .PageBox .disabled:hover {
   background: #fff;
