@@ -50,7 +50,6 @@ var View = BaseView.extend({
     initWebIM: function () {
         var self = this;
         function callback(notifyInfo) {
-            console.log(5);
             $(document).trigger('event:groupSystemNotifys', notifyInfo);
         }
 
@@ -58,16 +57,13 @@ var View = BaseView.extend({
         YYTIMServer.init({
             'onConnNotify': function (notifyInfo) {
                 console.log('1-onConnNotify', notifyInfo);
-                alert(2);
                 $(document).trigger('event:onConnNotify', notifyInfo);
             },
             'onMsgNotify': function (notifyInfo) {
                 console.log('2-onMsgNotify', notifyInfo);
-                alert(1);
                 $(document).trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
-                alert(3);
                 console.log('3-onGroupInfoChangeNotify', notifyInfo);
                 $(document).trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
