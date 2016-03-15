@@ -17,6 +17,7 @@ var rev = require('gulp-rev');
 var filter = require('gulp-filter');
 var pkg = require('./package.json');
 var header = require('gulp-header');
+var jshint = require('gulp-jshint');
 // 配置本地服务器
 var browser = require('browser-sync');
 var browserSync = browser.create();
@@ -32,6 +33,14 @@ var loadMap = [
   './*.html',
   './web/*.html'
 ];
+
+var paths = {
+  scripts: [
+      './src/**/*.js',
+      './link/**/*.js'
+  ]
+};
+
 gulp.task('server', [], function () {
   // content
   browserSync.init(loadMap,{
@@ -44,6 +53,13 @@ gulp.task('server', [], function () {
   //});
 });
 
+//语法检查
+gulp.task('jshint', function(){
+  return gulp.src(paths.scripts)
+      .pipe(jshint())
+      .pipe(jshint.reporter('default'));
+});
+
 // 清理dist目录
 gulp.task('clean', function () {
   // content
@@ -53,7 +69,7 @@ gulp.task('clean', function () {
 gulp.task('build:rename', ['build'], function () {
   return gulp.src('./dist/web/*.html')
 
-})
+});
 
 //进入build
 gulp.task('build', ['build:move'], function () {

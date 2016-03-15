@@ -124,7 +124,7 @@ var View = BaseView.extend({
             options = {
                 GroupId: this.roomInfo.imGroupid
             };
-        if (isLock == true) {
+        if (isLock === true) {
             options.Introduction = JSON.stringify({
                 blockState: !!isLock,
                 alert: '播主设定锁定屏幕，不能发送弹幕及礼物'
@@ -136,9 +136,9 @@ var View = BaseView.extend({
         }
 
         YYTIMServer.modifyGroupInfo(options, function (result) {
-            var txt = isLock == true ? '锁屏' : '解屏';
+            var txt = isLock === true ? '锁屏' : '解屏';
             if (result && result.ActionStatus == 'OK') {
-                self.btnLock.children('span').text(isLock == true ? '解屏' : '锁屏');
+                self.btnLock.children('span').text(isLock === true ? '解屏' : '锁屏');
                 msgBox.showOK(txt + '成功!');
             } else {
                 msgBox.showError(txt + '操作失败,请稍后重试');
@@ -421,7 +421,7 @@ var View = BaseView.extend({
             if (result && result.ActionStatus === 'OK') {
                 if (result.GroupInfo && result.GroupInfo[0]) {
                     var intro = JSON.parse(result.GroupInfo[0].Introduction);
-                    if (intro && intro.blockState == true) {
+                    if (intro && intro.blockState === true) {
                         self.btnLock.children('span').text('解屏');
                     }
                 }

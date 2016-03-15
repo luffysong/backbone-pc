@@ -1,0 +1,9 @@
+{
+  "node": true,
+  "jquery": true,
+  "predef": [
+    "webim",
+    "_",
+    "backbone"
+  ]
+}
