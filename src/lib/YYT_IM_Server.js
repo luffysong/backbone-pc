@@ -21,20 +21,18 @@ var YYTIMServer = {
  * @param options
  */
 YYTIMServer.init = function (options) {
-    this.options = options;
-    this.setting = _.extend(this.setting, options);
-
-    console.log('init - setting', this.setting);
     var imSig = store.get('imSig');
+    var loginInfo = {
+        sdkAppID: imSig.imAppid, //用户所属应用id
+        appIDAt3rd: imSig.imAppid, //用户所属应用id
+        accountType: imSig.imAccountType, //用户所属应用帐号类型
+        identifier: imSig.imIdentifier, //当前用户ID
+        userSig: imSig.userSig //当前用户身份凭证
+    };
     if (imSig && options) {
+        console.log('--------', 'loginInfo', loginInfo, 'listeners',options);
         //腾讯IM初始化
-        webim.init({
-            sdkAppID: imSig.imAppid, //用户所属应用id
-            appIDAt3rd: imSig.imAppid, //用户所属应用id
-            accountType: imSig.imAccountType, //用户所属应用帐号类型
-            identifier: imSig.imIdentifier, //当前用户ID
-            userSig: imSig.userSig //当前用户身份凭证
-        }, this.setting.listeners, null);
+        webim.init(loginInfo, options, null);
     }
 };
 
