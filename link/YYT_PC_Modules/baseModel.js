@@ -44,6 +44,7 @@ var BaseModel = Backbone.Model.extend({
 		};
 		if (typeof this.url === 'string') {
 			this.url = this.url.split('?')[0];
+			this.hostname = this.url;
 		};
 	},
 	_ICESetEnv:function(){
@@ -157,6 +158,9 @@ var BaseModel = Backbone.Model.extend({
 	_ICESendHelper:function(message){
 		var success = message.success;
 		var error = message.error;
+		if (message.type !== 'GET') {
+			this.url = this.hostname;
+		};
 		switch(message.type){
 			case 'POST':
 				this._ICESave(message.saveJSON,success,error);

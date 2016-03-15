@@ -33,24 +33,22 @@ var View = BaseView.extend({
 		this.count = props.count;
 		this.offset = props.offset;
 		this.size = props.size;
+		this.sectionBase = props.sectionBase || 3;
 		this.listModel = this._ICEOptions.listModel;
 		this.listRender = this._ICEOptions.listRender;
 		this.modelParameter = {
+			'deviceinfo':'{"aid":"30001001"}',
 			'order':'',
 			'offset':0,
 			'size':this.size,
 			'access_token':user.getToken()
 		};
-		this.renderData = {
-			'count':this.count,
-			'omit':this.count > 2,
-			'items':[]
-		};
+		this.omit = this.count > 2;
+		this.items = [];
 		var i = 0;
 		for(;i<this.count;i++){
-			this.renderData.items.push(i+1);
+			this.items.push(i+1);
 		};
-		
 		this.lock = true;
 	},
 	//当模板挂载到元素之后
@@ -62,7 +60,16 @@ var View = BaseView.extend({
 		this.initRender();
 	},
 	initRender:function(){
-		var html = this.compileHTML(this.boxTemp,this.renderData);
+		var temp = this.items.concat();
+		if (this.omit) {
+			temp = temp.splice(0,3);
+		}
+		var data = {
+			'count':this.count,
+			'omit':this.omit,
+			'items':temp
+		};
+		var html = this.compileHTML(this.boxTemp,data);
 		this.$el.html(html);
 		this.howPage = this.$el.find('#howPage');
 		this.nav = this.$el.find('#nav');
@@ -101,11 +108,13 @@ var View = BaseView.extend({
 			case '1':
 				if (this.offset !== 0) {
 					this.offset--;
+					this.sectionLogic();
 				};
 				break;
 			case '2':
 				if (this.offset <= this.count - 2) {
 					this.offset++;
+					this.sectionLogic();
 				};
 				break;
 		};
@@ -128,8 +137,20 @@ var View = BaseView.extend({
 			});
 		}
 	},
-	resetRender:function(){
-		
+	sectionLogic:function(){
+		var base = this.sectionBase - 1;
+		var boundary = this.offset + (base);
+		var temp = this.items.concat();
+		if (boundary <= temp[temp.length - 1] ) {
+			temp = temp.splice(this.offset,boundary);
+			this.sectionRender(temp);
+		}else{
+
+		};
+	},
+	sectionRender:function(items){
+		var html = this.compileHTML(navTemp,{'items':items,'num':0});
+		this.nav.html(html);
 	}
 });
 module.exports = View;
