@@ -65,7 +65,7 @@ var View = BaseView.extend({
     panelDisplay: function (isShow) {
         this.errNoticeTip.text('');
         if (isShow === true) {
-            this.txtNotice.val(this.roomInfo.desc);
+            this.txtNotice.val(this.noticeInfo.content);
             this.editNoticPanel.show();
         } else {
             this.editNoticPanel.hide();
@@ -129,6 +129,7 @@ var View = BaseView.extend({
                 var notice = null;
                 res.data.placards && (notice = res.data.placards[0]);
                 if(notice){
+                    self.noticeInfo = notice;
                     self.noticeWrap.text(notice.content || '暂无公告');
                     self.txtNotice.val(notice.content);
                 }else{
