@@ -196,7 +196,7 @@ var View = BaseView.extend({
         } else if (target.text() === '踢出') {
             this.removeUserFromRoom({
                 name: li.attr('data-name'),
-                id: 1
+                id: '40549673$0'
             });
         }
     },
@@ -236,12 +236,15 @@ var View = BaseView.extend({
     removeUserFromRoom: function (data) {
         var self = this,
             errTip = '将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试';
+        var user = [];
+        user.push(data.id);
+        console.log('data.id', user);
         uiConfirm.show({
             content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
             okFn: function () {
                 YYTIMServer.removeUserFromGroup({
                     GroupId: self.roomInfo.imGroupid,
-                    MemberToDel_Account: [data.id]
+                    MemberToDel_Account: user
                 }, okFn, function (err) {
                     msgBox.showError(errTip);
                 });
@@ -267,6 +270,8 @@ var View = BaseView.extend({
     },
     onMsgNotify: function (notifyInfo) {
         console.log('onMsgNotify', notifyInfo);
+        this.addMessage(notifyInfo);
+
 
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
@@ -288,9 +293,20 @@ var View = BaseView.extend({
      * @constructor
      */
     addMessage: function (data) {
-        var tpl = _.template(this.getMessageTpl());
-        this.msgList.append(tpl(data));
-        this.chatHistory.scrollTop(this.msgList.height());
+        //var msgObj = {};
+        //if (data.elems && data.elems.length > 0) {
+        //    msgObj = data.elems[0].content.text;
+        //    msgObj = JSON.parse(msgObj);
+        //}
+        //
+        //console.log(msgObj);
+        //
+        //var tpl = _.template(this.getMessageTpl());
+        //var msg = {
+        //    fromAccount: data.fromAccount
+        //};
+        //this.msgList.append(tpl(data));
+        //this.chatHistory.scrollTop(this.msgList.height());
     },
     autoAddMsg: function () {
         var self = this;
@@ -444,7 +460,7 @@ var View = BaseView.extend({
         YYTIMServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
             console.log('getGroupInfo', result);
             if (result && result.ActionStatus === 'OK') {
-                if (result.GroupInfo && result.GroupInfo[0]) {
+                if (result.GroupInfo && result.GroupInfo[0] && result.GroupInfo[0].Introduction) {
                     var intro = JSON.parse(result.GroupInfo[0].Introduction);
                     if (intro && intro.blockState === true) {
                         self.btnLock.children('span').text('解屏');
