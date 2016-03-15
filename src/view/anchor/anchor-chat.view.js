@@ -66,13 +66,16 @@ var View = BaseView.extend({
         //注册IM事件处理
         YYTIMServer.init({
             listeners: {
-                onMsgNotify: function (notifyInfo) {
+                'onConnNotify': function(notifyInfo){
+                    console.log('1-onConnNotify', notifyInfo);
+                },
+                'onMsgNotify': function (notifyInfo) {
                     self.onMsgNotify(notifyInfo);
                 },
-                onGroupInfoChangeNotify: function (notifyInfo) {
+                'onGroupInfoChangeNotify': function (notifyInfo) {
                     self.onGroupInfoChangeNotify(notifyInfo);
                 },
-                groupSystemNotifys: {
+                'groupSystemNotifys': {
                     "1": callback, //申请加群请求（只有管理员会收到）
                     "2": callback, //申请加群被同意（只有申请人能够收到）
                     "3": callback, //申请加群被拒绝（只有申请人能够收到）

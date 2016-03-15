@@ -24,6 +24,7 @@ YYTIMServer.init = function (options) {
     this.options = options;
     this.setting = _.extend(this.setting, options);
 
+    console.log('init - setting', this.setting);
     var imSig = store.get('imSig');
     if (imSig && options) {
         //腾讯IM初始化
