@@ -11,7 +11,7 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var store = require('store');
 var Model = BaseModel.extend({
-    url: '{{url_prefix}}/user/sig_get.json?deviceinfo={"aid":"30001001"}', //填写请求地址
+    url: '{{url_prefix}}/user/sig_get.json', //填写请求地址
     beforeEmit: function(options) {
         // 如果需要开启对请求数据的本地缓存，可将下列两行注释去掉
         // this.storageCache = true; //开启本地缓存
@@ -23,13 +23,14 @@ var Model = BaseModel.extend({
      * @return {Boolean} [description]
      */
     isAnchor: function() {
+        //deviceinfo={"aid":"30001001"}
         return !!this.$get('data.anchor');
     },
     setTokenUrl: function(token) {
-        this.url = this.url + '&access_token=web-' + token;
+        this.url = this.url + '?deviceinfo={"aid":"30001001"}&access_token=web-' + token;
     },
     setNoTokenUrl: function() {
-        this.url = this.notTokenURL;
+        this.url = this.notTokenURL+'?deviceinfo={"aid":"30001001"}';
     },
     /**
      * [fetchIMUserSig 获取IM签名]

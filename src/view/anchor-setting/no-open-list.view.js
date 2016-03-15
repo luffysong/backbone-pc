@@ -15,6 +15,7 @@ var NoOpenListModel = require('../../model/anchor-setting/no-open-list.model');
 var ReleaseModel = require('../../model/anchor-setting/release-video.model');
 var RemoveModel = require('../../model/anchor-setting/remove-video.model');
 var NoOpenPageBoxView = require('./page-box.view');
+var MsgBox = require('ui.MsgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
@@ -121,6 +122,7 @@ var View = BaseView.extend({
 							span.addClass('disable');
 						},function(e){
 							self.releaseLock = true;
+							MsgBox.showError('发布失败');
 						});
 					}
 					break;
@@ -134,6 +136,7 @@ var View = BaseView.extend({
 							console.log(response);
 						},function(e){
 							self.removeLock = true;
+							MsgBox.showError('删除失败');
 						});
 					};
 					break;

@@ -2,7 +2,7 @@
 <div class="fl">
 	<div id="nav">
 		{{each items as item i}}
-			<span class="{{if i === 0}}now{{/if}}" data-page="{{item}}">{{item}}</span>
+			<span class="{{if i === 0}}now{{/if}}" data-page="{{item}}" data-indice="{{i}}">{{item}}</span>
 		{{/each}}
 	</div>
 </div>
