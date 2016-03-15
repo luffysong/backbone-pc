@@ -22,24 +22,26 @@
 })(function() {
 	var uid = 999;
 	var win = window;
-	var url = win.ICEPlugs.url;
+	var ICEPlugs = win.ICEPlugs || {};
+	var url = ICEPlugs.url;
 	if (!url) {
 		url = require('url');
 	};
-	var tools = win.ICEPlugs.tools;
+	var tools = ICEPlugs.tools;
 	if (!tools) {
 		tools = require('tools');
 	};
-	var AjaxForm = win.ICEPlugs.AjaxForm;
+	var AjaxForm = ICEPlugs.AjaxForm;
 	if (!AjaxForm) {
 		AjaxForm = require('AjaxForm');
 	};
 	var shared = null;
 	var UploadFile = function(options){
 		var self = this;
-		this.$el = $(options.el);
+		this.$el = typeof options.el === 'string' ? $(options.el) : options.el;
 		this.uid = 'UploadFile'+(uid++);
-		this._data = options.data || data;
+		this.options = options;
+		this._data = options.data || {};
 		this._filename = options.filename || 'image';
 		this._success = options.success;
 		this._before = options.before;
@@ -82,7 +84,7 @@
 			};
 			inputs += '<input type="hidden" name="'+name+'" value=\''+value+'\'/>';
 		};
-		inputs += '<input type="file" name="'+this._filename+'" />';
+		inputs += '<input type="file" class="upload-file" name="'+this._filename+'" id="'+this.options.className+'" />';
 		this.$el.attr('method','POST');
 		this.$el.attr('action',this._url);
 		this.$el.attr('enctype','multipart/form-data');

@@ -153,7 +153,7 @@ var View = BaseView.extend({
 		}
 	},
 	uploadImageHandler:function(e){
-
+		var el = $(e.currentTarget);
 	}
 });
 module.exports = View;

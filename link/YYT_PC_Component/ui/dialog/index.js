@@ -23,7 +23,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
-		var id = 'dialogIcepy'+(uid++);
+		this.elId = 'dialogIcepy'+(uid++);
 		this.options = {
 			width: '',    //box宽度
 			height: '',   //box高度
@@ -43,7 +43,7 @@ var View = BaseView.extend({
 		};
 		this.options = _.extend(this.options,this._ICEOptions);
 		this._status = false;
-		this.$el = $('<div id="'+id+'" class="'+this.options.mainClass+'"/>')
+		this.$el = $('<div id="'+this.elId+'" class="'+this.options.mainClass+'"/>')
 				.append(this.$el.show())
 				.addClass(this.options.className)
 				.appendTo(document.body);
@@ -72,6 +72,9 @@ var View = BaseView.extend({
 		if (this.options.isAutoShow) {
 			this.trigger('show');
 		};
+		if (typeof this.options.ready === 'function') {
+			this.options.ready.call(this);
+		}
 	},
 	_renderTitle: function () {
 		var title = this.options.title;
