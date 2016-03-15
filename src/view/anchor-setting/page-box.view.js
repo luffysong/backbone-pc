@@ -144,6 +144,7 @@ var View = BaseView.extend({
 		var boundary = this.offset + (base);
 		var temp = this.items.concat();
 		if (temp[boundary] <= temp[temp.length - 1] ) {
+			this.translation = 0;
 			temp = temp.splice(this.offset,this.sectionBase);
 			this.sectionRender(temp,temp[0]);
 		}else{
