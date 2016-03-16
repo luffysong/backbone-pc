@@ -17,29 +17,18 @@ var rev = require('gulp-rev');
 var filter = require('gulp-filter');
 var pkg = require('./package.json');
 var header = require('gulp-header');
-var jshint = require('gulp-jshint');
 // 配置本地服务器
 var browser = require('browser-sync');
 var browserSync = browser.create();
-
-//test 
-
-// origin dev
 
 var PORT = 4000;
 var loadMap = [
   'modules/*.*',
   './src/**/*.*',
   './*.html',
-  './web/*.html'
+  './web/*.html',
+  './link/**/*.*'
 ];
-
-var paths = {
-  scripts: [
-      './src/**/*.js',
-      './link/**/*.js'
-  ]
-};
 
 gulp.task('server', [], function () {
   // content
@@ -53,30 +42,39 @@ gulp.task('server', [], function () {
   });
 });
 
-//语法检查
-gulp.task('jshint', function(){
-  return gulp.src(paths.scripts)
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'));
-});
 
 // 清理dist目录
 gulp.task('clean', function () {
   // content
-  return gulp.src(['./dist/'], {read: false}).pipe(clean());
+  return gulp.src(['./dist'], {read: false}).pipe(clean());
 });
 
-gulp.task('build:rename', ['build'], function () {
-  return gulp.src('./dist/web/*.html')
+gulp.task('build:rename',['build:clean'],function(){
+    return gulp.src('./dist/temp/*.html')
+        .pipe(gulp.dest('./dist/web'));
+});
 
+gulp.task('build:clean',['build:retemp'],function(){
+    return gulp.src('./dist/web/*.html',{read:false})
+        .pipe(clean());
+})
+
+gulp.task('build:retemp', ['build'], function () {
+  return gulp.src('./dist/web/*-*.html')
+    .pipe(rename(function(path){
+        var basename = path.basename.split('-');
+        if (basename.length > 1) {
+            basename.pop();
+            path.dirname = '/temp'
+            path.basename = basename.join('-');
+            path.extname = '.html';
+        }
+    }))
+    .pipe(gulp.dest('./dist'))
 });
 
 //进入build
 gulp.task('build', ['build:move'], function () {
-  // content
-  var libraryFilter = filter('./dist/link/base.library.js', {
-    restore: true
-  });
   var cssFilter = filter('./dist/style/*.css', {
     restore: true
   });
@@ -97,12 +95,7 @@ gulp.task('build', ['build:move'], function () {
     ''
   ].join('\n');
   return gulp.src('./dist/web/*.html')
-    .pipe(clean())
-    .pipe(useref({
-      noAssets: false
-    }))
-    .pipe(libraryFilter)
-    .pipe(libraryFilter.restore)
+    .pipe(useref())
     .pipe(cssFilter)
     .pipe(cssFilter.restore)
     .pipe(jsFilter)
@@ -121,17 +114,22 @@ gulp.task('build:move', ['clean'], function () {
       movePath + 'link/base.library.js',
       movePath + 'link/webim.js',
       movePath + 'link/json2.js',
-      movePath + 'img/*.*',
+      movePath + 'img/**/*.*',
       movePath + 'web/*.*',
-      movePath + 'style/*.css',
+      movePath + 'style/**/*.css',
       movePath + 'js/*.js'
     ], {base: '.'})
-    .pipe(gulpif('*.js', uglify({
-      warnings: true,
-      compress: {
-        pure_funcs: ['console.log', 'warn']
-      }
+    .pipe(gulpif('*.js',uglify({
+        compress:{
+            pure_funcs:['console.log','warn']
+        }
     })))
+    // .pipe(gulpif('*.js', uglify({
+    //   warnings: true,
+    //   compress: {
+    //     pure_funcs: ['console.log', 'warn']
+    //   }
+    // })))
     .pipe(gulpif('*.css', autoprefixer({
       browsers: ['last 2 versions', 'Android >= 4.0'],
       cascade: true, //是否美化属性值 默认：true 像这样：

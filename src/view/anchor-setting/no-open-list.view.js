@@ -39,7 +39,7 @@ var View = BaseView.extend({
 		this.liTemp = require('../../template/anchor-setting/no-open-li.html');
 		this.noOpenParameter = {
 			'deviceinfo':'{"aid":"30001001"}',
-			'order':'',
+			'order':'time',
 			'offset':0,
 			'size':6,
 			'access_token':token
@@ -103,6 +103,8 @@ var View = BaseView.extend({
 				//保存
 				if (self.uploadState) {
 					self.saveCoverImage();
+				}else{
+					MsgBox.showTip('正在上传，请等待');
 				}
 			}
 		};
