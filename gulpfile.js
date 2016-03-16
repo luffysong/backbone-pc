@@ -47,10 +47,10 @@ gulp.task('server', [], function () {
     server: './',
     port: PORT
   });
-  //gulp.watch(loadMap, function (file) {
-  //  console.log(file);
-  //  browserSync.reload();
-  //});
+  gulp.watch(loadMap, function (file) {
+    console.log(file);
+    browserSync.reload();
+  });
 });
 
 //语法检查
