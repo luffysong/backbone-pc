@@ -17,7 +17,7 @@ var msgBox = require('ui.MsgBox');
 var View = BaseView.extend({
     el: '#edit_background', //设置View对象作用于的根元素，比如id
     rawLoader: function () { //可用此方法返回字符串模版
-        return require('../../template/anchor/editBg.html');
+        return require('../../template/anchor/edit-bg.html');
     },
     events: { //监听事件
         'click .edit_bg_btn': 'showFileUploadDialog'
@@ -40,13 +40,9 @@ var View = BaseView.extend({
         this.defineEventInterface();
 
         this.editBgModel.execute(function (response) {
-            console.log(response);
+            console.log('editBgModel',response);
             var items = this.$get('items');
         }, function (e) {
-
-        });
-
-        this.on('event-name', function (args) {
 
         });
     },
@@ -80,22 +76,26 @@ var View = BaseView.extend({
                 "redirect": window.location.origin +  "/web/upload.html"
             },
             uploadFileSuccess:function(response){
-                //上传成功
-                self.fileUploadResultHandler(true, response);
+                console.log(response);
+                if(response && response.images && response.images.length>0){
+                    self.currentBgImg = response.images[0].path;
+                }
             },
             saveFile:function(){
-                //保存
-                self.fileUploadResultHandler(false);
+                self.setBackgroundImg();
+
             }
         };
     },
     showFileUploadDialog: function(){
+        this.currentBgImg = '';
         this.uploadFile.show();
     },
-    fileUploadResultHandler: function(isOk, resp){
-        if(!isOk){
-            msgBox.showError('背景图片设置失败');
-            return null;
+    setBackgroundImg: function(){
+        var self = this;
+        if(!self.currentBgImg){
+            msgBox.showTip('请耐心等待图片上传完成!');
+            return ;
         }
 
         msgBox.showOK('背景图片设置成功');
