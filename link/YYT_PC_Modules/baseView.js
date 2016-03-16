@@ -19,7 +19,7 @@ var tplEng = require('tplEng');
 var warn = require('./util/warn');
 var tools = require('./util/tools')
 var BaseView = Backbone.View.extend({
-	initialize:function(options){	
+	initialize:function(options){
 		//默认开启客户端渲染模式
 		if (this.clientRender === undefined && this.clientRender !== false) {
 			this.clientRender = true;
@@ -46,7 +46,6 @@ var BaseView = Backbone.View.extend({
 				};
 				self._ICEAfterMount();
 				self._ICEObject();
-				
 			}else{
 				warn('使用rawLoader方法返回一个模板字符串，如果你的页面是服务端渲染HTML，可将clientRender设置为false');
 			}
@@ -127,6 +126,6 @@ var BaseView = Backbone.View.extend({
 			parent = parent.$parent;
 		}
 	}
-}); 
+});
 
 module.exports = BaseView;

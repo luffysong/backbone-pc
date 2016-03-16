@@ -71,7 +71,7 @@ var View = BaseView.extend({
 				"cmd":[
 					{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
 				],
-				"redirect":window.location.origin+"/web/upload.html"
+				"redirect":window.location.origin+"/web/upload.htm"
 			},
 			uploadFileSuccess:function(response){
 				//上传成功
@@ -115,7 +115,6 @@ var View = BaseView.extend({
 	uploadSuccess:function(response){
 		var images = response.images;
 		var path = images[0].path;
-		console.log(this);
 	},
 	saveFileSuccess:function(){
 		//保存
