@@ -18,9 +18,7 @@ var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
-	rawLoader:function(){ //可用此方法返回字符串模版
-
-	},
+	clientRender:false,
 	events:{ //监听事件
 		'click .pre':'preHandler',
 		'click .next':'nextHandler',

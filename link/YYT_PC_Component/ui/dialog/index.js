@@ -14,6 +14,8 @@
 var BaseView = require('BaseView'); //View的基类
 var Mask = require('./mask.js');
 var mask;
+var uid = 999;
+var body = document.body;
 var View = BaseView.extend({
 	clientRender:false,
 	events:{ //监听事件
@@ -21,7 +23,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
-
+		this.elId = 'dialogIcepy'+(uid++);
 		this.options = {
 			width: '',    //box宽度
 			height: '',   //box高度
@@ -33,12 +35,15 @@ var View = BaseView.extend({
 			className: '',
 			effect: 'fade',    //显示效果 可选none, fade
 			draggable: false,
+			mainClass:'dialog',
+			closeClass:'ico_close J_close',
+			closeText:'关闭',
 			onShow: function () {},
 			onHide: function () {}
 		};
 		this.options = _.extend(this.options,this._ICEOptions);
 		this._status = false;
-		this.$el = $('<div class="dialog"/>')
+		this.$el = $('<div id="'+this.elId+'" class="'+this.options.mainClass+'"/>')
 				.append(this.$el.show())
 				.addClass(this.options.className)
 				.appendTo(document.body);
@@ -67,6 +72,9 @@ var View = BaseView.extend({
 		if (this.options.isAutoShow) {
 			this.trigger('show');
 		};
+		if (typeof this.options.ready === 'function') {
+			this.options.ready.call(this);
+		}
 	},
 	_renderTitle: function () {
 		var title = this.options.title;
@@ -77,7 +85,18 @@ var View = BaseView.extend({
 	},
 	_renderClose: function () {
 		if (this.options.hasClose) {
-			$(this.closeTemp).attr('hidefocus', 'true').appendTo(this.$el);
+			var self = this;
+			var id = 'dialogClose'+(uid++);
+			var closeHTML = this.compileHTML(this.closeTemp,{
+				'closeClass':this.options.closeClass,
+				'closeText':this.options.closeText,
+				'id':id
+			});
+			$(closeHTML).attr('hidefocus', 'true').appendTo(this.$el);
+			$('#'+id).on('click',function(e){
+				e.preventDefault();
+				self.hide();
+			});
 		}
 	},
 	_adjustPosition: function () {

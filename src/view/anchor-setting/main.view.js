@@ -16,15 +16,17 @@ var UserModel = require('UserModel');
 var TopBarView = require('../topbar/topbar.view');
 var IMModel = require('../../lib/IMModel');
 var store = require('store');
-var SettingBgView = require('./edit-bg.view');
 var ProfileView = require('./profile.view');
 var PageContentView = require('./page-content.view');
+var Dialog = require('ui.Dialog');
+var UploadFileDialog = require('UploadFileDialog');
 var imModel = IMModel.sharedInstanceIMModel();
 var user = UserModel.sharedInstanceUserModel();
+var MsgBox = require('ui.MsgBox');
 var View = BaseView.extend({
 	el:'#settingContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
-
+		'click #editBgBtn':'editBgHandler'
 	},
 	rawLoader:function(){
 		return require('../../template/anchor-setting/setting-body.html')
@@ -32,6 +34,8 @@ var View = BaseView.extend({
 	//当模板挂载到元素之前
 	beforeMount:function(){
 		this.topbarView = new TopBarView();
+		this.isLogined = false;
+		this.upload = null;
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -53,7 +57,28 @@ var View = BaseView.extend({
 	},
 	//渲染界面
 	initRender:function(){
-		this.settingBgView = new SettingBgView();
+		var self = this;
+		var fileDialog = UploadFileDialog.fetchDialogTemplate();
+		var fileOptions = {
+			width : 580,
+			height : 341,
+			isRemoveAfterHide : false,
+			isAutoShow : false,
+			mainClass:'shadow_screen',
+			closeClass:'editor_bg_close',
+			closeText:'X',
+			ready:function(){
+				self.upload = new UploadFileDialog();
+				self.upload.on('success',function(response){
+					self.uploadSuccess(response);
+				});
+				self.upload.on('saveFile',function(){
+					self.saveFile();
+				});
+			}
+		};
+		this.dialog = Dialog.classInstanceDialog(fileDialog,fileOptions);
+		this.isLogined = true;
 		this.profileView = new ProfileView();
 		this.pageContentView = new PageContentView();
 	},
@@ -70,8 +95,26 @@ var View = BaseView.extend({
 			}
 		},function(e){
 			//处理请求错误
-
+			MsgBox.showError('获取签名错误');
 		});
+	},
+	editBgHandler:function(e){
+		if (this.isLogined) {
+			if(this.upload){
+				this.upload.resetPage();
+			};
+			this.dialog.show();
+		}else{
+			MsgBox.showError('未登录或获取签名失败');
+		};
+	},
+	uploadSuccess:function(response){
+		var images = response.images;
+		var path = images[0].path;
+		console.log(this);
+	},
+	saveFile:function(){
+		//保存
 	}
 });
 
