@@ -72,8 +72,8 @@ var View = BaseView.extend({
 		if (this.options.isAutoShow) {
 			this.trigger('show');
 		};
-		if (typeof this.options.ready === 'function') {
-			this.options.ready.call(this);
+		if (typeof this.options.attached === 'function') {
+			this.options.attached.call(this);
 		}
 	},
 	_renderTitle: function () {
