@@ -69,6 +69,7 @@ var View = BaseView.extend({
             mainClass:'shadow_screen_x',
             closeClass:'editor_bg_close_x',
             closeText:'X',
+            title: '上传主题背景图片',
             ctrlData:{
                 "cmd":[
                     {"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
