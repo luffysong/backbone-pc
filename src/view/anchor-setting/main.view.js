@@ -63,8 +63,8 @@ var View = BaseView.extend({
 			height : 341,
 			isRemoveAfterHide : false,
 			isAutoShow : false,
-			mainClass:'shadow_screen',
-			closeClass:'editor_bg_close',
+			mainClass:'shadow_screen_x',
+			closeClass:'editor_bg_close_x',
 			closeText:'X',
 			ctrlData:{
 				"cmd":[
