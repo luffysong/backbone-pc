@@ -39,7 +39,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-		
+
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
@@ -53,7 +53,7 @@ var View = BaseView.extend({
 			//跳转走人
 		}else{
 			this.fetchIMUserSig();
-		}		
+		}
 	},
 	//渲染界面
 	initRender:function(){
@@ -66,15 +66,16 @@ var View = BaseView.extend({
 			mainClass:'shadow_screen_x',
 			closeClass:'editor_bg_close_x',
 			closeText:'X',
+			title:'背景设置',
 			ctrlData:{
 				"cmd":[
 					{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
 				],
-				"redirect":"http://icepy.yinyuetai.com:4000/web/upload.html"
+				"redirect":window.location.origin+"/web/upload.html"
 			},
 			uploadFileSuccess:function(response){
 				//上传成功
-				
+
 			},
 			saveFile:function(){
 				//保存

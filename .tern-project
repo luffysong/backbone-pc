@@ -1,0 +1,11 @@
+{
+  "ecmaVersion": 5,
+  "libs": [
+    "jquery"
+  ],
+  "loadEagerly": [
+    "src/**/*.js",
+    "link/YYT_PC_Modules/**/*.js",
+    "link/YYT_PC_Component/**/*.js"
+  ]
+}

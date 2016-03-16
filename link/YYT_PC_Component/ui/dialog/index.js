@@ -23,7 +23,7 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之前
 	beforeMount:function(){
-		this.elId = 'dialogIcepy'+(uid++);
+		this.id = 'YYT_UI_Dialog'+(uid++);
 		this.options = {
 			width: '',    //box宽度
 			height: '',   //box高度
@@ -43,10 +43,11 @@ var View = BaseView.extend({
 		};
 		this.options = _.extend(this.options,this._ICEOptions);
 		this._status = false;
-		this.$el = $('<div id="'+this.elId+'" class="'+this.options.mainClass+'"/>')
+		this.$el = $('<div id="'+this.id+'" class="'+this.options.mainClass+'"/>')
 				.append(this.$el.show())
 				.addClass(this.options.className)
 				.appendTo(document.body);
+		this.$title = this.$el.find('.upload-title');
 		this._ICEinitEvent();
 	},
 	//当模板挂载到元素之后
@@ -79,8 +80,9 @@ var View = BaseView.extend({
 	_renderTitle: function () {
 		var title = this.options.title;
 		if (title) {
-			var titleHTML = this.titleTemp.replace('{{title}}',title);
-			this.$title = $(titleHTML).prependTo(this.$el);
+			this.$title.text(title);
+			// var titleHTML = this.titleTemp.replace('{{title}}',title);
+			// this.$title = $(titleHTML).prependTo(this.$el);
 		};
 	},
 	_renderClose: function () {
@@ -102,7 +104,7 @@ var View = BaseView.extend({
 	_adjustPosition: function () {
 		var size = {
 			width: this.options.width || this.$el.innerWidth(),
-			height: this.options.height ? (this.options.title != '' ? this.options.height+30 : this.options.height) : this.$el.innerHeight()
+			height: this.options.height ? this.options.height : this.$el.innerHeight()
 		};
 		this.$el.css(_.extend({
 			marginLeft: -(size.width / 2),

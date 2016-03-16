@@ -17,20 +17,21 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var CreateLiveModel = require('../../model/anchor-setting/create-live-video.model');
 var ArtistCompleteModel = require('../../model/anchor-setting/artist-autocomplete.model');
-var lighten;    
+var lighten;
+var MsgBox = require('ui.MsgBox');    
 var View = BaseView.extend({
 	el: '#createLiveVideo', //设置View对象作用于的根元素，比如id
 	rawLoader: function() { //可用此方法返回字符串模版
 		return require('../../template/anchor-setting/create-live-video.html');
 	},
-	events: { //监听事件			
+	events: { //监听事件
 		'click #createVideo':'createVideoHandler',
 		'click .select':'dateTimeToggle',
 		'click .selectDate li':'selectDateHandler',
 		'keyup #inputActorName':'actorNameHandler',
 		'blur #inputActorName':'actorNameBlurHandler',
 		'click #selectorActor li':'selectorActorHandler',
-		'change #inputActorName':''       
+		'change #inputActorName':''
 	},
 	//当模板挂载到元素之前
 	beforeMount: function() {
@@ -68,13 +69,13 @@ var View = BaseView.extend({
 		this.cellsTemp = this.$el.find('#cellsTemp').html();
 		this.hours = this.compileHTML(this.cellsTemp,{'cells':this.eachMost(0,23)});
 		this.minutes = this.compileHTML(this.cellsTemp,{'cells':this.eachMost(0,59)});
-	},     
+	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready: function() {
 		this.artistModel = new ArtistCompleteModel();
 		this.createModel = new CreateLiveModel();
 		this.initRender();
-		this.initListener();              
+		this.initListener();
 	},
 	initRender:function(){
 		var data = this.dateDataStructure();
@@ -91,13 +92,13 @@ var View = BaseView.extend({
 			var video = self.videoName.val();
 			if (actor&&video) {
 				self.createVideo.removeClass('m_disabled');
-				self.createClick = true;           
+				self.createClick = true;
 			}else{
 				if (actor || video) {
 					self.createVideo.addClass('m_disabled');
 					self.createClick = false;
 				};
-			};    
+			};
 		},0);
 	},
 	dateDataStructure:function(){
@@ -189,7 +190,7 @@ var View = BaseView.extend({
 					days = this.dateTime.getCountDays(val);
 					html = this.compileHTML(this.cellsTemp,{'cells':this.eachMost(1,days)});
 					curSpan.text(defaD);
-					curUl.html(html);	
+					curUl.html(html);
 					break;
 				case 'hours':
 					curUl.html(this.hours);
@@ -249,19 +250,22 @@ var View = BaseView.extend({
 			this.createData.roomName = this.actorName.val();
 			this.createData.liveTime = this.dateTime.getTime(this.createDate);
 			if (this.createData.liveTime < time) {
-				alert('直播时间至少为一小时之后');
-				self.initListener(); 
+				MsgBox.showError('直播时间至少为一小时之后');
+				this.createLock = true;
+				self.initListener();
 				return;
 			};
 			this.createModel.setChangeURL(this.createData);
 			this.createModel.execute(function(response){
 				var code = ~~response.code;
 				var data = response.data;
-				console.log(data.message);
 				if (!code) {
+					MsgBox.showOK('创建成功')
 					window.location.reload();
 				};
 			},function(e){
+				MsgBox.showError('创建失败');
+				self.createLock = true;
 				self.initListener();
 			});
 		}
