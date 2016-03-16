@@ -14,7 +14,6 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomMessageModel = require('../../model/anchor/room-message.model');
 var StartLiveModel = require('../../model/anchor/start-live.model');
 var EndLiveModel = require('../../model/anchor/end-live.model');
-var RoomMsgModel = require('../../model/anchor/room-message.model');
 var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
@@ -261,24 +260,24 @@ var View = BaseView.extend({
         }
     },
     renderGroupMsgs: function (datas) {
-        var self = this;
-        if (datas && datas.length > 0) {
 
+        console.log('renderGroupMsgs',datas);
+        var self = this;
+
+        if (datas && datas.length > 0) {
         }
-        for (var i = 0, j = datas.length; i < j; i++) {
-            self.addMessage(datas[i]);
-        }
+        //for (var i = 0, j = datas.length; i < j; i++) {
+        //    self.addMessage(datas[i]);
+        //}
     },
+    //腾讯IM消息到达回调
     onMsgNotify: function (notifyInfo) {
         console.log('onMsgNotify', notifyInfo);
         this.addMessage(notifyInfo);
-
-
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
         console.log('onGroupInfoChangeNotify', notifyInfo);
     },
-
     groupSystemNotifys: function (notifyInfo) {
         console.log('groupSystemNotifys', notifyInfo);
     },
@@ -316,58 +315,48 @@ var View = BaseView.extend({
             }
         }
     },
-    autoAddMsg: function () {
-        var self = this;
-        setInterval(function () {
-            self.addMessage({
-                name: '123123',
-                msg: 'ppppp'
-            });
-        }, 1500);
-    },
     /**
      * 开始直播按钮点击,创建群后开始直播
      */
     startLiveClick: function (data) {
-        var self = this;
-
-        if (!this.roomInfo) {
-            console.log('没有获取到房间信息');
-            return '';
-        }
-        if (!this.roomInfo.imGroupid) {
-            YYTIMServer.createIMChatRoom(function (res) {
-                console.log('createIMChatRoom=', res);
-                self.roomInfo.imGroupid = res.GroupId;
-                self.startLive();
-            }, function (err) {
-
-            });
-        } else {
-            self.startLive();
-        }
-
+        //var self = this;
+        //
+        //if (!this.roomInfo) {
+        //    msgBox.showError('没有获取到房间信息');
+        //    return '';
+        //}
+        //if (!this.roomInfo.imGroupid) {
+        //    YYTIMServer.createIMChatRoom(function (res) {
+        //        console.log('createIMChatRoom=', res);
+        //        self.roomInfo.imGroupid = res.GroupId;
+        //        self.startLive();
+        //    }, function (err) {
+        //
+        //    });
+        //} else {
+        //    self.startLive();
+        //}
     },
     /**
      * 开始直播
      */
     startLive: function () {
-        var self = this;
-        self.startLiveModel.setChangeURL({
-            deviceinfo: JSON.stringify({"aid": "30001001"}),
-            accessToken: user.getToken(),
-            roomId: self.roomInfo.id,
-            imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
-        });
-        self.startLiveModel.executeGET(function (result) {
-            console.log('start live', result);
-            self.isLiveShowing = true;
-            msgBox.showOK('成功开启直播');
-
-        }, function (err) {
-            console.log(err);
-            msgBox.showError(err.msg);
-        });
+        //var self = this;
+        //self.startLiveModel.setChangeURL({
+        //    deviceinfo: JSON.stringify({"aid": "30001001"}),
+        //    accessToken: user.getToken(),
+        //    roomId: self.roomInfo.id,
+        //    imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
+        //});
+        //self.startLiveModel.executeGET(function (result) {
+        //    console.log('start live', result);
+        //    self.isLiveShowing = true;
+        //    msgBox.showOK('成功开启直播');
+        //
+        //}, function (err) {
+        //    console.log(err);
+        //    msgBox.showError(err.msg);
+        //});
     },
     /**
      * 点击结束直播
@@ -411,7 +400,7 @@ var View = BaseView.extend({
                 self.roomInfo = data;
                 self.roomInfoReady();
             }
-            console.log('chat', data);
+            console.log('event:roomInfoReady', data);
         });
 
         $(document).on('event:onConnNotify', function (e, notifyInfo) {
