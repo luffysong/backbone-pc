@@ -60,6 +60,7 @@ YYTIMServer.lockScreen = function () {
 YYTIMServer.disableSendMsg = function (options, okFn, errFn) {
     console.log('禁言中.....');
     var time =  webim.Tool.formatTimeStamp(Math.round(new Date().getTime() / 1000) + 10 * 60);
+
     time = new Date(time + '').getTime();
     console.log(time);
     options = _.extend({

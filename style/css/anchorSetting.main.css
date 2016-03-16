@@ -1167,6 +1167,9 @@ img {
   height: 180px;
   margin-bottom: 60px;
   background: #ccc;
+  background-image: url('/img/upload-file-default-bg.png');
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 .edit_Bg_form_x .formBox {
   padding-top: 4px;

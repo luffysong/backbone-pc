@@ -190,6 +190,9 @@ var View = BaseView.extend({
             msgBox.showError('禁言失败,请稍后重试!');
         });
     },
+    hideUserControl: function(){
+        $('.controls_forbid_reject').hide();
+    },
     /**
      * 将用户从房间中移除
      */
