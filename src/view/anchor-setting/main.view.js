@@ -58,7 +58,6 @@ var View = BaseView.extend({
 	//渲染界面
 	initRender:function(){
 		var self = this;
-		var fileDialog = UploadFileDialog.fetchDialogTemplate();
 		var fileOptions = {
 			width : 580,
 			height : 341,
@@ -67,17 +66,20 @@ var View = BaseView.extend({
 			mainClass:'shadow_screen',
 			closeClass:'editor_bg_close',
 			closeText:'X',
-			ready:function(){
-				self.upload = new UploadFileDialog();
-				self.upload.on('success',function(response){
-					self.uploadSuccess(response);
-				});
-				self.upload.on('saveFile',function(){
-					self.saveFile();
-				});
+			ctrlData:{
+				"cmd":[
+					{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
+				],
+				"redirect":"http://icepy.yinyuetai.com:4000/web/upload.html"
+			},
+			uploadFileSuccess:function(){
+				//上传成功
+			},
+			saveFile:function(){
+				//保存
 			}
 		};
-		this.dialog = Dialog.classInstanceDialog(fileDialog,fileOptions);
+		this.upload = new UploadFileDialog(fileOptions);
 		this.isLogined = true;
 		this.profileView = new ProfileView();
 		this.pageContentView = new PageContentView();
@@ -101,9 +103,9 @@ var View = BaseView.extend({
 	editBgHandler:function(e){
 		if (this.isLogined) {
 			if(this.upload){
-				this.upload.resetPage();
+				this.upload.emptyValue();
 			};
-			this.dialog.show();
+			this.upload.show();
 		}else{
 			MsgBox.showError('未登录或获取签名失败');
 		};
@@ -113,7 +115,7 @@ var View = BaseView.extend({
 		var path = images[0].path;
 		console.log(this);
 	},
-	saveFile:function(){
+	saveFileSuccess:function(){
 		//保存
 	}
 });
