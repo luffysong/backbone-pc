@@ -72,8 +72,9 @@ var View = BaseView.extend({
 				],
 				"redirect":"http://icepy.yinyuetai.com:4000/web/upload.html"
 			},
-			uploadFileSuccess:function(){
+			uploadFileSuccess:function(response){
 				//上传成功
+				
 			},
 			saveFile:function(){
 				//保存

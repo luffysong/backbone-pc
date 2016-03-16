@@ -16,6 +16,7 @@ var UploadFile = require('UploadFile');
 var uploadIng = '正在上传';
 var uploadDone = '上传完成!';
 var MsgBox = require('ui.MsgBox');
+var loc = window.location;
 var View = BaseView.extend({
 	el:'#uploadFileDialog',
 	rawLoader:function(){
@@ -41,7 +42,7 @@ var View = BaseView.extend({
 			"cmd":[
 				{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
 			],
-			"redirect":"http://icepy.yinyuetai.com:4000/web/upload.html"
+			"redirect":loc.origin+"/web/upload.html"
 		};
 		var self = this;
 		this.upload = UploadFile.classInstanceUploadFile({
