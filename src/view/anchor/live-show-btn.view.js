@@ -28,8 +28,8 @@ var View = BaseView.extend({
         return require('../../template/anchor/live-show-btn.html');
     },
     events: { //监听事件
-        'click .endLive': 'endLiveShow',
-        'click .startLive': 'startLiveShow'
+        'click .endLive': 'endLiveClick',
+        'click .startLive': 'startLiveClick'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
@@ -49,7 +49,7 @@ var View = BaseView.extend({
     /**
      * 开启直播
      */
-    startLiveShow: function (e) {
+    startLiveClick: function (e) {
         var current = $(e.target),
             self = this;
         if (current.hasClass('m_disabled')) {
@@ -95,7 +95,8 @@ var View = BaseView.extend({
     /**
      * 结束直播
      */
-    endLiveShow: function (e) {
+    endLiveClick: function (e) {
+        var self = this;
         if (this.btnEndLive.hasClass('m_disabled')) {
             return null;
         }
@@ -103,13 +104,33 @@ var View = BaseView.extend({
             title: '消息',
             content: '您确定要结束直播吗',
             okFn: function () {
-                $(document).trigger('event:endLiveShow');
-                current.addClass('m_disabled');
+                self.endLive();
             },
             cancelFn: function () {
                 console.log('cancel');
             }
         });
+    },
+    /**
+     * 点击结束直播
+     */
+    endLive: function () {
+        var self = this;
+        self.endLiveModel.setChangeURL({
+            deviceinfo: '{"aid": "30001001"}',
+            accessToken: user.getToken(),
+            roomId: self.roomInfo.id
+        });
+        self.endLiveModel.executeGET(function (result) {
+            self.btnEndLive.addClass('m_disabled');
+            self.isLiveShowing = false;
+            console.log('end live show');
+            $(document).trigger('event:liveShowEnded');
+        }, function (err) {
+            console.log(err);
+            msgBox.showError(err.msg);
+        });
+
     },
     defineEventInterface: function () {
         var self = this;
@@ -121,10 +142,19 @@ var View = BaseView.extend({
         $(document).on('event:roomInfoReady', function (e, data) {
             if (data) {
                 self.roomInfo = data;
+                self.changeButtonStatus(self.roomInfo.status);
             }
         });
+    },
+    changeButtonStatus: function (status) {
+        if (status === 2) {
+            
+        } else if (status === 3) {
+
+        }
 
     }
+
 });
 
 module.exports = View;
