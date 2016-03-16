@@ -51,9 +51,30 @@ YYTIMServer.lockScreen = function () {
 
 /**
  * 禁言
+ //options = {
+    //    'GroupId': '',
+    //    'Members_Account': [],
+    //    'ShutUpTime': time
+    //};
  */
-YYTIMServer.disableSendMsg = function () {
+YYTIMServer.disableSendMsg = function (options, okFn, errFn) {
     console.log('禁言中.....');
+    var time =  webim.Tool.formatTimeStamp(Math.round(new Date().getTime() / 1000) + 10 * 60);
+    time = new Date(time + '').getTime();
+    console.log(time);
+    options = _.extend({
+        'ShutUpTime': time
+    }, options);
+    console.log('disableSendMsg', options);
+    webim.forbidSendMsg(
+        options,
+        function (resp) {
+            okFn && okFn(resp);
+        },
+        function (err) {
+            errFn && errFn(err);
+        }
+    );
 };
 
 /**
@@ -177,7 +198,8 @@ YYTIMServer.getGroupInfo = function (groupId, okFn, errFn) {
 
 /**
  * 修改群组消息
- * @param options {GroupId: xx, Name: 'xx', Notification: '', Introduction: ''}
+ * @param options
+ *      { GroupId: 1, Name: 'xx', Notification: '', Introduction: ''}
  * @param okFn
  * @param errFn
  */
@@ -192,35 +214,6 @@ YYTIMServer.modifyGroupInfo = function (options, okFn, errFn) {
         }
     );
 };
-
-
-/**
- * 腾讯IM收到消息通知的回调函数
- * @param notifyInfo
- */
-function onMsgNotify(notifyInfo) {
-
-    YYTIMServer.setting.listeners.onMsgNotify && YYTIMServer.setting.listeners.onMsgNotify(notifyInfo);
-
-}
-
-
-/**
- * 腾讯监听群组资料变更的回调函数
- * @param notifyInfo
- */
-function onGroupInfoChangeNotify(notifyInfo) {
-
-    YYTIMServer.setting.listeners.onGroupInfoChangeNotify && YYTIMServer.setting.listeners.onGroupInfoChangeNotify(notifyInfo);
-}
-
-/**
- * 用于监听（多终端同步）群系统消息的回调函数
- * @param notifyInfo
- */
-function groupSystemNotifys(notifyInfo) {
-    YYTIMServer.setting.listeners.groupSystemNotifys && YYTIMServer.setting.listeners.groupSystemNotifys(notifyInfo);
-}
 
 
 module.exports = YYTIMServer;

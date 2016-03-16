@@ -33,60 +33,19 @@ var View = BaseView.extend({
     beforeMount: function () {
         this.roomMsgModel = new RoomMessageModel();
         //标记是否开始直播
-        this.isLiveShowing = false;
+        //this.isLiveShowing = false;
         //禁言用户列表
         this.forbidUsers = [];
-
-        var self = this;
-
-        function callback(notifyInfo) {
-            self.groupSystemNotifys(notifyInfo);
-        }
-
-        //注册IM事件处理
-        //YYTIMServer.init({
-        //    listeners: {
-        //        'onConnNotify': function(notifyInfo){
-        //            console.log('1-onConnNotify', notifyInfo);
-        //        },
-        //        'onMsgNotify': function (notifyInfo) {
-        //            alert(1);
-        //            self.onMsgNotify(notifyInfo);
-        //        },
-        //        'onGroupInfoChangeNotify': function (notifyInfo) {
-        //            self.onGroupInfoChangeNotify(notifyInfo);
-        //        },
-        //        'groupSystemNotifys': {
-        //            "1": callback, //申请加群请求（只有管理员会收到）
-        //            "2": callback, //申请加群被同意（只有申请人能够收到）
-        //            "3": callback, //申请加群被拒绝（只有申请人能够收到）
-        //            "4": callback, //被管理员踢出群(只有被踢者接收到)
-        //            "5": callback, //群被解散(全员接收)
-        //            "6": callback, //创建群(创建者接收)
-        //            "7": callback, //邀请加群(被邀请者接收)
-        //            "8": callback, //主动退群(主动退出者接收)
-        //            "9": callback, //设置管理员(被设置者接收)
-        //            "10": callback, //取消管理员(被取消者接收)
-        //            "11": callback, //群已被回收(全员接收)
-        //            "255": callback//用户自定义通知(默认全员接收,暂不支持)
-        //        }
-        //    }
-        //});
     },
     //当模板挂载到元素之后
     afterMount: function () {
-        var self = this;
-        //this.btnClear = $('#btn-clear');
         //背景图片元素
         this.themeBgEle = $('#anchorContainerBg');
-
-        this.messageTpl = '';
         this.msgList = $('#msgList');
         this.chatHistory = $('#chatHistory');
         this.btnLock = $('#btn-lock');
 
         this.defineEventInterface();
-
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -99,6 +58,10 @@ var View = BaseView.extend({
     //清屏
     clearHandler: function () {
         var self = this;
+        var flag = self.checkLiveRoomReady();
+        if (!flag) {
+            return;
+        }
         uiConfirm.show({
             content: '您确定要清屏吗?',
             okFn: function () {
@@ -109,6 +72,10 @@ var View = BaseView.extend({
     },
     //锁屏
     lockClickHandler: function () {
+        var flag = this.checkLiveRoomReady();
+        if (!flag) {
+            return;
+        }
         var target = this.btnLock.children('span'),
             self = this,
             txt = target.text() == '锁屏' ? '锁定屏幕' : '解开屏幕';
@@ -169,7 +136,7 @@ var View = BaseView.extend({
     showMsgControlMenu: function (target) {
         if (target.length <= 0) return;
         var control = target.find('.controls_forbid_reject'),
-            index = $('#msgList li').index(target);
+            index = $('#msgList').find('li').index(target);
 
         $('.controls_forbid_reject').not(control).hide();
         if (index === 0) {
@@ -207,63 +174,59 @@ var View = BaseView.extend({
         });
     },
     disableSendMsgHandler: function (user) {
-        var self = this;
-        if (self.forbidUsers.length > 200) {
-            self.forbidUsers.shift();
-        }
-        self.forbidUsers.push(user.id);
-        console.log('self.forbidUsers', self.forbidUsers);
-        var options = {
+        var self = this,
+            users = [];
+        users.push(user.id);
+        YYTIMServer.disableSendMsg({
             GroupId: self.roomInfo.imGroupid,
-            Notification: JSON.stringify({
-                forbidUsers: self.forbidUsers
-            })
-        };
-
-        YYTIMServer.modifyGroupInfo(options, function (result) {
-
-            console.log('disableSendMsgHandler', result);
+            'Members_Account': users
+        }, function (resp) {
+            if (resp && resp.ActionStatus === 'OK') {
+                msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
+            } else {
+                msgBox.showError('禁言失败,请稍后重试!');
+            }
+        }, function () {
+            msgBox.showError('禁言失败,请稍后重试!');
         });
     },
     /**
      * 将用户从房间中移除
      */
     removeUserFromRoom: function (data) {
-        var self = this,
-            errTip = '将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试';
-        var user = [];
-        user.push(data.id);
-        console.log('data.id', user);
+        var self = this;
         uiConfirm.show({
             content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
             okFn: function () {
-                YYTIMServer.removeUserFromGroup({
-                    GroupId: self.roomInfo.imGroupid,
-                    MemberToDel_Account: user
-                }, okFn, function (err) {
-                    msgBox.showError(errTip);
-                });
+                okFn();
             }
         });
 
-        function okFn(resp) {
-            if (resp.ActionStatus == 'OK') {
-                msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
-            } else {
-                msgBox.showError(errTip);
+        function okFn() {
+            if (self.forbidUsers.length > 200) {
+                self.forbidUsers.shift();
             }
+            self.forbidUsers.push(data.id);
+            var options = {
+                GroupId: self.roomInfo.imGroupid,
+                Notification: JSON.stringify({
+                    forbidUsers: self.forbidUsers
+                })
+            };
+
+            YYTIMServer.modifyGroupInfo(options, function (result) {
+                console.log('disableSendMsgHandler', result);
+                if (result && result.ActionStatus === 'OK') {
+                    msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
+                } else {
+                    msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
+                }
+            })
         }
     },
     renderGroupMsgs: function (datas) {
-
-        console.log('renderGroupMsgs',datas);
-        var self = this;
-
-        if (datas && datas.length > 0) {
-        }
-        //for (var i = 0, j = datas.length; i < j; i++) {
-        //    self.addMessage(datas[i]);
-        //}
+        console.log('renderGroupMsgs', datas);
+        //TODO
     },
     //腾讯IM消息到达回调
     onMsgNotify: function (notifyInfo) {
@@ -289,19 +252,23 @@ var View = BaseView.extend({
      */
     addMessage: function (data) {
         var self = this;
-        console.log(data);
         var msgObj = {};
         if (data.elems && data.elems.length > 0) {
             msgObj = data.elems[0].content.text + '';
             msgObj = msgObj.replace(/&quot;/g, '\'');
             eval('msgObj = ' + msgObj);
+
             msgObj = _.extend({
                 nickName: '匿名',
                 content: '',
-                url: '',
+                smallAvatar: '',
                 time: self.getDateStr(new Date())
             }, msgObj);
+            console.log('msgObj', msgObj);
 
+            if (msgObj && msgObj.roomId !== self.roomInfo.id) {
+                return;
+            }
             if (msgObj && msgObj.content) {
                 msgObj.fromAccount = data.fromAccount;
                 var tpl = _.template(this.getMessageTpl());
@@ -403,6 +370,24 @@ var View = BaseView.extend({
     getDateStr: function (dateInt) {
         var date = new Date(dateInt);
         return date.Format('hh:MM:ss');
+    },
+    //检查当前直播状态
+    checkLiveRoomReady: function () {
+        switch (this.roomInfo.status) {
+            case 0:
+                msgBox.showTip('该直播尚未发布!');
+                return false;
+            case 1:
+            case 2:
+                if (!this.roomInfo || !this.roomInfo.imGroupid) {
+                    msgBox.showTip('请先开始直播!');
+                    return false;
+                }
+                return true;
+            case 3:
+                msgBox.showTip('该直播已经结束!');
+                return false;
+        }
     }
 
 });
