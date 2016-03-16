@@ -4,6 +4,7 @@
 
 'use strict';
 var IMModel = require('./IMModel');
+var imModel = IMModel.sharedInstanceIMModel();
 var store = require('store');
 
 var YYTIMServer = {
@@ -21,25 +22,55 @@ var YYTIMServer = {
  * @param options
  */
 YYTIMServer.init = function (options) {
-    var imSig = store.get('imSig');
-    var loginInfo = {
-        sdkAppID: imSig.imAppid, //用户所属应用id
-        appIDAt3rd: imSig.imAppid, //用户所属应用id
-        accountType: imSig.imAccountType, //用户所属应用帐号类型
-        identifier: imSig.imIdentifier, //当前用户ID
-        userSig: imSig.userSig //当前用户身份凭证
-    };
-    if (imSig && options) {
-        //腾讯IM初始化
-        webim.init(loginInfo, options, null);
+
+    imModel.fetchIMUserSig(function (imSig) {
+        console.log(imSig);
+        var loginInfo = {
+            sdkAppID: imSig.imAppid, //用户所属应用id
+            appIDAt3rd: imSig.imAppid, //用户所属应用id
+            accountType: imSig.imAccountType, //用户所属应用帐号类型
+            identifier: imSig.imIdentifier, //当前用户ID
+            userSig: imSig.userSig //当前用户身份凭证
+        };
+        if (imSig && options) {
+            //腾讯IM初始化
+            webim.init(loginInfo, options, null);
+        }
+    }, function (err) {
+
+    });
+    //var imSig = store.get('imSig');
+};
+
+/**
+ * 发送消息
+ *
+ */
+YYTIMServer.sendMessage = function (attrs) {
+    console.log(attrs);
+    var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
+    console.log("-----", currentSession);
+    if (currentSession) {
+        var sendMsg = new webim.Msg(currentSession, true);
+        sendMsg.addText(new webim.Msg.Elem.Text(JSON.stringify(attrs.msg)));
+        sendMsg.accountfrom = '';
+
+        console.log(sendMsg);
+        webim.sendMsg(sendMsg, function (resp) {
+            console.log(resp);
+        }, function (err) {
+            console.log(err);
+        });
     }
 };
+
 
 /**
  * 清屏
  */
-YYTIMServer.clearScreen = function () {
+YYTIMServer.clearScreen = function (args) {
     console.log('IM clear');
+    this.sendMessage(args);
 };
 
 /**
@@ -59,7 +90,7 @@ YYTIMServer.lockScreen = function () {
  */
 YYTIMServer.disableSendMsg = function (options, okFn, errFn) {
     console.log('禁言中.....');
-    var time =  webim.Tool.formatTimeStamp(Math.round(new Date().getTime() / 1000) + 10 * 60);
+    var time = webim.Tool.formatTimeStamp(Math.round(new Date().getTime() / 1000) + 10 * 60);
 
     time = new Date(time + '').getTime();
     console.log(time);

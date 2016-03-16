@@ -57,6 +57,10 @@ var View = BaseView.extend({
     },
     //清屏
     clearHandler: function () {
+
+
+
+
         var self = this;
         var flag = self.checkLiveRoomReady();
         if (!flag) {
@@ -66,7 +70,15 @@ var View = BaseView.extend({
             content: '您确定要清屏吗?',
             okFn: function () {
                 self.clearMessageList();
-                YYTIMServer.clearScreen();
+                YYTIMServer.clearScreen({
+                    groupId: self.roomInfo.imGroupid,
+                    msg: {
+                        roomId: self.roomInfo.id,
+                        nickName: '群主',
+                        smallAvatar: '',
+                        mstType: 4
+                    }
+                });
             }
         });
     },
@@ -190,7 +202,7 @@ var View = BaseView.extend({
             msgBox.showError('禁言失败,请稍后重试!');
         });
     },
-    hideUserControl: function(){
+    hideUserControl: function () {
         $('.controls_forbid_reject').hide();
     },
     /**
@@ -234,7 +246,28 @@ var View = BaseView.extend({
     //腾讯IM消息到达回调
     onMsgNotify: function (notifyInfo) {
         console.log('onMsgNotify', notifyInfo);
-        this.addMessage(notifyInfo);
+        var self = this;
+        var msgObj = {};
+        if (notifyInfo.elems && notifyInfo.elems.length > 0) {
+            msgObj = notifyInfo.elems[0].content.text + '';
+            msgObj = msgObj.replace(/&quot;/g, '\'');
+            eval('msgObj = ' + msgObj);
+            msgObj.fromAccount = notifyInfo.fromAccount;
+
+            switch (msgObj.mstType) {
+                case 0: //文本消息
+                    self.addMessage(msgObj);
+                    break;
+                case 1: //
+                    break;
+                case 2: //公告
+                    break;
+                case 3: //点赞
+                    break;
+                case 4: // 清屏
+                    break;
+            }
+        }
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
         console.log('onGroupInfoChangeNotify', notifyInfo);
@@ -253,33 +286,26 @@ var View = BaseView.extend({
      * 添加消息
      * @constructor
      */
-    addMessage: function (data) {
+    addMessage: function (msgObj) {
         var self = this;
-        var msgObj = {};
-        if (data.elems && data.elems.length > 0) {
-            msgObj = data.elems[0].content.text + '';
-            msgObj = msgObj.replace(/&quot;/g, '\'');
-            eval('msgObj = ' + msgObj);
+        msgObj = _.extend({
+            nickName: '匿名',
+            content: '',
+            smallAvatar: '',
+            time: self.getDateStr(new Date())
+        }, msgObj);
+        console.log('msgObj', msgObj);
 
-            msgObj = _.extend({
-                nickName: '匿名',
-                content: '',
-                smallAvatar: '',
-                time: self.getDateStr(new Date())
-            }, msgObj);
-            console.log('msgObj', msgObj);
-
-            if (msgObj && msgObj.roomId !== self.roomInfo.id) {
-                return;
-            }
-            if (msgObj && msgObj.content) {
-                msgObj.fromAccount = data.fromAccount;
-                var tpl = _.template(this.getMessageTpl());
-                this.msgList.append(tpl(msgObj));
-                this.chatHistory.scrollTop(this.msgList.height());
-            }
+        if (msgObj && msgObj.roomId !== self.roomInfo.id) {
+            return;
+        }
+        if (msgObj && msgObj.content) {
+            var tpl = _.template(this.getMessageTpl());
+            this.msgList.append(tpl(msgObj));
+            this.chatHistory.scrollTop(this.msgList.height());
         }
     },
+
     /**
      * 定义对外公布的事件
      */
