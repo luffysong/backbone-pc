@@ -126,6 +126,8 @@ var View = BaseView.extend({
             self.isLiveShowing = false;
             console.log('end live show');
             $(document).trigger('event:liveShowEnded');
+            //TOOD
+            self.btnStartLive.removeClass('m_disabled');
         }, function (err) {
             console.log(err);
             msgBox.showError(err.msg);
@@ -134,10 +136,6 @@ var View = BaseView.extend({
     },
     defineEventInterface: function () {
         var self = this;
-        $(document).on('event:liveShowEnded', function (e, data) {
-            self.btnStartLive.removeClass('m_disabled');
-        });
-
         //成功获取房间信息
         $(document).on('event:roomInfoReady', function (e, data) {
             if (data) {
@@ -148,9 +146,12 @@ var View = BaseView.extend({
     },
     changeButtonStatus: function (status) {
         if (status === 2) {
-            
+            this.btnStartLive.addClass('m_disabled');
+            this.btnEndLive.removeClass('m_disabled');
         } else if (status === 3) {
-
+            //this.btnStartLive.addClass('m_disabled');
+            //TODO
+            //this.btnEndLive.addClass('m_disabled');
         }
 
     }
