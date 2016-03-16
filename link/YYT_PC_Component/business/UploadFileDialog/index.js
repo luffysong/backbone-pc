@@ -18,7 +18,20 @@ var UploadFileDialog = function(options){
 	this.options = options;
 	if (!options.ready) {
 		options.attached = function(){
-			self._initHelper();
+			self.helper = new Helper({
+				ctrlData:self.options.ctrlData,
+				id:'#'+this.id
+			});
+			self.helper.on('uploadFileSuccess',function(response){
+				if (typeof self.options.uploadFileSuccess === 'function') {
+					self.options.uploadFileSuccess(response);
+				};
+			});
+			self.helper.on('saveFile',function(){
+				if (typeof self.options.saveFile === 'function') {
+					self.options.saveFile();
+				};
+			});
 		};
 	};
 	this.dialog = Dialog.classInstanceDialog(dialogTemp,options);
@@ -34,22 +47,6 @@ UploadFileDialog.prototype.emptyValue = function(){
 		this.helper.emptyValue();
 	};
 };
-UploadFileDialog.prototype._initHelper = function(){
-	var self = this;
-	this.helper = new Helper({
-		ctrlData:this.options.ctrlData
-	});
-	this.helper.on('uploadFileSuccess',function(response){
-		if (typeof self.options.uploadFileSuccess === 'function') {
-			self.options.uploadFileSuccess(response);
-		};
-	});
-	this.helper.on('saveFile',function(){
-		if (typeof self.options.saveFile === 'function') {
-			self.options.saveFile();
-		};
-	});
-}
 var shared = null;
 UploadFileDialog.sharedInstanceUploadFileDialog = function(options){
 	if (!shared) {

@@ -14,6 +14,7 @@ var BaseView = require('BaseView'); //View的基类
 var NoOpenListModel = require('../../model/anchor-setting/no-open-list.model');
 var ReleaseModel = require('../../model/anchor-setting/release-video.model');
 var RemoveModel = require('../../model/anchor-setting/remove-video.model');
+var SaveCoverImageModel = require('../../model/anchor-setting/save-cover-image.model');
 var NoOpenPageBoxView = require('./page-box.view');
 var MsgBox = require('ui.MsgBox');
 var Confirm = require('ui.Confirm');
@@ -26,7 +27,7 @@ var View = BaseView.extend({
 	el:'#noOpenContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
 		'click li':'checkLiveVideoHandler',
-		'click .uploadImage':'uploadImageHandler'
+		'click .uploadImage':'editCoverImageHandler'
 	},
 	rawLoader:function(){
 
@@ -53,12 +54,23 @@ var View = BaseView.extend({
 			'roomId':'',
 			'access_token':token
 		};
+		this.saveCoverParameter = {
+			'deviceinfo':'{"aid":"30001001"}',
+			'access_token':token,
+			'roomId':'',
+			'posterUrl':''
+		};
 		this.removeLock = true;
 		this.releaseLock = true;
 		this.liCache = null;
+		this.imagePath = '';
+		this.upload = null;
+		this.singleLiDOM = null;
+		this.uploadState = false;
 		this.noOpenModel = new NoOpenListModel();
 		this.releaseModel = new ReleaseModel();
 		this.removeModel = new RemoveModel();
+		this.saveCoverModel = new SaveCoverImageModel();
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -67,7 +79,34 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
-		// this.uploadImage = new UploadFileDialog();
+		var fileOptions = {
+			width : 580,
+			height : 341,
+			isRemoveAfterHide : false,
+			isAutoShow : false,
+			mainClass:'shadow_screen_x',
+			closeClass:'editor_bg_close_x',
+			closeText:'X',
+			title:'封面设置',
+			ctrlData:{
+				"cmd":[
+					{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
+				],
+				"redirect":window.location.origin+"/web/upload.html"
+			},
+			uploadFileSuccess:function(response){
+				//上传成功
+				self.uploadImageHandler(response);
+				self.uploadState = true;
+			},
+			saveFile:function(){
+				//保存
+				if (self.uploadState) {
+					self.saveCoverImage();
+				}
+			}
+		};
+		this.upload = new UploadFileDialog(fileOptions);
 		this.noOpenModel.setChangeURL(this.noOpenParameter);
 		this.noOpenModel.execute(function(response){
 			var data = response.data;
@@ -82,7 +121,7 @@ var View = BaseView.extend({
 			};
 			self.initRender(roomList);
 		},function(e){
-			
+			MsgBox.showError('获取未直播列表：第1页失败');
 		});
 	},
 	initPageBox:function(prop){
@@ -98,6 +137,7 @@ var View = BaseView.extend({
 			}
 		});
 	},
+	//分页渲染，以及缓存li
 	initRender:function(items){
 		var html = '';
 		if (items.length) {
@@ -117,6 +157,7 @@ var View = BaseView.extend({
 			this.liCache[key] = li;
 		};
 	},
+	//点击发布或删除时的处理
 	checkLiveVideoHandler:function(e){
 		var self = this;
 		var el = $(e.currentTarget);
@@ -130,7 +171,7 @@ var View = BaseView.extend({
 					if (span.attr('class') === 'disable') {
 						return;
 					};
-					if (this.releaseLock) {
+					if (this.releaseLock && this.imagePath) {
 						this.releaseLock = false;
 						this.removeParameter.roomId = id;
 						this.releaseModel.setChangeURL(this.removeParameter);
@@ -147,7 +188,9 @@ var View = BaseView.extend({
 							self.releaseLock = true;
 							MsgBox.showError('发布失败');
 						});
-					}
+					}else{
+						MsgBox.showError('发布失败，请上传封面');
+					};
 					break;
 				case 3:
 					if (this.removeLock) {
@@ -159,7 +202,8 @@ var View = BaseView.extend({
 								self.removeModel.setChangeURL(self.removeParameter);
 								self.removeModel.execute(function(response){
 									self.removeLock = true;
-									console.log(response);
+									MsgBox.showOK('删除成功');
+									el.remove();
 								},function(e){
 									self.removeLock = true;
 									MsgBox.showError('删除失败');
@@ -171,11 +215,44 @@ var View = BaseView.extend({
 			};
 		}
 	},
-	uploadImageHandler:function(e){
+	//点击编辑封面
+	editCoverImageHandler:function(e){
 		var el = $(e.currentTarget);
+		if (this.upload) {
+			this.singleLiDOM = el.parent();
+			this.saveCoverParameter.roomId = this.singleLiDOM.data('id');
+			this.upload.emptyValue();
+			this.upload.show();
+		};
 	},
+	//上传成功之后处理image 地址
+	uploadImageHandler:function(response){
+		var images = response.images;
+		var imagePath = images[0].path;
+		this.imagePath = imagePath;
+	},
+	//点击保存之后的处理
+	saveCoverImage:function(){
+		var self = this;
+		this.saveCoverParameter.posterUrl = this.imagePath;
+		this.saveCoverModel.setChangeURL(this.saveCoverParameter);
+		this.saveCoverModel.execute(function(response){
+			var code = ~~response.code;
+			if (!code) {
+				var coverImageDOM = self.singleLiDOM.find('.cover-image');
+				coverImageDOM.attr('src',self.imagePath);
+				self.singleLiDOM = null;
+				MsgBox.showOK('保存成功');
+				self.upload.hide();
+				self.uploadState = false;
+			}
+		},function(e){
+			MsgBox.showError('保存失败');
+		});
+	},
+	//格式化时间
 	forMatterDate:function(time){
-		dateTime.setCurNewDate(liveTime);
+		dateTime.setCurNewDate(time);
 		var year = dateTime.$get('year');
 		var month = dateTime.$get('month');
 		var day = dateTime.$get('day');
@@ -185,6 +262,7 @@ var View = BaseView.extend({
 		var minutes = _minutes < 10 ? '0'+_minutes : _minutes;
 		return year+'/'+month+'/'+day+' '+hours+':'+minutes;
 	},
+	//发布时，重新渲染li
 	liRender:function(item){
 		var html = this.compileHTML(this.liTemp,{'item':item});
 		var li = this.liCache[item.liCacheKey];

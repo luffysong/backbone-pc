@@ -18,7 +18,6 @@ var uploadDone = '上传完成!';
 var MsgBox = require('ui.MsgBox');
 var loc = window.location;
 var View = BaseView.extend({
-	el:'#uploadFileDialog',
 	rawLoader:function(){
 
 	},
@@ -68,7 +67,7 @@ var View = BaseView.extend({
 		this.dialog.hide();
 	},
 	saveHandler:function(e){
-		this.trigger('saveFile'); 
+		this.trigger('saveFile');
 	},
 	changeFile:function(e){
 		this.imageStateDOM.html(uploadIng)

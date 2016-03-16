@@ -39,7 +39,6 @@ var Model = BaseModel.extend({
 			value.lookUrl = '/web/anchor.html?roomId='+value.id;
 			value.liCacheKey = value.id+'-'+value.streamName;
 		};
-		response.data.totalCount = 73;
 		return response;
 	}
 });
