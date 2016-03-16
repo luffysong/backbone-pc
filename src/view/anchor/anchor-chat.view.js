@@ -308,6 +308,7 @@ var View = BaseView.extend({
                 url: '',
                 time: self.getDateStr(new Date())
             },msgObj);
+            
             if (msgObj && msgObj.content) {
                 msgObj.fromAccount = data.fromAccount;
                 var tpl = _.template(this.getMessageTpl());
