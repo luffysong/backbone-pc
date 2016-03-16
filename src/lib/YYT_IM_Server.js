@@ -30,7 +30,6 @@ YYTIMServer.init = function (options) {
         userSig: imSig.userSig //当前用户身份凭证
     };
     if (imSig && options) {
-        console.log('--------', 'loginInfo', loginInfo, 'listeners',options);
         //腾讯IM初始化
         webim.init(loginInfo, options, null);
     }

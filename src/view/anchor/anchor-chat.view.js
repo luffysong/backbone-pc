@@ -22,7 +22,6 @@ var DateTime = require('DateTime');
 
 var msgBox = require('ui.MsgBox');
 
-
 var View = BaseView.extend({
     el: '#anchorCtrlChat', //设置View对象作用于的根元素，比如id
     rawLoader: function () { //可用此方法返回字符串模版
@@ -307,8 +306,8 @@ var View = BaseView.extend({
                 content: '',
                 url: '',
                 time: self.getDateStr(new Date())
-            },msgObj);
-            
+            }, msgObj);
+
             if (msgObj && msgObj.content) {
                 msgObj.fromAccount = data.fromAccount;
                 var tpl = _.template(this.getMessageTpl());
@@ -481,7 +480,7 @@ var View = BaseView.extend({
             msgBox.showError(err.msg || '获取群组消息失败!');
         });
     },
-    getDateStr: function(dateInt){
+    getDateStr: function (dateInt) {
         var date = new Date(dateInt);
         return date.Format('hh:MM:ss');
     }
