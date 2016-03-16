@@ -53,6 +53,7 @@ YYTIMServer.sendMessage = function (attrs) {
     if (currentSession) {
         var sendMsg = new webim.Msg(currentSession, true);
         sendMsg.addText(new webim.Msg.Elem.Text(JSON.stringify(attrs.msg)));
+        sendMsg.accountfrom = '';
 
         console.log(sendMsg);
         webim.sendMsg(sendMsg, function (resp) {
