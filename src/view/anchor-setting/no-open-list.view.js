@@ -39,7 +39,7 @@ var View = BaseView.extend({
 		this.liTemp = require('../../template/anchor-setting/no-open-li.html');
 		this.noOpenParameter = {
 			'deviceinfo':'{"aid":"30001001"}',
-			'order':'',
+			'order':'time',
 			'offset':0,
 			'size':6,
 			'access_token':token

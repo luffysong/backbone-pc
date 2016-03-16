@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://git.oschina.net/xiangwenwen/generate-backbone-pc.git"
   },
-  "author": "icepy",
+  "author": "YYT",
   "license": "MIT",
   "devDependencies": {
     "backbone": "^1.2.3",
