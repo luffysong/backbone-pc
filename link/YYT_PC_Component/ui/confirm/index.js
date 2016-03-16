@@ -31,6 +31,7 @@ var setting = {
 confirm.init = function (setting) {
     var tpl = _.template(this.getHTML());
     var html = tpl(setting);
+    this.remove();
     this.bindEvent(html, setting.okFn, setting.cancelFn);
 
 };
