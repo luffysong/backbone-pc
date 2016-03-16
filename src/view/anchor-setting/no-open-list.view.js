@@ -103,6 +103,8 @@ var View = BaseView.extend({
 				//保存
 				if (self.uploadState) {
 					self.saveCoverImage();
+				}else{
+					MsgBox.showTip('正在上传，请等待');
 				}
 			}
 		};
