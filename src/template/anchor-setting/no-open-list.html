@@ -1,5 +1,5 @@
 {{each items as item}}
-     <li  data-id="{{item.id}}">
+     <li  data-id="{{item.id}}" data-key="{{item.liCacheKey}}">
             <div class="uploadAd fl uploadImage">
                    <img src="{{item.imageUrl}}" alt="">
             </div>
@@ -13,7 +13,7 @@
                                 <a href="javascript:;" class="copy">复制</a>
                         </div>
                    <dd>
-                        <h4 class="tit">视频连接：</h4>
+                        <h4 class="tit">视频流：</h4>
                         <div>
                               <span>{{item.streamName}}</span>
                               <a href="javascript:;" class="copy">复制</a>

@@ -19,7 +19,9 @@ var MsgBox = require('ui.MsgBox');
 var Confirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var UploadFileDialog = require('UploadFileDialog');
+var DateTime = require('DateTime');
 var user = UserModel.sharedInstanceUserModel();
+var dateTime = new DateTime();
 var View = BaseView.extend({
 	el:'#noOpenContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
@@ -33,6 +35,7 @@ var View = BaseView.extend({
 	beforeMount:function(){
 		var token = user.getToken();
 		this.listTemp = require('../../template/anchor-setting/no-open-list.html');
+		this.liTemp = require('../../template/anchor-setting/no-open-li.html');
 		this.noOpenParameter = {
 			'deviceinfo':'{"aid":"30001001"}',
 			'order':'',
@@ -52,6 +55,7 @@ var View = BaseView.extend({
 		};
 		this.removeLock = true;
 		this.releaseLock = true;
+		this.liCache = null;
 		this.noOpenModel = new NoOpenListModel();
 		this.releaseModel = new ReleaseModel();
 		this.removeModel = new RemoveModel();
@@ -102,6 +106,16 @@ var View = BaseView.extend({
 			html = '<h1>暂无数据</h1>';
 		};
 		this.$el.html(html);
+		this.liCache = null;
+		this.liCache = {};
+		var lis = this.$el.find('li')
+		var i = 0;
+		var l = lis.length;
+		for(;i<l;i++){
+			var li = $(lis[i]);
+			var key = li.attr('data-key');
+			this.liCache[key] = li;
+		};
 	},
 	checkLiveVideoHandler:function(e){
 		var self = this;
@@ -123,6 +137,12 @@ var View = BaseView.extend({
 						this.releaseModel.execute(function(response){
 							this.releaseLock = true;
 							span.addClass('disable');
+							MsgBox.showOK('发布成功');
+							var item = response.data;
+							item.liCacheKey = item.id+'-'+item.streamName;
+							item.liveVideoTime = self.forMatterDate(item.liveTime)
+							item.lookUrl = '/web/anchor.html?roomId='+item.id;
+							self.liRender(item);
 						},function(e){
 							self.releaseLock = true;
 							MsgBox.showError('发布失败');
@@ -145,8 +165,7 @@ var View = BaseView.extend({
 									MsgBox.showError('删除失败');
 								});
 							}
-						})
-						
+						});
 					};
 					break;
 			};
@@ -154,6 +173,22 @@ var View = BaseView.extend({
 	},
 	uploadImageHandler:function(e){
 		var el = $(e.currentTarget);
+	},
+	forMatterDate:function(time){
+		dateTime.setCurNewDate(liveTime);
+		var year = dateTime.$get('year');
+		var month = dateTime.$get('month');
+		var day = dateTime.$get('day');
+		var _hours = dateTime.$get('hours');
+		var hours = _hours < 10 ? '0'+_hours : _hours;
+		var _minutes = dateTime.$get('minutes');
+		var minutes = _minutes < 10 ? '0'+_minutes : _minutes;
+		return year+'/'+month+'/'+day+' '+hours+':'+minutes;
+	},
+	liRender:function(item){
+		var html = this.compileHTML(this.liTemp,{'item':item});
+		var li = this.liCache[item.liCacheKey];
+		li.html(html);
 	}
 });
 module.exports = View;

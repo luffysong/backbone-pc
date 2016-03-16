@@ -37,6 +37,7 @@ var Model = BaseModel.extend({
 			var minutes = _minutes < 10 ? '0'+_minutes : _minutes;
 			value.liveVideoTime = year+'/'+month+'/'+day+' '+hours+':'+minutes;
 			value.lookUrl = '/web/anchor.html?roomId='+value.id;
+			value.liCacheKey = value.id+'-'+value.streamName;
 		};
 		response.data.totalCount = 73;
 		return response;

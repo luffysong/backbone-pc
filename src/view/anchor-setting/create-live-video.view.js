@@ -249,7 +249,8 @@ var View = BaseView.extend({
 			this.createData.roomName = this.actorName.val();
 			this.createData.liveTime = this.dateTime.getTime(this.createDate);
 			if (this.createData.liveTime < time) {
-				alert('直播时间至少为一小时之后');
+				MsgBox.showError('直播时间至少为一小时之后');
+				this.createLock = true;
 				self.initListener(); 
 				return;
 			};
@@ -257,11 +258,13 @@ var View = BaseView.extend({
 			this.createModel.execute(function(response){
 				var code = ~~response.code;
 				var data = response.data;
-				console.log(data.message);
 				if (!code) {
+					MsgBox.showOK('创建成功')
 					window.location.reload();
 				};
 			},function(e){
+				MsgBox.showError('创建失败');
+				self.createLock = true;
 				self.initListener();
 			});
 		}
