@@ -34,6 +34,7 @@ var View = BaseView.extend({
 		this.formDOM = this.$el.find('.upload-form');
 		this.imgSrcDOM = this.$el.find('.imgboxFile');
 		this.imageStateDOM = this.$el.find('.upload-image-state');
+		this.inputTextDOM = this.$el.find('.input-text');
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(options){
@@ -59,12 +60,19 @@ var View = BaseView.extend({
 				MsgBox.showError('上传失败');
 			}
 		});
+		this.on('successBreviary',function(obj){
+			this.successBreviary(obj);
+		});
 	},
-	show:function(){
-		this.dialog.show();
-	},
-	hide:function(){
-		this.dialog.hide();
+	successBreviary:function(obj){
+		this.emptyValue();
+		if (obj.breviaryUrl) {
+			this.imgSrcDOM.attr('src',obj.breviaryUrl);
+			this.imgSrcDOM.show();
+		};
+		if (obj.inputText) {
+			this.inputTextDOM.text(obj.inputText);
+		};
 	},
 	saveHandler:function(e){
 		this.trigger('saveFile');
@@ -82,6 +90,7 @@ var View = BaseView.extend({
 	emptyValue:function(){
 		this.imageStateDOM.html('');
 		this.imgSrcDOM.hide();
+		this.inputTextDOM.text('上传图片');
 	}
 });
 

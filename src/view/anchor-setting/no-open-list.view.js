@@ -220,11 +220,21 @@ var View = BaseView.extend({
 	//点击编辑封面
 	editCoverImageHandler:function(e){
 		var el = $(e.currentTarget);
+		var attrs = null;
+		var posterpic = el.attr('data-posterpic');
 		if (this.upload) {
 			this.singleLiDOM = el.parent();
 			this.saveCoverParameter.roomId = this.singleLiDOM.data('id');
 			this.upload.emptyValue();
-			this.upload.show();
+			if (posterpic) {
+				var img = el.find('.cover-image');
+				attrs = {
+					breviaryUrl:img.attr('src'),
+					inputText:'编辑图片'
+				};
+				console.log(attrs);
+			}
+			this.upload.show(attrs);
 		};
 	},
 	//上传成功之后处理image 地址

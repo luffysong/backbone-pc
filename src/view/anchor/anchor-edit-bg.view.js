@@ -96,8 +96,15 @@ var View = BaseView.extend({
         };
     },
     showFileUploadDialog: function () {
+        var attrs = null;
+        if (this.roomInfo.imageUrl) {
+            attrs = {
+                'inputText':'编辑图片',
+                'breviaryUrl':this.roomInfo.imageUrl
+            }
+        };
         this.currentBgImg = '';
-        this.uploadFile.show();
+        this.uploadFile.show(attrs);
     },
     setBackgroundImg: function () {
         var self = this;

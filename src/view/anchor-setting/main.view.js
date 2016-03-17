@@ -15,6 +15,7 @@ var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var TopBarView = require('../topbar/topbar.view');
 var IMModel = require('../../lib/IMModel');
+var UpdateBgModel = require('../../model/anchor-setting/update-bgtheme.model');
 var store = require('store');
 var ProfileView = require('./profile.view');
 var EditProfileView = require('./edit-profile.view');
@@ -25,6 +26,7 @@ var UploadFileDialog = require('UploadFileDialog');
 var imModel = IMModel.sharedInstanceIMModel();
 var user = UserModel.sharedInstanceUserModel();
 var MsgBox = require('ui.MsgBox');
+var origin = window.location.origin;
 var View = BaseView.extend({
 	el:'#settingContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
@@ -38,6 +40,15 @@ var View = BaseView.extend({
 		this.topbarView = new TopBarView();
 		this.isLogined = false;
 		this.upload = null;
+		this.bgTheme = null;
+		this.anchorSig = null;
+		this.updateBgParameter = {
+			'deviceinfo':'{"aid":"30001001"}'
+		};
+		this.tempImg = null;
+		this.saveLock = true;
+		this.uploadSate = false;
+		this.updateBgModel = new UpdateBgModel();
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -53,6 +64,8 @@ var View = BaseView.extend({
 				self.fetchIMUserSig();
 			});
 			//跳转走人
+			store.set('signout',1);
+			window.location.href = origin + '/web/login.html';
 		}else{
 			this.fetchIMUserSig();
 		}
@@ -77,10 +90,16 @@ var View = BaseView.extend({
 			},
 			uploadFileSuccess:function(response){
 				//上传成功
-
+				self.uploadSate = true;
+				self.uploadSuccess(response);
 			},
 			saveFile:function(){
 				//保存
+				if (self.uploadSate) {
+					self.saveFile();
+				}else{
+					MsgBox.showError('正在上传，请等待');
+				};
 			}
 		};
 		this.upload = new UploadFileDialog(fileOptions);
@@ -92,6 +111,7 @@ var View = BaseView.extend({
 	},
 	fetchIMUserSig:function(){
 		var self = this;
+		this.updateBgParameter.access_token = user.getToken();
 		imModel.fetchIMUserSig(function(sig){
 			if (!sig.anchor) {
 				console.log('跳转走人');
@@ -99,6 +119,8 @@ var View = BaseView.extend({
 				//跳转走人
 			}else{
 				//继续处理主播
+				self.anchorSig = sig;
+				self.bgTheme = sig.anchor.bgTheme;
 				self.initRender();
 			}
 		},function(e){
@@ -108,10 +130,15 @@ var View = BaseView.extend({
 	},
 	editBgHandler:function(e){
 		if (this.isLogined) {
-			if(this.upload){
-				this.upload.emptyValue();
+			var attrs = null;
+			if (this.anchorBg) {
+				attrs = {
+					'inputText':'编辑背景',
+					'breviaryUrl':this.anchorBg
+				};
 			};
-			this.upload.show();
+			this.upload.emptyValue();
+			this.upload.show(attrs);
 		}else{
 			MsgBox.showError('未登录或获取签名失败');
 		};
@@ -119,9 +146,27 @@ var View = BaseView.extend({
 	uploadSuccess:function(response){
 		var images = response.images;
 		var path = images[0].path;
+		this.tempImg = path;
 	},
-	saveFileSuccess:function(){
+	saveFile:function(){
 		//保存
+		var self = this;
+		if (this.saveLock) {
+			this.saveLock = false;
+			this.bgTheme = this.tempImg;
+			this.updateBgParameter.bgTheme = this.bgTheme;
+			this.updateBgModel.setChangeURL(this.updateBgParameter);
+			this.updateBgModel.execute(function(response){
+				var code = response.code;
+				if (!~~code) {
+					console.log(response);
+					self.saveLock = true;
+				};
+			},function(e){
+				self.saveLock = true;
+				MsgBox.showError('保存背景图出错');
+			});
+		}
 	}
 });
 

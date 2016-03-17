@@ -1,6 +1,6 @@
 {{each items as item}}
      <li  data-id="{{item.id}}" data-key="{{item.liCacheKey}}">
-            <div class="uploadAd fl uploadImage">
+            <div class="uploadAd fl uploadImage" data-posterPic="{{if item.posterPic}}1{{/if}}">
                    <img src="{{item.posterPic || '../img/aP-list-ad.png'}}" alt="" class="cover-image">
             </div>
             <dl class="preLiveMsg fl">
@@ -26,9 +26,11 @@
                         {{else }}
                         	{{if item.status === 0}}
                         		<span  data-state="2">发布</span>
-					{{/if}}
+					        {{/if}}
                         {{/if}}
-                        <span data-state="3">删除</span>
+                        {{if item.status === 0}}
+                            <span data-state="3">删除</span>
+                        {{/if}}
                    </dd>
             </dl>
      </li>

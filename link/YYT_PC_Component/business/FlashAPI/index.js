@@ -1,25 +1,41 @@
 'use strict';
 var flashTemp = require('./template/flash.html');
-console.log(flashTemp)
+var flashvars = 'local=true&amp;amovid=5f4ffbc12418024&amp;refererdomain=yinyuetai.com&amp;domain=yinyuetai.com&amp;videoId=456&amp;showlyrics=false&amp;capturevideoavailable=true&amp;sendsnaplog=true&amp;usepromptbar=true&amp;popupwin=true&amp;preamovid=true&amp;autostart=true&amp;showadvipbutton=true&amp;playerready=ifFlash&amp;hasbarrage=true&amp;swflocation=%2Fswf%2Fcommon%2Fmvplayer.swf%3Ft%3D2016021913';
+var plugins = '12334++1234';
 var win = window;
 var origin = win.location.origin;
+var isWindows = win.navigator.appName.indexOf("Microsoft") != -1;
+var uid = 999;
+var tplEng = require('tplEng');
 var FlashAPI = function(options){
     this.$el = $(options.id);
     this.options = options;
-    this.attrs = {};
+    this.attrs = {
+        'id':'YYTFlash'+(uid++),
+        'name':'YYTFlash'+(uid++),
+        'plugins':options.plugins || plugins,
+        'flashvars':options.flashvars || '12132',
+        'src':options.src || origin + '/flash/Test3.swf'
+    };
+    this._fns = {};
     this._init();
 };
 FlashAPI.prototype._init = function(){
-    var pluginSrc = this.options.pluginSrc || origin+'/falsh/Inplayer.swf';
-    console.log(flashTemp)
-    var html = flashTemp.replace('{{plugins}}',pluginSrc);
+    var html = tplEng.compile(flashTemp)(this.attrs);
     this.$el.html(html);
-    this.$embed = this.$el.find('.player');
-    return;
+    this.$embed = this.$el.find(this.attrs.id);
     this._createAttrs();
+    console.log(this);
 };
 FlashAPI.prototype._createAttrs = function(){
-    this.attrs = win.thisMovie("ExternalInterfaceExample");
+    var funKey = 'ExternalInterfaceExample';
+    console.log(document[funKey]);
+    console.log(window[funKey]);
+    if (isWindows) {
+        this._fns = window[funKey];
+    }else{
+        this._fns = document[funKey];
+    };
 };
 
 FlashAPI.prototype.addUrl = function(value){

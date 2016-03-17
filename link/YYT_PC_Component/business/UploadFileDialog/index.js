@@ -16,27 +16,26 @@ var Helper = require('./helper');
 var UploadFileDialog = function(options){
 	var self = this;
 	this.options = options;
-	if (!options.ready) {
-		options.attached = function(){
-			self.helper = new Helper({
-				ctrlData:self.options.ctrlData,
-				id:'#'+this.id
-			});
-			self.helper.on('uploadFileSuccess',function(response){
-				if (typeof self.options.uploadFileSuccess === 'function') {
-					self.options.uploadFileSuccess(response);
-				};
-			});
-			self.helper.on('saveFile',function(){
-				if (typeof self.options.saveFile === 'function') {
-					self.options.saveFile();
-				};
-			});
-		};
-	};
 	this.dialog = Dialog.classInstanceDialog(dialogTemp,options);
+	this.helper = new Helper({
+		ctrlData:this.options.ctrlData,
+		id:'#'+ this.dialog.id
+	});
+	this.helper.on('uploadFileSuccess',function(response){
+		if (typeof self.options.uploadFileSuccess === 'function') {
+			self.options.uploadFileSuccess(response);
+		};
+	});
+	this.helper.on('saveFile',function(){
+		if (typeof self.options.saveFile === 'function') {
+			self.options.saveFile();
+		};
+	});
 };
-UploadFileDialog.prototype.show = function(){
+UploadFileDialog.prototype.show = function(obj){
+	if (this.helper && obj) {
+		this.helper.trigger('successBreviary',obj);
+	}
 	this.dialog.show();
 };
 UploadFileDialog.prototype.hide = function(){
