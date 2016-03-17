@@ -84,7 +84,7 @@
 			};
 			inputs += '<input type="hidden" name="'+name+'" value=\''+value+'\'/>';
 		};
-		inputs += '<input type="file" class="upload-file" name="'+this._filename+'" id="'+this.options.className+'" />';
+		inputs += '<input type="file" class="upload-file '+this.options.className+'" name="'+this._filename+'"  />';
 		this.$el.attr('method','POST');
 		this.$el.attr('action',this._url);
 		this.$el.attr('enctype','multipart/form-data');

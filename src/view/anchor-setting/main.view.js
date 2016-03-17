@@ -17,6 +17,8 @@ var TopBarView = require('../topbar/topbar.view');
 var IMModel = require('../../lib/IMModel');
 var store = require('store');
 var ProfileView = require('./profile.view');
+var EditProfileView = require('./edit-profile.view');
+var UpdatePasswordView = require('./update-password.view');
 var PageContentView = require('./page-content.view');
 var Dialog = require('ui.Dialog');
 var UploadFileDialog = require('UploadFileDialog');
@@ -85,6 +87,8 @@ var View = BaseView.extend({
 		this.isLogined = true;
 		this.profileView = new ProfileView();
 		this.pageContentView = new PageContentView();
+		this.editProfileView = new EditProfileView();
+		this.updatePasswordView = new UpdatePasswordView();
 	},
 	fetchIMUserSig:function(){
 		var self = this;

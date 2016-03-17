@@ -832,7 +832,7 @@ img {
   margin-bottom: 14px;
   cursor: pointer;
 }
-.personInfo .uploadform #file {
+.personInfo .uploadform .file {
   width: 120px;
   height: 38px;
   background: blue;
