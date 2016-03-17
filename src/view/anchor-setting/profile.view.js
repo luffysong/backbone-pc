@@ -22,6 +22,7 @@ var View = BaseView.extend({
 	events:{ //监听事件
 
 	},
+	rawLoader:function(){},
 	//当模板挂载到元素之前
 	beforeMount:function(){
 		this.data = {
