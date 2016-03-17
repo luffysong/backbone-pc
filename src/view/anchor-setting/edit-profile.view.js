@@ -155,7 +155,6 @@ var View = BaseView.extend({
             this.imgUserAvatar.attr('src', src);
         }
     },
-
     saveuserinfo: function () {
         var self = this;
         if (this.verifyForm()) {
