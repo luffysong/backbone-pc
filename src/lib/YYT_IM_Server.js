@@ -22,9 +22,10 @@ var YYTIMServer = {
  * @param options
  */
 YYTIMServer.init = function (options) {
-
+    var self = this;
     imModel.fetchIMUserSig(function (imSig) {
         console.log(imSig);
+        self.im = imSig;
         var loginInfo = {
             sdkAppID: imSig.imAppid, //用户所属应用id
             appIDAt3rd: imSig.imAppid, //用户所属应用id
@@ -48,12 +49,14 @@ YYTIMServer.init = function (options) {
  */
 YYTIMServer.sendMessage = function (attrs) {
     console.log(attrs);
-    var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
+    //var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
+    var random = Math.floor(Math.random() * 10000);
+    var currentSession = new webim.Session('GROUP', attrs.groupId, attrs.groupId, '', random);
     console.log("-----", currentSession);
     if (currentSession) {
         var sendMsg = new webim.Msg(currentSession, true);
         sendMsg.addText(new webim.Msg.Elem.Text(JSON.stringify(attrs.msg)));
-        sendMsg.accountfrom = '';
+        sendMsg.fromAccount = this.im.imIdentifier;
 
         console.log(sendMsg);
         webim.sendMsg(sendMsg, function (resp) {

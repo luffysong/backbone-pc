@@ -34,6 +34,10 @@ var View = BaseView.extend({
     beforeMount: function () {
         this.noticeModel = new NoticeModel();
         this.noticeGetModel = new NoticeGetModel();
+        this.noticeInfo = {
+            content: ''
+        };
+
     },
     //当模板挂载到元素之后
     afterMount: function () {

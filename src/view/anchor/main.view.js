@@ -156,7 +156,7 @@ var View = BaseView.extend({
         new LiveShowBtnView();
     },
     goBack: function () {
-        window.location.href = '/web/anchor-setting.html';
+        window.location.href = '/web/anchorsetting.html';
     }
 
 
