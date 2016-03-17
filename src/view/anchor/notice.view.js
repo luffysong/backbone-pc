@@ -14,6 +14,7 @@
 var BaseView = require('BaseView'); //View的基类
 var NoticeModel = require('../../model/anchor/notice-create.model');
 var NoticeGetModel = require('../../model/anchor/notice-get.model');
+var YYTIMServer = require('../../lib/YYT_IM_Server');
 var UserModel = require('UserModel');
 
 var msgBox = require('ui.MsgBox');
@@ -91,15 +92,32 @@ var View = BaseView.extend({
             content: content
         }, function (data) {
             if (data && data.code == '0') {
-                $(document).trigger('event:noticeChanged',content);
+                $(document).trigger('event:noticeChanged', content);
                 self.roomInfo.desc = content;
                 self.noticeWrap.text(content);
                 self.panelDisplay();
+
             } else {
                 msgBox.showError('数据保存失败,请稍后重试');
             }
         }, function (err) {
             msgBox.showError('数据保存失败,请稍后重试');
+        });
+    },
+    sendNotifyToIM: function (content) {
+        YYTIMServer.sendMessage({
+            groupId: this.roomInfo.imGroupid,
+            msg: {
+                roomId: this.roomInfo.id,
+                nickName: '主播',
+                smallAvatar: '',
+                mstType: 2,
+                content: content
+            }
+        }, function (res) {
+            console.log(res);
+        }, function (err) {
+            content.log(err);
         });
     },
     /**
@@ -120,27 +138,27 @@ var View = BaseView.extend({
     /**
      * 获取公告信息
      */
-    getNoticeInfo: function(){
+    getNoticeInfo: function () {
         var self = this;
         this.noticeGetModel.setChangeURL({
             deviceinfo: '{"aid":"30001001"}',
             roomId: this.roomInfo.id,
             accessToken: user.getToken()
         });
-        this.noticeGetModel.executeGET(function(res){
+        this.noticeGetModel.executeGET(function (res) {
             console.log('noticeGetModel', res);
-            if(res && res.data){
+            if (res && res.data) {
                 var notice = null;
                 res.data.placards && (notice = res.data.placards[0]);
-                if(notice){
+                if (notice) {
                     self.noticeInfo = notice;
                     self.noticeWrap.text(notice.content || '暂无公告');
                     self.txtNotice.val(notice.content);
-                }else{
+                } else {
                     self.noticeWrap.text('暂无公告');
                 }
             }
-        }, function(err){
+        }, function (err) {
             console.log(err);
             msgBox.showErr(err.msg || '获取公告失败');
         });
