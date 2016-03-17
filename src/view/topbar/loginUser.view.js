@@ -19,6 +19,8 @@ var sginHTML = require('../../template/topbar/sgin.html');
 var loginedTemp = require('../../template/topbar/logined.html');
 var store = require('store');
 var win = window;
+var location = win.location;
+var origin = location.origin;
 var View = BaseView.extend({
 	clientRender:false,
 	el:'#loginUser', //设置View对象作用于的根元素，比如id
@@ -75,7 +77,8 @@ var View = BaseView.extend({
 	logoutHandler:function(e){
 		e.preventDefault();
 		store.remove('imSig');
-		window.location.href ='http://login.yinyuetai.com/logout';
+		store.set('signout',1);
+		location.href = origin + '/web/login.html'
 	},
 	fetchUserInfo:function(){
 		var token = user.getToken();
@@ -102,6 +105,18 @@ var View = BaseView.extend({
 		$(document).on('click', function () {
 			self.showDropMenuEle&&self.showDropMenuEle.hide();
 		});
+	},
+	showDialog:function(){
+		var self = this;
+		this._dialog.trigger('show');
+		this._dialog.once('hide',function(){
+			if (user.isLogined()) {
+				self.trigger('topbar-logined');
+			};
+		});
+	},
+	hideDialog:function(){
+		this._dialog.trigger('hide');
 	}
 });
 

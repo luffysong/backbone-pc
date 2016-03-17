@@ -33,6 +33,12 @@ var View = BaseView.extend({
 		this.loginUserView.on('topbar-logined',function(){
 			self.trigger('logined');
 		});
+	},
+	showLoginDialog:function(){
+		this.loginUserView.showDialog();
+	},
+	hideLoginDialog:function(){
+		this.loginUserView.hideDialog();
 	}
 });
 

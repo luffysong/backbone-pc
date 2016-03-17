@@ -1,6 +1,7 @@
 {
 	"source":{
 		"anchor.main":"./src/anchor.main.js",
-		"anchorSetting.main":"./src/anchorSetting.main.js"
+		"anchorSetting.main":"./src/anchorSetting.main.js",
+		"login.main":"./src/login.main.js"
 	}
 }
