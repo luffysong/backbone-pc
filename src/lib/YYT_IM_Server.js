@@ -38,7 +38,7 @@ YYTIMServer.init = function (options) {
             webim.init(loginInfo, options, null);
         }
     }, function (err) {
-
+        console.log(err);
     });
     //var imSig = store.get('imSig');
 };
@@ -55,14 +55,12 @@ YYTIMServer.sendMessage = function (attrs, okFn, errFn) {
 
     if (currentSession) {
         var sendMsg = new webim.Msg(currentSession, true);
+        console.log('send msg', attrs.msg);
         sendMsg.addText(new webim.Msg.Elem.Text(JSON.stringify(attrs.msg)));
         sendMsg.fromAccount = this.im.imIdentifier;
-        console.log('sendMsg', sendMsg);
         webim.sendMsg(sendMsg, function (resp) {
-            console.log(resp);
             okFn && okFn(resp);
         }, function (err) {
-            console.log(err);
             errFn && errFn(err);
         });
     }
@@ -73,7 +71,6 @@ YYTIMServer.sendMessage = function (attrs, okFn, errFn) {
  * 清屏
  */
 YYTIMServer.clearScreen = function (args) {
-    console.log('IM clear');
     this.sendMessage(args);
 };
 
@@ -93,15 +90,12 @@ YYTIMServer.lockScreen = function () {
     //};
  */
 YYTIMServer.disableSendMsg = function (options, okFn, errFn) {
-    console.log('禁言中.....');
     var time = webim.Tool.formatTimeStamp(Math.round(new Date().getTime() / 1000) + 10 * 60);
 
     time = new Date(time + '').getTime();
-    console.log(time);
     options = _.extend({
         'ShutUpTime': time
     }, options);
-    console.log('disableSendMsg', options);
     webim.forbidSendMsg(
         options,
         function (resp) {
@@ -180,7 +174,6 @@ YYTIMServer.createIMChatRoom = function (okFn, errFn) {
             okFn && okFn(resp);
         },
         function (err) {
-            console.log(err.ErrorInfo);
             errFn && errFn(err);
         }
     );

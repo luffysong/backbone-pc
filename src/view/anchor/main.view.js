@@ -17,9 +17,7 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
-var msgBox = require('ui.MsgBox');
 var uiConfirm = require('ui.Confirm');
-
 
 var View = BaseView.extend({
     clientRender: false,
@@ -56,15 +54,12 @@ var View = BaseView.extend({
         //注册IM事件处理
         YYTIMServer.init({
             'onConnNotify': function (notifyInfo) {
-                console.log('1-onConnNotify', notifyInfo);
                 $(document).trigger('event:onConnNotify', notifyInfo);
             },
             'onMsgNotify': function (notifyInfo) {
-                console.log('2-onMsgNotify', notifyInfo);
                 $(document).trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
-                console.log('3-onGroupInfoChangeNotify', notifyInfo);
                 $(document).trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {
@@ -89,9 +84,9 @@ var View = BaseView.extend({
      */
     userVerify: function () {
         var self = this;
-        user.getUserInfo(function (u) {
-            console.log('user:', u);
-        });
+        //user.getUserInfo(function (u) {
+        //    console.log('user:', u);
+        //});
         if (user.isLogined()) {
 
             self.initWebIM();
