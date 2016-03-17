@@ -47,7 +47,7 @@ YYTIMServer.init = function (options) {
  * 发送消息
  *
  */
-YYTIMServer.sendMessage = function (attrs) {
+YYTIMServer.sendMessage = function (attrs, okFn, errFn) {
     console.log(attrs);
     //var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
     var random = Math.floor(Math.random() * 10000);
@@ -61,8 +61,10 @@ YYTIMServer.sendMessage = function (attrs) {
         console.log(sendMsg);
         webim.sendMsg(sendMsg, function (resp) {
             console.log(resp);
+            okFn && okFn(resp);
         }, function (err) {
             console.log(err);
+            errFn && errFn(err);
         });
     }
 };

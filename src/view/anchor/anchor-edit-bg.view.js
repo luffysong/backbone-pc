@@ -98,6 +98,8 @@ var View = BaseView.extend({
             msgBox.showTip('请耐心等待图片上传完成!');
             return ;
         }
+        //this.uploadFile.hide();
+
 
         msgBox.showOK('背景图片设置成功');
 
