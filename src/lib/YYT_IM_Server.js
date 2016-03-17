@@ -50,7 +50,8 @@ YYTIMServer.init = function (options) {
 YYTIMServer.sendMessage = function (attrs) {
     console.log(attrs);
     //var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
-    var currentSession = new webim.Session('GROUP', attrs.groupId, attrs.groupId, '', 123, 222222);
+    var random = Math.floor(Math.random() * 10000);
+    var currentSession = new webim.Session('GROUP', attrs.groupId, attrs.groupId, '', random);
     console.log("-----", currentSession);
     if (currentSession) {
         var sendMsg = new webim.Msg(currentSession, true);
