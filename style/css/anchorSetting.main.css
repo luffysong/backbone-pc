@@ -631,8 +631,8 @@ img {
 }
 .liveHistory .uploadAd {
   margin-right: 19px;
-  width: 320px;
-  height: 180px;
+  width: 212px;
+  height: 120px;
 }
 .liveHistory .uploadAd img {
   width: 100%;
@@ -640,6 +640,29 @@ img {
 }
 .liveHistory .preLiveMsg {
   width: 330px;
+}
+.liveHistory .preLiveMsg .dark-color {
+  color: #666666;
+}
+.liveHistory .preLiveMsg .date {
+  margin-right: 16px;
+}
+.liveHistory .popularity-wrap .progress-wrap {
+  background-color: #434343;
+  width: 140px;
+  height: 5px;
+  border: none;
+}
+.liveHistory .popularity-wrap .progress-wrap .progress {
+  background-color: #27d5bf;
+  width: 30%;
+  height: 5px;
+  border: none;
+}
+.liveHistory .popularity-wrap .border-radius {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 .liveHistory dt {
   font-size: 14px;
@@ -651,9 +674,6 @@ img {
   font-size: 12px;
   color: #999;
   padding: 7px 0;
-}
-.liveHistory .popularity {
-  margin-bottom: 13px;
 }
 .liveHistory .popularity span {
   display: inline;
@@ -872,6 +892,7 @@ img {
   border: 1px solid #dadada;
   text-indent: 1em;
   margin-bottom: 15px;
+  line-height: 32px;
 }
 .personInfo .tags input:hover {
   border-color: #27d5bf;
