@@ -95,7 +95,9 @@ gulp.task('build', ['build:move'], function () {
     ''
   ].join('\n');
   return gulp.src('./dist/web/*.html')
-    .pipe(useref())
+    .pipe(useref({
+        noAssets:false
+    }))
     .pipe(cssFilter)
     .pipe(cssFilter.restore)
     .pipe(jsFilter)
