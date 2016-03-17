@@ -57,10 +57,6 @@ var View = BaseView.extend({
     },
     //清屏
     clearHandler: function () {
-
-
-
-
         var self = this;
         var flag = self.checkLiveRoomReady();
         if (!flag) {
@@ -248,7 +244,8 @@ var View = BaseView.extend({
         console.log('onMsgNotify', notifyInfo);
         var self = this;
         var msgObj = {};
-        if (notifyInfo.elems && notifyInfo.elems.length > 0) {
+
+        if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
             msgObj = msgObj.replace(/&quot;/g, '\'');
             eval('msgObj = ' + msgObj);

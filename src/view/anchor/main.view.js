@@ -163,7 +163,7 @@ var View = BaseView.extend({
         new LiveShowBtnView();
     },
     goBack: function () {
-        window.location.href = '/web/anchorsetting.html';
+        //window.location.href = '/web/anchorsetting.html';
     }
 
 
