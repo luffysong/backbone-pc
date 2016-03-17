@@ -164,12 +164,12 @@ var View = BaseView.extend({
                 accessToken: user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
-                tags: self.txtTags.val()
+                tags: self.txtTags.val().split(/[,，]/)
             });
 
             self.userUpdateModel.executeGET(function (res) {
                 if (res && res.code === '0') {
-                    msgBox.showError('数据保存成功!');
+                    msgBox.showOK('数据保存成功!');
                     $(document).trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
                         headImg: self.txtImg.val(),
