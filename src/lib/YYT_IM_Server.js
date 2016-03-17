@@ -52,13 +52,12 @@ YYTIMServer.sendMessage = function (attrs, okFn, errFn) {
     //var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
     var random = Math.floor(Math.random() * 10000);
     var currentSession = new webim.Session('GROUP', attrs.groupId, attrs.groupId, '', random);
-    console.log("-----", currentSession);
+
     if (currentSession) {
         var sendMsg = new webim.Msg(currentSession, true);
         sendMsg.addText(new webim.Msg.Elem.Text(JSON.stringify(attrs.msg)));
         sendMsg.fromAccount = this.im.imIdentifier;
-
-        console.log(sendMsg);
+        console.log('sendMsg', sendMsg);
         webim.sendMsg(sendMsg, function (resp) {
             console.log(resp);
             okFn && okFn(resp);

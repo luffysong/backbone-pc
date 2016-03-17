@@ -10,7 +10,6 @@
  */
 
 var BaseView = require('BaseView'); //View的基类
-var EditTtitleModel = require('../../model/anchor/anchorEditTitle.model');
 
 var View = BaseView.extend({
     el: '#currentAnchorInfo', //设置View对象作用于的根元素，比如id

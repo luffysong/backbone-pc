@@ -16,9 +16,9 @@ var NoticeModel = require('../../model/anchor/notice-create.model');
 var NoticeGetModel = require('../../model/anchor/notice-get.model');
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
 
 var msgBox = require('ui.MsgBox');
-var user = UserModel.sharedInstanceUserModel();
 
 
 var View = BaseView.extend({

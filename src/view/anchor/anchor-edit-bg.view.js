@@ -13,6 +13,8 @@ var BaseView = require('BaseView'); //View的基类
 var EditBgModel = require('../../model/anchor/anchor-edit-bg.model');
 var UploadFileDialog = require('UploadFileDialog');
 var msgBox = require('ui.MsgBox');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
 
 var View = BaseView.extend({
     el: '#edit_background', //设置View对象作用于的根元素，比如id
@@ -26,6 +28,7 @@ var View = BaseView.extend({
     beforeMount: function () {
         this.editBgModel = new EditBgModel();
         this.uploadFile = new UploadFileDialog(this.getFileUploadOptions());
+
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -34,17 +37,19 @@ var View = BaseView.extend({
         this.txtPopularity = $('#txtPopularity');
         this.txtRoomName = $('#txtRoomName');
 
+        this.anchorContainerBg = $('#anchorContainerBg');
+
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.defineEventInterface();
 
-        this.editBgModel.execute(function (response) {
-            console.log('editBgModel',response);
-            var items = this.$get('items');
-        }, function (e) {
-
-        });
+        //this.editBgModel.execute(function (response) {
+        //    console.log('editBgModel', response);
+        //    var items = this.$get('items');
+        //}, function (e) {
+        //
+        //});
     },
     /**
      * 定义事件
@@ -56,52 +61,73 @@ var View = BaseView.extend({
                 self.roomInfo = data;
                 self.txtRoomName.text(data.roomName || '');
                 self.txtPopularity.text(data.popularity || 0);
+                if (self.roomInfo.imageUrl) {
+                    self.setBgStyle(self.roomInfo.imageUrl);
+                }
             }
         })
     },
-    getFileUploadOptions:function(){
+    getFileUploadOptions: function () {
         var self = this;
         return {
-            width : 580,
-            height : 341,
-            isRemoveAfterHide : false,
-            isAutoShow : false,
-            mainClass:'shadow_screen_x',
-            closeClass:'editor_bg_close_x',
-            closeText:'X',
+            width: 580,
+            height: 341,
+            isRemoveAfterHide: false,
+            isAutoShow: false,
+            mainClass: 'shadow_screen_x',
+            closeClass: 'editor_bg_close_x',
+            closeText: 'X',
             title: '上传主题背景图片',
-            ctrlData:{
-                "cmd":[
-                    {"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
+            ctrlData: {
+                "cmd": [
+                    {"saveOriginal": 1, "op": "save", "plan": "avatar", "belongId": "20634338", "srcImg": "img"}
                 ],
-                "redirect": window.location.origin +  "/web/upload.html"
+                "redirect": window.location.origin + "/web/upload.html"
             },
-            uploadFileSuccess:function(response){
+            uploadFileSuccess: function (response) {
                 console.log(response);
-                if(response && response.images && response.images.length>0){
+                if (response && response.images && response.images.length > 0) {
                     self.currentBgImg = response.images[0].path;
                 }
             },
-            saveFile:function(){
+            saveFile: function () {
                 self.setBackgroundImg();
-
             }
         };
     },
-    showFileUploadDialog: function(){
+    showFileUploadDialog: function () {
         this.currentBgImg = '';
         this.uploadFile.show();
     },
-    setBackgroundImg: function(){
+    setBackgroundImg: function () {
         var self = this;
-        if(!self.currentBgImg){
+        if (!self.currentBgImg) {
             msgBox.showTip('请耐心等待图片上传完成!');
-            return ;
+            return;
         }
-        //this.uploadFile.hide();
 
-
-        msgBox.showOK('背景图片设置成功');
+        self.editBgModel.setChangeURL({
+            accessToken: user.getToken(),
+            deviceinfo: '{"aid": "30001001"}',
+            roomId: this.roomInfo.id,
+            imageUrl: self.currentBgImg
+        });
+        self.editBgModel.executeGET(function (res) {
+            if (res && res.code === '0') {
+                self.setBgStyle(self.currentBgImg);
+                self.uploadFile.hide();
+                msgBox.showOK('背景图片设置成功');
+            } else {
+                msgBox.showOK('背景图片设置失败,稍后重试');
+            }
+        }, function (err) {
+            msgBox.showOK('背景图片设置失败,稍后重试');
+        });
+    },
+    setBgStyle: function (url) {
+        if(url){
+            this.anchorContainerBg.css('background', 'url(' + url + ')');
+        }
 
     }
 });
