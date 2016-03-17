@@ -169,7 +169,7 @@ var View = BaseView.extend({
 
             self.userUpdateModel.executeGET(function (res) {
                 if (res && res.code === '0') {
-                    msgBox.showError('数据保存失败,请稍后重试!');
+                    msgBox.showError('数据保存成功!');
                     $(document).trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
                         headImg: self.txtImg.val(),
