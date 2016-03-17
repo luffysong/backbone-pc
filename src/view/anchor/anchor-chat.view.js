@@ -120,7 +120,6 @@ var View = BaseView.extend({
             }
 
         }, function (err) {
-            console.log('modifyGroupInfo err', err);
             msgBox.showError(txt + '操作失败,请稍后重试');
         });
     },
@@ -191,6 +190,20 @@ var View = BaseView.extend({
         }, function (resp) {
             if (resp && resp.ActionStatus === 'OK') {
                 msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
+
+                YYTIMServer.sendMessage({
+                    groupId: self.roomInfo.imGroupid,
+                    msg: {
+                        roomId: self.roomInfo.id,
+                        mstType: 5,
+                        userId: user.id
+                    }
+                }, function (resp) {
+                    console.log(resp);
+                }, function (err) {
+                    console.log(err);
+                });
+
             } else {
                 msgBox.showError('禁言失败,请稍后重试!');
             }
@@ -226,7 +239,6 @@ var View = BaseView.extend({
             };
 
             YYTIMServer.modifyGroupInfo(options, function (result) {
-                console.log('disableSendMsgHandler', result);
                 if (result && result.ActionStatus === 'OK') {
                     msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
                 } else {
@@ -319,7 +331,6 @@ var View = BaseView.extend({
 
         //成功获取房间信息
         $(document).on('event:roomInfoReady', function (e, data) {
-
             if (data) {
                 self.roomInfo = data;
                 self.roomInfoReady();

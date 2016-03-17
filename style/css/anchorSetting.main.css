@@ -486,15 +486,6 @@ img {
   padding-top: 20px;
   color: #c3c3c3;
 }
-.preLive .uploadForm .file {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-}
 .preLive .preLiveMsg {
   width: 720px;
 }
@@ -546,6 +537,18 @@ img {
   color: #fff;
   background: #d3d1d1;
   cursor: default;
+}
+.pseudo-uploadBtn {
+  position: relative;
+}
+.pseudo-uploadBtn .file {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  cursor: pointer;
 }
 .PageBox {
   float: right;
