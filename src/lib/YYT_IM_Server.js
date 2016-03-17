@@ -40,7 +40,6 @@ YYTIMServer.init = function (options) {
     }, function (err) {
         console.log(err);
     });
-    //var imSig = store.get('imSig');
 };
 
 /**

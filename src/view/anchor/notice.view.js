@@ -98,19 +98,10 @@ var View = BaseView.extend({
         this.noticeModel.executeGET(function (res) {
                 if (res && res.code == '0') {
                     $(document).trigger('event:noticeChanged', content);
-                    //self.roomInfo.desc = content;
                     self.noticeInfo.content = content;
                     self.noticeWrap.text(content);
                     self.panelDisplay();
                     msgBox.showOK('公告发布成功');
-                    //YYTIMServer.sendMessage({
-                    //    groupId: self.roomInfo.imGroupid,
-                    //    msg: {
-                    //        roomId: self.roomInfo.id,
-                    //        mstType: 2,
-                    //        content: content
-                    //    }
-                    //});
                     self.sendNotifyToIM(content);
                 }
             },
@@ -118,23 +109,6 @@ var View = BaseView.extend({
                 msgBox.showError('数据保存失败,请稍后重试');
             }
         );
-
-        //this.noticeModel.executePOST({
-        //    roomId: this.roomInfo.id,
-        //    content: content
-        //}, function (data) {
-        //    if (data && data.code == '0') {
-        //        $(document).trigger('event:noticeChanged', content);
-        //        self.roomInfo.desc = content;
-        //        self.noticeWrap.text(content);
-        //        self.panelDisplay();
-        //
-        //    } else {
-        //        msgBox.showError('数据保存失败,请稍后重试');
-        //    }
-        //}, function (err) {
-        //    msgBox.showError('数据保存失败,请稍后重试');
-        //});
     },
     sendNotifyToIM: function (content) {
         if (!this.roomInfo.imGroupid) {
@@ -144,7 +118,7 @@ var View = BaseView.extend({
             groupId: this.roomInfo.imGroupid,
             msg: {
                 roomId: this.roomInfo.id,
-                nickName: '主播',
+                //nickName: '主播',
                 smallAvatar: '',
                 mstType: 2,
                 content: content
