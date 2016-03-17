@@ -57,6 +57,7 @@ var config = {
             "Scrollbar": path.resolve(__dirname, YYT_PC_Component + 'feature/Scrollbar'),
             "LoginBox": path.resolve(__dirname, YYT_PC_Component + 'business/LoginBox/'),
             "UserModel": path.resolve(__dirname, YYT_PC_Component + 'business/UserModel/'),
+            "FlashAPI": path.resolve(__dirname,YYT_PC_Component+ 'business/FlashAPI/'),
             "UploadFileDialog": path.resolve(__dirname, YYT_PC_Component + 'business/UploadFileDialog/'),
             "ui.Dialog": path.resolve(__dirname, YYT_PC_Component + 'ui/dialog/'),
             "ui.Confirm": path.resolve(__dirname, YYT_PC_Component + 'ui/confirm/'),

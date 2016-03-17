@@ -19,7 +19,10 @@ var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
 var msgBox = require('ui.MsgBox');
 var uiConfirm = require('ui.Confirm');
-
+var FlashAPI = require('FlashAPI');
+var falshAPI = FlashAPI.sharedInstanceFlashAPI({
+    id:'#broadCastFlash'
+});
 
 var View = BaseView.extend({
     clientRender: false,
@@ -117,6 +120,10 @@ var View = BaseView.extend({
         var self = this;
         this.roomDetail.executeGET(function (data) {
             $(document).trigger('event:roomInfoReady', data.data);
+            console.log('flash ----',data)
+            falshAPI = FlashAPI.sharedInstanceFlashAPI({
+                id:'#broadCastFlash'
+            });
         }, function (err) {
             uiConfirm.show({
                 title: '提示',

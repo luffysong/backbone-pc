@@ -1,3 +1,4 @@
+'use strict';
 var BaseModel = require('BaseModel');
 var Dialog = require('ui.Dialog');
 var LoginBox = require('LoginBox');
