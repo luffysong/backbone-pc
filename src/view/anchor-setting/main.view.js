@@ -26,6 +26,7 @@ var UploadFileDialog = require('UploadFileDialog');
 var imModel = IMModel.sharedInstanceIMModel();
 var user = UserModel.sharedInstanceUserModel();
 var MsgBox = require('ui.MsgBox');
+var origin = window.location.origin;
 var View = BaseView.extend({
 	el:'#settingContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
@@ -63,6 +64,8 @@ var View = BaseView.extend({
 				self.fetchIMUserSig();
 			});
 			//跳转走人
+			store.set('signout',1);
+			window.location.href = origin + '/web/login.html';
 		}else{
 			this.fetchIMUserSig();
 		}
