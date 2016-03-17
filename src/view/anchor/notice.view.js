@@ -87,29 +87,38 @@ var View = BaseView.extend({
             this.errNoticeTip.text('公告文字请在50字以内');
             return null;
         }
-        this.noticeModel.executePOST({
+
+        this.noticeModel.setChangeURL({
+            deviceinfo: '{"aid": "30001001"}',
+            accessToken: user.getToken(),
             roomId: this.roomInfo.id,
             content: content
-        }, function (data) {
-            if (data && data.code == '0') {
-                $(document).trigger('event:noticeChanged', content);
-                self.roomInfo.desc = content;
-                self.noticeWrap.text(content);
-                self.panelDisplay();
+        });
 
-            } else {
+        this.noticeModel.executeGET(function (res) {
+                if (res && res.code == '0') {
+                    $(document).trigger('event:noticeChanged', content);
+                    self.noticeInfo.content = content;
+                    self.noticeWrap.text(content);
+                    self.panelDisplay();
+                    msgBox.showOK('公告发布成功');
+                    self.sendNotifyToIM(content);
+                }
+            },
+            function (err) {
                 msgBox.showError('数据保存失败,请稍后重试');
             }
-        }, function (err) {
-            msgBox.showError('数据保存失败,请稍后重试');
-        });
+        );
     },
     sendNotifyToIM: function (content) {
+        if (!this.roomInfo.imGroupid) {
+            return;
+        }
         YYTIMServer.sendMessage({
             groupId: this.roomInfo.imGroupid,
             msg: {
                 roomId: this.roomInfo.id,
-                nickName: '主播',
+                //nickName: '主播',
                 smallAvatar: '',
                 mstType: 2,
                 content: content

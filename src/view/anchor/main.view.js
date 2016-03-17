@@ -17,7 +17,6 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
-var msgBox = require('ui.MsgBox');
 var uiConfirm = require('ui.Confirm');
 var FlashAPI = require('FlashAPI');
 var falshAPI = FlashAPI.sharedInstanceFlashAPI({
@@ -92,9 +91,9 @@ var View = BaseView.extend({
      */
     userVerify: function () {
         var self = this;
-        user.getUserInfo(function (u) {
-            console.log('user:', u);
-        });
+        //user.getUserInfo(function (u) {
+        //    console.log('user:', u);
+        //});
         if (user.isLogined()) {
 
             self.initWebIM();
