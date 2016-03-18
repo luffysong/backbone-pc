@@ -18,7 +18,6 @@ var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
 var uiConfirm = require('ui.Confirm');
-var FlashAPI = require('FlashAPI');
 var store = require('store');
 var View = BaseView.extend({
     clientRender: false,
@@ -100,7 +99,6 @@ var View = BaseView.extend({
                 roomId: this.roomId
             });
             self.initRoom();
-            self.renderPage();
         } else {
             store.remove('imSig');
             store.set('signout',1);
@@ -112,9 +110,14 @@ var View = BaseView.extend({
      */
     initRoom: function () {
         var self = this;
-        this.roomDetail.executeGET(function (data) {
-            self.videoUrl = '1234';
-            $(document).trigger('event:roomInfoReady', data.data);
+        this.roomDetail.executeGET(function (response) {
+            var data = response.data;
+            self.videoUrl = {
+                'streamName':data.streamName,
+                'url':data.url
+            };
+            self.renderPage();
+            $(document).trigger('event:roomInfoReady', data);
         }, function (err) {
             uiConfirm.show({
                 title: '提示',
@@ -143,7 +146,11 @@ var View = BaseView.extend({
 
         //组件三，主播控制消息
         var ChatView = require('./anchor-chat.view');
-        new ChatView();
+        new ChatView({
+            props:{
+                videoUrl:this.videoUrl
+            }
+        });
 
         //公告组件
         var NoticeView = require('./notice.view');
@@ -152,15 +159,7 @@ var View = BaseView.extend({
         //直播开始,结束控制
         var LiveShowBtnView = require('./live-show-btn.view');
         new LiveShowBtnView();
-        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-            el:'broadCastFlash'
-        });
-        this.flashAPI.onReady(function(){
-            console.log(this);
-            this.width(895);
-            this.height(502);
-            this.addUrl('rtmp://live.hkstv.hk.lxdns.com/live/','hks');
-        });
+        
     },
     goBack: function () {
         //window.location.href = '/web/anchorsetting.html';

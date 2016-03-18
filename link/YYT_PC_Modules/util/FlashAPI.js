@@ -127,7 +127,7 @@
         };
         this.$swf.setPlayerHeight(value);
     };
-    FlashAPI.prototype.sendMessage = function(obj){
+    FlashAPI.prototype.notifying = function(obj){
         this.$swf.setOneMessage(obj);
     };
     FlashAPI.prototype.clear = function(){
@@ -145,5 +145,31 @@
         //flash init success
         win.YYTPCFlashReadyState = true;
     };
+    // win.YYTPCActivaBrowserFullScreen = function(){
+    //     var docElm = document.documentElement;
+    //     if (docElm.requestFullscreen) {
+    //         docElm.requestFullscreen();
+    //     }
+    //     else if (docElm.msRequestFullscreen) {
+    //         docElm.msRequestFullscreen();
+    //     }
+    //     else if (docElm.mozRequestFullScreen) {
+    //         docElm.mozRequestFullScreen();
+    //     }
+    //     else if (docElm.webkitRequestFullScreen) {
+    //         docElm.webkitRequestFullScreen();
+    //     }
+    // };
+    // win.YYTPCCancelBrowserFullScreen = function(){
+    //     if (document.exitFullscreen) {
+    //         document.exitFullscreen();
+    //     }else if (document.msExitFullscreen) {
+    //         document.msExitFullscreen();
+    //     }else if (document.mozCancelFullScreen) {
+    //         document.mozCancelFullScreen();
+    //     }else if (document.webkitCancelFullScreen) {
+    //         document.webkitCancelFullScreen();
+    //     }
+    // };
     return FlashAPI;
 });
