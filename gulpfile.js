@@ -94,6 +94,12 @@ gulp.task('build', ['build:move'], function () {
     ' */',
     ''
   ].join('\n');
+
+
+    function htmlMaped (filename) {
+      return filename.replace(/[-][\w]{10}.html/g, '.html');
+    }
+
   return gulp.src('./dist/web/*.html')
     .pipe(useref({
         noAssets:false
@@ -103,7 +109,11 @@ gulp.task('build', ['build:move'], function () {
     .pipe(jsFilter)
     .pipe(jsFilter.restore)
     .pipe(rev())
-    .pipe(revReplace())
+    .pipe(revReplace({
+        modifyReved: htmlMaped,
+        modifyUnreved: htmlMaped
+    }))
+    .pipe(useref())
     .pipe(gulpif('*.js', header(banner, {pkg: pkg})))
     .pipe(gulp.dest('./dist/web/'))
 });
