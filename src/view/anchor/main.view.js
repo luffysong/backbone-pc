@@ -19,10 +19,7 @@ var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
 var uiConfirm = require('ui.Confirm');
 var FlashAPI = require('FlashAPI');
-var falshAPI = FlashAPI.sharedInstanceFlashAPI({
-    id:'#broadCastFlash'
-});
-
+var store = require('store');
 var View = BaseView.extend({
     clientRender: false,
     el: '#anchorContainerBg', //设置View对象作用于的根元素，比如id
@@ -116,11 +113,8 @@ var View = BaseView.extend({
     initRoom: function () {
         var self = this;
         this.roomDetail.executeGET(function (data) {
+            self.videoUrl = '1234';
             $(document).trigger('event:roomInfoReady', data.data);
-            console.log('flash ----',data)
-            falshAPI = FlashAPI.sharedInstanceFlashAPI({
-                id:'#broadCastFlash'
-            });
         }, function (err) {
             uiConfirm.show({
                 title: '提示',
@@ -158,6 +152,15 @@ var View = BaseView.extend({
         //直播开始,结束控制
         var LiveShowBtnView = require('./live-show-btn.view');
         new LiveShowBtnView();
+        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+            el:'broadCastFlash'
+        });
+        this.flashAPI.onReady(function(){
+            console.log(this);
+            this.width(895);
+            this.height(502);
+            this.addUrl('rtmp://live.hkstv.hk.lxdns.com/live/','hks');
+        });
     },
     goBack: function () {
         //window.location.href = '/web/anchorsetting.html';
