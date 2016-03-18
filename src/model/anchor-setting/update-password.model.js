@@ -11,7 +11,7 @@ function UpdatePwdModel() {
 
 UpdatePwdModel.prototype.save = function (data, okFn, errFn) {
     $.ajax('http://i.yinyuetai.com/i/profile/update-password',{
-        method: 'GET',
+        method: 'POST',
         data: data,
         success: function(res){
             okFn && okFn(res);

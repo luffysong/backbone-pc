@@ -23,7 +23,7 @@ var View = BaseView.extend({
     },
     events: { //监听事件
         'click #btnPwdSave': 'updatePwd',
-        'keyup .inputChanged': 'changeBtnStatus'
+        'keyup #txtConfirmPwd': 'changeBtnStatus'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
@@ -33,7 +33,7 @@ var View = BaseView.extend({
     afterMount: function () {
         var el = this.$el;
         this.txtOldPwd = el.find('#txtOldPwd');
-        this.txtNewPwd = el.find('#txtNewPw');
+        this.txtNewPwd = el.find('#txtNewPwd');
         this.txtConfirmPwd = el.find('#txtConfirmPwd');
         this.btnPwdSave = el.find('#btnPwdSave');
     },
@@ -49,7 +49,7 @@ var View = BaseView.extend({
             return false;
         }
 
-        var newPwd = this.txtNewPw.val(),
+        var newPwd = this.txtNewPwd.val(),
             pwdReg = /[a-zA-Z00-9]{6,18}/g;
         if (!newPwd || newPwd.length <= 0) {
             msgBox.showTip('请输入新的密码');
@@ -68,7 +68,7 @@ var View = BaseView.extend({
         return true;
     },
     changeBtnStatus: function () {
-        var newPwd = this.txtNewPw.val(),
+        var newPwd = this.txtNewPwd.val(),
             confirmPwd = this.txtConfirmPwd.val();
         if (newPwd != confirmPwd) {
             this.btnPwdSave.addClass('m_disabled');
