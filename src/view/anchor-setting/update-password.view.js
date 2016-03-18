@@ -13,7 +13,9 @@
 
 var BaseView = require('BaseView'); //View的基类
 var UpdatePwdModel = require('../../model/anchor-setting/update-password.model');
+var AjaxForm = require('AjaxForm');
 var msgBox = require('ui.MsgBox');
+var url =  require('url');
 
 
 var View = BaseView.extend({
@@ -36,10 +38,13 @@ var View = BaseView.extend({
         this.txtNewPwd = el.find('#txtNewPwd');
         this.txtConfirmPwd = el.find('#txtConfirmPwd');
         this.btnPwdSave = el.find('#btnPwdSave');
+
+        this.formPwd = el.find('#formPwd');
+
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-
+        this.initAjaxForm();
     },
     //校验表单
     verifyForm: function () {
@@ -83,21 +88,49 @@ var View = BaseView.extend({
             return null;
         }
 
-        this.updatePwdModel.save({
-            oldPassword: self.txtOldPwd.val(),
-            newPassword: self.txtNewPwd.val(),
-            newPasswordRepeat: self.txtConfirmPwd.val()
-        }, function (res) {
-            console.log(res);
-            msgBox.showOK('密码修改成功!');
-        }, function (err) {
-            console.log(err);
-            msgBox.showError(err.message || '密码修改失败,请稍后重试');
-        });
+        this.formPwd.submit();
+
+        //
+        //this.updatePwdModel.save({
+        //    oldPassword: self.txtOldPwd.val(),
+        //    newPassword: self.txtNewPwd.val(),
+        //    newPasswordRepeat: self.txtConfirmPwd.val()
+        //}, function (res) {
+        //    console.log(res);
+        //    msgBox.showOK('密码修改成功!');
+        //}, function (err) {
+        //    console.log(err);
+        //    msgBox.showError(err.message || '密码修改失败,请稍后重试');
+        //});
     },
     //重置表单
     resetInput: function () {
+        $('form').find('input').val('');
 
+    },
+    initAjaxForm: function () {
+        var self = this;
+        this.pwdAjaxForm = AjaxForm.classInstanceAjaxForm($('#formPwd'), {
+            success: function (res) {
+                var cw = this.contentWindow;
+                var loc = cw.location;
+                var search = decodeURIComponent(cw.location.search);
+                var response = url.parseSearch(search);
+                response = response.json;
+                console.log(response);
+                if(response && response.error == true){
+                    msgBox.showError(response.message);
+                }else{
+                    self.resetInput();
+                    msgBox.showOK('密码修改成功!');
+                }
+            },
+            failure: function (err) {
+                console.log(err);
+                msgBox.showError('密码修改失败!');
+            }
+        });
+        this.pwdAjaxForm.setIframeState(true);
     }
 
 });

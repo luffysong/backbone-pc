@@ -53,7 +53,7 @@ var View = BaseView.extend({
         user.getUserInfo(function (data) {
             self.userInfo = data;
             //console.log(self.userInfo);
-            self.initForm(self.userInfo);
+            self.initForm(self.userInfo.userName);
         });
     },
     initForm: function () {
@@ -69,7 +69,7 @@ var View = BaseView.extend({
                 var tags = userImInfo.anchor.tags.join(',') || '';
                 self.txtTags.val(tags);
             }
-            self.verifyForm();
+            //self.verifyForm();
         });
     },
     //检查数据
