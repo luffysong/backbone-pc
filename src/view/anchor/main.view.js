@@ -94,20 +94,16 @@ var View = BaseView.extend({
         //user.getUserInfo(function (u) {
         //    console.log('user:', u);
         //});
+
         if (user.isLogined()) {
-
             self.initWebIM();
-
             self.roomDetail.setChangeURL({
                 deviceinfo: '{"aid": "30001001"}',
                 accessToken: user.getToken(),
                 roomId: this.roomId
             });
-
             self.initRoom();
             self.renderPage();
-
-
         } else {
             store.remove('imSig');
             store.set('signout',1);
