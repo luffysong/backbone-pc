@@ -16,6 +16,7 @@ var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var DateTime = require('DateTime');
+var FlashAPI = require('FlashAPI');
 
 var msgBox = require('ui.MsgBox');
 
@@ -36,6 +37,8 @@ var View = BaseView.extend({
         //this.isLiveShowing = false;
         //禁言用户列表
         this.forbidUsers = [];
+
+        //视频流地址
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -44,15 +47,15 @@ var View = BaseView.extend({
         this.msgList = $('#msgList');
         this.chatHistory = $('#chatHistory');
         this.btnLock = $('#btn-lock');
-
         this.defineEventInterface();
-
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-
+        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+            el:'broadCastFlash',
+        });
+        
         //YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
-
         //this.autoAddMsg();
     },
     //清屏
@@ -66,6 +69,9 @@ var View = BaseView.extend({
             content: '您确定要清屏吗?',
             okFn: function () {
                 self.clearMessageList();
+                self.flashAPI.onReady(function(){
+                    this.clear();
+                });
                 YYTIMServer.clearScreen({
                     groupId: self.roomInfo.imGroupid,
                     msg: {
@@ -319,6 +325,11 @@ var View = BaseView.extend({
             var tpl = _.template(this.getMessageTpl());
             this.msgList.append(tpl(msgObj));
             this.chatHistory.scrollTop(this.msgList.height());
+            if(msgObj.mstType == 0){
+                this.flashAPI.onReady(function(){
+                    this.notifying(msgObj);
+                });
+            }
         }
     },
 

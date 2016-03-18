@@ -17,7 +17,7 @@ var uiConfirm = require('ui.Confirm');
 var msgBox = require('ui.MsgBox');
 var StartLiveModel = require('../../model/anchor/start-live.model');
 var EndLiveModel = require('../../model/anchor/end-live.model');
-
+var FlashAPI = require('FlashAPI');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
@@ -45,6 +45,9 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+            el:'broadCastFlash',
+        });
     },
     /**
      * 开启直播
@@ -86,6 +89,9 @@ var View = BaseView.extend({
         self.startLiveModel.executeGET(function (result) {
             console.log('start live', result);
             msgBox.showOK('成功开启直播');
+            self.flashAPI.onReady(function(){
+                this.addUrl(self.roomInfo.url,self.roomInfo.streamName);
+            });
             $(document).trigger('event:LiveShowStarted');
         }, function (err) {
             console.log(err);
