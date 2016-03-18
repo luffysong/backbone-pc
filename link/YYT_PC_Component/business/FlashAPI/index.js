@@ -15,7 +15,7 @@ var FlashAPI = function(options){
         'name':'YYTFlash'+(uid++),
         'plugins':options.plugins || plugins,
         'flashvars':options.flashvars || '12132',
-        'src':options.src || origin + '/flash/Test3.swf'
+        'src':options.src || origin + '/flash/Inplayer1.swf?t=20160220'
     };
     this._fns = {};
     this._init();

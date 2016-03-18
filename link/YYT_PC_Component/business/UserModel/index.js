@@ -44,7 +44,7 @@ var UserModel = BaseModel.extend({
    * @return {Boolean} [description]
    */
   isLogined: function () {
-    return ~~this.getUserId() ? true : false;
+    return !!this.getToken(); 
   },
   /**
    * [login 检查是否登录，如果未登录调出对话框]

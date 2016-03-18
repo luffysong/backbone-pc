@@ -60,12 +60,12 @@ var View = BaseView.extend({
 		if (!user.isLogined()) {
 			//把签名清除一次
 			store.remove('imSig');
-			this.topbarView.on('logined',function(){
-				self.fetchIMUserSig();
-			});
 			//跳转走人
 			store.set('signout',1);
 			window.location.href = origin + '/web/login.html';
+			this.topbarView.on('logined',function(){
+				self.fetchIMUserSig();
+			});
 		}else{
 			this.fetchIMUserSig();
 		}

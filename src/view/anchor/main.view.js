@@ -109,7 +109,9 @@ var View = BaseView.extend({
 
 
         } else {
-            self.goBack();
+            store.remove('imSig');
+            store.set('signout',1);
+            window.location.href = '/web/login.html';
         }
     },
     /**
