@@ -40,6 +40,7 @@ var View = BaseView.extend({
             console.log('roomInfoReady = ', data);
             if (data) {
                 var tpl = _.template(self.infoTpl);
+                console.log(data);
                 var html = tpl(data);
                 self.roomInfoWrap.append(html);
                 if(data.posterPic){

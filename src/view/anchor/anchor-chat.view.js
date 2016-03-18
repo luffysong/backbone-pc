@@ -135,13 +135,16 @@ var View = BaseView.extend({
             this.msgControlHandler(e);
         } else {
             li = $(e.target).parents('li');
-            this.showMsgControlMenu(li);
+            if (li.attr('data-msgType') == 0) {
+                this.showMsgControlMenu(li);
+            }
         }
 
     },
     //显示,隐藏禁言/提出按钮
     showMsgControlMenu: function (target) {
         if (target.length <= 0) return;
+
         var control = target.find('.controls_forbid_reject'),
             index = $('#msgList').find('li').index(target);
 
@@ -272,6 +275,10 @@ var View = BaseView.extend({
                 case 2: //公告
                     break;
                 case 3: //点赞
+                    msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
+                    msgObj.nickName = '消息';
+                    msgObj.smallAvatar = '';
+                    self.addMessage(msgObj);
                     break;
                 case 4: // 清屏
                     break;
