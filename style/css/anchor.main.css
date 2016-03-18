@@ -471,6 +471,18 @@ img {
 .errTip {
   color: #FF005B;
 }
+.pseudo-uploadBtn .file {
+  position: absolute;
+  width: 100%;
+  height: 45px;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.edit_Bg_form_x {
+  margin-top: -171px !important;
+}
 .bottom {
   height: 226px;
   background: #181818;
