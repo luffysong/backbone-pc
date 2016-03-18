@@ -85,7 +85,6 @@ var View = BaseView.extend({
                 "redirect": window.location.origin + "/web/upload.html"
             },
             uploadFileSuccess: function (response) {
-                console.log(response);
                 if (response && response.images && response.images.length > 0) {
                     self.currentBgImg = response.images[0].path;
                 }

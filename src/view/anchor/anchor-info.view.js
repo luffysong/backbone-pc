@@ -37,7 +37,6 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
         $(document).on('event:roomInfoReady', function (e, data) {
-            console.log('roomInfoReady = ', data);
             if (data) {
                 var tpl = _.template(self.infoTpl);
                 var html = tpl(data);
