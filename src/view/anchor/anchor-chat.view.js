@@ -50,17 +50,11 @@ var View = BaseView.extend({
         this.defineEventInterface();
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
-    ready: function (options) {
-        console.log('chat ---- ',options);
-        var props = options.props;
-        var videoUrl = props.videoUrl.url;
-        var videoName = props.videoUrl.streamName;
+    ready: function () {
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el:'broadCastFlash',
         });
-        this.flashAPI.onReady(function(){
-            this.addUrl(videoUrl,videoName);
-        });
+        
         //YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
         //this.autoAddMsg();
     },

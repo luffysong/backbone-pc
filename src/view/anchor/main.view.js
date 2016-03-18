@@ -146,11 +146,7 @@ var View = BaseView.extend({
 
         //组件三，主播控制消息
         var ChatView = require('./anchor-chat.view');
-        new ChatView({
-            props:{
-                videoUrl:this.videoUrl
-            }
-        });
+        new ChatView();
 
         //公告组件
         var NoticeView = require('./notice.view');
@@ -159,7 +155,7 @@ var View = BaseView.extend({
         //直播开始,结束控制
         var LiveShowBtnView = require('./live-show-btn.view');
         new LiveShowBtnView();
-        
+
     },
     goBack: function () {
         //window.location.href = '/web/anchorsetting.html';

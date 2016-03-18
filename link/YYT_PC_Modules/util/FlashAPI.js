@@ -128,6 +128,7 @@
         this.$swf.setPlayerHeight(value);
     };
     FlashAPI.prototype.notifying = function(obj){
+        obj = {"data":obj};
         this.$swf.setOneMessage(obj);
     };
     FlashAPI.prototype.clear = function(){
