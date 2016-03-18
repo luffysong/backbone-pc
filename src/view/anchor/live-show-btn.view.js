@@ -68,11 +68,10 @@ var View = BaseView.extend({
         }
         if (!this.roomInfo.imGroupid) {
             YYTIMServer.createIMChatRoom(function (res) {
-                console.log('createIMChatRoom=', res);
                 self.roomInfo.imGroupid = res.GroupId;
                 self.startLive();
             }, function (err) {
-
+                msgBox.showError('创建房间失败,请稍后重试');
             });
         } else {
             self.startLive();
@@ -87,15 +86,13 @@ var View = BaseView.extend({
             imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
         });
         self.startLiveModel.executeGET(function (result) {
-            console.log('start live', result);
             msgBox.showOK('成功开启直播');
             self.flashAPI.onReady(function(){
                 this.addUrl(self.roomInfo.url,self.roomInfo.streamName);
             });
             $(document).trigger('event:LiveShowStarted');
         }, function (err) {
-            console.log(err);
-            msgBox.showError(err.msg);
+            msgBox.showError(err.msg || '开启直播失败,请稍后重试');
         });
     },
     /**
@@ -113,7 +110,7 @@ var View = BaseView.extend({
                 self.endLive();
             },
             cancelFn: function () {
-                console.log('cancel');
+                //console.log('cancel');
             }
         });
     },
@@ -130,13 +127,10 @@ var View = BaseView.extend({
         self.endLiveModel.executeGET(function (result) {
             self.btnEndLive.addClass('m_disabled');
             self.isLiveShowing = false;
-            console.log('end live show');
+            msgBox.showOK('结束直播操作成功');
             $(document).trigger('event:liveShowEnded');
-            //TOOD
-            self.btnStartLive.removeClass('m_disabled');
         }, function (err) {
-            console.log(err);
-            msgBox.showError(err.msg);
+            msgBox.showError(err.msg || '操作失败,稍后重试');
         });
 
     },
@@ -155,9 +149,9 @@ var View = BaseView.extend({
             this.btnStartLive.addClass('m_disabled');
             this.btnEndLive.removeClass('m_disabled');
         } else if (status === 3) {
-            //this.btnStartLive.addClass('m_disabled');
+            this.btnStartLive.addClass('m_disabled');
             //TODO
-            //this.btnEndLive.addClass('m_disabled');
+            this.btnEndLive.addClass('m_disabled');
         }
 
     }

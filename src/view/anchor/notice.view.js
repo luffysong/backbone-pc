@@ -159,7 +159,6 @@ var View = BaseView.extend({
             accessToken: user.getToken()
         });
         this.noticeGetModel.executeGET(function (res) {
-            console.log('noticeGetModel', res);
             if (res && res.data) {
                 var notice = null;
                 res.data.placards && (notice = res.data.placards[0]);
@@ -172,7 +171,6 @@ var View = BaseView.extend({
                 }
             }
         }, function (err) {
-            console.log(err);
             msgBox.showErr(err.msg || '获取公告失败');
         });
     },

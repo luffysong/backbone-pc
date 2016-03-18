@@ -54,7 +54,6 @@ var View = BaseView.extend({
         //注册IM事件处理
         YYTIMServer.init({
             'onConnNotify': function (notifyInfo) {
-                console.log('1-onConnNotify', notifyInfo);
                 $(document).trigger('event:onConnNotify', notifyInfo);
             },
             'onMsgNotify': function (notifyInfo) {
@@ -62,7 +61,6 @@ var View = BaseView.extend({
                 $(document).trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
-                console.log('3-onGroupInfoChangeNotify', notifyInfo);
                 $(document).trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {

@@ -208,7 +208,7 @@ var View = BaseView.extend({
                         userId: user.id
                     }
                 }, function (resp) {
-                    console.log(resp);
+                    //console.log(resp);
                 }, function (err) {
                     console.log(err);
                 });
@@ -257,7 +257,7 @@ var View = BaseView.extend({
         }
     },
     renderGroupMsgs: function (datas) {
-        console.log('renderGroupMsgs', datas);
+        //console.log('renderGroupMsgs', datas);
         //TODO
     },
     //腾讯IM消息到达回调
@@ -353,7 +353,6 @@ var View = BaseView.extend({
                 self.roomInfo = data;
                 self.roomInfoReady();
             }
-            console.log('event:roomInfoReady', data);
         });
 
         $(document).on('event:onConnNotify', function (e, notifyInfo) {
@@ -408,7 +407,6 @@ var View = BaseView.extend({
         var self = this;
 
         YYTIMServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
-            console.log('getGroupInfo', result);
             if (result && result.ActionStatus === 'OK') {
                 if (result.GroupInfo && result.GroupInfo[0] && result.GroupInfo[0].Introduction) {
                     var intro = JSON.parse(result.GroupInfo[0].Introduction);
@@ -418,7 +416,6 @@ var View = BaseView.extend({
                 }
             }
         }, function (err) {
-            console.log(err);
             msgBox.showError(err.msg || '获取群组消息失败!');
         });
     },
