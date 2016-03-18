@@ -29,7 +29,8 @@ var View = BaseView.extend({
     events: { //监听事件
         'click #btnEditNotice': 'editClickHandler',
         'click .closeNoticePanel': 'panelDisplay',
-        'click #btnSubmitNotice': 'submitClickHandler'
+        'click #btnSubmitNotice': 'submitClickHandler',
+        'keyup #txtNotice': 'noticeChanged'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
@@ -49,6 +50,8 @@ var View = BaseView.extend({
         this.txtNotice = $('#txtNotice');
         this.imgRoomPic = $('#imgRoomPic');
         this.errNoticeTip = $('#errNoticTip');
+
+        this.tipTextarea = this.$el.find('.tipTextarea');
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -61,6 +64,7 @@ var View = BaseView.extend({
      * @param e
      */
     editClickHandler: function (e) {
+        this.noticeChanged();
         this.panelDisplay(true);
     },
     /**
@@ -83,7 +87,7 @@ var View = BaseView.extend({
     submitClickHandler: function (e) {
         var content = this.txtNotice.val().trim(),
             self = this;
-        if (!content || content.length > 50 || content.length <= 0) {
+        if (!content || content.length >= 50 || content.length <= 0) {
             this.errNoticeTip.text('公告文字请在50字以内');
             return null;
         }
@@ -171,6 +175,14 @@ var View = BaseView.extend({
             console.log(err);
             msgBox.showErr(err.msg || '获取公告失败');
         });
+    },
+    noticeChanged: function () {
+        if (this.txtNotice.val().length < 50) {
+            this.tipTextarea.text('您还可以输入' + (50 - this.txtNotice.val().length) + '个字');
+        }else{
+            this.tipTextarea.text('您的输入超出了' + (this.txtNotice.val().length - 50) + '个字');
+        }
+
     }
 
 });
