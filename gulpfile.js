@@ -128,6 +128,7 @@ gulp.task('build:move', ['clean'], function () {
       movePath + 'link/json2.js',
       movePath + 'img/**/*.*',
       movePath + 'web/*.*',
+      movePath + 'flash/*.*',
       movePath + 'style/**/*.css',
       movePath + 'js/*.js'
     ], {base: '.'})
