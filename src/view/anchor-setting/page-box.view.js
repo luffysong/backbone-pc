@@ -10,12 +10,13 @@
  */
 
 'use strict';
-var navTemp = 
+var navTemp =
 	'{{each items as item i}}'
 		+'<span class="{{if item == num }}now{{/if}}" data-page="{{item}}" data-indice="{{i}}">{{item}}</span>'
 	+'{{/each}}';
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
+var MsgBox = require('ui.MsgBox');
 var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
 	clientRender:false,
@@ -52,10 +53,11 @@ var View = BaseView.extend({
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
-		
+
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
+		this._ICEinitEvent();
 		this.initRender();
 	},
 	initRender:function(){
@@ -76,6 +78,7 @@ var View = BaseView.extend({
 	preHandler:function(e){
 		var target = $(e.currentTarget);
 		if (this.offset <= 0) {
+			MsgBox.showTip('原因：已经翻到最前一页');
 			return;
 		};
 		var state = target.attr('data-state');
@@ -84,6 +87,7 @@ var View = BaseView.extend({
 	nextHandler:function(e){
 		var target = $(e.currentTarget);
 		if (this.offset === this.count - 1) {
+			MsgBox.showTip('原因：已经翻到最后一页');
 			return;
 		};
 		var state = target.attr('data-state');
@@ -108,13 +112,13 @@ var View = BaseView.extend({
 			case '1':
 				if (this.offset !== 0) {
 					this.offset--;
-					this.sectionLogic();
+					this.sectionLogic(0);
 				};
 				break;
 			case '2':
-				if (this.offset <= this.count - 2) {
+				if (this.offset <= (this.count - 2)) {
 					this.offset++;
-					this.sectionLogic();
+					this.sectionLogic(1);
 				};
 				break;
 		};
@@ -137,18 +141,40 @@ var View = BaseView.extend({
 			});
 		}
 	},
-	sectionLogic:function(){
+	sectionLogic:function(state){
 		var base = this.sectionBase - 1;
 		var boundary = this.offset + (base);
 		var temp = this.items.concat();
-		if (temp[boundary] <= temp[temp.length - 1] ) {
+		var middle = temp[boundary];
+		if (middle <= temp[temp.length - 1] ) {
 			this.translation = 0;
 			temp = temp.splice(this.offset,this.sectionBase);
 			this.sectionRender(temp,temp[0]);
 		}else{
-			this.translation++;
+			if (!middle) {
+				//如果中间值未存在
+				var start = this.offset - 1; //重新计算起始位置
+				var tagIndex = 1;
+				if (this.offset > (this.count - 2)) {
+					//已经到最后一位了
+					tagIndex = 2;
+					--start;
+				}
+				var middleTemp = temp.splice(start,this.sectionBase);
+				this.translation = 0;
+				//并且迁移一位
+				this.sectionRender(middleTemp,middleTemp[tagIndex]);
+				return;
+			}
 			if (this.translation > base) {
 				return;
+			};
+			if (state) {
+				//true ++
+				this.translation++;
+			}else{
+				//false --
+				this.translation--;
 			};
 			this.spans.removeClass('now');
 			var span = this.spans[this.translation];

@@ -54,7 +54,6 @@ var View = BaseView.extend({
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el:'broadCastFlash',
         });
-        
         //YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
         //this.autoAddMsg();
     },

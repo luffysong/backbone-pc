@@ -273,8 +273,11 @@ var View = BaseView.extend({
                 if (!code) {
                     MsgBox.showOK('创建成功')
                     window.location.reload();
-                }
-                ;
+                }else{
+                    MsgBox.showError(response.msg);
+                    self.createLock = true;
+                    self.initListener();
+                };
             }, function (e) {
                 MsgBox.showError('创建失败');
                 self.createLock = true;

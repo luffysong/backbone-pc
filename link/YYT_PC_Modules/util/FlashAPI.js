@@ -75,7 +75,7 @@
         this._props = options.props || {};
         this.$attrs = {
             'id':'YYTFlash'+(uid++), //配置id
-            'src':this._props.src || origin + '/flash/Inplayer.swf?t=20160220', //引入swf文件
+            'src':this._props.src || origin + '/flash/Inplayer10.swf?t=20160220', //引入swf文件
             'width':this._props.width || 895,
             'height':this._props.height || 502,
             'wmode':this._props.wmode || 'transparent', //控制显示模型
@@ -128,11 +128,10 @@
         this.$swf.setPlayerHeight(value);
     };
     FlashAPI.prototype.notifying = function(obj){
-        obj = {"data":obj};
-        this.$swf.setOneMessage(obj);
+        this.$swf.setOneMessageInchat(JSON.stringify(obj));
     };
     FlashAPI.prototype.clear = function(){
-        this.$swf.clear();
+        this.$swf.clearAllMessage();
     };
 
     var shared = null;

@@ -39,7 +39,6 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.initRender();
-
         this.defineEventInterface();
     },
     initRender: function () {
@@ -49,7 +48,6 @@ var View = BaseView.extend({
 
     partialRender: function (data) {
         console.log(data);
-
     },
     /**
      * 定义对外公布的事件
