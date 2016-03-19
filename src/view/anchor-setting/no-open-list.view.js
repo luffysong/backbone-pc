@@ -27,7 +27,9 @@ var View = BaseView.extend({
 	el:'#noOpenContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
 		'click li':'checkLiveVideoHandler',
-		'click .uploadImage':'editCoverImageHandler'
+		'click .uploadImage':'editCoverImageHandler',
+		'click .copy-video-url':'copyUrlHandler',
+		'click .copy-video-name':'copyNameHandler'
 	},
 	rawLoader:function(){
 
@@ -279,6 +281,31 @@ var View = BaseView.extend({
 		var html = this.compileHTML(this.liTemp,{'item':item});
 		var li = this.liCache[item.liCacheKey];
 		li.html(html);
+	},
+	copyUrlHandler:function(e){
+		e.preventDefault();
+		var el = $(e.currentTarget);
+		var value = el.attr('data-value');
+		if (!value.length) {
+			MsgBox.showTip('原因：需要发布才会存在视屏地址');
+			return;
+		}
+		this.clipboard(value);
+	},
+	copyNameHandler:function(e){
+		e.preventDefault();
+		var el = $(e.currentTarget);
+		var value = el.attr('data-value');
+		this.clipboard(value);
+	},
+	clipboard:function(value){
+		if(window.clipboardData){
+			window.clipboardData.clearData('text');
+			window.clipboardData.setData('text',value);
+			MsgBox.showOK('复制成功');
+		}else{
+			MsgBox.showTip('原因：你浏览器的js不支持剪贴板，无法调用');
+		}
 	}
 });
 module.exports = View;
