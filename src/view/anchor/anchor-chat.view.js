@@ -165,6 +165,7 @@ var View = BaseView.extend({
         li = target.parents('li');
 
         if (target.text() === '禁言') {
+
             this.disableSendMsgConfirm({
                 name: li.attr('data-name'),
                 id: li.attr('data-id')
@@ -198,7 +199,14 @@ var View = BaseView.extend({
         }, function (resp) {
             if (resp && resp.ActionStatus === 'OK') {
                 msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
-
+                self.flashAPI.onReady(function(){
+                    this.notifying({
+                        roomId:self.roomInfo.id,
+                        userId:user.id,
+                        nickName:user.name,
+                        mstType:5
+                    });
+                });
                 YYTIMServer.sendMessage({
                     groupId: self.roomInfo.imGroupid,
                     msg: {
