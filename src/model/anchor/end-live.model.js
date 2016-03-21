@@ -8,7 +8,7 @@
 
 var BaseModel = require('BaseModel');
 var Model = BaseModel.extend({
-	url:'{{url_prefix}}/room/close.json?deviceinfo={{deviceinfo}}&access_token=web-{{accessToken}}&roomId={{roomId}}',//填写请求地址
+	url:'{{url_prefix}}/room/close.json?deviceinfo={{deviceinfo}}&access_token=web-{{access_token}}&roomId={{roomId}}',//填写请求地址
 	beforeEmit:function(options){
 		// 如果需要开启对请求数据的本地缓存，可将下列两行注释去掉
 		// this.storageCache = true; //开启本地缓存

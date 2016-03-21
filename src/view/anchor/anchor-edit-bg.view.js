@@ -32,7 +32,7 @@ var View = BaseView.extend({
 
         //数据参数
         this.bgModelParams = {
-            accessToken: 'web-' + user.getToken(),
+            access_token: 'web-' + user.getToken(),
             deviceinfo: '{"aid": "30001001"}',
             roomId: '',
             imageUrl: ''
@@ -122,13 +122,6 @@ var View = BaseView.extend({
             return;
         }
 
-        //self.editBgModel.setChangeURL({
-        //    accessToken: user.getToken(),
-        //    deviceinfo: '{"aid": "30001001"}',
-        //    roomId: this.roomInfo.id,
-        //    imageUrl: self.currentBgImg
-        //});
-
         self.bgModelParams.roomId = this.roomInfo.id;
         self.bgModelParams.imageUrl = this.currentBgImg;
 
@@ -138,10 +131,10 @@ var View = BaseView.extend({
                 self.uploadFile.hide();
                 msgBox.showOK('背景图片设置成功');
             } else {
-                msgBox.showOK('背景图片设置失败,稍后重试');
+                msgBox.showError(res.msg || '背景图片设置失败,稍后重试');
             }
         }, function (err) {
-            msgBox.showOK('背景图片设置失败,稍后重试');
+            msgBox.showError('背景图片设置失败,稍后重试');
         });
     },
     setBgStyle: function (url) {
