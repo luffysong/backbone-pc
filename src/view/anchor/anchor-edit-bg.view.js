@@ -82,7 +82,7 @@ var View = BaseView.extend({
                 "cmd": [
                     {"saveOriginal": 1, "op": "save", "plan": "avatar", "belongId": "20634338", "srcImg": "img"}
                 ],
-                "redirect": window.location.origin + "/web/upload.html"
+                "redirect": window.location.origin + "/cross-url/upload.html"
             },
             uploadFileSuccess: function (response) {
                 if (response && response.images && response.images.length > 0) {

@@ -130,6 +130,7 @@ gulp.task('build:move', ['clean'], function () {
       movePath + 'web/*.*',
       movePath + 'flash/*.*',
       movePath + 'style/**/*.css',
+      movePath + 'cross-url/*.*',
       movePath + 'js/*.js'
     ], {base: '.'})
     .pipe(gulpif('*.js',uglify({
