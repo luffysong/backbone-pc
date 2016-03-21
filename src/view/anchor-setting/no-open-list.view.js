@@ -167,6 +167,7 @@ var View = BaseView.extend({
 		var span = $(e.target);
 		var state = span.data('state');
 		var id = el.attr('data-id');
+		var postImg = span.parents('li').attr('data-img');
 		if (state) {
 			switch(state){
 				case 2:
@@ -174,7 +175,7 @@ var View = BaseView.extend({
 					if (span.attr('class') === 'disable') {
 						return;
 					};
-					if (this.releaseLock && this.imagePath) {
+					if (this.releaseLock && postImg) {
 						this.releaseLock = false;
 						this.releaseParameter.roomId = id;
 						this.releaseModel.executeJSONP(this.releaseParameter,function(response){
@@ -222,6 +223,8 @@ var View = BaseView.extend({
 		var attrs = null;
 		var posterpic = el.attr('data-posterpic');
 		if (this.upload) {
+			this.currentLiveItem = $(el.parents('li'));
+
 			this.singleLiDOM = el.parent();
 			this.saveCoverParameter.roomId = this.singleLiDOM.data('id');
 			this.upload.emptyValue();
@@ -232,8 +235,6 @@ var View = BaseView.extend({
 					inputText:'编辑图片'
 				};
 				console.log(attrs);
-
-
 			}
 			this.upload.show(attrs);
 		};
@@ -241,8 +242,12 @@ var View = BaseView.extend({
 	//上传成功之后处理image 地址
 	uploadImageHandler:function(response){
 		var images = response.images;
-		var imagePath = images[0].path;
-		this.imagePath = imagePath;
+		this.imagePath = images[0].path;
+
+		if(this.currentLiveItem){
+			this.currentLiveItem.attr('data-img', images[0].path || '');
+		}
+
 	},
 	//点击保存之后的处理
 	saveCoverImage:function(){

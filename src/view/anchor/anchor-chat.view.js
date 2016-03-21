@@ -106,7 +106,8 @@ var View = BaseView.extend({
             });
         } else {
             options.Introduction = JSON.stringify({
-                blockState: false
+                blockState: false,
+                alert: '播主解除锁屏啦'
             });
         }
 
