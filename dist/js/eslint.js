@@ -1,0 +1,1 @@
+webpackJsonp([2,3],[function(n,e){n.exports={eslint:{configFile:"../.eslintrc"}}}]);
