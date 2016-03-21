@@ -29,6 +29,15 @@ var View = BaseView.extend({
         this.editBgModel = new EditBgModel();
         this.uploadFile = new UploadFileDialog(this.getFileUploadOptions());
 
+
+        //数据参数
+        this.bgModelParams = {
+            accessToken: 'web-' + user.getToken(),
+            deviceinfo: '{"aid": "30001001"}',
+            roomId: '',
+            imageUrl: ''
+        };
+
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -98,10 +107,11 @@ var View = BaseView.extend({
         var attrs = null;
         if (this.roomInfo.imageUrl) {
             attrs = {
-                'inputText':'编辑图片',
-                'breviaryUrl':this.roomInfo.imageUrl
+                'inputText': '编辑图片',
+                'breviaryUrl': this.roomInfo.imageUrl
             }
-        };
+        }
+        ;
         this.currentBgImg = '';
         this.uploadFile.show(attrs);
     },
@@ -112,13 +122,17 @@ var View = BaseView.extend({
             return;
         }
 
-        self.editBgModel.setChangeURL({
-            accessToken: user.getToken(),
-            deviceinfo: '{"aid": "30001001"}',
-            roomId: this.roomInfo.id,
-            imageUrl: self.currentBgImg
-        });
-        self.editBgModel.executeGET(function (res) {
+        //self.editBgModel.setChangeURL({
+        //    accessToken: user.getToken(),
+        //    deviceinfo: '{"aid": "30001001"}',
+        //    roomId: this.roomInfo.id,
+        //    imageUrl: self.currentBgImg
+        //});
+
+        self.bgModelParams.roomId = this.roomInfo.id;
+        self.bgModelParams.imageUrl = this.currentBgImg;
+
+        self.editBgModel.executeJSONP(self.bgModelParams, function (res) {
             if (res && res.code === '0') {
                 self.setBgStyle(self.currentBgImg);
                 self.uploadFile.hide();
@@ -131,7 +145,7 @@ var View = BaseView.extend({
         });
     },
     setBgStyle: function (url) {
-        if(url){
+        if (url) {
             this.anchorContainerBg.css('background', 'url(' + url + ')');
         }
 

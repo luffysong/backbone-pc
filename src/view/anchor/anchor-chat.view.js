@@ -38,7 +38,6 @@ var View = BaseView.extend({
         //禁言用户列表
         this.forbidUsers = [];
 
-        //视频流地址
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -391,21 +390,21 @@ var View = BaseView.extend({
      */
     getMessageFromServer: function () {
         var self = this;
-        self.roomMsgModel.setChangeURL({
-            deviceinfo: '{"aid": "30001001"}',
-            accessToken: user.getToken(),
-            limit: 100,
-            endTime: 0,
-            startTime: 0,
-            cursor: '',
-            roomId: self.roomInfo.id
-        });
-
-        self.roomMsgModel.executeGET(function (result) {
-            console.log('roomMsgModel', result);
-        }, function (err) {
-            console.log(err);
-        });
+        //self.roomMsgModel.setChangeURL({
+        //    deviceinfo: '{"aid": "30001001"}',
+        //    accessToken: user.getToken(),
+        //    limit: 100,
+        //    endTime: 0,
+        //    startTime: 0,
+        //    cursor: '',
+        //    roomId: self.roomInfo.id
+        //});
+        //
+        //self.roomMsgModel.executeGET(function (result) {
+        //    console.log('roomMsgModel', result);
+        //}, function (err) {
+        //    console.log(err);
+        //});
     },
     /**
      * 获取群组公告以及介绍
