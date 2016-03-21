@@ -15,6 +15,8 @@ var BaseView = require('BaseView'); //View的基类
 var CreateLiveView = require('./create-live-video.view');
 var NoOpenListView = require('./no-open-list.view');
 var HistoryListView = require('./history-list.view');
+var UIConfirm = require('ui.Confirm');
+var store = require('store');
 var View = BaseView.extend({
     el: '#pageContent', //设置View对象作用于的根元素，比如id
     rawLoader: function () { //可用此方法返回字符串模版
@@ -55,6 +57,18 @@ var View = BaseView.extend({
             target.parent().children('li').removeClass('on');
             target.addClass('on');
             $('.tab-panel').hide();
+            if (target.attr('data-panel') === 'signout') {
+                UIConfirm.show({
+                    content:'是否退出',
+                    okFn:function(){
+                        store.remove('imSig');
+                        //跳转走人
+                        store.set('signout', 1);
+                        window.location.href = window.location.origin + '/web/login.html';
+                    }
+                });
+                return;
+            }
             $('#' + target.attr('data-panel')).show();
         }
     },
