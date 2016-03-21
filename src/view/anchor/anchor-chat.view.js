@@ -63,21 +63,24 @@ var View = BaseView.extend({
         if (!flag) {
             return;
         }
+
         uiConfirm.show({
             content: '您确定要清屏吗?',
             okFn: function () {
-                self.clearMessageList();
+                var msg = {
+                    roomId: self.roomInfo.id,
+                    nickName: '群主',
+                    smallAvatar: '',
+                    mstType: 4
+                };
+                //self.clearMessageList();
+
                 self.flashAPI.onReady(function(){
-                    this.clear();
+                    this.notifying(msg);
                 });
                 YYTIMServer.clearScreen({
                     groupId: self.roomInfo.imGroupid,
-                    msg: {
-                        roomId: self.roomInfo.id,
-                        nickName: '群主',
-                        smallAvatar: '',
-                        mstType: 4
-                    }
+                    msg: msg
                 });
             }
         });
