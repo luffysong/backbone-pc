@@ -31,7 +31,7 @@ var View = BaseView.extend({
 			'order':'time',
 			'offset':0,
 			'size':6,
-			'access_token':token
+			'access_token':'web-'+token
 		};
 		this.historyModel = new HistoryListModel();
 	},
@@ -42,8 +42,7 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
-		this.historyModel.setChangeURL(this.historyParameter);
-		this.historyModel.execute(function(response){
+		this.historyModel.executeJSONP(this.historyParameter,function(response){
 			var data = response.data;
 			var roomList = data.roomList;
 			var count = Math.ceil(data.totalCount/self.historyParameter.size);
@@ -64,7 +63,7 @@ var View = BaseView.extend({
 		this.pageBoxView = new NoOpenPageBoxView({
 			id:'#historyPageBox',
 			props:prop,
-			listModel:this.endModel,
+			listModel:this.historyModel,
 			listRender:function(response){
 				var data = response.data;
 				var roomList = data.roomList;

@@ -158,15 +158,14 @@ var View = BaseView.extend({
     saveuserinfo: function () {
         var self = this;
         if (this.verifyForm()) {
-            self.userUpdateModel.setChangeURL({
+            var userUpdateParameter = {
                 deviceinfo: '{"aid": "30001001"}',
-                accessToken: user.getToken(),
+                access_token: 'web-'+user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
                 tags: self.txtTags.val().split(/[,，]/)
-            });
-
-            self.userUpdateModel.executeGET(function (res) {
+            };
+            this.userUpdateModel.executeJSONP(userUpdateParameter,function (res) {
                 if (res && res.code === '0') {
                     msgBox.showOK('数据保存成功!');
                     $(document).trigger('event:userProfileChanged', {

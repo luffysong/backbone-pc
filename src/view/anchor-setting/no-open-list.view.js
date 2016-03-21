@@ -44,21 +44,21 @@ var View = BaseView.extend({
 			'order':'time',
 			'offset':0,
 			'size':6,
-			'access_token':token
+			'access_token':'web-'+token
 		};
 		this.removeParameter = {
 			'deviceinfo':'{"aid":"30001001"}',
 			'roomId':'',
-			'access_token':token
+			'access_token':'web-'+token
 		};
 		this.releaseParameter = {
 			'deviceinfo':'{"aid":"30001001"}',
 			'roomId':'',
-			'access_token':token
+			'access_token':'web-'+token
 		};
 		this.saveCoverParameter = {
 			'deviceinfo':'{"aid":"30001001"}',
-			'access_token':token,
+			'access_token':'web-'+token,
 			'roomId':'',
 			'posterUrl':''
 		};
@@ -111,8 +111,7 @@ var View = BaseView.extend({
 			}
 		};
 		this.upload = new UploadFileDialog(fileOptions);
-		this.noOpenModel.setChangeURL(this.noOpenParameter);
-		this.noOpenModel.execute(function(response){
+		this.noOpenModel.executeJSONP(this.noOpenParameter,function(response){
 			var data = response.data;
 			var roomList = data.roomList;
 			var count = Math.ceil(data.totalCount/self.noOpenParameter.size);
@@ -177,9 +176,8 @@ var View = BaseView.extend({
 					};
 					if (this.releaseLock && this.imagePath) {
 						this.releaseLock = false;
-						this.removeParameter.roomId = id;
-						this.releaseModel.setChangeURL(this.removeParameter);
-						this.releaseModel.execute(function(response){
+						this.releaseParameter.roomId = id;
+						this.releaseModel.executeJSONP(this.releaseParameter,function(response){
 							this.releaseLock = true;
 							span.addClass('disable');
 							MsgBox.showOK('发布成功');
@@ -203,8 +201,7 @@ var View = BaseView.extend({
 							okFn:function(){
 								self.removeLock = false;
 								self.removeParameter.roomId = id;
-								self.removeModel.setChangeURL(self.removeParameter);
-								self.removeModel.execute(function(response){
+								self.removeModel.executeJSONP(self.removeParameter,function(response){
 									self.removeLock = true;
 									MsgBox.showOK('删除成功');
 									el.remove();
@@ -235,6 +232,8 @@ var View = BaseView.extend({
 					inputText:'编辑图片'
 				};
 				console.log(attrs);
+
+
 			}
 			this.upload.show(attrs);
 		};
@@ -249,8 +248,7 @@ var View = BaseView.extend({
 	saveCoverImage:function(){
 		var self = this;
 		this.saveCoverParameter.posterUrl = this.imagePath;
-		this.saveCoverModel.setChangeURL(this.saveCoverParameter);
-		this.saveCoverModel.execute(function(response){
+		this.saveCoverModel.executeJSONP(this.saveCoverParameter,function(response){
 			var code = ~~response.code;
 			if (!code) {
 				var coverImageDOM = self.singleLiDOM.find('.cover-image');
