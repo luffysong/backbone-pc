@@ -11,10 +11,8 @@
 
 var BaseView = require('BaseView'); //View的基类
 var YYTIMServer = require('../../lib/YYT_IM_Server');
-var RoomMessageModel = require('../../model/anchor/room-message.model');
 var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
-var user = UserModel.sharedInstanceUserModel();
 var DateTime = require('DateTime');
 var FlashAPI = require('FlashAPI');
 
@@ -32,29 +30,23 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之前
     beforeMount: function () {
-        this.roomMsgModel = new RoomMessageModel();
-        //标记是否开始直播
-        //this.isLiveShowing = false;
         //禁言用户列表
         this.forbidUsers = [];
 
     },
     //当模板挂载到元素之后
     afterMount: function () {
-        //背景图片元素
-        this.themeBgEle = $('#anchorContainerBg');
-        this.msgList = $('#msgList');
-        this.chatHistory = $('#chatHistory');
-        this.btnLock = $('#btn-lock');
+        var el = this.$el;
+        this.msgList = el.find('#msgList');
+        this.chatHistory = el.find('#chatHistory');
+        this.btnLock = el.find('#btn-lock');
         this.defineEventInterface();
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-            el:'broadCastFlash',
+            el: 'broadCastFlash'
         });
-        //YYTIMServer.getRoomMsgs.call(this, this.renderGroupMsgs);
-        //this.autoAddMsg();
     },
     //清屏
     clearHandler: function () {
@@ -73,9 +65,10 @@ var View = BaseView.extend({
                     smallAvatar: '',
                     mstType: 4
                 };
+                //清理右侧列表
                 //self.clearMessageList();
 
-                self.flashAPI.onReady(function(){
+                self.flashAPI.onReady(function () {
                     this.notifying(msg);
                 });
                 YYTIMServer.clearScreen({
@@ -142,13 +135,14 @@ var View = BaseView.extend({
             this.msgControlHandler(e);
         } else {
             li = $(e.target).parents('li');
+            //确认是文本消息
             if (li.attr('data-msgType') == 0) {
                 this.showMsgControlMenu(li);
             }
         }
 
     },
-    //显示,隐藏禁言/提出按钮
+    //显示,隐藏禁言/踢出按钮
     showMsgControlMenu: function (target) {
         if (target.length <= 0) return;
 
@@ -163,20 +157,18 @@ var View = BaseView.extend({
     },
     //禁言,或者踢出
     msgControlHandler: function (e) {
-        var target = $(e.target), li;
+        var target = $(e.target), li, userInfo = {};
+
         li = target.parents('li');
+        userInfo = {
+            name: li.attr('data-name'),
+            id: li.attr('data-id')
+        };
 
         if (target.text() === '禁言') {
-
-            this.disableSendMsgConfirm({
-                name: li.attr('data-name'),
-                id: li.attr('data-id')
-            });
+            this.disableSendMsgConfirm(userInfo);
         } else if (target.text() === '踢出') {
-            this.removeUserFromRoom({
-                name: li.attr('data-name'),
-                id: li.attr('data-id')
-            });
+            this.removeUserFromRoom(userInfo);
         }
     },
     /**
@@ -201,12 +193,12 @@ var View = BaseView.extend({
         }, function (resp) {
             if (resp && resp.ActionStatus === 'OK') {
                 msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
-                self.flashAPI.onReady(function(){
+                self.flashAPI.onReady(function () {
                     this.notifying({
-                        roomId:self.roomInfo.id,
-                        userId:user.id,
-                        nickName:user.name,
-                        mstType:5
+                        roomId: self.roomInfo.id,
+                        userId: user.id,
+                        nickName: user.name,
+                        mstType: 5
                     });
                 });
                 YYTIMServer.sendMessage({
@@ -219,9 +211,8 @@ var View = BaseView.extend({
                 }, function (resp) {
                     //console.log(resp);
                 }, function (err) {
-                    console.log(err);
+                    msgBox.showError('禁言失败,请稍后重试!');
                 });
-
             } else {
                 msgBox.showError('禁言失败,请稍后重试!');
             }
@@ -264,10 +255,6 @@ var View = BaseView.extend({
                 }
             })
         }
-    },
-    renderGroupMsgs: function (datas) {
-        //console.log('renderGroupMsgs', datas);
-        //TODO
     },
     //腾讯IM消息到达回调
     onMsgNotify: function (notifyInfo) {
@@ -334,8 +321,8 @@ var View = BaseView.extend({
             var tpl = _.template(this.getMessageTpl());
             this.msgList.append(tpl(msgObj));
             this.chatHistory.scrollTop(this.msgList.height());
-            if(msgObj.mstType == 0){
-                this.flashAPI.onReady(function(){
+            if (msgObj.mstType == 0) {
+                this.flashAPI.onReady(function () {
                     this.notifying(msgObj);
                 });
             }
@@ -348,14 +335,6 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
 
-        $(document).on('event:LiveShowStarted', function (e, data) {
-
-        });
-
-        $(document).on('event:liveShowEnded', function (e, data) {
-
-        });
-
         //成功获取房间信息
         $(document).on('event:roomInfoReady', function (e, data) {
             if (data) {
@@ -364,10 +343,6 @@ var View = BaseView.extend({
             }
         });
 
-        $(document).on('event:onConnNotify', function (e, notifyInfo) {
-
-            //self.onConnNotify(notifyInfo);
-        });
         $(document).on('event:onMsgNotify', function (e, notifyInfo) {
             self.onMsgNotify(notifyInfo);
         });
@@ -383,31 +358,12 @@ var View = BaseView.extend({
      *
      */
     roomInfoReady: function () {
-        var self = this;
-        self.getMessageFromServer();
-        self.getGroupInfo();
-
+        this.getGroupInfo();
     },
     /**
-     *
+     * 从服务器端拉去消息
      */
     getMessageFromServer: function () {
-        var self = this;
-        //self.roomMsgModel.setChangeURL({
-        //    deviceinfo: '{"aid": "30001001"}',
-        //    accessToken: user.getToken(),
-        //    limit: 100,
-        //    endTime: 0,
-        //    startTime: 0,
-        //    cursor: '',
-        //    roomId: self.roomInfo.id
-        //});
-        //
-        //self.roomMsgModel.executeGET(function (result) {
-        //    console.log('roomMsgModel', result);
-        //}, function (err) {
-        //    console.log(err);
-        //});
     },
     /**
      * 获取群组公告以及介绍
@@ -428,6 +384,7 @@ var View = BaseView.extend({
             msgBox.showError(err.msg || '获取群组消息失败!');
         });
     },
+    //转换时间格式
     getDateStr: function (dateInt) {
         var date = new Date(dateInt);
         return date.Format('hh:MM:ss');
