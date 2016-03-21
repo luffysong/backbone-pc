@@ -10,7 +10,7 @@
  * @time 2016年2月27日
  * @author icepy
  * @info 改造兼容webpack打包
- * 
+ *
  */
 
 
@@ -35,6 +35,7 @@ var BaseModel = Backbone.Model.extend({
 		this._view = null;
 		this._onQueue = [];
 		this._original = null;
+		this.parameter = null;
 		if (typeof this.beforeEmit === 'function') {
 			this.beforeEmit(options);
 		};
@@ -53,7 +54,7 @@ var BaseModel = Backbone.Model.extend({
 			this.url = this.url.replace('{{url_prefix}}',env['url_prefix']);
 			this._url = this.url
 		}else{
-			warn('你应该正确的配置{{url_prefix}}，在你的config.js文件中')	
+			warn('你应该正确的配置{{url_prefix}}，在你的config.js文件中')
 		}
 	},
 	_ICESort:function(data,fun){
@@ -67,7 +68,7 @@ var BaseModel = Backbone.Model.extend({
 		for(;i<j;i++){
 			for(j = i+1;j<n;j++){
 				logic = fun.call(this,data[i],data[j]);
-				key = (typeof logic === 'number' ? logic : !!logic ? 1 : 0) > 0 ? true : false; 
+				key = (typeof logic === 'number' ? logic : !!logic ? 1 : 0) > 0 ? true : false;
 				if (key) {
 					temp = data[i];
 					data[i] = data[j];
@@ -140,13 +141,15 @@ var BaseModel = Backbone.Model.extend({
 		var self = this;
 		var jsonpXHR = $.ajax({
 			url:this.url,
+			data:this.parameter || {},
 			dataType:'jsonp',
 			jsonp:'callback',
 			jsonpCallback:'_YYTPC_',
 		});
-		jsonpXHR.done(function(data,state,xhr){
+		jsonpXHR.done(function(response,state,xhr){
+			response = self._ICEProcessData(response);
 			if (typeof success === 'function') {
-				success.call(self,data,state,xhr);
+				success.call(self,response,state,xhr);
 			};
 		});
 		jsonpXHR.fail(function(xhr,state,errors){
@@ -298,7 +301,9 @@ var BaseModel = Backbone.Model.extend({
 	 * @param  {[type]} error   [description]
 	 * @return {[type]}         [description]
 	 */
-	executeJSONP:function(success,error){
+	executeJSONP:function(parameter,success,error){
+		this.parameter = null;
+		this.parameter = parameter;
 		var message = {
 			type:'JSONP',
 			success:success,
@@ -525,7 +530,7 @@ var BaseModel = Backbone.Model.extend({
 								};
 							});
 						}
-						
+
 					};
 					break
 			}

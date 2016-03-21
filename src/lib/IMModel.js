@@ -17,6 +17,7 @@ var Model = BaseModel.extend({
         // this.storageCache = true; //开启本地缓存
         // this.expiration = 1; //设置缓存过期时间（1表示60*60*1000 一小时）
         this.notTokenURL = this.url;
+        this.imData = null;
     },
     /**
      * [isAnchor 判断是否为主播]
@@ -27,10 +28,15 @@ var Model = BaseModel.extend({
         return !!this.$get('data.anchor');
     },
     setTokenUrl: function (token) {
-        this.url = this.url + '?deviceinfo={"aid":"30001001"}&access_token=web-' + token;
+        this.imData = {
+            'deviceinfo':'{"aid":"30001001"}',
+            "access_token":"web-"+token
+        };
     },
     setNoTokenUrl: function () {
-        this.url = this.notTokenURL + '?deviceinfo={"aid":"30001001"}';
+        this.imData = {
+            'deviceinfo':'{"aid":"30001001"}'
+        };
     },
     /**
      * [fetchIMUserSig 获取IM签名]
@@ -52,7 +58,7 @@ var Model = BaseModel.extend({
         if (token) {
             this.setTokenUrl(token);
         }
-        this.execute(function (response) {
+        this.executeJSONP(this.imData,function (response) {
             var data = response.data;
             store.set('imSig', data);
             if (typeof callback === 'function') {
@@ -70,7 +76,7 @@ var Model = BaseModel.extend({
         if (token) {
             this.setTokenUrl(token);
         }
-        this.execute(function (response) {
+        this.executeJSONP(function (response) {
             var data = response.data;
             store.set('imSig', data);
             okFn && okFn(data);
