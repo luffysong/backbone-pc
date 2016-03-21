@@ -40,6 +40,19 @@ var View = BaseView.extend({
             content: ''
         };
 
+        this.noticeInfoParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            roomId: '',
+            content: ''
+        };
+
+        this.noticeGetParams = {
+            deviceinfo: '{"aid":"30001001"}',
+            roomId: '',
+            access_token: 'web-' + user.getToken()
+        };
+
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -92,14 +105,10 @@ var View = BaseView.extend({
             return null;
         }
 
-        this.noticeModel.setChangeURL({
-            deviceinfo: '{"aid": "30001001"}',
-            accessToken: user.getToken(),
-            roomId: this.roomInfo.id,
-            content: content
-        });
+        this.noticeInfoParams.roomId = this.roomInfo.id;
+        this.noticeInfoParams.content = content;
 
-        this.noticeModel.executeGET(function (res) {
+        this.noticeModel.executeJSONP(this.noticeInfoParams, function (res) {
                 if (res && res.code == '0') {
                     $(document).trigger('event:noticeChanged', content);
                     self.noticeInfo.content = content;
@@ -153,12 +162,9 @@ var View = BaseView.extend({
      */
     getNoticeInfo: function () {
         var self = this;
-        this.noticeGetModel.setChangeURL({
-            deviceinfo: '{"aid":"30001001"}',
-            roomId: this.roomInfo.id,
-            accessToken: user.getToken()
-        });
-        this.noticeGetModel.executeGET(function (res) {
+        this.noticeGetParams.roomId = this.roomInfo.id;
+
+        this.noticeGetModel.executeJSONP(this.noticeGetParams, function (res) {
             if (res && res.data) {
                 var notice = null;
                 res.data.placards && (notice = res.data.placards[0]);
@@ -171,13 +177,13 @@ var View = BaseView.extend({
                 }
             }
         }, function (err) {
-            msgBox.showErr(err.msg || '获取公告失败');
+            msgBox.showError(err.msg || '获取公告失败');
         });
     },
     noticeChanged: function () {
         if (this.txtNotice.val().length < 50) {
             this.tipTextarea.text('您还可以输入' + (50 - this.txtNotice.val().length) + '个字');
-        }else{
+        } else {
             this.tipTextarea.text('您的输入超出了' + (this.txtNotice.val().length - 50) + '个字');
         }
 

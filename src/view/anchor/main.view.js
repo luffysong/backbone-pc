@@ -34,6 +34,12 @@ var View = BaseView.extend({
         }
         this.roomDetail = new RoomDetailModel();
 
+        this.roomDetailParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            roomId: ''
+        };
+
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -47,6 +53,7 @@ var View = BaseView.extend({
     },
     initWebIM: function () {
         var self = this;
+
         function callback(notifyInfo) {
             $(document).trigger('event:groupSystemNotifys', notifyInfo);
         }
@@ -91,15 +98,11 @@ var View = BaseView.extend({
 
         if (user.isLogined()) {
             self.initWebIM();
-            self.roomDetail.setChangeURL({
-                deviceinfo: '{"aid": "30001001"}',
-                accessToken: user.getToken(),
-                roomId: this.roomId
-            });
+
             self.initRoom();
         } else {
             store.remove('imSig');
-            store.set('signout',1);
+            store.set('signout', 1);
             window.location.href = '/web/login.html';
         }
     },
@@ -108,11 +111,12 @@ var View = BaseView.extend({
      */
     initRoom: function () {
         var self = this;
-        this.roomDetail.executeGET(function (response) {
+        self.roomDetailParams.roomId = self.roomId;
+        this.roomDetail.executeJSONP(self.roomDetailParams, function (response) {
             var data = response.data;
             self.videoUrl = {
-                'streamName':data.streamName,
-                'url':data.url
+                'streamName': data.streamName,
+                'url': data.url
             };
             self.renderPage();
             $(document).trigger('event:roomInfoReady', data);

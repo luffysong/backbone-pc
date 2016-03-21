@@ -36,6 +36,18 @@ var View = BaseView.extend({
         this.startLiveModel = new StartLiveModel();
         this.endLiveModel = new EndLiveModel();
 
+        this.startLiveParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            roomId: '',
+            imGroupId: ''
+        };
+
+        this.endLiveParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            roomId: ''
+        };
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -46,7 +58,7 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-            el:'broadCastFlash',
+            el: 'broadCastFlash',
         });
     },
     /**
@@ -79,16 +91,14 @@ var View = BaseView.extend({
     },
     startLive: function () {
         var self = this;
-        self.startLiveModel.setChangeURL({
-            deviceinfo: JSON.stringify({"aid": "30001001"}),
-            accessToken: user.getToken(),
-            roomId: self.roomInfo.id,
-            imGroupId: encodeURIComponent(self.roomInfo.imGroupid)
-        });
-        self.startLiveModel.executeGET(function (result) {
+
+        self.startLiveParams.roomId = self.roomInfo.id;
+        self.startLiveParams.imGroupId = self.roomInfo.imGroupid;
+
+        self.startLiveModel.executeJSONP(this.startLiveParams ,function (result) {
             msgBox.showOK('成功开启直播');
-            self.flashAPI.onReady(function(){
-                this.addUrl(self.roomInfo.url,self.roomInfo.streamName);
+            self.flashAPI.onReady(function () {
+                this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
             });
             $(document).trigger('event:LiveShowStarted');
         }, function (err) {
@@ -119,12 +129,9 @@ var View = BaseView.extend({
      */
     endLive: function () {
         var self = this;
-        self.endLiveModel.setChangeURL({
-            deviceinfo: '{"aid": "30001001"}',
-            accessToken: user.getToken(),
-            roomId: self.roomInfo.id
-        });
-        self.endLiveModel.executeGET(function (result) {
+
+        self.endLiveParams.roomId = self.roomInfo.id;
+        self.endLiveModel.executeJSONP(self.endLiveParams, function (result) {
             self.btnEndLive.addClass('m_disabled');
             self.isLiveShowing = false;
             msgBox.showOK('结束直播操作成功');
