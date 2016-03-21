@@ -53,7 +53,7 @@ var View = BaseView.extend({
             'roomDesc': '',
             'artistId': '',
             'liveTime': 0,
-            'access_token': user.getToken()
+            'access_token': 'web-'+user.getToken()
         };
         this.createDate = {};
     },
@@ -225,19 +225,17 @@ var View = BaseView.extend({
         if (!val) {
             this.selectorActor.empty();
             return;
-        }
-        ;
+        };
         var self = this;
-        this.artistModel.setChangeURL({
+        this.artistModel.executeJSONP({
             'keyword': val,
             'deviceinfo': '{"aid":"30001001"}'
-        });
-        this.artistModel.execute(function (response) {
+        },function (response) {
             var items = response.data.list;
             self.selectorActor.html(self.compileHTML(self.actorTemp, {'items': items}));
             self.selectorActor.show();
         }, function (e) {
-
+            MsgBox.showError('输入有误');
         });
     },
     actorNameBlurHandler: function (e) {
@@ -266,8 +264,7 @@ var View = BaseView.extend({
                 return;
             }
             ;
-            this.createModel.setChangeURL(this.createData);
-            this.createModel.execute(function (response) {
+            this.createModel.executeJSONP(this.createData,function (response) {
                 var code = ~~response.code;
                 var data = response.data;
                 if (!code) {

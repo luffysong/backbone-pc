@@ -143,8 +143,7 @@ var BaseModel = Backbone.Model.extend({
 			url:this.url,
 			data:this.parameter || {},
 			dataType:'jsonp',
-			jsonp:'callback',
-			jsonpCallback:'_YYTPC_',
+			jsonp:'callback'
 		});
 		jsonpXHR.done(function(response,state,xhr){
 			response = self._ICEProcessData(response);

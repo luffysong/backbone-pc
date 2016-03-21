@@ -40,7 +40,7 @@ var View = BaseView.extend({
 			'order':'',
 			'offset':0,
 			'size':this.size,
-			'access_token':user.getToken()
+			'access_token':'web-'+user.getToken()
 		};
 		this.omit = this.count > 2;
 		this.items = [];
@@ -129,9 +129,13 @@ var View = BaseView.extend({
 		if (this.lock) {
 			this.lock = false;
 			this.modelParameter.offset = this.offset;
-			this.listModel.setChangeURL(this.modelParameter);
-			this.listModel.execute(function(response,model){
+			this.listModel.executeJSONP(this.modelParameter,function(response,model){
 				self.lock = true;
+				var code = ~~response.code;
+				if (code) {
+					MsgBox.showError(response.msg);
+					return;
+				};
 				self.listRender(response);
 			},function(e){
 				self.lock = true;

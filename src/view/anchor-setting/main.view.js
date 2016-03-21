@@ -166,8 +166,6 @@ var View = BaseView.extend({
             this.updateBgModel.execute(function (response) {
                 var code = response.code;
                 if (!~~code) {
-                    console.log(response);
-
                     self.saveLock = true;
                     self.setPageBgimg(response.data.bgTheme);
                     self.upload.hide();
