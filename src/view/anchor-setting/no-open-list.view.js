@@ -232,6 +232,8 @@ var View = BaseView.extend({
 					inputText:'编辑图片'
 				};
 				console.log(attrs);
+
+
 			}
 			this.upload.show(attrs);
 		};
