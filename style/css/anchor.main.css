@@ -421,6 +421,9 @@ img {
   height: 653px;
   overflow: auto;
 }
+#anchorCtrlChat .chatCon .system-info p {
+  width: 265px!important;
+}
 #anchorCtrlChat .chatCon li {
   padding: 6px 20px 6px 12px;
   background: #fff;
