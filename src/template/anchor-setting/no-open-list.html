@@ -1,5 +1,5 @@
 {{each items as item}}
-     <li  data-id="{{item.id}}" data-key="{{item.liCacheKey}}">
+     <li  data-id="{{item.id}}" data-key="{{item.liCacheKey}}" data-img="{{item.posterPic}}" data-liveTime="{{item.liveTime}}">
             <div class="uploadAd fl uploadImage" data-posterPic="{{if item.posterPic}}1{{/if}}">
                    <img src="{{item.posterPic || '../img/aP-list-ad.png'}}" alt="" class="cover-image">
             </div>

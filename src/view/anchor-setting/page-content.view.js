@@ -54,9 +54,6 @@ var View = BaseView.extend({
     menuChanged: function (e) {
         var target = $(e.target);
         if (target) {
-            target.parent().children('li').removeClass('on');
-            target.addClass('on');
-            $('.tab-panel').hide();
             if (target.attr('data-panel') === 'signout') {
                 UIConfirm.show({
                     content:'是否退出',
@@ -67,9 +64,12 @@ var View = BaseView.extend({
                         window.location.href = window.location.origin + '/web/login.html';
                     }
                 });
-                return;
+            }else{
+                target.parent().children('li').removeClass('on');
+                target.addClass('on');
+                $('.tab-panel').hide();
+                $('#' + target.attr('data-panel')).show();
             }
-            $('#' + target.attr('data-panel')).show();
         }
     },
     /**

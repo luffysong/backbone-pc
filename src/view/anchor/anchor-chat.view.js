@@ -106,7 +106,8 @@ var View = BaseView.extend({
             });
         } else {
             options.Introduction = JSON.stringify({
-                blockState: false
+                blockState: false,
+                alert: '播主解除锁屏啦'
             });
         }
 
@@ -187,36 +188,24 @@ var View = BaseView.extend({
         var self = this,
             users = [];
         users.push(user.id);
-        YYTIMServer.disableSendMsg({
-            GroupId: self.roomInfo.imGroupid,
-            'Members_Account': users
-        }, function (resp) {
-            if (resp && resp.ActionStatus === 'OK') {
-                msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
-                self.flashAPI.onReady(function () {
-                    this.notifying({
-                        roomId: self.roomInfo.id,
-                        userId: user.id,
-                        nickName: user.name,
-                        mstType: 5
-                    });
-                });
-                YYTIMServer.sendMessage({
-                    groupId: self.roomInfo.imGroupid,
-                    msg: {
-                        roomId: self.roomInfo.id,
-                        mstType: 5,
-                        userId: user.id
-                    }
-                }, function (resp) {
-                    //console.log(resp);
-                }, function (err) {
-                    msgBox.showError('禁言失败,请稍后重试!');
-                });
-            } else {
-                msgBox.showError('禁言失败,请稍后重试!');
+        YYTIMServer.sendMessage({
+            groupId: self.roomInfo.imGroupid,
+            msg: {
+                roomId: self.roomInfo.id,
+                mstType: 5,
+                userId: user.id
             }
-        }, function () {
+        }, function (resp) {
+            msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
+            self.flashAPI.onReady(function () {
+                this.notifying({
+                    roomId: self.roomInfo.id,
+                    userId: user.id,
+                    nickName: user.name,
+                    mstType: 5
+                });
+            });
+        }, function (err) {
             msgBox.showError('禁言失败,请稍后重试!');
         });
     },
@@ -387,7 +376,7 @@ var View = BaseView.extend({
     //转换时间格式
     getDateStr: function (dateInt) {
         var date = new Date(dateInt);
-        return date.Format('hh:MM:ss');
+        return date.Format('hh:mm:ss');
     },
     //检查当前直播状态
     checkLiveRoomReady: function () {

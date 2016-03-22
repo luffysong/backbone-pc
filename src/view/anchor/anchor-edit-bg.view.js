@@ -52,13 +52,6 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.defineEventInterface();
-
-        //this.editBgModel.execute(function (response) {
-        //    console.log('editBgModel', response);
-        //    var items = this.$get('items');
-        //}, function (e) {
-        //
-        //});
     },
     /**
      * 定义事件

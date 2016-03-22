@@ -62,7 +62,7 @@ var View = BaseView.extend({
         //公告内容
         this.txtNotice = $('#txtNotice');
         this.imgRoomPic = $('#imgRoomPic');
-        this.errNoticeTip = $('#errNoticTip');
+        this.errNoticeTip = $('#errNoticeTip');
 
         this.tipTextarea = this.$el.find('.tipTextarea');
     },
@@ -100,7 +100,7 @@ var View = BaseView.extend({
     submitClickHandler: function (e) {
         var content = this.txtNotice.val().trim(),
             self = this;
-        if (!content || content.length >= 50 || content.length <= 0) {
+        if (!content || content.length > 50 || content.length <= 0) {
             this.errNoticeTip.text('公告文字请在50字以内');
             return null;
         }
