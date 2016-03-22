@@ -37,10 +37,12 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之后
     afterMount: function () {
+        var el = this.$el;
         this.txtImg = $('#txtImg');
         this.txtName = $('#txtName');
         this.txtTags = $('#txtTags');
         this.btnSave = $('#btnSave');
+        this.btnUploadAvatar = el.find('#btnUploadAvatar');
 
         this.imgUserAvatar = $('#imgUserAvatar');
 
@@ -52,15 +54,14 @@ var View = BaseView.extend({
 
         user.getUserInfo(function (data) {
             self.userInfo = data;
-            //console.log(self.userInfo);
             self.initForm(self.userInfo.userName);
         });
     },
     initForm: function () {
         var self = this;
-        if (self.userInfo.headImg) {
-            self.imgUserAvatar.attr('src', self.userInfo.headImg);
-            self.txtImg.val(self.userInfo.headImg);
+        if (self.userInfo.bigheadImg) {
+            self.imgUserAvatar.attr('src', self.userInfo.bigheadImg);
+            self.txtImg.val(self.userInfo.bigheadImg);
         }
         self.txtName.val(self.userInfo.userName);
 
@@ -135,16 +136,32 @@ var View = BaseView.extend({
             filename: 'img',
             className: 'file',
             success: function (response) {
-                console.log(response);
+                self.changeUploadBtnStatus();
                 self.fileUploaded(response);
             },
             failure: function () {
+                self.changeUploadBtnStatus();
                 msgBox.showError('上传失败');
             }
         });
     },
+    changeUploadBtnStatus: function (isUploading) {
+        if (isUploading) {
+            this.btnUploadAvatar.parent().addClass('m_disabled');
+            this.btnUploadAvatar.text('正在上传');
+        } else {
+            this.btnUploadAvatar.parent().removeClass('m_disabled');
+            this.btnUploadAvatar.text('重新上传');
+        }
+    },
     //表单提交文件
     submitFile: function () {
+        var btn = this.btnUploadAvatar.parent();
+        if (btn.hasClass('m_disabled')) {
+            return;
+        }
+        this.changeUploadBtnStatus(true);
+
         this.upload.submit();
     },
     //上传成功后处理图片
@@ -153,6 +170,11 @@ var View = BaseView.extend({
             var src = res.images[0].path;
             this.txtImg.val(src);
             this.imgUserAvatar.attr('src', src);
+            this.verifyForm();
+        } else if (res && res.errCode == '29') {
+            msgBox.showError('您上传的文件太大了,请重新上传!');
+        } else {
+            msgBox.showError('文件上传失败,请重新上传!');
         }
     },
     saveuserinfo: function () {
@@ -160,12 +182,12 @@ var View = BaseView.extend({
         if (this.verifyForm()) {
             var userUpdateParameter = {
                 deviceinfo: '{"aid": "30001001"}',
-                access_token: 'web-'+user.getToken(),
+                access_token: 'web-' + user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
                 tags: self.txtTags.val().split(/[,，]/)
             };
-            this.userUpdateModel.executeJSONP(userUpdateParameter,function (res) {
+            this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
                 if (res && res.code === '0') {
                     msgBox.showOK('数据保存成功!');
                     $(document).trigger('event:userProfileChanged', {
