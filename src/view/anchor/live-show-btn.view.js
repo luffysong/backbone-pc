@@ -97,13 +97,22 @@ var View = BaseView.extend({
 
         self.startLiveModel.executeJSONP(this.startLiveParams ,function (result) {
             msgBox.showOK('成功开启直播');
-            self.flashAPI.onReady(function () {
-                this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
-            });
+            self.startFlash();
+            //self.flashAPI.onReady(function () {
+            //    this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
+            //});
             $(document).trigger('event:LiveShowStarted');
         }, function (err) {
             msgBox.showError(err.msg || '开启直播失败,请稍后重试');
         });
+    },
+
+    startFlash: function(){
+        var self = this;
+        self.flashAPI.onReady(function () {
+            this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
+        });
+
     },
     /**
      * 结束直播
@@ -155,6 +164,7 @@ var View = BaseView.extend({
         if (status === 2) {
             this.btnStartLive.addClass('m_disabled');
             this.btnEndLive.removeClass('m_disabled');
+            this.startFlash();
         } else if (status === 3) {
             this.btnStartLive.addClass('m_disabled');
             //TODO

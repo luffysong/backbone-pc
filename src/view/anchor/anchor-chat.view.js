@@ -188,38 +188,38 @@ var View = BaseView.extend({
         var self = this,
             users = [];
         users.push(user.id);
-        YYTIMServer.disableSendMsg({
-            GroupId: self.roomInfo.imGroupid,
-            'Members_Account': users
-        }, function (resp) {
-            if (resp && resp.ActionStatus === 'OK') {
-                msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
-                self.flashAPI.onReady(function () {
-                    this.notifying({
-                        roomId: self.roomInfo.id,
-                        userId: user.id,
-                        nickName: user.name,
-                        mstType: 5
-                    });
-                });
-                YYTIMServer.sendMessage({
-                    groupId: self.roomInfo.imGroupid,
-                    msg: {
-                        roomId: self.roomInfo.id,
-                        mstType: 5,
-                        userId: user.id
-                    }
-                }, function (resp) {
-                    //console.log(resp);
-                }, function (err) {
-                    msgBox.showError('禁言失败,请稍后重试!');
-                });
-            } else {
-                msgBox.showError('禁言失败,请稍后重试!');
+        //YYTIMServer.disableSendMsg({
+        //    GroupId: self.roomInfo.imGroupid,
+        //    'Members_Account': users
+        //}, function (resp) {
+        //    if (resp && resp.ActionStatus === 'OK') {
+        msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
+        self.flashAPI.onReady(function () {
+            this.notifying({
+                roomId: self.roomInfo.id,
+                userId: user.id,
+                nickName: user.name,
+                mstType: 5
+            });
+        });
+        YYTIMServer.sendMessage({
+            groupId: self.roomInfo.imGroupid,
+            msg: {
+                roomId: self.roomInfo.id,
+                mstType: 5,
+                userId: user.id
             }
-        }, function () {
+        }, function (resp) {
+            //console.log(resp);
+        }, function (err) {
             msgBox.showError('禁言失败,请稍后重试!');
         });
+        //    } else {
+        //        msgBox.showError('禁言失败,请稍后重试!');
+        //    }
+        //}, function () {
+        //    msgBox.showError('禁言失败,请稍后重试!');
+        //});
     },
     hideUserControl: function () {
         $('.controls_forbid_reject').hide();
