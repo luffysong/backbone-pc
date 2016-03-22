@@ -188,20 +188,6 @@ var View = BaseView.extend({
         var self = this,
             users = [];
         users.push(user.id);
-        //YYTIMServer.disableSendMsg({
-        //    GroupId: self.roomInfo.imGroupid,
-        //    'Members_Account': users
-        //}, function (resp) {
-        //    if (resp && resp.ActionStatus === 'OK') {
-        msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
-        self.flashAPI.onReady(function () {
-            this.notifying({
-                roomId: self.roomInfo.id,
-                userId: user.id,
-                nickName: user.name,
-                mstType: 5
-            });
-        });
         YYTIMServer.sendMessage({
             groupId: self.roomInfo.imGroupid,
             msg: {
@@ -210,16 +196,18 @@ var View = BaseView.extend({
                 userId: user.id
             }
         }, function (resp) {
-            //console.log(resp);
+            msgBox.showOK('已将用户:<b>' + user.name + ' 禁言10分钟.');
+            self.flashAPI.onReady(function () {
+                this.notifying({
+                    roomId: self.roomInfo.id,
+                    userId: user.id,
+                    nickName: user.name,
+                    mstType: 5
+                });
+            });
         }, function (err) {
             msgBox.showError('禁言失败,请稍后重试!');
         });
-        //    } else {
-        //        msgBox.showError('禁言失败,请稍后重试!');
-        //    }
-        //}, function () {
-        //    msgBox.showError('禁言失败,请稍后重试!');
-        //});
     },
     hideUserControl: function () {
         $('.controls_forbid_reject').hide();
