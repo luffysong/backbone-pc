@@ -203,6 +203,9 @@ img {
   width: 1200px;
   margin: 0 auto;
 }
+.light-color {
+  color: #c3c3c3;
+}
 .am-container {
   background: url('/img/anchor-bg.jpg');
   height: 927px;
@@ -417,6 +420,9 @@ img {
   background: #fff;
   height: 653px;
   overflow: auto;
+}
+#anchorCtrlChat .chatCon .system-info p {
+  width: 265px!important;
 }
 #anchorCtrlChat .chatCon li {
   padding: 6px 20px 6px 12px;
