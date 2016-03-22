@@ -376,7 +376,7 @@ var View = BaseView.extend({
     //转换时间格式
     getDateStr: function (dateInt) {
         var date = new Date(dateInt);
-        return date.Format('hh:MM:ss');
+        return date.Format('hh:mm:ss');
     },
     //检查当前直播状态
     checkLiveRoomReady: function () {
