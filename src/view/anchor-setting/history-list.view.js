@@ -48,7 +48,7 @@ var View = BaseView.extend({
 			var count = Math.ceil(data.totalCount/self.historyParameter.size);
 			if (count > 1) {
 				self.initPageBox({
-					'offset':self.historyParameter.offset+1,
+					'offset':self.historyParameter.offset,
 					'size':self.historyParameter.size,
 					'count':count
 				});

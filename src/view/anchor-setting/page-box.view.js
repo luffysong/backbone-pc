@@ -128,7 +128,7 @@ var View = BaseView.extend({
 		var self = this;
 		if (this.lock) {
 			this.lock = false;
-			this.modelParameter.offset = this.offset;
+			this.modelParameter.offset = (this.offset || 1 ) * this.size;
 			this.listModel.executeJSONP(this.modelParameter,function(response,model){
 				self.lock = true;
 				var code = ~~response.code;
@@ -157,17 +157,17 @@ var View = BaseView.extend({
 		}else{
 			if (!middle) {
 				//如果中间值未存在
-				var start = this.offset - 1; //重新计算起始位置
-				var tagIndex = 1;
+				var start = this.offset ? this.offset - 1 : this.offset; //重新计算起始位置
 				if (this.offset > (this.count - 2)) {
 					//已经到最后一位了
-					tagIndex = 2;
-					--start;
+					if(start){
+						--start;
+					}
 				}
 				var middleTemp = temp.splice(start,this.sectionBase);
 				this.translation = 0;
 				//并且迁移一位
-				this.sectionRender(middleTemp,middleTemp[tagIndex]);
+				this.sectionRender(middleTemp,this.offset+1);
 				return;
 			}
 			if (this.translation > base) {
