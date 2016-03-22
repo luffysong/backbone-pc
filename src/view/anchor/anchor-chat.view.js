@@ -61,9 +61,10 @@ var View = BaseView.extend({
             okFn: function () {
                 var msg = {
                     roomId: self.roomInfo.id,
-                    nickName: '群主',
+                    nickName: '主播',
                     smallAvatar: '',
-                    mstType: 4
+                    mstType: 4,
+                    content: '主播已清屏'
                 };
                 //清理右侧列表
                 //self.clearMessageList();
@@ -102,12 +103,12 @@ var View = BaseView.extend({
         if (isLock === true) {
             options.Introduction = JSON.stringify({
                 blockState: !!isLock,
-                alert: '播主设定锁定屏幕，不能发送弹幕及礼物'
+                alert: '主播已锁屏'
             });
         } else {
             options.Introduction = JSON.stringify({
                 blockState: false,
-                alert: '播主解除锁屏啦'
+                alert: '主播解除锁屏'
             });
         }
 
