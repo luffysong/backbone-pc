@@ -128,7 +128,7 @@ var View = BaseView.extend({
 		var self = this;
 		if (this.lock) {
 			this.lock = false;
-			this.modelParameter.offset = (this.offset || 1 ) * this.size;
+			this.modelParameter.offset = (this.offset || 0) * this.size;
 			this.listModel.executeJSONP(this.modelParameter,function(response,model){
 				self.lock = true;
 				var code = ~~response.code;
