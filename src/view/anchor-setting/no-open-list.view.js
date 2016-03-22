@@ -171,28 +171,7 @@ var View = BaseView.extend({
 
         switch (state) {
             case 2://发布
-                if (span.attr('class') === 'disable') {
-                    return;
-                }
-                if (this.releaseLock && postImg) {
-                    this.releaseLock = false;
-                    this.releaseParameter.roomId = id;
-                    this.releaseModel.executeJSONP(this.releaseParameter, function (response) {
-                        self.releaseLock = true;
-                        span.addClass('disable');
-                        MsgBox.showOK('发布成功');
-                        var item = response.data;
-                        item.liCacheKey = item.id + '-' + item.streamName;
-                        item.liveVideoTime = self.forMatterDate(item.liveTime);
-                        item.lookUrl = '/web/anchor.html?roomId=' + item.id;
-                        self.liRender(item);
-                    }, function (e) {
-                        self.releaseLock = true;
-                        MsgBox.showError('发布失败');
-                    });
-                } else {
-                    MsgBox.showError('发布失败，请上传封面');
-                }
+                self.publishLiveShow(id,span,postImg);
                 break;
             case 3: //删除
                 if (this.removeLock) {
@@ -214,6 +193,47 @@ var View = BaseView.extend({
                 }
                 break;
         }
+    },
+    isTooLate: function (time) {
+        var currentTime = new Date();
+        var timeSpan = time - currentTime.getTime();
+        var hour = Number.parseInt(DateTime.difference(Math.abs(timeSpan)).hours);
+        if (timeSpan < 0 && hour >= 1) {
+            return true;
+        }
+        return false;
+    },
+    //发布直播
+    publishLiveShow: function (id,span, postImg) {
+        var self = this,
+            time = span.parents('li').attr('data-liveTime');
+        if (self.isTooLate(time)) {
+            msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
+            return null;
+        }
+        if (span.attr('class') === 'disable') {
+            return;
+        }
+        if (this.releaseLock && postImg) {
+            this.releaseLock = false;
+            this.releaseParameter.roomId = id;
+            this.releaseModel.executeJSONP(this.releaseParameter, function (response) {
+                self.releaseLock = true;
+                span.addClass('disable');
+                MsgBox.showOK('发布成功');
+                var item = response.data;
+                item.liCacheKey = item.id + '-' + item.streamName;
+                item.liveVideoTime = self.forMatterDate(item.liveTime);
+                item.lookUrl = '/web/anchor.html?roomId=' + item.id;
+                self.liRender(item);
+            }, function (e) {
+                self.releaseLock = true;
+                MsgBox.showError('发布失败');
+            });
+        } else {
+            MsgBox.showError('发布失败，请上传封面');
+        }
+
     },
     //点击编辑封面
     editCoverImageHandler: function (e) {
