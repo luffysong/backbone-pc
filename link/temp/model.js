@@ -4,6 +4,8 @@
  * @info {实现的功能}
  */
 
+'use strict';
+
 var BaseModel = require('BaseModel');
 var Model = BaseModel.extend({
 	url:'{{url_prefix}}/mock/index.json',//填写请求地址

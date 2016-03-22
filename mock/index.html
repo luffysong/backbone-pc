@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -7,160 +7,33 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="">
 	<meta name="keywords" content="">
+	<link rel="stylesheet" type="text/css" href="../style/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../style/common.css">
+	<link rel="stylesheet" type="text/css" href="../style/loginbox.css">
+	<!-- build:css ../style/index.main.css -->
+	<link rel="stylesheet" type="text/css" href="../style/css/index.main.css">
+	<!-- endbuild -->
 </head>
 <body>
-	<form id='formFile'></form>
-	<button id="submit">提交图片</button>
-	<br/>
-	<br/>
-	<img src="" id="submit_image" width="200" height="200">
-	<p>-----------------------------分割线----------------------------</p>
-	<br/>
-	<br/>
-	<form id="formFile1"></form>
-	<button id="submit1">提交图片1</button>
-	<br/>
-	<br/>
-	<img src="" id="submit_image1" width="200" height="200">
-	<p>-----------------------------分割线----------------------------</p>
-	<br/>
-	<br/>
-	<style type="text/css">
-		.container{
-			width: 450px;
-			height: 450px;
-			border: 1px solid #ccc;
-			overflow: hidden;
-			position: relative;
-		}
-	</style>
-	<div id="scrollbar" class="container">
-		<div class="content">
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789]</p>
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789]</p>
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789]</p>
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789]</p>
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789]</p>
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789]</p>
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789]</p>
-			<p>[123]</p>
-			<p>[456]</p>
-			<p>[789 end]</p>
-		</div>
+	<div id="topBar">
+		<button id="login">登录</button>
+		<br/>
+		<br/>
+		<a href="http://login.yinyuetai.com/logout">退出</a>
 	</div>
-	<br/>
-	<br/>
-	<script type="text/javascript" src="./link/base.library.js"></script>
-	<script type="text/javascript" src="./YYT_PC_Modules/util/url.js"></script>
-	<script type="text/javascript" src="./YYT_PC_Modules/util/tools.js"></script>
-	<script type="text/javascript" src="./YYT_PC_Component/feature/uploadFile.js"></script>
-	<script type="text/javascript">
-		var ctrlData = {
-			"cmd":[
-				{"saveOriginal" : 1, "op" : "save", "plan" : "avatar", "belongId" :"20634338","srcImg":"img"}
-			],
-			"redirect":"http://localhost:4000/upload.html"
-		};
-		
-		var uploadFile = ICEPlugs.uploadFile;		
-		var upload = uploadFile({
-			el:'#formFile',
-			url:'http://image.yinyuetai.com/edit',
-			data:ctrlData,
-			filename:'img',
-			before:function(){
-				
-			},
-			success:function(response){
-				var images = response.images;
-				var path = images[0].path;
-				$('#submit_image').attr('src',path);
-			},
-			failure:function(){
+	<div class="am-container">
+		<div id="index" class="box"></div>
+		<div id="nav"></div>
+	</div>
+	<!-- <script type="text/javascript" src="https://static.geetest.com/static/js/geetest.5.3.6.js"></script> -->
+	<script src="http://api.geetest.com/get.php"></script>
 
-			}
-		});
-		$('#submit').on('click',function(){
-			upload.submit();
-		});
-
-		var upload1 = uploadFile({
-			el:'#formFile1',
-			url:'http://image.yinyuetai.com/edit',
-			data:ctrlData,
-			filename:'img',
-			before:function(){
-				
-			},
-			success:function(response){
-				var images = response.images;
-				var path = images[0].path;
-				$('#submit_image1').attr('src',path);
-			},
-			failure:function(){
-
-			}
-		});
-
-		$('#submit1').on('click',function(){
-			upload1.submit();
-		});
-		// console.log(upload)
-		// var obj = {};
-		// Object.defineProperty(obj,"node",{
-		// 	get:function(){
-		// 		return  node || undefined;
-		// 	},
-		// 	set:function(val){
-		// 		node = val;
-		// 	}
-		// });
-		// obj.node = 123;
-	</script>
-	<script type="text/javascript" src="./YYT_PC_Component/feature/scrollbar.js"></script>
-	<script type="text/javascript">
-		var scrollbar = ICEPlugs.scrollbar;
-		var scroll = scrollbar({
-			el:'#scrollbar',
-			config:{ //配置可选
-				floor:{
-					position:'absolute',
-					top:'0px',
-					right:'0px',
-					width:'25px',
-					height:'450px',
-					zIndex:'10',
-					backgroundColor:'#333'
-				},
-				top:{
-					position:'absolute',
-					top:'0px',
-					right:'0px',
-					width:'25px',
-					height:'20px',
-					zIndex:'20',
-					backgroundColor:'red'
-				}
-			},
-			beforeRender:function(){
-
-			}
-		});
-		console.log(scroll);
-	</script>
+	<script type="text/javascript" src="../link/base.library.js"></script>
+	<!-- build:js ../js/common.js -->
+	<script type="text/javascript" src="../js/common.js"></script>
+	<!-- endbuild -->
+	<!-- build:js ../js/index.main.js -->
+	<script type="text/javascript" src="../js/index.main.js"></script>
+	<!-- endbuild -->
 </body>
 </html>

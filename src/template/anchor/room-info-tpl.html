@@ -1,0 +1,15 @@
+<dt><%=roomName%></dt>
+<dd>在线人数:<span><%=online%></span></dd>
+<dd>标签:
+    <%
+    var allTags = creator.tags || [];
+    for(var i = 0,j = allTags.length; i < j; i++){
+    %>
+    <i><%=allTags[i] %></i>
+    <%
+    }
+    if(allTags.length ==0){
+    %>
+    <i>暂无</i>
+    <% }%>
+</dd>

@@ -9,6 +9,8 @@
  * @info {实现的功能}
  */
 
+'use strict';
+
 var BaseView = require('BaseView'); //View的基类
 
 var View = BaseView.extend({

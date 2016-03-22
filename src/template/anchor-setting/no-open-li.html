@@ -1,0 +1,33 @@
+<div class="uploadAd fl uploadImage"data-posterPic="{{if item.posterPic}}1{{/if}}">
+       <img src="{{item.posterPic|| '../img/aP-list-ad.png'}}" alt="" class="cover-image">
+</div>
+<dl class="preLiveMsg fl">
+       <dt>{{item.roomName}}</dt>
+       <dd>直播时间：<span>{{item.liveVideoTime}}</span></dd>
+       <dd>
+            <h4 class="tit">视频连接：</h4>
+            <div>
+                    <span>{{item.livePushStreamUrl}}</span>
+                    <a href="" class="copy copy-video-url" data-value="{{item.livePushStreamUrl}}">复制</a>
+            </div>
+       <dd>
+            <h4 class="tit">视频流：</h4>
+            <div>
+                  <span>{{item.streamName}}</span>
+                  <a href="" class="copy copy-video-name" data-value="{{item.streamName}}">复制</a>
+            </div>
+      </dd>
+       <dd class="ctl">
+            <a href="{{item.lookUrl}}">查看</a>
+            {{if item.status === 1}}
+            	<span class="disable" data-state="2">已发布</span>
+            {{else }}
+            	{{if item.status === 0}}
+            		<span  data-state="2">发布</span>
+			    {{/if}}
+            {{/if}}
+            {{if item.status === 0}}
+                <span data-state="3">删除</span>
+            {{/if}}
+       </dd>
+</dl>

@@ -1,7 +1,7 @@
 {
 	"source":{
-		"index.main":"./src/index.main.js",
 		"anchor.main":"./src/anchor.main.js",
-		"homepage.main":"./src/homepage.main.js"
+		"anchorSetting.main":"./src/anchorSetting.main.js",
+		"login.main":"./src/login.main.js"
 	}
 }
