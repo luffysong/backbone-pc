@@ -20,6 +20,7 @@ var EndLiveModel = require('../../model/anchor/end-live.model');
 var FlashAPI = require('FlashAPI');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var DateTime = require('DateTime');
 
 
 var View = BaseView.extend({
@@ -58,8 +59,17 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-            el: 'broadCastFlash',
+            el: 'broadCastFlash'
         });
+    },
+    isTooLate: function (time) {
+        var currentTime = new Date();
+        var timeSpan = time - currentTime.getTime();
+        var hour = Number.parseInt(DateTime.difference(Math.abs(timeSpan)).hours);
+        if (timeSpan < 0 && hour >= 1) {
+            return true;
+        }
+        return false;
     },
     /**
      * 开启直播
@@ -70,9 +80,13 @@ var View = BaseView.extend({
         if (current.hasClass('m_disabled')) {
             return null;
         }
+        if (self.isTooLate(self.roomInfo.liveTime)) {
+            msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
+            return null;
+        }
+
         current.addClass('m_disabled');
         this.btnEndLive.removeClass('m_disabled');
-        //$(document).trigger('eventStartLiveShow');
 
         if (!this.roomInfo) {
             msgBox.showError('没有获取到房间信息');
@@ -95,15 +109,24 @@ var View = BaseView.extend({
         self.startLiveParams.roomId = self.roomInfo.id;
         self.startLiveParams.imGroupId = self.roomInfo.imGroupid;
 
-        self.startLiveModel.executeJSONP(this.startLiveParams ,function (result) {
+        self.startLiveModel.executeJSONP(this.startLiveParams, function (result) {
             msgBox.showOK('成功开启直播');
-            self.flashAPI.onReady(function () {
-                this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
-            });
+            self.startFlash();
+            //self.flashAPI.onReady(function () {
+            //    this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
+            //});
             $(document).trigger('event:LiveShowStarted');
         }, function (err) {
             msgBox.showError(err.msg || '开启直播失败,请稍后重试');
         });
+    },
+
+    startFlash: function () {
+        var self = this;
+        self.flashAPI.onReady(function () {
+            this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
+        });
+
     },
     /**
      * 结束直播
@@ -147,6 +170,7 @@ var View = BaseView.extend({
         $(document).on('event:roomInfoReady', function (e, data) {
             if (data) {
                 self.roomInfo = data;
+                console.log('roomInfo', data);
                 self.changeButtonStatus(self.roomInfo.status);
             }
         });
@@ -155,6 +179,7 @@ var View = BaseView.extend({
         if (status === 2) {
             this.btnStartLive.addClass('m_disabled');
             this.btnEndLive.removeClass('m_disabled');
+            this.startFlash();
         } else if (status === 3) {
             this.btnStartLive.addClass('m_disabled');
             //TODO

@@ -114,7 +114,7 @@ var View = BaseView.extend({
     },
     fetchIMUserSig: function () {
         var self = this;
-        this.updateBgParameter.access_token = user.getToken();
+        this.updateBgParameter.access_token = 'web-'+user.getToken();
         imModel.fetchIMUserSig(function (sig) {
             if (!sig.anchor) {
                 console.log('跳转走人');
@@ -162,15 +162,15 @@ var View = BaseView.extend({
             this.saveLock = false;
             this.bgTheme = this.tempImg;
             this.updateBgParameter.bgTheme = this.bgTheme;
-            this.updateBgModel.setChangeURL(this.updateBgParameter);
-            this.updateBgModel.execute(function (response) {
+            this.updateBgModel.executeJSONP(this.updateBgParameter,function (response) {
                 var code = response.code;
                 if (!~~code) {
                     self.saveLock = true;
                     self.setPageBgimg(response.data.bgTheme);
                     self.upload.hide();
-                }
-                ;
+                }else{
+                    MsgBox.showError(response.msg);
+                };
             }, function (e) {
                 self.saveLock = true;
                 MsgBox.showError('保存背景图出错');
