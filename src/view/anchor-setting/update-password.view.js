@@ -55,12 +55,15 @@ var View = BaseView.extend({
         }
 
         var newPwd = this.txtNewPwd.val(),
-            pwdReg = /[a-zA-Z00-9]{6,18}/g;
+            pwdReg = /[\S]{6,18}/; ///[a-zA-Z00-9]{6,18}/g;
         if (!newPwd || newPwd.length <= 0) {
             msgBox.showTip('请输入新的密码');
             return false;
+        }else if(newPwd == old){
+            msgBox.showTip('新密码不能跟旧密码一致');
+            return false;
         } else if (!pwdReg.test(newPwd)) {
-            msgBox.showTip('密码的长度建议6~18位,允许输入字母、数字');
+            msgBox.showTip('密码的长度建议6~18位,允许输入字母、数字、符号');
             return false;
         }
 
@@ -89,19 +92,6 @@ var View = BaseView.extend({
         }
 
         this.formPwd.submit();
-
-        //
-        //this.updatePwdModel.save({
-        //    oldPassword: self.txtOldPwd.val(),
-        //    newPassword: self.txtNewPwd.val(),
-        //    newPasswordRepeat: self.txtConfirmPwd.val()
-        //}, function (res) {
-        //    console.log(res);
-        //    msgBox.showOK('密码修改成功!');
-        //}, function (err) {
-        //    console.log(err);
-        //    msgBox.showError(err.message || '密码修改失败,请稍后重试');
-        //});
     },
     //重置表单
     resetInput: function () {
