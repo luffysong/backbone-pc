@@ -321,8 +321,17 @@ var View = BaseView.extend({
                 });
             }
         }
+        self.autoDeleteMsgList();
     },
-
+    //当消息条数超过1000自动删除前面的,仅留下500条
+    autoDeleteMsgList:function(){
+        var total = this.msgList.children().length,
+            index = 0;
+        if(total > 1000){
+            index = total - 500;
+        }
+        this.msgList.children(':lt('+index+')').remove();
+    },
     /**
      * 定义对外公布的事件
      */
