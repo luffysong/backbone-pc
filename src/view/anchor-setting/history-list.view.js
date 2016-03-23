@@ -44,7 +44,7 @@ var View = BaseView.extend({
 		var self = this;
 		this.historyModel.executeJSONP(this.historyParameter,function(response){
 			var data = response.data;
-			var roomList = data.roomList;
+			var roomList = data.roomList || [];
 			var count = Math.ceil(data.totalCount/self.historyParameter.size);
 			if (count > 1) {
 				self.initPageBox({
