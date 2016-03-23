@@ -54,7 +54,7 @@ var View = BaseView.extend({
      */
     defineEventInterface: function () {
         var self = this;
-        $(document).on('event:userProfileChanged', function (e, data) {
+        Backbone.on('event:userProfileChanged', function (data) {
             self.partialRender(data);
         });
     }

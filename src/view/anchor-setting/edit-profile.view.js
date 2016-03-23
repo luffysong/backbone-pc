@@ -185,12 +185,13 @@ var View = BaseView.extend({
                 access_token: 'web-' + user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
-                tags: self.txtTags.val().split(/[,，]/)
+                tags: self.txtTags.val()
             };
+            console.log(userUpdateParameter);
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
                 if (res && res.code === '0') {
                     msgBox.showOK('数据保存成功!');
-                    $(document).trigger('event:userProfileChanged', {
+                    Backbone.trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
                         headImg: self.txtImg.val(),
                         tags: self.txtTags.val().split(/[,，]/)
