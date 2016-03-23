@@ -83,9 +83,11 @@ var View = BaseView.extend({
 	},
 	previewImage:function(response){
 		var images = response.images;
-		var imagePath = images[0].path;
-		this.imgSrcDOM.attr('src',imagePath);
-		this.imgSrcDOM.show();
+		if(images && images.length > 0){
+			var imagePath = images[0].path;
+			this.imgSrcDOM.attr('src',imagePath);
+			this.imgSrcDOM.show();
+		}
 	},
 	emptyValue:function(){
 		this.imageStateDOM.html('');

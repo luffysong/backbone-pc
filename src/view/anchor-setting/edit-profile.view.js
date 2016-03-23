@@ -166,15 +166,14 @@ var View = BaseView.extend({
     },
     //上传成功后处理图片
     fileUploaded: function (res) {
-        if (res && res.state == 'SUCCESS') {
+        var result = this.upload.parseErrorMsg(res);
+        if(result == true){
             var src = res.images[0].path;
             this.txtImg.val(src);
             this.imgUserAvatar.attr('src', src);
             this.verifyForm();
-        } else if (res && res.errCode == '29') {
-            msgBox.showError('您上传的文件太大了,请重新上传!');
-        } else {
-            msgBox.showError('文件上传失败,请重新上传!');
+        }else{
+            msgBox.showTip(result);
         }
     },
     saveuserinfo: function () {
@@ -187,7 +186,6 @@ var View = BaseView.extend({
                 headImg: self.txtImg.val(),
                 tags: self.txtTags.val()
             };
-            console.log(userUpdateParameter);
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
                 if (res && res.code === '0') {
                     msgBox.showOK('数据保存成功!');

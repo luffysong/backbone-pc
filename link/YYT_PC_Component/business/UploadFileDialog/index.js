@@ -46,6 +46,24 @@ UploadFileDialog.prototype.emptyValue = function(){
 		this.helper.emptyValue();
 	};
 };
+
+UploadFileDialog.prototype.parseErrorMsg = function(res){
+	if(res && res.state == 'SUCCESS'){
+		return true;
+	}
+	var code = res.errCode *1 || 0;
+	switch(code){
+		case 29:
+			return '上传的文件太大了,请重新上传';
+		case 31:
+			return '请上传JPGE,JPG,PNG,GIF等格式的图片文件';
+	}
+
+	return '文件上传失败,请重新上传';
+};
+
+
+
 var shared = null;
 UploadFileDialog.sharedInstanceUploadFileDialog = function(options){
 	if (!shared) {

@@ -90,9 +90,14 @@ var View = BaseView.extend({
                 "redirect": window.location.origin + "/cross-url/upload.html"
             },
             uploadFileSuccess: function (response) {
-                //上传成功
-                self.uploadSate = true;
-                self.uploadSuccess(response);
+                var result = self.upload.parseErrorMsg(response);
+                if(result == true){
+                    //上传成功
+                    self.uploadSate = true;
+                    self.uploadSuccess(response);
+                }else{
+                    MsgBox.showTip(result);
+                }
             },
             saveFile: function () {
                 //保存

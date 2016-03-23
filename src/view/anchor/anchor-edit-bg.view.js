@@ -87,8 +87,11 @@ var View = BaseView.extend({
                 "redirect": window.location.origin + "/cross-url/upload.html"
             },
             uploadFileSuccess: function (response) {
-                if (response && response.images && response.images.length > 0) {
+                var result = self.uploadFile.parseErrorMsg(response);
+                if (result == true) {
                     self.currentBgImg = response.images[0].path;
+                } else {
+                    msgBox.showTip(result);
                 }
             },
             saveFile: function () {
@@ -104,7 +107,6 @@ var View = BaseView.extend({
                 'breviaryUrl': this.roomInfo.imageUrl
             }
         }
-        ;
         this.currentBgImg = '';
         this.uploadFile.show(attrs);
     },
