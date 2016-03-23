@@ -106,7 +106,6 @@ var View = BaseView.extend({
                 } else {
                     MsgBox.showError('正在上传，请等待');
                 }
-                ;
             }
         };
         this.upload = new UploadFileDialog(fileOptions);
@@ -173,6 +172,8 @@ var View = BaseView.extend({
                     self.saveLock = true;
                     self.setPageBgimg(response.data.bgTheme);
                     self.upload.hide();
+                    //更新缓存
+                    imModel.updateIMUserSig();
                 }else{
                     MsgBox.showError(response.msg);
                 };

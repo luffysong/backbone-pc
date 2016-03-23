@@ -189,6 +189,9 @@ var View = BaseView.extend({
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
                 if (res && res.code === '0') {
                     msgBox.showOK('数据保存成功!');
+                    //更新缓存
+                    imModel.updateIMUserSig();
+
                     Backbone.trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
                         headImg: self.txtImg.val(),

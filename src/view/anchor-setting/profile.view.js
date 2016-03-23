@@ -34,7 +34,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之后
     afterMount: function () {
-
+        this.elements = {};
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -42,12 +42,24 @@ var View = BaseView.extend({
         this.defineEventInterface();
     },
     initRender: function () {
+        var el = this.$el;
         var profileHTML = this.compileHTML(profileTemp, this.data);
         this.$el.html(profileHTML);
+
+        this.elements.nickName = el.find('#nickName');
+        this.elements.headAvatar = el.find('#headAvatar');
+        this.elements.tagsWrap = el.find('#tagsWrap');
     },
 
     partialRender: function (data) {
-        console.log(data);
+        console.log(this.elements);
+        this.elements.nickName.text(data.nickName);
+        this.elements.headAvatar.attr('src', data.headImg);
+        var html = '';
+        for (var item in data.tags) {
+            html += '<span>' + data.tags[item] + '</span>';
+        }
+        this.elements.tagsWrap.html(html);
     },
     /**
      * 定义对外公布的事件

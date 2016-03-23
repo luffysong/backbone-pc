@@ -29,13 +29,13 @@ var Model = BaseModel.extend({
     },
     setTokenUrl: function (token) {
         this.imData = {
-            'deviceinfo':'{"aid":"30001001"}',
-            "access_token":"web-"+token
+            'deviceinfo': '{"aid":"30001001"}',
+            "access_token": "web-" + token
         };
     },
     setNoTokenUrl: function () {
         this.imData = {
-            'deviceinfo':'{"aid":"30001001"}'
+            'deviceinfo': '{"aid":"30001001"}'
         };
     },
     /**
@@ -58,7 +58,7 @@ var Model = BaseModel.extend({
         if (token) {
             this.setTokenUrl(token);
         }
-        this.executeJSONP(this.imData,function (response) {
+        this.executeJSONP(this.imData, function (response) {
             var data = response.data;
             store.set('imSig', data);
             if (typeof callback === 'function') {
@@ -70,8 +70,9 @@ var Model = BaseModel.extend({
             }
         });
     },
-    //更新
+    //更新缓存
     updateIMUserSig: function (okFn, errFn) {
+        store.remove('imSig');
         var token = user.getToken();
         if (token) {
             this.setTokenUrl(token);
