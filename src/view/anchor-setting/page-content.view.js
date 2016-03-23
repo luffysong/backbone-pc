@@ -53,6 +53,10 @@ var View = BaseView.extend({
      */
     menuChanged: function (e) {
         var target = $(e.target);
+        if(e.target.tagName == 'SPAN'){
+            target = target.parent();
+        }
+        console.log(target);
         if (target) {
             if (target.attr('data-panel') === 'signout') {
                 UIConfirm.show({
