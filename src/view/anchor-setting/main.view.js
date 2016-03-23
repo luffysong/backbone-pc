@@ -125,7 +125,6 @@ var View = BaseView.extend({
                 store.remove('imSig');
                 //跳转走人
             } else {
-                console.log(sig);
                 //继续处理主播
                 self.anchorSig = sig;
                 self.bgTheme = sig.anchor.bgTheme;
