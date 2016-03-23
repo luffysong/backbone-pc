@@ -56,7 +56,6 @@ var View = BaseView.extend({
         if(e.target.tagName == 'SPAN'){
             target = target.parent();
         }
-        console.log(target);
         if (target) {
             if (target.attr('data-panel') === 'signout') {
                 UIConfirm.show({
