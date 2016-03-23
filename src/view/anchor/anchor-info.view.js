@@ -36,7 +36,7 @@ var View = BaseView.extend({
     },
     defineEventInterface: function () {
         var self = this;
-        $(document).on('event:roomInfoReady', function (e, data) {
+        Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
                 var tpl = _.template(self.infoTpl);
                 var html = tpl(data);

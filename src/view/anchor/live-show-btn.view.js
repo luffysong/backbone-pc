@@ -115,7 +115,7 @@ var View = BaseView.extend({
             //self.flashAPI.onReady(function () {
             //    this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
             //});
-            $(document).trigger('event:LiveShowStarted');
+            Backbone.trigger('event:LiveShowStarted');
         }, function (err) {
             msgBox.showError(err.msg || '开启直播失败,请稍后重试');
         });
@@ -158,7 +158,7 @@ var View = BaseView.extend({
             self.btnEndLive.addClass('m_disabled');
             self.isLiveShowing = false;
             msgBox.showOK('结束直播操作成功');
-            $(document).trigger('event:liveShowEnded');
+            Backbone.trigger('event:liveShowEnded');
         }, function (err) {
             msgBox.showError(err.msg || '操作失败,稍后重试');
         });
@@ -167,7 +167,7 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
         //成功获取房间信息
-        $(document).on('event:roomInfoReady', function (e, data) {
+        Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
                 self.roomInfo = data;
                 console.log('roomInfo', data);

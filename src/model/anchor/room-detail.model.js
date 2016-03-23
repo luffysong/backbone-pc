@@ -7,6 +7,8 @@
 'use strict';
 
 var BaseModel = require('BaseModel');
+var sigleInstance = null;
+
 var Model = BaseModel.extend({
     url: '{{url_prefix}}/room/detail.json?deviceinfo={{deviceinfo}}&access_token=web-{{accessToken}}&roomId={{roomId}}',//accessToken 填写请求地址
     beforeEmit: function (options) {
@@ -18,4 +20,15 @@ var Model = BaseModel.extend({
     //		//formatter方法可以格式化数据
     // }
 });
+
+/**
+ * 获取单例对象
+ */
+Model.sigleInstance = function(){
+    if(!sigleInstance){
+        sigleInstance = new Model();
+    }
+    return sigleInstance;
+};
+
 module.exports = Model;

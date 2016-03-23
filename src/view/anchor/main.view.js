@@ -32,7 +32,8 @@ var View = BaseView.extend({
         if (!this.roomId) {
             this.goBack();
         }
-        this.roomDetail = new RoomDetailModel();
+        //this.roomDetail = new RoomDetailModel();
+        this.roomDetail = RoomDetailModel.sigleInstance();
 
         this.roomDetailParams = {
             deviceinfo: '{"aid": "30001001"}',
@@ -55,20 +56,19 @@ var View = BaseView.extend({
         var self = this;
 
         function callback(notifyInfo) {
-            $(document).trigger('event:groupSystemNotifys', notifyInfo);
+            Backbone.trigger('event:groupSystemNotifys', notifyInfo);
         }
 
         //注册IM事件处理
         YYTIMServer.init({
             'onConnNotify': function (notifyInfo) {
-                $(document).trigger('event:onConnNotify', notifyInfo);
+                Backbone.trigger('event:onConnNotify', notifyInfo);
             },
             'onMsgNotify': function (notifyInfo) {
-                console.log('2-onMsgNotify', notifyInfo);
-                $(document).trigger('event:onMsgNotify', notifyInfo);
+                Backbone.trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
-                $(document).trigger('event:onGroupInfoChangeNotify', notifyInfo);
+                Backbone.trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {
                 "1": callback, //申请加群请求（只有管理员会收到）
@@ -119,7 +119,7 @@ var View = BaseView.extend({
                 'url': data.url
             };
             self.renderPage();
-            $(document).trigger('event:roomInfoReady', data);
+            Backbone.trigger('event:roomInfoReady', data);
         }, function (err) {
             uiConfirm.show({
                 title: '提示',

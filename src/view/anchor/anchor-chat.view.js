@@ -15,6 +15,7 @@ var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var DateTime = require('DateTime');
 var FlashAPI = require('FlashAPI');
+var RoomDetailModel = require('../../model/anchor/room-detail.model');
 
 var msgBox = require('ui.MsgBox');
 
@@ -33,6 +34,9 @@ var View = BaseView.extend({
         //禁言用户列表
         this.forbidUsers = [];
 
+        this.roomDetail = RoomDetailModel.sigleInstance();
+        this.roomInfo = this.roomDetail.$get().data || {};
+
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -44,6 +48,7 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        this.roomInfoReady();
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el: 'broadCastFlash'
         });
@@ -302,7 +307,6 @@ var View = BaseView.extend({
             smallAvatar: '',
             time: self.getDateStr(new Date())
         }, msgObj);
-        console.log('msgObj', msgObj);
 
         if (msgObj && msgObj.roomId !== self.roomInfo.id) {
             return;
@@ -325,21 +329,19 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
 
-        //成功获取房间信息
-        $(document).on('event:roomInfoReady', function (e, data) {
-            if (data) {
-                self.roomInfo = data;
-                self.roomInfoReady();
+        Backbone.on('event:onMsgNotify', function (notifyInfo) {
+            if(notifyInfo && notifyInfo.constructor.name == 'Array'){
+                for(var i= 0, len = notifyInfo.length; i< len; i++){
+                    self.onMsgNotify(notifyInfo[i]);
+                }
+            }else{
+                self.onMsgNotify(notifyInfo);
             }
         });
-
-        $(document).on('event:onMsgNotify', function (e, notifyInfo) {
-            self.onMsgNotify(notifyInfo);
-        });
-        $(document).on('event:onGroupInfoChangeNotify', function (e, notifyInfo) {
+        Backbone.on('event:onGroupInfoChangeNotify', function (notifyInfo) {
             self.onGroupInfoChangeNotify(notifyInfo);
         });
-        $(document).on('event:groupSystemNotifys', function (e, notifyInfo) {
+        Backbone.on('event:groupSystemNotifys', function (notifyInfo) {
             self.groupSystemNotifys(notifyInfo);
         });
 

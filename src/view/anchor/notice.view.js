@@ -110,7 +110,7 @@ var View = BaseView.extend({
 
         this.noticeModel.executeJSONP(this.noticeInfoParams, function (res) {
                 if (res && res.code == '0') {
-                    $(document).trigger('event:noticeChanged', content);
+                    Backbone.trigger('event:noticeChanged', content);
                     self.noticeInfo.content = content;
                     self.noticeWrap.text(content);
                     self.panelDisplay();
@@ -131,7 +131,6 @@ var View = BaseView.extend({
             groupId: this.roomInfo.imGroupid,
             msg: {
                 roomId: this.roomInfo.id,
-                //nickName: '主播',
                 smallAvatar: '',
                 mstType: 2,
                 content: content
@@ -139,7 +138,7 @@ var View = BaseView.extend({
         }, function (res) {
             console.log(res);
         }, function (err) {
-            content.log(err);
+            console.log(err);
         });
     },
     /**
@@ -147,7 +146,7 @@ var View = BaseView.extend({
      */
     defineEventInterface: function () {
         var self = this;
-        $(document).on('event:roomInfoReady', function (e, data) {
+        Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
                 self.roomInfo = data;
             }
