@@ -126,7 +126,6 @@ var View = BaseView.extend({
         self.flashAPI.onReady(function () {
             this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
         });
-
     },
     /**
      * 结束直播
@@ -143,7 +142,6 @@ var View = BaseView.extend({
                 self.endLive();
             },
             cancelFn: function () {
-                //console.log('cancel');
             }
         });
     },
@@ -170,7 +168,6 @@ var View = BaseView.extend({
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
                 self.roomInfo = data;
-                console.log('roomInfo', data);
                 self.changeButtonStatus(self.roomInfo.status);
             }
         });
