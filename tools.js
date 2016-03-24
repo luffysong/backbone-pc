@@ -9,6 +9,7 @@ var logInfo = {
 	LANG:env.LANG,
 	USER:env.USER
 };
+//test git
 
 var file = {
 	'model':'link/temp/model.js',
