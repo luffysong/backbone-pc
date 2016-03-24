@@ -150,6 +150,7 @@ var View = BaseView.extend({
             content: '您确定要结束直播吗',
             okFn: function () {
                 self.endLive();
+                window.location.href = '/web/anchorsetting.html?view=history';
             },
             cancelFn: function () {
             }
