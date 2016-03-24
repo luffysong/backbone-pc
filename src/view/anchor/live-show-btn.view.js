@@ -62,6 +62,11 @@ var View = BaseView.extend({
             el: 'broadCastFlash'
         });
     },
+    /**
+     * 判断是否超过预播时间
+     * @param time
+     * @returns {number} 1: 超过1小时以上;  0:没有超时;  -1: 太早了
+     */
     isTooLate: function (time) {
         var currentTime = new Date();
         var timeSpan = time - currentTime.getTime();
@@ -81,6 +86,7 @@ var View = BaseView.extend({
             self = this,
             result = self.isTooLate(self.roomInfo.liveTime),
             status = self.roomInfo.status;
+
         if (status == 0) {
             msgBox.showTip('该直播尚未发布,无法开启直播!');
             return null;
