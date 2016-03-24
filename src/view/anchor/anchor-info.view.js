@@ -10,6 +10,8 @@
  */
 
 var BaseView = require('BaseView'); //View的基类
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
 
 var View = BaseView.extend({
     el: '#currentAnchorInfo', //设置View对象作用于的根元素，比如id
@@ -30,7 +32,9 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-
+        //user.getUserInfo(function (u) {
+        //    console.log('user:', u);
+        //});
         this.defineEventInterface();
 
     },
@@ -41,8 +45,8 @@ var View = BaseView.extend({
                 var tpl = _.template(self.infoTpl);
                 var html = tpl(data);
                 self.roomInfoWrap.append(html);
-                if(data.posterPic){
-                    self.imgRoomPic.attr('src', data.posterPic);
+                if(data.creator.smallAvatar){
+                    self.imgRoomPic.attr('src', data.creator.smallAvatar);
                 }
 
             }
