@@ -26,7 +26,7 @@ var Model = BaseModel.extend({
  */
 Model.sigleInstance = function(){
 	if(!sigleInstance){
-		sigleInstance = new Module();
+		sigleInstance = new Model();
 	}
 	return sigleInstance;
 };

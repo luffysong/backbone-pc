@@ -19,6 +19,8 @@ var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var URL = require('url');
 var uiConfirm = require('ui.Confirm');
 var store = require('store');
+var GiftModel = require('../../model/anchor/gift.model.js');
+
 var View = BaseView.extend({
     clientRender: false,
     el: '#anchorContainerBg', //设置View对象作用于的根元素，比如id
@@ -32,13 +34,21 @@ var View = BaseView.extend({
         if (!this.roomId) {
             this.goBack();
         }
-        //this.roomDetail = new RoomDetailModel();
+        this.giftModel = GiftModel.sigleInstance();
         this.roomDetail = RoomDetailModel.sigleInstance();
 
         this.roomDetailParams = {
             deviceinfo: '{"aid": "30001001"}',
             access_token: 'web-' + user.getToken(),
             roomId: ''
+        };
+
+        this.giftParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            offset: 0,
+            size: 90000,
+            type: 0
         };
 
     },
@@ -98,6 +108,8 @@ var View = BaseView.extend({
 
         if (user.isLogined()) {
             self.initWebIM();
+
+            //self.initGiftList();
 
             self.initRoom();
         } else {
@@ -161,6 +173,13 @@ var View = BaseView.extend({
     },
     goBack: function () {
         //window.location.href = '/web/anchorsetting.html';
+    },
+    initGiftList: function(){
+        this.giftModel.get(this.giftParams, function(res){
+            console.log(res);
+        }, function(err){
+            console.log(err);
+        });
     }
 
 
