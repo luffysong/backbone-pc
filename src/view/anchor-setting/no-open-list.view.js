@@ -197,7 +197,7 @@ var View = BaseView.extend({
     isTooLate: function (time) {
         var currentTime = new Date();
         var timeSpan = time - currentTime.getTime();
-        var hour = Number.parseInt(DateTime.difference(Math.abs(timeSpan)).hours);
+        var hour = Number(DateTime.difference(Math.abs(timeSpan)).hours);
         if (timeSpan < 0 && hour >= 1) {
             return true;
         }
