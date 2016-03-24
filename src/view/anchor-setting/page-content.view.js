@@ -17,6 +17,9 @@ var NoOpenListView = require('./no-open-list.view');
 var HistoryListView = require('./history-list.view');
 var UIConfirm = require('ui.Confirm');
 var store = require('store');
+var URL = require('url');
+
+
 var View = BaseView.extend({
     el: '#pageContent', //设置View对象作用于的根元素，比如id
     rawLoader: function () { //可用此方法返回字符串模版
@@ -47,6 +50,11 @@ var View = BaseView.extend({
         this.createLiveView = new CreateLiveView();
         this.noopenListView = new NoOpenListView();
         this.historyListView = new HistoryListView();
+
+
+        var viewName = URL.parse(window.location.href).query.view || '';
+        this.changeView(viewName);
+        //console.log(this.view);
     },
     /**
      * 切换菜单
@@ -113,7 +121,13 @@ var View = BaseView.extend({
             this.editProfileDOM.show();
             this.updatePasswordDom.hide();
         }
-        ;
+    },
+    changeView: function(view){
+        if(view == 'history'){
+            this.liveStateChanged({
+                currentTarget: $('.myLiveControls').find('[data-state="1"]')
+            })
+        }
     }
 });
 

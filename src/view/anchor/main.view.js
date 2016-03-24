@@ -102,9 +102,6 @@ var View = BaseView.extend({
      */
     userVerify: function () {
         var self = this;
-        //user.getUserInfo(function (u) {
-        //    console.log('user:', u);
-        //});
 
         if (user.isLogined()) {
             self.initWebIM();

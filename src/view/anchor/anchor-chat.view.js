@@ -12,7 +12,6 @@
 var BaseView = require('BaseView'); //View的基类
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var uiConfirm = require('ui.Confirm');
-var UserModel = require('UserModel');
 var DateTime = require('DateTime');
 var FlashAPI = require('FlashAPI');
 var RoomDetailModel = require('../../model/anchor/room-detail.model');

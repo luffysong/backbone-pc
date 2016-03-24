@@ -171,7 +171,7 @@ var View = BaseView.extend({
 
         switch (state) {
             case 2://发布
-                self.publishLiveShow(id,span,postImg);
+                self.publishLiveShow(id, span, postImg);
                 break;
             case 3: //删除
                 if (this.removeLock) {
@@ -197,14 +197,14 @@ var View = BaseView.extend({
     isTooLate: function (time) {
         var currentTime = new Date();
         var timeSpan = time - currentTime.getTime();
-        var hour = Number.parseInt(DateTime.difference(Math.abs(timeSpan)).hours);
+        var hour = Number(DateTime.difference(Math.abs(timeSpan)).hours);
         if (timeSpan < 0 && hour >= 1) {
             return true;
         }
         return false;
     },
     //发布直播
-    publishLiveShow: function (id,span, postImg) {
+    publishLiveShow: function (id, span, postImg) {
         var self = this,
             time = span.parents('li').attr('data-liveTime');
         if (self.isTooLate(time)) {
@@ -259,13 +259,17 @@ var View = BaseView.extend({
     },
     //上传成功之后处理image 地址
     uploadImageHandler: function (response) {
-        var images = response.images;
-        this.imagePath = images[0].path;
+        var result = this.upload.parseErrorMsg(response);
 
-        if (this.currentLiveItem) {
-            this.currentLiveItem.attr('data-img', images[0].path || '');
+        if (result == true) {
+            var images = response.images;
+            this.imagePath = images[0].path;
+            if (this.currentLiveItem) {
+                this.currentLiveItem.attr('data-img', images[0].path || '');
+            }
+        }else{
+            MsgBox.showTip(result);
         }
-
     },
     //点击保存之后的处理
     saveCoverImage: function () {
