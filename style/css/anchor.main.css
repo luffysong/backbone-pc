@@ -132,7 +132,8 @@
   text-align: center;
   width: 100%;
 }
-.anchorPc .loginMsg li a {
+.anchorPc .loginMsg li a,
+.anchorPc .loginMsg li .header-logout {
   display: block;
   height: 32px;
   width: 100%;
@@ -140,9 +141,14 @@
   background: #272727;
   margin-top: 0;
 }
-.anchorPc .loginMsg li a:hover {
+.anchorPc .loginMsg li a:hover,
+.anchorPc .loginMsg li .header-logout:hover {
   background: #01ceb5;
   color: #ffffff;
+}
+.anchorPc .loginMsg li .header-logout {
+  border: none;
+  cursor: pointer;
 }
 .anchorPc .on ul {
   display: block;

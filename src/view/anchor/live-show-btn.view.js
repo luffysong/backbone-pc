@@ -67,21 +67,33 @@ var View = BaseView.extend({
         var timeSpan = time - currentTime.getTime();
         var hour = Number.parseInt(DateTime.difference(Math.abs(timeSpan)).hours);
         if (timeSpan < 0 && hour >= 1) {
-            return true;
+            return 1;
+        }else if (timeSpan > 300000){
+            return -1;
         }
-        return false;
+        return 0;
     },
     /**
      * 开启直播
      */
     startLiveClick: function (e) {
         var current = $(e.target),
-            self = this;
-        if (current.hasClass('m_disabled')) {
+            self = this,
+            result = self.isTooLate(self.roomInfo.liveTime);
+        if(self.roomInfo.status == 0){
+            msgBox.showTip('该直播尚未发布,无法开启直播!');
             return null;
         }
-        if (self.isTooLate(self.roomInfo.liveTime)) {
+        if ( result == 1) {
             msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
+            return null;
+        }else if(result == -1){
+            msgBox.showTip('您最多提前5分钟开启直播,请耐心等候');
+            return null;
+        }else{
+            current.removeClass('m_disabled');
+        }
+        if (current.hasClass('m_disabled')) {
             return null;
         }
 
@@ -171,14 +183,26 @@ var View = BaseView.extend({
         });
     },
     changeButtonStatus: function (status) {
-        if (status === 2) {
+        var result = this.isTooLate(this.roomInfo.liveTime);
+        if(result == -1){
             this.btnStartLive.addClass('m_disabled');
-            this.btnEndLive.removeClass('m_disabled');
-            this.startFlash();
-        } else if (status === 3) {
-            this.btnStartLive.addClass('m_disabled');
-            //TODO
-            this.btnEndLive.addClass('m_disabled');
+        }else if(result == 0){
+            this.btnStartLive.removeClass('m_disabled');
+        }
+
+        switch (status){
+            case 0:
+                this.btnStartLive.addClass('m_disabled');
+                break;
+            case 2:
+                this.btnStartLive.addClass('m_disabled').text('直播中');
+                this.btnEndLive.removeClass('m_disabled');
+                this.startFlash();
+                break;
+            case 3:
+                this.btnStartLive.addClass('m_disabled');
+                this.btnEndLive.addClass('m_disabled');
+                break;
         }
 
     }

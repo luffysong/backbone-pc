@@ -136,7 +136,7 @@
 		li{
 			text-align: center;
 			width: 100%;
-			a{
+			a,.header-logout{
 				display: block;
 				height: 32px;
 				width: 100%;
@@ -144,10 +144,15 @@
 				background: @c-27;
 				margin-top: 0;
 			}
-			a:hover{
+			a:hover,.header-logout:hover{
 				background: #01ceb5;
 				color: #ffffff;
 			}
+			.header-logout{
+				border: none;
+				cursor: pointer;
+			}
+
 		}
 	}
 	.on{

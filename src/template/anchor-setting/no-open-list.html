@@ -23,6 +23,8 @@
                         <a href="{{item.lookUrl}}">查看</a>
                         {{if item.status === 1}}
                         	<span class="disable" data-state="2">已发布</span>
+                        {{else if item.status === 2}}
+                            <span class="disable">直播中</span>
                         {{else }}
                         	{{if item.status === 0}}
                         		<span  data-state="2">发布</span>
