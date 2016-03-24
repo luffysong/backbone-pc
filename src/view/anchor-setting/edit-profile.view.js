@@ -69,6 +69,7 @@ var View = BaseView.extend({
             if (userImInfo.anchor.tags) {
                 var tags = userImInfo.anchor.tags.join(',') || '';
                 self.txtTags.val(tags);
+                self.userIMInfo = userImInfo.anchor;
             }
             //self.verifyForm();
         });
@@ -178,15 +179,20 @@ var View = BaseView.extend({
     },
     saveuserinfo: function () {
         var self = this;
+        if(!self.isChanged()){
+            return;
+        }
         if (this.verifyForm()) {
+            self.btnSave.text('保存中');
             var userUpdateParameter = {
                 deviceinfo: '{"aid": "30001001"}',
                 access_token: 'web-' + user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
-                tags: self.txtTags.val().replace(/[,，]/, ',')
+                tags: self.txtTags.val().replace(/[,，]+/g, ',')
             };
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
+                self.btnSave.text('保存');
                 if (res && res.code === '0') {
                     msgBox.showOK('数据保存成功!');
                     //更新缓存
@@ -203,8 +209,21 @@ var View = BaseView.extend({
 
             }, function (err) {
                 msgBox.showError('数据保存失败,请稍后重试!');
+                self.btnSave.text('保存');
             });
         }
+    },
+    //检查是否更改了信息
+    isChanged: function () {
+        var name = $.trim(this.txtName.val()),
+            tags = $.trim(this.txtTags.val()).replace(/[,，]/g, ',');
+
+        if (name == this.userInfo.userName && tags == this.userIMInfo.tags.join(',') && this.txtImg.val() == this.userInfo.bigheadImg) {
+            this.btnSave.addClass('m_disabled');
+            return false;
+        }
+
+        return true;
     }
 });
 
