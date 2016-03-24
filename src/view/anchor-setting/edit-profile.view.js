@@ -167,12 +167,12 @@ var View = BaseView.extend({
     //上传成功后处理图片
     fileUploaded: function (res) {
         var result = this.upload.parseErrorMsg(res);
-        if(result == true){
+        if (result == true) {
             var src = res.images[0].path;
             this.txtImg.val(src);
             this.imgUserAvatar.attr('src', src);
             this.verifyForm();
-        }else{
+        } else {
             msgBox.showTip(result);
         }
     },
@@ -184,7 +184,7 @@ var View = BaseView.extend({
                 access_token: 'web-' + user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
-                tags: self.txtTags.val()
+                tags: self.txtTags.val().replace(/[,，]/, ',')
             };
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
                 if (res && res.code === '0') {
