@@ -12,11 +12,9 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
-var IMModel = require('../../lib/IMModel');
-var UserModel = require('UserModel');
 var profileTemp = require('../../template/anchor-setting/profile.html');
+var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
-var user = UserModel.sharedInstanceUserModel();
 var View = BaseView.extend({
     el: '#settingProfile', //设置View对象作用于的根元素，比如id
     events: { //监听事件
@@ -28,7 +26,7 @@ var View = BaseView.extend({
     beforeMount: function () {
         this.data = {
             'nickName': imModel.$get('data.nickName'),
-            'bigheadImg': user.$get('bigheadImg'),
+            'bigheadImg': imModel.$get('data.largeAvatar'),
             'anchor': imModel.$get('data.anchor')
         };
     },
@@ -52,7 +50,6 @@ var View = BaseView.extend({
     },
 
     partialRender: function (data) {
-        console.log(this.elements);
         this.elements.nickName.text(data.nickName);
         this.elements.headAvatar.attr('src', data.headImg);
         var html = '';

@@ -46,31 +46,30 @@ var View = BaseView.extend({
 
         this.imgUserAvatar = $('#imgUserAvatar');
 
-        this.initUploadFile();
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        var self = this;
+        this.initUploadFile();
 
-        user.getUserInfo(function (data) {
-            self.userInfo = data;
-            self.initForm(self.userInfo.userName);
-        });
+        this.fetchIMUserInfo();
     },
     initForm: function () {
         var self = this;
-        if (self.userInfo.bigheadImg) {
-            self.imgUserAvatar.attr('src', self.userInfo.bigheadImg);
-            self.txtImg.val(self.userInfo.bigheadImg);
+        if (self.userInfo.smallAvatar) {
+            self.imgUserAvatar.attr('src', self.userInfo.smallAvatar);
+            self.txtImg.val(self.userInfo.smallAvatar);
         }
-        self.txtName.val(self.userInfo.userName);
+        self.txtName.val(self.userInfo.nickName);
 
+        var tags = self.userInfo.anchor.tags.join(',') || '';
+        self.txtTags.val(tags);
+        //self.userIMInfo = userImInfo.anchor;
+    },
+    fetchIMUserInfo: function () {
+        var self = this;
         imModel.fetchIMUserSig(function (userImInfo) {
-            if (userImInfo.anchor.tags) {
-                var tags = userImInfo.anchor.tags.join(',') || '';
-                self.txtTags.val(tags);
-            }
-            //self.verifyForm();
+            self.userInfo = userImInfo;
+            self.initForm();
         });
     },
     //检查数据
@@ -129,7 +128,7 @@ var View = BaseView.extend({
             "redirect": window.location.origin + "/cross-url/upload.html"
         };
         var self = this;
-        this.upload = UploadFile.classInstanceUploadFile({
+        self.upload = UploadFile.classInstanceUploadFile({
             el: $('#userAvatarForm'),
             url: 'http://image.yinyuetai.com/edit',
             data: ctrlData,
@@ -167,30 +166,36 @@ var View = BaseView.extend({
     //上传成功后处理图片
     fileUploaded: function (res) {
         var result = this.upload.parseErrorMsg(res);
-        if(result == true){
+        if (result == true) {
             var src = res.images[0].path;
             this.txtImg.val(src);
             this.imgUserAvatar.attr('src', src);
             this.verifyForm();
-        }else{
+        } else {
             msgBox.showTip(result);
         }
     },
     saveuserinfo: function () {
         var self = this;
+        if (!self.isChanged()) {
+            return;
+        }
         if (this.verifyForm()) {
+            self.btnSave.text('保存中');
             var userUpdateParameter = {
                 deviceinfo: '{"aid": "30001001"}',
                 access_token: 'web-' + user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
-                tags: self.txtTags.val()
+                tags: self.txtTags.val().replace(/[,，]+/g, ',')
             };
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
+                self.btnSave.text('保存');
                 if (res && res.code === '0') {
                     msgBox.showOK('数据保存成功!');
                     //更新缓存
                     imModel.updateIMUserSig();
+                    self.fetchIMUserInfo();
 
                     Backbone.trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
@@ -203,8 +208,21 @@ var View = BaseView.extend({
 
             }, function (err) {
                 msgBox.showError('数据保存失败,请稍后重试!');
+                self.btnSave.text('保存');
             });
         }
+    },
+    //检查是否更改了信息
+    isChanged: function () {
+        var name = $.trim(this.txtName.val()),
+            tags = $.trim(this.txtTags.val()).replace(/[,，]/g, ',');
+
+        if (name == this.userInfo.userName && tags == this.userInfo.anchor.tags.join(',') && this.txtImg.val() == this.userInfo.bigheadImg) {
+            this.btnSave.addClass('m_disabled');
+            return false;
+        }
+
+        return true;
     }
 });
 
