@@ -75,10 +75,9 @@ var View = BaseView.extend({
 	 * @return {[type]}   [description]
 	 */
 	logoutHandler:function(e){
-		e.preventDefault();
 		store.remove('imSig');
 		store.set('signout',1);
-		location.href = origin + '/web/login.html'
+		window.location.href = origin + '/web/login.html'
 	},
 	fetchUserInfo:function(){
 		var token = user.getToken();
