@@ -49,29 +49,27 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        var self = this;
         this.initUploadFile();
 
-        user.getUserInfo(function (data) {
-            self.userInfo = data;
-            self.initForm(self.userInfo.userName);
-        });
+        this.fetchIMUserInfo();
     },
     initForm: function () {
         var self = this;
-        if (self.userInfo.bigheadImg) {
-            self.imgUserAvatar.attr('src', self.userInfo.bigheadImg);
-            self.txtImg.val(self.userInfo.bigheadImg);
+        if (self.userInfo.smallAvatar) {
+            self.imgUserAvatar.attr('src', self.userInfo.smallAvatar);
+            self.txtImg.val(self.userInfo.smallAvatar);
         }
-        self.txtName.val(self.userInfo.userName);
+        self.txtName.val(self.userInfo.nickName);
 
+        var tags = self.userInfo.anchor.tags.join(',') || '';
+        self.txtTags.val(tags);
+        //self.userIMInfo = userImInfo.anchor;
+    },
+    fetchIMUserInfo: function () {
+        var self = this;
         imModel.fetchIMUserSig(function (userImInfo) {
-            if (userImInfo.anchor.tags) {
-                var tags = userImInfo.anchor.tags.join(',') || '';
-                self.txtTags.val(tags);
-                self.userIMInfo = userImInfo.anchor;
-            }
-            //self.verifyForm();
+            self.userInfo = userImInfo;
+            self.initForm();
         });
     },
     //检查数据
@@ -179,7 +177,7 @@ var View = BaseView.extend({
     },
     saveuserinfo: function () {
         var self = this;
-        if(!self.isChanged()){
+        if (!self.isChanged()) {
             return;
         }
         if (this.verifyForm()) {
@@ -197,6 +195,7 @@ var View = BaseView.extend({
                     msgBox.showOK('数据保存成功!');
                     //更新缓存
                     imModel.updateIMUserSig();
+                    self.fetchIMUserInfo();
 
                     Backbone.trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
@@ -218,7 +217,7 @@ var View = BaseView.extend({
         var name = $.trim(this.txtName.val()),
             tags = $.trim(this.txtTags.val()).replace(/[,，]/g, ',');
 
-        if (name == this.userInfo.userName && tags == this.userIMInfo.tags.join(',') && this.txtImg.val() == this.userInfo.bigheadImg) {
+        if (name == this.userInfo.userName && tags == this.userInfo.anchor.tags.join(',') && this.txtImg.val() == this.userInfo.bigheadImg) {
             this.btnSave.addClass('m_disabled');
             return false;
         }
