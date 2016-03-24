@@ -46,11 +46,11 @@ var View = BaseView.extend({
 
         this.imgUserAvatar = $('#imgUserAvatar');
 
-        this.initUploadFile();
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         var self = this;
+        this.initUploadFile();
 
         user.getUserInfo(function (data) {
             self.userInfo = data;
@@ -129,7 +129,7 @@ var View = BaseView.extend({
             "redirect": window.location.origin + "/cross-url/upload.html"
         };
         var self = this;
-        this.upload = UploadFile.classInstanceUploadFile({
+        self.upload = UploadFile.classInstanceUploadFile({
             el: $('#userAvatarForm'),
             url: 'http://image.yinyuetai.com/edit',
             data: ctrlData,
