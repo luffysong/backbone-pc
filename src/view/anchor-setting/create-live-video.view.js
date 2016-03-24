@@ -52,6 +52,7 @@ var View = BaseView.extend({
             'roomName': '',
             'roomDesc': '',
             'artistId': '',
+            'artistName': '',
             'liveTime': 0,
             'access_token': 'web-'+user.getToken()
         };
@@ -256,6 +257,7 @@ var View = BaseView.extend({
             var time = date.getTime() + (1000 * 60 * 60 * 1);
             this.createLock = false;
             this.createData.roomName = this.videoName.val();
+            this.createData.artistName = this.actorName.val();
             this.createData.liveTime = this.dateTime.getTime(this.createDate);
             if (this.createData.liveTime < time) {
                 MsgBox.showError('直播时间至少为一小时之后');
