@@ -136,9 +136,9 @@ var View = BaseView.extend({
                 content: content
             }
         }, function (res) {
-            console.log(res);
+            //console.log(res);
         }, function (err) {
-            console.log(err);
+            //console.log(err);
         });
     },
     /**

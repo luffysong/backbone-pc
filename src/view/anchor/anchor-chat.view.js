@@ -253,7 +253,6 @@ var View = BaseView.extend({
     },
     //腾讯IM消息到达回调
     onMsgNotify: function (notifyInfo) {
-        console.log('onMsgNotify', notifyInfo);
         var self = this;
         var msgObj = {};
 
@@ -267,7 +266,11 @@ var View = BaseView.extend({
                 case 0: //文本消息
                     self.addMessage(msgObj);
                     break;
-                case 1: //
+                case 1: //发送礼物
+                    msgObj.content = '<b>' + msgObj.nickName + '</b>发来礼物!';
+                    msgObj.nickName = '消息';
+                    msgObj.smallAvatar = '';
+                    self.addMessage(msgObj);
                     break;
                 case 2: //公告
                     break;
@@ -283,10 +286,10 @@ var View = BaseView.extend({
         }
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
-        console.log('onGroupInfoChangeNotify', notifyInfo);
+        //console.log('onGroupInfoChangeNotify', notifyInfo);
     },
     groupSystemNotifys: function (notifyInfo) {
-        console.log('groupSystemNotifys', notifyInfo);
+        //console.log('groupSystemNotifys', notifyInfo);
     },
     /**
      * 获取消息模板

@@ -111,10 +111,8 @@ var View = BaseView.extend({
 
         self.startLiveModel.executeJSONP(this.startLiveParams, function (result) {
             msgBox.showOK('成功开启直播');
+
             self.startFlash();
-            //self.flashAPI.onReady(function () {
-            //    this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
-            //});
             Backbone.trigger('event:LiveShowStarted');
         }, function (err) {
             msgBox.showError(err.msg || '开启直播失败,请稍后重试');
