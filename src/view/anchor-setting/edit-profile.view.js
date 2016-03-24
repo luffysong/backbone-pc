@@ -69,6 +69,7 @@ var View = BaseView.extend({
         var self = this;
         imModel.fetchIMUserSig(function (userImInfo) {
             self.userInfo = userImInfo;
+            console.log('userinfo', self.userInfo);
             self.initForm();
         });
     },
@@ -189,6 +190,7 @@ var View = BaseView.extend({
                 headImg: self.txtImg.val(),
                 tags: self.txtTags.val().replace(/[,，]+/g, ',')
             };
+            console.log(userUpdateParameter);
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
                 self.btnSave.text('保存');
                 if (res && res.code === '0') {

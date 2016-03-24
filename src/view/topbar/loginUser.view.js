@@ -51,6 +51,7 @@ var View = BaseView.extend({
             this.$el.html(sginHTML);
         }
         this.hideDropMenu();
+        this.defineEventInterface();
     },
     /**
      * [loginHandler 处理登录按钮]
@@ -135,10 +136,9 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
         Backbone.on('event:userProfileChanged', function (user) {
-            console.log('login view', user);
             var data = {
-                'userName': userImInfo.nickName,
-                'bigheadImg': userImInfo.largeAvatar
+                'userName': user.nickName,
+                'bigheadImg': user.headImg
             };
             self.render(data);
         });
