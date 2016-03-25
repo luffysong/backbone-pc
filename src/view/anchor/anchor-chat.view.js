@@ -313,6 +313,7 @@ var View = BaseView.extend({
         if (msgObj && msgObj.roomId !== self.roomInfo.id) {
             return;
         }
+        console.log('msgObj', msgObj);
         if (msgObj && msgObj.content) {
             var tpl = _.template(this.getMessageTpl());
             this.msgList.append(tpl(msgObj));
