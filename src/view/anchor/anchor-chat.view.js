@@ -311,6 +311,7 @@ var View = BaseView.extend({
         if (msgObj && msgObj.roomId !== self.roomInfo.id) {
             return;
         }
+        msgObj.content = self.filterEmoji(msgObj.content);
         if (msgObj && msgObj.content) {
             var tpl = _.template(this.getMessageTpl());
             this.msgList.append(tpl(msgObj));
@@ -322,6 +323,18 @@ var View = BaseView.extend({
             }
         }
         self.autoDeleteMsgList();
+    },
+    /**
+     * 过滤表情
+     * @param  {[type]} content [description]
+     * @return {[type]}         [description]
+     */
+    filterEmoji: function(content){
+        var reg = /[\u4e00-\u9fa5\w\d@\.\-。_!^^+#【】！~“：《》？<>]/g;
+        if(content){
+            return content.match(reg).join('') || '';
+        }
+        return content;
     },
     //当消息条数超过1000自动删除前面的,仅留下500条
     autoDeleteMsgList: function() {
