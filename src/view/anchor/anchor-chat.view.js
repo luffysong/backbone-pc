@@ -332,7 +332,11 @@ var View = BaseView.extend({
     filterEmoji: function(content){
         var reg = /[\u4e00-\u9fa5\w\d@\.\-。_!^^+#【】！~“：《》？<>]/g;
         if(content){
-            return content.match(reg).join('') || '';
+            var result = content.match(reg) || [];
+            if(result.length > 0){
+                return result.join('') || '';
+            }
+            return '';
         }
         return content;
     },
