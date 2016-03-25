@@ -8,6 +8,8 @@
 
 var BaseModel = require('BaseModel');
 var DateTime = require('DateTime');
+var dateTime = new DateTime();
+
 var Model = BaseModel.extend({
     url: '{{url_prefix}}/room/end_list.json?deviceinfo={{deviceinfo}}&access_token=web-{{access_token}}&order={{order}}&offset={{offset}}&size={{size}}',//填写请求地址
     beforeEmit: function (options) {
@@ -28,6 +30,17 @@ var Model = BaseModel.extend({
             var value = roomList[l];
             var d = DateTime.difference(value.duration > 0 ? value.duration : 0);
             value.diff = d.hours + ':' + d.minutes + ':' + d.seconds;
+
+            var liveTime = value.liveTime;
+            dateTime.setCurNewDate(liveTime);
+            var year = dateTime.$get('year');
+            var month = dateTime.$get('month');
+            var day = dateTime.$get('day');
+            var _hours = dateTime.$get('hours');
+            var hours = _hours < 10 ? '0'+_hours : _hours;
+            var _minutes = dateTime.$get('minutes');
+            var minutes = _minutes < 10 ? '0'+_minutes : _minutes;
+            value.liveVideoTime = year+'/'+month+'/'+day+' '+hours+':'+minutes;
         }
         return response;
     }
