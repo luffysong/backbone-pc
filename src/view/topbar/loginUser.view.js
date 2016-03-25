@@ -20,7 +20,6 @@ var loginedTemp = require('../../template/topbar/logined.html');
 var store = require('store');
 var win = window;
 var location = win.location;
-var origin = location.origin;
 var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 
@@ -83,7 +82,7 @@ var View = BaseView.extend({
     logoutHandler: function (e) {
         store.remove('imSig');
         store.set('signout', 1);
-        location.href = origin + '/web/login.html'
+        location.href = '/web/login.html'
     },
     fetchUserInfo: function () {
         var self = this;

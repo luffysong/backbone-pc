@@ -44,7 +44,7 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        this.initAjaxForm();
+        // this.initAjaxForm();
     },
     //校验表单
     verifyForm: function () {
@@ -91,6 +91,10 @@ var View = BaseView.extend({
             return null;
         }
 
+        this.btnPwdSave.text('保存中');
+
+        this.initAjaxForm();
+
         this.formPwd.submit();
     },
     //重置表单
@@ -107,17 +111,17 @@ var View = BaseView.extend({
                 var search = decodeURIComponent(cw.location.search);
                 var response = url.parseSearch(search);
                 response = response.json;
-                console.log(response);
                 if(response && response.error == true){
                     msgBox.showError(response.message);
                 }else{
                     self.resetInput();
                     msgBox.showOK('密码修改成功!');
                 }
+                self.btnPwdSave.text('保存');
             },
             failure: function (err) {
-                console.log(err);
                 msgBox.showError('密码修改失败!');
+                self.btnPwdSave.text('保存');
             }
         });
         this.pwdAjaxForm.setIframeState(true);
