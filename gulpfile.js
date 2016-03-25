@@ -37,7 +37,6 @@ gulp.task('server', [], function () {
     port: PORT
   });
   gulp.watch(loadMap, function (file) {
-    console.log(file);
     browserSync.reload();
   });
 });

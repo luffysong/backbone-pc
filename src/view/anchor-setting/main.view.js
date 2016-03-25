@@ -26,7 +26,8 @@ var UploadFileDialog = require('UploadFileDialog');
 var imModel = IMModel.sharedInstanceIMModel();
 var user = UserModel.sharedInstanceUserModel();
 var MsgBox = require('ui.MsgBox');
-var origin = window.location.origin;
+
+//视图
 var View = BaseView.extend({
     el: '#settingContent', //设置View对象作用于的根元素，比如id
     events: { //监听事件
@@ -63,7 +64,7 @@ var View = BaseView.extend({
             store.remove('imSig');
             //跳转走人
             store.set('signout', 1);
-            window.location.href = origin + '/web/login.html';
+            window.location.href = '/web/login.html';
             this.topbarView.on('logined', function () {
                 self.fetchIMUserSig();
             });
@@ -87,7 +88,7 @@ var View = BaseView.extend({
                 "cmd": [
                     {"saveOriginal": 1, "op": "save", "plan": "avatar", "belongId": "20634338", "srcImg": "img"}
                 ],
-                "redirect": window.location.origin + "/cross-url/upload.html"
+                "redirect": 'http://' + window.location.host + "/cross-url/upload.html"
             },
             uploadFileSuccess: function (response) {
                 var result = self.upload.parseErrorMsg(response);
