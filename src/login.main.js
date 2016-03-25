@@ -13,7 +13,6 @@ $(function(){
     var UserModel = require('UserModel');
     var TopBarView = require('./view/topbar/topbar.view');
     var IMModel = require('./lib/IMModel');
-    var store = require('store');
     var topbarView = new TopBarView();
     var imModel = IMModel.sharedInstanceIMModel();
     var user = UserModel.sharedInstanceUserModel();
