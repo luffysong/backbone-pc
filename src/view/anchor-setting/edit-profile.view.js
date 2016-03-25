@@ -217,7 +217,7 @@ var View = BaseView.extend({
         var name = $.trim(this.txtName.val()),
             tags = $.trim(this.txtTags.val()).replace(/[,，]/g, ',');
 
-        if (name == this.userInfo.userName && tags == this.userInfo.anchor.tags.join(',') && this.txtImg.val() == this.userInfo.bigheadImg) {
+        if (name == this.userInfo.nickName && tags == this.userInfo.anchor.tags.join(',') && this.txtImg.val() == this.userInfo.smallAvatar) {
             this.btnSave.addClass('m_disabled');
             return false;
         }
