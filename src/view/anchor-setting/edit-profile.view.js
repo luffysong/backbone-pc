@@ -203,7 +203,7 @@ var View = BaseView.extend({
                         tags: self.txtTags.val().split(/[,，]/)
                     });
                 } else {
-                    msgBox.showError('数据保存失败,请稍后重试!');
+                    msgBox.showError(res.msg || '数据保存失败,请稍后重试!');
                 }
 
             }, function (err) {
