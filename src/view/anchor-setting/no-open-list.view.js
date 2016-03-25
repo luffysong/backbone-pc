@@ -208,7 +208,7 @@ var View = BaseView.extend({
         var self = this,
             time = span.parents('li').attr('data-liveTime');
         if (self.isTooLate(time)) {
-            msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
+            MsgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
             return null;
         }
         if (span.attr('class') === 'disable') {
