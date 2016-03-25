@@ -13,7 +13,6 @@ $(function(){
     var UserModel = require('UserModel');
     var TopBarView = require('./view/topbar/topbar.view');
     var IMModel = require('./lib/IMModel');
-    var store = require('store');
     var topbarView = new TopBarView();
     var imModel = IMModel.sharedInstanceIMModel();
     var user = UserModel.sharedInstanceUserModel();
@@ -26,14 +25,13 @@ $(function(){
                 MsgBox.showError('获取签名错误，原因：你可能不是主播；');
 			}else{
                 //处理登录成功跳转到设置页面
-                var origin = location.origin;
-                window.location.href = origin + '/web/anchorsetting.html';
-            };
+                window.location.href = '/web/anchorsetting.html';
+            }
 		},function(e){
 			//处理请求错误
 			MsgBox.showError('获取签名错误，原因：网络或服务器错误');
 		});
-	}
+	};
     if (!user.isLogined()) {
         //如果未登录状态，清除签名
         store.remove('imSig');

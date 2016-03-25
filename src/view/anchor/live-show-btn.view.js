@@ -140,7 +140,9 @@ var View = BaseView.extend({
     startFlash: function () {
         var self = this;
         self.flashAPI.onReady(function () {
-            this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
+            // this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
+            console.log(self.roomInfo);
+            this.init(self.roomInfo);
         });
     },
     /**
