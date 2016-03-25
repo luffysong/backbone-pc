@@ -75,7 +75,7 @@
         this._props = options.props || {};
         this.$attrs = {
             'id':'YYTFlash'+(uid++), //配置id
-            'src':this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160325.5', //引入swf文件
+            'src':this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160325.6', //引入swf文件
             'width':this._props.width || 895,
             'height':this._props.height || 502,
             'wmode':this._props.wmode || 'transparent', //控制显示模型

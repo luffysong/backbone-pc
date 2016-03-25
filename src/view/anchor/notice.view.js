@@ -151,10 +151,10 @@ var View = BaseView.extend({
                 self.roomInfo = data;
             }
             self.getNoticeInfo();
-            if (data.imageUrl) {
-                self.imgRoomPic.attr('src', data.imageUrl);
-            }
-        })
+            // if (data.imageUrl) {
+            //     self.imgRoomPic.attr('src', data.imageUrl);
+            // }
+        });
     },
     /**
      * 获取公告信息

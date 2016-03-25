@@ -60,6 +60,7 @@ var View = BaseView.extend({
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
+                console.log('edit bg',data);
                 self.roomInfo = data;
                 self.txtRoomName.text(data.roomName || '');
                 self.txtPopularity.text(data.popularity || 0);
@@ -67,7 +68,7 @@ var View = BaseView.extend({
                     self.setBgStyle(self.roomInfo.imageUrl);
                 }
             }
-        })
+        });
     },
     getFileUploadOptions: function () {
         var self = this;
@@ -105,7 +106,7 @@ var View = BaseView.extend({
             attrs = {
                 'inputText': '编辑图片',
                 'breviaryUrl': this.roomInfo.imageUrl
-            }
+            };
         }
         this.currentBgImg = '';
         this.uploadFile.show(attrs);
