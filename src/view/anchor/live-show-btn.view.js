@@ -193,9 +193,9 @@ var View = BaseView.extend({
     },
     changeButtonStatus: function (status) {
         var result = this.isTooLate(this.roomInfo.liveTime);
-        if (result == -1) {
+        if (result === -1 || result === 1) {
             this.btnStartLive.addClass('m_disabled');
-        } else if (result == 0) {
+        } else if (result === 0) {
             this.btnStartLive.removeClass('m_disabled');
         }
 

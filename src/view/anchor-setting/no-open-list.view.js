@@ -207,12 +207,14 @@ var View = BaseView.extend({
     publishLiveShow: function (id, span, postImg) {
         var self = this,
             time = span.parents('li').attr('data-liveTime');
+
+        if (span.attr('class') === 'disable') {
+            return;
+        }
+
         if (self.isTooLate(time)) {
             MsgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
             return null;
-        }
-        if (span.attr('class') === 'disable') {
-            return;
         }
         if (this.releaseLock && postImg) {
             this.releaseLock = false;

@@ -1,6 +1,6 @@
 var config = {
-	// scheme: 'alpha',
-	scheme: 'release',
+	scheme: 'alpha',
+	// scheme: 'release',
 	env:{
 		alpha:{
 			'url_prefix':'http://beta.yinyuetai.com:9019'
