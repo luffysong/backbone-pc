@@ -25,7 +25,7 @@ var DateTime = require('DateTime');
 
 var View = BaseView.extend({
     el: '#liveShowBtnWraper', //设置View对象作用于的根元素，比如id
-    rawLoader: function () { //可用此方法返回字符串模版
+    rawLoader: function() { //可用此方法返回字符串模版
         return require('../../template/anchor/live-show-btn.html');
     },
     events: { //监听事件
@@ -33,7 +33,7 @@ var View = BaseView.extend({
         'click .startLive': 'startLiveClick'
     },
     //当模板挂载到元素之前
-    beforeMount: function () {
+    beforeMount: function() {
         this.startLiveModel = new StartLiveModel();
         this.endLiveModel = new EndLiveModel();
 
@@ -51,13 +51,13 @@ var View = BaseView.extend({
         };
     },
     //当模板挂载到元素之后
-    afterMount: function () {
+    afterMount: function() {
         this.btnEndLive = $('.endLive');
         this.btnStartLive = $('.startLive');
         this.defineEventInterface();
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
-    ready: function () {
+    ready: function() {
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el: 'broadCastFlash'
         });
@@ -67,7 +67,7 @@ var View = BaseView.extend({
      * @param time
      * @returns {number} 1: 超过1小时以上;  0:没有超时;  -1: 太早了
      */
-    isTooLate: function (time) {
+    isTooLate: function(time) {
         var currentTime = new Date();
         var timeSpan = time - currentTime.getTime();
         var hour = Number(DateTime.difference(Math.abs(timeSpan)).hours);
@@ -81,7 +81,7 @@ var View = BaseView.extend({
     /**
      * 开启直播
      */
-    startLiveClick: function (e) {
+    startLiveClick: function(e) {
         var current = $(e.target),
             self = this,
             result = self.isTooLate(self.roomInfo.liveTime),
@@ -111,35 +111,35 @@ var View = BaseView.extend({
             return '';
         }
         if (!this.roomInfo.imGroupid) {
-            YYTIMServer.createIMChatRoom(function (res) {
+            YYTIMServer.createIMChatRoom(function(res) {
                 self.roomInfo.imGroupid = res.GroupId;
                 self.startLive();
-            }, function (err) {
+            }, function(err) {
                 msgBox.showError('创建房间失败,请稍后重试');
             });
         } else {
             self.startLive();
         }
     },
-    startLive: function () {
+    startLive: function() {
         var self = this;
 
         self.startLiveParams.roomId = self.roomInfo.id;
         self.startLiveParams.imGroupId = self.roomInfo.imGroupid;
 
-        self.startLiveModel.executeJSONP(this.startLiveParams, function (result) {
+        self.startLiveModel.executeJSONP(this.startLiveParams, function(result) {
             msgBox.showOK('成功开启直播');
 
             self.startFlash();
             Backbone.trigger('event:LiveShowStarted');
-        }, function (err) {
+        }, function(err) {
             msgBox.showError(err.msg || '开启直播失败,请稍后重试');
         });
     },
 
-    startFlash: function () {
+    startFlash: function() {
         var self = this;
-        self.flashAPI.onReady(function () {
+        self.flashAPI.onReady(function() {
             // this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
             console.log(self.roomInfo);
             this.init(self.roomInfo);
@@ -148,7 +148,7 @@ var View = BaseView.extend({
     /**
      * 结束直播
      */
-    endLiveClick: function (e) {
+    endLiveClick: function(e) {
         var self = this;
         if (this.btnEndLive.hasClass('m_disabled')) {
             return null;
@@ -156,45 +156,55 @@ var View = BaseView.extend({
         uiConfirm.show({
             title: '消息',
             content: '您确定要结束直播吗',
-            okFn: function () {
+            okFn: function() {
                 self.endLive();
                 window.location.href = '/web/anchorsetting.html?view=history';
             },
-            cancelFn: function () {
-            }
+            cancelFn: function() {}
         });
     },
     /**
      * 点击结束直播
      */
-    endLive: function () {
+    endLive: function() {
         var self = this;
 
         self.endLiveParams.roomId = self.roomInfo.id;
-        self.endLiveModel.executeJSONP(self.endLiveParams, function (result) {
+        self.endLiveModel.executeJSONP(self.endLiveParams, function(result) {
             self.btnEndLive.addClass('m_disabled');
             self.isLiveShowing = false;
             msgBox.showOK('结束直播操作成功');
             Backbone.trigger('event:liveShowEnded');
-        }, function (err) {
+        }, function(err) {
             msgBox.showError(err.msg || '操作失败,稍后重试');
         });
 
     },
-    defineEventInterface: function () {
+
+    roomInfoReady: function(data) {
+        if (data) {
+            this.roomInfo = data;
+            this.changeButtonStatus(this.roomInfo.status);
+        }
+
+    },
+
+    defineEventInterface: function() {
         var self = this;
         //成功获取房间信息
-        Backbone.on('event:roomInfoReady', function (data) {
-            if (data) {
-                self.roomInfo = data;
-                self.changeButtonStatus(self.roomInfo.status);
-            }
+        Backbone.on('event:roomInfoReady', function(data) {
+            self.roomInfoReady(data);
+        });
+        Backbone.on('event:updateRoomInfo', function(data) {
+            self.roomInfoReady(data);
         });
     },
-    changeButtonStatus: function (status) {
+    changeButtonStatus: function(status) {
         var result = this.isTooLate(this.roomInfo.liveTime);
         if (result === -1 || result === 1) {
             this.btnStartLive.addClass('m_disabled');
+
+            Backbone.trigger('event:stopLoopRoomInfo');
         } else if (result === 0) {
             this.btnStartLive.removeClass('m_disabled');
         }

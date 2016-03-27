@@ -60,7 +60,6 @@ var View = BaseView.extend({
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
-                console.log('edit bg',data);
                 self.roomInfo = data;
                 self.txtRoomName.text(data.roomName || '');
                 self.txtPopularity.text(data.popularity || 0);
@@ -69,6 +68,14 @@ var View = BaseView.extend({
                 }
             }
         });
+
+        Backbone.on('event:updateRoomInfo', function(data) {
+            if(data && data.popularity){
+                self.roomInfo = data;
+                self.txtPopularity.text(data.popularity);
+            }
+        });
+
     },
     getFileUploadOptions: function () {
         var self = this;

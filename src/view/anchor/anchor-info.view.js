@@ -26,8 +26,10 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之后
     afterMount: function () {
-        this.roomInfoWrap = $('#roomInfoWrap');
-        this.imgRoomPic = $('#imgRoomPic');
+        var el = this.$el;
+        this.roomInfoWrap = el.find('#roomInfoWrap');
+        this.imgRoomPic = el.find('#imgRoomPic');
+        this.txtOnline = el.find("#txtOnline");
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -41,11 +43,15 @@ var View = BaseView.extend({
                 var tpl = _.template(self.infoTpl);
                 var html = tpl(data);
                 self.roomInfoWrap.append(html);
-                console.log('smallAvatar' ,data.creator.smallAvatar);
                 if(data.creator.smallAvatar){
                     self.imgRoomPic.attr('src', data.creator.smallAvatar);
                 }
 
+            }
+        });
+        Backbone.on('event:updateRoomInfo', function (data) {
+            if(data && data.online){
+                self.txtOnline.text(data.online);
             }
         });
     }
