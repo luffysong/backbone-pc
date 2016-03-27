@@ -25,7 +25,8 @@ var View = BaseView.extend({
     },
     events: { //监听事件
         'click #btnPwdSave': 'updatePwd',
-        'keyup #txtConfirmPwd': 'changeBtnStatus'
+        'keyup #txtConfirmPwd': 'changeBtnStatus',
+        'keyup #txtNewPwd': 'checkNewPwd'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
@@ -38,6 +39,8 @@ var View = BaseView.extend({
         this.txtNewPwd = el.find('#txtNewPwd');
         this.txtConfirmPwd = el.find('#txtConfirmPwd');
         this.btnPwdSave = el.find('#btnPwdSave');
+
+        this.tipPwdErr = el.find('#tipPwdErr');
 
         this.formPwd = el.find('#formPwd');
 
@@ -97,10 +100,19 @@ var View = BaseView.extend({
 
         this.formPwd.submit();
     },
+    checkNewPwd: function(){
+        var old = this.txtOldPwd.val(),
+        newPwd = this.txtNewPwd.val();
+        if(old === newPwd){
+            this.tipPwdErr.show();
+        }else{
+            this.tipPwdErr.hide();
+        }
+
+    },
     //重置表单
     resetInput: function () {
-        $('form').find('input').val('');
-
+        this.formPwd.find('input').val('');
     },
     initAjaxForm: function () {
         var self = this;
