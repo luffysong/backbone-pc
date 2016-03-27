@@ -11,9 +11,11 @@
 
 'use strict';
 var navTemp =
-	'{{each items as item i}}'
+	'{{if preOmit}}<span class="disabled">...</span>{{/if}}'
+	+'{{each items as item i}}'
 		+'<span class="{{if item == num }}now{{/if}}" data-page="{{item}}" data-indice="{{i}}">{{item}}</span>'
-	+'{{/each}}';
+	+'{{/each}}'
+	+'{{if omit}}<span class="disabled">...</span>{{/if}}';
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var MsgBox = require('ui.MsgBox');
@@ -68,7 +70,8 @@ var View = BaseView.extend({
 		var data = {
 			'count':this.count,
 			'omit':this.omit,
-			'items':temp
+			'items':temp,
+			'preOmit': this.preOmit
 		};
 		var html = this.compileHTML(this.boxTemp,data);
 		this.$el.html(html);
@@ -77,6 +80,7 @@ var View = BaseView.extend({
 	},
 	preHandler:function(e){
 		var target = $(e.currentTarget);
+		this.pageChanged();
 		if (this.offset <= 0) {
 			MsgBox.showTip('原因：已经翻到最前一页');
 			return;
@@ -86,6 +90,7 @@ var View = BaseView.extend({
 	},
 	nextHandler:function(e){
 		var target = $(e.currentTarget);
+		this.pageChanged();
 		if (this.offset === this.count - 1) {
 			MsgBox.showTip('原因：已经翻到最后一页');
 			return;
@@ -95,6 +100,9 @@ var View = BaseView.extend({
 	},
 	pageboxHandler:function(e){
 		var el = $(e.currentTarget);
+		if(!el.attr('data-page')){
+			return;
+		}
 		var page = ~~el.attr('data-page');
 		if ((page-1) === this.offset) {
 			return;
@@ -186,9 +194,26 @@ var View = BaseView.extend({
 		};
 	},
 	sectionRender:function(items,state){
-		var html = this.compileHTML(navTemp,{'items':items,'num':state});
+		this.pageChanged();
+		var html = this.compileHTML(navTemp,{'items':items,'num':state, preOmit: this.preOmit, omit: this.omit});
 		this.nav.html(html);
 		this.spans = this.nav.find('span');
+	},
+	//分页变化时
+	pageChanged: function(){
+		if(this.count <4){
+			this.omit = false;
+		}
+		if(this.offset > 2){
+			this.preOmit = true;
+		}else{
+			this.preOmit = false;
+		}
+		if(this.offset+2>= this.count){
+			this.omit = false;
+		}else{
+			this.omit = true;
+		}
 	}
 });
 module.exports = View;
