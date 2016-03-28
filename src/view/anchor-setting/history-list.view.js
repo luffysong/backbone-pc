@@ -16,6 +16,8 @@ var HistoryListModel = require('../../model/anchor-setting/history-list.model');
 var NoOpenPageBoxView = require('./page-box.view');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+
+
 var View = BaseView.extend({
 	el:'#historyContent', //设置View对象作用于的根元素，比如id
 	events:{ //监听事件
