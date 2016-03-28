@@ -23,6 +23,7 @@ var UploadFileDialog = require('UploadFileDialog');
 var DateTime = require('DateTime');
 var user = UserModel.sharedInstanceUserModel();
 var dateTime = new DateTime();
+
 var View = BaseView.extend({
     el: '#noOpenContent', //设置View对象作用于的根元素，比如id
     events: { //监听事件
