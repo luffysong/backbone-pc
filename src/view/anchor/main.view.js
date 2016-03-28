@@ -67,7 +67,7 @@ var View = BaseView.extend({
         this.userVerify();
 
         Backbone.on('event:stopLoopRoomInfo', function(){
-            clearTimeout(self.roomInfoTimeId);
+            //clearTimeout(self.roomInfoTimeId);
         });
 
 
