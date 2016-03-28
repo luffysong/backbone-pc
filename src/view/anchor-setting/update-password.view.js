@@ -58,7 +58,7 @@ var View = BaseView.extend({
         }
 
         var newPwd = this.txtNewPwd.val(),
-            pwdReg = /[\S]{6,18}/; ///[a-zA-Z00-9]{6,18}/g;
+            pwdReg = /[\S]{4,20}/; ///[a-zA-Z00-9]{6,18}/g;
         if (!newPwd || newPwd.length <= 0) {
             msgBox.showTip('请输入新的密码');
             return false;
@@ -66,7 +66,7 @@ var View = BaseView.extend({
             msgBox.showTip('新密码不能跟旧密码一致');
             return false;
         } else if (!pwdReg.test(newPwd)) {
-            msgBox.showTip('密码的长度建议6~18位,允许输入字母、数字、符号');
+            msgBox.showTip('密码的长度建议4~20位,允许输入字母、数字、符号');
             return false;
         }
 
