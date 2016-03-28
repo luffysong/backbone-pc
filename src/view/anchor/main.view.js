@@ -32,7 +32,7 @@ var View = BaseView.extend({
         var url = URL.parse(location.href);
         this.roomId = url.query['roomId'] || 1;
         //获取房间信息周期
-        this.roomInfoPeriod = 5000;
+        this.roomInfoPeriod = 10000;
 
         if (!this.roomId) {
             this.goBack();
