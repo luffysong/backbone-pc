@@ -129,7 +129,7 @@ var View = BaseView.extend({
 
         self.startLiveModel.executeJSONP(this.startLiveParams, function (result) {
             // msgBox.showOK('成功开启直播');
-            if (result && !!result.success) {
+            if (result && result.code == 0) {
                 var msg = '您已成功开启直播，下面是房间流信息：</br>'
                     + '视频连接：' + result.data.livePushStreamUrl
                     +'</br>视频流：' + result.data.streamName;
