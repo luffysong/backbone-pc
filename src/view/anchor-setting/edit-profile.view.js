@@ -103,6 +103,8 @@ var View = BaseView.extend({
             }
         }
         tags = temp;
+        //tags = this.tagsFilter(tags);
+
         if (!tags || tags.length == 0) {
             msgBox.showTip('请输入至少一个标签,多个标签请用逗号分隔!');
             return false;
@@ -119,6 +121,17 @@ var View = BaseView.extend({
         }
         this.btnSave.removeClass('m_disabled');
         return true;
+    },
+    tagsFilter: function(tags){
+        tags = tags.split(/[,，]/);
+        var temp = [], overLen = false, val = '';
+        for (var j = tags.length; j >= 0; j--) {
+            val = $.trim(tags[j]);
+            if (val.length >= 1) {
+                temp.push(val);
+            }
+        }
+        return temp;
     },
     initUploadFile: function () {
         var ctrlData = {
@@ -187,7 +200,7 @@ var View = BaseView.extend({
                 access_token: 'web-' + user.getToken(),
                 nickname: $.trim(self.txtName.val()),
                 headImg: self.txtImg.val(),
-                tags: self.txtTags.val().replace(/[,，]+/g, ',')
+                tags: self.tagsFilter(self.txtTags.val()).join(',')
             };
             this.userUpdateModel.executeJSONP(userUpdateParameter, function (res) {
                 self.btnSave.text('保存');
@@ -200,7 +213,7 @@ var View = BaseView.extend({
                     Backbone.trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
                         headImg: self.txtImg.val(),
-                        tags: self.txtTags.val().split(/[,，]/)
+                        tags: userUpdateParameter.tags
                     });
                 } else {
                     msgBox.showError(res.msg || '数据保存失败,请稍后重试!');
