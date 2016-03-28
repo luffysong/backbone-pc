@@ -16,6 +16,7 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
+var RoomLongPollingModel = require('../../model/anchor/room-longPolling.model');
 var URL = require('url');
 var uiConfirm = require('ui.Confirm');
 var store = require('store');
@@ -28,7 +29,7 @@ var View = BaseView.extend({
 
     },
     //当模板挂载到元素之前
-    beforeMount: function() {
+    beforeMount: function () {
         var url = URL.parse(location.href);
         this.roomId = url.query['roomId'] || 1;
         //获取房间信息周期
@@ -53,26 +54,27 @@ var View = BaseView.extend({
             size: 90000,
             type: 0
         };
+        this.roomLongPolling = RoomLongPollingModel.sigleInstance();
 
     },
     //当模板挂载到元素之后
-    afterMount: function() {
+    afterMount: function () {
 
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
-    ready: function() {
+    ready: function () {
         var self = this;
 
         this.userVerify();
 
-        Backbone.on('event:stopLoopRoomInfo', function(){
+        Backbone.on('event:stopLoopRoomInfo', function () {
             //clearTimeout(self.roomInfoTimeId);
         });
 
 
     },
-    initWebIM: function() {
+    initWebIM: function () {
         var self = this;
 
         function callback(notifyInfo) {
@@ -81,13 +83,13 @@ var View = BaseView.extend({
 
         //注册IM事件处理
         YYTIMServer.init({
-            'onConnNotify': function(notifyInfo) {
+            'onConnNotify': function (notifyInfo) {
                 Backbone.trigger('event:onConnNotify', notifyInfo);
             },
-            'onMsgNotify': function(notifyInfo) {
+            'onMsgNotify': function (notifyInfo) {
                 Backbone.trigger('event:onMsgNotify', notifyInfo);
             },
-            'onGroupInfoChangeNotify': function(notifyInfo) {
+            'onGroupInfoChangeNotify': function (notifyInfo) {
                 Backbone.trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {
@@ -110,7 +112,7 @@ var View = BaseView.extend({
     /**
      * 校验用户
      */
-    userVerify: function() {
+    userVerify: function () {
         var self = this;
 
         if (user.isLogined()) {
@@ -128,10 +130,10 @@ var View = BaseView.extend({
     /**
      * 初始化房间信息
      */
-    initRoom: function() {
+    initRoom: function () {
         var self = this;
         // self.roomDetailParams.roomId = self.roomId;
-        this.getRoomInfo(function(response) {
+        this.getRoomInfo(function (response) {
             var data = response.data;
             self.videoUrl = {
                 'streamName': data.streamName,
@@ -139,51 +141,64 @@ var View = BaseView.extend({
             };
             self.renderPage();
             Backbone.trigger('event:roomInfoReady', data);
-        }, function(err) {
+            if(data.status == 2){
+                self.loopRoomInfo();
+            }
+        }, function (err) {
             uiConfirm.show({
                 title: '提示',
                 content: '获取房间数据失败!',
-                okFn: function() {
+                okFn: function () {
                     self.goBack();
                 },
-                cancelFn: function() {
+                cancelFn: function () {
                     self.goBack();
                 }
             });
         });
-
-        self.loopRoomInfo();
+        //self.loopRoomInfo();
 
     },
-    loopRoomInfo: function() {
+    loopRoomInfo: function () {
         var self = this;
 
-        self.roomInfoTimeId = setTimeout(function() {
+        self.roomInfoTimeId = setTimeout(function () {
             self.roomDetailParams.roomId = self.roomId;
-            self.getRoomInfo(function(res) {
+            //self.getRoomInfo(function (res) {
+            self.getRoomLoopInfo(function (res) {
                 var data = res.data;
                 Backbone.trigger('event:updateRoomInfo', data);
                 self.loopRoomInfo();
             });
         }, self.roomInfoPeriod);
     },
+    getRoomLoopInfo: function (okFn, errFn) {
+        var self = this;
+        self.roomDetailParams.roomId = self.roomId;
+        this.roomLongPolling.executeJSONP(self.roomDetailParams, function (response) {
+            okFn && okFn(response);
+        }, function (err) {
+            errFn && errFn(err);
+        });
+
+    },
     /**
      * 获取房间数据
      * @return {[type]} [description]
      */
-    getRoomInfo: function(okFn, errFn) {
+    getRoomInfo: function (okFn, errFn) {
         var self = this;
         self.roomDetailParams.roomId = self.roomId;
-        this.roomDetail.executeJSONP(self.roomDetailParams, function(response) {
+        this.roomDetail.executeJSONP(self.roomDetailParams, function (response) {
             okFn && okFn(response);
-        }, function(err) {
+        }, function (err) {
             errFn && errFn(err);
         });
     },
     /**
      * 载入页面其他视图
      */
-    renderPage: function() {
+    renderPage: function () {
         //组件一，编辑背景图片
         var EditBgView = require('./anchor-edit-bg.view');
         new EditBgView();
@@ -206,13 +221,13 @@ var View = BaseView.extend({
         new LiveShowBtnView();
 
     },
-    goBack: function() {
+    goBack: function () {
         window.location.href = '/web/anchorsetting.html';
     },
-    initGiftList: function() {
-        this.giftModel.get(this.giftParams, function(res) {
+    initGiftList: function () {
+        this.giftModel.get(this.giftParams, function (res) {
             // console.log(res);
-        }, function(err) {
+        }, function (err) {
             // console.log(err);
         });
     }

@@ -62,7 +62,7 @@ var View = BaseView.extend({
             if (data) {
                 self.roomInfo = data;
                 self.txtRoomName.text(data.roomName || '');
-                self.txtPopularity.text(data.popularity || 0);
+                self.txtPopularity.text(data.realPopularity || 0);
                 if (self.roomInfo.imageUrl) {
                     self.setBgStyle(self.roomInfo.imageUrl);
                 }
@@ -71,7 +71,7 @@ var View = BaseView.extend({
 
         Backbone.on('event:updateRoomInfo', function(data) {
             if(data && data.popularity){
-                self.roomInfo = data;
+                //self.roomInfo = data;
                 self.txtPopularity.text(data.popularity);
             }
         });

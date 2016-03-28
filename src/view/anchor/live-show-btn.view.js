@@ -206,9 +206,9 @@ var View = BaseView.extend({
         Backbone.on('event:roomInfoReady', function (data) {
             self.roomInfoReady(data);
         });
-        Backbone.on('event:updateRoomInfo', function (data) {
-            self.roomInfoReady(data);
-        });
+        //Backbone.on('event:updateRoomInfo', function (data) {
+            //self.roomInfoReady(data);
+        //});
     },
     changeButtonStatus: function (status) {
         var result = this.isTooLate(this.roomInfo.liveTime);
