@@ -11,11 +11,9 @@
 
 'use strict';
 var navTemp =
-	// '{{if preOmit}}<span class="disabled">...</span>{{/if}}'
 	'{{each items as item i}}'
 		+'<span class="{{if item == num }}now{{/if}}" data-page="{{item}}" data-indice="{{i}}">{{item}}</span>'
 	+'{{/each}}';
-	// +'{{if omit}}<span class="disabled">...</span>{{/if}}';
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var MsgBox = require('ui.MsgBox');
@@ -220,11 +218,8 @@ var View = BaseView.extend({
 	initEvent: function(){
 		var self = this;
 		Backbone.on('event:listPageChanged', function(context){
-
 			self.pageChanged(context);
 		});
-
-
 	}
 });
 module.exports = View;
