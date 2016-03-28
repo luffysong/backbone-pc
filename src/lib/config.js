@@ -1,10 +1,9 @@
 var config = {
-	scheme: 'alpha',
-	// scheme: 'release',
+	//scheme: 'alpha',
+	 scheme: 'release',
 	env:{
 		alpha:{
 			'url_prefix':'http://beta.yinyuetai.com:9019'
-			// 'url_prefix':'http://icepy.yinyuetai.com:4000'
 		},
 		release:{
 			'url_prefix':'http://lapi.yinyuetai.com'
