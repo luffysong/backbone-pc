@@ -127,6 +127,7 @@ gulp.task('build:move', ['clean'], function () {
       movePath + 'link/json2.js',
       movePath + 'img/**/*.*',
       movePath + 'web/*.*',
+      movePath + '*.html',
       movePath + 'flash/*.*',
       movePath + 'style/**/*.css',
       movePath + 'cross-url/*.*',

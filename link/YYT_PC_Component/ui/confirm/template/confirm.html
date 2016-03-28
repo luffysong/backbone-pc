@@ -2,11 +2,11 @@
     <div class="shadow UIConfirmClose"></div>
     <div class="edit_annmoucement_con" style="margin-bottom: 16px; width: 400px;height: 200px;margin-left:-200px;">
         <h2 class="edit_title"><span id="UIConfirmTitle"><%=title%></span> <span class="close UIConfirmClose">X</span></h2>
-        <div class="editCon" style="width: 400px;padding-top: inherit;">
+        <div class="editCon" style="height:144px;width: 400px;padding-top: inherit; position:relative;">
             <div style="padding:16px; font-size: 14px;"><%=content%></div>
-            <p style="padding-top: 16px;">
-                <a href="####" class="cancel UIConfirmClose">取消</a>
-                <a id="UIConfirmOk" href="####" class="submit">确定</a>
+            <p style="padding-top: 0px;display: block; position: absolute; bottom: 8px;left: 0;width: 100%;">
+                <a style="display: <%= cancelBtn?'inline-block':'none'%>;" href="javascript:;" class="cancel UIConfirmClose">取消</a>
+                <a id="UIConfirmOk" href="javascript:;" class="submit">确定</a>
             </p>
         </div>
     </div>

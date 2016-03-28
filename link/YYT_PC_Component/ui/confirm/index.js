@@ -25,7 +25,9 @@ var setting = {
     title: '消息',
     content: '',
     okFn: null,
-    cancelFn: null
+    cancelFn: null,
+    okBtn: true,
+    cancelBtn: true
 };
 
 confirm.init = function (setting) {

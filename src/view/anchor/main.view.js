@@ -207,7 +207,7 @@ var View = BaseView.extend({
 
     },
     goBack: function() {
-        //window.location.href = '/web/anchorsetting.html';
+        window.location.href = '/web/anchorsetting.html';
     },
     initGiftList: function() {
         this.giftModel.get(this.giftParams, function(res) {
