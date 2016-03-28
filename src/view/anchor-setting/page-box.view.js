@@ -11,11 +11,11 @@
 
 'use strict';
 var navTemp =
-	'{{if preOmit}}<span class="disabled">...</span>{{/if}}'
-	+'{{each items as item i}}'
+	// '{{if preOmit}}<span class="disabled">...</span>{{/if}}'
+	'{{each items as item i}}'
 		+'<span class="{{if item == num }}now{{/if}}" data-page="{{item}}" data-indice="{{i}}">{{item}}</span>'
-	+'{{/each}}'
-	+'{{if omit}}<span class="disabled">...</span>{{/if}}';
+	+'{{/each}}';
+	// +'{{if omit}}<span class="disabled">...</span>{{/if}}';
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var MsgBox = require('ui.MsgBox');
@@ -32,7 +32,7 @@ var View = BaseView.extend({
 		var props = this._ICEOptions.props;
 		this.boxTemp = require('../../template/anchor-setting/pagebox.html');
 		this.count = props.count;
-		this.offset = props.offset;
+		this.offset = props.offset || 0;
 		this.size = props.size;
 		this.sectionBase = props.sectionBase || 3;
 		this.listModel = this._ICEOptions.listModel;
@@ -52,6 +52,10 @@ var View = BaseView.extend({
 		};
 		this.lock = true;
 		this.translation = 0;
+
+		this.tipPreOmit = $('#tipPreOmit');
+		this.tipOmit = $('#tipOmit');
+
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -60,7 +64,9 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		this._ICEinitEvent();
+		this.pageChanged(this);
 		this.initRender();
+		this.initEvent();
 	},
 	initRender:function(){
 		var temp = this.items.concat();
@@ -80,7 +86,6 @@ var View = BaseView.extend({
 	},
 	preHandler:function(e){
 		var target = $(e.currentTarget);
-		this.pageChanged();
 		if (this.offset <= 0) {
 			MsgBox.showTip('原因：已经翻到最前一页');
 			return;
@@ -90,7 +95,6 @@ var View = BaseView.extend({
 	},
 	nextHandler:function(e){
 		var target = $(e.currentTarget);
-		this.pageChanged();
 		if (this.offset === this.count - 1) {
 			MsgBox.showTip('原因：已经翻到最后一页');
 			return;
@@ -194,26 +198,33 @@ var View = BaseView.extend({
 		};
 	},
 	sectionRender:function(items,state){
-		this.pageChanged();
+		Backbone.trigger('event:listPageChanged', this);
 		var html = this.compileHTML(navTemp,{'items':items,'num':state, preOmit: this.preOmit, omit: this.omit});
 		this.nav.html(html);
 		this.spans = this.nav.find('span');
 	},
 	//分页变化时
-	pageChanged: function(){
-		if(this.count <4){
-			this.omit = false;
-		}
-		if(this.offset > 2){
-			this.preOmit = true;
+	pageChanged: function(context){
+		var self = context;
+		if(self.offset > 2){
+			this.tipPreOmit.show();
 		}else{
-			this.preOmit = false;
+			this.tipPreOmit.hide();
 		}
-		if(this.offset+2>= this.count){
-			this.omit = false;
+		if(self.count <4 ||(self.offset+3) >= self.count){
+			this.tipOmit.hide();
 		}else{
-			this.omit = true;
+			this.tipOmit.show();
 		}
+	},
+	initEvent: function(){
+		var self = this;
+		Backbone.on('event:listPageChanged', function(context){
+
+			self.pageChanged(context);
+		});
+
+
 	}
 });
 module.exports = View;

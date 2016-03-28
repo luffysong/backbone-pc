@@ -1,7 +1,5 @@
 <span class="pre" data-state="1">&lt;</span>
-{{if preOmit}}
-  <span class="disabled">...</span>
-{{/if}}
+<span id='tipPreOmit' style="display: none;" class="disabled">...</span>
 <div class="fl">
 	<div id="nav">
 		{{each items as item i}}
@@ -9,8 +7,8 @@
 		{{/each}}
 	</div>
 </div>
-{{if omit}}
-	<!-- <span class="disabled">...</span> -->
-{{/if}}
+<!-- {{if omit}} -->
+<span id='tipOmit' class="disabled" style="display: none;">...</span>
+<!-- {{/if}} -->
 <span class="next" data-state="2">&gt;</span>
 <p>共<i id="howPage">{{count}}</i>页</p>
