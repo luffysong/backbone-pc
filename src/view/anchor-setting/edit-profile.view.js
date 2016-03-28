@@ -213,7 +213,7 @@ var View = BaseView.extend({
                     Backbone.trigger('event:userProfileChanged', {
                         nickName: $.trim(self.txtName.val()),
                         headImg: self.txtImg.val(),
-                        tags: userUpdateParameter.tags
+                        tags: self.tagsFilter(self.txtTags.val())
                     });
                 } else {
                     msgBox.showError(res.msg || '数据保存失败,请稍后重试!');

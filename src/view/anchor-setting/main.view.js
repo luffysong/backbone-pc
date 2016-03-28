@@ -122,7 +122,7 @@ var View = BaseView.extend({
         this.updateBgParameter.access_token = 'web-'+user.getToken();
         imModel.fetchIMUserSig(function (sig) {
             if (!sig.anchor) {
-                console.log('跳转走人');
+                //console.log('跳转走人');
                 store.remove('imSig');
                 //跳转走人
             } else {

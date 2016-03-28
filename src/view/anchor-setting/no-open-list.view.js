@@ -254,7 +254,6 @@ var View = BaseView.extend({
                     breviaryUrl: img.attr('src'),
                     inputText: '编辑图片'
                 };
-                console.log(attrs);
             }
             this.upload.show(attrs);
         }
