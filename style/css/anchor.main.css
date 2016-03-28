@@ -545,7 +545,8 @@ img {
 }
 .edit_annmoucement_con {
   width: 580px;
-  height: 322px;
+  min-height: 160px;
+  max-height: 300px;
   border: 3px solid #252929;
   position: absolute;
   top: 50%;
@@ -581,9 +582,10 @@ img {
   color: #39c4b2;
 }
 .edit_annmoucement_con .editCon {
-  width: 473px;
   margin: 0 auto;
-  padding-top: 35px;
+  width: 400px;
+  padding-top: inherit;
+  padding-bottom: 16px;
 }
 .edit_annmoucement_con .editCon h3 {
   color: #7a7a7a;
@@ -620,6 +622,14 @@ img {
 .edit_annmoucement_con .editCon a:hover {
   background: #27d5bf;
   color: #fff;
+}
+.edit_annmoucement_con .editCon .content {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.edit_annmoucement_con .editCon .btn-wrap {
+  display: block;
+  width: 100%;
 }
 .shadow_screen {
   position: fixed;

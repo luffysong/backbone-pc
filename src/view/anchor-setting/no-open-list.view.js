@@ -314,7 +314,7 @@ var View = BaseView.extend({
         var el = $(e.currentTarget);
         var value = el.attr('data-value');
         if (!value.length) {
-            MsgBox.showTip('原因：需要发布才会存在视屏地址');
+            MsgBox.showTip('开启直播后生成视频地址');
             return;
         }
         this.clipboard(value);
@@ -331,7 +331,7 @@ var View = BaseView.extend({
             window.clipboardData.setData('text', value);
             MsgBox.showOK('复制成功');
         } else {
-            MsgBox.showTip('原因：你浏览器的js不支持剪贴板，无法调用');
+            MsgBox.showTip('你浏览器的js不支持剪贴板，无法调用');
         }
     }
 });

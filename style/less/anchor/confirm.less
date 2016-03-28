@@ -1,15 +1,17 @@
 //弹出框
-.edit_annmoucement_con{
+.edit_annmoucement_con {
   width: 580px;
-  height: 322px;
-  border:3px solid #252929;
+  min-height: 160px;
+  //height: 200px;
+  max-height: 300px;
+  border: 3px solid #252929;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-left: -290px;
   margin-top: -170px;
   background: #fff;
-  .edit_title{
+  .edit_title {
     height: 56px;
     background: #000;
     width: 100%;
@@ -18,13 +20,13 @@
     line-height: 56px;
     text-indent: 15px;
     overflow: hidden;
-    .upload-status{
-      color:#ccc;
+    .upload-status {
+      color: #ccc;
       font-weight: normal;
       margin-left: 38px;
     }
   }
-  .close{
+  .close {
     float: right;
     font-size: 28px;
     padding-right: 7px;
@@ -32,37 +34,42 @@
     font-weight: lighter;
     cursor: pointer;
   }
-  .close:hover{
-    color:#39c4b2;
+  .close:hover {
+    color: #39c4b2;
   }
-  .editCon{
-    width: 473px;
-    margin:0 auto;
-    padding-top: 35px;
-    h3{
-      color:#7a7a7a;
+  .editCon {
+    //width: 473px;
+    margin: 0 auto;
+    //padding-top: 35px;
+    //height: 144px;
+    width: 400px;
+    padding-top: inherit;
+    padding-bottom: 16px;
+    //position: relative;
+    h3 {
+      color: #7a7a7a;
       font-size: 14px;
       margin-bottom: 15px;
     }
-    textarea{
+    textarea {
       width: 451px;
       height: 76px;
       resize: none;
       overflow: hidden;
       font-size: 12px;
       line-height: 20px;
-      padding:11px;
+      padding: 11px;
       text-align: left;
       background: #f5f5f5;
       font-family: '微软雅黑';
       font-weight: lighter;
-      letter-spacing:2px;
+      letter-spacing: 2px;
       //margin-bottom: 40px;
     }
-    p{
+    p {
       text-align: center;
     }
-    a{
+    a {
       width: 120px;
       height: 38px;
       line-height: 38px;
@@ -70,11 +77,23 @@
       display: inline-block;
       background: #e2e2e2;
       font-size: 14px;
-      color:#999;
+      color: #999;
     }
-    a:hover{
+    a:hover {
       background: #27d5bf;
-      color:#fff;
+      color: #fff;
+    }
+    .content {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+    .btn-wrap {
+      //height: 90%;
+      display: block;
+      //position: absolute;
+      //bottom: 8px;
+      //left: 0;
+      width: 100%;
     }
   }
 }
