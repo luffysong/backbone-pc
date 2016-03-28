@@ -136,7 +136,13 @@ var View = BaseView.extend({
                 uiConfirm.show({
                     title: '开启直播成功',
                     content: msg,
-                    cancelBtn: false
+                    cancelBtn: false,
+                    okFn:function(){
+                        window.location.reload();
+                    },
+                    cancelFn: function(){
+                        window.location.reload();
+                    }
                 });
                 self.startFlash();
                 Backbone.trigger('event:LiveShowStarted');
