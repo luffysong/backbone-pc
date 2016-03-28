@@ -50,8 +50,8 @@ var View = BaseView.extend({
             }
         });
         Backbone.on('event:updateRoomInfo', function (data) {
-            if(data && data.currentOnline){
-                self.txtOnline.text(data.currentOnline);
+            if(data){
+                self.txtOnline.text(data.currentOnline || 0);
             }
         });
     }

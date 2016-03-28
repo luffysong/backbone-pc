@@ -70,9 +70,9 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:updateRoomInfo', function(data) {
-            if(data && data.popularity){
+            if(data){
                 //self.roomInfo = data;
-                self.txtPopularity.text(data.popularity);
+                self.txtPopularity.text(data.popularity || 0);
             }
         });
 
