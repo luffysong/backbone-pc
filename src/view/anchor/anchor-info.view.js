@@ -29,7 +29,6 @@ var View = BaseView.extend({
         var el = this.$el;
         this.roomInfoWrap = el.find('#roomInfoWrap');
         this.imgRoomPic = el.find('#imgRoomPic');
-        this.txtOnline = el.find("#txtOnline");
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -43,6 +42,7 @@ var View = BaseView.extend({
                 var tpl = _.template(self.infoTpl);
                 var html = tpl(data);
                 self.roomInfoWrap.append(html);
+                self.txtOnline = self.$el.find("#txtOnline");
                 if(data.creator.smallAvatar){
                     self.imgRoomPic.attr('src', data.creator.smallAvatar);
                 }
@@ -51,7 +51,7 @@ var View = BaseView.extend({
         });
         Backbone.on('event:updateRoomInfo', function (data) {
             if(data){
-                self.txtOnline.text(data.currentOnline || 0);
+                self.txtOnline.text(data.currentOnline);
             }
         });
     }
