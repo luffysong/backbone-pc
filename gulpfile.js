@@ -20,9 +20,10 @@ var header = require('gulp-header');
 // 配置本地服务器
 var browser = require('browser-sync');
 var browserSync = browser.create();
+var webConfig = require('./src/lib/config.js');
 
 
-
+//releaseHandler();
 var PORT = 4000;
 var loadMap = [
   'modules/*.*',
@@ -156,3 +157,18 @@ gulp.task('build:move', ['clean'], function () {
     .pipe(gulpif('*.css', minifycss()))
     .pipe(gulp.dest('./dist/'));
 });
+
+
+function releaseHandler(){
+    if(process.env.NODE_ENV == 'release'){
+        webConfig.scheme = 'release';
+        webConfig.test = 'aa';
+        var txt = 'var config = ' + JSON.stringify(webConfig) + '; module.exports = config;';
+        fs.writeFile('./src/lib/config.json',txt, function(err){
+            console.log(err);
+        });
+    }
+}
+
+
+
