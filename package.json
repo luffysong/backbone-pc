@@ -8,7 +8,7 @@
     "test": "test",
     "start": "gulp server",
     "dev": "webpack --watch --colors --config webpack.dev.config.js",
-    "beta": "gulp build:rename",
+    "beta": "NODE_ENV=beta gulp build:rename",
     "release":"NODE_ENV=release gulp build:rename"
   },
   "repository": {
