@@ -72,7 +72,6 @@ var View = BaseView.extend({
             //clearTimeout(self.roomInfoTimeId);
         });
 
-
     },
     initWebIM: function () {
         var self = this;

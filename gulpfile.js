@@ -120,7 +120,7 @@ gulp.task('build', ['build:move'], function () {
     .pipe(gulp.dest('./dist/web/'))
 });
 
-gulp.task('build:move', ['clean', 'setConfig'], function () {
+gulp.task('build:move', ['clean'], function () {
   // content
   var dontMovePath = '!./';
   var movePath = './';
@@ -159,14 +159,17 @@ gulp.task('build:move', ['clean', 'setConfig'], function () {
 });
 
 //读取./src/config.demo.js ,修正config.js
-gulp.task('setConfig', function(){
+gulp.task('rebuild:config', function(){
     if(process.env.NODE_ENV == 'release'){
         webConfig.scheme = 'release';
     }else{
         webConfig.scheme = 'alpha';
     }
     var txt = 'var config = ' + JSON.stringify(webConfig) + '; module.exports = config;';
-    fs.writeFile('./src/lib/config.js',txt, function(err){});
+    fs.writeFile('./src/lib/config.js',txt, function(err){
+        gulp.start(['build:rename']);
+    });
+
 
 });
 
