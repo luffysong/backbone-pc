@@ -20,7 +20,7 @@ var header = require('gulp-header');
 // 配置本地服务器
 var browser = require('browser-sync');
 var browserSync = browser.create();
-var webConfig = require('./src/lib/config.js');
+var webConfig = require('./src/lib/config.demo.js');
 
 
 //releaseHandler();
@@ -158,16 +158,20 @@ gulp.task('build:move', ['clean'], function () {
     .pipe(gulp.dest('./dist/'));
 });
 
+gulp.task('setConfig', function(){
+
+});
 
 function releaseHandler(){
     if(process.env.NODE_ENV == 'release'){
         webConfig.scheme = 'release';
-        webConfig.test = 'aa';
-        var txt = 'var config = ' + JSON.stringify(webConfig) + '; module.exports = config;';
-        fs.writeFile('./src/lib/config.json',txt, function(err){
-            console.log(err);
-        });
+    }else{
+        webConfig.scheme = 'alpha';
     }
+    var txt = 'var config = ' + JSON.stringify(webConfig) + '; module.exports = config;';
+    fs.writeFile('./src/lib/config.js',txt, function(err){
+        console.log(err);
+    });
 }
 
 
