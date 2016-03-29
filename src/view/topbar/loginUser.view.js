@@ -30,7 +30,9 @@ var View = BaseView.extend({
     events: { //监听事件
         'click #login': 'loginHandler',
         'click .show-drop-menu': 'showDropMenu',
-        'click #logout': 'logoutHandler'
+        'click #logout': 'logoutHandler',
+        'mouseover .hoverMenu': 'nameHover',
+        'mouseout .hoverMenu': 'nameOut'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
@@ -40,6 +42,7 @@ var View = BaseView.extend({
     afterMount: function () {
         this.loginBox = LoginBox();
         this._dialog = this.loginBox.dialog;
+        this.userDromMenu = this.$el.find('.pcNav');
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -141,7 +144,13 @@ var View = BaseView.extend({
             };
             self.render(data);
         });
-    }
+    },
+	nameHover: function(){
+		this.showDropMenuEle.show();
+	},
+	nameOut: function(){
+		this.showDropMenuEle.hide();
+	}
 });
 
 module.exports = View;
