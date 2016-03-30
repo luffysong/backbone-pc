@@ -466,5 +466,8 @@ img {
 .edit_Bg_form .formBox .submit:hover {
   background: #5bdfcd;
 }
+.index-container {
+  background: url('/img/1.jpg');
+}
 
 /*# sourceMappingURL=index.main.css.map*/

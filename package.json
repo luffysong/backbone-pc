@@ -9,7 +9,7 @@
     "start": "gulp server",
     "dev": "webpack --watch --colors --config webpack.dev.config.js",
     "beta": "NODE_ENV=beta gulp build:rename",
-    "release":"NODE_ENV=release gulp build:rename"
+    "release": "NODE_ENV=release gulp build:rename"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "jquery": "^1.12.0",
     "less-loader": "^2.2.2",
     "raw-loader": "^0.5.1",
+    "react": "^0.14.8",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14"
