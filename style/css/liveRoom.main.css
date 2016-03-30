@@ -774,6 +774,9 @@ img {
   -webkit-border-radius: 35px;
   border-radius: 35px;
 }
+.am-container {
+  padding-bottom: 100px;
+}
 .live-room-wrap .gary1 {
   color: #585757!important;
 }
