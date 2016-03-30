@@ -1,14 +1,116 @@
-@import url('common/topBar.less');
 @import url('common/base.less');
-@import url('anchor/editBg.less');
-@import url('common/footer.less');
-//确认框
-@import "anchor/confirm";
-@import "anchor/dialog.less";
-//弹出框
-@import url('common/uploadFileDialog.less');
-
 //直播间
-.live-room-wrap{
+.live-room-wrap {
+  .gary1 {
+    color: #585757!important;
+  }
+  .gary2 {
+    color: #999999!important;
+  }
+  .edit_Bg {
+    width: 857px;
+  }
+  .room-header {
+    padding-top: 0 !important;
+    height: 60px;
+    line-height: 60px;
+    .room-name {
+      font-size: 20px;
+    }
+    .room-title-right {
+      width: 330px;
+      span {
+        color: #999999;
+      }
+      .count {
+        font-size: 20px;
+      }
+      .red {
+        color: #e74e75;
+      }
+      .green {
+        color: @main-bg-green-color;
+      }
+      .online {
+        margin-right: 20px;
+      }
+      .btn-support {
+        margin-left: 20px;
+        position: relative;
+        //background-color: @main-bg-green-color;
+        height: 40px;
+        width: 95px;
+        //color: #fff;
+        padding-left: 35px;
+        i {
+          top: 5px;
+          left: 12px;
+          position: absolute;
+          display: inline-block;
+          width: 25px;
+          height: 32px;
+          background-image: url(/img/live-bg_03.jpg);
+          background-repeat: no-repeat;
+          -webkit-background-size: 100%;
+          background-size: 100%;
+        }
+      }
+    }
+  }
 
+  .user-info-block {
+    background-color: #1a1c19;
+    overflow: hidden;
+    //height: 150px;
+    padding: 8px;
+    width: 289px;
+    .user-info-wrap {
+      .avator {
+        width: 65px;
+        height: 65px;
+      }
+      .info {
+        height: 85px;
+        margin-left: 12px;
+        .name {
+          color: @main-bg-green-color;
+          font-size: 18px;
+          width: 212px;
+        }
+        .tags {
+          font-size: 12px;
+          .item {
+            color: #999999;
+            margin: 0 2px;
+          }
+        }
+        .btn-wrap {
+          .btn {
+            width: 80px;
+            line-height: 27px;
+            height: 27px;
+            font-size: 12px;
+          }
+        }
+
+      }
+
+    }
+    .room-notice {
+      background-color: #333333;
+      padding: 5px;
+      .icon{
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url(/img/live-bg-012.png);
+        background-repeat: no-repeat;
+      }
+      .notice{
+        //margin-left: 28px;
+      }
+
+    }
+
+  }
 }

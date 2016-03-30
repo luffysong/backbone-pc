@@ -13,6 +13,7 @@
     <!-- build:css ../style/css/anchor.main.css -->
     <link rel="stylesheet" type="text/css" href="../style/msgbox.css">
     <link rel="stylesheet" type="text/css" href="../style/css/anchor.main.css">
+    <link rel="stylesheet" type="text/css" href="../style/css/liveRoom.main.css">
     <!-- endbuild -->
 </head>
 <body>
@@ -30,13 +31,13 @@
 </div>
 <!--顶部导航栏$  -->
 <!--^内容区域 -->
-<div class="am-container" id="anchorContainerBg">
+<div class="am-container live-room-wrap" id="anchorContainerBg">
     <div class="common_con">
-        <div id="edit_background" class="clearfix edit_Bg">
-            <!-- 编辑背景 -->
-        </div>
         <div class="content clearfix">
             <div class="fl" id="set_Anchor_info">
+                <div id="edit_background" class="edit_Bg clearfix room-header">
+                    <!-- 编辑背景 -->
+                </div>
                 <div class="BroadcastRoom" id="broadCastFlash">
                     <ul class="bulletScreen">
                         <li>
@@ -54,7 +55,37 @@
                 </div>
             </div>
             <!--留言-->
-            <div class="fl" id="anchorCtrlChat">
+            <div class="fl">
+                <div id="userInfoWrap" class="user-info-block">
+                    <div class="user-info-wrap clearfix">
+                        <img class="Left avator boderRadAll_35" src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg" alt="">
+                        <div class="info Left">
+                            <div class="name overflow_ellipsis">撒旦法是否是是法撒旦法</div>
+                            <div class="tags">
+                                <span class="gary1">标签:</span>
+                                <span class="item">测试</span>
+                                <span class="item">CTO</span>
+                                <span class="item">CSFER</span>
+                            </div>
+                            <div class="btn-wrap mTop10">
+                                <a class="btn" href="javascript:;"><i>x</i> 加关注</a>
+                                <a class="btn mLeft5" href="javascript:;"><i>x</i> 举报</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-notice mTop10 boderRadAll_5">
+                        <i class="icon mLeft5 Left"></i>
+                        <div class="gary2 WordBreak notice mLeft30">fasf
+                            sadfasdfasfasdfasdfjasdl;dfs
+                            asdfkljadslkfjaskldfjas
+                            asdl;kfjadskl;fj
+                            sfasfsfasfsfasfsfasfsfasfs</div>
+                        <div class="Clear"></div>
+                    </div>
+                </div>
+                <div id="anchorCtrlChat">
+
+                </div>
             </div>
         </div>
     </div>
@@ -85,7 +116,7 @@
 <script type="text/javascript" src="../js/common.js"></script>
 <!-- endbuild -->
 <!-- build:js ../js/anchor.main.js -->
-<script type="text/javascript" src="../js/anchor.main.js"></script>
+<script type="text/javascript" src="../js/liveRoom.main.js"></script>
 <!-- endbuild -->
 </body>
 </html>
