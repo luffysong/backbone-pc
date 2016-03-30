@@ -839,8 +839,8 @@ img {
   height: 65px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info {
-  height: 85px;
   margin-left: 12px;
+  width: 210px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .name {
   color: #01ceb5;
@@ -860,16 +860,186 @@ img {
   height: 27px;
   font-size: 12px;
 }
+.live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn i {
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: -10px;
+}
+.live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn .add {
+  background-image: url(/img/live_bg_icons_10.jpg);
+  width: 14px;
+  height: 14px;
+  margin-top: 6px;
+}
+.live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn .report {
+  background-image: url(/img/live_bg_icons_07.jpg);
+  width: 18px;
+  height: 18px;
+  margin-top: 4px;
+}
 .live-room-wrap .user-info-block .room-notice {
   background-color: #333333;
   padding: 5px;
 }
-.live-room-wrap .user-info-block .room-notice .icon {
+.live-room-wrap .user-info-block .room-notice .trumpet {
   width: 20px;
   height: 20px;
   display: inline-block;
   background-image: url(/img/live-bg-012.png);
   background-repeat: no-repeat;
+}
+.live-room-wrap .chatCon {
+  height: 373px!important;
+}
+.live-room-wrap .chatCon ul {
+  border-top: 1px solid #eee;
+}
+.live-room-wrap .send-msg-wrap {
+  background-color: #000;
+}
+.live-room-wrap .send-msg-wrap .msg-text .msg {
+  height: 80px;
+  background-color: #313234;
+  width: 235px;
+}
+.live-room-wrap .send-msg-wrap .msg-text .send {
+  height: 90px;
+  width: 40px;
+  line-height: 90px;
+}
+.live-room-wrap .send-msg-wrap .msg-footer .size {
+  width: 20px;
+  height: 20px;
+  background: #000;
+}
+.live-room-wrap .send-msg-wrap .msg-footer .size i {
+  display: inline-block;
+  background-image: url(/img/live_bg_icons_38.jpg);
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 19px;
+}
+.live-room-wrap .gift-wrap {
+  height: 138px;
+  background-color: #fff;
+}
+.live-room-wrap .recent-list-wrap {
+  background-color: #fff;
+}
+.live-room-wrap .recent-list-wrap .list-header {
+  font-size: 18px;
+  padding: 20px;
+}
+.live-room-wrap .recent-list-wrap .list {
+  overflow: hidden;
+  padding: 10px 40px;
+}
+.live-room-wrap .recent-list-wrap .list .ctrl {
+  background-color: #f2f1f2;
+  width: 40px;
+  height: 100px;
+  background-repeat: no-repeat;
+}
+.live-room-wrap .recent-list-wrap .list .ctrl.pre {
+  background-image: url(/img/live_btn_05.jpg);
+}
+.live-room-wrap .recent-list-wrap .list .ctrl.pre:hover {
+  background-image: url(/img/live_btn_03.jpg);
+}
+.live-room-wrap .recent-list-wrap .list .ctrl.next {
+  background-image: url(/img/live_btn_07.jpg);
+}
+.live-room-wrap .recent-list-wrap .list .ctrl.next:hover {
+  background-image: url(/img/live_btn_09.png);
+}
+.live-room-wrap .recent-list-wrap .list .item .img-wrap img {
+  width: 345px;
+  height: 195px;
+}
+.live-room-wrap .recent-list-wrap .list .item .info {
+  font-size: 12px;
+}
+.live-room-wrap .recent-list-wrap .list .item .info i {
+  display: inline-block;
+  width: 16px;
+  height: 13px;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100%;
+  background-size: 100%;
+  margin-right: 8px;
+  float: left;
+}
+.live-room-wrap .recent-list-wrap .list .item .info .coments-count {
+  background-image: url(/img/live_bg_07.png);
+}
+.live-room-wrap .recent-list-wrap .list .item .info .like-count {
+  background-image: url(/img/love.png);
+}
+.live-room-wrap .recent-list-wrap .list .item .btn-wrap {
+  font-size: 12px;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+.live-room-wrap .recent-list-wrap .list .item .btn-wrap .block-left .progress {
+  width: 185px;
+  background-color: #434343;
+  height: 8px;
+}
+.live-room-wrap .recent-list-wrap .list .item .btn-wrap .block-left .progress .value {
+  width: 34%;
+  height: 8px;
+  background-color: #01ceb5;
+}
+.live-room-wrap .recent-list-wrap .list .item .btn-wrap .block-left .count {
+  color: #3d3938;
+  font-size: 14px;
+}
+.live-room-wrap .recent-list-wrap .list .item .btn-wrap .btn {
+  width: 114px;
+  height: 40px;
+  line-height: 40px;
+}
+.live-room-wrap .jcarousel-wrapper {
+  margin: 20px auto;
+  position: relative;
+}
+.live-room-wrap .jcarousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.live-room-wrap .jcarousel ul {
+  width: 20000em;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.live-room-wrap .jcarousel li {
+  width: 200px;
+  float: left;
+  border: 1px solid #fff;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.live-room-wrap .jcarousel img {
+  display: block;
+  max-width: 100%;
+  height: auto !important;
+}
+.live-room-wrap .jcarousel-control-prev,
+.live-room-wrap .jcarousel-control-next {
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+}
+.live-room-wrap .jcarousel-control-prev {
+  left: 0px;
+}
+.live-room-wrap .jcarousel-control-next {
+  right: 0px;
 }
 
 /*# sourceMappingURL=liveRoom.main.css.map*/
