@@ -13,7 +13,6 @@
  'use strict';
 
  var BaseView = require('BaseView'); //View的基类
- var BaseView = require('BaseView'); //View的基类
  var UserModel = require('UserModel');
  var MsgBox = require('ui.MsgBox');
  var TopBarView = require('../topbar/topbar.view');
@@ -22,8 +21,6 @@
  var View = BaseView.extend({
  	el:'#indexContent', //设置View对象作用于的根元素，比如id
  	rawLoader:function(){ //可用此方法返回字符串模版
- 		var template = require('../template/index');
- 		return template;
  	},
  	events:{ //监听事件
 
