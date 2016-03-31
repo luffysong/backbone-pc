@@ -10,7 +10,5 @@ $(function(){
     var MainView = require('./view/live-room/main.view');
     new MainView();
 
-    console.log(1);
-
     require('../style/less/live-room.less');
 });
