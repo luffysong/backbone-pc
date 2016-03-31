@@ -52,7 +52,7 @@ var View = BaseView.extend({
         });
         Backbone.on('event:updateRoomInfo', function (data) {
             if (data) {
-                
+
             }
         });
     },

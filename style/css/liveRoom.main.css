@@ -912,6 +912,7 @@ img {
 .live-room-wrap .user-info-block .room-notice {
   background-color: #333333;
   padding: 5px;
+  height: 38px;
 }
 .live-room-wrap .user-info-block .room-notice .notice {
   font-size: 12px;
