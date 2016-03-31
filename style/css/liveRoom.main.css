@@ -932,11 +932,13 @@ img {
 }
 .live-room-wrap .send-msg-wrap {
   background-color: #000;
+  position: relative;
 }
 .live-room-wrap .send-msg-wrap .msg-text .msg {
   height: 45px;
   background-color: #313234;
   width: 235px;
+  color: #999999;
 }
 .live-room-wrap .send-msg-wrap .msg-text .send {
   height: 55px;
@@ -948,12 +950,63 @@ img {
   height: 20px;
   background: #000;
 }
+.live-room-wrap .send-msg-wrap .msg-footer .size.actived i {
+  background-image: url(/img/live_color_2_03.png);
+}
 .live-room-wrap .send-msg-wrap .msg-footer .size i {
   display: inline-block;
-  background-image: url(/img/live_bg_icons_38.jpg);
+  background-image: url(/img/live_bg_icons_38.png);
   background-repeat: no-repeat;
   width: 15px;
   height: 19px;
+}
+.live-room-wrap .send-msg-wrap .choose-color {
+  position: absolute;
+  width: 100%;
+  background-color: #f4f4f6;
+  height: 65px;
+  top: 0;
+  left: 0;
+}
+.live-room-wrap .send-msg-wrap .choose-color .title {
+  padding: 5px 0;
+  font-size: 12px;
+  text-align: center;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list {
+  text-align: center;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list span {
+  width: 26px;
+  height: 26px;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list span:hover {
+  transform: scale(1.3);
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  -o-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list .red {
+  background-color: #f9517d;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list .yellow {
+  background-color: #ead97a;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list .green {
+  background-color: #53e2c2;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list .blue {
+  background-color: #569ef8;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list .purple {
+  background-color: #cf57cf;
+}
+.live-room-wrap .send-msg-wrap .choose-color .color-list .white {
+  background-color: #fff;
 }
 .live-room-wrap .gift-wrap {
   height: 138px;

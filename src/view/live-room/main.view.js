@@ -17,6 +17,7 @@ var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
+var msgBox = require('ui.MsgBox');
 
 
 var View = BaseView.extend({
@@ -57,6 +58,9 @@ var View = BaseView.extend({
 
         var ChatView = require('./chat.view');
         new ChatView();
+
+        var SendMessageView = require('./send-message.view');
+        new SendMessageView();
 
         var AnchorCardView = require('./anchor-card.view');
         new AnchorCardView();
@@ -148,6 +152,7 @@ var View = BaseView.extend({
     checkRoomStatus: function(status){
         switch (status){
             case 0:
+                msgBox.showTip('该直播尚未发布!');
                 break;
             case 1:
                 break;

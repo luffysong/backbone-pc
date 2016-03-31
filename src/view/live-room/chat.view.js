@@ -12,6 +12,10 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
+var uiConfirm = require('ui.Confirm');
+var DateTime = require('DateTime');
+var FlashAPI = require('FlashAPI');
+var msgBox = require('ui.MsgBox');
 
 var View = BaseView.extend({
 	el: '#anchorCtrlChat', //设置View对象作用于的根元素，比如id
