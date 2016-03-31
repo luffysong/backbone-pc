@@ -1,5 +1,5 @@
 /*
-	clientRender:{bool} //默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+ clientRender:{bool} //默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
  */
 
 
@@ -12,58 +12,133 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+var GiftModel = require('../../model/anchor/gift.model.js');
+
+var msgBox = require('ui.MsgBox');
 
 var View = BaseView.extend({
-	clientRender: false,
-	//el:'', //设置View对象作用于的根元素，比如id
-	events:{ //监听事件
+    clientRender: false,
+    el: '#giftwarp', //设置View对象作用于的根元素，比如id
+    events: { //监听事件
+        'click #gift-items': 'giftClick',
+        'click #btnTop': 'topClick',
+        'click #btnLike': 'lickClick',
+        'click #btnShare': 'shareClick'
+    },
+    //当模板挂载到元素之前
+    beforeMount: function () {
 
-	},
-	//当模板挂载到元素之前
-	beforeMount:function(){
+        this.giftTpl = $('#gift-item-tpl').html();
 
-	},
-	//当模板挂载到元素之后
-	afterMount:function(){
+        this.giftParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            offset: 0,
+            size: 90000,
+            type: 0
+        };
+        this.giftModel = GiftModel.sigleInstance();
 
-	},
-	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	ready:function(){
+        this.elements = {};
+    },
+    //当模板挂载到元素之后
+    afterMount: function () {
+        var el = this.$el;
+        this.elemens = {
+            giftItems: el.find('#gift-items')
+        };
 
-		this.initCarousel();
-	},
-	initCarousel: function () {
-		var warp = $('#giftwarp');
-		var jcarousel = warp.find('.jcarousel');
+    },
+    //当事件监听器，内部实例初始化完成，模板挂载到文档之后
+    ready: function () {
 
-		jcarousel
-			.on('jcarousel:reload jcarousel:create', function () {
-				var carousel = $(this),
-					width = carousel.innerWidth();
+        this.initGiftList();
 
-				if (width >= 600) {
-					width = width / 5;
-				} else if (width >= 350) {
-					width = width / 5;
-				}
+        this.initCarousel();
+    },
+    initCarousel: function () {
+        var warp = $('#giftwarp');
+        var jcarousel = warp.find('.jcarousel');
 
-				carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
-			})
-			.jcarousel({
-				wrap: 'circular'
-			});
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var carousel = $(this),
+                    width = carousel.innerWidth();
 
-		warp.find('.jcarousel-control-prev')
-			.jcarouselControl({
-				target: '-=1'
-			});
+                if (width >= 600) {
+                    width = width / 5;
+                } else if (width >= 350) {
+                    width = width / 5;
+                }
 
-		warp.find('.jcarousel-control-next')
-			.jcarouselControl({
-				target: '+=1'
-			});
+                carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
 
-	}
+        warp.find('.jcarousel-control-prev')
+            .jcarouselControl({
+                target: '-=1'
+            });
+
+        warp.find('.jcarousel-control-next')
+            .jcarouselControl({
+                target: '+=1'
+            });
+
+    },
+    initGiftList: function () {
+        var self = this;
+
+        this.giftModel.get(this.giftParams, function (res) {
+            if (res && res.code == '0') {
+                var template = _.template(self.giftTpl);
+                self.elemens.giftItems.html(template(res || []));
+                self.initCarousel();
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    },
+    giftClick: function (e) {
+        var target = e.target;
+        if (e.target.nodeName != 'LI') {
+            target = $(e.target).parent()
+        } else {
+            target = $(e.target);
+        }
+        this.sendGift({
+            name: target.data('name'),
+            giftId: target.data('giftId')
+        });
+    },
+
+    sendGift: function (data) {
+
+        Backbone.trigger('event:visitorSendMessage', {
+            mstType: 1
+        });
+        msgBox.showOK('您向主播送出一个' + data.name);
+    },
+    topClick: function () {
+        msgBox.showOK('顶一下');
+        Backbone.trigger('event:visitorSendMessage', {
+            //mstType:
+        });
+    },
+    lickClick: function () {
+        Backbone.trigger('event:visitorSendMessage', {
+            mstType: 3
+        });
+        msgBox.showOK('赞一下');
+    },
+    shareClick: function () {
+        msgBox.showOK('分享一下');
+    }
+
 });
 
 module.exports = View;
