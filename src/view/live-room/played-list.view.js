@@ -14,10 +14,11 @@
 var BaseView = require('BaseView'); //View的基类
 
 var View = BaseView.extend({
-    el: '#playedListWrap', //设置View对象作用于的根元素，比如id
-    rawLoader: function () { //可用此方法返回字符串模版
-        return require('../../template/live-room/played-list.html');
-    },
+    clientRender: false,
+    el: '#anchorPlayedList', //设置View对象作用于的根元素，比如id
+    //rawLoader: function () { //可用此方法返回字符串模版
+    //    return require('../../template/live-room/played-list.html');
+    //},
     events: { //监听事件
 
     },
@@ -27,6 +28,8 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之后
     afterMount: function () {
+        var el = this.$el;
+        this.anchorPlayedTpl = el.find('#anchorPlayedTpl').html();
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后

@@ -54,8 +54,9 @@
                                 <!--礼物列表-->
                                 <script type="text/template" id="gift-item-tpl">
                                     <% for(var i= 0, len = data.length; i < len; i++) {%>
-                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>" data-giftId="<%=data[i].giftId%>">
-                                        <img src="<%=data[i].images.logo%>"  alt="">
+                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
+                                        data-giftId="<%=data[i].giftId%>">
+                                        <img src="<%=data[i].images.logo%>" alt="">
                                         <span class="name"><%=data[i].name%></span>
                                     </li>
                                     <% } %>
@@ -101,13 +102,59 @@
                 </div>
             </div>
         </div>
-        <div class="recent-list-wrap mTop15">
+        <div class="recent-list-wrap mTop15" id="anchorPlayedList">
             <div class="list-header">播主播过的</div>
 
             <div class="jcarousel-wrapper  list" id="palyedJcarousel">
                 <div class="jcarousel">
                     <ul id="playedListWrap">
                         <!--已播放列表-->
+                        <script type="text/template" id="anchorPlayedTpl">
+                            <li>
+                                <div class="item Left mLeft10 mRight10">
+                                    <a class="img-wrap" href="">
+                                        <div class="hover-wrap Hand">
+                                            <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                                        </div>
+                                        <img src="/img/user_47.jpg" alt="/img/user_47.jpg">
+                                    </a>
+                                    <div class="name mTop15">EXO签售EXO签售直</div>
+                                    <div class="info mTop10 gary2">
+                                        <div class="Clear"></div>
+                                    </div>
+                                    <div class="btn-wrap mTop10 pAll5">
+                                        <div class="Left gary2 mTop10 pBottom10">人气: <span class="count">234234</span>
+                                        </div>
+                                        <span class="Right mTop10 pBottom10"><i class="like-count"></i>34</span>
+                                        <span class="Right mRight20 mTop10 pBottom10"><i
+                                            class="coments-count"></i>234</span>
+                                        <div class="Clear"></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </script>
+                        <li>
+                            <div class="item Left mLeft10 mRight10">
+                                <a class="img-wrap" href="">
+                                    <div class="hover-wrap Hand">
+                                        <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                                    </div>
+                                    <img src="/img/user_47.jpg" alt="/img/user_47.jpg">
+                                </a>
+                                <div class="name mTop15">EXO签售EXO签售直</div>
+                                <div class="info mTop10 gary2">
+                                    <div class="Clear"></div>
+                                </div>
+                                <div class="btn-wrap mTop10 pAll5">
+                                    <div class="Left gary2 mTop10 pBottom10">人气: <span class="count">234234</span></div>
+                                    <span class="Right mTop10 pBottom10"><i class="like-count"></i>34</span>
+                                    <span class="Right mRight20 mTop10 pBottom10"><i
+                                        class="coments-count"></i>234</span>
+                                    <div class="Clear"></div>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <a href="#" class="jcarousel-control-prev ctrl pre"></a>
