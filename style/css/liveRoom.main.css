@@ -881,9 +881,23 @@ img {
   height: 18px;
   margin-top: 4px;
 }
+.live-room-wrap .user-info-block .tags .Right {
+  display: inline-block;
+  word-break: keep-all;
+  width: 250px;
+  height: 42px;
+}
+.live-room-wrap .user-info-block .tags .item {
+  font-size: 12px;
+  color: #999999;
+  margin: 0 2px;
+}
 .live-room-wrap .user-info-block .room-notice {
   background-color: #333333;
   padding: 5px;
+}
+.live-room-wrap .user-info-block .room-notice .notice {
+  font-size: 12px;
 }
 .live-room-wrap .user-info-block .room-notice .trumpet {
   width: 20px;
@@ -893,7 +907,7 @@ img {
   background-repeat: no-repeat;
 }
 .live-room-wrap .chatCon {
-  height: 373px!important;
+  height: 365px!important;
 }
 .live-room-wrap .chatCon ul {
   border-top: 1px solid #eee;

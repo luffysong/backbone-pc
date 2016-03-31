@@ -5,9 +5,20 @@
 <div class="chatCon pTop5" id="chatHistory">
     <!--聊天记录-->
     <ul id="msgList">
-        <li>12312</li>
-        <li>12312</li>
-        <li>12312</li>
-        <li>12312</li>
+        <li class="clearfix <%=mstType==0?'':'system-info'%>" data-msgType="<%=mstType%>" data-name="<%=nickName%>" data-id="<%=fromAccount%>">
+            <!--<%if(mstType == 0){%>-->
+            <img onerror="this.src='../img/visitor_avator.jpg'" src="<%=smallAvatar%>" alt="" class="fl visitor_avator">
+            <!--<%}%>-->
+            <p class="visitor_chat fl">
+                <span class="visitorName"><%=nickName%>:</span>
+                <%=content%>
+                <span class="time fr"><%=time%></span>
+            </p>
+            <div class="controls_forbid_reject">
+                <a href="javascript:;" class="forbid">禁言</a>
+                <a href="javascript:;" class="reject">踢出</a>
+            </div>
+        </li>
+
     </ul>
 </div>
