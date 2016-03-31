@@ -46,23 +46,67 @@
                         </li>
                     </ul>
                 </div>
-                <div class="gift-wrap">
-                    <div class="like-wrap boderRadAll_5">
-                        <button class="share">share</button>
-                        <button class="like-count"><i>+</i>123234</button>
+                <div class="gift-wrap" id="giftwarp">
+                    <!--<div class="gift-list">-->
+                    <div class="jcarousel-wrapper Left">
+                        <div class="jcarousel">
+                            <ul id="gift-items" class="gift-items">
+                                <!--礼物列表-->
+                                <script type="text/template" id="gift-item-tpl">
+                                <li>
+                                    <img src="/img/live_bg_gift_03.jpg" alt="">
+                                    <span class="name">红心11</span>
+                                </li>
+                                </script>
+                                <li>
+                                    <img src="/img/live_bg_gift_03.jpg" alt="">
+                                    <span class="name">红心</span>
+                                </li>
+                                <li>
+                                    <img src="/img/live_bg_gift_12.jpg" alt="">
+                                    <span class="name">鲜花</span>
+                                </li>
+                                <li>
+                                    <img src="/img/live_bg_gift_05.jpg" alt="">
+                                    <span class="name">啤酒</span>
+                                </li>
+                                <li>
+                                    <img src="/img/live_bg_gift_07.jpg" alt="">
+                                    <span class="name">烟花</span>
+                                </li>
+                                <li>
+                                    <img src="/img/live_bg_gift_09.jpg" alt="">
+                                    <span class="name">鼓掌</span>
+                                </li>
+                                <li>
+                                    <img src="/img/live_bg_gift_12.jpg" alt="">
+                                    <span class="name">鲜花</span>
+                                </li>
+                                <li>
+                                    <img src="/img/live_bg_gift_05.jpg" alt="">
+                                    <span class="name">啤酒</span>
+                                </li>
+                                <li>
+                                    <img src="/img/live_bg_gift_07.jpg" alt="">
+                                    <span class="name">烟花</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#" class="jcarousel-control-prev ctrl pre"></a>
+                        <a href="#" class="jcarousel-control-next ctrl next"></a>
                     </div>
-                    <div class="gift-list">
-                        <div class="item">1</div>
-                        <div class="item">2</div>
-                        <div class="item">3</div>
-                        <div class="item">4</div>
-                        <div class="item">5</div>
-                        <button>送礼物</button>
+
+                    <!--</div>-->
+                    <div class="like-wrap Right ">
+                        <div class="btns boderRadAll_5">
+                            <button class="share Left Hand boderRadAll_5"><i></i></button>
+                            <button class="Hand like Left gary2"><i></i>34</button>
+                            <div class="Clear"></div>
+                        </div>
+                        <button class="btn Hand btn-support boderRadAll_3"><i></i> 顶一下</button>
                     </div>
+                    <div class="Clear"></div>
                 </div>
-                <!--<div id="liveShowBtnWraper" class="anchor_control clearfix">-->
-                <!--3433-->
-                <!--</div>-->
             </div>
             <!--留言-->
             <div class="fl">
@@ -90,8 +134,8 @@
         <div class="recent-list-wrap mTop15">
             <div class="list-header">播主播过的</div>
 
-            <div class="jcarousel-wrapper  list">
-                <div class="jcarousel">
+            <div class="jcarousel-wrapper  list" id="palyedJcarousel">
+                <div class="jcarousel" >
                     <ul id="playedListWrap">
                         <!--已播放列表-->
                     </ul>

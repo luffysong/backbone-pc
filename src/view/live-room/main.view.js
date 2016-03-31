@@ -51,6 +51,11 @@ var View = BaseView.extend({
         var PlayedListView = require('./played-list.view');
         new PlayedListView();
 
+        var GiftView = require('./gift.view');
+        new GiftView();
+
+
+
 
 
 

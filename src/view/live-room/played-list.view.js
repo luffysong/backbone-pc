@@ -35,7 +35,8 @@ var View = BaseView.extend({
         this.initCarousel();
     },
     initCarousel: function () {
-        var jcarousel = $('.jcarousel');
+        var warp = $('#palyedJcarousel');
+        var jcarousel = warp.find('.jcarousel');
 
         jcarousel
             .on('jcarousel:reload jcarousel:create', function () {
@@ -54,12 +55,12 @@ var View = BaseView.extend({
                 wrap: 'circular'
             });
 
-        $('.jcarousel-control-prev')
+        warp.find('.jcarousel-control-prev')
             .jcarouselControl({
                 target: '-=1'
             });
 
-        $('.jcarousel-control-next')
+        warp.find('.jcarousel-control-next')
             .jcarouselControl({
                 target: '+=1'
             });
