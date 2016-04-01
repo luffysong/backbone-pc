@@ -5,6 +5,8 @@
   <p class="visitor_chat fl">
     <%if(mstType == 0){%>
     <span class="visitorName"><%=nickName%>:</span>
+    <%} else if(mstType == 4){%>
+        <span class="visitorName">主播:</span>
     <%} else{%>
         <span class="visitorName">消息:</span>
     <% }%>

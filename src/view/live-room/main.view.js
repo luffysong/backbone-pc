@@ -118,6 +118,7 @@ var View = BaseView.extend({
                 Backbone.trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
+                console.log('-----------------------------------------',notifyInfo);
                 Backbone.trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {
