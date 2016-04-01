@@ -86,6 +86,7 @@ var View = BaseView.extend({
         });
 
     },
+
     onMsgNotify: function (notifyInfo) {
         var self = this;
         var msgObj = {};
@@ -99,6 +100,7 @@ var View = BaseView.extend({
             self.beforeSendMsg(msgObj);
         }
     },
+
     beforeSendMsg: function (msgObj) {
         var self = this;
 
@@ -125,11 +127,22 @@ var View = BaseView.extend({
                 self.addMessage(msgObj);
                 break;
             case 4: // 清屏
+                this.elements.msgList.children().remove();
+                msgObj.content = '进行了清屏操作!';
+                msgObj.smallAvatar = '';
+                self.addMessage(msgObj);
+
                 break;
             case 5: // 禁言
                 Backbone.trigger('event:forbidUserSendMsg', msgObj);
                 break;
         }
+    },
+    onGroupInfoChangeNotify: function (notifyInfo) {
+        console.log(notifyInfo);
+    },
+    groupSystemNotifys: function (notifyInfo) {
+        console.log(notifyInfo);
     },
     /**
      * 获取消息模板

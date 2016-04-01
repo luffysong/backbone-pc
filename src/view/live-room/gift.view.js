@@ -174,7 +174,7 @@ var View = BaseView.extend({
                 msgBox.showTip(res.data.message || '操作失败请您稍后重试');
             }
         }, function (err) {
-
+            msgBox.showTip('操作失败请您稍后重试');
         });
     },
 
