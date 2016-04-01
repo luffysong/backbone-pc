@@ -34,7 +34,6 @@ var View = BaseView.extend({
             onLine: el.find('#onlineCount'),
             popularity: el.find('#popularityCount')
         };
-        console.log(this.elements);
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
@@ -44,7 +43,7 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
-            console.log(data);
+            console.log('event:roomInfoReady',data);
             if (data) {
                 self.bindData(data);
 

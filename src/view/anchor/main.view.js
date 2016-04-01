@@ -31,7 +31,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之前
     beforeMount: function () {
-        auth.fetchIMUserSig();
+        auth.onlyAnchorUse();
         var url = URL.parse(location.href);
         this.roomId = url.query['roomId'] || 1;
         //获取房间信息周期

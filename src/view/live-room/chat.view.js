@@ -45,9 +45,9 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-            el: 'broadCastFlash'
-        });
+        //this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+        //    el: 'broadCastFlash'
+        //});
         this.defineEventInterface();
     },
     defineEventInterface: function () {
@@ -101,7 +101,7 @@ var View = BaseView.extend({
                 break;
             case 1: //发送礼物
                 msgObj.content = '<b>' + msgObj.nickName + '</b>向主播发送礼物!';
-                msgObj.nickName = '消息';
+                //msgObj.nickName = '消息';
                 msgObj.smallAvatar = '';
                 self.addMessage(msgObj);
                 break;
@@ -109,7 +109,7 @@ var View = BaseView.extend({
                 break;
             case 3: //点赞
                 msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
-                msgObj.nickName = '消息';
+                //msgObj.nickName = '消息';
                 msgObj.smallAvatar = '';
                 self.addMessage(msgObj);
                 break;
@@ -153,6 +153,10 @@ var View = BaseView.extend({
                 }
             }
         }
+        YYTIMServer.sendMessage({
+            groupId: this.roomInfo.imGroupid,
+            msg: msgObj
+        });
         self.autoDeleteMsgList();
     },
     filterEmoji: function (content) {

@@ -52,9 +52,6 @@ var View = BaseView.extend({
         this.defineEventInterface();
         this.setTextAreatColor();
 
-        console.log('user111i', user.$get());
-
-
     },
     defineEventInterface: function () {
         var self = this;
@@ -79,7 +76,6 @@ var View = BaseView.extend({
     },
     chooseColor: function (e) {
         var target = $(e.target);
-        //console.log();
         var color = target.data('color');
         this.setTextAreatColor(color);
         this.showColorPanel();
@@ -115,8 +111,8 @@ var View = BaseView.extend({
         if (e.keyCode == 13) {
             this.sendMsgClick();
         }
-        this.elements.limitTip.text(50 - len);
-        if (len >= 50) {
+        this.elements.limitTip.text(20 - len);
+        if (len >= 20) {
             return false;
         }
 
