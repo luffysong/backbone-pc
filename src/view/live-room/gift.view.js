@@ -112,28 +112,46 @@ var View = BaseView.extend({
         }
         this.sendGift({
             name: target.data('name'),
-            giftId: target.data('giftId')
+            giftId: target.data('giftid')
         });
     },
 
     sendGift: function (data) {
-
-        Backbone.trigger('event:visitorSendMessage', {
-            mstType: 1
+        Backbone.trigger('event:visitorSendGift', {
+            mstType: 1,
+            giftId: data.giftId,
+            giftNum: 1
         });
         msgBox.showOK('您向主播送出一个' + data.name);
     },
     topClick: function () {
-        msgBox.showOK('顶一下');
-        Backbone.trigger('event:visitorSendMessage', {
-            //mstType:
+        var self = this;
+        if (this.isPushGood) {
+            return;
+        }
+        this.isPushGood = true;
+        Backbone.trigger('event:visitorSendGift', {
+            mstType: 3
         });
+        msgBox.showOK('订一下');
+        setTimeout(function () {
+            self.isPushGood = false;
+        }, 5000);
     },
     lickClick: function () {
-        Backbone.trigger('event:visitorSendMessage', {
+        var self = this;
+        if (this.isClicked) {
+            return;
+        }
+        this.isClicked = true;
+        Backbone.trigger('event:visitorSendGift', {
             mstType: 3
         });
         msgBox.showOK('赞一下');
+        setTimeout(function () {
+            self.isClicked = false;
+        }, 5000);
+
     },
     shareClick: function () {
         msgBox.showOK('分享一下');

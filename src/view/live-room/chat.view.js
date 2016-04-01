@@ -75,7 +75,8 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorSendMessage', function (data) {
-            console.log(data);
+            console.log('event:visitorSendMessage, get', data);
+            self.beforeSendMsg(data);
         });
 
     },
@@ -89,27 +90,31 @@ var View = BaseView.extend({
             eval('msgObj = ' + msgObj);
             msgObj.fromAccount = notifyInfo.fromAccount;
 
-            switch (msgObj.mstType) {
-                case 0: //文本消息
-                    self.addMessage(msgObj);
-                    break;
-                case 1: //发送礼物
-                    msgObj.content = '<b>' + msgObj.nickName + '</b>向主播发送礼物!';
-                    msgObj.nickName = '消息';
-                    msgObj.smallAvatar = '';
-                    self.addMessage(msgObj);
-                    break;
-                case 2: //公告
-                    break;
-                case 3: //点赞
-                    msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
-                    msgObj.nickName = '消息';
-                    msgObj.smallAvatar = '';
-                    self.addMessage(msgObj);
-                    break;
-                case 4: // 清屏
-                    break;
-            }
+            self.beforeSendMsg(msgObj);
+        }
+    },
+    beforeSendMsg: function(msgObj){
+        var self = this;
+        switch (msgObj.mstType) {
+            case 0: //文本消息
+                self.addMessage(msgObj);
+                break;
+            case 1: //发送礼物
+                msgObj.content = '<b>' + msgObj.nickName + '</b>向主播发送礼物!';
+                msgObj.nickName = '消息';
+                msgObj.smallAvatar = '';
+                self.addMessage(msgObj);
+                break;
+            case 2: //公告
+                break;
+            case 3: //点赞
+                msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
+                msgObj.nickName = '消息';
+                msgObj.smallAvatar = '';
+                self.addMessage(msgObj);
+                break;
+            case 4: // 清屏
+                break;
         }
     },
     /**
@@ -125,7 +130,8 @@ var View = BaseView.extend({
             nickName: '匿名',
             content: '',
             smallAvatar: '',
-            time: self.getDateStr(new Date())
+            time: self.getDateStr(new Date()),
+            fromAccount: ''
         }, msgObj);
 
         if (msgObj && msgObj.roomId !== self.roomInfo.id) {
@@ -134,12 +140,17 @@ var View = BaseView.extend({
         msgObj.content = self.filterEmoji(msgObj.content);
         if (msgObj && msgObj.content) {
             var tpl = _.template(this.getMessageTpl());
-            this.msgList.append(tpl(msgObj));
-            this.chatHistory.scrollTop(this.msgList.height());
+            this.elements.msgList.append(tpl(msgObj));
+            this.elements.chatHistory.scrollTop(this.elements.msgList.height());
             if (msgObj.mstType == 0) {
-                this.flashAPI.onReady(function () {
-                    this.notifying(msgObj);
-                });
+                try {
+                    this.flashAPI.onReady(function () {
+                        this.notifying(msgObj);
+                    });
+
+                } catch (e){
+
+                }
             }
         }
         self.autoDeleteMsgList();
@@ -157,12 +168,12 @@ var View = BaseView.extend({
     },
     //动删除前面的,仅留下500条
     autoDeleteMsgList: function () {
-        var total = this.msgList.children().length,
+        var total = this.elements.msgList.children().length,
             index = 0;
-        if (total > 1000) {
-            index = total - 500;
+        if (total > 500) {
+            index = total - 200;
         }
-        this.msgList.children(':lt(' + index + ')').remove();
+        this.elements.msgList.children(':lt(' + index + ')').remove();
     },
     //转换时间格式
     getDateStr: function (dateInt) {
