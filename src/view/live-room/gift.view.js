@@ -43,8 +43,15 @@ var View = BaseView.extend({
         };
 
         this.giftModel = GiftModel.sigleInstance();
-        htis.popularityModel = PopularityModel.sigleInstance();
+        this.popularityModel = PopularityModel.sigleInstance();
+        this.popularityParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            type: 1,
+            roomId: 0
+        };
 
+        this.isNeedPopup = true;
         this.elements = {};
     },
     //当模板挂载到元素之后
@@ -57,6 +64,12 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        var self = this;
+        Backbone.on('event:roomInfoReady', function (data) {
+            if (data) {
+                self.roomInfo = data;
+            }
+        });
 
         this.initGiftList();
 
@@ -130,14 +143,38 @@ var View = BaseView.extend({
     },
     topClick: function () {
         var self = this;
+        if (!this.isNeedPopup) {
+            self.pushPopularity(2);
+            return;
+        }
+        var content = '<div>使用20积分支持一下MC,当前共有xx积分</div> '
+            + '<div style="text-align:right;"> <label><input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
         uiConfirm.show({
             title: '顶上去',
-            content: '使用20积分支持一下MC,当前共有xx积分',
+            content: content,
             okFn: function () {
-                //this.popularityModel.executeJSONP({
-                //
-                //}, function())
+                self.pushPopularity(2);
+                var check = $('#popupCheckBox');
+                if (check.is(':checked')) {
+                    self.isNeedPopup = false;
+                } else {
+                    self.isNeedPopup = true;
+                }
             }
+        });
+    },
+
+    pushPopularity: function (type) {
+        this.popularityParams.type = type;
+        this.popularityParams.roomId = this.roomInfo.id;
+        this.popularityModel.executeJSONP(this.popularityParams, function (res) {
+            if (res && res.data && res.data.success) {
+
+            } else {
+                msgBox.showTip(res.data.message || '操作失败请您稍后重试');
+            }
+        }, function (err) {
+
         });
     },
 
@@ -150,6 +187,7 @@ var View = BaseView.extend({
         Backbone.trigger('event:visitorSendGift', {
             mstType: 3
         });
+        self.pushPopularity(1);
         msgBox.showOK('赞一下');
         setTimeout(function () {
             self.isClicked = false;
