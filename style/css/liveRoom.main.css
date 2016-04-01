@@ -1148,6 +1148,9 @@ img {
   height: 100px;
   background-repeat: no-repeat;
 }
+.live-room-wrap .recent-list-wrap .list .item:hover .name {
+  color: #01ceb5;
+}
 .live-room-wrap .recent-list-wrap .list .item .played-icon {
   position: absolute;
   z-index: 10;

@@ -14,7 +14,9 @@
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var uiConfirm = require('ui.Confirm');
 var GiftModel = require('../../model/anchor/gift.model.js');
+var PopularityModel = require('../../model/live-room/popularity-add.model');
 
 var msgBox = require('ui.MsgBox');
 
@@ -39,7 +41,9 @@ var View = BaseView.extend({
             size: 90000,
             type: 0
         };
+
         this.giftModel = GiftModel.sigleInstance();
+        htis.popularityModel = PopularityModel.sigleInstance();
 
         this.elements = {};
     },
@@ -126,18 +130,17 @@ var View = BaseView.extend({
     },
     topClick: function () {
         var self = this;
-        if (this.isPushGood) {
-            return;
-        }
-        this.isPushGood = true;
-        Backbone.trigger('event:visitorSendGift', {
-            mstType: 3
+        uiConfirm.show({
+            title: '顶上去',
+            content: '使用20积分支持一下MC,当前共有xx积分',
+            okFn: function () {
+                //this.popularityModel.executeJSONP({
+                //
+                //}, function())
+            }
         });
-        msgBox.showOK('订一下');
-        setTimeout(function () {
-            self.isPushGood = false;
-        }, 5000);
     },
+
     lickClick: function () {
         var self = this;
         if (this.isClicked) {

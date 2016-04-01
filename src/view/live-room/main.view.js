@@ -58,15 +58,18 @@ var View = BaseView.extend({
     fetchUserIMSig: function (groupId) {
         var self = this;
         imModel.fetchIMUserSig(function (sig) {
+            console.log(sig);
             self.initWebIM();
             var goBack = function () {
                 window.history.go(-1);
             };
             YYTIMServer.applyJoinGroup(groupId, function (res) {
                 //self.renderPage();
+                Backbone.trigger('event:roomInfoReady',self.roomInfo);
             }, function (res) {
                 if(res.ErrorCode == 10013){
                     //self.renderPage();
+                    Backbone.trigger('event:roomInfoReady',self.roomInfo);
                 }else{
                     uiConfirm.show({
                         title: '进入房间',
@@ -156,8 +159,7 @@ var View = BaseView.extend({
                     'streamName': data.streamName,
                     'url': data.url
                 };
-                Backbone.trigger('event:roomInfoReady', data);
-                console.log('get room info',data);
+                self.roomInfo = data;
 
                 self.fetchUserIMSig(data.imGroupid);
                 self.checkRoomStatus(data.status);

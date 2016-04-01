@@ -18,6 +18,8 @@ var FlashAPI = require('FlashAPI');
 var msgBox = require('ui.MsgBox');
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
+var IMModel = require('../../lib/IMModel');
+var imModel = IMModel.sharedInstanceIMModel();
 
 
 var View = BaseView.extend({
@@ -55,6 +57,7 @@ var View = BaseView.extend({
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
                 self.roomInfo = data;
+                self.checkUserCanJoinRoom();
             }
         });
 
@@ -78,6 +81,9 @@ var View = BaseView.extend({
             console.log('event:visitorSendMessage, get', data);
             self.beforeSendMsg(data);
         });
+        Backbone.on('event:forbidUserSendMsg', function (data) {
+            self.forbidUserSendMsgHandler(data);
+        });
 
     },
     onMsgNotify: function (notifyInfo) {
@@ -93,8 +99,13 @@ var View = BaseView.extend({
             self.beforeSendMsg(msgObj);
         }
     },
-    beforeSendMsg: function(msgObj){
+    beforeSendMsg: function (msgObj) {
         var self = this;
+
+        if (msgObj.roomId != this.roomInfo.id) {
+            return;
+        }
+
         switch (msgObj.mstType) {
             case 0: //文本消息
                 self.addMessage(msgObj);
@@ -114,6 +125,9 @@ var View = BaseView.extend({
                 self.addMessage(msgObj);
                 break;
             case 4: // 清屏
+                break;
+            case 5: // 禁言
+                Backbone.trigger('event:forbidUserSendMsg', msgObj);
                 break;
         }
     },
@@ -148,7 +162,7 @@ var View = BaseView.extend({
                         this.notifying(msgObj);
                     });
 
-                } catch (e){
+                } catch (e) {
 
                 }
             }
@@ -212,7 +226,31 @@ var View = BaseView.extend({
         }, function (err) {
             errFn && errFn(err);
         });
+    },
 
+    checkUserCanJoinRoom: function () {
+        YYTIMServer.getGroupInfo(this.roomInfo.imGroupid, function (res) {
+            console.log(res);
+            if (res && res.ErrorCode == 0 || res.GroupInfo[0]) {
+                var info = res.GroupInfo[0];
+
+            }
+        }, function (err) {
+
+        });
+    },
+    checkUserStatus: function () {
+
+        return true;
+    },
+    forbidUserSendMsgHandler: function (notifyInfo) {
+        //notifyInfo.userId = notifyInfo.userId.replace('$0', '');
+        //console.log('forbidUserSendMsgHandler', notifyInfo);
+        //console.log(imModel.$get());
+        var imIdentifier = imModel.$get('data.imIdentifier');
+        if (notifyInfo.userId === imIdentifier) {
+            msgBox.showTip('您已被主播禁言10分钟!');
+        }
     }
 });
 
