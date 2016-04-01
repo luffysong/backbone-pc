@@ -26,6 +26,7 @@ var UploadFileDialog = require('UploadFileDialog');
 var imModel = IMModel.sharedInstanceIMModel();
 var user = UserModel.sharedInstanceUserModel();
 var MsgBox = require('ui.MsgBox');
+var auth = require('../../lib/auth');
 
 //视图
 var View = BaseView.extend({
@@ -38,6 +39,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之前
     beforeMount: function () {
+        auth.onlyAnchorUse();
         this.topbarView = new TopBarView();
         this.isLogined = false;
         this.upload = null;

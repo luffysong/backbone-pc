@@ -21,6 +21,7 @@ var URL = require('url');
 var uiConfirm = require('ui.Confirm');
 var store = require('store');
 var GiftModel = require('../../model/anchor/gift.model.js');
+var auth = require('../../lib/auth');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -30,6 +31,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之前
     beforeMount: function () {
+        auth.fetchIMUserSig();
         var url = URL.parse(location.href);
         this.roomId = url.query['roomId'] || 1;
         //获取房间信息周期
