@@ -1,13 +1,16 @@
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
+var sourceMap = require('./map.json').source;
+var keys = Object.keys(sourceMap);
+keys.splice(keys.length - 1,1);
 var plugins = [];
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var optimize = webpack.optimize
 var extractLESS = new ExtractTextPlugin('../style/css/[name].css');
 plugins.push(extractLESS);
-plugins.push(new optimize.CommonsChunkPlugin('common.js'));
-var sourceMap = require('./map.json').source;
+plugins.push(new optimize.CommonsChunkPlugin('common.js',keys));
+//plugins.push(new optimize.CommonsChunkPlugin('vendors','vendors.js'));
 var YYT_PC_Modules = 'link/YYT_PC_Modules/';
 var YYT_PC_Component = 'link/YYT_PC_Component/';
 var config = {
