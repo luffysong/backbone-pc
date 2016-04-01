@@ -18,6 +18,8 @@ var FlashAPI = require('FlashAPI');
 var msgBox = require('ui.MsgBox');
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
+var IMModel = require('../../lib/IMModel');
+var imModel = IMModel.sharedInstanceIMModel();
 
 
 var View = BaseView.extend({
@@ -45,9 +47,9 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-            el: 'broadCastFlash'
-        });
+        //this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+        //    el: 'broadCastFlash'
+        //});
         this.defineEventInterface();
     },
     defineEventInterface: function () {
@@ -55,6 +57,7 @@ var View = BaseView.extend({
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
                 self.roomInfo = data;
+                self.checkUserCanJoinRoom();
             }
         });
 
@@ -75,7 +78,11 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorSendMessage', function (data) {
-            console.log(data);
+            console.log('event:visitorSendMessage, get', data);
+            self.beforeSendMsg(data);
+        });
+        Backbone.on('event:forbidUserSendMsg', function (data) {
+            self.forbidUserSendMsgHandler(data);
         });
 
     },
@@ -89,27 +96,39 @@ var View = BaseView.extend({
             eval('msgObj = ' + msgObj);
             msgObj.fromAccount = notifyInfo.fromAccount;
 
-            switch (msgObj.mstType) {
-                case 0: //文本消息
-                    self.addMessage(msgObj);
-                    break;
-                case 1: //发送礼物
-                    msgObj.content = '<b>' + msgObj.nickName + '</b>向主播发送礼物!';
-                    msgObj.nickName = '消息';
-                    msgObj.smallAvatar = '';
-                    self.addMessage(msgObj);
-                    break;
-                case 2: //公告
-                    break;
-                case 3: //点赞
-                    msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
-                    msgObj.nickName = '消息';
-                    msgObj.smallAvatar = '';
-                    self.addMessage(msgObj);
-                    break;
-                case 4: // 清屏
-                    break;
-            }
+            self.beforeSendMsg(msgObj);
+        }
+    },
+    beforeSendMsg: function (msgObj) {
+        var self = this;
+
+        if (msgObj.roomId != this.roomInfo.id) {
+            return;
+        }
+
+        switch (msgObj.mstType) {
+            case 0: //文本消息
+                self.addMessage(msgObj);
+                break;
+            case 1: //发送礼物
+                msgObj.content = '<b>' + msgObj.nickName + '</b>向主播发送礼物!';
+                //msgObj.nickName = '消息';
+                msgObj.smallAvatar = '';
+                self.addMessage(msgObj);
+                break;
+            case 2: //公告
+                break;
+            case 3: //点赞
+                msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
+                //msgObj.nickName = '消息';
+                msgObj.smallAvatar = '';
+                self.addMessage(msgObj);
+                break;
+            case 4: // 清屏
+                break;
+            case 5: // 禁言
+                Backbone.trigger('event:forbidUserSendMsg', msgObj);
+                break;
         }
     },
     /**
@@ -125,7 +144,8 @@ var View = BaseView.extend({
             nickName: '匿名',
             content: '',
             smallAvatar: '',
-            time: self.getDateStr(new Date())
+            time: self.getDateStr(new Date()),
+            fromAccount: ''
         }, msgObj);
 
         if (msgObj && msgObj.roomId !== self.roomInfo.id) {
@@ -134,14 +154,23 @@ var View = BaseView.extend({
         msgObj.content = self.filterEmoji(msgObj.content);
         if (msgObj && msgObj.content) {
             var tpl = _.template(this.getMessageTpl());
-            this.msgList.append(tpl(msgObj));
-            this.chatHistory.scrollTop(this.msgList.height());
+            this.elements.msgList.append(tpl(msgObj));
+            this.elements.chatHistory.scrollTop(this.elements.msgList.height());
             if (msgObj.mstType == 0) {
-                this.flashAPI.onReady(function () {
-                    this.notifying(msgObj);
-                });
+                try {
+                    this.flashAPI.onReady(function () {
+                        this.notifying(msgObj);
+                    });
+
+                } catch (e) {
+
+                }
             }
         }
+        YYTIMServer.sendMessage({
+            groupId: this.roomInfo.imGroupid,
+            msg: msgObj
+        });
         self.autoDeleteMsgList();
     },
     filterEmoji: function (content) {
@@ -157,12 +186,12 @@ var View = BaseView.extend({
     },
     //动删除前面的,仅留下500条
     autoDeleteMsgList: function () {
-        var total = this.msgList.children().length,
+        var total = this.elements.msgList.children().length,
             index = 0;
-        if (total > 1000) {
-            index = total - 500;
+        if (total > 500) {
+            index = total - 200;
         }
-        this.msgList.children(':lt(' + index + ')').remove();
+        this.elements.msgList.children(':lt(' + index + ')').remove();
     },
     //转换时间格式
     getDateStr: function (dateInt) {
@@ -197,7 +226,31 @@ var View = BaseView.extend({
         }, function (err) {
             errFn && errFn(err);
         });
+    },
 
+    checkUserCanJoinRoom: function () {
+        YYTIMServer.getGroupInfo(this.roomInfo.imGroupid, function (res) {
+            console.log(res);
+            if (res && res.ErrorCode == 0 || res.GroupInfo[0]) {
+                var info = res.GroupInfo[0];
+
+            }
+        }, function (err) {
+
+        });
+    },
+    checkUserStatus: function () {
+
+        return true;
+    },
+    forbidUserSendMsgHandler: function (notifyInfo) {
+        //notifyInfo.userId = notifyInfo.userId.replace('$0', '');
+        //console.log('forbidUserSendMsgHandler', notifyInfo);
+        //console.log(imModel.$get());
+        var imIdentifier = imModel.$get('data.imIdentifier');
+        if (notifyInfo.userId === imIdentifier) {
+            msgBox.showTip('您已被主播禁言10分钟!');
+        }
     }
 });
 

@@ -12,6 +12,11 @@
 'use strict';
 
 var BaseView = require('BaseView'); //View的基类
+var YYTIMServer = require('../../lib/YYT_IM_Server');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+var msgBox = require('ui.MsgBox');
+
 
 var View = BaseView.extend({
     el: '#sendMessageWrap', //设置View对象作用于的根元素，比如id
@@ -44,6 +49,24 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        this.defineEventInterface();
+        this.setTextAreatColor();
+
+    },
+    defineEventInterface: function () {
+        var self = this;
+        Backbone.on('event:roomInfoReady', function (data) {
+            if (data) {
+                self.roomInfo = data;
+            }
+        });
+        Backbone.on('event:visitorSendGift', function (data) {
+            self.sendMessageToChat(_.extend({
+                nickName: user.$get('userName'),
+                smallAvatar: user.$get('bigheadImg'),
+                roomId: self.roomInfo.id || ''
+            }, data));
+        });
 
     },
     showColorPanel: function () {
@@ -53,7 +76,6 @@ var View = BaseView.extend({
     },
     chooseColor: function (e) {
         var target = $(e.target);
-        //console.log();
         var color = target.data('color');
         this.setTextAreatColor(color);
         this.showColorPanel();
@@ -63,19 +85,34 @@ var View = BaseView.extend({
         this.elements.txtMessage.css('color', color || '#999999');
     },
     sendMsgClick: function () {
-        Backbone.trigger('event:visitorSendMessage', {
-            msg: this.elements.txtMessage.val(),
-            color: this.elements.btnChooseColor.data('color') || '#999999'
+        if (this.elements.txtMessage.val() < 1) {
+            return ''
+        }
+        this.sendMessageToChat({
+            mstType: 0,
+            content: this.elements.txtMessage.val(),
+            nickName: user.$get('userName'),
+            color: this.elements.btnChooseColor.data('color') || '#999999',
+            smallAvatar: user.$get('bigheadImg'),
+            roomId: this.roomInfo.id
         });
         this.elements.txtMessage.val('');
+    },
+    sendMessageToChat: function (msg) {
+        if (!this.roomInfo || this.roomInfo.status != 2) {
+            msgBox.showTip('该直播不在直播中,无法进行互动');
+            this.elements.txtMessage.val('');
+            return;
+        }
+        Backbone.trigger('event:visitorSendMessage', msg);
     },
     textMsgChanged: function (e) {
         var len = this.elements.txtMessage.val().length;
         if (e.keyCode == 13) {
             this.sendMsgClick();
         }
-        this.elements.limitTip.text(50 - len);
-        if(len >=50){
+        this.elements.limitTip.text(20 - len);
+        if (len >= 20) {
             return false;
         }
 

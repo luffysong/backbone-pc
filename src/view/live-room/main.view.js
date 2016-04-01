@@ -18,7 +18,9 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var msgBox = require('ui.MsgBox');
-
+var IMModel = require('../../lib/IMModel');
+var imModel = IMModel.sharedInstanceIMModel();
+var YYTIMServer = require('../../lib/YYT_IM_Server');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -29,6 +31,9 @@ var View = BaseView.extend({
     //当模板挂载到元素之前
     beforeMount: function () {
         var url = URL.parse(location.href);
+        if (!url.query['roomId']) {
+            window.history.go(-1);
+        }
         this.roomId = url.query['roomId'] || 1;
 
         this.roomDetail = RoomDetailModel.sigleInstance();
@@ -46,12 +51,37 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-
         this.initRoom();
-
         this.renderPage();
     },
 
+    fetchUserIMSig: function (groupId) {
+        var self = this;
+        imModel.fetchIMUserSig(function (sig) {
+            console.log(sig);
+            self.initWebIM();
+            var goBack = function () {
+                window.history.go(-1);
+            };
+            YYTIMServer.applyJoinGroup(groupId, function (res) {
+                //self.renderPage();
+                Backbone.trigger('event:roomInfoReady',self.roomInfo);
+            }, function (res) {
+                if(res.ErrorCode == 10013){
+                    //self.renderPage();
+                    Backbone.trigger('event:roomInfoReady',self.roomInfo);
+                }else{
+                    uiConfirm.show({
+                        title: '进入房间',
+                        content: '进入房间失败,请稍后重试',
+                        cancelFn: goBack,
+                        okFn: goBack
+                    });
+
+                }
+            });
+        });
+    },
     renderPage: function () {
         var RoomTitle = require('./room-title.view');
         new RoomTitle();
@@ -109,7 +139,7 @@ var View = BaseView.extend({
     },
     initRoom: function () {
         var self = this,
-            errFn = function(){
+            errFn = function () {
                 uiConfirm.show({
                     title: '提示',
                     content: '获取房间数据失败!',
@@ -129,13 +159,11 @@ var View = BaseView.extend({
                     'streamName': data.streamName,
                     'url': data.url
                 };
-                //self.renderPage();
-                Backbone.trigger('event:roomInfoReady', data);
+                self.roomInfo = data;
+
+                self.fetchUserIMSig(data.imGroupid);
                 self.checkRoomStatus(data.status);
-                //if (data.status == 2) {
-                //    self.initWebIM();
-                //}
-            }else{
+            } else {
                 errFn();
             }
         }, errFn);
@@ -149,8 +177,8 @@ var View = BaseView.extend({
             errFn && errFn(err);
         });
     },
-    checkRoomStatus: function(status){
-        switch (status){
+    checkRoomStatus: function (status) {
+        switch (status) {
             case 0:
                 msgBox.showTip('该直播尚未发布!');
                 break;

@@ -175,6 +175,24 @@ YYTIMServer.createIMChatRoom = function (okFn, errFn) {
     );
 };
 
+YYTIMServer.applyJoinGroup = function (groupId, okFn, errFn) {
+    var options = {
+        'GroupId': groupId,
+        'ApplyMsg': '直播间',
+        'UserDefinedField': ''
+    };
+    webim.applyJoinGroup(
+        options,
+        function (resp) {
+            okFn && okFn(resp);
+        },
+        function (err) {
+            errFn && errFn(err);
+        }
+    );
+};
+
+
 /**
  * 获取群组消息
  * @param groupId

@@ -14,7 +14,9 @@
 var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var uiConfirm = require('ui.Confirm');
 var GiftModel = require('../../model/anchor/gift.model.js');
+var PopularityModel = require('../../model/live-room/popularity-add.model');
 
 var msgBox = require('ui.MsgBox');
 
@@ -39,7 +41,9 @@ var View = BaseView.extend({
             size: 90000,
             type: 0
         };
+
         this.giftModel = GiftModel.sigleInstance();
+        htis.popularityModel = PopularityModel.sigleInstance();
 
         this.elements = {};
     },
@@ -112,28 +116,45 @@ var View = BaseView.extend({
         }
         this.sendGift({
             name: target.data('name'),
-            giftId: target.data('giftId')
+            giftId: target.data('giftid')
         });
     },
 
     sendGift: function (data) {
-
-        Backbone.trigger('event:visitorSendMessage', {
-            mstType: 1
+        Backbone.trigger('event:visitorSendGift', {
+            mstType: 1,
+            giftId: data.giftId,
+            giftNum: 1
         });
         msgBox.showOK('您向主播送出一个' + data.name);
     },
     topClick: function () {
-        msgBox.showOK('顶一下');
-        Backbone.trigger('event:visitorSendMessage', {
-            //mstType:
+        var self = this;
+        uiConfirm.show({
+            title: '顶上去',
+            content: '使用20积分支持一下MC,当前共有xx积分',
+            okFn: function () {
+                //this.popularityModel.executeJSONP({
+                //
+                //}, function())
+            }
         });
     },
+
     lickClick: function () {
-        Backbone.trigger('event:visitorSendMessage', {
+        var self = this;
+        if (this.isClicked) {
+            return;
+        }
+        this.isClicked = true;
+        Backbone.trigger('event:visitorSendGift', {
             mstType: 3
         });
         msgBox.showOK('赞一下');
+        setTimeout(function () {
+            self.isClicked = false;
+        }, 5000);
+
     },
     shareClick: function () {
         msgBox.showOK('分享一下');

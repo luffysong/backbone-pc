@@ -441,6 +441,12 @@
         //}
       }
       .item {
+
+        &:hover{
+          .name{
+            color: @main-bg-green-color;
+          }
+        }
         .played-icon {
           position: absolute;
           z-index: 10;
@@ -459,13 +465,9 @@
           }
           position: relative;
           &:hover {
-            .name {
-              color: @main-bg-green-color;
-            }
             .hover-wrap {
               display: inline-block;
             }
-
           }
           .hover-wrap {
             position: absolute;
