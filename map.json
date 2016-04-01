@@ -1,8 +1,9 @@
 {
-	"source":{
-		"anchor.main":"./src/anchor.main.js",
-		"anchorSetting.main":"./src/anchorSetting.main.js",
-		"login.main":"./src/login.main.js",
-		"liveRoom.main":"./src/live-room.main.js"
+	"source": {
+		"anchor.main": "./src/anchor.main.js",
+		"anchorSetting.main": "./src/anchorSetting.main.js",
+		"login.main": "./src/login.main.js",
+		"liveRoom.main": "./src/live-room.main.js",
+		"index.main": "./src/index.main.js"
 	}
 }

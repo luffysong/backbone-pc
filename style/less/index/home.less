@@ -1,3 +1,122 @@
-a{
-	flex:box;
+@mainColor:#27d5bf;
+@baseBackground:#fff;
+.index-center(@center: 1200px){
+    width: @center;
+    margin: 0 auto;
+}
+.index-container{
+    width:100%;
+    padding-top: 90px;
+}
+.top-container{
+    width: 100%;
+    height:760px;
+    background-color: #fff;
+    background-repeat: repeat-x;
+}
+.top-content{
+    .index-center;
+    .top-title{
+        width: 100%;
+        height: 75px;
+        line-height: 75px;
+        margin-left: 5px;
+        font-size: 20px;
+        color: @mainColor;
+    }
+    .top-flash-content{
+        width:100%;
+        height:570px;
+        background-color: #000;
+    }
+    .top-go-home{
+        width:100%;
+        height: 60px;
+        background-color: #fff;
+        position: relative;
+        .go-home-title{
+            font-size: 15px;
+            line-height: 60px;
+            padding-left: 30px;
+        }
+        .go-livehome{
+            width: 120px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            position: absolute;
+            right: 25px;
+            top: 10px;
+            color:#fff;
+            background-color: @mainColor;
+            cursor: pointer;
+        }
+    }
+}
+.list-container{
+    width: 100%;
+    background-color: @baseBackground;
+}
+.list-set-container{
+    .index-center;
+    .list-title{
+        height: 95px;
+        h1{
+            padding-top: 35px;
+            font-size: 18px;
+        }
+        .list-tag{
+            height: 20px;
+            position: relative;
+            border-bottom: 1px solid #ccc;
+            .live-in{
+                position: absolute;
+                bottom: -1px;
+                font-size: 10px;
+                padding-right: 5px;
+                color: #ccc;
+                background-color: #fff;
+            }
+        }
+    }
+    .list-box-content{
+        height: 590px;
+        li{
+            width: 385px;
+            height: 285px;
+            float: left;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+        @box-top-height:215px;
+        .box-content{
+            position: relative;
+            width: 385px;
+            height: 285px;
+            .box-cover-hover{
+                position: absolute;
+                height:@box-top-height;
+                z-index: 100;
+                display: none;
+            }
+            .box-top{
+                position: absolute;
+                height: @box-top-height;
+                z-index:98;
+                top: 0px;
+                .box-state{
+                    width: 65px;
+                    height: 65px;
+                    background-color: red;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                }
+            }
+            .box-bottom{
+                position: absolute;
+                height: 65px;
+            }
+        }
+    }
 }
