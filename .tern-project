@@ -6,6 +6,7 @@
   "loadEagerly": [
     "src/**/*.js",
     "link/YYT_PC_Modules/**/*.js",
-    "link/YYT_PC_Component/**/*.js"
+    "link/YYT_PC_Component/**/*.js",
+    ""
   ]
 }

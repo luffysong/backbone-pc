@@ -1192,6 +1192,9 @@ img {
 .edit_Bg_form .formBox .submit:hover {
   background: #5bdfcd;
 }
+:root .hover-wrap {
+  filter: none;
+}
 .index-container {
   width: 100%;
   padding-top: 90px;
@@ -1277,37 +1280,135 @@ img {
   width: 385px;
   height: 285px;
   float: left;
-  margin-left: 10px;
+  margin-right: 10px;
   margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.list-set-container .list-box-content .box-live-direct-video a:hover .box-cover-hover {
+  display: block;
 }
 .list-set-container .list-box-content .box-content {
   position: relative;
-  width: 385px;
+  width: 386px;
   height: 285px;
 }
 .list-set-container .list-box-content .box-content .box-cover-hover {
+  width: 386px;
   position: absolute;
-  height: 215px;
+  height: 217px;
   z-index: 100;
+  background-image: url('/img/index/index-icepy-4.png');
+  background-repeat: no-repeat;
   display: none;
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-popularity {
+  height: 28px;
+  position: absolute;
+  padding-left: 10px;
+  padding-right: 10px;
+  top: 7px;
+  right: 7px;
+  color: #fff;
+  text-align: center;
+  line-height: 28px;
+  background: rgba(0, 0, 0, 0.4);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66000000', EndColorStr='#66000000');
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-popularity span {
+  color: #27d5bf;
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-click {
+  width: 52px;
+  height: 52px;
+  background-image: url('/img/index/index-icepy-5.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  margin-top: -26px;
+  margin-left: -26px;
+  top: 50%;
+  left: 50%;
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push {
+  height: 28px;
+  position: absolute;
+  padding-left: 10px;
+  padding-right: 10px;
+  left: 7px;
+  bottom: 7px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66000000', EndColorStr='#66000000');
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .praise {
+  width: 50%;
+  height: 28px;
+  float: left;
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .praise .praise-img {
+  width: 18px;
+  height: 18px;
+  background-image: url('/img/index/index-icepy-8.png');
+  background-repeat: no-repeat;
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .push {
+  width: 50%;
+  height: 28px;
+  float: left;
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .push .push-img {
+  width: 18px;
+  height: 18px;
+  background-image: url('/img/index/index-icepy-9.png');
+  background-repeat: no-repeat;
 }
 .list-set-container .list-box-content .box-content .box-top {
   position: absolute;
-  height: 215px;
+  height: 217px;
   z-index: 98;
   top: 0px;
 }
 .list-set-container .list-box-content .box-content .box-top .box-state {
   width: 65px;
   height: 65px;
-  background-color: red;
   position: absolute;
   top: 0px;
   left: 0px;
 }
+.list-set-container .list-box-content .box-content .box-top .box-live-direct {
+  background-image: url('/img/index/index-icepy-1.png');
+  background-repeat: no-repeat;
+}
+.list-set-container .list-box-content .box-content .box-top .box-foreshow {
+  background-image: url('/img/index/index-icepy-3.png');
+  background-repeat: no-repeat;
+}
 .list-set-container .list-box-content .box-content .box-bottom {
   position: absolute;
+  width: 100%;
   height: 65px;
+  bottom: 0px;
+}
+.list-set-container .list-box-content .box-content .box-bottom .box-title {
+  line-height: 65px;
+  padding-left: 5px;
+  float: left;
+  font-size: 14px;
+}
+.list-set-container .list-box-content .box-content .box-bottom .box-praise {
+  width: 115px;
+  height: 41px;
+  float: right;
+  background: #27d5bf;
+  margin-top: 10px;
+}
+.list-set-container .list-box-content .box-content .box-bottom .box-praise button {
+  width: 115px;
+  height: 41px;
+  text-align: right;
+  padding-right: 11px;
+  color: #fff;
+  font-size: 15px;
+  background: url('/img/index/index-icepy-6.png') no-repeat;
 }
 
 /*# sourceMappingURL=index.main.css.map*/
