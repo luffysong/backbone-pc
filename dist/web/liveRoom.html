@@ -11,7 +11,7 @@
     <meta name="keywords" content="">
     <link rel="stylesheet" type="text/css" href="../style/common.css">
     <link rel="stylesheet" type="text/css" href="../style/loginbox.css">
-    <link rel="stylesheet" href="../style/css/anchor-7efc7125b1.main.css">
+    <link rel="stylesheet" href="../style/css/anchor-780e774005.main.css">
 </head>
 <body>
 <!--^顶部导航栏  -->
@@ -38,7 +38,7 @@
                 <div class="BroadcastRoom" id="broadCastFlash">
                     <ul class="bulletScreen">
                         <li>
-                            <div class="tm">弹幕消息...</div>
+                            <div class="tm">弹幕消息加载中...</div>
                         </li>
                     </ul>
                 </div>
@@ -49,43 +49,14 @@
                             <ul id="gift-items" class="gift-items">
                                 <!--礼物列表-->
                                 <script type="text/template" id="gift-item-tpl">
-                                <li>
-                                    <img src="/img/live_bg_gift_03.jpg" alt="">
-                                    <span class="name">红心11</span>
-                                </li>
+                                    <% for(var i= 0, len = data.length; i < len; i++) {%>
+                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
+                                        data-giftId="<%=data[i].giftId%>">
+                                        <img src="<%=data[i].images.logo%>" alt="">
+                                        <span class="name"><%=data[i].name%></span>
+                                    </li>
+                                    <% } %>
                                 </script>
-                                <li>
-                                    <img src="/img/live_bg_gift_03.jpg" alt="">
-                                    <span class="name">红心</span>
-                                </li>
-                                <li>
-                                    <img src="/img/live_bg_gift_12.jpg" alt="">
-                                    <span class="name">鲜花</span>
-                                </li>
-                                <li>
-                                    <img src="/img/live_bg_gift_05.jpg" alt="">
-                                    <span class="name">啤酒</span>
-                                </li>
-                                <li>
-                                    <img src="/img/live_bg_gift_07.jpg" alt="">
-                                    <span class="name">烟花</span>
-                                </li>
-                                <li>
-                                    <img src="/img/live_bg_gift_09.jpg" alt="">
-                                    <span class="name">鼓掌</span>
-                                </li>
-                                <li>
-                                    <img src="/img/live_bg_gift_12.jpg" alt="">
-                                    <span class="name">鲜花</span>
-                                </li>
-                                <li>
-                                    <img src="/img/live_bg_gift_05.jpg" alt="">
-                                    <span class="name">啤酒</span>
-                                </li>
-                                <li>
-                                    <img src="/img/live_bg_gift_07.jpg" alt="">
-                                    <span class="name">烟花</span>
-                                </li>
                             </ul>
                         </div>
                         <a href="#" class="jcarousel-control-prev ctrl pre"></a>
@@ -95,11 +66,11 @@
                     <!--</div>-->
                     <div class="like-wrap Right ">
                         <div class="btns boderRadAll_5">
-                            <button class="share Left Hand boderRadAll_5"><i></i></button>
-                            <button class="Hand like Left gary2"><i></i>34</button>
+                            <button id="btnShare" class="share Left Hand boderRadAll_5"><i></i></button>
+                            <button id="btnLike" class="Hand like Left gary2"><i></i>34</button>
                             <div class="Clear"></div>
                         </div>
-                        <button class="btn Hand btn-support boderRadAll_3"><i></i> 顶一下</button>
+                        <button id="btnTop" class="btn Hand btn-support boderRadAll_3"><i></i> 顶一下</button>
                     </div>
                     <div class="Clear"></div>
                 </div>
@@ -112,28 +83,76 @@
                 <div id="anchorCtrlChat">
                     <!--消息列表-->
                 </div>
-                <div class="send-msg-wrap pAll10">
-                    <div class="msg-text">
-                        <textarea class="pAll5 gary2 msg Left" cols="30" rows="5" placeholder="请输入消息"></textarea>
-                        <button class="Hand btn send Left">发送</button>
-                        <div class="Clear"></div>
-                    </div>
-                    <div class="msg-footer mTop5">
-                        <!--<button>face</button>-->
-                        <button class="size Hand"><i></i></button>
-                        <div class="tip Right gary1">您还可以输入<span class="gary2">324</span>字</div>
-                        <div class="Clear"></div>
-                    </div>
+                <div id="sendMessageWrap" class="send-msg-wrap pAll10">
+                    <!--<div class="msg-text">-->
+                    <!--<textarea class="pAll5 gary2 msg Left" cols="30" rows="5" placeholder="请输入消息"></textarea>-->
+                    <!--<button class="Hand btn send Left">发送</button>-->
+                    <!--<div class="Clear"></div>-->
+                    <!--</div>-->
+                    <!--<div class="msg-footer mTop5">-->
+                    <!--&lt;!&ndash;<button>face</button>&ndash;&gt;-->
+                    <!--<button class="size Hand"><i></i></button>-->
+                    <!--<div class="tip Right gary1">您还可以输入<span class="gary2">324</span>字</div>-->
+                    <!--<div class="Clear"></div>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
-        <div class="recent-list-wrap mTop15">
+        <div class="recent-list-wrap mTop15" id="anchorPlayedList">
             <div class="list-header">播主播过的</div>
 
             <div class="jcarousel-wrapper  list" id="palyedJcarousel">
-                <div class="jcarousel" >
+                <div class="jcarousel">
                     <ul id="playedListWrap">
                         <!--已播放列表-->
+                        <script type="text/template" id="anchorPlayedTpl">
+                            <li>
+                                <div class="item Left mLeft10 mRight10">
+                                    <a class="img-wrap" href="">
+                                        <div class="hover-wrap Hand">
+                                            <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                                        </div>
+                                        <img src="/img/user_47.jpg" alt="/img/user_47.jpg">
+                                    </a>
+                                    <div class="name mTop15">EXO签售EXO签售直</div>
+                                    <div class="info mTop10 gary2">
+                                        <div class="Clear"></div>
+                                    </div>
+                                    <div class="btn-wrap mTop10 pAll5">
+                                        <div class="Left gary2 mTop10 pBottom10">人气: <span class="count">234234</span>
+                                        </div>
+                                        <span class="Right mTop10 pBottom10"><i class="like-count"></i>34</span>
+                                        <span class="Right mRight20 mTop10 pBottom10"><i
+                                            class="coments-count"></i>234</span>
+                                        <div class="Clear"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </script>
+                        <!-- -->
+                        <li>
+                            <div class="item Left mLeft10 mRight10">
+                                <a class="img-wrap" href="">
+                                    <div class="hover-wrap Hand">
+                                        <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                                    </div>
+                                    <img src="/img/user_47.jpg" alt="/img/user_47.jpg">
+                                </a>
+                                <div class="name mTop15">EXO签售EXO签售直</div>
+                                <div class="info mTop10 gary2">
+                                    <div class="Clear"></div>
+                                </div>
+                                <div class="btn-wrap mTop10 pAll5">
+                                    <div class="Left gary2 mTop10 pBottom10">人气: <span class="count">234234</span>
+                                    </div>
+                                    <span class="Right mTop10 pBottom10"><i class="like-count"></i>34</span>
+                                        <span class="Right mRight20 mTop10 pBottom10"><i
+                                            class="coments-count"></i>234</span>
+                                    <div class="Clear"></div>
+                                </div>
+                            </div>
+                        </li>
+
                     </ul>
                 </div>
                 <a href="#" class="jcarousel-control-prev ctrl pre"></a>
@@ -173,7 +192,7 @@
 <!--<script type="text/javascript" src="../link/jquery-1.12.2.min.js"></script>-->
 <script type="text/javascript" src="../link/jQuery/jquery.jcarousel.min.js"></script>
 <script src="http://api.geetest.com/get.php"></script>
-<script src="../js/common-ea1a75aec3.js"></script>
-<script src="../js/anchor-62196302fb.main.js"></script>
+<script src="../js/common-2fb69ec4dd.js"></script>
+<script src="../js/anchor-0d39217d6d.main.js"></script>
 </body>
 </html>
