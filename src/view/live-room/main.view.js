@@ -61,13 +61,14 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.getUserInfo();
-        this.initRoom();
+        //this.initRoom();
         this.renderPage();
     },
 
     fetchUserIMSig: function (groupId) {
         var self = this;
         imModel.fetchIMUserSig(function (sig) {
+            self.userIMSig = sig;
             self.initWebIM();
             var goBack = function () {
                 window.history.go(-1);
@@ -173,14 +174,32 @@ var View = BaseView.extend({
 
                 self.fetchUserIMSig(data.imGroupid);
                 self.checkRoomStatus(data.status);
+
             } else {
                 errFn();
             }
         }, errFn);
     },
+    getGroupInfo: function (imGroupId) {
+        var self = this;
+        YYTIMServer.getGroupInfo(imGroupId, function (res) {
+            if (res && res.ErrorCode == 0) {
+                self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
+                    return item.GroupId == self.roomInfo.imGroupid;
+                });
+                Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
+                self.checkUserIsKickout(self.currentGroupInfo.Notification);
+            } else {
+            }
+        }, function (err) {
+        });
+    },
     getUserInfo: function () {
+        var self = this;
         UserInfo.getInfo(function (userInfo) {
+            self.userInfo = userInfo;
             Backbone.trigger('event:currentUserInfoReady', userInfo);
+            self.initRoom();
         });
         //this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
         //    if(res){
@@ -207,9 +226,35 @@ var View = BaseView.extend({
             case 1:
                 break;
             case 2:
+                this.getGroupInfo(this.roomInfo.imGroupid);
                 break;
             case 3:
                 break;
+        }
+    },
+    checkUserIsKickout: function (notifyInfo) {
+        var self = this;
+        var notify = null;
+        try {
+            notify = JSON.parse(notifyInfo);
+        } catch (e) {
+        }
+        if (notify) {
+            var result = _.find(notify.forbidUsers, function (item) {
+                return item.replace('$0', '') == self.userIMSig.userId;
+            });
+            if (result) {
+                uiConfirm.show({
+                    title: '禁止进入',
+                    content: '您已经被主播踢出房间!',
+                    okFn: function () {
+                        self.goBack();
+                    },
+                    cancelFn: function () {
+                        self.goBack();
+                    }
+                });
+            }
         }
     },
     goBack: function () {

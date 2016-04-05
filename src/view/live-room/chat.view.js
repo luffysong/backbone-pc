@@ -82,9 +82,9 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorSendMessage', function (data) {
-            if(UserInfo.isDisbaleTalk()){
+            if (UserInfo.isDisbaleTalk()) {
                 msgBox.showTip('您已经被禁言,暂时无法操作');
-            }else{
+            } else {
                 self.beforeSendMsg(data);
             }
         });
@@ -95,6 +95,10 @@ var View = BaseView.extend({
             if (userInfo) {
                 self.currentUserInfo = userInfo;
             }
+        });
+
+        Backbone.on('event:IMGroupInfoReady', function (info) {
+            self.currentGroupInfo = info;
         });
 
     },
@@ -265,7 +269,7 @@ var View = BaseView.extend({
         });
     },
     checkUserStatus: function () {
-        if(UserInfo.isDisbaleTalk()){
+        if (UserInfo.isDisbaleTalk()) {
             msgBox.showTip('您已经被禁言,暂无法操作');
             return false;
         }
