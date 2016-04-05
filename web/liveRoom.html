@@ -110,53 +110,37 @@
                     <ul id="playedListWrap">
                         <!--已播放列表-->
                         <script type="text/template" id="anchorPlayedTpl">
+                            <%
+                                var item =null;
+                                for(var i = 0, len = roomList.length; i < len; i++ ) {
+                                item = roomList[i];
+                            %>
                             <li>
                                 <div class="item Left mLeft10 mRight10">
-                                    <a class="img-wrap" href="">
+                                    <a class="img-wrap" href="/web/liveRoom.html?roomId=<%=item.roomId%>">
                                         <div class="hover-wrap Hand">
                                             <img class="played-icon" src="/img/live_paly_03.png" alt="">
                                         </div>
-                                        <img src="/img/user_47.jpg" alt="/img/user_47.jpg">
+                                        <img src="<%=item.posterPic%>" data-src="/img/user_47.jpg" alt="">
                                     </a>
-                                    <div class="name mTop15">EXO签售EXO签售直</div>
+                                    <div class="name mTop15"><%=item.roomName%></div>
                                     <div class="info mTop10 gary2">
                                         <div class="Clear"></div>
                                     </div>
                                     <div class="btn-wrap mTop10 pAll5">
-                                        <div class="Left gary2 mTop10 pBottom10">人气: <span class="count">234234</span>
+                                        <div class="Left gary2 mTop10 pBottom10">人气: <span class="count"><%=item.popularity%></span>
                                         </div>
-                                        <span class="Right mTop10 pBottom10"><i class="like-count"></i>34</span>
+                                        <span class="Right mTop10 pBottom10"><i class="like-count"></i><%=item.push%></span>
                                         <span class="Right mRight20 mTop10 pBottom10"><i
-                                            class="coments-count"></i>234</span>
+                                            class="coments-count"></i><%=item.seen%></span>
                                         <div class="Clear"></div>
                                     </div>
                                 </div>
                             </li>
+                            <%
+                                }
+                            %>
                         </script>
-                        <!-- -->
-                        <li>
-                            <div class="item Left mLeft10 mRight10">
-                                <a class="img-wrap" href="">
-                                    <div class="hover-wrap Hand">
-                                        <img class="played-icon" src="/img/live_paly_03.png" alt="">
-                                    </div>
-                                    <img src="/img/user_47.jpg" alt="/img/user_47.jpg">
-                                </a>
-                                <div class="name mTop15">EXO签售EXO签售直</div>
-                                <div class="info mTop10 gary2">
-                                    <div class="Clear"></div>
-                                </div>
-                                <div class="btn-wrap mTop10 pAll5">
-                                    <div class="Left gary2 mTop10 pBottom10">人气: <span class="count">234234</span>
-                                    </div>
-                                    <span class="Right mTop10 pBottom10"><i class="like-count"></i>34</span>
-                                        <span class="Right mRight20 mTop10 pBottom10"><i
-                                            class="coments-count"></i>234</span>
-                                    <div class="Clear"></div>
-                                </div>
-                            </div>
-                        </li>
-
                     </ul>
                 </div>
                 <a href="#" class="jcarousel-control-prev ctrl pre"></a>

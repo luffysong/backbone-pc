@@ -19,6 +19,7 @@ var GiftModel = require('../../model/anchor/gift.model');
 var PopularityModel = require('../../model/live-room/popularity-add.model');
 
 var msgBox = require('ui.MsgBox');
+var UserInfo = require('./user.js');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -141,12 +142,16 @@ var View = BaseView.extend({
     },
 
     sendGift: function (data) {
-        Backbone.trigger('event:visitorSendGift', {
-            mstType: 1,
-            giftId: data.giftId,
-            giftNum: 1
-        });
-        msgBox.showOK('您向主播送出一个' + data.name);
+        if (UserInfo.isDisbaleTalk()) {
+            msgBox.showTip('您已经被禁言,暂时无法操作');
+        } else {
+            Backbone.trigger('event:visitorSendGift', {
+                mstType: 1,
+                giftId: data.giftId,
+                giftNum: 1
+            });
+            msgBox.showOK('您向主播送出一个' + data.name);
+        }
     },
     topClick: function () {
         var self = this;

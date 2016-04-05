@@ -21,7 +21,8 @@ var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var GiftModel = require('../../model/anchor/gift.model');
-var Cookie = require('cookie');
+//var Storage = require('store');
+var UserInfo = require('./user.js');
 
 
 var View = BaseView.extend({
@@ -81,7 +82,11 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorSendMessage', function (data) {
-            self.beforeSendMsg(data);
+            if(UserInfo.isDisbaleTalk()){
+                msgBox.showTip('您已经被禁言,暂时无法操作');
+            }else{
+                self.beforeSendMsg(data);
+            }
         });
         Backbone.on('event:forbidUserSendMsg', function (data) {
             self.forbidUserSendMsgHandler(data);
@@ -260,15 +265,22 @@ var View = BaseView.extend({
         });
     },
     checkUserStatus: function () {
+        if(UserInfo.isDisbaleTalk()){
+            msgBox.showTip('您已经被禁言,暂无法操作');
+            return false;
+        }
 
-        return true;
+        return false;
     },
     forbidUserSendMsgHandler: function (notifyInfo) {
         var imIdentifier = imModel.$get('data.imIdentifier');
         if (notifyInfo.userId === imIdentifier) {
             msgBox.showTip('您已被主播禁言10分钟!');
             Backbone.trigger('event:currentUserDisableTalk', true);
+            //Storage.set('disableTalkTime', new Date());
+            var cur = new Date();
 
+            UserInfo.setDisableTalk(cur.getTime() + 10 * 60 * 1000);
         }
     }
 });

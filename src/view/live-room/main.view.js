@@ -22,6 +22,7 @@ var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
+var UserInfo = require('./user.js');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -178,13 +179,16 @@ var View = BaseView.extend({
         }, errFn);
     },
     getUserInfo: function () {
-        this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
-            if(res){
-                Backbone.trigger('event:currentUserInfoReady', res.data);
-            }
-        }, function () {
-
+        UserInfo.getInfo(function (userInfo) {
+            Backbone.trigger('event:currentUserInfoReady', userInfo);
         });
+        //this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
+        //    if(res){
+        //        Backbone.trigger('event:currentUserInfoReady', res.data);
+        //    }
+        //}, function () {
+        //
+        //});
     },
     getRoomInfo: function (okFn, errFn) {
         var self = this;
@@ -209,7 +213,7 @@ var View = BaseView.extend({
         }
     },
     goBack: function () {
-        window.history.go(-1);
+        //window.history.go(-1);
     }
 
 });
