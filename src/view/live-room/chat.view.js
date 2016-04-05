@@ -107,7 +107,9 @@ var View = BaseView.extend({
         var self = this;
         var msgObj = {};
 
-        if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
+        console.log('msgObj',notifyInfo);
+
+        if (notifyInfo && notifyInfo.type ==0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
             msgObj = msgObj.replace(/&quot;/g, '\'');
             eval('msgObj = ' + msgObj);
@@ -136,6 +138,7 @@ var View = BaseView.extend({
                 self.addMessage(msgObj);
                 break;
             case 2: //公告
+                Backbone.trigger('event:updateRoomNotice', msgObj);
                 break;
             case 3: //点赞
                 msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';

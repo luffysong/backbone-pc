@@ -117,7 +117,6 @@ var View = BaseView.extend({
         var self = this;
 
         this.giftModel.get(this.giftParams, function (res) {
-            console.log(res);
             if (res && res.code == '0') {
                 var template = _.template(self.giftTpl);
                 self.elemens.giftItems.html(template(res || []));
