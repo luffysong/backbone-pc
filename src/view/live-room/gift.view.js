@@ -112,7 +112,6 @@ var View = BaseView.extend({
             .jcarouselControl({
                 target: '+=1'
             });
-
     },
     initGiftList: function () {
         var self = this;
@@ -128,8 +127,19 @@ var View = BaseView.extend({
             console.log(err);
         });
     },
+    roomStatusCheck: function(){
+        if (!this.roomInfo || this.roomInfo.status != 2) {
+            msgBox.showTip('该直播不在直播中,无法进行互动');
+            return false;
+        }
+        return true;
+    },
     giftClick: function (e) {
         var target = e.target;
+        if(!this.roomStatusCheck()){
+            return;
+        }
+
         if (e.target.nodeName != 'LI') {
             target = $(e.target).parent()
         } else {
@@ -155,6 +165,9 @@ var View = BaseView.extend({
     },
     topClick: function () {
         var self = this;
+        if(!this.roomStatusCheck()){
+            return;
+        }
         if (!this.isNeedPopup) {
             self.pushPopularity(2);
             return;
@@ -177,6 +190,9 @@ var View = BaseView.extend({
     },
 
     pushPopularity: function (type) {
+        if(!this.roomStatusCheck()){
+            return;
+        }
         this.popularityParams.type = type;
         this.popularityParams.roomId = this.roomInfo.id;
         this.popularityModel.executeJSONP(this.popularityParams, function (res) {
@@ -192,6 +208,9 @@ var View = BaseView.extend({
 
     lickClick: function () {
         var self = this;
+        if(!this.roomStatusCheck()){
+            return;
+        }
         if (this.isClicked) {
             return;
         }
