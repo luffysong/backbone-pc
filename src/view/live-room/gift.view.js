@@ -15,7 +15,7 @@ var BaseView = require('BaseView'); //View的基类
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var uiConfirm = require('ui.Confirm');
-var GiftModel = require('../../model/anchor/gift.model.js');
+var GiftModel = require('../../model/anchor/gift.model');
 var PopularityModel = require('../../model/live-room/popularity-add.model');
 
 var msgBox = require('ui.MsgBox');
@@ -71,6 +71,12 @@ var View = BaseView.extend({
             }
         });
 
+        Backbone.on('event:currentUserInfoReady', function (userInfo) {
+            if (userInfo) {
+                self.currentUserInfo = userInfo;
+            }
+        });
+
         this.initGiftList();
 
         this.initCarousel();
@@ -111,6 +117,7 @@ var View = BaseView.extend({
         var self = this;
 
         this.giftModel.get(this.giftParams, function (res) {
+            console.log(res);
             if (res && res.code == '0') {
                 var template = _.template(self.giftTpl);
                 self.elemens.giftItems.html(template(res || []));
@@ -147,7 +154,7 @@ var View = BaseView.extend({
             self.pushPopularity(2);
             return;
         }
-        var content = '<div>使用20积分支持一下MC,当前共有xx积分</div> '
+        var content = '<div>使用20积分支持一下MC,当前共有' + (this.currentUserInfo.totalMarks || 0) + '积分</div> '
             + '<div style="text-align:right;"> <label><input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
         uiConfirm.show({
             title: '顶上去',

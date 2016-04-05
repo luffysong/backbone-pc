@@ -20,6 +20,8 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
 var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
+var GiftModel = require('../../model/anchor/gift.model');
+var Cookie = require('cookie');
 
 
 var View = BaseView.extend({
@@ -42,6 +44,7 @@ var View = BaseView.extend({
             chatHistory: el.find('#chatHistory')
         };
 
+        this.giftModel = GiftModel.sigleInstance();
         this.roomDetail = RoomDetailModel.sigleInstance();
 
     },
@@ -83,6 +86,11 @@ var View = BaseView.extend({
         Backbone.on('event:forbidUserSendMsg', function (data) {
             self.forbidUserSendMsgHandler(data);
         });
+        Backbone.on('event:currentUserInfoReady', function (userInfo) {
+            if (userInfo) {
+                self.currentUserInfo = userInfo;
+            }
+        });
 
     },
 
@@ -112,7 +120,8 @@ var View = BaseView.extend({
                 self.addMessage(msgObj);
                 break;
             case 1: //发送礼物
-                msgObj.content = '<b>' + msgObj.nickName + '</b>向主播发送礼物!';
+                var giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
+                msgObj.content = '<b>' + msgObj.nickName + '</b>向主播赠送' + giftName + '!';
                 //msgObj.nickName = '消息';
                 msgObj.smallAvatar = '';
                 self.addMessage(msgObj);
@@ -255,12 +264,11 @@ var View = BaseView.extend({
         return true;
     },
     forbidUserSendMsgHandler: function (notifyInfo) {
-        //notifyInfo.userId = notifyInfo.userId.replace('$0', '');
-        //console.log('forbidUserSendMsgHandler', notifyInfo);
-        //console.log(imModel.$get());
         var imIdentifier = imModel.$get('data.imIdentifier');
         if (notifyInfo.userId === imIdentifier) {
             msgBox.showTip('您已被主播禁言10分钟!');
+            Backbone.trigger('event:currentUserDisableTalk', true);
+
         }
     }
 });

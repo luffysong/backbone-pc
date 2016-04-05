@@ -21,6 +21,7 @@ var msgBox = require('ui.MsgBox');
 var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('../../lib/YYT_IM_Server');
+var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -38,10 +39,17 @@ var View = BaseView.extend({
 
         this.roomDetail = RoomDetailModel.sigleInstance();
 
+        this.anchorInfoModel = AnchorUserInfoModel.sigleInstance();
+
         this.roomDetailParams = {
             deviceinfo: '{"aid": "30001001"}',
             access_token: 'web-' + user.getToken(),
             roomId: ''
+        };
+
+        this.anchorInfoParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken()
         };
 
     },
@@ -51,6 +59,7 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        this.getUserInfo();
         this.initRoom();
         this.renderPage();
     },
@@ -64,12 +73,12 @@ var View = BaseView.extend({
             };
             YYTIMServer.applyJoinGroup(groupId, function (res) {
                 //self.renderPage();
-                Backbone.trigger('event:roomInfoReady',self.roomInfo);
+                Backbone.trigger('event:roomInfoReady', self.roomInfo);
             }, function (res) {
-                if(res.ErrorCode == 10013){
+                if (res.ErrorCode == 10013) {
                     //self.renderPage();
-                    Backbone.trigger('event:roomInfoReady',self.roomInfo);
-                }else{
+                    Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                } else {
                     uiConfirm.show({
                         title: '进入房间',
                         content: '进入房间失败,请稍后重试',
@@ -117,7 +126,7 @@ var View = BaseView.extend({
                 Backbone.trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
-                console.log('-----------------------------------------',notifyInfo);
+                console.log('-----------------------------------------', notifyInfo);
                 Backbone.trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {
@@ -167,6 +176,15 @@ var View = BaseView.extend({
                 errFn();
             }
         }, errFn);
+    },
+    getUserInfo: function () {
+        this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
+            if(res){
+                Backbone.trigger('event:currentUserInfoReady', res.data);
+            }
+        }, function () {
+
+        });
     },
     getRoomInfo: function (okFn, errFn) {
         var self = this;

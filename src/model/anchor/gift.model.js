@@ -52,12 +52,19 @@ GiftModel.prototype.get = function (data, okFn, errFn) {
             jsonp: 'callback'
         })
         .done(function (res) {
-            cacheData = res;
             okFn && okFn(res);
+            cacheData = res;
         })
         .fail(function (err) {
             errFn && errFn(err);
         });
+};
+
+GiftModel.prototype.findGift = function (giftId) {
+    var list = cacheData.data;
+    return _.find(list, function (item) {
+        return item.giftId == giftId;
+    });
 };
 
 GiftModel.sigleInstance = function () {
