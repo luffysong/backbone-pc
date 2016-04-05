@@ -43,7 +43,6 @@ var View = BaseView.extend({
     defineEventInterface: function () {
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
-            console.log('event:roomInfoReady',data);
             if (data) {
                 self.bindData(data);
 

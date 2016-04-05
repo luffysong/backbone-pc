@@ -78,7 +78,6 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorSendMessage', function (data) {
-            console.log('event:visitorSendMessage, get', data);
             self.beforeSendMsg(data);
         });
         Backbone.on('event:forbidUserSendMsg', function (data) {
@@ -243,7 +242,6 @@ var View = BaseView.extend({
 
     checkUserCanJoinRoom: function () {
         YYTIMServer.getGroupInfo(this.roomInfo.imGroupid, function (res) {
-            console.log(res);
             if (res && res.ErrorCode == 0 || res.GroupInfo[0]) {
                 var info = res.GroupInfo[0];
 

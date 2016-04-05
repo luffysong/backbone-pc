@@ -58,7 +58,6 @@ var View = BaseView.extend({
     fetchUserIMSig: function (groupId) {
         var self = this;
         imModel.fetchIMUserSig(function (sig) {
-            console.log(sig);
             self.initWebIM();
             var goBack = function () {
                 window.history.go(-1);

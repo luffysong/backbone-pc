@@ -86,7 +86,6 @@ var View = BaseView.extend({
 
 		this.noticeGetModel.executeJSONP(this.noticeGetParams, function (res) {
 			if (res && res.data) {
-				console.log(self.elements.noticeWrap);
 				var notice = null;
 				res.data.placards && (notice = res.data.placards[0]);
 				if (notice) {
