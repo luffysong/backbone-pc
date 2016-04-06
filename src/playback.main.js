@@ -7,7 +7,7 @@ $(function(){
     var TopbarView = require('./view/topbar/topbar.view');
     new TopbarView();
 
-    var MainView = require('./view/live-room/main.view');
+    var MainView = require('./view/playback/main.view');
     new MainView();
 
     require('../style/less/live-room.less');

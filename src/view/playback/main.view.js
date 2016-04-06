@@ -23,7 +23,7 @@ var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
-var UserInfo = require('./user.js');
+var UserInfo = require('../live-room/user.js');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -74,9 +74,9 @@ var View = BaseView.extend({
     },
     defineEventInterface: function () {
         var self = this;
-        Backbone.on('event:UserKickOut', function (notifyInfo) {
-            self.checkUserIsKickout(notifyInfo);
-        });
+        //Backbone.on('event:UserKickOut', function (notifyInfo) {
+        //    self.checkUserIsKickout(notifyInfo);
+        //});
     },
     fetchUserIMSig: function (groupId) {
         var self = this;
@@ -112,23 +112,23 @@ var View = BaseView.extend({
         });
     },
     renderPage: function () {
-        var RoomTitle = require('./room-title.view');
+        var RoomTitle = require('../live-room/room-title.view');
         new RoomTitle();
 
-        var ChatView = require('./chat.view');
-        new ChatView();
+        //var ChatView = require('../live-room/chat.view');
+        //new ChatView();
 
-        var SendMessageView = require('./send-message.view');
-        new SendMessageView();
+        //var SendMessageView = require('./send-message.view');
+        //new SendMessageView();
 
-        var AnchorCardView = require('./anchor-card.view');
+        var AnchorCardView = require('../live-room/anchor-card.view');
         new AnchorCardView();
 
-        var PlayedListView = require('./played-list.view');
+        var PlayedListView = require('../live-room/played-list.view');
         new PlayedListView();
 
-        var GiftView = require('./gift.view');
-        new GiftView();
+        //var GiftView = require('./gift.view');
+        //new GiftView();
 
     },
     initWebIM: function () {
@@ -189,9 +189,10 @@ var View = BaseView.extend({
                     'url': data.url
                 };
                 self.roomInfo = data;
+                Backbone.trigger('event:roomInfoReady', self.roomInfo);
 
-                self.fetchUserIMSig(data.imGroupid);
-                self.checkRoomStatus(data.status);
+                //self.fetchUserIMSig(data.imGroupid);
+                //self.checkRoomStatus(data.status);
 
             } else {
                 errFn();
