@@ -107,8 +107,6 @@ var View = BaseView.extend({
         var self = this;
         var msgObj = {};
 
-        console.log('msgObj',notifyInfo);
-
         if (notifyInfo && notifyInfo.type ==0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
             msgObj = msgObj.replace(/&quot;/g, '\'');

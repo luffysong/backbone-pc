@@ -58,13 +58,22 @@ var View = BaseView.extend({
     //当模板挂载到元素之后
     afterMount: function () {
         var el = this.$el;
-        this.elemens = {
-            giftItems: el.find('#gift-items')
+        this.elements = {
+            giftItems: el.find('#gift-items'),
+            txtLikeCount: el.find('#txtLikeCount')
         };
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+
+        this.defineEventInterface();
+
+        this.initGiftList();
+
+        this.initCarousel();
+    },
+    defineEventInterface: function () {
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
@@ -77,10 +86,12 @@ var View = BaseView.extend({
                 self.currentUserInfo = userInfo;
             }
         });
+        Backbone.on('event:updateRoomInfo', function (data) {
+            if (data) {
+                self.elements.txtLikeCount.text(data.likeCount || 0);
+            }
+        });
 
-        this.initGiftList();
-
-        this.initCarousel();
     },
     initCarousel: function () {
         var warp = $('#giftwarp');
@@ -119,14 +130,14 @@ var View = BaseView.extend({
         this.giftModel.get(this.giftParams, function (res) {
             if (res && res.code == '0') {
                 var template = _.template(self.giftTpl);
-                self.elemens.giftItems.html(template(res || []));
+                self.elements.giftItems.html(template(res || []));
                 self.initCarousel();
             }
         }, function (err) {
             console.log(err);
         });
     },
-    roomStatusCheck: function(){
+    roomStatusCheck: function () {
         if (!this.roomInfo || this.roomInfo.status != 2) {
             msgBox.showTip('该直播不在直播中,无法进行互动');
             return false;
@@ -135,7 +146,7 @@ var View = BaseView.extend({
     },
     giftClick: function (e) {
         var target = e.target;
-        if(!this.roomStatusCheck()){
+        if (!this.roomStatusCheck()) {
             return;
         }
 
@@ -164,7 +175,7 @@ var View = BaseView.extend({
     },
     topClick: function () {
         var self = this;
-        if(!this.roomStatusCheck()){
+        if (!this.roomStatusCheck()) {
             return;
         }
         if (!this.isNeedPopup) {
@@ -189,7 +200,7 @@ var View = BaseView.extend({
     },
 
     pushPopularity: function (type) {
-        if(!this.roomStatusCheck()){
+        if (!this.roomStatusCheck()) {
             return;
         }
         this.popularityParams.type = type;
@@ -207,7 +218,7 @@ var View = BaseView.extend({
 
     lickClick: function () {
         var self = this;
-        if(!this.roomStatusCheck()){
+        if (!this.roomStatusCheck()) {
             return;
         }
         if (this.isClicked) {

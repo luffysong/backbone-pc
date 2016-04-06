@@ -17,6 +17,7 @@ var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
+var RoomLongPollingModel = require('../../model/anchor/room-longPolling.model');
 var msgBox = require('ui.MsgBox');
 var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
@@ -38,6 +39,8 @@ var View = BaseView.extend({
         }
         this.roomId = url.query['roomId'] || 1;
 
+        this.roomInfoPeriod = 10 * 1000;
+
         this.roomDetail = RoomDetailModel.sigleInstance();
 
         this.anchorInfoModel = AnchorUserInfoModel.sigleInstance();
@@ -48,6 +51,8 @@ var View = BaseView.extend({
             roomId: ''
         };
 
+        this.roomLongPolling = RoomLongPollingModel.sigleInstance();
+
         this.anchorInfoParams = {
             deviceinfo: '{"aid": "30001001"}',
             access_token: 'web-' + user.getToken()
@@ -56,6 +61,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之后
     afterMount: function () {
+
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -76,10 +82,16 @@ var View = BaseView.extend({
             YYTIMServer.applyJoinGroup(groupId, function (res) {
                 //self.renderPage();
                 Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                if (self.roomInfo.status == 2) {
+                    self.loopRoomInfo();
+                }
             }, function (res) {
                 if (res.ErrorCode == 10013) {
                     //self.renderPage();
                     Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                    if (self.roomInfo.status == 2) {
+                        self.loopRoomInfo();
+                    }
                 } else {
                     uiConfirm.show({
                         title: '进入房间',
@@ -259,6 +271,29 @@ var View = BaseView.extend({
     },
     goBack: function () {
         //window.history.go(-1);
+    },
+    loopRoomInfo: function () {
+        var self = this;
+
+        self.roomInfoTimeId = setTimeout(function () {
+            self.roomDetailParams.roomId = self.roomId;
+            //self.getRoomInfo(function (res) {
+            self.getRoomLoopInfo(function (res) {
+                var data = res.data;
+                Backbone.trigger('event:updateRoomInfo', data);
+                self.loopRoomInfo();
+            });
+        }, self.roomInfoPeriod);
+    },
+    getRoomLoopInfo: function (okFn, errFn) {
+        var self = this;
+        self.roomDetailParams.roomId = self.roomId;
+        this.roomLongPolling.executeJSONP(self.roomDetailParams, function (response) {
+            okFn && okFn(response);
+        }, function (err) {
+            errFn && errFn(err);
+        });
+
     }
 
 });
