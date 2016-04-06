@@ -39,6 +39,7 @@ var View = BaseView.extend({
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
+                console.log(self.infoTpl);
                 var tpl = _.template(self.infoTpl);
                 var html = tpl(data);
                 self.roomInfoWrap.append(html);
