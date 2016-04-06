@@ -75,13 +75,15 @@ var View = BaseView.extend({
 			}
 		}
 		var html = this.compileHTML(livePreviewTemp,{'items':items});
+
+		this.$el.css()
 		this.$el.html(html);
 	},
 	pushLiveVideo:function(e){
 		var el = $(e.currentTarget);
 		var roomId = el.attr('data-id');
 		var status = el.attr('data-status');
-		
+
 	}
 });
 
