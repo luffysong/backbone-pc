@@ -1,1 +1,0 @@
-"use strict";var BaseView=require("BaseView"),View=BaseView.extend({el:"",rawLoader:function(){var e=require("../template/index");return e},events:{},beforeMount:function(){},afterMount:function(){},ready:function(){}});module.exports=View;

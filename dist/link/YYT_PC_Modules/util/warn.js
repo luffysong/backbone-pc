@@ -1,1 +1,0 @@
-"use strict";var Config=require("config"),Debug=require("./debug"),warn=function(e,r){Config.debug&&Debug.warn(e,r)};module.exports=warn;

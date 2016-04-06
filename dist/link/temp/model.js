@@ -1,1 +1,0 @@
-"use strict";var BaseModel=require("BaseModel"),sigleInstance=null,Model=BaseModel.extend({url:"{{url_prefix}}/mock/index.json",beforeEmit:function(e){}});Model.sigleInstance=function(){return sigleInstance||(sigleInstance=new Model),sigleInstance},module.exports=Model;
