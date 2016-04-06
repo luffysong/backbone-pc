@@ -87,18 +87,19 @@
         li{
             width: 385px;
             height: 285px;
-            float: left;
             margin-right: 10px;
             margin-bottom: 10px;
             border-bottom: 1px solid #ccc;
+            display: inline-block;
         }
         @box-top-height:217px;
         .box-live-direct-video{
-            a:hover{
+            a:hover,.box-trailer:hover{
                 .box-cover-hover{
                     display: block;
                 }
             }
+
         }
         .box-content{
             position: relative;
@@ -140,6 +141,26 @@
                     top:50%;
                     left: 50%;
                 }
+                .box-show-trailer{
+                    width: 52px;
+                    height: 52px;
+                    background-image: url('/img/index/index-icepy-7.png');
+                    background-repeat: no-repeat;
+                    position: absolute;
+                    margin-top: -26px;
+                    margin-left: -26px;
+                    top:50%;
+                    left: 50%;
+                    color:#fff;
+                    text-align: center;
+                    span{
+                        // padding: 5px;
+                        display: inline-block;
+                        width: 28px;
+                        font-size: 12px;
+                        margin-top:13px;
+                    }
+                }
                 .box-praise-push{
                     height: 28px;
                     position: absolute;
@@ -151,34 +172,48 @@
                     background: rgba(0, 0, 0, 0.4);
                     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66000000', EndColorStr='#66000000');
                     .praise{
-                        width: 50%;
                         height: 28px;
+                        line-height: 28px;
                         float: left;
                         .praise-img{
+                            vertical-align: middle;
                             width:18px;
                             height: 18px;
+                            display: inline-block;
                             background-image: url('/img/index/index-icepy-8.png');
                             background-repeat: no-repeat;
                         }
                     }
                     .push{
-                        width:50%;
+                        margin-left: 10px;
                         height: 28px;
+                        line-height: 28px;
                         float: left;
                         .push-img{
+                            vertical-align: middle;
                             width:18px;
                             height:18px;
+                            display: inline-block;
                             background-image: url('/img/index/index-icepy-9.png');
                             background-repeat: no-repeat;
                         }
+                    }
+                    .box-time{
+                        height: 28px;
+                        line-height: 28px;
                     }
                 }
             }
             .box-top{
                 position: absolute;
+                width:386px;
                 height: @box-top-height;
                 z-index:98;
                 top: 0px;
+                img.box-top-img{
+                    width:386px;
+                    height: @box-top-height;
+                }
                 .box-state{
                     width: 65px;
                     height: 65px;
@@ -188,6 +223,10 @@
                 }
                 .box-live-direct{
                     background-image: url('/img/index/index-icepy-1.png');
+                    background-repeat: no-repeat;
+                }
+                .box-live-trailer{
+                    background-image: url('/img/index/index-icepy-3.png');
                     background-repeat: no-repeat;
                 }
                 .box-foreshow{

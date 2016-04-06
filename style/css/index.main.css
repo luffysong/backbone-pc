@@ -1279,12 +1279,13 @@ img {
 .list-set-container .list-box-content li {
   width: 385px;
   height: 285px;
-  float: left;
   margin-right: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
+  display: inline-block;
 }
-.list-set-container .list-box-content .box-live-direct-video a:hover .box-cover-hover {
+.list-set-container .list-box-content .box-live-direct-video a:hover .box-cover-hover,
+.list-set-container .list-box-content .box-live-direct-video .box-trailer:hover .box-cover-hover {
   display: block;
 }
 .list-set-container .list-box-content .box-content {
@@ -1328,6 +1329,25 @@ img {
   top: 50%;
   left: 50%;
 }
+.list-set-container .list-box-content .box-content .box-cover-hover .box-show-trailer {
+  width: 52px;
+  height: 52px;
+  background-image: url('/img/index/index-icepy-7.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  margin-top: -26px;
+  margin-left: -26px;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  text-align: center;
+}
+.list-set-container .list-box-content .box-content .box-cover-hover .box-show-trailer span {
+  display: inline-block;
+  width: 28px;
+  font-size: 12px;
+  margin-top: 13px;
+}
 .list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push {
   height: 28px;
   position: absolute;
@@ -1340,32 +1360,46 @@ img {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66000000', EndColorStr='#66000000');
 }
 .list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .praise {
-  width: 50%;
   height: 28px;
+  line-height: 28px;
   float: left;
 }
 .list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .praise .praise-img {
+  vertical-align: middle;
   width: 18px;
   height: 18px;
+  display: inline-block;
   background-image: url('/img/index/index-icepy-8.png');
   background-repeat: no-repeat;
 }
 .list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .push {
-  width: 50%;
+  margin-left: 10px;
   height: 28px;
+  line-height: 28px;
   float: left;
 }
 .list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .push .push-img {
+  vertical-align: middle;
   width: 18px;
   height: 18px;
+  display: inline-block;
   background-image: url('/img/index/index-icepy-9.png');
   background-repeat: no-repeat;
 }
+.list-set-container .list-box-content .box-content .box-cover-hover .box-praise-push .box-time {
+  height: 28px;
+  line-height: 28px;
+}
 .list-set-container .list-box-content .box-content .box-top {
   position: absolute;
+  width: 386px;
   height: 217px;
   z-index: 98;
   top: 0px;
+}
+.list-set-container .list-box-content .box-content .box-top img.box-top-img {
+  width: 386px;
+  height: 217px;
 }
 .list-set-container .list-box-content .box-content .box-top .box-state {
   width: 65px;
@@ -1376,6 +1410,10 @@ img {
 }
 .list-set-container .list-box-content .box-content .box-top .box-live-direct {
   background-image: url('/img/index/index-icepy-1.png');
+  background-repeat: no-repeat;
+}
+.list-set-container .list-box-content .box-content .box-top .box-live-trailer {
+  background-image: url('/img/index/index-icepy-3.png');
   background-repeat: no-repeat;
 }
 .list-set-container .list-box-content .box-content .box-top .box-foreshow {

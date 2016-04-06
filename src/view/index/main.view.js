@@ -19,6 +19,7 @@ var TopBarView = require('../topbar/topbar.view');
 var user = UserModel.sharedInstanceUserModel();
 var RecommendView = require('./recommended.view');
 var LivePreView = require('./livePreview.view');
+var PlaybackView = require('./playback.view');
 var View = BaseView.extend({
 	el:'#indexContent', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
@@ -38,6 +39,7 @@ var View = BaseView.extend({
 	ready:function(){
         this.recommendview = new RecommendView();
         this.livepreview = new LivePreView();
+        this.playback = new PlaybackView();
 	}
 });
 
