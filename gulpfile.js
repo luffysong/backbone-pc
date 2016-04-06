@@ -128,6 +128,7 @@ gulp.task('build:move', ['clean'], function () {
       movePath + 'link/base.library.js',
       movePath + 'link/webim.js',
       movePath + 'link/json2.js',
+      movePath + 'link/jQuery/jquery.jcarousel.min.js',
       movePath + 'img/**/*.*',
       movePath + 'web/*.*',
       movePath + '*.html',
