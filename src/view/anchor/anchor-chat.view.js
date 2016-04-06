@@ -312,7 +312,6 @@ var View = BaseView.extend({
         }
         msgObj.content = self.filterEmoji(msgObj.content);
         if (msgObj && msgObj.content) {
-            console.log(this.getMessageTpl());
             var tpl = _.template(this.getMessageTpl());
             this.msgList.append(tpl(msgObj));
             this.chatHistory.scrollTop(this.msgList.height());

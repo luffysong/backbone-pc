@@ -164,7 +164,7 @@ var View = BaseView.extend({
     sendGift: function (data) {
         if (UserInfo.isDisbaleTalk()) {
             msgBox.showTip('您已经被禁言,暂时无法操作');
-        } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
+        } else if (UserInfo.isLockScreen(this.roomInfo.id)) {
             msgBox.showTip('主播进行了锁屏,暂时无法互动');
         } else {
             Backbone.trigger('event:visitorSendGift', {
