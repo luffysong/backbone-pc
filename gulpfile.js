@@ -125,11 +125,10 @@ gulp.task('build:move', ['clean'], function () {
   var dontMovePath = '!./';
   var movePath = './';
   return gulp.src([
-      movePath + 'link/**/*.*',
-      //movePath + 'link/base.library.js',
-      //movePath + 'link/webim.js',
-      //movePath + 'link/json2.js',
-      //movePath + 'link/jQuery/jquery.jcarousel.min.js',
+      movePath + 'link/base.library.js',
+      movePath + 'link/webim.js',
+      movePath + 'link/json2.js',
+      movePath + 'link/jQuery/jquery.jcarousel.min.js',
       movePath + 'img/**/*.*',
       movePath + 'web/*.*',
       movePath + '*.html',

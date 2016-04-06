@@ -1709,13 +1709,16 @@ img {
   margin-top: -170px;
   background: #fff;
 }
+.edit_annmoucement_con .green {
+  color: #27d5bf;
+}
 .edit_annmoucement_con .edit_title {
-  height: 56px;
+  height: 40px;
   background: #000;
   width: 100%;
   color: #8a8a8a;
   font-size: 14px;
-  line-height: 56px;
+  line-height: 40px;
   text-indent: 15px;
   overflow: hidden;
 }
@@ -1726,11 +1729,12 @@ img {
 }
 .edit_annmoucement_con .close {
   float: right;
-  font-size: 28px;
+  font-size: 24px;
   padding-right: 7px;
   font-family: 'arial';
   font-weight: lighter;
   cursor: pointer;
+  margin-right: 5px;
 }
 .edit_annmoucement_con .close:hover {
   color: #39c4b2;
@@ -1773,11 +1777,13 @@ img {
   font-size: 14px;
   color: #999;
 }
-.edit_annmoucement_con .editCon a:hover {
-  background: #27d5bf;
+.edit_annmoucement_con .editCon a:hover,
+.edit_annmoucement_con .editCon .active {
+  background: #27d5bf!important;
   color: #fff;
 }
 .edit_annmoucement_con .editCon .content {
+  min-height: 55px;
   word-wrap: break-word;
   word-break: break-all;
 }
