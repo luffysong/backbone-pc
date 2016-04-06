@@ -1,0 +1,1 @@
+"use strict";var debug={};debug.warn=function(r,n){var o=void 0!==typeof console;if(o){if(console.warn("[YYT PC Warning]:"+r),n)throw n;var e=new Error("Warning Stack Trace");console.warn(e.stack)}},module.exports=debug;

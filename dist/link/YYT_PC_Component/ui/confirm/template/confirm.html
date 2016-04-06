@@ -1,0 +1,13 @@
+<div id="UIConfigWrap" class="shadow_screen">
+    <div class="shadow"></div>
+    <div class="edit_annmoucement_con" style="margin-bottom: 16px; width: 400px;margin-left:-200px;">
+        <h2 class="edit_title"><span id="UIConfirmTitle"><%=title%></span> <span class="close UIConfirmClose">X</span></h2>
+        <div class="editCon" style="">
+            <div class="content" style="padding:16px; font-size: 14px;"><%=content%></div>
+            <p class="btn-wrap" style="">
+                <a style="display: <%= cancelBtn?'inline-block':'none'%>;" href="javascript:;" class="cancel UIConfirmClose">取消</a>
+                <a id="UIConfirmOk" href="javascript:;" class="submit">确定</a>
+            </p>
+        </div>
+    </div>
+</div>
