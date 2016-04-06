@@ -104,8 +104,6 @@ var View = BaseView.extend({
             if (res && res.msg === 'SUCCESS' && res.data.totalCount > 0) {
                 var template = _.template(self.anchorPlayedTpl);
                 self.playedList.html(template(res.data));
-
-                console.log(self.anchorPlayedTpl);
                 self.initCarousel();
 
             } else {

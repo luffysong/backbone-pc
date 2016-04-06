@@ -66,11 +66,18 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        this.defineEventInterface();
+
         this.getUserInfo();
         //this.initRoom();
         this.renderPage();
     },
-
+    defineEventInterface: function () {
+        var self = this;
+        Backbone.on('event:UserKickOut', function (notifyInfo) {
+            self.checkUserIsKickout(notifyInfo);
+        });
+    },
     fetchUserIMSig: function (groupId) {
         var self = this;
         imModel.fetchIMUserSig(function (sig) {
@@ -140,7 +147,6 @@ var View = BaseView.extend({
                 Backbone.trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
-                console.log('-----------------------------------------', notifyInfo);
                 Backbone.trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {
@@ -199,8 +205,10 @@ var View = BaseView.extend({
                 self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
                     return item.GroupId == self.roomInfo.imGroupid;
                 });
+
                 Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
                 self.checkUserIsKickout(self.currentGroupInfo.Notification);
+
             } else {
             }
         }, function (err) {
@@ -248,7 +256,11 @@ var View = BaseView.extend({
         var self = this;
         var notify = null;
         try {
-            notify = JSON.parse(notifyInfo);
+            if (_.isString(notifyInfo)) {
+                notify = JSON.parse(notifyInfo);
+            } else {
+                notify = notifyInfo;
+            }
         } catch (e) {
         }
         if (notify) {
@@ -256,6 +268,8 @@ var View = BaseView.extend({
                 return item.replace('$0', '') == self.userIMSig.userId;
             });
             if (result) {
+                UserInfo.setKickout(self.roomId, true);
+
                 uiConfirm.show({
                     title: '禁止进入',
                     content: '您已经被主播踢出房间!',

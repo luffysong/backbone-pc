@@ -121,7 +121,6 @@ var View = BaseView.extend({
             } else {
                 msgBox.showError(txt + '操作失败,请稍后重试');
             }
-
         }, function(err) {
             msgBox.showError(txt + '操作失败,请稍后重试');
         });
