@@ -55,7 +55,7 @@ var View = BaseView.extend({
 	},
 	playbackRender:function(items){
 		var le = items.length;
-		var u = 0;
+		var u = 6;
 		if (le < 3) {
 			u = 3;
 		}else{

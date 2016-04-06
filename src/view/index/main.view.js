@@ -38,7 +38,9 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
         this.recommendview = new RecommendView();
-        this.livepreview = new LivePreView();
+        this.livepreview = new LivePreView({
+            topbar:this.topbar
+        });
         this.playback = new PlaybackView();
 	}
 });
