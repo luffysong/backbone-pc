@@ -19,6 +19,7 @@ var GiftModel = require('../../model/anchor/gift.model');
 var PopularityModel = require('../../model/live-room/popularity-add.model');
 
 var msgBox = require('ui.MsgBox');
+var UserInfo = require('./user.js');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -57,13 +58,22 @@ var View = BaseView.extend({
     //当模板挂载到元素之后
     afterMount: function () {
         var el = this.$el;
-        this.elemens = {
-            giftItems: el.find('#gift-items')
+        this.elements = {
+            giftItems: el.find('#gift-items'),
+            txtLikeCount: el.find('#txtLikeCount')
         };
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+
+        this.defineEventInterface();
+
+        this.initGiftList();
+
+        this.initCarousel();
+    },
+    defineEventInterface: function () {
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
@@ -76,10 +86,12 @@ var View = BaseView.extend({
                 self.currentUserInfo = userInfo;
             }
         });
+        Backbone.on('event:updateRoomInfo', function (data) {
+            if (data) {
+                self.elements.txtLikeCount.text(data.likeCount || 0);
+            }
+        });
 
-        this.initGiftList();
-
-        this.initCarousel();
     },
     initCarousel: function () {
         var warp = $('#giftwarp');
@@ -111,24 +123,33 @@ var View = BaseView.extend({
             .jcarouselControl({
                 target: '+=1'
             });
-
     },
     initGiftList: function () {
         var self = this;
 
         this.giftModel.get(this.giftParams, function (res) {
-            console.log(res);
             if (res && res.code == '0') {
                 var template = _.template(self.giftTpl);
-                self.elemens.giftItems.html(template(res || []));
+                self.elements.giftItems.html(template(res || []));
                 self.initCarousel();
             }
         }, function (err) {
             console.log(err);
         });
     },
+    roomStatusCheck: function () {
+        if (!this.roomInfo || this.roomInfo.status != 2) {
+            msgBox.showTip('该直播不在直播中,无法进行互动');
+            return false;
+        }
+        return true;
+    },
     giftClick: function (e) {
         var target = e.target;
+        if (!this.roomStatusCheck()) {
+            return;
+        }
+
         if (e.target.nodeName != 'LI') {
             target = $(e.target).parent()
         } else {
@@ -141,15 +162,24 @@ var View = BaseView.extend({
     },
 
     sendGift: function (data) {
-        Backbone.trigger('event:visitorSendGift', {
-            mstType: 1,
-            giftId: data.giftId,
-            giftNum: 1
-        });
-        msgBox.showOK('您向主播送出一个' + data.name);
+        if (UserInfo.isDisbaleTalk()) {
+            msgBox.showTip('您已经被禁言,暂时无法操作');
+        } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
+            msgBox.showTip('主播进行了锁屏,暂时无法互动');
+        } else {
+            Backbone.trigger('event:visitorSendGift', {
+                mstType: 1,
+                giftId: data.giftId,
+                giftNum: 1
+            });
+            msgBox.showOK('您向主播送出一个' + data.name);
+        }
     },
     topClick: function () {
         var self = this;
+        if (!this.roomStatusCheck()) {
+            return;
+        }
         if (!this.isNeedPopup) {
             self.pushPopularity(2);
             return;
@@ -172,6 +202,9 @@ var View = BaseView.extend({
     },
 
     pushPopularity: function (type) {
+        if (!this.roomStatusCheck()) {
+            return;
+        }
         this.popularityParams.type = type;
         this.popularityParams.roomId = this.roomInfo.id;
         this.popularityModel.executeJSONP(this.popularityParams, function (res) {
@@ -187,6 +220,9 @@ var View = BaseView.extend({
 
     lickClick: function () {
         var self = this;
+        if (!this.roomStatusCheck()) {
+            return;
+        }
         if (this.isClicked) {
             return;
         }

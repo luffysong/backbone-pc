@@ -1,0 +1,36 @@
+{{each items as item i}}
+    <li>
+        {{if item.status === 2}}
+            <div class="box-content box-live-direct-video">
+                <a href="/web/liveRoom.html?roomId={{item.roomId}}">
+                    <div class="box-top">
+                        <img src="{{item.posterPic}}"/>
+                        <span class="box-state box-live-direct"></span>
+                    </div>
+                    <div class="box-cover-hover">
+                        <div class="box-popularity boderRadAll_3">
+                            人气：<span>123456</span>
+                        </div>
+                        <div class="box-click"></div>
+                        <div class="box-praise-push boderRadAll_3">
+                            <div class="praise">
+                                <span class="praise-img"></span>
+                                <span class="praise-text">23</span>
+                            </div>
+                            <div class="push">
+                                <span class="push-img"></span>
+                                <span class="push-text">1234</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class="box-bottom">
+                    <div class="box-title">周华健签售</div>
+                    <div class="box-praise">
+                        <button>顶上去</button>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+    </li>
+{{/each}}

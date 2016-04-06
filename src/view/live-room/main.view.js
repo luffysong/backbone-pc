@@ -17,11 +17,13 @@ var uiConfirm = require('ui.Confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
+var RoomLongPollingModel = require('../../model/anchor/room-longPolling.model');
 var msgBox = require('ui.MsgBox');
 var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
+var UserInfo = require('./user.js');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -37,6 +39,8 @@ var View = BaseView.extend({
         }
         this.roomId = url.query['roomId'] || 1;
 
+        this.roomInfoPeriod = 10 * 1000;
+
         this.roomDetail = RoomDetailModel.sigleInstance();
 
         this.anchorInfoModel = AnchorUserInfoModel.sigleInstance();
@@ -47,6 +51,8 @@ var View = BaseView.extend({
             roomId: ''
         };
 
+        this.roomLongPolling = RoomLongPollingModel.sigleInstance();
+
         this.anchorInfoParams = {
             deviceinfo: '{"aid": "30001001"}',
             access_token: 'web-' + user.getToken()
@@ -56,17 +62,26 @@ var View = BaseView.extend({
     //当模板挂载到元素之后
     afterMount: function () {
 
+
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        this.defineEventInterface();
+
         this.getUserInfo();
-        this.initRoom();
+        //this.initRoom();
         this.renderPage();
     },
-
+    defineEventInterface: function () {
+        var self = this;
+        Backbone.on('event:UserKickOut', function (notifyInfo) {
+            self.checkUserIsKickout(notifyInfo);
+        });
+    },
     fetchUserIMSig: function (groupId) {
         var self = this;
         imModel.fetchIMUserSig(function (sig) {
+            self.userIMSig = sig;
             self.initWebIM();
             var goBack = function () {
                 window.history.go(-1);
@@ -74,10 +89,16 @@ var View = BaseView.extend({
             YYTIMServer.applyJoinGroup(groupId, function (res) {
                 //self.renderPage();
                 Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                if (self.roomInfo.status == 2) {
+                    self.loopRoomInfo();
+                }
             }, function (res) {
                 if (res.ErrorCode == 10013) {
                     //self.renderPage();
                     Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                    if (self.roomInfo.status == 2) {
+                        self.loopRoomInfo();
+                    }
                 } else {
                     uiConfirm.show({
                         title: '进入房间',
@@ -126,7 +147,6 @@ var View = BaseView.extend({
                 Backbone.trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
-                console.log('-----------------------------------------', notifyInfo);
                 Backbone.trigger('event:onGroupInfoChangeNotify', notifyInfo);
             },
             'groupSystemNotifys': {
@@ -172,19 +192,42 @@ var View = BaseView.extend({
 
                 self.fetchUserIMSig(data.imGroupid);
                 self.checkRoomStatus(data.status);
+
             } else {
                 errFn();
             }
         }, errFn);
     },
-    getUserInfo: function () {
-        this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
-            if(res){
-                Backbone.trigger('event:currentUserInfoReady', res.data);
-            }
-        }, function () {
+    getGroupInfo: function (imGroupId) {
+        var self = this;
+        YYTIMServer.getGroupInfo(imGroupId, function (res) {
+            if (res && res.ErrorCode == 0) {
+                self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
+                    return item.GroupId == self.roomInfo.imGroupid;
+                });
 
+                Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
+                self.checkUserIsKickout(self.currentGroupInfo.Notification);
+
+            } else {
+            }
+        }, function (err) {
         });
+    },
+    getUserInfo: function () {
+        var self = this;
+        UserInfo.getInfo(function (userInfo) {
+            self.userInfo = userInfo;
+            Backbone.trigger('event:currentUserInfoReady', userInfo);
+            self.initRoom();
+        });
+        //this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
+        //    if(res){
+        //        Backbone.trigger('event:currentUserInfoReady', res.data);
+        //    }
+        //}, function () {
+        //
+        //});
     },
     getRoomInfo: function (okFn, errFn) {
         var self = this;
@@ -203,13 +246,68 @@ var View = BaseView.extend({
             case 1:
                 break;
             case 2:
+                this.getGroupInfo(this.roomInfo.imGroupid);
                 break;
             case 3:
                 break;
         }
     },
+    checkUserIsKickout: function (notifyInfo) {
+        var self = this;
+        var notify = null;
+        try {
+            if (_.isString(notifyInfo)) {
+                notify = JSON.parse(notifyInfo);
+            } else {
+                notify = notifyInfo;
+            }
+        } catch (e) {
+        }
+        if (notify) {
+            var result = _.find(notify.forbidUsers, function (item) {
+                return item.replace('$0', '') == self.userIMSig.userId;
+            });
+            if (result) {
+                UserInfo.setKickout(self.roomId, true);
+
+                uiConfirm.show({
+                    title: '禁止进入',
+                    content: '您已经被主播踢出房间!',
+                    okFn: function () {
+                        self.goBack();
+                    },
+                    cancelFn: function () {
+                        self.goBack();
+                    }
+                });
+            }
+        }
+    },
     goBack: function () {
-        window.history.go(-1);
+        //window.history.go(-1);
+    },
+    loopRoomInfo: function () {
+        var self = this;
+
+        self.roomInfoTimeId = setTimeout(function () {
+            self.roomDetailParams.roomId = self.roomId;
+            //self.getRoomInfo(function (res) {
+            self.getRoomLoopInfo(function (res) {
+                var data = res.data;
+                Backbone.trigger('event:updateRoomInfo', data);
+                self.loopRoomInfo();
+            });
+        }, self.roomInfoPeriod);
+    },
+    getRoomLoopInfo: function (okFn, errFn) {
+        var self = this;
+        self.roomDetailParams.roomId = self.roomId;
+        this.roomLongPolling.executeJSONP(self.roomDetailParams, function (response) {
+            okFn && okFn(response);
+        }, function (err) {
+            errFn && errFn(err);
+        });
+
     }
 
 });

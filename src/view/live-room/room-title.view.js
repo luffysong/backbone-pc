@@ -50,13 +50,14 @@ var View = BaseView.extend({
         });
         Backbone.on('event:updateRoomInfo', function (data) {
             if (data) {
-
+                self.elements.onLine.text(data.currentOnline || 0);
+                self.elements.popularity.text(data.popularity || 0);
             }
         });
     },
-    bindData: function(data){
+    bindData: function (data) {
         var els = this.elements;
-        els.roomName.text(data.roomName ||'' );
+        els.roomName.text(data.roomName || '');
         els.onLine.text(data.online || 0);
         els.popularity.text(data.popularity || 0);
     }

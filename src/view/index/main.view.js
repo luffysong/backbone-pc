@@ -12,31 +12,33 @@
 
  'use strict';
 
- var BaseView = require('BaseView'); //View的基类
- var UserModel = require('UserModel');
- var MsgBox = require('ui.MsgBox');
- var TopBarView = require('../topbar/topbar.view');
- var user = UserModel.sharedInstanceUserModel();
+var BaseView = require('BaseView'); //View的基类
+var UserModel = require('UserModel');
+var MsgBox = require('ui.MsgBox');
+var TopBarView = require('../topbar/topbar.view');
+var user = UserModel.sharedInstanceUserModel();
+var RecommendView = require('./recommended.view');
+var LivePreView = require('./livePreview.view');
+var View = BaseView.extend({
+	el:'#indexContent', //设置View对象作用于的根元素，比如id
+	rawLoader:function(){ //可用此方法返回字符串模版
+	},
+	events:{ //监听事件
 
- var View = BaseView.extend({
- 	el:'#indexContent', //设置View对象作用于的根元素，比如id
- 	rawLoader:function(){ //可用此方法返回字符串模版
- 	},
- 	events:{ //监听事件
-
- 	},
- 	//当模板挂载到元素之前
- 	beforeMount:function(){
+	},
+	//当模板挂载到元素之前
+	beforeMount:function(){
         this.topbar = new TopBarView();
- 	},
- 	//当模板挂载到元素之后
- 	afterMount:function(){
+	},
+	//当模板挂载到元素之后
+	afterMount:function(){
 
- 	},
- 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
- 	ready:function(){
+	},
+	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
+	ready:function(){
+        this.recommendview = new RecommendView();
+        this.livepreview = new LivePreView();
+	}
+});
 
- 	}
- });
-
- module.exports = View;
+module.exports = View;

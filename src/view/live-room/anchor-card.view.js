@@ -70,6 +70,12 @@ var View = BaseView.extend({
 
 			}
 		});
+		Backbone.on('event:updateRoomNotice', function (data) {
+			console.log('event:updateRoomNotice', data);
+			if (data) {
+				self.elements.noticeWrap.text(data.content || '暂无公告');
+			}
+		});
 	},
 	bindData: function(data){
 		var els = this.elements;
