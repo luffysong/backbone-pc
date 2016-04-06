@@ -1273,16 +1273,13 @@ img {
   color: #ccc;
   background-color: #fff;
 }
-.list-set-container .list-box-content {
-  height: 590px;
-}
 .list-set-container .list-box-content li {
   width: 385px;
   height: 285px;
-  margin-right: 10px;
+  margin-right: 15px;
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
-  display: inline-block;
+  float: left;
 }
 .list-set-container .list-box-content .box-live-direct-video a:hover .box-cover-hover,
 .list-set-container .list-box-content .box-live-direct-video .box-trailer:hover .box-cover-hover {

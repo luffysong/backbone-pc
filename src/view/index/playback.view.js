@@ -37,6 +37,7 @@ var View = BaseView.extend({
 	//当模板挂载到元素之后
 	afterMount:function(){
 		this.playbackModel = new PlaybackModel();
+		this.parentNode = this.$el.parent();
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
@@ -54,16 +55,24 @@ var View = BaseView.extend({
 	},
 	playbackRender:function(items){
 		var le = items.length;
-		if (le < 6) {
-			var temp = items[0];
-			while(le < 6){
-				le++
-				items.push({
-					'completion':1
-				})
+		var u = 0;
+		if (le < 3) {
+			u = 3;
+		}else{
+			if (le < 6) {
+				u = 6
 			}
 		}
+		while (le < u) {
+			le++;
+			items.push({
+				'completion':1
+			})
+		}
 		var html = this.compileHTML(playbackTemp,{'items':items});
+		this.parentNode.css({
+			height:590/(6/u)
+		});
 		this.$el.html(html);
 	}
 });
