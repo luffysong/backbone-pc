@@ -233,7 +233,6 @@ YYTIMServer.getGroupInfo = function (groupId, okFn, errFn) {
             okFn && okFn(resp);
         },
         function (err) {
-            alert(err.ErrorInfo);
             errFn && errFn(err);
         }
     );

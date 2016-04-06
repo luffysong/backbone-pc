@@ -82,9 +82,11 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorSendMessage', function (data) {
-            if(UserInfo.isDisbaleTalk()){
+            if (UserInfo.isDisbaleTalk()) {
                 msgBox.showTip('您已经被禁言,暂时无法操作');
-            }else{
+            } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
+                msgBox.showTip('主播进行了锁屏,暂时无法互动');
+            } else {
                 self.beforeSendMsg(data);
             }
         });
@@ -97,13 +99,17 @@ var View = BaseView.extend({
             }
         });
 
+        Backbone.on('event:IMGroupInfoReady', function (info) {
+            self.currentGroupInfo = info;
+        });
+
     },
 
     onMsgNotify: function (notifyInfo) {
         var self = this;
         var msgObj = {};
 
-        if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
+        if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
             msgObj = msgObj.replace(/&quot;/g, '\'');
             eval('msgObj = ' + msgObj);
@@ -132,6 +138,7 @@ var View = BaseView.extend({
                 self.addMessage(msgObj);
                 break;
             case 2: //公告
+                Backbone.trigger('event:updateRoomNotice', msgObj);
                 break;
             case 3: //点赞
                 msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
@@ -152,10 +159,20 @@ var View = BaseView.extend({
         }
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
-        console.log(notifyInfo);
+        if (notifyInfo && notifyInfo.GroupIntroduction) {
+            var intro = JSON.parse(notifyInfo.GroupIntroduction);
+            UserInfo.setLockScreen(this.roomInfo.id, intro.blockState);
+            var msg = '主播进行了' + (intro.blockState ? '锁屏' : '解屏') + '操作';
+            msgBox.showTip(msg);
+            Backbone.trigger('event:LockScreen', intro.blockState);
+        }
+        if (notifyInfo && notifyInfo.GroupNotification) {
+            var notify = JSON.parse(notifyInfo.GroupNotification);
+            Backbone.trigger('event:UserKickOut', notify);
+        }
     },
     groupSystemNotifys: function (notifyInfo) {
-        console.log(notifyInfo);
+        //console.log(notifyInfo);
     },
     /**
      * 获取消息模板
@@ -265,7 +282,7 @@ var View = BaseView.extend({
         });
     },
     checkUserStatus: function () {
-        if(UserInfo.isDisbaleTalk()){
+        if (UserInfo.isDisbaleTalk()) {
             msgBox.showTip('您已经被禁言,暂无法操作');
             return false;
         }

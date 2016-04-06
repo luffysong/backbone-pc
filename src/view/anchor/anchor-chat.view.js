@@ -121,7 +121,6 @@ var View = BaseView.extend({
             } else {
                 msgBox.showError(txt + '操作失败,请稍后重试');
             }
-
         }, function(err) {
             msgBox.showError(txt + '操作失败,请稍后重试');
         });
@@ -253,7 +252,7 @@ var View = BaseView.extend({
         var self = this;
         var msgObj = {};
 
-        if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
+        if (notifyInfo && notifyInfo.type ==0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
             msgObj = msgObj.replace(/&quot;/g, '\'');
             eval('msgObj = ' + msgObj);

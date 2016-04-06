@@ -1,5 +1,5 @@
 /* WebIM javascript SDK
- * VER 1.2
+ * VER 1.1
  * creator peakerdong@tencent.com
  * copyright(c) Tencent 2015
  */
@@ -22,14 +22,8 @@ var webim = { // namespace object webim
 	 *   listeners		- Object, 事件回调函数集合, 详见下面
 	 *   {
 	 *     onConnNotify - function(connInfo), 用于收到连接状态相关通知的回调函数,目前未使用
-	 *     jsonpCallback -function(rspData),//IE9(含)以下浏览器用到的jsonp回调函数
-	 *     onMsgNotify	- function(notifyInfo), 用于收到消息通知的回调函数,
-         *      notifyInfo为[{msg: Msg对象}]
-	 *      使用方有两种处理回调: 1)直接访问webim.MsgStore获取最新的消息 2)处理notifyInfo中的增量消息
-	 *     onGroupInfoChangeNotify	- function(notifyInfo), 用于监听群组资料变更的回调函数,
-         *     notifyInfo为新的群组资料信息
-	 *     groupSystemNotifys	- Object, 用于监听（多终端同步）群系统消息的回调函数对象
-	 *
+	 *     onMsgNotify	- function(notifyInfo), 用于收到消息通知的回调函数, notifyInfo为[{msg: Msg对象}]
+	 *   			 	  使用方有两种处理回调: 1)直接访问webim.MsgStore获取最新的消息 2)处理notifyInfo中的增量消息
 	 *   }
 	 *   options		- Object, 其它选项, 目前未使用
 	 * return:
@@ -41,14 +35,14 @@ var webim = { // namespace object webim
 	 *   拉取最新C2C消息
 	 *   一般不需要使用方直接调用, SDK底层会自动同步最新消息并通知使用方, 一种有用的调用场景是用户手动触发刷新消息
 	 * params:
-	 *   cbOk	- function(notifyInfo)类型, 当同步消息成功时的回调函数, notifyInfo同上面cbNotify中的说明,
+	 *   cbOk	- function(notifyInfo)类型, 当同步消息成功时的回调函数, notifyInfo同上面cbNotify中的说明, 
 	 *   		  如果此参数为null或undefined则同步消息成功后会像自动同步那样回调cbNotify
 	 *   cbErr	- function(err)类型, 当同步消息失败时的回调函数, err为错误对象
 	 * return:
 	 *   (无)
 	 */
 	syncMsgs: function(cbOk, cbErr) {},
-
+        
 	/* function syncGroupMsgs
 	 * 拉取群漫游消息
 	 * params:
@@ -70,7 +64,7 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	sendMsg: function(msg, cbOk, cbErr) {},
-
+        
 	/* function offline
 	 *   用户下线
 	 * params:
@@ -80,7 +74,7 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	offline: function(cbOk, cbErr) {},
-
+        
 	/* function setAutoRead
 	 * 设置会话自动已读上报标志
 	 * params:
@@ -91,7 +85,7 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	setAutoRead: function(selSess, isOn, isResetAll) {},
-
+        
 	/* function getProfilePortrait
 	 *   拉取资料（搜索用户）
 	 * params:
@@ -101,7 +95,7 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getProfilePortrait: function(options,cbOk, cbErr) {},
-
+        
 	/* function setProfilePortrait
 	 *   设置个人资料
 	 * params:
@@ -111,8 +105,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	setProfilePortrait: function(options,cbOk, cbErr) {},
-
-	/* function applyAddFriend
+        
+	/* function applyAddFriend 
 	 *   申请添加好友
 	 * params:
 	 *   cbOk	- function()类型, 成功时回调函数
@@ -121,8 +115,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	applyAddFriend: function(options,cbOk, cbErr) {},
-
-	/* function getPendency
+        
+	/* function getPendency 
 	 *   拉取好友申请
 	 * params:
 	 *   cbOk	- function()类型, 成功时回调函数
@@ -131,8 +125,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getPendency: function(options,cbOk, cbErr) {},
-
-	/* function deletePendency
+        
+	/* function deletePendency 
 	 *   删除好友申请
 	 * params:
 	 *   cbOk	- function()类型, 成功时回调函数
@@ -141,8 +135,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	deletePendency: function(options,cbOk, cbErr) {},
-
-	/* function responseFriend
+        
+	/* function responseFriend 
 	 *   响应好友申请
 	 * params:
 	 *   cbOk	- function()类型, 成功时回调函数
@@ -151,7 +145,7 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	responseFriend: function(options,cbOk, cbErr) {},
-
+        
 	/* function getAllFriend
 	 *   拉取我的好友
 	 * params:
@@ -161,7 +155,7 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getAllFriend: function(options,cbOk, cbErr) {},
-
+        
 	/* function deleteFriend
 	 *   删除好友
 	 * params:
@@ -171,8 +165,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	deleteFriend: function(options,cbOk, cbErr) {},
-
-	/* function addBlackList
+        
+	/* function addBlackList 
 	 *   增加黑名单
 	 * params:
 	 *   cbOk	- function()类型, 成功时回调函数
@@ -181,8 +175,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	addBlackList: function(options,cbOk, cbErr) {},
-
-	/* function getBlackList
+        
+	/* function getBlackList  
 	 *   删除黑名单
 	 * params:
 	 *   cbOk	- function()类型, 成功时回调函数
@@ -191,8 +185,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getBlackList: function(options,cbOk, cbErr) {},
-
-	/* function deleteBlackList
+        
+	/* function deleteBlackList  
 	 *   我的黑名单
 	 * params:
 	 *   cbOk	- function()类型, 成功时回调函数
@@ -201,8 +195,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	deleteBlackList: function(options,cbOk, cbErr) {},
-
-	/* function uploadPic
+        
+	/* function uploadPic  
 	 *   上传图片
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -212,8 +206,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	uploadPic: function(options,cbOk, cbErr) {},
-
-	/* function createGroup
+        
+	/* function createGroup  
 	 *   创建群
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -223,8 +217,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	createGroup: function(options,cbOk, cbErr) {},
-
-	/* function applyJoinGroup
+        
+	/* function applyJoinGroup  
 	 *   申请加群
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -234,31 +228,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	applyJoinGroup: function(options,cbOk, cbErr) {},
-
-	/* function handleApplyJoinGroup
-	 *   处理申请加群(同意或拒绝)
-	 * params:
-	 *   options	- 请求参数，详见api文档
-	 *   cbOk	- function()类型, 成功时回调函数
-	 *   cbErr	- function(err)类型, 失败时回调函数, err为错误对象
-	 * return:
-	 *   (无)
-	 */
-	handleApplyJoinGroup: function(options,cbOk, cbErr) {},
-
-	/* function deleteApplyJoinGroupPendency
-	 *   删除加群申请
-	 * params:
-	 *   options	- 请求参数，详见api文档
-	 *   cbOk	- function()类型, 成功时回调函数
-	 *   cbErr	- function(err)类型, 失败时回调函数, err为错误对象
-	 * return:
-	 *   (无)
-	 */
-	deleteApplyJoinGroupPendency: function(options,cbOk, cbErr) {},
-
-
-	/* function quitGroup
+        
+	/* function quitGroup  
 	 *  主动退群
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -268,8 +239,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	quitGroup: function(options,cbOk, cbErr) {},
-
-	/* function getGroupPublicInfo
+        
+	/* function getGroupPublicInfo  
 	 *   读取群公开资料-高级接口
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -279,8 +250,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getGroupPublicInfo: function(options,cbOk, cbErr) {},
-
-	/* function getGroupInfo
+        
+	/* function getGroupInfo  
 	 *   读取群详细资料-高级接口
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -290,8 +261,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getGroupInfo: function(options,cbOk, cbErr) {},
-
-	/* function modifyGroupBaseInfo
+        
+	/* function modifyGroupBaseInfo  
 	 *   修改群基本资料
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -301,8 +272,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	modifyGroupBaseInfo: function(options,cbOk, cbErr) {},
-
-	/* function destroyGroup
+        
+	/* function destroyGroup  
 	 *  解散群
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -312,8 +283,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	destroyGroup: function(options,cbOk, cbErr) {},
-
-	/* function getJoinedGroupListHigh
+        
+	/* function getJoinedGroupListHigh  
 	 *   获取我的群组-高级接口
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -323,8 +294,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getJoinedGroupListHigh: function(options,cbOk, cbErr) {},
-
-	/* function getGroupMemberInfo
+        
+	/* function getGroupMemberInfo  
 	 *   获取群组成员列表
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -334,8 +305,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	getGroupMemberInfo: function(options,cbOk, cbErr) {},
-
-	/* function addGroupMember
+        
+	/* function addGroupMember  
 	 *   邀请好友加群
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -345,8 +316,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	addGroupMember: function(options,cbOk, cbErr) {},
-
-	/* function modifyGroupMember
+        
+	/* function modifyGroupMember  
 	 *   修改群成员资料（角色或者群消息提类型示）
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -356,8 +327,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	modifyGroupMember: function(options,cbOk, cbErr) {},
-
-	/* function forbidSendMsg
+        
+	/* function forbidSendMsg  
 	 *   设置群成员禁言时间
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -367,8 +338,8 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	forbidSendMsg: function(options,cbOk, cbErr) {},
-
-	/* function deleteGroupMember
+        
+	/* function deleteGroupMember  
 	 *   删除群成员
 	 * params:
 	 *   options	- 请求参数，详见api文档
@@ -378,17 +349,6 @@ var webim = { // namespace object webim
 	 *   (无)
 	 */
 	deleteGroupMember: function(options,cbOk, cbErr) {},
-
-        /* function sendCustomGroupNotify
-	 *   发送自定义群通知
-	 * params:
-	 *   options	- 请求参数，详见api文档
-	 *   cbOk	- function()类型, 成功时回调函数
-	 *   cbErr	- function(err)类型, 失败时回调函数, err为错误对象
-	 * return:
-	 *   (无)
-	 */
-	sendCustomGroupNotify: function(options,cbOk, cbErr) {},
 
 	/* class webim.Msg
 	 *   一条消息的描述类, 消息发送、接收的API中都会涉及此类型的对象
@@ -406,7 +366,7 @@ var webim = { // namespace object webim
 	 *   addText(text)	- 向elems中添加一个TEXT元素
 	 *   addFace(face)	- 向elems中添加一个FACE元素
 	 *   toHtml()		- 转成可展示的html String
-	 *addFace
+	 *
 	 * sub-class webim.Msg.Elem
 	 *   消息中一个组成元素的描述类, 一条消息的内容被抽象描述为N个元素的有序列表
 	 * properties:
@@ -421,7 +381,7 @@ var webim = { // namespace object webim
 	 *   text  - String 内容
 	 * constructor:
 	 *   TextElem(text) - 构造函数, 参数定义同上面properties中定义
-         *
+         *   
 	 * sub-class webim.Msg.Elem.FaceElem
 	 *   表情
 	 * properties:
@@ -429,7 +389,7 @@ var webim = { // namespace object webim
 	 *   data   - String 额外数据，用户自定义
 	 * constructor:
 	 *   FaceElem(index,data) - 构造函数, 参数定义同上面properties中定义
-         *
+         *   
 	 *
 	 */
 	Msg: function(sess, isSend, seq, random,time,fromAccount) {/*Class constructor*/},
@@ -446,7 +406,7 @@ var webim = { // namespace object webim
 	 *   (Session对象未对外暴露任何属性字段, 所有访问通过下面的getter方法进行)
 	 * methods:
 	 *   type()		- String, 返回会话类型,"C2C"表示与好友私聊，"GROUP"表示群聊
-	 *   id()		- String, 返回会话ID
+	 *   id()		- String, 返回会话ID 
 	 *   name()		- String, 返回会话标题(如C2C类型中为对方的昵称)
 	 *   icon()		- String, 返回会话图标(对C2C类型中为对方的头像URL)
 	 *   unread()           - Integer, 返回会话未读条数
@@ -487,11 +447,11 @@ var webim = { // namespace object webim
 		 *   Boolean, 布尔类型
 		 */
 		delSessByTypeId: function(type, id) {return true;},
-
+                
 		/* function resetCookieAndSyncFlag
 		 *   重置上一次读取新c2c消息Cookie和是否继续拉取标记
 		 * return:
-		 *
+		 *   
 		 */
 		resetCookieAndSyncFlag: function() {}
 	}
@@ -501,10 +461,8 @@ var webim = { // namespace object webim
 /* WebIM API implementation
  */
 (function(webim) {
-		var WEB_IM_SRV_HOST = "https://webim.tim.qq.com";
-
-        var browserInfo={};//浏览器版本信息
-
+	var WEB_IM_SRV_HOST = "https://yun.tim.qq.com";
+        
         var WEB_IM_SRV_NAME_OPEN_IM='openim';//私聊（拉取未读c2c消息，长轮询，c2c消息已读上报等）服务名
         var WEB_IM_SRV_NAME_GROUP='group_open_http_svc';//群组管理（拉取群消息，创建群，群成员管理，群消息已读上报等）服务名
         var WEB_IM_SRV_NAME_FRIEND='sns';//关系链管理（好友管理，黑名单管理等）服务名
@@ -517,122 +475,33 @@ var webim = { // namespace object webim
             'profile':'v3',
             'openpic':'v1'
         };
-
-        var WEB_IM_SDK_VERSION='v1.3';//web im sdk版本号
+        
+        var WEB_IM_SDK_VERSION='v1.1';//web im sdk版本号
         var WEB_IM_MSG_TYPE_C2C='C2C';//私聊类型
         var WEB_IM_MSG_TYPE_GROUP='GROUP';//群聊类型
         var WEB_IM_ACTION_STATUS_OK='OK';//后台接口返回成功
         var WEB_IM_ACTION_STATUS_FAIL='FAIL';//后台接口返回失败
         var WEB_IM_ERROR_CODE_CUSTOM=99999;//自定义后台接口返回错误码
-
+        
         //消息类型
         var WEB_IM_MSG_ELEMENT_TYPE_TEXT='TIMTextElem';//文本
         var WEB_IM_MSG_ELEMENT_TYPE_FACE='TIMFaceElem';//表情
         var WEB_IM_MSG_ELEMENT_TYPE_IMAGE='TIMImageElem';//图片
-
-        //只支持显示
+        //以下四种类型，web端暂不支持
         var WEB_IM_MSG_ELEMENT_TYPE_SOUND='TIMSoundElem';//语音
-        var WEB_IM_MSG_ELEMENT_TYPE_FILE='TIMFileElem';//文件
-
-        //以下类型，web端暂不支持
         var WEB_IM_MSG_ELEMENT_TYPE_LOCATION='TIMLocationElem';//地理位置
+        var WEB_IM_MSG_ELEMENT_TYPE_FILE='TIMFileElem';//文件
         var WEB_IM_MSG_ELEMENT_TYPE_CUSTOM='TIMCustomElem';//自定义
-
-        //新增群提示消息类型
-        var WEB_IM_MSG_ELEMENT_TYPE_GROUP_TIP="TIMGroupTipElem";//群提示消息
-
+        
         //图片类型
         var WEB_IM_IMAGE_TYPE={
             'ORIGIN':1,//原图
             'LARGE':2,//缩略大图
             'SMALL':3//缩略小图
         };
-
-        //下载文件业务ID
-        var WEB_IM_DOWNLOAD_FILE_BUSSINESS_ID="10001";
-        //下载文件authkey
-        var WEB_IM_DOWNLOAD_FILE_AUTH_KEY="617574686b6579";
-        //下载文件服务器IP
-        var WEB_IM_DOWNLOAD_FILE_SERVER_IP="182.140.186.147";
-        //下载文件类型
-        var WEB_IM_DOWNLOAD_FILE_TYPE={
-            "SOUND":2106,//语音
-            "FILE":2107//普通文件
-        };
-
-        //长轮询消息类型
-        var WEB_IM_LONG_POLLINNG_MSG_TYPE={
-            "C2C":1,//新的c2c消息通知
-            "GROUP_ORDINARY":3,//新的群普通消息
-            "GROUP_TIP":4,//新的群提示消息
-            "GROUP_SYSTEM":5//新的群系统消息
-        };
-
-        //c2c消息类型
-        var WEB_IM_C2C_MSG_TYPE={
-            "ORDINARY":0//普通消息
-        };
-
-        //群消息类型
-        var WEB_IM_GROUP_MSG_TYPE={
-            "ORDINARY":0,//普通消息
-            "TIP":1//提示消息
-        };
-
-        //群提示消息类型
-        var WEB_IM_GROUP_TIP_TYPE={
-            "JOIN":1,//加入群组
-            "QUIT":2,//退出群组
-            "KICK":3,//被踢出群组
-            "SET_ADMIN":4,//被设置为管理员
-            "CANCEL_ADMIN":5,//被取消管理员
-            "MODIFY_GROUP_INFO":6,//修改群资料
-            "MODIFY_MEMBER_INFO":7//修改群成员信息
-        };
-
-        //群提示消息-群资料变更类型
-        var WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE={
-            "FACE_URL":1,//修改群头像URL
-            "NAME":2,//修改群名称
-            "OWNER":3,//修改群主
-            "NOTIFICATION":4,//修改群公告
-            "INTRODUCTION":5//修改群简介
-        };
-
-        //群系统消息类型
-        var WEB_IM_GROUP_SYSTEM_TYPE={
-            "JOIN_GROUP_REQUEST":1,//申请加群请求（只有管理员会收到）
-            "JOIN_GROUP_ACCEPT":2,//申请加群被同意（只有申请人能够收到）
-            "JOIN_GROUP_REFUSE":3,//申请加群被拒绝（只有申请人能够收到）
-            "KICK":4,//被管理员踢出群(只有被踢者接收到)
-            "DESTORY":5,//群被解散(全员接收)
-            "CREATE":6,//创建群(创建者接收, 不展示)
-            "INVITED_JOIN_GROUP_REQUEST":7,//邀请加群(被邀请者接收)
-            "QUIT":8,//主动退群(主动退出者接收, 不展示)
-            "SET_ADMIN":9,//设置管理员(被设置者接收)
-            "CANCEL_ADMIN":10,//取消管理员(被取消者接收)
-            "REVOKE":11,//群已被回收(全员接收, 不展示)
-            "CUSTOM":255//用户自定义通知(默认全员接收)
-        };
-
-        //群提示消息最多显示人数
-        var WEB_IM_GROUP_TIP_MAX_USER_COUNT=10;
-
-        //当前长轮询返回错误次数
-        var curLongPollingRetErrorCount=0;
-        //最大允许长轮询返回错误次数
-        var WEB_IM_LONG_POLLING_MAX_RET_ERROR_COUNT=15;
-
-        //ie8,9采用jsonp方法解决ajax跨域限制
-        var webimJsonpRequestId=0;//jsonp请求id
-        //最新jsonp请求返回的json数据
-        var webimJsonpLastRspData=null;
-        //兼容ie7/8/9,jsonp回调函数
-        var webimJsonpCallback=null;
-
         //错误码
         var WEB_IM_ERROR={
-
+            
             //SSO 错误码
             '60002':'HTTP解析错误',
             '60003':'Json body解析错误',
@@ -648,7 +517,7 @@ var webim = { // namespace object webim
             '20006':'因第三方要求，拦截发送方请求',
             '80001':'安全打击',
             //关系链错误码
-            '30001':'关系链解包失败',
+            '30001':'关系链解包失败', 
             '30002':'SDKAppId非法',
             '30501':'加好友来源参数错误',
             '30502':'加好友参数长度错误',
@@ -822,29 +691,29 @@ var webim = { // namespace object webim
             '40001':'资料解包失败',
             '40002':'sdk appid 非法',
             '40003':'用户不存在',
-            '40601':'设置资料头像URL太长',
-            '40602':'设置资料读取数据失败',
-            '40603':'设置资料非法字段',
-            '40604':'设置资料系统错误非法字段长度',
-            '40605':'设置资料请求参数非法',
-            '40606':'设置资料设置标准数据失败',
-            '40607':'设置资料非法字段',
+            '40601':'设置资料头像URL太长',   
+            '40602':'设置资料读取数据失败', 
+            '40603':'设置资料非法字段',  
+            '40604':'设置资料系统错误非法字段长度',   
+            '40605':'设置资料请求参数非法',   
+            '40606':'设置资料设置标准数据失败', 
+            '40607':'设置资料非法字段',   
             '40608':'设置资料系统错误非法字段长度',
-            '40609':'设置资料设置自定义数据失败',
+            '40609':'设置资料设置自定义数据失败',  
             '40701':'设置头像获取数据失败',
             '40702':'设置头像设置数据失败',
             '40703':'设置头像URL太长',
             '40704':'设置头像头像参数数据不正确',
-            '40801':'获取资料字段非法',
+            '40801':'获取资料字段非法', 
             '40802':'获取资料系统执行标配任务失败',
-            '40803':'获取资料系统解析数据失败',
+            '40803':'获取资料系统解析数据失败', 
             '40804':'获取资料非法字段',
-            '40805':'获取资料系统执行自定义任务列表失败',
-            '40806':'获取资料系统错误自定义字段长度非法',
-            '40807':'获取资料标配主Key不存在',
-            '40808':'获取资料标配读取数据失败',
-            '40809':'获取资料自定义主Key不存在',
-            '40810':'获取资料自定义读取数据失败',
+            '40805':'获取资料系统执行自定义任务列表失败', 
+            '40806':'获取资料系统错误自定义字段长度非法', 
+            '40807':'获取资料标配主Key不存在', 
+            '40808':'获取资料标配读取数据失败',    
+            '40809':'获取资料自定义主Key不存在', 
+            '40810':'获取资料自定义读取数据失败',  
             '40811':'获取资料时Account不正确',
             '40901':'获取头像系统执行任务列表失败',
             //群组错误码
@@ -877,11 +746,11 @@ var webim = { // namespace object webim
                 identifier:null,
                 userSig:null,
 		contentType: 'json',
-		apn: 1
+		apn: 1,
 	};
 	var opt = {};
 	var xmlHttpObj;
-	var curSeqMap = {};
+	var curSeq = 0;
         var tempC2CMsgList=[];
         //表情数据索引，用户可以自定义
         var emotionPicDataIndex = {
@@ -1021,11 +890,11 @@ var webim = { // namespace object webim
                 "[玫瑰]":"data:image/gif;base64,R0lGODlhGAAYAPdQAEDAHRZFDhlJEB1OFeokJPaJijWAJCtfIuskJBpKEpURETeFJjuiH4sDA/dbUMbfwKshITydJB5PFupkZL8mJt5QSDOBIrgmJjN+I6QcHIQZGfBLR9Vtbe5IQithIuElJe5CQMglJT+cJzt8LTV4J+kkJP6TitslJc8zM58gII8CAkiLOitdIjeVHzukH+9JR/6SiephYTN2JVOJRz61HyJUGnm6ae1APmOUWoK5dlWyPkGaK3fLYOxJSu5KRoIMDIwCAq4mJjqdIcntv4YKCh1OFD2rIa8uLe9KSokPD2S8TTmcIUqpMdlzcxlJEf1lWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAFAALAAAAAAYABgAAAioAKEIHEiwoMGDCBMqhNJDYJKBBBYWRPLEwY8GGi5ElDgQxpMnFYgAQRCD40ATH58cUVFigkmBPlI+UfABxUsoG2RmOBHiZoEXHztAoMDhJpQCIG6kCNLEKBQXFjywONDCqBAlUHAkGMJjh1MoOQZ8HfhAwlgANDCIdQrAiAERNQhG4MhkgQEdUIqMWAKAwQqnAmzIIDHjq4CxA50gFhhgMZTGiyE7VhgQADs=",
                 "[凋谢]":"data:image/gif;base64,R0lGODlhGAAYAPdMAElxQqK3nz25HEBqOdDazsTRwvAiIm2OaPqJiTifH3eXci9sIjllMhdJD/VJSYgHB2TATGO/S64fH8MkJPEiItxxce5fX/ZKRoQJCTR0Jv1bT/M/PYsMDCxuHfRBP8nuvuNPR+5jYzGDHqcZGRpNEv+TijV/JPVIRildIPRJRSlxGzV9JOAjI7IsK5EAAOYjI7EkJNdra7wkJDqnHNQxMfNHQTGCIClhIIYWFl2BV40AAIzWeaIeHmKUWS5dJswjI44AAPJIScbgv+8iIjmgH32aeSlfIP+SiZcODoK6dRtOE/9lWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAEwALAAAAAAYABgAAAi5AJkIHEiwoMGDCBMqXMiwocMDA5QMOOCQIIAAAwMoqSjkYsEARRwmIXHQBwGFRCIw6dHgAwQTBAnkWDjDxg0URkQYZLAQgYcNPGBUMKhkgQABBxGcWLKkhoQJMQoqEbAiAdKCF5gyHcHih1QmOzIkMJhC6xIkL2h8ZdJhgcESWlu4GBJiLRMVBo8wBfEACAULdg86WKIBgw4cMgwENhhEIIeBii1WPFhAwWSDCgpcLghg8+LNGz0zDAgAOw==",
                 "[示爱]":"data:image/gif;base64,R0lGODlhGAAYAPf/AJELC70QEOY9PYQLCsUeHYMaFOFmZv46OrsnJfN0c+03NqQTE9UyMcQrKXoMC/ZCQeBFRf5eXv/CwepAQPEyMasWFNMXF+4lJfZOTuxpafkqKv5PT/MkJP8qKsU2NPS3t/IpKfIiIpUUE9kqKbcdG9IqKvWBgf1FRf76+v6Li/U3NtcqKco8PLISEp4YFO4iItImJelGRf+trasYFehNTekqKt4UFN4mJudvb+w+Pv8nJ/UjI5oODtkhIccODvdlZf6npv5KSuEiIts1NaElJOshIf8uLuchId0hIeMfH9YfH1MNCaIPD58FBf8pKdwwMONYWOkjI+dXV7cREf4pKd4YGOEwMORERM4tLJUAAL4MDO9eXdQeHu5SUv0pKfpERLsdHfXGxvJMS90zNHMfGf/q6G8dF8cjI8UYFvVISOUnJ/rc3I4cF//l5dQsK+snJ+ZpaeMpJ84cHPMoKPhBQckqKf+Ff9k8PNIdHfcnJ5MsKfc8PP8oKNxJSbgICOEaGv9UVLkbGOtLS2EJBtUeHNYcHOyRkf729uN9fqkbGfFlZfOPj981NfwqKvB5ebEODueEhP6AgPmlpfyhofhJSdohHv/9/fw3N/l+fco4NuAlJOQkIv++ta0jIK8tKfJKSvWvqv+SkvUyMttCQsxLS91TU+t4eOl/f+x4ePzv79ktLN4rK8QVFfJhYfFZWfxQUOpRUelUVP3IyOxXV58XE/9ZWdcnJfwiIvaHh9kfH2AkH94fH4sfGe6Pj9yZmf93d9UuLLMWFt4uLvpnZ9ApJv9lZI8oJft4edu8vPx8fOpjY/MsK/UsLP6Gh7YWFfqrq/s7O9koJ/89PessLO8uLuQyMuQ1Ndk4OPeRkds8OP9iYt04ONQbG9EiIusoJ/ecmc4nJf/w65AoJpsrKPM4OOmBgfU5Of2xsf+0tPu9vcseHswYGOKpqf+NjdxOTv+8vKwPD7kODoAHB+dZWf1WVf5XV/ScnOuIiL4YGOpcXGEHBeAvL/EcHGUMCmoOC////yH/C05FVFNDQVBFMi4wAwEAAAAh+QQJFAD/ACwAAAAAGAAYAAAI/wD/CRxIsKDBgwgTKlzIsKHDhwc/PIFCEM6TMA2h7FNhrY5AN9mkTVwIocsPTHSqwYj2IFQEJ8sgJHzS6pksCc0okaOAbYMTJyo8NDj4xEQ6GYBOvKJXL4gTLxRAXFiGYChBKBginGjkbVMlWyPiaCJGwFa0EuAykRp4D4sFTy4SiRvXiYQIF0T0GNPFhlYFZ1hwDMxxaYOkWWhmFOBFxkyBAi4CERC258aVglaqpDg36QeGNA/MiWI2p0iSEVUuGzRkRREQIMl+yuZ3AYaqUwqlfIrUrphsJ9NWXPvAUMqfHDTEKFDAoNuVQw5ToRpFCNi2fGsgat/Ovbv379wDAgAh+QQFRgD/ACwAAAAAGAAYAAAI/wD/CRxIsKDBgwgTKlzIsCHDJ6vmDcwgQJBDewlcUcOBwtEECiBgMVxkog26L2piCeDAR0eRDJYS9tryrcy7X3Ns7DDixEmHIxMQmqKRgJMdbdBqIImioUPPHVyCFrwTZViKCAdu7WrBY4GSRlSodLCBRKrAKY96HDjg5IWFFiIcyGOC50UIIT1Y4Qs0sESAeAgWZGkCwEG/JUv8DRggDwAAHvC0EGTgow87ZIiGLJA3SN8AfNymwGviJ9hBZSYkhDvGiCuTdReiKPFBAExCAzFAyaj1JtcRHR2SFJLDYqG7MbiC8OygI8QNdeVQMCwVI0QeDTWEEPAAyeE/X0POJA8iwsKA9/Po06tfz759wYAAOw==",
-                "[爱心]":"data:image/gif;base64,R0lGODlhGAAYAPfaAOtxR/FJAPdPAPlRAO5GAPNLAP/9/PtUAP6UW/RMAO9HAO1EAOY9AP/axuhAAPZOAOVGD/VNAPhQAPdOAO9GAPlSAOU9AOpBAPNKAP6WXutCAPpTAOlhM/+icOtiLvtrI/l0NPh0N+17U/ZyN/6sgf7s5P+whe9UFu15UOdGDPyMVPGZe/6tgfmIVPyRXedLE/lfFP6ERPdWC/6hb/d6QvJUD/JtNO1GA/+yieplOP1kEv7l2P6QWOpIC/VpK+ZRHf/v6PdsLf1uI/uQXfvi2v2aZ/yHTOU+Av6aZvi/qPqOW/qDS/6CQvFNBvuES/9tHu+FX/5qGv6SWPexlP/h0f/Bn/18OexHB/dYD/eBTPtoH/qGUP+ugvl9Q+lBAeZMGPyKUf/ezP+ga+ZHEOtMDvzo4ehfMOtkM/97NPyid//BoPpSAPlwMP7j1eM7AeRCCuVDCuZQHPJkKv3o3+lBAPjPwf7Iq/ppI/6JTf/IquRBCf/j1PSRaf2PVuplN/2yjf6FRuM6AOtgLfvg1fyERvpgFv/FpeM8AupICfuIUPhaEvxzLfuaavZYEOY/A/W8qP6JS+pHCOc+AP7VwPt8Pfyaafzq5Pzl3PvYye1fJ/1+POtfKvS0nv/u5PtlGehECP2UYOdCBvx1MPNyPft+QuxWHPCXeOpCAP3KseQ+Bf2cavyyjvdSBP6bZelSGuZBBuVKFf6da+tuQ/Z8R/yRW/RQBvVwNf/GpvtVAPFkKf+5kvuke/+8l/fGtP6OU/eacu1mMv/Gp+pDAv+whO5kL+ZMF/+7l/7Dpf1YA/ypgfx6OOdZKPRLAOhSG/+zivBXGPBNCf+bZPNpLf/n2/NMAf6YY/94LvyHS/ZjIP7QuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAANoALAAAAAAYABgAAAj/ALUJHEiwoMGDCBMqXMiwocOHBHdcQ6YDUgOCbYYEkcZn0EFUyrJ12qPLWhWBxzw5aTErF6JeBUvcATKNSpgGatDwMiYEFCMlWUYRc2SJ4K5kk+wYCpbn1rAnUaqpcrGFho1MKVYQZLPqDwkWJnA44xItAxJaibqMkFMqlBmCWNJUKhJrRocOYlpl6GOEVAgfzyJZgECw0RIwKnggWCzFFx5ClEBgq3HDwRE9BG0pgqFlkRUmgGJoEvWhkAxqCjRIgpOD4K9arAZsOHAAF+0NAwQkCLDAy4tipgjOCZBggoQBFdZUGCBhwm4Cwlz5eVOGoAFMTQpEeCCg+4MIBQIQZLjiAcWXOgYMToEWAEMBZgUwBFCwgMwmKD84ITSQ5AQBCgpQQMACGvQgiAhxPLLQJcBccMoFdDjwSTOycEBEQwacwQADFrwyxjIcQKQNAIe4AQEsAIgoEACBpJKiiiu+CKNDAQEAOw=="
-        };
+                "[爱心]":"data:image/gif;base64,R0lGODlhGAAYAPfaAOtxR/FJAPdPAPlRAO5GAPNLAP/9/PtUAP6UW/RMAO9HAO1EAOY9AP/axuhAAPZOAOVGD/VNAPhQAPdOAO9GAPlSAOU9AOpBAPNKAP6WXutCAPpTAOlhM/+icOtiLvtrI/l0NPh0N+17U/ZyN/6sgf7s5P+whe9UFu15UOdGDPyMVPGZe/6tgfmIVPyRXedLE/lfFP6ERPdWC/6hb/d6QvJUD/JtNO1GA/+yieplOP1kEv7l2P6QWOpIC/VpK+ZRHf/v6PdsLf1uI/uQXfvi2v2aZ/yHTOU+Av6aZvi/qPqOW/qDS/6CQvFNBvuES/9tHu+FX/5qGv6SWPexlP/h0f/Bn/18OexHB/dYD/eBTPtoH/qGUP+ugvl9Q+lBAeZMGPyKUf/ezP+ga+ZHEOtMDvzo4ehfMOtkM/97NPyid//BoPpSAPlwMP7j1eM7AeRCCuVDCuZQHPJkKv3o3+lBAPjPwf7Iq/ppI/6JTf/IquRBCf/j1PSRaf2PVuplN/2yjf6FRuM6AOtgLfvg1fyERvpgFv/FpeM8AupICfuIUPhaEvxzLfuaavZYEOY/A/W8qP6JS+pHCOc+AP7VwPt8Pfyaafzq5Pzl3PvYye1fJ/1+POtfKvS0nv/u5PtlGehECP2UYOdCBvx1MPNyPft+QuxWHPCXeOpCAP3KseQ+Bf2cavyyjvdSBP6bZelSGuZBBuVKFf6da+tuQ/Z8R/yRW/RQBvVwNf/GpvtVAPFkKf+5kvuke/+8l/fGtP6OU/eacu1mMv/Gp+pDAv+whO5kL+ZMF/+7l/7Dpf1YA/ypgfx6OOdZKPRLAOhSG/+zivBXGPBNCf+bZPNpLf/n2/NMAf6YY/94LvyHS/ZjIP7QuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAANoALAAAAAAYABgAAAj/ALUJHEiwoMGDCBMqXMiwocOHBHdcQ6YDUgOCbYYEkcZn0EFUyrJ12qPLWhWBxzw5aTErF6JeBUvcATKNSpgGatDwMiYEFCMlWUYRc2SJ4K5kk+wYCpbn1rAnUaqpcrGFho1MKVYQZLPqDwkWJnA44xItAxJaibqMkFMqlBmCWNJUKhJrRocOYlpl6GOEVAgfzyJZgECw0RIwKnggWCzFFx5ClEBgq3HDwRE9BG0pgqFlkRUmgGJoEvWhkAxqCjRIgpOD4K9arAZsOHAAF+0NAwQkCLDAy4tipgjOCZBggoQBFdZUGCBhwm4Cwlz5eVOGoAFMTQpEeCCg+4MIBQIQZLjiAcWXOgYMToEWAEMBZgUwBFCwgMwmKD84ITSQ5AQBCgpQQMACGvQgiAhxPLLQJcBccMoFdDjwSTOycEBEQwacwQADFrwyxjIcQKQNAIe4AQEsAIgoEACBpJKiiiu+CKNDAQEAOw==",
+        };      
         //工具类
 	var tool = new function() {
-
+		
                 //格式化时间戳
 		this.formatTimeStamp = function(time,format) {
                     if(time==0){
@@ -1035,18 +904,18 @@ var webim = { // namespace object webim
                     var date = new Date(time * 1000);
                     var formatTime;
                     var o = {
-                        "M+": date.getMonth() + 1, //月份
-                        "d+": date.getDate(), //日
-                        "h+": date.getHours(), //小时
-                        "m+": date.getMinutes(), //分
-                        "s+": date.getSeconds() //秒
+                        "M+": date.getMonth() + 1, //月份 
+                        "d+": date.getDate(), //日 
+                        "h+": date.getHours(), //小时 
+                        "m+": date.getMinutes(), //分 
+                        "s+": date.getSeconds() //秒   
                     };
-                    if (/(y+)/.test(format))
+                    if (/(y+)/.test(format)) 
                         formatTime = format.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
                     for (var k in o){
-                        if (new RegExp("(" + k + ")").test(formatTime))
+                        if (new RegExp("(" + k + ")").test(formatTime)) 
                             formatTime = formatTime.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                    }
+                    } 
                     return formatTime;
                 };
                 //根据群类型英文名转换成中文名
@@ -1182,7 +1051,7 @@ var webim = { // namespace object webim
                     }
                     return text;
                 };
-                //获取字符串所占字节数
+                //获取字符串所占字节数 
                 this.getStrBytes=function(str){
                     if (str == null) return 0;
                     if (typeof str != "string"){
@@ -1199,7 +1068,7 @@ var webim = { // namespace object webim
                     //val = val.replace(/'/g, "&#039;");
                     return val;
                 };
-
+             
                 //去掉头尾空白符
                 this.trimStr=function(str){
                     if(!str) return '';
@@ -1222,92 +1091,32 @@ var webim = { // namespace object webim
                 //name 名字
                 //value 值
                 //expires 有效期(单位：秒)
-                //path
+                //path 
                 //domain 作用域
                 this.setCookie=function(name,value,expires,path,domain){
-
+                    
                     var exp  = new Date();
                     exp.setTime(exp.getTime() + expires*1000);
                     document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
-                };
+                }
                 //获取cookie
                 this.getCookie=function (name){
                     var result = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
                     if(result != null){
                         return unescape(result[2]);
-                    }
+                    }  
                     return null;
-                };
+
+                }
                 //删除cookie
                 this.delCookie=function (name){
                     var exp = new Date();
                     exp.setTime(exp.getTime() - 1);
                     var value=this.getCookie(name);
-                    if(value!=null)
+                    if(value!=null) 
                         document.cookie= name + "="+escape (value)+";expires="+exp.toGMTString();
-                };
-                //判断IE版本号，ver表示版本号
-                this.isIE = function(ver){
-                    var b = document.createElement('b')
-                    b.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->'
-                    return b.getElementsByTagName('i').length === 1;
-                };
-                //判断浏览器版本
-                this.getBrowserInfo=function(){
-                    var Sys={};
-                    var ua=navigator.userAgent.toLowerCase();
-                    console.info('navigator.userAgent='+ua);
-                    var s;
-                    (s=ua.match(/msie ([\d.]+)/))?Sys.ie=s[1]:
-                    (s=ua.match(/firefox\/([\d.]+)/))?Sys.firefox=s[1]:
-                    (s=ua.match(/chrome\/([\d.]+)/))?Sys.chrome=s[1]:
-                    (s=ua.match(/opera.([\d.]+)/))?Sys.opera=s[1]:
-                    (s=ua.match(/version\/([\d.]+).*safari/))?Sys.safari=s[1]:0;
-                    if(Sys.ie){//Js判断为IE浏览器
-
-                        //alert(Sys.ie);
-                        /*if(Sys.ie=='9.0'){//Js判断为IE 9
-                            return 'ie9';
-                        }else if(Sys.ie=='8.0'){//Js判断为IE 8
-                            return 'ie8';
-                        }else{
-                            return 'ie8';
-                        }*/
-                        return {
-                            'type':'ie',
-                            'ver':Sys.ie
-                        };
-                    }
-                    if(Sys.firefox){//Js判断为火狐(firefox)浏览器
-                        return {
-                            'type':'firefox',
-                            'ver':Sys.firefox
-                        };
-                    }
-                    if(Sys.chrome){//Js判断为谷歌chrome浏览器
-                        return {
-                            'type':'chrome',
-                            'ver':Sys.chrome
-                        };
-                    }
-                    if(Sys.opera){//Js判断为opera浏览器
-                        return {
-                            'type':'opera',
-                            'ver':Sys.opera
-                        };
-                    }
-                    if(Sys.safari){//Js判断为苹果safari浏览器
-                        return {
-                            'type':'safari',
-                            'ver':Sys.safari
-                        };
-                    }
-                    return {
-                        'type':'unknow',
-                        'ver':-1
-                    };
-                };
-
+                }
+                  
 	};
 	//获取unix时间戳
 	var unixtime = function(d) {
@@ -1319,19 +1128,14 @@ var webim = { // namespace object webim
 		return new Date(t*1000);
 	};
         //获取下一个消息序号
-	var nextSeq = function(userId) {
-                var tempSeq=curSeqMap[userId];
-                if(tempSeq){
-                    tempSeq=curSeqMap[userId]=tempSeq+1;
-                }else{
-                    tempSeq=curSeqMap[userId]=1;
-                }
-		return tempSeq;
+	var nextSeq = function() {
+		if (!curSeq)
+			curSeq = Math.round(Math.random() * 4294967296);
+		return curSeq++;
 	};
         //产生随机数
         var createRandom = function() {
-		//return  Math.round(Math.random() * 65536);
-		return  Math.round(Math.random() * 4294967296);
+		return  Math.round(Math.random() * 65536);
 	};
         //获取ajax请求对象
 	var getXmlHttp = function() {
@@ -1353,7 +1157,7 @@ var webim = { // namespace object webim
 	}
         //发起ajax请求
 	var ajaxRequest = function(meth, url, req, cbOk, cbErr) {
-
+                
                 var xmlHttpObj = getXmlHttp();
                 var error,errInfo;
 		if (!xmlHttpObj){
@@ -1363,14 +1167,16 @@ var webim = { // namespace object webim
                     if (cbErr) cbErr(error);
                     return;
                 }
-
+			
 		xmlHttpObj.open(meth, url, true);
 		xmlHttpObj.onreadystatechange = function() {
 			if (xmlHttpObj.readyState == 4) {
 				if (xmlHttpObj.status == 200) {
 					if (cbOk) cbOk(xmlHttpObj.responseText);
                                         xmlHttpObj=null;
+                                        
 				} else {
+                                        
 					var errInfo = "["+xmlHttpObj.status+"]请求服务器失败";
                                         var error=tool.getReturnError(errInfo);
                                         xmlHttpObj=null;
@@ -1378,20 +1184,14 @@ var webim = { // namespace object webim
 				}
 			}
 		};
-                //xmlHttpObj.setRequestHeader('Content-Type', 'application/json');
-                if(browserInfo.type=='safari'){
-                    xmlHttpObj.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');//为了兼容safari浏览器
-                }
-                //
+                xmlHttpObj.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');//为了兼容safari浏览器
 		xmlHttpObj.send(req);
 	}
         //发起ajax请求（json格式数据）
 	var ajaxRequestJson = function(meth, url, req, cbOk, cbErr) {
 		ajaxRequest(meth, url, JSON.stringify(req), function(resp) {
 			var json = null;
-			//if (resp) eval('json=('+resp+');');//将返回的json字符串转换成json对象
-			//if (resp) json=eval('('+resp+')');//将返回的json字符串转换成json对象
-			if (resp) json=JSON.parse(resp);//将返回的json字符串转换成json对象
+			if (resp) eval('json=('+resp+')');
 			if (cbOk) cbOk(json);
 		}, cbErr);
 	}
@@ -1402,7 +1202,7 @@ var webim = { // namespace object webim
         //检查是否登录
 	var checkLogin = function() {
 		if (!isLogin()) {
-			console.error('请登录');
+			console.error('还未登录');
 			return false;
 		}
 		return true;
@@ -1448,7 +1248,7 @@ var webim = { // namespace object webim
 	var proto_sendMsg = function(msg, cbOk, cbErr) {
 		if (!checkLogin()) return;
                 var msgInfo = null;
-
+                
                 switch(msg.sess.type()){
                     case WEB_IM_MSG_TYPE_C2C:
                         msgInfo = {
@@ -1469,7 +1269,7 @@ var webim = { // namespace object webim
                     default:
                         break;
                 }
-
+		
 		for (var i in msg.elems) {
 			var elem = msg.elems[i];
                         var msgContent=null;
@@ -1497,24 +1297,23 @@ var webim = { // namespace object webim
                                 msgContent={'UUID':elem.content.UUID,'ImageInfoArray':ImageInfoArray};
                                 break;
                             case WEB_IM_MSG_ELEMENT_TYPE_SOUND://
-                                msgContent={'Text':'web端暂不支持发送语音消息'};
+                                msgContent={'Text':'web端暂不支持语音消息'};
                                 msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
                                 break;
                             case WEB_IM_MSG_ELEMENT_TYPE_LOCATION://
-                                msgContent={'Text':'web端暂不支持发送地理位置消息'};
+                                msgContent={'Text':'web端暂不支持地理位置消息'};
                                 msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
                                 break;
                             case WEB_IM_MSG_ELEMENT_TYPE_FILE://
-                                msgContent={'Text':'web端暂不支持发送文件消息'};
+                                msgContent={'Text':'web端暂不支持文件消息'};
                                 msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
                                 break;
                             case WEB_IM_MSG_ELEMENT_TYPE_CUSTOM://
-                                msgContent={'Data':elem.content.data,'Desc':elem.content.desc,'Ext':elem.content.ext};
-                                //msgContent={'Text':'web端暂不支持发送自定义消息'};
-                                msgType=WEB_IM_MSG_ELEMENT_TYPE_CUSTOM;
+                                msgContent={'Text':'web端暂不支持自定义消息'};
+                                msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
                                 break;
                             default :
-                                msgContent={'Text':'web端暂不支持发送'+elem.type+'消息'};
+                                msgContent={'Text':'web端暂不支持'+elem.type+'消息'};
                                 msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
                                 break;
                         }
@@ -1525,27 +1324,27 @@ var webim = { // namespace object webim
                 }else if(msg.sess.type()==WEB_IM_MSG_TYPE_GROUP){//群聊
                     ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"send_group_msg", msgInfo, cbOk, cbErr);
                 }
-
+               
 	};
         //长轮询接口
         var proto_longPolling = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_OPEN_IM,"longpolling", options, cbOk, cbErr);
 	};
-
+        
 
         //拉取未读c2c消息接口
-        var proto_getMsgs = function(cookie, syncFlag,cbOk, cbErr) {
+        var proto_getMsgs = function(cookie, syncFlag,cbOk, cbErr) {    
 		if (!checkLogin()) return;
-		ConnManager.apiCall(WEB_IM_SRV_NAME_OPEN_IM,"getmsg", {'Cookie':cookie,'SyncFlag':syncFlag},
+		ConnManager.apiCall(WEB_IM_SRV_NAME_OPEN_IM,"getmsg", {'Cookie':cookie,'SyncFlag':syncFlag}, 
                                         function(resp){
                                             if(resp.MsgList && resp.MsgList.length){
                                                 for(var i in resp.MsgList){
                                                      tempC2CMsgList.push(resp.MsgList[i]);
-                                                }
+                                                } 
                                             }
-                                           if(resp.SyncFlag==1){
+                                           if(resp.SyncFlag==1){                                              
                                                proto_getMsgs(resp.Cookie,resp.SyncFlag,cbOk,cbErr);
                                            }else{
                                                resp.MsgList=tempC2CMsgList;
@@ -1568,15 +1367,7 @@ var webim = { // namespace object webim
                 }
 		ConnManager.apiCall(WEB_IM_SRV_NAME_OPEN_IM,"msgreaded", {C2CMsgReaded:{'Cookie':cookie,'C2CMsgReadedItem':tmpC2CMsgReadedItem}}, cbOk, cbErr);
 	};
-
-        //删除c2c消息
-        var proto_deleteC2CMsg = function(options,cbOk, cbErr) {
-		if (!checkLogin()) return;
-
-		ConnManager.apiCall(WEB_IM_SRV_NAME_OPEN_IM,"deletemsg",options ,
-                                   cbOk, cbErr);
-	};
-
+        
         //群组接口
         //创建群组-高级接口
         var proto_createGroup = function(options,cbOk, cbErr) {
@@ -1589,7 +1380,7 @@ var webim = { // namespace object webim
                     'Notification':options.Notification
                 };
                 var member_list=[];
-
+                
                 for(var i=0;i<options.MemberList.length;i++){
                     member_list.push({'Member_Account':options.MemberList[i]})
                 }
@@ -1606,66 +1397,50 @@ var webim = { // namespace object webim
                 if(options.FaceUrl){
                     opt.FaceUrl=options.FaceUrl;
                 }
-		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"create_group", opt,
+		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"create_group", opt, 
                                    cbOk, cbErr);
 	};
-
+        
         //修改群组基本资料
         var proto_modifyGroupBaseInfo = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
-		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"modify_group_base_info", options,
+                
+		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"modify_group_base_info", options, 
                                    cbOk, cbErr);
 	};
-
+        
         //申请加群
         var proto_applyJoinGroup = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"apply_join_group", {
                                                 'GroupId':options.GroupId,
                                                 'ApplyMsg':options.ApplyMsg,
                                                 'UserDefinedField':options.UserDefinedField
-                                              },
+                                              }, 
                                    cbOk, cbErr);
 	};
-
-        //处理加群申请(同意或拒绝)
-        var proto_handleApplyJoinGroupPendency = function(options,cbOk, cbErr) {
-		if (!checkLogin()) return;
-
-		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"handle_apply_join_group", {
-                                                'GroupId':options.GroupId,
-                                                'Applicant_Account':options.Applicant_Account,
-                                                'HandleMsg':options.HandleMsg,
-                                                'Authentication':options.Authentication,
-                                                'MsgKey':options.MsgKey,
-                                                'ApprovalMsg':options.ApprovalMsg,
-                                                'UserDefinedField':options.UserDefinedField
-                                              },
-                                   cbOk, cbErr);
-	};
-
+        
         //主动退群
         var proto_quitGroup = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"quit_group", {
                                                 'GroupId':options.GroupId
-                                              },
+                                              }, 
                                    cbOk, cbErr);
 	};
-
+        
         //获取群组公开资料
         var proto_getGroupPublicInfo = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"get_group_public_info", {
                                                 'GroupIdList':options.GroupIdList,
                                                 'ResponseFilter':{
                                                     'GroupBasePublicInfoFilter':options.GroupBasePublicInfoFilter
-                                                }
-                                              },
+                                                } 
+                                              }, 
                                    function(resp){
                                        resp.ErrorInfo='';
                                        if(resp.GroupInfo){
@@ -1673,13 +1448,12 @@ var webim = { // namespace object webim
                                                var errorCode=resp.GroupInfo[i].ErrorCode;
                                                if(errorCode>0){
                                                    resp.ActionStatus=WEB_IM_ACTION_STATUS_FAIL;
-
+                                                   var errorInfoZh=WEB_IM_ERROR[errorCode];
                                                    resp.GroupInfo[i].ErrorInfo="["+errorCode+"]"+resp.GroupInfo[i].ErrorInfo;
-                                                   /*var errorInfoZh=WEB_IM_ERROR[errorCode];
                                                    if(errorInfoZh){
                                                        resp.GroupInfo[i].ErrorInfo="["+errorCode+"]"+errorInfoZh;
-                                                   }*/
-
+                                                   }
+                                                   
                                                    resp.ErrorInfo+=resp.GroupInfo[i].ErrorInfo+'\n';
                                                }
                                            }
@@ -1691,52 +1465,52 @@ var webim = { // namespace object webim
                                        }else if(cbOk){
                                            cbOk(resp);
                                        }
-
+                                       
                                    },
                                    cbErr);
 	};
-
+        
         //获取群组详细资料--高级
         var proto_getGroupInfo = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
                 var opt={
                     'GroupIdList':options.GroupIdList,
                     'ResponseFilter':{
                         'GroupBaseInfoFilter':options.GroupBaseInfoFilter,
                         'MemberInfoFilter':options.MemberInfoFilter
-                    }
+                    } 
                 };
                 if(options.AppDefinedDataFilter_Group){
                     opt.AppDefinedDataFilter_Group=options.AppDefinedDataFilter_Group
                 }
-		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"get_group_info", opt,
+		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"get_group_info", opt, 
                                    cbOk, cbErr);
 	};
-
+        
         //获取群组成员-高级接口
         var proto_getGroupMemberInfo = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"get_group_member_info", {
                                                 'GroupId':options.GroupId,
                                                 'Offset':options.Offset,
                                                 'Limit':options.Limit,
                                                 'MemberInfoFilter':options.MemberInfoFilter
-                                              },
+                                              }, 
                                    cbOk, cbErr);
 	};
-
-
+        
+        
         //增加群组成员
         var proto_addGroupMember = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"add_group_member", {
                                                 'GroupId':options.GroupId,
                                                 'Silence':options.Silence,
-                                                'MemberList':options.MemberList
-                                              },
+                                                'MemberList':options.MemberList 
+                                              }, 
                                    cbOk, cbErr);
 	};
         //修改群组成员资料
@@ -1760,42 +1534,42 @@ var webim = { // namespace object webim
                 if(options.ShutUpTime){
                     opt.ShutUpTime=options.ShutUpTime;
                 }
-		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"modify_group_member_info", opt,
+		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"modify_group_member_info", opt, 
                                    cbOk, cbErr);
 	};
         //删除群组成员
         var proto_deleteGroupMember = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"delete_group_member", {
                                                 'GroupId':options.GroupId,
                                                 'Silence':options.Silence,
-                                                'MemberToDel_Account':options.MemberToDel_Account
-                                              },
+                                                'MemberToDel_Account':options.MemberToDel_Account 
+                                              }, 
                                    cbOk, cbErr);
 	};
         //解散群组
         var proto_destroyGroup = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"destroy_group", {
                                                 'GroupId':options.GroupId
-                                              },
+                                              }, 
                                    cbOk, cbErr);
 	};
         //获取用户所加入的群组
         var proto_getJoinedGroupList = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"get_joined_group_list", {
-                                                'Member_Account':options.Member_Account
-                                              },
+                                                'Member_Account':encodeURIComponent(options.Member_Account)
+                                              }, 
                                    cbOk, cbErr);
 	};
         //获取用户所加入的群组-高级接口
         var proto_getJoinedGroupListHigh = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"get_joined_group_list", {
                                                 'Member_Account':options.Member_Account,
                                                 'Limit':options.Limit,
@@ -1805,47 +1579,39 @@ var webim = { // namespace object webim
                                                     'GroupBaseInfoFilter':options.GroupBaseInfoFilter,
                                                     'SelfInfoFilter':options.SelfInfoFilter
                                                 }
-                                              },
+                                              }, 
                                    cbOk, cbErr);
 	};
         //查询一组UserId在群中的身份
         var proto_getRoleInGroup = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"get_role_in_group", {
                                                 'GroupId':options.GroupId,
                                                 'User_Account':options.User_Account
-                                              },
+                                              }, 
                                    cbOk, cbErr);
 	};
         //设置取消成员禁言时间
         var proto_forbidSendMsg = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"forbid_send_msg", {
                                                 'GroupId':options.GroupId,
                                                 'Members_Account':options.Members_Account,
                                                 'ShutUpTime':options.ShutUpTime
-                                              },
+                                              }, 
                                    cbOk, cbErr);
 	};
-
-        //发送自定义群系统通知
-        var proto_sendCustomGroupNotify = function(options,cbOk, cbErr) {
-		if (!checkLogin()) return;
-		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"send_group_system_notification", options,
-                                   cbOk, cbErr);
-	};
-
+        
         //拉取群消息接口
         var proto_getGroupMsgs = function(options,cbOk, cbErr) {
-
 		if (!checkLogin()) return;
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"group_msg_get", {
                                               "GroupId":options.GroupId,
                                               "ReqMsgSeq":options.ReqMsgSeq,
                                               "ReqMsgNumber":options.ReqMsgNumber
-                                          },
+                                          }, 
                                     cbOk, cbErr);
 	};
         //群消息已读上报接口
@@ -1854,11 +1620,11 @@ var webim = { // namespace object webim
 		ConnManager.apiCall(WEB_IM_SRV_NAME_GROUP,"msg_read_report", {
                                               'GroupId':options.GroupId,
                                               'MsgReadedSeq':options.MsgReadedSeq
-                                          },
+                                          }, 
                                     cbOk, cbErr);
 	};
         //end
-
+        
         //好友接口
         //处理好友接口返回的错误码
         var convertErrorEn2ZhFriend=function(resp){
@@ -1879,14 +1645,13 @@ var webim = { // namespace object webim
                                 var failCount = errorAccount[i];
                                 for (var j in resp.ResultItem){
                                     if (resp.ResultItem[j].To_Account == failCount){
-
+                                        
                                         var resultCode = resp.ResultItem[j].ResultCode;
-
+                                        var errorInfoZh = WEB_IM_ERROR[resultCode];
                                         resp.ResultItem[j].ResultInfo = "[" + resultCode + "]" + resp.ResultItem[j].ResultInfo;
-                                        /*var errorInfoZh = WEB_IM_ERROR[resultCode];
                                         if (errorInfoZh){
                                             resp.ResultItem[j].ResultInfo = "[" + resultCode + "]" + errorInfoZh;
-                                        }*/
+                                        }
                                         resp.ErrorInfo+=resp.ResultItem[j].ResultInfo+"\n";
                                         break;
                                     }
@@ -1901,7 +1666,7 @@ var webim = { // namespace object webim
 		ConnManager.apiCall(WEB_IM_SRV_NAME_FRIEND,"friend_add", {
                                               'From_Account':options.From_Account,
                                               'AddFriendItem':options.AddFriendItem
-                                          },
+                                          }, 
                                     function(resp){
                                         var newResp=convertErrorEn2ZhFriend(resp);
                                         if(newResp.ActionStatus==WEB_IM_ACTION_STATUS_FAIL ){
@@ -1918,7 +1683,7 @@ var webim = { // namespace object webim
                                               'From_Account':options.From_Account,
                                               'To_Account':options.To_Account,
                                               'DeleteType':options.DeleteType
-                                          },
+                                          }, 
                                     function(resp){
                                         var newResp=convertErrorEn2ZhFriend(resp);
                                         if(newResp.ActionStatus==WEB_IM_ACTION_STATUS_FAIL ){
@@ -1937,7 +1702,7 @@ var webim = { // namespace object webim
                                               "StartTime":options.StartTime,
                                               "MaxLimited":options.MaxLimited,
                                               "LastSequence":options.LastSequence
-                                          },
+                                          }, 
                                     cbOk, cbErr);
 	};
         //删除好友申请
@@ -1947,8 +1712,8 @@ var webim = { // namespace object webim
                                               "From_Account":options.From_Account,
                                               "PendencyType":options.PendencyType,
                                               "To_Account":options.To_Account
-
-                                          },
+                                              
+                                          }, 
                                     function(resp){
                                         var newResp=convertErrorEn2ZhFriend(resp);
                                         if(newResp.ActionStatus==WEB_IM_ACTION_STATUS_FAIL ){
@@ -1964,7 +1729,7 @@ var webim = { // namespace object webim
 		ConnManager.apiCall(WEB_IM_SRV_NAME_FRIEND,"friend_response", {
                                               'From_Account':options.From_Account,
                                               'ResponseFriendItem':options.ResponseFriendItem
-                                          },
+                                          }, 
                                     function(resp){
                                         var newResp=convertErrorEn2ZhFriend(resp);
                                         if(newResp.ActionStatus==WEB_IM_ACTION_STATUS_FAIL ){
@@ -1984,10 +1749,10 @@ var webim = { // namespace object webim
                                               'GetCount':options.GetCount,
                                               'LastStandardSequence':options.LastStandardSequence,
                                               'TagList':options.TagList
-                                          },
+                                          }, 
                                     cbOk, cbErr);
 	};
-
+        
         //资料接口
         //查看个人资料
         var proto_getProfilePortrait = function(options,cbOk, cbErr) {
@@ -1997,7 +1762,7 @@ var webim = { // namespace object webim
                                               'To_Account':options.To_Account,
                                               'LastStandardSequence':options.LastStandardSequence,
                                               'TagList':options.TagList
-                                          },
+                                          }, 
                                     function(resp){
                                         var errorAccount=[];
                                         if(resp.Fail_Account && resp.Fail_Account.length){
@@ -2006,7 +1771,7 @@ var webim = { // namespace object webim
                                         if(resp.Invalid_Account && resp.Invalid_Account.length){
                                             for(var k in resp.Invalid_Account){
                                                 errorAccount.push(resp.Invalid_Account[k]);
-                                            }
+                                            } 
                                         }
                                         if(errorAccount.length){
                                             resp.ActionStatus=WEB_IM_ACTION_STATUS_FAIL;
@@ -2017,11 +1782,11 @@ var webim = { // namespace object webim
                                                 for(var j in resp.UserProfileItem){
                                                     if(resp.UserProfileItem[j].To_Account==failCount){
                                                         var resultCode=resp.UserProfileItem[j].ResultCode;
+                                                        var errorInfoZh=WEB_IM_ERROR[resultCode];
                                                         resp.UserProfileItem[j].ResultInfo = "[" + resultCode + "]" + resp.UserProfileItem[j].ResultInfo;
-                                                        /*var errorInfoZh=WEB_IM_ERROR[resultCode];
                                                         if(errorInfoZh){
                                                             resp.UserProfileItem[j].ResultInfo="["+resultCode+"]"+errorInfoZh;
-                                                        }*/
+                                                        }
                                                         resp.ErrorInfo+="账号:"+failCount+","+resp.UserProfileItem[j].ResultInfo+"\n";
                                                         break;
                                                     }
@@ -2033,28 +1798,28 @@ var webim = { // namespace object webim
                                         }else if(cbOk) {
                                             cbOk(resp);
                                         }
-                                    },
+                                    }, 
                                     cbErr);
 	};
-
+        
         //设置个人资料
         var proto_setProfilePortrait = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
-
+                
 		ConnManager.apiCall(WEB_IM_SRV_NAME_PROFILE,"portrait_set", {
                                               'From_Account':options.From_Account,
                                               'ProfileItem':options.ProfileItem
-                                          },
+                                          }, 
                                     cbOk, cbErr);
 	};
-
+        
         //增加黑名单
         var proto_addBlackList = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
 		ConnManager.apiCall(WEB_IM_SRV_NAME_FRIEND,"black_list_add", {
                                               'From_Account':options.From_Account,
                                               'To_Account':options.To_Account
-                                          },
+                                          }, 
                                     function(resp){
                                         var newResp=convertErrorEn2ZhFriend(resp);
                                         if(newResp.ActionStatus==WEB_IM_ACTION_STATUS_FAIL ){
@@ -2064,14 +1829,14 @@ var webim = { // namespace object webim
                                         }
                                     }, cbErr);
 	};
-
+        
         //删除黑名单
         var proto_deleteBlackList = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
 		ConnManager.apiCall(WEB_IM_SRV_NAME_FRIEND,"black_list_delete", {
                                               'From_Account':options.From_Account,
                                               'To_Account':options.To_Account
-                                          },
+                                          }, 
                                     function(resp){
                                         var newResp=convertErrorEn2ZhFriend(resp);
                                         if(newResp.ActionStatus==WEB_IM_ACTION_STATUS_FAIL ){
@@ -2081,7 +1846,7 @@ var webim = { // namespace object webim
                                         }
                                     }, cbErr);
 	};
-
+        
         //我的黑名单
         var proto_getBlackList = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
@@ -2090,10 +1855,10 @@ var webim = { // namespace object webim
                                               'StartIndex':options.StartIndex,
                                               'MaxLimited':options.MaxLimited,
                                               'LastSequence':options.LastSequence
-                                          },
+                                          }, 
                                     cbOk, cbErr);
 	};
-
+        
         //上传图片
         var proto_uploadPic = function(options,cbOk, cbErr) {
 		if (!checkLogin()) return;
@@ -2111,27 +1876,13 @@ var webim = { // namespace object webim
                                               'Slice_Offset':options.Slice_Offset,
                                               'Slice_Size':options.Slice_Size,
                                               'Slice_Data':options.Slice_Data
-                                          },
+                                          }, 
                                     cbOk, cbErr);
 	};
-
-        //获取语音和文件下载IP和authkey
-        var proto_getIpAndAuthkey = function(cbOk, cbErr) {
-		if (!checkLogin()) return;
-		ConnManager.apiCall(WEB_IM_SRV_NAME_OPEN_IM,"authkey", {}, cbOk, cbErr);
-	};
         //end
-        var lowerBR = false;
-        var bVersion = tool.getBrowserInfo();
-        //console.debug('bVersion',bVersion);
-        if (bVersion.type=="ie") {
-            if (parseInt(bVersion.ver) < 10) {
-                lowerBR = true;
-            }
-        }
+        
 	// singleton object ConnManager
-	var ConnManager = lowerBR == false
-        ? new function() {
+	var ConnManager = new function() {
 		var callback = null;//回调函数
 		this.init = function(cb) {
 			callback = cb;
@@ -2144,96 +1895,30 @@ var webim = { // namespace object webim
 			ajaxRequestJson("POST", url, data, function(resp) {
                                 //成功
 				if (resp.ActionStatus == WEB_IM_ACTION_STATUS_OK) {
-                                        //if(cmd!='pic_up'){
+                                        if(cmd!='pic_up'){
                                             console.info("["+type+"]["+cmd+"]success:\nurl:\n%s\ndata:\n%s\nresponse:\n%s",url,JSON.stringify(data),JSON.stringify(resp));
-                                            //console.info("["+type+"]["+cmd+"]success:\nurl:\n%s\ndata:\n%s\nresponse:\n%o",url,JSON.stringify(data),resp);
-                                        //}
-                                        //console.info('cbOk='+cbOk);
+                                        }
+                                        
 					if (cbOk) cbOk(resp);//回调
 				} else {
                                         //报错
 					if (cbErr){
-                                            resp.ErrorInfo="["+resp.ErrorCode+"]"+resp.ErrorInfo;
-                                            /*var errorInfoZh=WEB_IM_ERROR[resp.ErrorCode];
+                                            var errorInfoZh=WEB_IM_ERROR[resp.ErrorCode];
                                             if(errorInfoZh){
                                                 resp.ErrorInfo="["+resp.ErrorCode+"]"+errorInfoZh;
-                                            }*/
+                                            }else{
+                                                resp.ErrorInfo="["+resp.ErrorCode+"]"+resp.ErrorInfo;
+                                            }
                                             if(cmd!='longpolling'){
                                                 console.error("["+type+"]["+cmd+"]fail:url:\n%s\ndata:\n%s\nresponse:\n%s",url,JSON.stringify(data),JSON.stringify(resp));
-                                            }else{
-                                                console.warn("["+type+"]["+cmd+"]fail:url:\n%s\ndata:\n%s\nresponse:\n%s",url,JSON.stringify(data),JSON.stringify(resp));
                                             }
                                             cbErr(resp);
                                         }
-
+                                            
 				}
 			}, cbErr);
 		};
-	}
-        :new function () {
-                var self = this;
-		var callback = null;        //回调函数
-		this.init = function(cb) {
-			callback = cb;
-		};
-                //请求后台服务接口
-		this.apiCall = function(type,cmd, data, cbOk, cbErr) {
-                        //封装后台服务接口地址
-                        var url=getApiUrl(type,cmd);
-                        //发起jsonp请求
-                        var reqId = webimJsonpRequestId++,
-                        cbkey = 'jsonpcallback', // the 'callback' key
-                        cbval = 'jsonpRequest' + reqId, // the 'callback' value
-                        script = document.createElement('script'),
-                        loaded = 0;
-
-                        window[cbval] = webimJsonpCallback;
-                        script.type = 'text/javascript';
-                        url=url+"&"+cbkey+"="+cbval+"&jsonpbody="+encodeURIComponent(JSON.stringify(data));
-                        script.src = url;
-                        script.async = true;
-
-                        if (typeof script.onreadystatechange !== 'undefined') {
-                            // need this for IE due to out-of-order onreadystatechange(), binding script
-                            // execution to an event listener gives us control over when the script
-                            // is executed. See http://jaubourg.net/2010/07/loading-script-as-onclick-handler-of.html
-                            script.event = 'onclick';
-                            script.htmlFor = script.id = '_jsonpRequest_' + reqId;
-                        }
-                        console.info("["+type+"]["+cmd+"]\nurl:\n%s\ndata:\n%s",url,JSON.stringify(data));
-
-                        script.onload = script.onreadystatechange = function () {
-                            if ((this.readyState && this.readyState!== 'complete' && this.readyState!== 'loaded') || loaded) {
-                                return false;
-                            }
-                            script.onload = script.onreadystatechange = null;
-                            script.onclick && script.onclick();
-                            // Call the user callback with the last value stored and clean up values and scripts.
-                            var resp=webimJsonpLastRspData;
-                            if (resp.ActionStatus == WEB_IM_ACTION_STATUS_OK){
-                                console.info("["+type+"]["+cmd+"]success:\nurl:\n%s\ndata:\n%s\nresponse:\n%s",url,JSON.stringify(data),JSON.stringify(resp));
-                                cbOk && cbOk(resp);
-                            }else{
-                                resp.ErrorInfo="["+resp.ErrorCode+"]"+resp.ErrorInfo;
-                                if(cmd!='longpolling'){
-                                    console.error("["+type+"]["+cmd+"]fail:url:\n%s\ndata:\n%s\nresponse:\n%s",url,JSON.stringify(data),JSON.stringify(resp));
-                                }else{
-                                    console.warn("["+type+"]["+cmd+"]fail:url:\n%s\ndata:\n%s\nresponse:\n%s",url,JSON.stringify(data),JSON.stringify(resp));
-                                }
-                                cbErr && cbErr(resp);
-                            }
-                            webimJsonpLastRspData = undefined;
-                            document.body.removeChild(script);
-                            loaded = 1;
-                        };
-
-                        // Add the script to the DOM head
-                        document.body.appendChild(script);
-		};
-        };
-        var ParseJSONPDatas = function (StringDatas) {
-            return JSON.parse(StringDatas)
-        };
+	};
 	// class Session
 	var Session = function(type, id, name, icon, time,seq) {
 		this._impl = {
@@ -2261,14 +1946,12 @@ var webim = { // namespace object webim
 	Session.prototype.curMaxMsgSeq = function() {return this._impl.curMaxMsgSeq;};
 	Session.prototype.msgCount = function() {return this._impl.msgs.length;};
 	Session.prototype.msg = function(index) {return this._impl.msgs[index];};
-
+        
 	Session.prototype._impl_addMsg = function(msg) {
 		this._impl.msgs.push(msg);
-		//if (!msg.isSend && msg.time > this._impl.time)
-		if (msg.time > this._impl.time)
+		if (!msg.isSend && msg.time > this._impl.time)
 			this._impl.time = msg.time;
-                //if (!msg.isSend && msg.seq > this._impl.curMaxMsgSeq)
-                if (msg.seq > this._impl.curMaxMsgSeq)
+                if (!msg.isSend && msg.seq > this._impl.curMaxMsgSeq)
 			this._impl.curMaxMsgSeq = msg.seq;
                 //console.info("msg.isSend="+msg.isSend);
                 //console.info("_impl.isAutoRead="+this._impl.isAutoRead);
@@ -2284,12 +1967,11 @@ var webim = { // namespace object webim
             this.lastedMsgTime=lastedMsgTime;
         }
 	// class Msg
-	var Msg = function(sess, isSend, seq, random,time,fromAccount,type) {
+	var Msg = function(sess, isSend, seq, random,time,fromAccount) {
 		this.sess = sess;
-                this.type = type>=0 ? type : 0;//消息类型,c2c消息时，type取值为0；group消息时，type取值0和1，0-普通群消息，1-群提示消息
                 this.fromAccount = fromAccount;
                 this.isSend = Boolean(isSend);
-		this.seq = seq >= 0 ? seq : nextSeq(fromAccount);
+		this.seq = seq >= 0 ? seq : nextSeq();
 		this.random = random >= 0 ? random : createRandom();
 		this.time = time >= 0 ? time : unixtime();
 		this.elems = [];
@@ -2306,11 +1988,7 @@ var webim = { // namespace object webim
 	Msg.prototype.addImage = function(image) {
 		this.addElem(new webim.Msg.Elem(WEB_IM_MSG_ELEMENT_TYPE_IMAGE, image));
 	};
-        //自定义
-	Msg.prototype.addCustom = function(custom) {
-		this.addElem(new webim.Msg.Elem(WEB_IM_MSG_ELEMENT_TYPE_CUSTOM, custom));
-	};
-
+        
 	Msg.prototype.addElem = function(elem) {
 		this.elems.push(elem);
 	};
@@ -2320,7 +1998,8 @@ var webim = { // namespace object webim
 			var elem = this.elems[i];
 			html += elem.toHtml();
 		}
-                return html;
+		//return html;
+		return "<pre>"+html+"</pre>";
 	};
 	// class Msg.Elem
 	Msg.Elem = function(type, value) {
@@ -2351,7 +2030,7 @@ var webim = { // namespace object webim
                 return this.index;
 	};
         Msg.Elem.Face.prototype.getData = function() {
-                return this.data;
+                return this.data;     
 	};
         Msg.Elem.Face.prototype.toHtml = function() {
 		if(emotionPicData[this.data]){
@@ -2360,29 +2039,28 @@ var webim = { // namespace object webim
                     return this.data;
                 }
 	};
-
-        //图片消息
+        
         // class Msg.Elem.Images
 	Msg.Elem.Images = function(imageId) {
 		this.UUID = imageId;
 		this.ImageInfoArray=[];
 	};
         Msg.Elem.Images.prototype.addImage = function(image) {
-                this.ImageInfoArray.push(image);
+                this.ImageInfoArray.push(image);    
 	};
         Msg.Elem.Images.prototype.toHtml = function() {
                 var smallImage=this.getImage(WEB_IM_IMAGE_TYPE.SMALL);
                 var bigImage=this.getImage(WEB_IM_IMAGE_TYPE.LARGE);
-                var oriImage=this.getImage(WEB_IM_IMAGE_TYPE.ORIGIN);
+				var oriImage=this.getImage(WEB_IM_IMAGE_TYPE.ORIGIN);
                 if(!bigImage){
                     bigImage=smallImage;
                 }
-                if(!oriImage){
+				if(!oriImage){
                     oriImage=smallImage;
                 }
                 return	"<img src='" + smallImage.getUrl() + "#"+bigImage.getUrl()+"#"+oriImage.getUrl()+"' style='CURSOR: hand' id='"+this.getImageId()+"' bigImgUrl='"+bigImage.getUrl()+"' onclick='imageClick(this)' />";
-
-	};
+                
+	}; 
         Msg.Elem.Images.prototype.getImageId = function() {
                 return this.UUID;
 	};
@@ -2403,267 +2081,21 @@ var webim = { // namespace object webim
 		this.url = url;
 	};
         Msg.Elem.Images.Image.prototype.getType= function() {
-                return this.type;
+                return this.type;  
 	};
         Msg.Elem.Images.Image.prototype.getSize= function() {
-                return this.size;
+                return this.size;  
 	};
         Msg.Elem.Images.Image.prototype.getWidth= function() {
-                return this.width;
+                return this.width;  
 	};
         Msg.Elem.Images.Image.prototype.getHeight= function() {
-                return this.height;
+                return this.height;  
 	};
         Msg.Elem.Images.Image.prototype.getUrl= function() {
-                return this.url;
+                return this.url;  
 	};
-
-        // class Msg.Elem.Sound
-	Msg.Elem.Sound = function(uuid,second,size,senderId,downUrl) {
-		this.uuid = uuid;//语音id
-		this.second = second;//时长，单位：秒
-		this.size = size;//大小，单位：字节
-		this.senderId = senderId;//发送者id
-		this.downUrl = downUrl;//下载url
-	};
-        Msg.Elem.Sound.prototype.getUUID = function() {
-                return this.uuid;
-	};
-        Msg.Elem.Sound.prototype.getSecond = function() {
-                return this.second;
-	};
-        Msg.Elem.Sound.prototype.getSize = function() {
-                return this.size;
-	};
-        Msg.Elem.Sound.prototype.getSenderId = function() {
-                return this.senderId;
-	};
-        Msg.Elem.Sound.prototype.getDownUrl = function() {
-                return this.downUrl;
-	};
-        Msg.Elem.Sound.prototype.toHtml = function() {
-                if(browserInfo.type=='ie' && parseInt(browserInfo.ver)<=8){
-                    return '[这是一条语音消息]demo暂不支持ie8(含)以下浏览器播放语音,语音URL:'+this.downUrl;
-                }
-		return '<audio src="'+this.downUrl+'" controls="controls" onplay="onChangePlayAudio(this)" preload="none"></audio>';
-	};
-
-        // class Msg.Elem.File
-	Msg.Elem.File = function(uuid,name,size,senderId,downUrl) {
-		this.uuid = uuid;//文件id
-		this.name = name;//文件名
-		this.size = size;//大小，单位：字节
-		this.senderId = senderId;//发送者
-                this.downUrl = downUrl;//下载地址
-	};
-        Msg.Elem.File.prototype.getUUID = function() {
-                return this.uuid;
-	};
-        Msg.Elem.File.prototype.getName = function() {
-                return this.name;
-	};
-        Msg.Elem.File.prototype.getSize = function() {
-                return this.size;
-	};
-        Msg.Elem.File.prototype.getSenderId = function() {
-                return this.senderId;
-	};
-        Msg.Elem.File.prototype.getDownUrl = function() {
-                return this.downUrl;
-	};
-        Msg.Elem.File.prototype.toHtml = function() {
-                var fileSize=Math.round(this.size/1024);
-		return '<a href="'+this.downUrl+'" title="点击下载文件" ><i class="glyphicon glyphicon-file">&nbsp;'+this.name+'('+fileSize+'KB)</i></a>';
-	};
-
-        // class Msg.Elem.GroupTip 群提示消息对象
-	Msg.Elem.GroupTip = function(opType,opUserId,groupId,groupName,userIdList) {
-		this.opType = opType;//操作类型
-		this.opUserId = opUserId;//操作者id
-		this.groupId = groupId;//群id
-		this.groupName = groupName;//群名称
-                this.userIdList = userIdList ? userIdList : [];//被操作的用户id列表
-                this.groupInfoList = [];//新的群资料信息，群资料变更时才有值
-                this.memberInfoList = [];//新的群成员资料信息，群成员资料变更时才有值
-	};
-        Msg.Elem.GroupTip.prototype.addGroupInfo = function(groupInfo) {
-                this.groupInfoList.push(groupInfo);
-	};
-        Msg.Elem.GroupTip.prototype.addMemberInfo = function(memberInfo) {
-                this.memberInfoList.push(memberInfo);
-	};
-        Msg.Elem.GroupTip.prototype.getOpType = function() {
-                return this.opType;
-	};
-        Msg.Elem.GroupTip.prototype.getOpUserId = function() {
-                return this.opUserId;
-	};
-        Msg.Elem.GroupTip.prototype.getGroupId = function() {
-                return this.groupId;
-	};
-        Msg.Elem.GroupTip.prototype.getGroupName = function() {
-                return this.groupName;
-	};
-        Msg.Elem.GroupTip.prototype.getUserIdList = function() {
-                return this.userIdList;
-	};
-        Msg.Elem.GroupTip.prototype.getGroupInfoList = function() {
-                return this.groupInfoList;
-	};
-        Msg.Elem.GroupTip.prototype.getMemberInfoList = function() {
-                return this.memberInfoList;
-	};
-        Msg.Elem.GroupTip.prototype.toHtml = function() {
-                var text="[群提示消息]";
-                var maxIndex=WEB_IM_GROUP_TIP_MAX_USER_COUNT-1;
-                switch (this.opType) {
-                    case WEB_IM_GROUP_TIP_TYPE.JOIN://加入群
-                        text += this.opUserId + "邀请了";
-                        for (var m in this.userIdList) {
-                            text += this.userIdList[m] + ",";
-                            if (this.userIdList.length > WEB_IM_GROUP_TIP_MAX_USER_COUNT && m == maxIndex) {
-                                text += "等" + this.userIdList.length + "人";
-                                break;
-                            }
-                        }
-                        text += "加入该群";
-                        break;
-                    case WEB_IM_GROUP_TIP_TYPE.QUIT://退出群
-                        text += this.opUserId + "主动退出该群";
-                        break;
-                    case WEB_IM_GROUP_TIP_TYPE.KICK://踢出群
-                        text += this.opUserId + "将";
-                        for (var m in this.userIdList) {
-                            text += this.userIdList[m] + ",";
-                            if (this.userIdList.length > WEB_IM_GROUP_TIP_MAX_USER_COUNT && m == maxIndex) {
-                                text += "等" + this.userIdList.length + "人";
-                                break;
-                            }
-                        }
-                        text += "踢出该群";
-                        break;
-                    case WEB_IM_GROUP_TIP_TYPE.SET_ADMIN://设置管理员
-                        text += this.opUserId + "将";
-                        for (var m in this.userIdList) {
-                            text += this.userIdList[m] + ",";
-                            if (this.userIdList.length > WEB_IM_GROUP_TIP_MAX_USER_COUNT && m == maxIndex) {
-                                text += "等" + this.userIdList.length + "人";
-                                break;
-                            }
-                        }
-                        text += "设为管理员";
-                        break;
-                    case WEB_IM_GROUP_TIP_TYPE.CANCEL_ADMIN://取消管理员
-                        text += this.opUserId + "取消";
-                        for (var m in this.userIdList) {
-                            text += this.userIdList[m] + ",";
-                            if (this.userIdList.length > WEB_IM_GROUP_TIP_MAX_USER_COUNT && m == maxIndex) {
-                                text += "等" + this.userIdList.length + "人";
-                                break;
-                            }
-                        }
-                        text += "的管理员资格";
-                        break;
-
-                    case WEB_IM_GROUP_TIP_TYPE.MODIFY_GROUP_INFO://群资料变更
-                        text += this.opUserId + "修改了群资料：";
-                        for (var m in this.groupInfoList) {
-                            var type=this.groupInfoList[m].getType();
-                            var value=this.groupInfoList[m].getValue();
-                            switch(type){
-                                case WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.FACE_URL:
-                                    text += "群头像为" + value + "; ";
-                                    break;
-                                case WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.NAME:
-                                    text += "群名称为" + value + "; ";
-                                    break;
-                                case WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.OWNER:
-                                    text += "群主为" + value + "; ";
-                                    break;
-                                case WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.NOTIFICATION:
-                                    text += "群公告为" + value + "; ";
-                                    break;
-                                case WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.INTRODUCTION:
-                                    text += "群简介为" + value + "; ";
-                                    break;
-                                default:
-                                    text += "未知信息为:type=" + type+",value="+value + "; ";
-                                    break;
-                            }
-                        }
-                        break;
-
-                    case WEB_IM_GROUP_TIP_TYPE.MODIFY_MEMBER_INFO://群成员资料变更(禁言时间)
-                        text += this.opUserId + "修改了群成员资料:";
-                        for (var m in this.memberInfoList) {
-                            var userId=this.memberInfoList[m].getUserId();
-                            var shutupTime=this.memberInfoList[m].getShutupTime();
-                            text += userId+": ";
-                            if (shutupTime != null && shutupTime !== undefined) {
-                                if (shutupTime == 0) {
-                                    text += "取消禁言; ";
-                                } else {
-                                    text += "禁言" + shutupTime + "秒; ";
-                                }
-                            } else{
-                                text += " shutupTime为空";
-                            }
-                            if (this.memberInfoList.length > WEB_IM_GROUP_TIP_MAX_USER_COUNT && m == maxIndex) {
-                                text += "等" + this.memberInfoList.length + "人";
-                                break;
-                            }
-                        }
-                        break;
-                    default:
-                        text += "未知群提示消息类型：type="+this.opType;
-                        break;
-                }
-                return text;
-	};
-
-        // class Msg.Elem.GroupTip.GroupInfo，变更的群资料信息对象
-	Msg.Elem.GroupTip.GroupInfo = function(type,value) {
-		this.type = type;//群资料信息类型
-		this.value = value;//对应的值
-	};
-        Msg.Elem.GroupTip.GroupInfo.prototype.getType = function() {
-                return this.type;
-	};
-        Msg.Elem.GroupTip.GroupInfo.prototype.getValue = function() {
-                return this.value;
-	};
-
-        // class Msg.Elem.GroupTip.MemberInfo，变更的群成员资料信息对象
-	Msg.Elem.GroupTip.MemberInfo = function(userId,shutupTime) {
-		this.userId = userId;//群成员id
-		this.shutupTime = shutupTime;//群成员被禁言时间，0表示取消禁言，大于0表示被禁言时长，单位：秒
-	};
-        Msg.Elem.GroupTip.MemberInfo.prototype.getUserId = function() {
-                return this.userId;
-	};
-        Msg.Elem.GroupTip.MemberInfo.prototype.getShutupTime = function() {
-                return this.shutupTime;
-	};
-
-        // 自定义消息类型 class Msg.Elem.Custom
-	Msg.Elem.Custom = function(data,desc,ext) {
-		this.data =data;//数据
-                this.desc =desc;//描述
-                this.ext =ext;//扩展字段
-	};
-        Msg.Elem.Custom.prototype.getData = function() {
-                return	this.data;
-	};
-        Msg.Elem.Custom.prototype.getDesc = function() {
-                return	this.desc;
-	};
-        Msg.Elem.Custom.prototype.getExt = function() {
-                return	this.ext;
-	};
-        Msg.Elem.Custom.prototype.toHtml = function() {
-                return	this.data;
-	};
-
+        
 	// singleton object MsgStore
 	var MsgStore = new function() {
 		var sessMap = {};//跟所有用户或群的聊天记录MAP
@@ -2672,7 +2104,7 @@ var webim = { // namespace object webim
                 //C2C
 		this.cookie = "";//上一次拉取新c2c消息的cookie
 		this.syncFlag = 0;//上一次拉取新c2c消息的是否继续拉取标记
-
+                
 		var visitSess = function(visitor) {
 			for (var i in sessMap) {
 				visitor(sessMap[i]);
@@ -2692,10 +2124,10 @@ var webim = { // namespace object webim
                             msgCache[first_key]={};
                             msgCache[first_key][second_key] = {time: msg.time};
                         }
-
+			
 			return dup;
 		};
-
+                
                 this.sessMap=function(){
                     return sessMap;
                 };
@@ -2720,7 +2152,7 @@ var webim = { // namespace object webim
 			this.cookie = "";
                         this.syncFlag = 0;
 		};
-
+		
                 //切换将当前会话的自动读取消息标志为isOn,重置其他会话的自动读取消息标志为false
 		this.setAutoRead = function(selSess, isOn, isResetAll) {
 			if (isResetAll)
@@ -2729,15 +2161,15 @@ var webim = { // namespace object webim
 				selSess._impl.isAutoRead = isOn;//
 				if (isOn) {//是否调用已读上报接口
                                     selSess._impl.unread = 0;
-
+                                    
                                     if(selSess._impl.type==WEB_IM_MSG_TYPE_C2C){//私聊消息已读上报
                                         var tmpC2CMsgReadedItem=[];
                                         tmpC2CMsgReadedItem.push(new C2CMsgReadedItem(selSess._impl.id,selSess._impl.time));
                                         //调用C2C消息已读上报接口
                                         proto_c2CMsgReaded(MsgStore.cookie,
                                                       tmpC2CMsgReadedItem,
-                                                      function(resp) {
-                                                        console.info("c2CMsgReaded success");
+                                                      function(resp) {                                                    
+                                                        console.info("c2CMsgReaded success");   
                                                       },
                                                       function(err) {
                                                         console.error("c2CMsgReaded failed:" + err.ErrorInfo);
@@ -2750,37 +2182,16 @@ var webim = { // namespace object webim
                                         //调用group消息已读上报接口
                                         proto_groupMsgReaded(tmpOpt,
                                                       function(resp) {
-                                                        console.info("groupMsgReaded success");
+                                                        console.info("groupMsgReaded success");                  
                                                       },
                                                       function(err) {
                                                         console.error("groupMsgReaded failed:" + err.ErrorInfo);
                                                       });
                                     }
-
+                                    
                                 }
 			}
 		};
-
-                this.c2CMsgReaded=function(opts,cbOk,cbErr){
-                    var tmpC2CMsgReadedItem=[];
-                    tmpC2CMsgReadedItem.push(new C2CMsgReadedItem(opts.To_Account,opts.LastedMsgTime));
-                    //调用C2C消息已读上报接口
-                    proto_c2CMsgReaded(MsgStore.cookie,
-                        tmpC2CMsgReadedItem,
-                            function(resp) {
-                                if(cbOk){
-                                    cbOk(resp);
-                                }
-                                console.info("c2CMsgReaded success");
-                            },
-                            function(err) {
-                                if(cbErr){
-                                    cbErr(err);
-                                }
-                                console.error("c2CMsgReaded failed:" + err.ErrorInfo);
-                            });
-                };
-
 		this.addSession = function(sess) {
 			sessMap[sess._impl.skey] = sess;
 		};
@@ -2803,268 +2214,12 @@ var webim = { // namespace object webim
 	};
 	// singleton object MsgManager
 	var MsgManager = new function() {
-		var callback = null;//c2新消息回调
-		var onGroupInfoChangeCallback = null;//群资料变化回调
-                //收到新群系统消息回调列表
-                var groupSystemNotifyCallbacks={
-                    "1":null,
-                    "2":null,
-                    "3":null,
-                    "4":null,
-                    "5":null,
-                    "6":null,
-                    "7":null,
-                    "8":null,
-                    "9":null,
-                    "10":null,
-                    "11":null,
-                    "255":null
-                };
-                var notifySeq=0;//c2c通知seq
-                var noticeSeq=0;//群消息seq
-
-
-                var ipList=[];//文件下载地址
-                var authkey=null;//文件下载票据
-                var expireTime=null;//票据超时时间
-
-                var getLostGroupMsgCount=0;//补拉丢失的群消息次数
-                //我的群当前最大的seq
-                var myGroupMaxSeqs={};//用于补拉丢失的群消息
-
-                var groupSystemMsgsCache={};//群组系统消息缓存,用于判重
-
-                //初始化文件下载ip和票据
-                var initIpAndAuthkey=function(cbOk,cbErr){
-                    proto_getIpAndAuthkey(function(resp){
-                            ipList=resp.IpList;
-                            authkey=resp.AuthKey;
-                            expireTime=resp.ExpireTime;
-                        },
-                        function(err) {
-				console.error("initIpAndAuthkey failed:" + err.ErrorInfo);
-				if (cbErr) cbErr(err);
-			}
-                    );
-                };
-
-                //初始化我的群当前最大的seq，用于补拉丢失的群消息
-                var initMyGroupMaxSeqs=function(cbOk,cbErr,loginInfo){
-                    var opts={
-                        'Member_Account': loginInfo.identifier,
-                        'Limit': 1000,
-                        'Offset': 0,
-                        'GroupBaseInfoFilter': [
-                            'NextMsgSeq'
-                        ]
-                    };
-                    proto_getJoinedGroupListHigh(opts,function(resp){
-                            if (!resp.GroupIdList || resp.GroupIdList.length == 0) {
-                                console.info("initMyGroupMaxSeqs: 目前还没有加入任何群组");
-                                return;
-                            }
-                            for (var i = 0; i < resp.GroupIdList.length; i++) {
-                                var group_id = resp.GroupIdList[i].GroupId;
-                                var curMaxSeq = resp.GroupIdList[i].NextMsgSeq-1;
-                                myGroupMaxSeqs[group_id]=curMaxSeq;
-                            }
-                            console.warn("initMyGroupMaxSeqs success: %o",myGroupMaxSeqs);
-                        },
-                        function(err) {
-				console.error("initMyGroupMaxSeqs failed:" + err.ErrorInfo);
-				if (cbErr) cbErr(err);
-			}
-                    );
-                };
-
-                //补拉群消息
-                var getLostGroupMsgs=function(groupId,reqMsgSeq,reqMsgNumber){
-                    getLostGroupMsgCount++;
-                    //发起一个拉群群消息请求
-                    var tempOpts={
-                        'GroupId':  groupId,
-                        'ReqMsgSeq':  reqMsgSeq,
-                        'ReqMsgNumber':  reqMsgNumber
-                    };
-                    //发起一个拉群群消息请求
-                    console.warn("第%s次补齐群消息,参数=%s：",getLostGroupMsgCount,JSON.stringify(tempOpts));
-                    MsgManager.syncGroupMsgs(tempOpts);
-                };
-
-                //添加群消息列表
-                var addGroupMsgList=function(msgs,new_group_msgs){
-                    for(var p in msgs){
-                            var newGroupMsg=msgs[p];
-                            //发群消息时，长轮询接口会返回用户自己发的群消息，如果收到自己发的群消息，则不要处理
-                            if(newGroupMsg.From_Account && newGroupMsg.From_Account!=ctx.identifier ){
-                            //if(newGroupMsg.From_Account){
-                                var msg=handlerGroupMsg(newGroupMsg.ToGroupId,newGroupMsg);
-                                    if(msg){
-                                        new_group_msgs.push(msg);
-                                    }
-                            }
-                    }
-                    return new_group_msgs;
-                };
-
-                //处理收到的群普通和提示消息
-                var handlerOrdinaryAndTipGroupMsgs=function(eventType,groupMsgArray){
-                                    var groupMsgMap = {};//
-                                    var new_group_msgs=[];
-                                    var minGroupMsgSeq=99999999;
-                                    var maxGroupMsgSeq=-1;
-                                    for(var j in groupMsgArray){
-
-                                        var groupMsgs=groupMsgMap[groupMsgArray[j].ToGroupId];
-                                        if(!groupMsgs){
-                                            groupMsgs=groupMsgMap[groupMsgArray[j].ToGroupId]={
-                                                "min":minGroupMsgSeq,//收到新消息最小seq
-                                                "max":maxGroupMsgSeq,//收到新消息最大seq
-                                                "msgs":[]//收到的新消息
-                                            };
-                                        }
-                                        //更新noticeseq
-                                        if(groupMsgArray[j].NoticeSeq>noticeSeq){
-                                            console.warn("noticeSeq=%s,msgNoticeSeq=%s",noticeSeq,groupMsgArray[j].NoticeSeq);
-                                            noticeSeq=groupMsgArray[j].NoticeSeq;
-                                        }
-                                        groupMsgArray[j].Event=eventType;
-                                        groupMsgMap[groupMsgArray[j].ToGroupId].msgs.push(groupMsgArray[j]);
-                                        if(groupMsgArray[j].MsgSeq<groupMsgs.min){
-                                            groupMsgMap[groupMsgArray[j].ToGroupId].min=groupMsgArray[j].MsgSeq;
-                                        }
-                                        if(groupMsgArray[j].MsgSeq>groupMsgs.max){
-                                            groupMsgMap[groupMsgArray[j].ToGroupId].max=groupMsgArray[j].MsgSeq;
-                                        }
-                                    }
-                                    //console.error("groupMsgSeqMap=%s",JSON.stringify(groupMsgMap));
-
-                                    for(var groupId in groupMsgMap){
-                                        var tempCount=groupMsgMap[groupId].max-groupMsgMap[groupId].min+1;
-                                        var curMaxMsgSeq=myGroupMaxSeqs[groupId];
-                                        if(curMaxMsgSeq){//存在这个群的最大消息seq
-                                            //高并发情况下，长轮询可能存在丢消息，这时需要客户端通过拉取群消息接口补齐下
-                                            //1、如果收到的新消息最小seq比当前最大群消息seq大于1，则表示收到的群消息发生跳跃，需要补齐
-                                            //2、收到的新群消息seq存在不连续情况，也需要补齐
-                                            if(groupMsgMap[groupId].min-curMaxMsgSeq>1 || groupMsgMap[groupId].msgs.length<tempCount){
-                                                //发起一个拉群群消息请求
-                                                console.warn("发起一次补齐群消息请求,curMaxMsgSeq=%s,minMsgSeq=%s,maxMsgSeq=%s,msgs.length=%s,tempCount=%s",curMaxMsgSeq,groupMsgMap[groupId].min,groupMsgMap[groupId].max,groupMsgMap[groupId].msgs.length,tempCount);
-                                                getLostGroupMsgs(groupId,groupMsgMap[groupId].max,groupMsgMap[groupId].max-curMaxMsgSeq);
-                                            }else{
-                                                new_group_msgs=addGroupMsgList(groupMsgMap[groupId].msgs,new_group_msgs);
-                                            }
-                                        }else{//不存在改群的最大消息seq
-                                            console.warn("不存在该群的最大消息seq，群id=%s",groupId);
-                                            //高并发情况下，长轮询可能存在丢消息，这时需要客户端通过拉取群消息接口补齐下
-                                            //1、收到的新群消息seq存在不连续情况，也需要补齐
-                                            if(groupMsgMap[groupId].msgs.length<tempCount){
-                                                //发起一个拉群群消息请求
-                                                console.warn("发起一次补齐群消息请求,minMsgSeq=%s,maxMsgSeq=%s,msgs.length=%s,tempCount=%s",groupMsgMap[groupId].min,groupMsgMap[groupId].max,groupMsgMap[groupId].msgs.length,tempCount);
-                                                getLostGroupMsgs(groupId,groupMsgMap[groupId].max,tempCount);
-
-                                            }else{
-                                                new_group_msgs=addGroupMsgList(groupMsgMap[groupId].msgs,new_group_msgs);
-                                            }
-                                        }
-                                    }
-                                    if(new_group_msgs.length ){
-                                        MsgStore.updateTimeline();
-                                    }
-                                    if(callback && new_group_msgs.length) callback(new_group_msgs);
-
-                };
-
-                //处理新的群提示消息
-                var handlerGroupTips=function(groupTips){
-                                    var new_group_msgs=[];
-                                    for(var o in groupTips){
-                                        var groupTip=groupTips[o];
-                                        //添加event字段
-                                        groupTip.Event=WEB_IM_LONG_POLLINNG_MSG_TYPE.GROUP_TIP;
-                                        //更新群消息通知seq
-                                        if(groupTip.NoticeSeq>noticeSeq){
-                                            noticeSeq=groupTip.NoticeSeq;
-                                        }
-                                        var msg=handlerGroupMsg(groupTip.ToGroupId,groupTip);
-                                        if(msg){
-                                            new_group_msgs.push(msg);
-                                        }
-                                    }
-                                    if(new_group_msgs.length ){
-                                        MsgStore.updateTimeline();
-                                    }
-                                    if(callback && new_group_msgs.length) callback(new_group_msgs);
-                };
-
-                //处理新的群系统消息
-                var handlerGroupSystemMsgs=function(groupSystemMsgs){
-                                    for(var k in groupSystemMsgs){
-                                        var groupTip=groupSystemMsgs[k];
-                                        var groupReportTypeMsg=groupTip.MsgBody;
-                                        var reportType=groupReportTypeMsg.ReportType;
-                                        //更新群消息通知seq
-                                        if(groupTip.NoticeSeq>noticeSeq){
-                                            noticeSeq=groupTip.NoticeSeq;
-                                        }
-                                        var toAccount=groupTip.GroupInfo.To_Account;
-                                        //过滤本不应该给自己的系统消息
-                                        if(!toAccount || toAccount!=ctx.identifier){
-                                            console.error("收到本不应该给自己的系统消息: To_Account=%s",toAccount);
-                                            continue;
-                                        }
-                                        var key=groupTip.ToGroupId+"_"+reportType+"_"+groupTip.MsgTimeStamp+"_"+groupReportTypeMsg.Operator_Account;
-                                        var isExist=groupSystemMsgsCache[key];
-                                        if(isExist){
-                                            console.warn("收到重复的群系统消息：key="+key);
-                                            continue;
-                                        }
-                                        groupSystemMsgsCache[key]=true;
-                                        var notify={
-                                                    "ReportType":reportType,
-                                                    "GroupId":groupTip.ToGroupId,
-                                                    "GroupName":groupTip.GroupInfo.GroupName,
-                                                    "Operator_Account":groupReportTypeMsg.Operator_Account,
-                                                    "MsgTime":groupTip.MsgTimeStamp
-                                        };
-                                        switch(reportType){
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.JOIN_GROUP_REQUEST://申请加群(只有管理员会接收到)
-                                                notify["RemarkInfo"]=groupReportTypeMsg.RemarkInfo;
-                                                notify["MsgKey"]=groupReportTypeMsg.MsgKey;
-                                                notify["Authentication"]=groupReportTypeMsg.Authentication;
-                                                notify["UserDefinedField"]=groupTip.UserDefinedField;
-                                                notify["From_Account"]=groupTip.From_Account;
-                                                notify["MsgSeq"]=groupTip.ClientSeq;
-                                                notify["MsgRandom"]=groupTip.MsgRandom;
-                                                break;
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.JOIN_GROUP_ACCEPT://申请加群被同意(只有申请人自己接收到)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.JOIN_GROUP_REFUSE://申请加群被拒绝(只有申请人自己接收到)
-                                                notify["RemarkInfo"]=groupReportTypeMsg.RemarkInfo;
-                                                break;
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.KICK://被管理员踢出群(只有被踢者接收到)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.DESTORY://群被解散(全员接收)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.CREATE://创建群(创建者接收, 不展示)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.INVITED_JOIN_GROUP_REQUEST://邀请加群(被邀请者接收)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.QUIT://主动退群(主动退出者接收, 不展示)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.SET_ADMIN://群设置管理员(被设置者接收)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.CANCEL_ADMIN://取消管理员(被取消者接收)
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.REVOKE://群已被回收(全员接收, 不展示)
-                                                break;
-                                            case WEB_IM_GROUP_SYSTEM_TYPE.CUSTOM://用户自定义通知(默认全员接收)
-                                                notify["UserDefinedField"]=groupReportTypeMsg.UserDefinedField;
-                                                break;
-                                            default:
-                                                console.warn("未知群系统消息类型：reportType="+reportType);
-                                                break;
-                                        }
-                                        //回调
-                                        if(groupSystemNotifyCallbacks[reportType]) groupSystemNotifyCallbacks[reportType](notify);
-                                    }//loop
-                };
-
-                //长轮询
+		var callback = null;
+                var notifySeq=0;
+                var noticeSeq=0;
                 var longPolling=function(cbOk,cbErr){
                     var opts={
-                        'Timeout':90,
+                        'Timeout':60,
                         'Cookie':{
                             'NotifySeq':notifySeq,
                             'NoticeSeq':noticeSeq
@@ -3074,82 +2229,58 @@ var webim = { // namespace object webim
                         for(var i in resp.EventArray){
                             var e=resp.EventArray[i];
                             switch(e.Event){
-                                case WEB_IM_LONG_POLLINNG_MSG_TYPE.C2C://c2c消息通知
+                                case 1:
                                     //更新C2C消息通知seq
                                     notifySeq=e.NotifySeq;
-                                    console.warn("longpolling: return new c2c msg");
+                                    console.info("longpolling: new c2c msg: %s",JSON.stringify(e));
                                      //获取新消息
                                      MsgManager.syncMsgs();
                                     break;
-                                case WEB_IM_LONG_POLLINNG_MSG_TYPE.GROUP_ORDINARY://普通群消息通知
-                                    console.warn("longpolling: return new group msgs");
-                                    //handlerOrdinaryGroupMsg(e.GroupMsgArray);
-                                    handlerOrdinaryAndTipGroupMsgs(e.Event,e.GroupMsgArray);
-                                    break;
-                                case WEB_IM_LONG_POLLINNG_MSG_TYPE.GROUP_TIP://（全员广播）群提示消息
-                                    console.warn("longpolling: return new group tips");
-                                    //handlerGroupTips(e.GroupTips);
-                                    handlerOrdinaryAndTipGroupMsgs(e.Event,e.GroupTips);
-                                    break;
-                                case WEB_IM_LONG_POLLINNG_MSG_TYPE.GROUP_SYSTEM://（多终端同步）群系统消息
-                                    console.warn("longpolling: new group system msgs");
-                                    handlerGroupSystemMsgs(e.GroupTips);
-                                    break;
-                                default:
-                                    console.error("longpolling收到未知新消息类型: Event=%s",e.Event);
+                                case 3:
+                                    console.info("longpolling: new group msgs: %s",JSON.stringify(e));
+                                    var new_group_msgs=[];
+                                    for(var j in e.GroupMsgArray){
+                                        var newGroupMsg=e.GroupMsgArray[j];
+                                        //更新群消息通知seq
+                                        if(newGroupMsg.NoticeSeq>noticeSeq){
+                                            noticeSeq=newGroupMsg.NoticeSeq;
+                                        }
+                                        //发群消息时，长轮询接口会返回用户自己发的群消息，如果收到自己发的群消息，则不要处理
+                                        if(newGroupMsg.From_Account && newGroupMsg.From_Account!=ctx.identifier ){
+                                            var msg=handlerGroupMsg(newGroupMsg.ToGroupId,newGroupMsg);
+                                            if(msg){
+                                                MsgStore.updateTimeline();
+                                                new_group_msgs.push(msg);
+                                            } 
+                                        }
+                                    }
+                                    if(callback) callback(new_group_msgs);
                                     break;
                             }
-                        }
-                        //重新启动长轮询
+                        }    
+                        //setTimeout(function(){longPolling();}, 30*1000);  
                         longPolling();
-
+                        
                     }, function(err) {
-
-                                if(err.ErrorCode==60003){
-                                    console.warn('长轮询返回json解析错误: %o',err);
-                                    //记录长轮询返回解析json错误次数
-                                    curLongPollingRetErrorCount++;
-                                }
-                                //curLongPollingRetErrorCount++;
-                                //累计超过一定次数，不再发起长轮询请求
-                                if(curLongPollingRetErrorCount<WEB_IM_LONG_POLLING_MAX_RET_ERROR_COUNT){
-                                    longPolling();
-                                }
+                                longPolling();
+				//console.error("longPolling failed:" + err.ErrorInfo);
 				if (cbErr) cbErr(err);
-
+                                
 			});
                 };
-
-                //处理未决的加群申请消息列表
-                var handlerApplyJoinGroupSystemMsgs=function(eventArray){
-                    for(var i in eventArray){
-                            var e=eventArray[i];
-                            switch(e.Event){
-                                case WEB_IM_LONG_POLLINNG_MSG_TYPE.GROUP_SYSTEM://（多终端同步）群系统消息
-                                    console.warn("handlerApplyJoinGroupSystemMsgs： handler new group system msg");
-                                    handlerGroupSystemMsgs(e.GroupTips);
-                                    break;
-                                default:
-                                    console.error("syncMsgs收到未知的群系统消息类型: Event=%s",e.Event);
-                                    break;
-                            }
-                    }
-                };
-
-                //拉取c2c消息(包含加群未决消息，需要处理)
+                
 		this.syncMsgs = function(cbOk, cbErr) {
 			var notifyInfo = [];
                         var msgInfos=[];
                         //读取C2C消息
 			proto_getMsgs(MsgStore.cookie, MsgStore.syncFlag,function(resp) {
-				//拉取完毕
+				
                                 if(resp.SyncFlag==2){
                                     MsgStore.syncFlag=0;
                                 }
-                                //处理c2c消息
 				msgInfos = resp.MsgList;//返回的消息列表
                                 MsgStore.cookie = resp.Cookie;//cookies，记录当前读到的最新消息位置
-
+                                
 				for (var i in msgInfos) {
 					var msgInfo = msgInfos[i];
 					var isSendMsg, id,headUrl;
@@ -3162,12 +2293,12 @@ var webim = { // namespace object webim
 						id = msgInfo.From_Account;//读取发送者信息
                                                 headUrl='';
 					}
-
+					
 					var sess = MsgStore.sessByTypeId(WEB_IM_MSG_TYPE_C2C, id);
-					if (!sess) {
+					if (!sess) {	
 						sess = new Session(WEB_IM_MSG_TYPE_C2C, id, id, headUrl, 0,0);
 					}
-					var msg = new Msg(sess, isSendMsg, msgInfo.MsgSeq, msgInfo.MsgRandom,msgInfo.MsgTimeStamp,msgInfo.From_Account);
+					var msg = new Msg(sess, isSendMsg, msgInfo.MsgSeq, msgInfo.MsgRandom,msgInfo.MsgTimeStamp,msgInfo.From_Account);                                       
                                         var msgBody=null;
                                         var msgContent=null;
                                         var msgType=null;
@@ -3202,54 +2333,20 @@ var webim = { // namespace object webim
                                                         }
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_SOUND:
-                                                        //msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
-                                                        //msgContent=new Msg.Elem.Text('web端暂不支持语音消息');
-                                                        var soundUrl=getSoundDownUrl(msgBody.MsgContent.UUID,msgInfo.From_Account);
-
-                                                        if(soundUrl){
-                                                            msgContent=new Msg.Elem.Sound(
-                                                                        msgBody.MsgContent.UUID,
-                                                                        msgBody.MsgContent.Second,
-                                                                        msgBody.MsgContent.Size,
-                                                                        msgInfo.From_Account,
-                                                                        soundUrl
-                                                                    );
-                                                        }else{
-                                                            msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
-                                                            msgContent=new Msg.Elem.Text('[语音消息]下载地址解析出错');
-                                                        }
+                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
+                                                        msgContent=new Msg.Elem.Text('web端暂不支持语音消息');
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_LOCATION:
                                                         msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
                                                         msgContent=new Msg.Elem.Text('web端暂不支持地理位置消息');
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_FILE:
-                                                    case WEB_IM_MSG_ELEMENT_TYPE_FILE+" ":
-                                                        //msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
-                                                        //msgContent=new Msg.Elem.Text('web端暂不支持文件消息');
-                                                        var fileUrl=getFileDownUrl(msgBody.MsgContent.UUID,msgInfo.From_Account,msgBody.MsgContent.FileName);
-
-                                                        if(fileUrl){
-                                                            msgContent=new Msg.Elem.File(
-                                                                        msgBody.MsgContent.UUID,
-                                                                        msgBody.MsgContent.FileName,
-                                                                        msgBody.MsgContent.FileSize,
-                                                                        msgInfo.From_Account,
-                                                                        fileUrl
-                                                                    );
-                                                        }else{
-                                                            msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
-                                                            msgContent=new Msg.Elem.Text('[文件消息下载地址解析出错]');
-                                                        }
+                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
+                                                        msgContent=new Msg.Elem.Text('web端暂不支持文件消息');
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_CUSTOM:
-                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_CUSTOM;
-                                                        msgContent=new Msg.Elem.Custom(
-                                                                        msgBody.MsgContent.Data,
-                                                                        msgBody.MsgContent.Desc,
-                                                                        msgBody.MsgContent.Ext
-                                                                    );
-                                                        //msgContent=new Msg.Elem.Text('web端暂不支持自定义消息');
+                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
+                                                        msgContent=new Msg.Elem.Text('web端暂不支持自定义消息');
                                                         break;
                                                     default :
                                                         msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
@@ -3262,23 +2359,18 @@ var webim = { // namespace object webim
 						notifyInfo.push({msg: msg});
 					}
 				} // for loop
-
-                                //处理加群未决申请消息
-                                handlerApplyJoinGroupSystemMsgs(resp.EventArray);
-
 				if (notifyInfo.length > 0)
 					MsgStore.updateTimeline();
 				if (cbOk) cbOk(notifyInfo);
 				else if (notifyInfo.length > 0) {
 					if(callback) callback(notifyInfo);
 				}
-
+				
 			}, function(err) {
 				console.error("getMsgs failed:" + err.ErrorInfo);
 				if (cbErr) cbErr(err);
 			});
 		};
-                //拉群消息
 		this.syncGroupMsgs = function(options,cbOk, cbErr) {
                         if(options.ReqMsgSeq<=0){
                             return;
@@ -3291,25 +2383,46 @@ var webim = { // namespace object webim
                         //读群漫游消息
 			proto_getGroupMsgs(opts,function(resp) {
 				var notifyInfo = [];
-
+				
 				var group_id = resp.GroupId;//返回的群id
-				var msgInfos = resp.RspMsgList;//返回的消息列表
-
+				var msgInfos = resp.RspMsgList;//返回的消息列表 
+				
                                 if(msgInfos==null || msgInfos==undefined){
                                     return;
                                 }
+				
 				for (var i=msgInfos.length-1;i>=0;i--) {
 					var msgInfo = msgInfos[i];
-
-                                        //如果是已经删除的消息或者发送者帐号为空或者消息内容为空
+                                        
+                                        //如果是已经删除的消息或者发送者帐号为空
                                         //IsPlaceMsg=1
-                                        if(msgInfo.IsPlaceMsg || !msgInfo.From_Account || !msgInfo.MsgBody){
+                                        if(msgInfo.IsPlaceMsg || !msgInfo.From_Account){
+                                            //console.info('IsPlaceMsg='+msgInfo.IsPlaceMsg);
                                             continue;
+                                        }else{
+                                            //console.info('IsSystemMsg='+msgInfo.IsSystemMsg);
+                                            //如果是系统消息
+                                            //IsSystemMsg=1
+                                            //系统消息时，MsgBody为空，需要处理下
+                                            if(msgInfo.IsSystemMsg || !msgInfo.MsgBody){
+                                                if(msgInfo.From_Account=="@TLS#NOT_FOUND"){
+                                                    msgInfo.From_Account="10000";
+                                                }
+                                                msgInfo.MsgBody=[];
+                                                var tempContent={
+                                                    "MsgType":WEB_IM_MSG_ELEMENT_TYPE_TEXT,
+                                                    "MsgContent":{
+                                                        "Text":"web端暂不支持系统消息"
+                                                    }
+                                                };
+                                                msgInfo.MsgBody.push(tempContent);
+                                            }
                                         }
 					var msg=handlerGroupMsg(group_id,msgInfo);
                                         if(msg){
                                             notifyInfo.push({msg: msg});
                                         }
+					
 				} // for loop
 				if (notifyInfo.length > 0)
 					MsgStore.updateTimeline();
@@ -3317,14 +2430,13 @@ var webim = { // namespace object webim
 				else if (notifyInfo.length > 0) {
 					if(callback) callback(notifyInfo);
 				}
-
+				
 			}, function(err) {
 				console.error("getGroupMsgs failed:" + err.ErrorInfo);
 				if (cbErr) cbErr(err);
 			});
 		};
-
-                //处理群消息(普通消息+提示消息)
+                
                 var handlerGroupMsg=function (group_id,msgInfo){
                     var isSendMsg, id,headUrl;
 					if (msgInfo.From_Account == ctx.identifier) {//当前用户发送的消息
@@ -3337,22 +2449,11 @@ var webim = { // namespace object webim
                                                 headUrl='';
 					}
 					var sess = MsgStore.sessByTypeId(WEB_IM_MSG_TYPE_GROUP, group_id);
+					
 					if (!sess) {
 						sess = new Session(WEB_IM_MSG_TYPE_GROUP, group_id, group_id, headUrl, 0,0);
 					}
-                                        var type=0;//消息类型
-                                        //群提示消息,重新封装下
-                                        if(4==msgInfo.Event){
-                                            type=1;
-                                            var groupTip=msgInfo.MsgBody;
-                                            msgInfo.MsgBody=[];
-                                            msgInfo.MsgBody.push({
-                                                    "MsgType":WEB_IM_MSG_ELEMENT_TYPE_GROUP_TIP,
-                                                    "MsgContent":groupTip
-                                                }
-                                            );
-                                        }
-					var msg = new Msg(sess, isSendMsg, msgInfo.MsgSeq, msgInfo.MsgSeq,msgInfo.MsgTimeStamp,msgInfo.From_Account,type);
+					var msg = new Msg(sess, isSendMsg, msgInfo.MsgSeq, msgInfo.MsgSeq,msgInfo.MsgTimeStamp,msgInfo.From_Account);                                       
                                         var msgBody=null;
                                         var msgContent=null;
                                         var msgType=null;
@@ -3363,7 +2464,7 @@ var webim = { // namespace object webim
                                                     case WEB_IM_MSG_ELEMENT_TYPE_TEXT:
                                                         msgContent=new Msg.Elem.Text(msgBody.MsgContent.Text);
                                                         break;
-                                                    case WEB_IM_MSG_ELEMENT_TYPE_FACE:
+                                                    case WEB_IM_MSG_ELEMENT_TYPE_FACE:                                                       
                                                          msgContent=new Msg.Elem.Face(
                                                                         msgBody.MsgContent.Index,
                                                                         msgBody.MsgContent.Data
@@ -3386,136 +2487,20 @@ var webim = { // namespace object webim
                                                         }
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_SOUND:
-                                                        //msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
-                                                        //msgContent=new Msg.Elem.Text('web端暂不支持语音消息');
-                                                        var soundUrl=getSoundDownUrl(msgBody.MsgContent.UUID,msgInfo.From_Account);
-                                                        if(soundUrl){
-                                                            msgContent=new Msg.Elem.Sound(
-                                                                        msgBody.MsgContent.UUID,
-                                                                        msgBody.MsgContent.Second,
-                                                                        msgBody.MsgContent.Size,
-                                                                        msgInfo.From_Account,
-                                                                        soundUrl
-                                                                    );
-                                                        }else{
-                                                            msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
-                                                            msgContent=new Msg.Elem.Text('[语音消息]下载地址解析出错');
-                                                        }
+                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
+                                                        msgContent=new Msg.Elem.Text('web端暂不支持语音消息');
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_LOCATION:
                                                         msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
                                                         msgContent=new Msg.Elem.Text('web端暂不支持地理位置消息');
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_FILE:
-                                                    case WEB_IM_MSG_ELEMENT_TYPE_FILE+" ":
-
-                                                        var fileUrl=getFileDownUrl(msgBody.MsgContent.UUID,msgInfo.From_Account,msgBody.MsgContent.FileName);
-
-                                                        if(fileUrl){
-                                                            msgContent=new Msg.Elem.File(
-                                                                        msgBody.MsgContent.UUID,
-                                                                        msgBody.MsgContent.FileName,
-                                                                        msgBody.MsgContent.FileSize,
-                                                                        msgInfo.From_Account,
-                                                                        fileUrl
-                                                                    );
-                                                        }else{
-                                                            msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
-                                                            msgContent=new Msg.Elem.Text('[文件消息]地址解析出错');
-                                                        }
-                                                        break;
-                                                    case WEB_IM_MSG_ELEMENT_TYPE_GROUP_TIP:
-                                                        var opType=msgBody.MsgContent.OpType;
-                                                        msgContent=new Msg.Elem.GroupTip(
-                                                                        opType,
-                                                                        msgBody.MsgContent.Operator_Account,
-                                                                        group_id,
-                                                                        msgInfo.GroupInfo.GroupName,
-                                                                        msgBody.MsgContent.List_Account
-                                                                    );
-                                                        if(WEB_IM_GROUP_TIP_TYPE.MODIFY_GROUP_INFO==opType){//群资料变更
-                                                            var tempIsCallbackFlag=false;
-                                                            var tempNewGroupInfo={
-                                                                "GroupId":group_id,
-                                                                "GroupFaceUrl":null,
-                                                                "GroupName":null,
-                                                                "OwnerAccount":null,
-                                                                "GroupNotification":null,
-                                                                "GroupIntroduction":null
-                                                            };
-                                                            var msgGroupNewInfo=msgBody.MsgContent.MsgGroupNewInfo;
-                                                            if(msgGroupNewInfo.GroupFaceUrl){
-                                                                var tmpNGIFaceUrl=new Msg.Elem.GroupTip.GroupInfo(
-                                                                                    WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.FACE_URL,
-                                                                                    msgGroupNewInfo.GroupFaceUrl
-                                                                                );
-                                                                msgContent.addGroupInfo(tmpNGIFaceUrl);
-                                                                tempIsCallbackFlag=true;
-                                                                tempNewGroupInfo.GroupFaceUrl=msgGroupNewInfo.GroupFaceUrl;
-                                                            }
-                                                            if(msgGroupNewInfo.GroupName){
-                                                                var tmpNGIName=new Msg.Elem.GroupTip.GroupInfo(
-                                                                                    WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.NAME,
-                                                                                    msgGroupNewInfo.GroupName
-                                                                                );
-                                                                msgContent.addGroupInfo(tmpNGIName);
-                                                                tempIsCallbackFlag=true;
-                                                                tempNewGroupInfo.GroupName=msgGroupNewInfo.GroupName;
-                                                            }
-                                                            if(msgGroupNewInfo.Owner_Account){
-                                                                var tmpNGIOwner=new Msg.Elem.GroupTip.GroupInfo(
-                                                                                    WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.OWNER,
-                                                                                    msgGroupNewInfo.Owner_Account
-                                                                                );
-                                                                msgContent.addGroupInfo(tmpNGIOwner);
-                                                                tempIsCallbackFlag=true;
-                                                                tempNewGroupInfo.OwnerAccount=msgGroupNewInfo.Owner_Account;
-                                                            }
-                                                            if(msgGroupNewInfo.GroupNotification){
-                                                                var tmpNGINotification=new Msg.Elem.GroupTip.GroupInfo(
-                                                                                    WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.NOTIFICATION,
-                                                                                    msgGroupNewInfo.GroupNotification
-                                                                                );
-                                                                msgContent.addGroupInfo(tmpNGINotification);
-                                                                tempIsCallbackFlag=true;
-                                                                tempNewGroupInfo.GroupNotification=msgGroupNewInfo.GroupNotification;
-                                                            }
-                                                            if(msgGroupNewInfo.GroupIntroduction){
-                                                                var tmpNGIIntroduction=new Msg.Elem.GroupTip.GroupInfo(
-                                                                                    WEB_IM_GROUP_TIP_MODIFY_GROUP_INFO_TYPE.INTRODUCTION,
-                                                                                    msgGroupNewInfo.GroupIntroduction
-                                                                                );
-                                                                msgContent.addGroupInfo(tmpNGIIntroduction);
-                                                                tempIsCallbackFlag=true;
-                                                                tempNewGroupInfo.GroupIntroduction=msgGroupNewInfo.GroupIntroduction;
-                                                            }
-
-                                                            //回调群资料变化通知方法
-                                                            if(tempIsCallbackFlag && onGroupInfoChangeCallback){
-                                                                onGroupInfoChangeCallback(tempNewGroupInfo);
-                                                            }
-
-                                                        }else if(WEB_IM_GROUP_TIP_TYPE.MODIFY_MEMBER_INFO==opType){//群成员变更
-                                                            var memberInfos=msgBody.MsgContent.MsgMemberInfo;
-                                                            for(var n in memberInfos){
-                                                                var memberInfo=memberInfos[n];
-                                                                msgContent.addMemberInfo(
-                                                                        new Msg.Elem.GroupTip.MemberInfo(
-                                                                            memberInfo.User_Account,memberInfo.ShutupTime
-                                                                        )
-                                                                );
-                                                            }
-                                                        }
-                                                        //console.warn("群提示消息：%o",msgContent);
+                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
+                                                        msgContent=new Msg.Elem.Text('web端暂不支持文件消息');
                                                         break;
                                                     case WEB_IM_MSG_ELEMENT_TYPE_CUSTOM:
-                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_CUSTOM;
-                                                        msgContent=new Msg.Elem.Custom(
-                                                                        msgBody.MsgContent.Data,
-                                                                        msgBody.MsgContent.Desc,
-                                                                        msgBody.MsgContent.Ext
-                                                                    );
-                                                        //msgContent=new Msg.Elem.Text('web端暂不支持自定义消息');
+                                                        msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
+                                                        msgContent=new Msg.Elem.Text('web端暂不支持自定义消息');
                                                         break;
                                                     default :
                                                         msgType=WEB_IM_MSG_ELEMENT_TYPE_TEXT;
@@ -3525,102 +2510,56 @@ var webim = { // namespace object webim
 						msg.elems.push(new Msg.Elem(msgType, msgContent));
 					}
 					if (MsgStore.addMsg(msg)) {
-                                                //更新我的群最大的消息seq
-                                                var tempCurMaxSeq=myGroupMaxSeqs[group_id];
-                                                if(tempCurMaxSeq){
-                                                    if(msgInfo.MsgSeq>tempCurMaxSeq){
-                                                        myGroupMaxSeqs[group_id]=msgInfo.MsgSeq;
-                                                    }
-                                                }else{
-                                                    myGroupMaxSeqs[group_id]=msgInfo.MsgSeq;
-                                                }
                                                 return msg;
 					}else{
                                             return null;
                                         }
                 };
-
-                //初始化
-		this.init = function(onMsgNotify,onGroupInfoChangeNotify,groupSystemNotifys,loginInfo) {
-			callback = onMsgNotify;
-                        onGroupInfoChangeCallback=onGroupInfoChangeNotify;
-                        groupSystemNotifyCallbacks=groupSystemNotifys;
-                        //初始化浏览器类型
-                        browserInfo=tool.getBrowserInfo();
-                        console.info('browserInfo: type='+browserInfo.type+', ver='+browserInfo.ver);
-                        if(browserInfo.type=='ie' && parseInt(browserInfo.ver)<8){
-                            alert('您的ie版本过低，建议使用ie8以上浏览器^_^');
-                           return;
-                        }
-                        initMyGroupMaxSeqs(null,null,loginInfo);
-                        initIpAndAuthkey();
+                
+		this.init = function(cb) {
+			callback = cb;
                         longPolling();
-                        //setInterval(longPolling, 10000);
 		};
 
-                //发消息（私聊或群聊）
 		this.sendMsg = function(msg, cbOk, cbErr) {
 			proto_sendMsg(msg, function(resp) {
-                                //私聊时，加入自己的发的消息，群聊时，由于seq和服务器的seq不一样，所以不作处理
-                                if(msg.sess.type()==WEB_IM_MSG_TYPE_C2C){
-                                    if (!MsgStore.addMsg(msg)) {
+
+				if (!MsgStore.addMsg(msg)) {                                   
 					var errInfo = "sendMsg: local addMsg failed!";
                                         var error=tool.getReturnError(errInfo);
 					console.error(errInfo);
 					if (cbErr) cbErr(error);
 					return;
-                                    }
-                                    //更新信息流时间
-                                    MsgStore.updateTimeline();
-                                }
+				}
+                                //更新信息流时间
+                                MsgStore.updateTimeline();
+                               
 				if (cbOk) cbOk(resp);
 			}, function(err) {
 				if (cbErr) cbErr(err);
 			});
 		};
-
-                //获取语音下载url
-                var getSoundDownUrl=function(uuid,senderId){
-                    var soundUrl=null;
-                    if(authkey && ipList[0]){
-                        soundUrl="http://"+ipList[0]+"/asn.com/stddownload_common_file?authkey="+authkey+"&bid="+WEB_IM_DOWNLOAD_FILE_BUSSINESS_ID+"&subbid="+ctx.appIDAt3rd+"&fileid="+uuid+"&filetype="+WEB_IM_DOWNLOAD_FILE_TYPE.SOUND+"&openid="+senderId+"&ver=0";
-                    }else{
-                        console.error("拼接语音下载url不报错：ip或者authkey为空");
-                    }
-                    return soundUrl;
-                };
-
-                //获取文件下载地址
-                var getFileDownUrl=function(uuid,senderId,fileName){
-                    var fileUrl=null;
-                    if(authkey && ipList[0]){
-                        fileUrl="http://"+ipList[0]+"/asn.com/stddownload_common_file?authkey="+authkey+"&bid="+WEB_IM_DOWNLOAD_FILE_BUSSINESS_ID+"&subbid="+ctx.appIDAt3rd+"&fileid="+uuid+"&filetype="+WEB_IM_DOWNLOAD_FILE_TYPE.FILE+"&openid="+senderId+"&ver=0&filename="+encodeURIComponent(fileName);
-                    }else{
-                        console.error("拼接文件下载url不报错：ip或者authkey为空");
-                    }
-                    return fileUrl;
-                };
 	};
-
+        
         //上传文件
         var FileUploder=new function() {
                 this.fileMd5=null;
                 //获取文件MD5
                 var getFileMD5=function(file,cbOk,cbErr){
-
+                    
                     //FileReader pc浏览器兼容性
                     //Feature	Firefox (Gecko)	Chrome	Internet Explorer	Opera	Safari
                     //Basic support	3.6	7	10                      12.02	6.0.2
                     var fileReader=null;
                     try{
-                        fileReader = new FileReader();//分块读取文件对象
+                        fileReader = new FileReader();
                     }catch(e){
                         if(cbErr){
                             cbErr(tool.getReturnError('当前浏览器不支持FileReader'));
                             return;
                         }
                     }
-                    //file的slice方法，注意它的兼容性，在不同浏览器的写法不同
+                    
                     var blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
                     if(!blobSlice){
                         if(cbErr){
@@ -3628,85 +2567,84 @@ var webim = { // namespace object webim
                             return;
                         }
                     }
-
-                    var chunkSize = 2 * 1024 * 1024;//分块大小，2M
-                    var chunks = Math.ceil(file.size / chunkSize);//总块数
-                    var currentChunk = 0;//当前块数
-                    var spark = new SparkMD5();//获取MD5对象
-
-                    fileReader.onload = function (e) {//数据加载完毕事件
-
-                        var binaryStr = "";
+                    
+                    var chunkSize = 2 * 1024 * 1024;
+                    var chunks = Math.ceil(file.size / chunkSize);
+                    var currentChunk = 0;
+                    var spark = new SparkMD5();
+                    
+                    fileReader.onload = function (e) {
+                        
+                        var binary = "";
                         var bytes = new Uint8Array(e.target.result);
                         var length = bytes.byteLength;
-                        for (var i = 0; i < length; i++)
+
+                        for (var i = 0; i < length; i++) 
                         {
-                            binaryStr += String.fromCharCode(bytes[i]);//二进制转换字符串
+                            binary += String.fromCharCode(bytes[i]);
                         }
-                        spark.appendBinary(binaryStr);
+                        spark.appendBinary(binary);
+
                         currentChunk++;
                         if (currentChunk < chunks) {
-                            loadNext();//读取下一块数据
+                            loadNext();
                         } else {
-                            this.fileMd5 = spark.end();//得到文件MD5值
+                            this.fileMd5 = spark.end();
                             if(cbOk){
                                 cbOk(this.fileMd5);
                             }
                         }
                     };
-                    //分片读取文件
                     function loadNext() {
                         var start = currentChunk * chunkSize, end = start + chunkSize >= file.size ? file.size : start + chunkSize;
-                        //根据开始和结束位置，切割文件
                         var b=blobSlice.call(file, start, end);
-                        //readAsBinaryString ie浏览器不兼容此方法
-                        //fileReader.readAsBinaryString(blobSlice.call(file, start, end));
-                        fileReader.readAsArrayBuffer(b);//ie，chrome，firefox等主流浏览器兼容此方法
-
+                        fileReader.readAsArrayBuffer(b);
+                        //fileReader.readAsBinaryString(blobSlice.call(file, start, end));//readAsBinaryString ie浏览器不兼容此方法
                     }
-                    loadNext();//开始读取
-                };
-                //上传图片
+                    loadNext();
+                }; 
+                
                 this.uploadFile=function(options,cbOk, cbErr){
-
+                    
                     var file_upload = {
-                        //初始化
                         init: function (options,cbOk, cbErr) {
                             var me = this;
                             me.file = options.file;
-                            //分片上传进度回调事件
+                            //上传进度回调事件
                             me.onProgressCallBack=options.onProgressCallBack;
                             //停止上传图片按钮
                             if(options.abortButton){
+								console.info('set options.abortButton.onclick event');
                                 options.abortButton.onclick = me.abortHandler;
                             }
-                            me.total =me.file.size;//图片总大小
-                            me.loaded = 0;//已读取字节数
-                            me.step = 120 * 1024;//分块大小，120K
-                            me.sliceSize = 0;//分片大小
-                            me.sliceOffset = 0;//当前分片位置
-                            me.timestamp = unixtime();//当前时间戳
-                            me.seq=nextSeq(options.From_Account);//请求seq
-                            me.random=createRandom();//请求随机数
-                            me.fromAccount=options.From_Account;//发送者
-                            me.toAccount=options.To_Account;//接收者
-                            me.fileMd5=options.fileMd5;//文件MD5
-                            me.businessType=options.businessType;//图片业务类型，群消息:1; c2c消息:2; 个人头像：3; 群头像：4;
+                            
+                            me.total =me.file.size;
+                            me.loaded = 0;
+                            //每次读取120K
+                            me.step = 120 * 1024;
+                            me.sliceSize = 0;
+                            me.sliceOffset = 0;
+                            me.timestamp = unixtime();
+                            me.seq=nextSeq();
+                            me.random=createRandom();
+                            me.fromAccount=options.From_Account;
+                            me.toAccount=options.To_Account;
+                            me.fileMd5=options.fileMd5;
+                            me.businessType=options.businessType;
+                            
+                            me.cbOk=cbOk;
+                            me.cbErr=cbErr;
+                            
+                            me.reader = new FileReader();
+                            me.blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
 
-                            me.cbOk=cbOk;//上传成功回调事件
-                            me.cbErr=cbErr;//上传失败回调事件
-
-                            me.reader = new FileReader();//读取文件对象
-                            me.blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;//file的slice方法,不同浏览器不一样
-
-                            me.reader.onloadstart = me.onLoadStart;//开始读取回调事件
-                            me.reader.onprogress = me.onProgress;//读取文件进度回调事件
-                            me.reader.onabort = me.onAbort;//停止读取回调事件
-                            me.reader.onerror = me.onerror;//读取发生错误回调事件
-                            me.reader.onload = me.onLoad;//分片加载完毕回调事件
-                            me.reader.onloadend = me.onLoadEnd;//读取文件完毕回调事件
+                            me.reader.onloadstart = me.onLoadStart;
+                            me.reader.onprogress = me.onProgress;
+                            me.reader.onabort = me.onAbort;
+                            me.reader.onerror = me.onerror;
+                            me.reader.onload = me.onLoad;
+                            me.reader.onloadend = me.onLoadEnd;
                     },
-                    //上传方法
                     upload: function () {
                         var me = file_upload;
                         //读取第一块
@@ -3718,6 +2656,10 @@ var webim = { // namespace object webim
                     onProgress: function (e) {
                         var me = file_upload;
                         me.loaded += e.loaded;
+                        //if(me.progress){
+                            //更新进度条
+                            //me.progress.value = (me.loaded / me.total) * 100;
+                        //}
                         if(me.onProgressCallBack){
                             me.onProgressCallBack(me.loaded,me.total);
                         }
@@ -3732,12 +2674,11 @@ var webim = { // namespace object webim
                         var me = file_upload;
                         if (e.target.readyState == FileReader.DONE) {
                             var slice_data_base64 = e.target.result;
-                            //注意，一定要去除base64编码头部
+                            //去除base64头部
                             var pos=slice_data_base64.indexOf(",");
                             if(pos!=-1){
                                 slice_data_base64=slice_data_base64.substr(pos+1);
                             }
-                            //封装上传图片接口的请求参数
                             var opt = {
                                 'From_Account': me.fromAccount,
                                 'To_Account': me.toAccount,
@@ -3752,7 +2693,7 @@ var webim = { // namespace object webim
                                 'Timestamp': me.timestamp,
                                 'Random': me.random
                             };
-                            //分片上传图片接口
+                            //console.info("pic json data: %s",JSON.stringify(opt));
                             proto_uploadPic(opt,
                                 function (resp) {
                                     if (resp.IsFinish == 0) {
@@ -3763,7 +2704,7 @@ var webim = { // namespace object webim
                                             me.loaded = me.total;
                                         }
                                     } else {
-
+                                        
                                         if(me.cbOk){
                                             var tempResp={
                                                 'ActionStatus':resp.ActionStatus,
@@ -3772,7 +2713,7 @@ var webim = { // namespace object webim
                                                 'File_UUID':resp.File_UUID,
                                                 'URL_INFO':resp.URL_INFO
                                             };
-                                            me.cbOk(tempResp);
+                                            me.cbOk(tempResp); 
                                         }
                                     }
                                 },
@@ -3783,7 +2724,6 @@ var webim = { // namespace object webim
                     onLoadEnd: function () {
                         var me = file_upload;
                     },
-                    //分片读取文件方法
                     readBlob: function (start) {
                         var me = file_upload;
                         var blob, file = me.file;
@@ -3795,27 +2735,25 @@ var webim = { // namespace object webim
                             me.sliceSize = me.step;
                         }
                         me.sliceOffset=start;
-                        //根据起始和结束位置，分片读取文件
                         blob = me.blobSlice.call(file, start, end);
-                        //将分片的二进制数据转换为base64编码
                         me.reader.readAsDataURL(blob);
                     },
                     abortHandler: function () {
                         var me = file_upload;
                         if (me.reader) {
+							console.info('stop upload pic....')
                             me.reader.abort();
                         }
                     }
                 };
-
+                
                 //读取文件MD5
                 getFileMD5(options.file,
                                function(fileMd5){
                                     console.info('fileMd5: '+fileMd5);
                                     options.fileMd5=fileMd5;
-                                    //初始化上传参数
+                                    //上传文件
                                     file_upload.init(options,cbOk, cbErr);
-                                    //开始上传文件
                                     file_upload.upload();
                                },
                                cbErr
@@ -3830,13 +2768,12 @@ var webim = { // namespace object webim
 		ctx.identifier = loginInfo.identifier;
 		ctx.accountType = loginInfo.accountType;
 		ctx.userSig = loginInfo.userSig;
-		if(listeners.jsonpCallback)
-                    webimJsonpCallback=listeners.jsonpCallback;
+		
 		if (options) opt = options;
 		ConnManager.init(listeners.onConnNotify);
-		MsgManager.init(listeners.onMsgNotify,listeners.onGroupInfoChangeNotify,listeners.groupSystemNotifys,loginInfo);
+		MsgManager.init(listeners.onMsgNotify);
 	};
-
+        
         //web im 基础对象
         //
         //工具对象
@@ -3859,7 +2796,7 @@ var webim = { // namespace object webim
 	};
         //设置自动标记已读
         webim.setAutoRead = function(selSess,isOn,isResetAll) {return MsgStore.setAutoRead(selSess, isOn, isResetAll);};
-
+        
         //消息管理接口
         //
         //用户下线
@@ -3870,25 +2807,13 @@ var webim = { // namespace object webim
 	webim.syncMsgs = function(cbOk, cbErr) {return MsgManager.syncMsgs(cbOk, cbErr);};
         //拉取群漫游消息
 	webim.syncGroupMsgs = function(options,cbOk, cbErr) {return MsgManager.syncGroupMsgs(options,cbOk, cbErr);};
-
-        //上报c2c消息已读
-        webim.c2CMsgReaded = function(options,cbOk,cbErr) {return MsgStore.c2CMsgReaded(options,cbOk,cbErr);};
-
-        //上报群消息已读
-        webim.groupMsgReaded = function(options,cbOk,cbErr) {return proto_groupMsgReaded(options,cbOk,cbErr);};
-
+	
         //群组管理接口
         //
         //创建群
         webim.createGroup = function(options,cbOk, cbErr) {return proto_createGroup(options,cbOk, cbErr);};
         //申请加群
         webim.applyJoinGroup = function(options,cbOk, cbErr) {return proto_applyJoinGroup(options,cbOk, cbErr);};
-        //处理加群申请(同意或拒绝)
-        webim.handleApplyJoinGroupPendency = function(options,cbOk, cbErr) {return proto_handleApplyJoinGroupPendency(options,cbOk, cbErr);};
-
-        //删除加群申请
-        webim.deleteApplyJoinGroupPendency= function(options,cbOk,cbErr) {return proto_deleteC2CMsg(options,cbOk,cbErr);};
-
         //主动退群
         webim.quitGroup = function(options,cbOk, cbErr) {return proto_quitGroup(options,cbOk, cbErr);};
         //获取群组公开资料-用于搜索群
@@ -3914,9 +2839,7 @@ var webim = { // namespace object webim
         webim.getRoleInGroup = function(options,cbOk, cbErr) {return proto_getRoleInGroup(options,cbOk, cbErr);};
         //设置群成员禁言时间
         webim.forbidSendMsg = function(options,cbOk, cbErr) {return proto_forbidSendMsg(options,cbOk, cbErr);};
-        //发送自定义群系统通知
-        webim.sendCustomGroupNotify = function(options,cbOk, cbErr) {return proto_sendCustomGroupNotify(options,cbOk, cbErr);};
-
+        
         //资料关系链管理接口
         //
         //获取个人资料接口，可用于搜索用户
@@ -3941,21 +2864,12 @@ var webim = { // namespace object webim
         webim.deleteBlackList = function(options,cbOk, cbErr) {return proto_deleteBlackList(options,cbOk, cbErr);};
         //获取我的黑名单
         webim.getBlackList = function(options,cbOk, cbErr) {return proto_getBlackList(options,cbOk, cbErr);};
-
+        
         //图片服务接口
         //
         //上传图片接口
         webim.uploadPic = function(options,cbOk, cbErr) {
-            /*if(browserInfo.type=='ie' && parseInt(browserInfo.ver)<=9){
-                    alert('sdk暂不支持使用ie9以下浏览器上传图片');
-                    return;
-            }*/
             return FileUploder.uploadFile(options,cbOk, cbErr);
         };
-
-        //设置jsonp返回的值
-        webim.setJsonpLastRspData=function(rspData){
-            webimJsonpLastRspData=typeof (rspData) == "string" ? JSON.parse(rspData) : rspData;
-        };
-
+        
 })(webim);

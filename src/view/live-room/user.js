@@ -44,7 +44,7 @@ module.exports = {
     },
     isDisbaleTalk: function () {
         var time = Storage.get('userDisableTalkTime');
-        if(!time){
+        if (!time) {
             return false;
         }
         time = new Date(time);
@@ -52,21 +52,77 @@ module.exports = {
         var diff = cur.getTime() - time.getTime();
         //var result = DateTimeHelper.difference(Math.abs(diff));
 
-        if(diff <= 0){
-            return true;
-        }
-        return false;
+        return diff <= 0;
     },
-    isKickout: function () {
-        return Storage.get('userKickout');
+    isKickout: function (roomId) {
+        var list = Storage.get('userKickout');
+        if (!list) {
+            return false;
+        } else {
+            list = JSON.parse(list);
+        }
+        var res = _.find(list, function (item) {
+            return item.roomId == roomId;
+        });
+        return !!res && res.isKickout;
     },
     setDisableTalk: function (time) {
         if (time) {
             Storage.set('userDisableTalkTime', time);
         }
     },
-    setKickout: function (isKickout) {
-        Storage.set('userKickout', isKickout);
+    setKickout: function (roomId, isKickout) {
+        var list = Storage.get('userKickout');
+        if (!list) {
+            list = []
+        } else {
+            list = JSON.parse(list);
+        }
+        var res = _.find(list, function (item) {
+            return item.roomId == roomId;
+        });
+        if (res) {
+            res.isKickout = isKickout;
+        } else {
+            list.push({
+                roomId: roomId,
+                isKickout: isKickout
+            });
+        }
+        Storage.set('userKickout', JSON.stringify(list));
+    },
+    setLockScreen: function (roomId, isLock) {
+        var list = Storage.get('isLockScreen');
+        if (!list) {
+            list = []
+        } else {
+            list = JSON.parse(list);
+        }
+        var res = _.find(list, function (item) {
+            return item.roomId == roomId;
+        });
+        if (res) {
+            res.isLock = isLock;
+        } else {
+            list.push({
+                roomId: roomId,
+                isLock: isLock
+            });
+        }
+        Storage.set('isLockScreen', JSON.stringify(list));
+    },
+    isLockScreen: function (roomId) {
+
+        var list = Storage.get('isLockScreen');
+        if (!list) {
+            return false;
+        } else {
+            list = JSON.parse(list);
+        }
+        var res = _.find(list, function (item) {
+            return item.roomId == roomId;
+        });
+        return !!res && res.isLock;
     }
 
 };
