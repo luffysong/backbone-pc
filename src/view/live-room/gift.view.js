@@ -184,10 +184,10 @@ var View = BaseView.extend({
             self.pushPopularity(2);
             return;
         }
-        var content = '<div>使用20积分支持一下MC,当前共有' + (this.currentUserInfo.totalMarks || 0) + '积分</div> '
-            + '<div style="text-align:right;"> <label><input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
+        var content = '<div>使用 <span class="green">20</span>积分支持一下MC,当前共有<span class="green">' + (this.currentUserInfo.totalMarks || 0) + '</span>积分</div></br>'
+            + '<div style="text-align:right; color:#999;"> <label><input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
         uiConfirm.show({
-            title: '顶上去',
+            title: '顶一下',
             content: content,
             okFn: function () {
                 self.pushPopularity(2);
