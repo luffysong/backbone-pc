@@ -45,6 +45,7 @@ var View = BaseView.extend({
 	afterMount:function(){
 		this.liveModel = new LivePreviewModel();
 		this.pushModel = new PushLarityModel();
+		this.parentNode = this.$el.parent();
 	},
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
@@ -63,27 +64,32 @@ var View = BaseView.extend({
 		});
 	},
 	livePreRender:function(items){
-		console.log(items);
 		var le = items.length;
-		if (le < 6) {
-			var temp = items[0];
-			while(le < 6){
-				le++
-				items.push({
-					'completion':1
-				})
+		var u = 0;
+		if (le < 3) {
+			u = 3;
+		}else{
+			if (le < 6) {
+				u = 6
 			}
 		}
+		while (le < u) {
+			le++;
+			items.push({
+				'completion':1
+			})
+		}
 		var html = this.compileHTML(livePreviewTemp,{'items':items});
-
-		this.$el.css()
+		this.parentNode.css({
+			height:590/(6/u)
+		});
 		this.$el.html(html);
 	},
 	pushLiveVideo:function(e){
 		var el = $(e.currentTarget);
 		var roomId = el.attr('data-id');
 		var status = el.attr('data-status');
-
+		console.log(status);
 	}
 });
 
