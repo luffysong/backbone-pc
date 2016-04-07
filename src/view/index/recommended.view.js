@@ -62,13 +62,14 @@ var View = BaseView.extend({
 			this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
 	            el: 'topFlash',
 				props:{
-					width: 1200,
+					width: 1014,
 					height: 570
 				}
 	        });
 		}
 		if (this.flashAPI) {
 			this.flashAPI.onReady(function(){
+				console.log(data)
 				this.init(data);
 			});
 		}
