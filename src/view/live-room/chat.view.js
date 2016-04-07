@@ -209,16 +209,17 @@ var View = BaseView.extend({
             var tpl = _.template(this.getMessageTpl());
             this.elements.msgList.append(tpl(msgObj));
             this.elements.chatHistory.scrollTop(this.elements.msgList.height());
-            if (msgObj.mstType == 0) {
+            //if (msgObj.mstType == 0) {
                 try {
                     this.flashAPI.onReady(function () {
+                        console.log(msgObj);
                         this.notifying(msgObj);
                     });
 
                 } catch (e) {
 
                 }
-            }
+            //}
         }
         YYTIMServer.sendMessage({
             groupId: this.roomInfo.imGroupid,
