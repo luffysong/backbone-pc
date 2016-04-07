@@ -93,7 +93,7 @@ var View = BaseView.extend({
             content: this.elements.txtMessage.val(),
             nickName: user.$get('userName'),
             style: {
-                fontColor:  this.elements.btnChooseColor.data('color') || '#999999'
+                fontColor: this.elements.btnChooseColor.attr('data-color') || '#999999'
             },
             smallAvatar: user.$get('bigheadImg'),
             roomId: this.roomInfo.id
