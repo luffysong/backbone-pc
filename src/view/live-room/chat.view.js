@@ -212,7 +212,6 @@ var View = BaseView.extend({
             //if (msgObj.mstType == 0) {
                 try {
                     this.flashAPI.onReady(function () {
-                        console.log(msgObj);
                         this.notifying(msgObj);
                     });
 
