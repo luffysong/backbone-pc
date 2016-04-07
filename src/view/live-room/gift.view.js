@@ -205,6 +205,7 @@ var View = BaseView.extend({
     },
 
     pushPopularity: function (type) {
+        var self = this;
         if (!this.roomStatusCheck()) {
             return;
         }
@@ -212,12 +213,18 @@ var View = BaseView.extend({
         this.popularityParams.roomId = this.roomInfo.id;
         this.popularityModel.executeJSONP(this.popularityParams, function (res) {
             if (res && res.data && res.data.success) {
-
+                msgBox.showOK('非常感谢您的大力支持');
+                self.getUserInfo();
             } else {
                 msgBox.showTip(res.data.message || '操作失败请您稍后重试');
             }
         }, function (err) {
             msgBox.showTip('操作失败请您稍后重试');
+        });
+    },
+    getUserInfo: function () {
+        UserInfo.getInfo(function (userInfo) {
+            Backbone.trigger('event:currentUserInfoReady', userInfo);
         });
     },
 
