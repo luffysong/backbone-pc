@@ -129,7 +129,7 @@ var View = BaseView.extend({
 
         this.giftModel.get(this.giftParams, function (res) {
             if (res && res.code == '0') {
-                if(self.giftTpl){
+                if (self.giftTpl) {
                     var template = _.template(self.giftTpl);
                     self.elements.giftItems.html(template(res || []));
                     self.initCarousel();
@@ -240,12 +240,14 @@ var View = BaseView.extend({
 
     },
     shareClick: function () {
-        var title = '', url='';
+        console.log(this.roomInfo);
+        var title = this.roomInfo.roomName + ',快来围观吧', url = window.location.href,
+            img = this.roomInfo.posterPic;
         //msgBox.showOK('分享一下');
-        var html = '<span class="share-wrap" style="width: 106px;">' +
-            '<a href="http://i.yinyuetai.com/share?title=%E3%80%90%E3%83%88%E3%83%A9%E3%82%A4%E3%83%BB%E3%82%A8%E3%83%B4%E3%83%AA%E3%82%B7%E3%83%B3%E3%82%B0-Dream+Ami+%E9%AB%98%E6%B8%85MV-%E9%9F%B3%E6%82%A6%E5%8F%B0%E3%80%91&amp;url=http%3A%2F%2Fv.yinyuetai.com%2Fvideo%2F2539803&amp;cover=http%3A%2F%2Fimg2.yytcdn.com%2Fvideo%2Fmv%2F160406%2F2539803%2F-M-08a09428964cbfbc42b639b775aab1c5_240x135.jpg%3Ft%3D20160405161857" title="分享到音悦台我的家" data-video-id="2539803" data-tongji-id="516" class="myhome J_sharelink"></a> ' +
+        var html = '<span class="share-wrap">' +
+            '<a href="http://i.yinyuetai.com/share?title=' + title + '&amp;url=&amp;cover=' + img + '?t=20160405161857" title="分享到音悦台我的家" class="myhome J_sharelink"></a> ' +
 
-            '<a href="http://v.t.sina.com.cn/share/share.php?appkey=2817290261&amp;url=http%3A%2F%2Fv.yinyuetai.com%2Fvideo%2F2539803&amp;title=%E3%80%90%E3%83%88%E3%83%A9%E3%82%A4%E3%83%BB%E3%82%A8%E3%83%B4%E3%83%AA%E3%82%B7%E3%83%B3%E3%82%B0-Dream+Ami+%E9%AB%98%E6%B8%85MV-%E9%9F%B3%E6%82%A6%E5%8F%B0%E3%80%91&amp;content=gb2312&amp;pic=http%3A%2F%2Fimg2.yytcdn.com%2Fvideo%2Fmv%2F160406%2F2539803%2F-M-08a09428964cbfbc42b639b775aab1c5_240x135.jpg%3Ft%3D20160405161857&amp;ralateUid=1698229264" title="分享到新浪微博" data-video-id="2539803" data-tongji-id="517" class="weibo17 J_sharelink"></a>' +
+            '<a href="http://v.t.sina.com.cn/share/share.php?appkey=2817290261&amp;url=http://v.yinyuetai.com/video/2539803&amp;title=' + title + '&amp;content=gb2312&amp;pic=' + img + '?t=20160405161857&amp;ralateUid=1698229264" title="分享到新浪微博" class="weibo17 J_sharelink"></a>' +
 
             '<a href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fv.yinyuetai.com%2Fvideo%2F2539803&amp;showcount=1&amp;desc=%E6%8E%A8%E8%8D%90%E4%B8%80%E9%A6%96%E5%A5%BD%E7%9C%8B%E7%9A%84MV%EF%BC%9A%E3%80%90%E3%83%88%E3%83%A9%E3%82%A4%E3%83%BB%E3%82%A8%E3%83%B4%E3%83%AA%E3%82%B7%E3%83%B3%E3%82%B0-Dream+Ami+%E9%AB%98%E6%B8%85MV-%E9%9F%B3%E6%82%A6%E5%8F%B0%E3%80%91&amp;summary=%E3%80%90%E3%83%88%E3%83%A9%E3%82%A4%E3%83%BB%E3%82%A8%E3%83%B4%E3%83%AA%E3%82%B7%E3%83%B3%E3%82%B0-Dream+Ami+%E9%AB%98%E6%B8%85MV-%E9%9F%B3%E6%82%A6%E5%8F%B0%E3%80%91&amp;title=%E3%80%90%E3%83%88%E3%83%A9%E3%82%A4%E3%83%BB%E3%82%A8%E3%83%B4%E3%83%AA%E3%82%B7%E3%83%B3%E3%82%B0-Dream+Ami+%E9%AB%98%E6%B8%85MV-%E9%9F%B3%E6%82%A6%E5%8F%B0%E3%80%91&amp;site=音悦台&amp;pics=http%3A%2F%2Fimg2.yytcdn.com%2Fvideo%2Fmv%2F160406%2F2539803%2F-M-08a09428964cbfbc42b639b775aab1c5_240x135.jpg%3Ft%3D20160405161857&amp;style=201&amp;width=39&amp;height=39" title="分享到QQ" data-video-id="2539803" data-tongji-id="518" class="qq17 J_sharelink"></a>' +
 
@@ -270,14 +272,14 @@ var View = BaseView.extend({
             title: '分享',
             content: html,
             okBtn: false,
-            cancelBtn:false,
+            cancelBtn: false,
             okFn: function () {
 
             }
         });
-        $('.share-wrap a').on('click', function(){
+        $('.share-wrap a').on('click', function () {
             var url = $(this).attr('href');
-            window.open(url,'newwindow','height=750px,width=700px,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+            window.open(url, 'newwindow', 'height=750px,width=700px,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
             uiConfirm.close();
             return false;
         });
