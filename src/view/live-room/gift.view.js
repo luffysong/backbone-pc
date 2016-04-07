@@ -129,9 +129,11 @@ var View = BaseView.extend({
 
         this.giftModel.get(this.giftParams, function (res) {
             if (res && res.code == '0') {
-                var template = _.template(self.giftTpl);
-                self.elements.giftItems.html(template(res || []));
-                self.initCarousel();
+                if(self.giftTpl){
+                    var template = _.template(self.giftTpl);
+                    self.elements.giftItems.html(template(res || []));
+                    self.initCarousel();
+                }
             }
         }, function (err) {
             console.log(err);

@@ -24,6 +24,7 @@ var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
 var UserInfo = require('../live-room/user.js');
+var FlashAPI = require('FlashAPI');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -67,9 +68,12 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.defineEventInterface();
+        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+            el: 'broadCastFlash'
+        });
 
-        this.getUserInfo();
-        //this.initRoom();
+        //this.getUserInfo();
+        this.initRoom();
         this.renderPage();
     },
     defineEventInterface: function () {
@@ -96,9 +100,9 @@ var View = BaseView.extend({
                 if (res.ErrorCode == 10013) {
                     //self.renderPage();
                     Backbone.trigger('event:roomInfoReady', self.roomInfo);
-                    if (self.roomInfo.status == 2) {
-                        self.loopRoomInfo();
-                    }
+                    //if (self.roomInfo.status == 2) {
+                    //    self.loopRoomInfo();
+                    //}
                 } else {
                     uiConfirm.show({
                         title: '进入房间',
@@ -190,6 +194,9 @@ var View = BaseView.extend({
                 };
                 self.roomInfo = data;
                 Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                self.flashAPI.onReady(function () {
+                    this.init(self.roomInfo);
+                });
 
                 //self.fetchUserIMSig(data.imGroupid);
                 //self.checkRoomStatus(data.status);
@@ -199,28 +206,12 @@ var View = BaseView.extend({
             }
         }, errFn);
     },
-    getGroupInfo: function (imGroupId) {
-        var self = this;
-        YYTIMServer.getGroupInfo(imGroupId, function (res) {
-            if (res && res.ErrorCode == 0) {
-                self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
-                    return item.GroupId == self.roomInfo.imGroupid;
-                });
-
-                Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
-                self.checkUserIsKickout(self.currentGroupInfo.Notification);
-
-            } else {
-            }
-        }, function (err) {
-        });
-    },
     getUserInfo: function () {
         var self = this;
         UserInfo.getInfo(function (userInfo) {
             self.userInfo = userInfo;
             Backbone.trigger('event:currentUserInfoReady', userInfo);
-            self.initRoom();
+            //self.initRoom();
         });
         //this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
         //    if(res){
@@ -247,7 +238,7 @@ var View = BaseView.extend({
             case 1:
                 break;
             case 2:
-                this.getGroupInfo(this.roomInfo.imGroupid);
+                //this.getGroupInfo(this.roomInfo.imGroupid);
                 break;
             case 3:
                 break;
@@ -285,7 +276,7 @@ var View = BaseView.extend({
         }
     },
     goBack: function () {
-        //window.history.go(-1);
+        window.history.go(-1);
     },
     loopRoomInfo: function () {
         var self = this;

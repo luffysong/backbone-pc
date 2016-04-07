@@ -51,9 +51,9 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        //this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-        //    el: 'broadCastFlash'
-        //});
+        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+            el: 'broadCastFlash'
+        });
         this.defineEventInterface();
     },
     defineEventInterface: function () {
@@ -151,6 +151,16 @@ var View = BaseView.extend({
                 msgObj.content = '进行了清屏操作!';
                 msgObj.smallAvatar = '';
                 self.addMessage(msgObj);
+                var msg = {
+                    roomId: self.roomInfo.id,
+                    nickName: '主播',
+                    smallAvatar: '',
+                    mstType: 4,
+                    content: '主播已清屏'
+                };
+                self.flashAPI.onReady(function () {
+                    this.notifying(msg);
+                });
 
                 break;
             case 5: // 禁言

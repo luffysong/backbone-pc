@@ -25,6 +25,7 @@ var YYTIMServer = require('../../lib/YYT_IM_Server');
 var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
 var UserInfo = require('./user.js');
 var InAndOurRoomModel = require('../../model/live-room/inAndOut-room.model.js');
+var FlashAPI = require('FlashAPI');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -73,6 +74,9 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.defineEventInterface();
+        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+            el: 'broadCastFlash'
+        });
 
         this.getUserInfo();
         //this.initRoom();
@@ -195,6 +199,9 @@ var View = BaseView.extend({
                     'url': data.url
                 };
                 self.roomInfo = data;
+                self.flashAPI.onReady(function () {
+                    this.init(self.roomInfo);
+                });
 
                 self.joinRoom();
                 self.fetchUserIMSig(data.imGroupid);
