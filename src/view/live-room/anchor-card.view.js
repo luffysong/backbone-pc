@@ -84,6 +84,7 @@ var View = BaseView.extend({
 		els.name.text(data.creator.nickName);
 
 		var template = _.template(this.tagTpl);
+
 		els.tagsWrap.html(template(data.creator));
 	},
 	getNoticeInfo: function () {

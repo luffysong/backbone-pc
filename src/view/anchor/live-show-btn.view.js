@@ -70,8 +70,8 @@ var View = BaseView.extend({
     isTooLate: function (time) {
         var currentTime = new Date();
         var timeSpan = time - currentTime.getTime();
-        var hour = Number(DateTime.difference(Math.abs(timeSpan)).hours);
-        if (timeSpan < 0 && hour >= 1) {
+        var result = DateTime.difference(Math.abs(timeSpan));
+        if (timeSpan < 0 && (result.hours >= 1 || result.day >= 1)) {
             return 1;
         } else if (timeSpan > 300000) {
             return -1;
@@ -87,21 +87,21 @@ var View = BaseView.extend({
             result = self.isTooLate(self.roomInfo.liveTime),
             status = self.roomInfo.status;
 
-         if (status == 0) {
-             msgBox.showTip('该直播尚未发布,无法开启直播!');
-             return null;
-         } else if (status == 1) {
-             if (result == 1) {
-                 msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
-                 return null;
-             } else if (result == -1) {
-                 msgBox.showTip('您最多提前5分钟开启直播,请耐心等候');
-                 return null;
-             }
-         }
-         if (current.hasClass('m_disabled')) {
-             return null;
-         }
+        if (status == 0) {
+            msgBox.showTip('该直播尚未发布,无法开启直播!');
+            return null;
+        } else if (status == 1) {
+            if (result == 1) {
+                msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
+                return null;
+            } else if (result == -1) {
+                msgBox.showTip('您最多提前5分钟开启直播,请耐心等候');
+                return null;
+            }
+        }
+        if (current.hasClass('m_disabled')) {
+            return null;
+        }
 
         current.addClass('m_disabled');
         this.btnEndLive.removeClass('m_disabled');
@@ -132,21 +132,21 @@ var View = BaseView.extend({
             if (result && result.code == 0) {
                 var msg = '您已成功开启直播，请复制下面的信息：</br>'
                     + '视频连接：' + result.data.livePushStreamUrl
-                    +'</br>视频流：' + result.data.streamName;
+                    + '</br>视频流：' + result.data.streamName;
                 uiConfirm.show({
                     title: '开启直播成功',
                     content: msg,
                     cancelBtn: false,
-                    okFn:function(){
+                    okFn: function () {
                         window.location.reload();
                     },
-                    cancelFn: function(){
+                    cancelFn: function () {
                         window.location.reload();
                     }
                 });
                 self.startFlash();
                 Backbone.trigger('event:LiveShowStarted');
-            }else{
+            } else {
                 msgBox.showError(result.msg || '开启直播失败,请稍后重试');
             }
         }, function (err) {
@@ -213,7 +213,7 @@ var View = BaseView.extend({
             self.roomInfoReady(data);
         });
         //Backbone.on('event:updateRoomInfo', function (data) {
-            //self.roomInfoReady(data);
+        //self.roomInfoReady(data);
         //});
     },
     changeButtonStatus: function (status) {

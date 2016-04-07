@@ -24,6 +24,7 @@ var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('../../lib/YYT_IM_Server');
 var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
 var UserInfo = require('./user.js');
+var InAndOurRoomModel = require('../../model/live-room/inAndOut-room.model.js');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -44,6 +45,7 @@ var View = BaseView.extend({
         this.roomDetail = RoomDetailModel.sigleInstance();
 
         this.anchorInfoModel = AnchorUserInfoModel.sigleInstance();
+        this.inAndOutRoom = InAndOurRoomModel.sigleInstance();
 
         this.roomDetailParams = {
             deviceinfo: '{"aid": "30001001"}',
@@ -54,6 +56,10 @@ var View = BaseView.extend({
         this.roomLongPolling = RoomLongPollingModel.sigleInstance();
 
         this.anchorInfoParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken()
+        };
+        this.inAndRoomParams = {
             deviceinfo: '{"aid": "30001001"}',
             access_token: 'web-' + user.getToken()
         };
@@ -190,6 +196,7 @@ var View = BaseView.extend({
                 };
                 self.roomInfo = data;
 
+                self.joinRoom();
                 self.fetchUserIMSig(data.imGroupid);
                 self.checkRoomStatus(data.status);
 
@@ -307,6 +314,17 @@ var View = BaseView.extend({
         }, function (err) {
             errFn && errFn(err);
         });
+    },
+    joinRoom: function () {
+        this.inAndRoomParams.type = 1;
+
+        if (this.roomInfo) {
+            this.inAndRoomParams.roomId = this.roomInfo.id;
+        }
+        this.inAndOutRoom.executeJSONP(this.inAndRoomParams, function (res) {
+
+        });
+
 
     }
 
