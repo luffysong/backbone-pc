@@ -78,6 +78,7 @@ var View = BaseView.extend({
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
                 self.roomInfo = data;
+                self.elements.txtLikeCount.text(data.assemble || 0);
             }
         });
 
@@ -240,7 +241,6 @@ var View = BaseView.extend({
 
     },
     shareClick: function () {
-        console.log(this.roomInfo);
         var title = this.roomInfo.roomName + ',快来围观吧', url = window.location.href,
             img = this.roomInfo.posterPic;
         //msgBox.showOK('分享一下');
