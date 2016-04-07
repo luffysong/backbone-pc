@@ -1281,7 +1281,7 @@ img {
   float: left;
   width: 21px;
   height: 20px;
-  margin: 5px;
+  margin: 25px 5px;
   background: url('/img/share2.png') no-repeat 2px 1px;
   background-position: -19px 0;
 }
