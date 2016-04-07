@@ -69,7 +69,6 @@ var View = BaseView.extend({
 		}
 		if (this.flashAPI) {
 			this.flashAPI.onReady(function(){
-				console.log(data)
 				this.init(data);
 			});
 		}
@@ -85,7 +84,7 @@ var View = BaseView.extend({
 				break;
 			case 3:
 				//处理回放
-				window.location.href= '/web/liveRoom.html?roomId='+id;
+				window.location.href= '/web/playback.html?roomId='+id;
 				break;
 			default:
 				//默认不处理
