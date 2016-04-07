@@ -1316,5 +1316,39 @@ img {
 .share-wrap .unicon17 {
   background-position: -19px -180px;
 }
+.play-back-main {
+  width: 100% !important;
+}
+.play-back-main .flash-header-wraper {
+  text-align: center;
+  background: #48443d;
+}
+.play-back-main .flash-header-wraper .edit_Bg {
+  margin: 0 auto;
+  width: 800px;
+}
+.play-back-main .BroadcastRoom {
+  width: 857px;
+  margin: 0 auto;
+}
+.play-back-main .user-info-block {
+  background-color: #fff!important;
+  float: left;
+  margin-left: 192px;
+  width: 450px;
+}
+.play-back-main .user-info-block .tags .Right {
+  float: left!important;
+  width: 300px!important;
+}
+.play-back-main .gift-wrap {
+  margin-right: 172px;
+}
+.play-back-main .gift-wrap .btn-support {
+  display: none!important;
+}
+.play-back-main .room-notice {
+  display: none!important;
+}
 
 /*# sourceMappingURL=liveRoom.main.css.map*/

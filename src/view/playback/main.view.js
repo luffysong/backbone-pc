@@ -127,8 +127,8 @@ var View = BaseView.extend({
         var PlayedListView = require('../live-room/played-list.view');
         new PlayedListView();
 
-        //var GiftView = require('./gift.view');
-        //new GiftView();
+        var GiftView = require('../live-room/gift.view');
+        new GiftView();
 
     },
     initWebIM: function () {
