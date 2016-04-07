@@ -17,6 +17,7 @@ var RecommendModel = require('../../model/index/recommended.model');
 var MsgBox = require('ui.MsgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var FlashAPI = require('FlashAPI');
 var View = BaseView.extend({
 	el:'#topContainer', //设置View对象作用于的根元素，比如id
 	rawLoader:function(){ //可用此方法返回字符串模版
@@ -39,6 +40,7 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
+
 		this.recommendModel.executeJSONP(this.recommendParameter,function(response){
 			var code = ~~response.code;
 			if (code) {
@@ -53,8 +55,23 @@ var View = BaseView.extend({
 		});
 	},
 	recommendRender:function(data){
+		var status = data.status;
 		var html = this.compileHTML(recommendTemp,{data:data});
 		this.$el.html(html);
+		if (status === 1 || status === 2) {
+			this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+	            el: 'topFlash',
+				props:{
+					width: 1200,
+					height: 570
+				}
+	        });
+		}
+		if (this.flashAPI) {
+			this.flashAPI.onReady(function(){
+				this.init(data);
+			});
+		}
 	},
 	gotoLiveHome:function(e){
 		var el = $(e.currentTarget);
