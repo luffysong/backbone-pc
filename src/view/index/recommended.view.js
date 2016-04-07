@@ -69,6 +69,7 @@ var View = BaseView.extend({
 		}
 		if (this.flashAPI) {
 			this.flashAPI.onReady(function(){
+				data.isIndex = true;
 				this.init(data);
 			});
 		}

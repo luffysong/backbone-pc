@@ -1,36 +1,40 @@
 {{each items as item i}}
     <li>
-        {{if item.completion === 1}}
-            不足6个或者3个时候的占位
-        {{else}}
-            <div class="box-content box-live-direct-video">
-                {{if item.status === 3}}
-                    <a href="/web/playback.html?roomId={{item.roomId}}">
-                        <div class="box-top">
-                            <img class="box-top-img" src="{{item.posterPic}}"/>
+        <div class="box-content box-live-direct-video">
+            {{if item.status === 3}}
+                <a href="/web/playback.html?roomId={{item.roomId}}">
+                    <div class="box-top">
+                        <img class="box-top-img" src="{{item.posterPic}}"/>
+                    </div>
+                    <div class="box-cover-hover">
+                        <div class="box-popularity boderRadAll_3">
+                            人气：<span>{{item.realPopularity}}</span>
                         </div>
-                        <div class="box-cover-hover">
-                            <div class="box-popularity boderRadAll_3">
-                                人气：<span>{{item.realPopularity}}</span>
+                        <div class="box-click"></div>
+                        <div class="box-praise-push boderRadAll_3">
+                            <div class="praise">
+                                <span class="praise-img"></span>
+                                <span class="praise-text">{{item.bulletCurtain}}</span>
                             </div>
-                            <div class="box-click"></div>
-                            <div class="box-praise-push boderRadAll_3">
-                                <div class="praise">
-                                    <span class="praise-img"></span>
-                                    <span class="praise-text">{{item.bulletCurtain}}</span>
-                                </div>
-                                <div class="push">
-                                    <span class="push-img"></span>
-                                    <span class="push-text">{{item.assemble}}</span>
-                                </div>
+                            <div class="push">
+                                <span class="push-img"></span>
+                                <span class="push-text">{{item.assemble}}</span>
                             </div>
                         </div>
-                    </a>
-                {{/if}}
-                <div class="box-bottom">
-                    <div class="box-title">{{item.roomName}}</div>
+                    </div>
+                </a>
+            {{/if}}
+
+            {{if item.completion === 1}}
+                <div class="box-trailer">
+                    <div class="box-top">
+                        <img class="box-top-img" src="/img/index/space.png"/>
+                    </div>
                 </div>
+            {{/if}}
+            <div class="box-bottom">
+                <div class="box-title">{{item.roomName}}</div>
             </div>
-        {{/if}}
+        </div>
     </li>
 {{/each}}
