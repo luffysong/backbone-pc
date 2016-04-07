@@ -212,7 +212,7 @@ var View = BaseView.extend({
         this.popularityParams.type = type;
         this.popularityParams.roomId = this.roomInfo.id;
         this.popularityModel.executeJSONP(this.popularityParams, function (res) {
-            if (res && res.data && res.data.success) {
+            if (res && res.data && res.msg === 'SUCCESS') {
                 msgBox.showOK('非常感谢您的大力支持');
                 self.getUserInfo();
             } else {
@@ -237,11 +237,15 @@ var View = BaseView.extend({
             return;
         }
         this.isClicked = true;
-        Backbone.trigger('event:visitorSendGift', {
+        //互动
+        Backbone.trigger('event:visitorInteractive', {
+            nickName: user.$get('userName'),
+            smallAvatar: user.$get('bigheadImg'),
+            roomId: self.roomInfo.id || '',
             mstType: 3
         });
         self.pushPopularity(1);
-        msgBox.showOK('赞一下');
+        //msgBox.showOK('赞一下');
         setTimeout(function () {
             self.isClicked = false;
         }, 5000);
