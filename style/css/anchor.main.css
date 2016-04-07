@@ -1349,7 +1349,7 @@ img {
 .edit_annmoucement_con .editCon p {
   text-align: center;
 }
-.edit_annmoucement_con .editCon a {
+.edit_annmoucement_con .editCon .btn-wrap a {
   width: 120px;
   height: 38px;
   line-height: 38px;
@@ -1359,9 +1359,9 @@ img {
   font-size: 14px;
   color: #999;
 }
-.edit_annmoucement_con .editCon a:hover,
-.edit_annmoucement_con .editCon .active {
-  background: #27d5bf!important;
+.edit_annmoucement_con .editCon .btn-wrap a:hover,
+.edit_annmoucement_con .editCon .btn-wrap .active {
+  background: #27d5bf !important;
   color: #fff;
 }
 .edit_annmoucement_con .editCon .content {

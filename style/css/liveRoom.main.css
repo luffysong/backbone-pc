@@ -1277,5 +1277,44 @@ img {
 .live-room-wrap .recent-list-wrap .jcarousel-control-next {
   right: 0px;
 }
+.share-wrap a {
+  float: left;
+  width: 21px;
+  height: 20px;
+  margin: 5px;
+  background: url('/img/share2.png') no-repeat 2px 1px;
+  background-position: -19px 0;
+}
+.share-wrap .weibo17 {
+  background-position: -20px -20px;
+}
+.share-wrap .qq17 {
+  background-position: -19px -100px;
+}
+.share-wrap .qzone17 {
+  background-position: -19px -60px;
+}
+.share-wrap .weixin17 {
+  background: url('/img/weixin1.png') no-repeat 0 0;
+  background-position: 0px -21px;
+}
+.share-wrap .renren17 {
+  background-position: -19px -40px;
+}
+.share-wrap .pengyou17 {
+  background-position: -19px -120px;
+}
+.share-wrap .tencent17 {
+  background-position: -19px -80px;
+}
+.share-wrap .huaban17 {
+  background-position: -19px -140px;
+}
+.share-wrap .sohu17 {
+  background-position: -19px -160px;
+}
+.share-wrap .unicon17 {
+  background-position: -19px -180px;
+}
 
 /*# sourceMappingURL=liveRoom.main.css.map*/
