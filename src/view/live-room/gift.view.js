@@ -129,9 +129,11 @@ var View = BaseView.extend({
 
         this.giftModel.get(this.giftParams, function (res) {
             if (res && res.code == '0') {
-                var template = _.template(self.giftTpl);
-                self.elements.giftItems.html(template(res || []));
-                self.initCarousel();
+                if(self.giftTpl){
+                    var template = _.template(self.giftTpl);
+                    self.elements.giftItems.html(template(res || []));
+                    self.initCarousel();
+                }
             }
         }, function (err) {
             console.log(err);
@@ -172,7 +174,7 @@ var View = BaseView.extend({
                 giftId: data.giftId,
                 giftNum: 1
             });
-            msgBox.showOK('您向主播送出一个' + data.name);
+            //msgBox.showOK('您向主播送出一个' + data.name);
         }
     },
     topClick: function () {

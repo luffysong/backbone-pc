@@ -51,9 +51,9 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        //this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
-        //    el: 'broadCastFlash'
-        //});
+        this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+            el: 'broadCastFlash'
+        });
         this.defineEventInterface();
     },
     defineEventInterface: function () {
@@ -151,6 +151,16 @@ var View = BaseView.extend({
                 msgObj.content = '进行了清屏操作!';
                 msgObj.smallAvatar = '';
                 self.addMessage(msgObj);
+                var msg = {
+                    roomId: self.roomInfo.id,
+                    nickName: '主播',
+                    smallAvatar: '',
+                    mstType: 4,
+                    content: '主播已清屏'
+                };
+                self.flashAPI.onReady(function () {
+                    this.notifying(msg);
+                });
 
                 break;
             case 5: // 禁言
@@ -199,16 +209,17 @@ var View = BaseView.extend({
             var tpl = _.template(this.getMessageTpl());
             this.elements.msgList.append(tpl(msgObj));
             this.elements.chatHistory.scrollTop(this.elements.msgList.height());
-            if (msgObj.mstType == 0) {
+            //if (msgObj.mstType == 0) {
                 try {
                     this.flashAPI.onReady(function () {
+                        console.log(msgObj);
                         this.notifying(msgObj);
                     });
 
                 } catch (e) {
 
                 }
-            }
+            //}
         }
         YYTIMServer.sendMessage({
             groupId: this.roomInfo.imGroupid,
