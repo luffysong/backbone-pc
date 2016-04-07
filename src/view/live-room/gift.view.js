@@ -174,7 +174,7 @@ var View = BaseView.extend({
                 giftId: data.giftId,
                 giftNum: 1
             });
-            msgBox.showOK('您向主播送出一个' + data.name);
+            //msgBox.showOK('您向主播送出一个' + data.name);
         }
     },
     topClick: function () {
