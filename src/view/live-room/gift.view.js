@@ -212,9 +212,16 @@ var View = BaseView.extend({
         this.popularityParams.type = type;
         this.popularityParams.roomId = this.roomInfo.id;
         this.popularityModel.executeJSONP(this.popularityParams, function (res) {
-            if (res && res.data && res.msg === 'SUCCESS') {
+            if (res && res.data && res.msg === 'SUCCESS' && type == 1) {
                 msgBox.showOK('非常感谢您的大力支持');
+                Backbone.trigger('event:pleaseUpdateRoomInfo');
                 self.getUserInfo();
+            }
+            else if (res && res.data.success && type == 2) {
+                msgBox.showOK('非常感谢您的大力支持');
+                Backbone.trigger('event:pleaseUpdateRoomInfo');
+                self.getUserInfo();
+
             } else {
                 msgBox.showTip(res.data.message || '操作失败请您稍后重试');
             }
