@@ -2888,11 +2888,11 @@ var webim = { // namespace object webim
                     };
                     //发起一个拉群群消息请求
 	                //edit by: yuanxujia
-	                //if(getLostGroupMsgCount < 2){
+	                if(getLostGroupMsgCount < 10){
 		                console.warn("第%s次补齐群消息,参数=%s：",getLostGroupMsgCount,JSON.stringify(tempOpts));
 		                MsgManager.syncGroupMsgs(tempOpts);
 		                //getLostGroupMsgCount = 0;
-	                //}
+	                }
                 };
 
                 //添加群消息列表
