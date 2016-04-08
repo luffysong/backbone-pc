@@ -308,6 +308,7 @@ var View = BaseView.extend({
                 uiConfirm.show({
                     title: '禁止进入',
                     content: msg,
+                    cancelBtn: false,
                     okFn: function () {
                         self.goBack();
                     },
