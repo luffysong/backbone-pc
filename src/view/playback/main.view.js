@@ -264,7 +264,7 @@ var View = BaseView.extend({
 
                 uiConfirm.show({
                     title: '禁止进入',
-                    content: '您已经被主播踢出房间!',
+                    content: '您已经被主播踢出房间,肿么又回来了!',
                     okFn: function () {
                         self.goBack();
                     },

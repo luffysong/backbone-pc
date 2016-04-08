@@ -294,6 +294,10 @@ var View = BaseView.extend({
             }
         } catch (e) {
         }
+        var msg = '您已经被主播踢出房间,肿么又回来了';
+        if (notifyInfo.isEvent) {
+            msg = '您已经被主播踢出房间!';
+        }
         if (notify) {
             var result = _.find(notify.forbidUsers, function (item) {
                 return item.replace('$0', '') == self.userIMSig.userId;
@@ -303,7 +307,7 @@ var View = BaseView.extend({
 
                 uiConfirm.show({
                     title: '禁止进入',
-                    content: '您已经被主播踢出房间!',
+                    content: msg,
                     okFn: function () {
                         self.goBack();
                     },
