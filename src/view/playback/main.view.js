@@ -48,7 +48,7 @@ var View = BaseView.extend({
 
         this.roomDetailParams = {
             deviceinfo: '{"aid": "30001001"}',
-            access_token: 'web-' + user.getToken(),
+            access_token: user.getWebToken(),
             roomId: ''
         };
 
