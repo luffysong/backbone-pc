@@ -46,9 +46,11 @@ YYTIMServer.init = function (options) {
  *
  */
 YYTIMServer.sendMessage = function (attrs, okFn, errFn) {
-    var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
+    //var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
     var random = Math.floor(Math.random() * 10000);
-    //var currentSession = new webim.Session('GROUP', attrs.groupId, attrs.groupId, '', random);
+    //if (!currentSession) {
+    var currentSession = new webim.Session('GROUP', attrs.groupId, attrs.groupId, '', random);
+    //}
 
     if (currentSession) {
         var sendMsg = new webim.Msg(currentSession, true);

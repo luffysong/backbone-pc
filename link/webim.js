@@ -2887,8 +2887,12 @@ var webim = { // namespace object webim
                         'ReqMsgNumber':  reqMsgNumber
                     };
                     //发起一个拉群群消息请求
-                    console.warn("第%s次补齐群消息,参数=%s：",getLostGroupMsgCount,JSON.stringify(tempOpts));
-                    MsgManager.syncGroupMsgs(tempOpts);
+	                //edit by: yuanxujia
+	                //if(getLostGroupMsgCount < 2){
+		                console.warn("第%s次补齐群消息,参数=%s：",getLostGroupMsgCount,JSON.stringify(tempOpts));
+		                MsgManager.syncGroupMsgs(tempOpts);
+		                //getLostGroupMsgCount = 0;
+	                //}
                 };
 
                 //添加群消息列表
@@ -3552,7 +3556,7 @@ var webim = { // namespace object webim
                             alert('您的ie版本过低，建议使用ie8以上浏览器^_^');
                            return;
                         }
-                        initMyGroupMaxSeqs(null,null,loginInfo);
+                        initMyGroupMaxSeqs(null, null, loginInfo);
                         initIpAndAuthkey();
                         longPolling();
                         //setInterval(longPolling, 10000);
@@ -3834,7 +3838,7 @@ var webim = { // namespace object webim
                     webimJsonpCallback=listeners.jsonpCallback;
 		if (options) opt = options;
 		ConnManager.init(listeners.onConnNotify);
-		MsgManager.init(listeners.onMsgNotify,listeners.onGroupInfoChangeNotify,listeners.groupSystemNotifys,loginInfo);
+		MsgManager.init(listeners.onMsgNotify,listeners.onGroupInfoChangeNotify,listeners.groupSystemNotifys, loginInfo);
 	};
 
         //web im 基础对象

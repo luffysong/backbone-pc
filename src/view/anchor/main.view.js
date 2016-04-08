@@ -141,6 +141,9 @@ var View = BaseView.extend({
                 'url': data.url
             };
             self.renderPage();
+            if(!data.mine){
+                self.goBack();
+            }
             Backbone.trigger('event:roomInfoReady', data);
             if(data.status == 2){
                 self.loopRoomInfo();
