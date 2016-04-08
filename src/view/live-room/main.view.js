@@ -41,7 +41,7 @@ var View = BaseView.extend({
         }
         this.roomId = url.query['roomId'] || 1;
 
-        this.roomInfoPeriod = 10 * 1000;
+        this.roomInfoPeriod = 5 * 1000;
 
         this.roomDetail = RoomDetailModel.sigleInstance();
 
@@ -86,6 +86,15 @@ var View = BaseView.extend({
         var self = this;
         Backbone.on('event:UserKickOut', function (notifyInfo) {
             self.checkUserIsKickout(notifyInfo);
+        });
+
+        Backbone.on('event:pleaseUpdateRoomInfo', function () {
+            self.roomDetailParams.roomId = self.roomId;
+            self.getRoomLoopInfo(function (res) {
+                var data = res.data;
+                Backbone.trigger('event:updateRoomInfo', data);
+            });
+
         });
     },
     fetchUserIMSig: function (groupId) {
@@ -300,7 +309,7 @@ var View = BaseView.extend({
     goBack: function () {
         //window.history.go(-1);
     },
-    loopRoomInfo: function () {
+    loopRoomInfo: function (time) {
         var self = this;
 
         self.roomInfoTimeId = setTimeout(function () {
@@ -311,7 +320,7 @@ var View = BaseView.extend({
                 Backbone.trigger('event:updateRoomInfo', data);
                 self.loopRoomInfo();
             });
-        }, self.roomInfoPeriod);
+        }, !!time ? time : self.roomInfoPeriod);
     },
     getRoomLoopInfo: function (okFn, errFn) {
         var self = this;

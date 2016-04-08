@@ -36,10 +36,10 @@ instance = new UserInfoView();
 
 module.exports = {
     getInfo: function (okFn, errFn) {
-        if (cacheData) {
-            okFn && okFn(cacheData);
-            return;
-        }
+        //if (cacheData) {
+        //    okFn && okFn(cacheData);
+        //    return;
+        //}
         instance.getInfo(okFn, errFn);
     },
     isDisbaleTalk: function () {

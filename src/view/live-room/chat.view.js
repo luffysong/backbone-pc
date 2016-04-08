@@ -90,6 +90,14 @@ var View = BaseView.extend({
                 self.beforeSendMsg(data);
             }
         });
+
+        Backbone.on('event:visitorInteractive', function (data) {
+            if (UserInfo.isDisbaleTalk()) {
+                msgBox.showTip('您已经被禁言,暂时无法操作');
+            } else {
+                self.beforeSendMsg(data);
+            }
+        });
         Backbone.on('event:forbidUserSendMsg', function (data) {
             self.forbidUserSendMsgHandler(data);
         });
@@ -121,6 +129,7 @@ var View = BaseView.extend({
 
     beforeSendMsg: function (msgObj) {
         var self = this;
+        console.log('222222222',msgObj);
 
         if (msgObj.roomId != this.roomInfo.id) {
             return;
@@ -210,15 +219,14 @@ var View = BaseView.extend({
             this.elements.msgList.append(tpl(msgObj));
             this.elements.chatHistory.scrollTop(this.elements.msgList.height());
             //if (msgObj.mstType == 0) {
-                try {
-                    this.flashAPI.onReady(function () {
-                        console.log(msgObj);
-                        this.notifying(msgObj);
-                    });
+            try {
+                this.flashAPI.onReady(function () {
+                    this.notifying(msgObj);
+                });
 
-                } catch (e) {
+            } catch (e) {
 
-                }
+            }
             //}
         }
         YYTIMServer.sendMessage({

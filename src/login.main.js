@@ -23,12 +23,13 @@ $(function(){
 			if (!sig.anchor) {
 				//store.remove('imSig');
                 //MsgBox.showError('获取签名错误，原因：你可能不是主播；');
-                //window.location.href = '/index.html';
+                window.location.href = '/index.html';
 			}else{
                 //处理登录成功跳转到设置页面
-                //window.location.href = '/web/anchorsetting.html';
+                window.location.href = '/web/anchorsetting.html';
             }
 		},function(e){
+            store.remove('imSig');
 			//处理请求错误
 			MsgBox.showError('获取签名错误，原因：网络或服务器错误');
 		});

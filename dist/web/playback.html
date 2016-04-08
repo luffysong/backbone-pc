@@ -11,13 +11,13 @@
     <meta name="keywords" content="">
     <link rel="stylesheet" type="text/css" href="../style/common.css">
     <link rel="stylesheet" type="text/css" href="../style/loginbox.css">
-    <link rel="stylesheet" href="../style/css/liveRoom-74c301cbef.main.css">
+    <link rel="stylesheet" href="../style/css/playback-850c2ce15c.main.css">
 </head>
 <body>
 <!--^顶部导航栏  -->
 <div class="topBar" id="topBar">
     <div class="topBarCon clearfix">
-        <a href="http://www.yinyuetai.com" title="音悦台"><h1 class="fl log"></h1></a>
+        <a href="/" title="音悦台"><h1 class="fl log"></h1></a>
         <div class="fr anchorPc">
             <div class="fl">
                 <div id="loginUser"></div>
@@ -31,85 +31,59 @@
 <div class="am-container live-room-wrap" id="anchorContainerBg">
     <div class="common_con">
         <div class="content clearfix">
-            <div class="fl" id="set_Anchor_info">
-                <div id="edit_background" class="edit_Bg clearfix room-header">
-                    <!-- 编辑背景 -->
+            <div class="fl play-back-main" id="set_Anchor_info">
+                <div class="flash-header-wraper">
+                    <div id="edit_background" class="edit_Bg clearfix room-header">
+                        <!-- 编辑背景 -->
+                    </div>
                 </div>
                 <div class="BroadcastRoom" id="broadCastFlash">
-                    <ul class="bulletScreen">
-                        <!--<li>-->
-                            <!--<div class="tm">弹幕消息加载中...</div>-->
-                        <!--</li>-->
-                    </ul>
                 </div>
-                <div class="gift-wrap" id="giftwarp">
-                    <!--<div class="gift-list">-->
-                    <div style="display: none;" class="jcarousel-wrapper Left">
-                        <div class="jcarousel">
-                            <ul id="gift-items" class="gift-items">
-                                <!--礼物列表-->
-                                <script type="text/template" id="gift-item-tpl">
-                                    <% for(var i= 0, len = data.length; i < len; i++) {%>
-                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
-                                        data-giftId="<%=data[i].giftId%>">
-                                        <img src="<%=data[i].images.logo%>" alt="">
-                                        <span class="name"><%=data[i].name%></span>
-                                    </li>
-                                    <% } %>
-                                </script>
-                            </ul>
-                        </div>
-                        <a href="#" class="jcarousel-control-prev ctrl pre"></a>
-                        <a href="#" class="jcarousel-control-next ctrl next"></a>
+                <div>
+                    <div id="userInfoWrap" class="user-info-block">
+                        <!--主播名片-->
                     </div>
 
-                    <!--</div>-->
-                    <div class="like-wrap Right ">
-                        <div class="btns boderRadAll_5">
-                            <button id="btnShare" class="share Left Hand boderRadAll_5"><i></i></button>
-                            <button id="btnLike" class="Hand like Left gary2"><i></i><span id="txtLikeCount">1</span></button>
-                            <div class="Clear"></div>
+                    <div class="gift-wrap" id="giftwarp">
+                        <div class="like-wrap Right ">
+                            <div class="btns boderRadAll_5">
+                                <button id="btnShare" class="share Left Hand boderRadAll_5"><i></i></button>
+                                <button id="btnLike" class="Hand like Left gary2"><i></i><span
+                                    id="txtLikeCount">1</span>
+                                </button>
+                                <div class="Clear"></div>
+                            </div>
+                            <button id="btnTop" class="btn Hand btn-support boderRadAll_3"><i></i> 顶一下</button>
                         </div>
-                        <button id="btnTop" class="btn Hand btn-support boderRadAll_3"><i></i> 顶一下</button>
+                        <div class="Clear"></div>
                     </div>
                     <div class="Clear"></div>
                 </div>
             </div>
             <!--留言-->
-            <div class="fl">
-                <div id="userInfoWrap" class="user-info-block">
-                    <!--主播名片-->
-                </div>
-                <div id="anchorCtrlChat">
-                    <!--消息列表-->
-                </div>
-                <div id="sendMessageWrap" class="send-msg-wrap pAll10">
-                    <!--<div class="msg-text">-->
-                    <!--<textarea class="pAll5 gary2 msg Left" cols="30" rows="5" placeholder="请输入消息"></textarea>-->
-                    <!--<button class="Hand btn send Left">发送</button>-->
-                    <!--<div class="Clear"></div>-->
-                    <!--</div>-->
-                    <!--<div class="msg-footer mTop5">-->
-                    <!--&lt;!&ndash;<button>face</button>&ndash;&gt;-->
-                    <!--<button class="size Hand"><i></i></button>-->
-                    <!--<div class="tip Right gary1">您还可以输入<span class="gary2">324</span>字</div>-->
-                    <!--<div class="Clear"></div>-->
-                    <!--</div>-->
-                </div>
-            </div>
+            <!--<div class="fl">-->
+            <!--<div id="userInfoWrap" class="user-info-block">-->
+            <!--&lt;!&ndash;主播名片&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div id="anchorCtrlChat">-->
+            <!--&lt;!&ndash;消息列表&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div id="sendMessageWrap" class="send-msg-wrap pAll10">-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
         <div class="recent-list-wrap mTop15" id="anchorPlayedList">
             <div class="list-header">播主播过的</div>
 
-            <div class="jcarousel-wrapper  list " id="palyedJcarousel" >
+            <div class="jcarousel-wrapper  list " id="palyedJcarousel">
                 <div class="jcarousel">
                     <ul id="playedListWrap">
                         <!--已播放列表-->
                         <script type="text/template" id="anchorPlayedTpl">
                             <%
-                                var item =null;
-                                for(var i = 0, len = roomList.length; i < len; i++ ) {
-                                item = roomList[i];
+                            var item =null;
+                            for(var i = 0, len = roomList.length; i < len; i++ ) {
+                            item = roomList[i];
                             %>
                             <li>
                                 <div class="item Left mLeft10 mRight10">
@@ -126,7 +100,8 @@
                                     <div class="btn-wrap mTop10 pAll5">
                                         <div class="Left gary2 mTop10 pBottom10">人气: <span class="count"><%=item.popularity%></span>
                                         </div>
-                                        <span class="Right mTop10 pBottom10"><i class="like-count"></i><%=item.push%></span>
+                                        <span class="Right mTop10 pBottom10"><i
+                                            class="like-count"></i><%=item.push%></span>
                                         <span class="Right mRight20 mTop10 pBottom10"><i
                                             class="coments-count"></i><%=item.seen%></span>
                                         <div class="Clear"></div>
@@ -134,7 +109,7 @@
                                 </div>
                             </li>
                             <%
-                                }
+                            }
                             %>
                         </script>
                     </ul>
@@ -176,6 +151,6 @@
 <script type="text/javascript" src="../link/jQuery/jquery.jcarousel.min.js"></script>
 <script src="http://api.geetest.com/get.php"></script>
 <script src="../js/common-cd3c3dca0a.js"></script>
-<script src="../js/playback-070e2b73ba.main.js"></script>
+<script src="../js/playback-4f993274bc.main.js"></script>
 </body>
 </html>
