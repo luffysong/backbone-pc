@@ -26,6 +26,7 @@ var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
 var UserInfo = require('./user.js');
 var InAndOurRoomModel = require('../../model/live-room/inAndOut-room.model.js');
 var FlashAPI = require('FlashAPI');
+var store = require('store');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -74,6 +75,13 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.defineEventInterface();
+
+        if (!user.isLogined()) {
+            store.remove('imSig');
+            store.set('signout', 1);
+            msgBox.showTip('请登录后观看直播!');
+            window.location.href = '/web/login.html';
+        }
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el: 'broadCastFlash'
         });
