@@ -26,6 +26,7 @@ var AnchorUserInfoModel = require('../../model/anchor/anchor-info.model');
 var UserInfo = require('./user.js');
 var InAndOurRoomModel = require('../../model/live-room/inAndOut-room.model.js');
 var FlashAPI = require('FlashAPI');
+var store = require('store');
 
 var View = BaseView.extend({
     clientRender: false,
@@ -74,6 +75,13 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         this.defineEventInterface();
+
+        if (!user.isLogined()) {
+            store.remove('imSig');
+            store.set('signout', 1);
+            msgBox.showTip('请登录后观看直播!');
+            window.location.href = '/web/login.html';
+        }
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el: 'broadCastFlash'
         });
@@ -286,6 +294,10 @@ var View = BaseView.extend({
             }
         } catch (e) {
         }
+        var msg = '您已经被主播踢出房间,肿么又回来了';
+        if (notifyInfo.isEvent) {
+            msg = '您已经被主播踢出房间!';
+        }
         if (notify) {
             var result = _.find(notify.forbidUsers, function (item) {
                 return item.replace('$0', '') == self.userIMSig.userId;
@@ -295,7 +307,7 @@ var View = BaseView.extend({
 
                 uiConfirm.show({
                     title: '禁止进入',
-                    content: '您已经被主播踢出房间!',
+                    content: msg,
                     okFn: function () {
                         self.goBack();
                     },
@@ -307,7 +319,7 @@ var View = BaseView.extend({
         }
     },
     goBack: function () {
-        //window.history.go(-1);
+        window.history.go(-1);
     },
     loopRoomInfo: function (time) {
         var self = this;

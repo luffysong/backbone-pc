@@ -83,9 +83,9 @@ var View = BaseView.extend({
 
         Backbone.on('event:visitorSendMessage', function (data) {
             if (UserInfo.isDisbaleTalk()) {
-                msgBox.showTip('您已经被禁言,暂时无法操作');
+                msgBox.showTip('您已经被禁言,不能发弹幕哦');
             } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
-                msgBox.showTip('主播进行了锁屏,暂时无法互动');
+                msgBox.showTip('主播:进行了锁屏操作');
             } else {
                 self.beforeSendMsg(data);
             }
@@ -93,7 +93,7 @@ var View = BaseView.extend({
 
         Backbone.on('event:visitorInteractive', function (data) {
             if (UserInfo.isDisbaleTalk()) {
-                msgBox.showTip('您已经被禁言,暂时无法操作');
+                msgBox.showTip('您已经被主播禁言十分钟.');
             } else {
                 self.beforeSendMsg(data);
             }
@@ -187,6 +187,7 @@ var View = BaseView.extend({
         }
         if (notifyInfo && notifyInfo.GroupNotification) {
             var notify = JSON.parse(notifyInfo.GroupNotification);
+            notify.isEvent = true;
             Backbone.trigger('event:UserKickOut', notify);
         }
     },
@@ -302,7 +303,7 @@ var View = BaseView.extend({
     },
     checkUserStatus: function () {
         if (UserInfo.isDisbaleTalk()) {
-            msgBox.showTip('您已经被禁言,暂无法操作');
+            msgBox.showTip('您已经被禁言,不能发弹幕哦');
             return false;
         }
 
