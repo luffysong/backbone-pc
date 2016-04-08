@@ -298,7 +298,7 @@ var View = BaseView.extend({
         }
     },
     goBack: function () {
-        //window.history.go(-1);
+        window.history.go(-1);
     },
     loopRoomInfo: function () {
         var self = this;
