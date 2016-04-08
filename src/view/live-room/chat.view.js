@@ -129,7 +129,6 @@ var View = BaseView.extend({
 
     beforeSendMsg: function (msgObj) {
         var self = this;
-        console.log('222222222',msgObj);
 
         if (msgObj.roomId != this.roomInfo.id) {
             return;

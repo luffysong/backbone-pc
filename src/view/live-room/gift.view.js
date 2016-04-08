@@ -213,7 +213,7 @@ var View = BaseView.extend({
         this.popularityParams.roomId = this.roomInfo.id;
         this.popularityModel.executeJSONP(this.popularityParams, function (res) {
             if (res && res.data && res.msg === 'SUCCESS' && type == 1) {
-                msgBox.showOK('非常感谢您的大力支持');
+                //msgBox.showOK('非常感谢您的大力支持');
                 Backbone.trigger('event:pleaseUpdateRoomInfo');
                 self.getUserInfo();
             }
