@@ -58,7 +58,7 @@ var View = BaseView.extend({
 		var status = data.status;
 		var html = this.compileHTML(recommendTemp,{data:data});
 		this.$el.html(html);
-		if (status === 1 || status === 2) {
+		if (status === 3 || status === 2) {
 			this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
 	            el: 'topFlash',
 				props:{
