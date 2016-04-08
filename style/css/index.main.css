@@ -1303,7 +1303,6 @@ img {
   z-index: 100;
   background-image: url('/img/index/index-icepy-4.png');
   background-repeat: no-repeat;
-  display: none;
 }
 .list-set-container .list-box-content .box-content .box-cover-hover .box-popularity {
   height: 28px;
