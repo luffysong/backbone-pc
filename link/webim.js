@@ -2953,7 +2953,7 @@ var webim = { // namespace object webim
                                             if(groupMsgMap[groupId].min-curMaxMsgSeq>1 || groupMsgMap[groupId].msgs.length<tempCount){
                                                 //发起一个拉群群消息请求
                                                 console.warn("发起一次补齐群消息请求,curMaxMsgSeq=%s,minMsgSeq=%s,maxMsgSeq=%s,msgs.length=%s,tempCount=%s",curMaxMsgSeq,groupMsgMap[groupId].min,groupMsgMap[groupId].max,groupMsgMap[groupId].msgs.length,tempCount);
-                                                getLostGroupMsgs(groupId,groupMsgMap[groupId].max,groupMsgMap[groupId].max-curMaxMsgSeq);
+                                                //getLostGroupMsgs(groupId,groupMsgMap[groupId].max,groupMsgMap[groupId].max-curMaxMsgSeq);
                                             }else{
                                                 new_group_msgs=addGroupMsgList(groupMsgMap[groupId].msgs,new_group_msgs);
                                             }
@@ -2964,7 +2964,7 @@ var webim = { // namespace object webim
                                             if(groupMsgMap[groupId].msgs.length<tempCount){
                                                 //发起一个拉群群消息请求
                                                 console.warn("发起一次补齐群消息请求,minMsgSeq=%s,maxMsgSeq=%s,msgs.length=%s,tempCount=%s",groupMsgMap[groupId].min,groupMsgMap[groupId].max,groupMsgMap[groupId].msgs.length,tempCount);
-                                                getLostGroupMsgs(groupId,groupMsgMap[groupId].max,tempCount);
+                                                //getLostGroupMsgs(groupId,groupMsgMap[groupId].max,tempCount);
 
                                             }else{
                                                 new_group_msgs=addGroupMsgList(groupMsgMap[groupId].msgs,new_group_msgs);
