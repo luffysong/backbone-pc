@@ -143,7 +143,8 @@ var View = BaseView.extend({
     roomStatusCheck: function () {
         if (!this.roomInfo || this.roomInfo.status != 2) {
             msgBox.showTip('该直播不在直播中,无法进行互动');
-            return false;
+            //TODO
+            //return false;
         }
         return true;
     },

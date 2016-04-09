@@ -104,7 +104,8 @@ var View = BaseView.extend({
         if (!this.roomInfo || this.roomInfo.status != 2) {
             msgBox.showTip('该直播不在直播中,无法进行互动');
             this.elements.txtMessage.val('');
-            return;
+            //TODO
+            //return;
         }
         Backbone.trigger('event:visitorSendMessage', msg);
     },

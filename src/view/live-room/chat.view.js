@@ -66,12 +66,18 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:onMsgNotify', function (notifyInfo) {
-            if (notifyInfo && notifyInfo.constructor.name == 'Array') {
-                for (var i = 0, len = notifyInfo.length; i < len; i++) {
-                    if (notifyInfo[i].isSend == false) {
-                        self.onMsgNotify(notifyInfo[i]);
+            if (_.isArray(notifyInfo)) {
+                _.each(notifyInfo, function (item) {
+                    if (item.hasOwnProperty('msg')) {
+                        if (item.msg.isSend == false) {
+                            self.onMsgNotify(item.msg);
+                        }
+                    } else if (item.hasOwnProperty('isSend')) {
+                        if (item.isSend == false) {
+                            self.onMsgNotify(item);
+                        }
                     }
-                }
+                });
             } else if (_.isObject(notifyInfo)) {
                 if (notifyInfo.isSend == false) {
                     self.onMsgNotify(notifyInfo);
@@ -91,7 +97,9 @@ var View = BaseView.extend({
             } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
                 msgBox.showTip('主播:进行了锁屏操作');
             } else {
-                self.beforeSendMsg(data);
+                self.beforeSendMsg(data, function (msgObj) {
+                    self.sendMsgToGroup(msgObj);
+                });
             }
         });
 
@@ -99,7 +107,10 @@ var View = BaseView.extend({
             if (UserInfo.isDisbaleTalk()) {
                 msgBox.showTip('您已经被主播禁言十分钟.');
             } else {
-                self.beforeSendMsg(data);
+                //self.beforeSendMsg(data);
+                self.beforeSendMsg(data, function (msgObj) {
+                    self.sendMsgToGroup(msgObj);
+                });
             }
         });
         Backbone.on('event:forbidUserSendMsg', function (data) {
@@ -124,15 +135,17 @@ var View = BaseView.extend({
         //if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
         if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
-            msgObj = msgObj.replace(/&quot;/g, '\'');
+            msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
             eval('msgObj = ' + msgObj);
             msgObj.fromAccount = notifyInfo.fromAccount;
 
-            self.beforeSendMsg(msgObj);
+            self.beforeSendMsg(msgObj, function (msgObj) {
+                self.addMessage(msgObj);
+            });
         }
     },
 
-    beforeSendMsg: function (msgObj) {
+    beforeSendMsg: function (msgObj, callback) {
         var self = this;
 
         if (msgObj.roomId != this.roomInfo.id) {
@@ -141,14 +154,16 @@ var View = BaseView.extend({
 
         switch (msgObj.mstType) {
             case 0: //文本消息
-                self.addMessage(msgObj);
+                //self.addMessage(msgObj);
+                callback && callback(msgObj);
                 break;
             case 1: //发送礼物
                 var giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
                 msgObj.content = '<b>' + msgObj.nickName + '</b>向主播赠送' + giftName + '!';
                 //msgObj.nickName = '消息';
                 msgObj.smallAvatar = '';
-                self.addMessage(msgObj);
+                //self.addMessage(msgObj);
+                callback && callback(msgObj);
                 break;
             case 2: //公告
                 Backbone.trigger('event:updateRoomNotice', msgObj);
@@ -157,13 +172,15 @@ var View = BaseView.extend({
                 msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
                 //msgObj.nickName = '消息';
                 msgObj.smallAvatar = '';
-                self.addMessage(msgObj);
+                //self.addMessage(msgObj);
+                callback && callback(msgObj);
                 break;
             case 4: // 清屏
                 this.elements.msgList.children().remove();
                 msgObj.content = '进行了清屏操作!';
                 msgObj.smallAvatar = '';
-                self.addMessage(msgObj);
+                //self.addMessage(msgObj);
+                callback && callback(msgObj);
                 var msg = {
                     roomId: self.roomInfo.id,
                     nickName: '主播',
@@ -205,6 +222,15 @@ var View = BaseView.extend({
     getMessageTpl: function () {
         return require('../../template/anchor/chat-message-tpl.html');
     },
+    sendMsgToGroup: function (msgObj) {
+        this.addMessage(msgObj);
+
+        YYTIMServer.sendMessage({
+            groupId: this.roomInfo.imGroupid,
+            msg: msgObj
+        });
+        this.autoDeleteMsgList();
+    },
     addMessage: function (msgObj) {
         var self = this;
         msgObj = _.extend({
@@ -234,10 +260,10 @@ var View = BaseView.extend({
             }
             //}
         }
-        YYTIMServer.sendMessage({
-            groupId: this.roomInfo.imGroupid,
-            msg: msgObj
-        });
+        //YYTIMServer.sendMessage({
+        //    groupId: this.roomInfo.imGroupid,
+        //    msg: msgObj
+        //});
         self.autoDeleteMsgList();
     },
     filterEmoji: function (content) {

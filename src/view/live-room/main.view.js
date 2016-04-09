@@ -171,7 +171,6 @@ var View = BaseView.extend({
                 Backbone.trigger('event:onConnNotify', notifyInfo);
             },
             'onMsgNotify': function (notifyInfo) {
-                console.log('=======',notifyInfo);
                 Backbone.trigger('event:onMsgNotify', notifyInfo);
             },
             'onGroupInfoChangeNotify': function (notifyInfo) {
