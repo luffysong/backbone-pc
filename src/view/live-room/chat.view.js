@@ -68,10 +68,14 @@ var View = BaseView.extend({
         Backbone.on('event:onMsgNotify', function (notifyInfo) {
             if (notifyInfo && notifyInfo.constructor.name == 'Array') {
                 for (var i = 0, len = notifyInfo.length; i < len; i++) {
-                    self.onMsgNotify(notifyInfo[i]);
+                    if (notifyInfo[i].isSend == false) {
+                        self.onMsgNotify(notifyInfo[i]);
+                    }
                 }
-            } else {
-                self.onMsgNotify(notifyInfo);
+            } else if (_.isObject(notifyInfo)) {
+                if (notifyInfo.isSend == false) {
+                    self.onMsgNotify(notifyInfo);
+                }
             }
         });
         Backbone.on('event:onGroupInfoChangeNotify', function (notifyInfo) {
@@ -117,7 +121,8 @@ var View = BaseView.extend({
         var self = this;
         var msgObj = {};
 
-        if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
+        //if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
+        if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
             msgObj = msgObj.replace(/&quot;/g, '\'');
             eval('msgObj = ' + msgObj);
