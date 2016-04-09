@@ -12,15 +12,15 @@ var IMModel = require('./IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 
 module.exports = {
-    onlyAnchorUse: function(url){
-        imModel.fetchIMUserSig(function(sig){
+    onlyAnchorUse: function (url) {
+        imModel.fetchIMUserSig(function (sig) {
             if (!sig.anchor) {
-                window.location.href = url ||'/index.html';
+                window.location.href = url || '/index.html';
             }
-            //else{
+            //else {
             //    window.location.href = url || '/web/anchorsetting.html';
             //}
-        }, function(){
+        }, function () {
             window.location.href = '/index.html';
         });
     }

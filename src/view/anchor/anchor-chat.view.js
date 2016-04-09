@@ -355,13 +355,30 @@ var View = BaseView.extend({
         var self = this;
 
         Backbone.on('event:onMsgNotify', function(notifyInfo) {
-            if (notifyInfo && notifyInfo.constructor.name == 'Array') {
-                for (var i = 0, len = notifyInfo.length; i < len; i++) {
-                    self.onMsgNotify(notifyInfo[i]);
+            if (_.isArray(notifyInfo)) {
+                _.each(notifyInfo, function (item) {
+                    if (item.hasOwnProperty('msg')) {
+                        if (item.msg.isSend == false) {
+                            self.onMsgNotify(item.msg);
+                        }
+                    } else if (item.hasOwnProperty('isSend')) {
+                        if (item.isSend == false) {
+                            self.onMsgNotify(item);
+                        }
+                    }
+                });
+            } else if (_.isObject(notifyInfo)) {
+                if (notifyInfo.isSend == false) {
+                    self.onMsgNotify(notifyInfo);
                 }
-            } else {
-                self.onMsgNotify(notifyInfo);
             }
+            //if (notifyInfo && notifyInfo.constructor.name == 'Array') {
+            //    for (var i = 0, len = notifyInfo.length; i < len; i++) {
+            //        self.onMsgNotify(notifyInfo[i]);
+            //    }
+            //} else {
+            //    self.onMsgNotify(notifyInfo);
+            //}
         });
         Backbone.on('event:onGroupInfoChangeNotify', function(notifyInfo) {
             self.onGroupInfoChangeNotify(notifyInfo);
