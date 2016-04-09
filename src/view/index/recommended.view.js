@@ -30,7 +30,7 @@ var View = BaseView.extend({
 	beforeMount:function(){
 		this.recommendParameter = {
 			'deviceinfo': '{"aid":"30001001"}',
-			'access_token':user.getToken()
+			'access_token':'web-'+user.getToken()
 		};
 	},
 	//当模板挂载到元素之后

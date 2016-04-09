@@ -29,7 +29,7 @@ var View = BaseView.extend({
 	beforeMount:function(){
 		this.playbackParameter = {
 			'deviceinfo': '{"aid":"30001001"}',
-			'access_token':user.getToken(),
+			'access_token':'web-'+user.getToken(),
 			'offset':0,
 			'size':6
 		};
