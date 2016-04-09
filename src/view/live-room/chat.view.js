@@ -68,10 +68,14 @@ var View = BaseView.extend({
         Backbone.on('event:onMsgNotify', function (notifyInfo) {
             if (notifyInfo && notifyInfo.constructor.name == 'Array') {
                 for (var i = 0, len = notifyInfo.length; i < len; i++) {
-                    self.onMsgNotify(notifyInfo[i]);
+                    if (notifyInfo[i].isSend == false) {
+                        self.onMsgNotify(notifyInfo[i]);
+                    }
                 }
-            } else {
-                self.onMsgNotify(notifyInfo);
+            } else if (_.isObject(notifyInfo)) {
+                if (notifyInfo.isSend == false) {
+                    self.onMsgNotify(notifyInfo);
+                }
             }
         });
         Backbone.on('event:onGroupInfoChangeNotify', function (notifyInfo) {
