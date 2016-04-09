@@ -136,12 +136,19 @@ var View = BaseView.extend({
         if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
             msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
-            eval('msgObj = ' + msgObj);
-            msgObj.fromAccount = notifyInfo.fromAccount;
+            try {
+                eval('msgObj = ' + msgObj);
+            } catch (e) {
 
-            self.beforeSendMsg(msgObj, function (msgObj) {
-                self.addMessage(msgObj);
-            });
+            }
+            if (_.isObject(msgObj)) {
+                msgObj.fromAccount = notifyInfo.fromAccount;
+
+                self.beforeSendMsg(msgObj, function (msgObj) {
+                    self.addMessage(msgObj);
+                });
+
+            }
         }
     },
 
