@@ -357,7 +357,7 @@ var View = BaseView.extend({
         });
     },
     setRoomBgImg: function () {
-        if (this.roomInfo && this.roomInfo.posterPic) {
+        if (this.roomInfo && this.roomInfo.imageUrl) {
             this.roomBg.css('background', 'url(' + this.roomInfo.posterPic + ')');
         }
 
