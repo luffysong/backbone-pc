@@ -920,6 +920,9 @@ img {
 }
 .live-room-wrap .user-info-block .room-notice .notice {
   font-size: 12px;
+  line-height: 14px;
+  height: 44px;
+  overflow: hidden;
 }
 .live-room-wrap .user-info-block .room-notice .trumpet {
   width: 20px;
