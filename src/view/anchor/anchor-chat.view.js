@@ -254,8 +254,16 @@ var View = BaseView.extend({
 
         if (notifyInfo && notifyInfo.type ==0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
             msgObj = notifyInfo.elems[0].content.text + '';
-            msgObj = msgObj.replace(/&quot;/g, '\'');
-            eval('msgObj = ' + msgObj);
+            //msgObj = msgObj.replace(/&quot;/g, '\'');
+            msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
+            try{
+                eval('msgObj = ' + msgObj);
+            }catch(e){
+
+            }
+            if(!_.isObject(msgObj)){
+                return ;
+            }
             msgObj.fromAccount = notifyInfo.fromAccount;
 
             switch (msgObj.mstType) {
