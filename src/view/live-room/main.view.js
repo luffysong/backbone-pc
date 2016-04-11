@@ -66,10 +66,11 @@ var View = BaseView.extend({
             access_token: 'web-' + user.getToken()
         };
 
+
     },
     //当模板挂载到元素之后
     afterMount: function () {
-
+        this.roomBg = $('#anchorContainerBg');
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -216,6 +217,7 @@ var View = BaseView.extend({
                     'url': data.url
                 };
                 self.roomInfo = data;
+                self.setRoomBgImg();
                 self.flashAPI.onReady(function () {
                     this.init(self.roomInfo);
                 });
@@ -353,9 +355,14 @@ var View = BaseView.extend({
         this.inAndOutRoom.executeJSONP(this.inAndRoomParams, function (res) {
 
         });
-
+    },
+    setRoomBgImg: function () {
+        if (this.roomInfo && this.roomInfo.posterPic) {
+            this.roomBg.css('background', 'url(' + this.roomInfo.posterPic + ')');
+        }
 
     }
+
 
 });
 
