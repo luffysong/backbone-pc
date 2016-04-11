@@ -315,11 +315,11 @@ var View = BaseView.extend({
             var tpl = _.template(this.getMessageTpl());
             this.msgList.append(tpl(msgObj));
             this.chatHistory.scrollTop(this.msgList.height());
-            if (msgObj.mstType == 0) {
+            //if (msgObj.mstType == 0) {
                 this.flashAPI.onReady(function() {
                     this.notifying(msgObj);
                 });
-            }
+            //}
         }
         self.autoDeleteMsgList();
     },
