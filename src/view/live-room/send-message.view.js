@@ -109,10 +109,10 @@ var View = BaseView.extend({
         Backbone.trigger('event:visitorSendMessage', msg);
     },
     textMsgChanged: function (e) {
-        var len = this.elements.txtMessage.val().length;
-        if (e.keyCode == 13) {
+        if (e && e.keyCode == 13) {
             this.sendMsgClick();
         }
+        var len = this.elements.txtMessage.val().length;
         this.elements.limitTip.text(20 - len);
         if (len >= 20) {
             return false;
