@@ -130,6 +130,17 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:liveShowEnded', function (data) {
+            uiConfirm.show({
+                title: '直播结束',
+                content: '本场直播已经结束,点击确定返回首页.',
+                cancelBtn: false,
+                okFn: function () {
+                    window.location.href = '/';
+                },
+                cancelFn: function () {
+                    window.location.href = '/';
+                }
+            });
             self.roomInfo.status = data.status;
         });
 

@@ -67,7 +67,7 @@ var View = BaseView.extend({
     },
     whenPalypack: function (data) {
         var els = this.elements;
-        els.onlineTxt.text('历史最高在先人数');
+        els.onlineTxt.text('历史最高在线人数');
         els.roomName.text(data.roomName || '');
         els.onLine.text(data.seen || 0);
         els.popularity.text(data.popularity || 0);
