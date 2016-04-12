@@ -42,15 +42,28 @@ module.exports = {
         //}
         instance.getInfo(okFn, errFn);
     },
-    isDisbaleTalk: function () {
-        var time = Storage.get('userDisableTalkTime');
+    isDisbaleTalk: function (userId, roomId) {
+        var list = Storage.get('userDisableTalkTime');
+        if (!list) {
+            return false;
+        } else {
+            list = JSON.parse(list);
+        }
+        var res = _.find(list, function (item) {
+            return item.roomId == roomId && item.userId == userId;
+        });
+        if (!res) {
+            return false;
+        }
+
+        var time = res.time;
         if (!time) {
             return false;
         }
+
         time = new Date(time);
         var cur = new Date();
         var diff = cur.getTime() - time.getTime();
-        //var result = DateTimeHelper.difference(Math.abs(diff));
 
         return diff <= 0;
     },
@@ -66,10 +79,27 @@ module.exports = {
         });
         return !!res && res.isKickout;
     },
-    setDisableTalk: function (time) {
-        if (time) {
-            Storage.set('userDisableTalkTime', time);
+    setDisableTalk: function (userid, roomid, time) {
+        var list = Storage.get('userDisableTalkTime');
+        if (!list) {
+            list = []
+        } else {
+            list = JSON.parse(list);
         }
+        var res = _.find(list, function (item) {
+            return item.roomId == roomId && item.userId == userid;
+        });
+
+        if (res) {
+            res.time = time;
+        } else {
+            list.push({
+                roomId: roomid,
+                userId: userid,
+                time: time
+            });
+        }
+        Storage.set('userDisableTalkTime', JSON.stringify(list));
     },
     setKickout: function (roomId, isKickout) {
         var list = Storage.get('userKickout');
@@ -123,6 +153,9 @@ module.exports = {
             return item.roomId == roomId;
         });
         return !!res && res.isLock;
+    },
+    removeAll: function () {
+
     }
 
 };

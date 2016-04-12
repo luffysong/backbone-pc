@@ -23,6 +23,8 @@ var imModel = IMModel.sharedInstanceIMModel();
 var GiftModel = require('../../model/anchor/gift.model');
 //var Storage = require('store');
 var UserInfo = require('./user.js');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
 
 
 var View = BaseView.extend({
@@ -51,6 +53,7 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
+        console.log(user.$get());
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el: 'broadCastFlash'
         });
@@ -92,7 +95,7 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorSendMessage', function (data) {
-            if (UserInfo.isDisbaleTalk()) {
+            if (UserInfo.isDisbaleTalk(user.$get().userId, self.roomInfo.id)) {
                 msgBox.showTip('您已经被禁言,不能发弹幕哦');
             } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
                 msgBox.showTip('主播:进行了锁屏操作');
@@ -104,7 +107,7 @@ var View = BaseView.extend({
         });
 
         Backbone.on('event:visitorInteractive', function (data) {
-            if (UserInfo.isDisbaleTalk()) {
+            if (UserInfo.isDisbaleTalk(user.$get().userId, self.roomInfo.id)) {
                 msgBox.showTip('您已经被主播禁言十分钟.');
             } else {
                 //self.beforeSendMsg(data);
@@ -124,6 +127,10 @@ var View = BaseView.extend({
 
         Backbone.on('event:IMGroupInfoReady', function (info) {
             self.currentGroupInfo = info;
+        });
+
+        Backbone.on('event:liveShowEnded', function (data) {
+            self.roomInfo.status = data.status;
         });
 
     },
@@ -156,6 +163,10 @@ var View = BaseView.extend({
         var self = this;
 
         if (msgObj.roomId != this.roomInfo.id) {
+            return;
+        }
+        if (self.roomInfo && self.roomInfo.status == 3) {
+            msgBox.showTip('直播已结束,无法进行互动');
             return;
         }
 
@@ -339,7 +350,7 @@ var View = BaseView.extend({
         });
     },
     checkUserStatus: function () {
-        if (UserInfo.isDisbaleTalk()) {
+        if (UserInfo.isDisbaleTalk(user.$get().userId, self.roomInfo.id)) {
             msgBox.showTip('您已经被禁言,不能发弹幕哦');
             return false;
         }
@@ -354,7 +365,7 @@ var View = BaseView.extend({
             //Storage.set('disableTalkTime', new Date());
             var cur = new Date();
 
-            UserInfo.setDisableTalk(cur.getTime() + 10 * 60 * 1000);
+            UserInfo.setDisableTalk(user.$get().userId, this.roomInfo.id, cur.getTime() + 10 * 60 * 1000);
         }
     }
 });
