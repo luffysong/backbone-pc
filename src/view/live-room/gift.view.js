@@ -92,6 +92,11 @@ var View = BaseView.extend({
                 self.elements.txtLikeCount.text(data.likeCount || 0);
             }
         });
+        Backbone.on('event:liveShowEnded', function (data) {
+            if (data) {
+                self.roomInfo.status = data.roomStatus;
+            }
+        });
 
     },
     initCarousel: function () {

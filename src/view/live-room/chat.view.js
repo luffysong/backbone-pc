@@ -141,7 +141,7 @@ var View = BaseView.extend({
                     window.location.href = '/';
                 }
             });
-            self.roomInfo.status = data.status;
+            self.roomInfo.status = data.roomStatus;
         });
 
     },

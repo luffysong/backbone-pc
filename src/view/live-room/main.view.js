@@ -333,9 +333,9 @@ var View = BaseView.extend({
             self.getRoomLoopInfo(function (res) {
                 var data = res.data;
                 Backbone.trigger('event:updateRoomInfo', data);
-                if(data.status == 3){
+                if(data.roomStatus == 3){
                     Backbone.trigger('event:liveShowEnded', data);
-                }else if(data.status == 2){
+                }else if(data.roomStatus == 2){
                     self.loopRoomInfo();
                 }
             });
