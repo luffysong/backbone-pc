@@ -70,7 +70,7 @@ var View = BaseView.extend({
         var els = this.elements;
         els.onlineTxt.text('历史最高在先人数');
         els.roomName.text(data.roomName || '');
-        els.onLine.text(data.onlineMax || 0);
+        els.onLine.text(data.seen || 0);
         els.popularity.text(data.popularity || 0);
     }
 
