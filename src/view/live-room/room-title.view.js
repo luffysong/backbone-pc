@@ -32,7 +32,8 @@ var View = BaseView.extend({
         this.elements = {
             roomName: el.find('.room-name'),
             onLine: el.find('#onlineCount'),
-            popularity: el.find('#popularityCount')
+            popularity: el.find('#popularityCount'),
+            onlineTxt: el.find('#onlineTxt')
         };
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -44,8 +45,12 @@ var View = BaseView.extend({
         var self = this;
         Backbone.on('event:roomInfoReady', function (data) {
             if (data) {
-                self.bindData(data);
-
+                if (data.status == 3) {
+                    self.whenPalypack(data);
+                } else {
+                    self.bindData(data);
+                }
+                console.log(data);
             }
         });
         Backbone.on('event:updateRoomInfo', function (data) {
@@ -59,6 +64,13 @@ var View = BaseView.extend({
         var els = this.elements;
         els.roomName.text(data.roomName || '');
         els.onLine.text(data.online || 0);
+        els.popularity.text(data.popularity || 0);
+    },
+    whenPalypack: function (data) {
+        var els = this.elements;
+        els.onlineTxt.text('历史最高在先人数');
+        els.roomName.text(data.roomName || '');
+        els.onLine.text(data.onlineMax || 0);
         els.popularity.text(data.popularity || 0);
     }
 
