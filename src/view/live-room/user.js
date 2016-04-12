@@ -155,7 +155,9 @@ module.exports = {
         return !!res && res.isLock;
     },
     removeAll: function () {
-
+        Storage.set('isLockScreen', '');
+        Storage.set('userDisableTalkTime', '');
+        Storage.set('userKickout', '');
     }
 
 };
