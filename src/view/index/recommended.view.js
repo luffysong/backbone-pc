@@ -29,9 +29,12 @@ var View = BaseView.extend({
 	//当模板挂载到元素之前
 	beforeMount:function(){
 		this.recommendParameter = {
-			'deviceinfo': '{"aid":"30001001"}',
-			'access_token':'web-'+user.getToken()
+			'deviceinfo': '{"aid":"30001001"}'
 		};
+		var token = user.getToken();
+		if (token) {
+			this.recommendParameter.access_token = 'web-'+user.getToken();
+		}
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
@@ -40,7 +43,6 @@ var View = BaseView.extend({
 	//当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	ready:function(){
 		var self = this;
-
 		this.recommendModel.executeJSONP(this.recommendParameter,function(response){
 			var code = ~~response.code;
 			if (code) {
