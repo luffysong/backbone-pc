@@ -1414,10 +1414,7 @@ img {
   height: 217px;
   z-index: 98;
   top: 0px;
-}
-.list-set-container .list-box-content .box-content .box-top img.box-top-img {
-  width: 386px;
-  height: 217px;
+  overflow: hidden;
 }
 .list-set-container .list-box-content .box-content .box-top .box-state {
   width: 65px;
