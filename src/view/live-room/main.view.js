@@ -109,34 +109,49 @@ var View = BaseView.extend({
     fetchUserIMSig: function (groupId) {
         var self = this;
         imModel.fetchIMUserSig(function (sig) {
-            self.userIMSig = sig;
-            self.initWebIM();
-            var goBack = function () {
-                window.history.go(-1);
-            };
-            YYTIMServer.applyJoinGroup(groupId, function (res) {
-                //self.renderPage();
-                Backbone.trigger('event:roomInfoReady', self.roomInfo);
-                if (self.roomInfo.status == 2) {
-                    self.loopRoomInfo();
-                }
-            }, function (res) {
-                if (res.ErrorCode == 10013) {
+            if (sig.roleType == 2) {
+                uiConfirm.show({
+                    title: '请登录',
+                    content: '您现在是游客模式,请先登录参与互动!',
+                    cancelBtn: false,
+                    cancelFn: function () {
+                        window.location.href = '/web/login.html';
+                    },
+                    okFn: function () {
+                        window.location.href = '/web/login.html';
+                    }
+                });
+            } else {
+                self.userIMSig = sig;
+                self.initWebIM();
+                var goBack = function () {
+                    window.history.go(-1);
+                };
+                YYTIMServer.applyJoinGroup(groupId, function (res) {
                     //self.renderPage();
                     Backbone.trigger('event:roomInfoReady', self.roomInfo);
                     if (self.roomInfo.status == 2) {
                         self.loopRoomInfo();
                     }
-                } else {
-                    uiConfirm.show({
-                        title: '进入房间',
-                        content: '进入房间失败,请稍后重试',
-                        cancelFn: goBack,
-                        okFn: goBack
-                    });
+                }, function (res) {
+                    if (res.ErrorCode == 10013) {
+                        //self.renderPage();
+                        Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                        if (self.roomInfo.status == 2) {
+                            self.loopRoomInfo();
+                        }
+                    } else {
+                        uiConfirm.show({
+                            title: '进入房间',
+                            content: '进入房间失败,请稍后重试',
+                            cancelFn: goBack,
+                            okFn: goBack
+                        });
 
-                }
-            });
+                    }
+                });
+
+            }
         });
     },
     renderPage: function () {
@@ -333,9 +348,9 @@ var View = BaseView.extend({
             self.getRoomLoopInfo(function (res) {
                 var data = res.data;
                 Backbone.trigger('event:updateRoomInfo', data);
-                if(data.roomStatus == 3){
+                if (data.roomStatus == 3) {
                     Backbone.trigger('event:liveShowEnded', data);
-                }else if(data.roomStatus == 2){
+                } else if (data.roomStatus == 2) {
                     self.loopRoomInfo();
                 }
             });
