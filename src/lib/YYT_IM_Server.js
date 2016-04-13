@@ -55,7 +55,9 @@ YYTIMServer.sendMessage = function (attrs, okFn, errFn) {
 
     if (currentSession) {
         var sendMsg = new webim.Msg(currentSession, true);
-        sendMsg.addText(new webim.Msg.Elem.Text(JSON.stringify(attrs.msg)));
+        var msg = new webim.Msg.Elem('TIMCustomElem', {data: JSON.stringify(attrs.msg)});
+        //sendMsg.addText(msg);
+        sendMsg.elems.push(msg);
         sendMsg.fromAccount = this.im.imIdentifier;
         webim.sendMsg(sendMsg, function (resp) {
             okFn && okFn(resp);

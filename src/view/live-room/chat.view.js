@@ -53,7 +53,6 @@ var View = BaseView.extend({
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
-        console.log(user.$get());
         this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
             el: 'broadCastFlash'
         });
@@ -152,8 +151,8 @@ var View = BaseView.extend({
 
         //if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
         if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
-            msgObj = notifyInfo.elems[0].content.text + '';
-            msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
+            msgObj = notifyInfo.elems[0].content.data;
+            //msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
             try {
                 eval('msgObj = ' + msgObj);
             } catch (e) {
