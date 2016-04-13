@@ -15,8 +15,10 @@ var uiConfirm = require('ui.Confirm');
 var DateTime = require('DateTime');
 var FlashAPI = require('FlashAPI');
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
-
+var GiftModel = require('../../model/anchor/gift.model');
 var msgBox = require('ui.MsgBox');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
 
 var View = BaseView.extend({
     el: '#anchorCtrlChat', //设置View对象作用于的根元素，比如id
@@ -33,9 +35,19 @@ var View = BaseView.extend({
         //禁言用户列表
         this.forbidUsers = [];
 
+        this.giftModel = GiftModel.sigleInstance();
+        this.giftParams = {
+            deviceinfo: '{"aid": "30001001"}',
+            access_token: 'web-' + user.getToken(),
+            offset: 0,
+            size: 90000,
+            type: 0
+        };
+
         this.roomDetail = RoomDetailModel.sigleInstance();
         this.roomInfo = this.roomDetail.$get().data || {};
 
+        this.initGiftList();
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -276,7 +288,8 @@ var View = BaseView.extend({
                     self.addMessage(msgObj);
                     break;
                 case 1: //发送礼物
-                    msgObj.content = '<b>' + msgObj.nickName + '</b>发来礼物!';
+                    var giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
+                    msgObj.content = '<b>' + msgObj.nickName + '</b>发来' + giftName + '!';
                     msgObj.nickName = '消息';
                     msgObj.smallAvatar = '';
                     self.addMessage(msgObj);
@@ -293,6 +306,21 @@ var View = BaseView.extend({
                     break;
             }
         }
+    },
+    initGiftList: function () {
+        var self = this;
+
+        this.giftModel.get(this.giftParams, function (res) {
+            if (res && res.code == '0') {
+                //if (self.giftTpl) {
+                //    var template = _.template(self.giftTpl);
+                //    self.elements.giftItems.html(template(res || []));
+                //    self.initCarousel();
+                //}
+            }
+        }, function (err) {
+            console.log(err);
+        });
     },
     onGroupInfoChangeNotify: function (notifyInfo) {
         //
