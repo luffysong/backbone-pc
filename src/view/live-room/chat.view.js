@@ -151,8 +151,14 @@ var View = BaseView.extend({
 
         //if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
         if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
-            msgObj = notifyInfo.elems[0].content.data;
-            //msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
+            var elem = notifyInfo.elems[0];
+            if (elem.type === 'TIMCustomElem') {
+                msgObj = elem.content.data;
+            } else {
+                msgObj = elem.content.text + '';
+                //msgObj = msgObj.replace(/&quot;/g, '\'');
+                msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
+            }
             try {
                 eval('msgObj = ' + msgObj);
             } catch (e) {
