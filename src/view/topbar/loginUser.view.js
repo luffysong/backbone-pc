@@ -91,6 +91,7 @@ var View = BaseView.extend({
         imModel.fetchIMUserSig(function (userImInfo) {
             if(userImInfo.roleType === 2){
                 //游客，未登录
+                self.$el.html(sginHTML);
             }else{
                 var data = {
                     'userName': userImInfo.nickName,
