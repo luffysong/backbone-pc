@@ -70,8 +70,7 @@ var View = BaseView.extend({
                 if (user.isLogined()) {
                     self.fetchUserInfo();
                     self.trigger('topbar-logined');
-                }
-                ;
+                };
             });
         } else {
             this._dialog.trigger('hide');
@@ -90,11 +89,15 @@ var View = BaseView.extend({
     fetchUserInfo: function () {
         var self = this;
         imModel.fetchIMUserSig(function (userImInfo) {
-            var data = {
-                'userName': userImInfo.nickName,
-                'bigheadImg': userImInfo.largeAvatar
-            };
-            self.render(data);
+            if(userImInfo.roleType === 2){
+                //游客，未登录
+            }else{
+                var data = {
+                    'userName': userImInfo.nickName,
+                    'bigheadImg': userImInfo.largeAvatar
+                };
+                self.render(data);
+            }
         });
     },
     render: function (data) {

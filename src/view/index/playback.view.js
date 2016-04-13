@@ -29,10 +29,13 @@ var View = BaseView.extend({
 	beforeMount:function(){
 		this.playbackParameter = {
 			'deviceinfo': '{"aid":"30001001"}',
-			'access_token':'web-'+user.getToken(),
 			'offset':0,
 			'size':6
 		};
+		var token = user.getToken();
+		if (token) {
+			this.playbackParameter.access_token = 'web-'+token;
+		}
 	},
 	//当模板挂载到元素之后
 	afterMount:function(){
