@@ -97,7 +97,7 @@ var View = BaseView.extend({
         }
         this.canSendNow = false;
         this.sendMessageToChat({
-            mstType: 0,
+            msgType: 0,
             content: $.trim(this.elements.txtMessage.val()),
             nickName: user.$get('userName'),
             style: {

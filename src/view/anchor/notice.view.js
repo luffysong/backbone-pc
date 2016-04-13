@@ -132,7 +132,7 @@ var View = BaseView.extend({
             msg: {
                 roomId: this.roomInfo.id,
                 smallAvatar: '',
-                mstType: 2,
+                msgType: 2,
                 content: content
             }
         }, function (res) {

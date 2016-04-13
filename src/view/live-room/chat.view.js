@@ -180,7 +180,7 @@ var View = BaseView.extend({
             return;
         }
 
-        switch (msgObj.mstType) {
+        switch (msgObj.msgType) {
             case 0: //文本消息
                 //self.addMessage(msgObj);
                 callback && callback(msgObj);
@@ -213,7 +213,7 @@ var View = BaseView.extend({
                     roomId: self.roomInfo.id,
                     nickName: '主播',
                     smallAvatar: '',
-                    mstType: 4,
+                    msgType: 4,
                     content: '主播已清屏'
                 };
                 self.flashAPI.onReady(function () {
@@ -277,7 +277,7 @@ var View = BaseView.extend({
             var tpl = _.template(this.getMessageTpl());
             this.elements.msgList.append(tpl(msgObj));
             this.elements.chatHistory.scrollTop(this.elements.msgList.height());
-            //if (msgObj.mstType == 0) {
+            //if (msgObj.msgType == 0) {
             try {
                 this.flashAPI.onReady(function () {
                     this.notifying(msgObj);
@@ -325,29 +325,29 @@ var View = BaseView.extend({
      msg: {
                 roomId: this.roomInfo.id,
                 smallAvatar: '',
-                mstType: 2,
+                msgType: 2,
                 content: content
             }
      */
-    sendNotifyToIM: function (notifyInfo, okFn, errFn) {
-        if (!this.roomInfo.imGroupid) {
-            msgBox.showTip('直播尚未开始,请稍后重试');
-            return;
-        }
-        YYTIMServer.sendMessage({
-            groupId: this.roomInfo.imGroupid,
-            msg: {
-                roomId: this.roomInfo.id,
-                smallAvatar: notifyInfo.smallAvatar || '',
-                mstType: notifyInfo.smallAvatar,
-                content: notifyInfo.smallAvatar
-            }
-        }, function (res) {
-            okFn && okFn(res);
-        }, function (err) {
-            errFn && errFn(err);
-        });
-    },
+    //sendNotifyToIM: function (notifyInfo, okFn, errFn) {
+    //    if (!this.roomInfo.imGroupid) {
+    //        msgBox.showTip('直播尚未开始,请稍后重试');
+    //        return;
+    //    }
+    //    YYTIMServer.sendMessage({
+    //        groupId: this.roomInfo.imGroupid,
+    //        msg: {
+    //            roomId: this.roomInfo.id,
+    //            smallAvatar: notifyInfo.smallAvatar || '',
+    //            msgType: notifyInfo.smallAvatar,
+    //            content: notifyInfo.smallAvatar
+    //        }
+    //    }, function (res) {
+    //        okFn && okFn(res);
+    //    }, function (err) {
+    //        errFn && errFn(err);
+    //    });
+    //},
 
     checkUserCanJoinRoom: function () {
         YYTIMServer.getGroupInfo(this.roomInfo.imGroupid, function (res) {

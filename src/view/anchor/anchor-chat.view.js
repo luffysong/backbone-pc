@@ -67,7 +67,7 @@ var View = BaseView.extend({
                     roomId: self.roomInfo.id,
                     nickName: '主播',
                     smallAvatar: '',
-                    mstType: 4,
+                    msgType: 4,
                     content: '主播已清屏'
                 };
                 self.flashAPI.onReady(function() {
@@ -194,7 +194,7 @@ var View = BaseView.extend({
             groupId: self.roomInfo.imGroupid,
             msg: {
                 roomId: self.roomInfo.id,
-                mstType: 5,
+                msgType: 5,
                 userId: user.id
             }
         }, function(resp) {
@@ -204,7 +204,7 @@ var View = BaseView.extend({
                     roomId: self.roomInfo.id,
                     userId: user.id,
                     nickName: user.name,
-                    mstType: 5
+                    msgType: 5
                 });
             });
         }, function(err) {
@@ -266,7 +266,7 @@ var View = BaseView.extend({
             }
             msgObj.fromAccount = notifyInfo.fromAccount;
 
-            switch (msgObj.mstType) {
+            switch (msgObj.msgType) {
                 case 0: //文本消息
                     self.addMessage(msgObj);
                     break;
@@ -323,7 +323,7 @@ var View = BaseView.extend({
             var tpl = _.template(this.getMessageTpl());
             this.msgList.append(tpl(msgObj));
             this.chatHistory.scrollTop(this.msgList.height());
-            //if (msgObj.mstType == 0) {
+            //if (msgObj.msgType == 0) {
                 this.flashAPI.onReady(function() {
                     this.notifying(msgObj);
                 });

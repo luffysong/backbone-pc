@@ -1,11 +1,11 @@
-<li class="clearfix <%=mstType==0?'':'system-info'%>" data-msgType="<%=mstType%>" data-name="<%=nickName%>" data-id="<%=fromAccount%>">
-  <%if(mstType == 0){%>
+<li class="clearfix <%=msgType==0?'':'system-info'%>" data-msgType="<%=msgType%>" data-name="<%=nickName%>" data-id="<%=fromAccount%>">
+  <%if(msgType == 0){%>
   <img onerror="this.src='../img/visitor_avator.jpg'" src="<%=smallAvatar%>" alt="" class="fl visitor_avator">
   <%}%>
   <p class="visitor_chat fl">
-    <%if(mstType == 0){%>
+    <%if(msgType == 0){%>
     <span class="visitorName"><%=nickName%>:</span>
-    <%} else if(mstType == 4){%>
+    <%} else if(msgType == 4){%>
         <span class="visitorName">主播:</span>
     <%} else{%>
         <span class="visitorName">消息:</span>

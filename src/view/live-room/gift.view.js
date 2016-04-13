@@ -184,7 +184,7 @@ var View = BaseView.extend({
             this.notSend = true;
 
             Backbone.trigger('event:visitorSendGift', {
-                mstType: 1,
+                msgType: 1,
                 giftId: data.giftId,
                 giftNum: 1
             });
@@ -266,7 +266,7 @@ var View = BaseView.extend({
             nickName: user.$get('userName'),
             smallAvatar: user.$get('bigheadImg'),
             roomId: self.roomInfo.id || '',
-            mstType: 3
+            msgType: 3
         });
         self.pushPopularity(1);
         //msgBox.showOK('赞一下');
