@@ -27,11 +27,13 @@ var View = BaseView.extend({
         'click #btnChooseColor': 'showColorPanel',
         'click #colorList': 'chooseColor',
         'click #btnSendMsg': 'sendMsgClick',
-        'keyup #txtMessage': 'textMsgChanged'
+        'keypress #txtMessage': 'textMsgChanged'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
         this.elements = {};
+        this.speekPeriod = 5 * 1000;
+        this.canSendNow = true;
 
     },
     //当模板挂载到元素之后
@@ -85,12 +87,18 @@ var View = BaseView.extend({
         this.elements.txtMessage.css('color', color || '#999999');
     },
     sendMsgClick: function () {
+        var self = this;
         if (this.elements.txtMessage.val() < 1) {
             return ''
         }
+        if (!this.canSendNow) {
+            msgBox.showTip('请发言不要太频繁!');
+            return null;
+        }
+        this.canSendNow = false;
         this.sendMessageToChat({
             mstType: 0,
-            content: this.elements.txtMessage.val(),
+            content: $.trim(this.elements.txtMessage.val()),
             nickName: user.$get('userName'),
             style: {
                 fontColor: this.elements.btnChooseColor.attr('data-color') || '#999999'
@@ -99,6 +107,9 @@ var View = BaseView.extend({
             roomId: this.roomInfo.id
         });
         this.elements.txtMessage.val('');
+        setTimeout(function () {
+            self.canSendNow = true;
+        }, self.speekPeriod);
     },
     sendMessageToChat: function (msg) {
         if (!this.roomInfo || this.roomInfo.status != 2) {
@@ -111,8 +122,9 @@ var View = BaseView.extend({
     textMsgChanged: function (e) {
         if (e && e.keyCode == 13) {
             this.sendMsgClick();
+            return false;
         }
-        var len = this.elements.txtMessage.val().length;
+        var len = $.trim(this.elements.txtMessage.val().length);
         this.elements.limitTip.text(20 - len);
         if (len >= 20) {
             return false;

@@ -54,6 +54,7 @@ var View = BaseView.extend({
 
         this.isNeedPopup = true;
         this.elements = {};
+        this.sendGiftPeriod = 5 * 1000;
     },
     //当模板挂载到元素之后
     afterMount: function () {
@@ -170,16 +171,27 @@ var View = BaseView.extend({
     },
 
     sendGift: function (data) {
+        var self = this;
         if (UserInfo.isDisbaleTalk(user.$get().userId, this.roomInfo.id)) {
             msgBox.showTip('您已经被禁言,不能发弹幕哦');
         } else if (UserInfo.isLockScreen(this.roomInfo.id)) {
             msgBox.showTip('主播锁屏中,不能发弹幕哦');
         } else {
+
+            if (this.notSend) {
+                return null;
+            }
+            this.notSend = true;
+
             Backbone.trigger('event:visitorSendGift', {
                 mstType: 1,
                 giftId: data.giftId,
                 giftNum: 1
             });
+
+            setTimeout(function () {
+                self.notSend = false;
+            }, self.sendGiftPeriod);
             //msgBox.showOK('您向主播送出一个' + data.name);
         }
     },
