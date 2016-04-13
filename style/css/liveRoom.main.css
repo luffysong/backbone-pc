@@ -1170,13 +1170,8 @@ img {
   width: 345px;
   height: 195px;
   display: inline-block;
+  overflow: hidden;
   position: relative;
-}
-.live-room-wrap .recent-list-wrap .list .item .img-wrap img {
-  width: 345px;
-  max-width: 345px;
-  height: 195px;
-  max-height: 195px;
 }
 .live-room-wrap .recent-list-wrap .list .item .img-wrap:hover .hover-wrap {
   display: inline-block;
