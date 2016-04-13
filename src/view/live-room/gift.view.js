@@ -276,8 +276,15 @@ var View = BaseView.extend({
 
     },
     shareClick: function () {
-        var title = this.roomInfo.roomName + ',快来围观吧', url = window.location.href,
+        var title = encodeURIComponent(this.roomInfo.roomName + ',快来围观吧'),
+            url = 'http://' + window.location.host,
             img = this.roomInfo.posterPic;
+
+        if (this.roomInfo.status == 2) {
+            url = encodeURIComponent(url + '/web/liveRoom.html?roomId=' + this.roomInfo.id);
+        } else {
+            url = encodeURIComponent(url + '/web/playback.html?roomId=' + this.roomInfo.id);
+        }
         //msgBox.showOK('分享一下');
         var html = '<span class="share-wrap">' +
             '<a href="http://i.yinyuetai.com/share?title=' + title + '&amp;url=' + url + '&amp;cover=' + img + '?t=20160405161857" title="分享到音悦台我的家" class="myhome J_sharelink"></a> ' +
