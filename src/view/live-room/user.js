@@ -47,7 +47,11 @@ module.exports = {
         if (!list) {
             return false;
         } else {
-            list = JSON.parse(list);
+            try{
+                list = JSON.parse(list);
+            }catch (e){
+                list = [];
+            }
         }
         var res = _.find(list, function (item) {
             return item.roomId == roomId && item.userId == userId;
@@ -72,7 +76,11 @@ module.exports = {
         if (!list) {
             return false;
         } else {
-            list = JSON.parse(list);
+            try{
+                list = JSON.parse(list);
+            }catch(e){
+                list = [];
+            }
         }
         var res = _.find(list, function (item) {
             return item.roomId == roomId;
@@ -81,10 +89,17 @@ module.exports = {
     },
     setDisableTalk: function (userid, roomid, time) {
         var list = Storage.get('userDisableTalkTime');
+        if(_.isNumber(list)){
+            list = [];
+        }
         if (!list) {
             list = []
         } else {
-            list = JSON.parse(list);
+            try{
+                list = JSON.parse(list);
+            }catch(e){
+                list = [];
+            }
         }
         var res = _.find(list, function (item) {
             return item.roomId == roomId && item.userId == userid;
@@ -106,7 +121,11 @@ module.exports = {
         if (!list) {
             list = []
         } else {
-            list = JSON.parse(list);
+            try{
+                list = JSON.parse(list);
+            }catch(e){
+                list = [];
+            }
         }
         var res = _.find(list, function (item) {
             return item.roomId == roomId;
