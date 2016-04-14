@@ -41,7 +41,7 @@ var View = BaseView.extend({
 
         this.playedListParams = {
             deviceinfo: '{"aid":"30001001"}',
-            access_token: 'web-' + user.getToken(),
+            access_token: user.getWebToken(),
             anchor: '',
             order: 'time',
             offset: 0,
