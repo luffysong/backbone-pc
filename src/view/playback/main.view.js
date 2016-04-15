@@ -62,7 +62,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之后
     afterMount: function () {
-
+        this.roomBg = $('#anchorContainerBg');
 
     },
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -78,52 +78,11 @@ var View = BaseView.extend({
     },
     defineEventInterface: function () {
         var self = this;
-        //Backbone.on('event:UserKickOut', function (notifyInfo) {
-        //    self.checkUserIsKickout(notifyInfo);
-        //});
-    },
-    fetchUserIMSig: function (groupId) {
-        var self = this;
-        imModel.fetchIMUserSig(function (sig) {
-            self.userIMSig = sig;
-            self.initWebIM();
-            var goBack = function () {
-                window.history.go(-1);
-            };
-            YYTIMServer.applyJoinGroup(groupId, function (res) {
-                //self.renderPage();
-                Backbone.trigger('event:roomInfoReady', self.roomInfo);
-                if (self.roomInfo.status == 2) {
-                    self.loopRoomInfo();
-                }
-            }, function (res) {
-                if (res.ErrorCode == 10013) {
-                    //self.renderPage();
-                    Backbone.trigger('event:roomInfoReady', self.roomInfo);
-                    //if (self.roomInfo.status == 2) {
-                    //    self.loopRoomInfo();
-                    //}
-                } else {
-                    uiConfirm.show({
-                        title: '进入房间',
-                        content: '进入房间失败,请稍后重试',
-                        cancelFn: goBack,
-                        okFn: goBack
-                    });
 
-                }
-            });
-        });
     },
     renderPage: function () {
         var RoomTitle = require('../live-room/room-title.view');
         new RoomTitle();
-
-        //var ChatView = require('../live-room/chat.view');
-        //new ChatView();
-
-        //var SendMessageView = require('./send-message.view');
-        //new SendMessageView();
 
         var AnchorCardView = require('../live-room/anchor-card.view');
         new AnchorCardView();
@@ -194,6 +153,7 @@ var View = BaseView.extend({
                 };
                 self.roomInfo = data;
                 Backbone.trigger('event:roomInfoReady', self.roomInfo);
+                self.setRoomBgImg();
                 self.flashAPI.onReady(function () {
                     this.init(self.roomInfo);
                 });
@@ -244,61 +204,13 @@ var View = BaseView.extend({
                 break;
         }
     },
-    checkUserIsKickout: function (notifyInfo) {
-        var self = this;
-        var notify = null;
-        try {
-            if (_.isString(notifyInfo)) {
-                notify = JSON.parse(notifyInfo);
-            } else {
-                notify = notifyInfo;
-            }
-        } catch (e) {
-        }
-        if (notify) {
-            var result = _.find(notify.forbidUsers, function (item) {
-                return item.replace('$0', '') == self.userIMSig.userId;
-            });
-            if (result) {
-                UserInfo.setKickout(self.roomId, true);
-
-                uiConfirm.show({
-                    title: '禁止进入',
-                    content: '您已经被主播踢出房间,肿么又回来了!',
-                    okFn: function () {
-                        self.goBack();
-                    },
-                    cancelFn: function () {
-                        self.goBack();
-                    }
-                });
-            }
-        }
-    },
     goBack: function () {
         window.history.go(-1);
     },
-    loopRoomInfo: function () {
-        var self = this;
-
-        self.roomInfoTimeId = setTimeout(function () {
-            self.roomDetailParams.roomId = self.roomId;
-            //self.getRoomInfo(function (res) {
-            self.getRoomLoopInfo(function (res) {
-                var data = res.data;
-                Backbone.trigger('event:updateRoomInfo', data);
-                self.loopRoomInfo();
-            });
-        }, self.roomInfoPeriod);
-    },
-    getRoomLoopInfo: function (okFn, errFn) {
-        var self = this;
-        self.roomDetailParams.roomId = self.roomId;
-        this.roomLongPolling.executeJSONP(self.roomDetailParams, function (response) {
-            okFn && okFn(response);
-        }, function (err) {
-            errFn && errFn(err);
-        });
+    setRoomBgImg: function () {
+        if (this.roomInfo && this.roomInfo.imageUrl) {
+            this.roomBg.css('background', 'url(' + this.roomInfo.imageUrl + ')');
+        }
 
     }
 

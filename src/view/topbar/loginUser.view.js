@@ -68,6 +68,7 @@ var View = BaseView.extend({
             this._dialog.trigger('show');
             this._dialog.once('hide', function () {
                 if (user.isLogined()) {
+                    store.remove('imSig');
                     self.fetchUserInfo();
                     self.trigger('topbar-logined');
                 };
