@@ -301,7 +301,7 @@ var View = BaseView.extend({
         self.autoDeleteMsgList();
     },
     filterEmoji: function (content) {
-        var reg = /[\u4e00-\u9fa5\w\d@\.\-\,\+，。（）。!^+#【】！~“：《》？<>]/g;
+        var reg = /[\u4e00-\u9fa5\w\d\@\.\-\,\+\?，。（）!#【】！~“：《》？<>]/g;
         if (content) {
             var result = content.match(reg) || [];
             if (result.length > 0) {
