@@ -45,7 +45,7 @@ var View = BaseView.extend({
             anchor: '',
             order: 'time',
             offset: 0,
-            size: 3
+            size: 9
         };
 
     },

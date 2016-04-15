@@ -125,7 +125,8 @@ var View = BaseView.extend({
                 self.userIMSig = sig;
                 self.initWebIM();
                 var goBack = function () {
-                    window.history.go(-1);
+                    //window.history.go(-1);
+                    window.location.href = '/';
                 };
                 YYTIMServer.applyJoinGroup(groupId, function (res) {
                     //self.renderPage();
