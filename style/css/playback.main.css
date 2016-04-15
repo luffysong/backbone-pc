@@ -1261,7 +1261,6 @@ img {
 }
 .live-room-wrap .recent-list-wrap .jcarousel img {
   display: block;
-  max-width: 100%;
   height: auto !important;
 }
 .live-room-wrap .recent-list-wrap .jcarousel-control-prev,

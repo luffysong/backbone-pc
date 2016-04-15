@@ -94,10 +94,11 @@ var View = BaseView.extend({
             if (result == 1) {
                 msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
                 return null;
-            } else if (result == -1) {
-                msgBox.showTip('您最多提前5分钟开启直播,请耐心等候');
-                return null;
             }
+            //else if (result == -1) {
+            //    msgBox.showTip('您最多提前5分钟开启直播,请耐心等候');
+            //    return null;
+            //}
         }
         if (current.hasClass('m_disabled')) {
             return null;
@@ -147,6 +148,7 @@ var View = BaseView.extend({
                 self.startFlash();
                 Backbone.trigger('event:LiveShowStarted');
             } else {
+                self.btnStartLive.removeClass('m_disabled');
                 msgBox.showError(result.msg || '开启直播失败,请稍后重试');
             }
         }, function (err) {
@@ -218,9 +220,9 @@ var View = BaseView.extend({
     },
     changeButtonStatus: function (status) {
         var result = this.isTooLate(this.roomInfo.liveTime);
-        if (result === -1 || result === 1) {
+        //if (result === -1 || result === 1) {
+        if (result === 1) {
             this.btnStartLive.addClass('m_disabled');
-
             Backbone.trigger('event:stopLoopRoomInfo');
         } else if (result === 0) {
             this.btnStartLive.removeClass('m_disabled');

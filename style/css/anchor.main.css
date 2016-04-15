@@ -1002,7 +1002,7 @@ img {
 }
 #set_Anchor_info .BroadcastRoom {
   height: 502px;
-  background: #abbdbd;
+  background: #000;
   position: relative;
 }
 #set_Anchor_info .bulletScreen {

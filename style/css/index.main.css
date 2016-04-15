@@ -1416,9 +1416,6 @@ img {
   top: 0px;
   overflow: hidden;
 }
-.list-set-container .list-box-content .box-content .box-top img.box-top-img {
-  width: 100%;
-}
 .list-set-container .list-box-content .box-content .box-top .box-state {
   width: 65px;
   height: 65px;
