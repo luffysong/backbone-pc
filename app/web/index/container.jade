@@ -1,6 +1,18 @@
-//
-   Created by xiangwenwen on 16/4/12.
-
-#indexContainer.container
-    h1 Hello World
-    #imgContainer
+div.index-container
+    #topContainer.top-container(style="background:url(./images/index/livevideo-index.jpg)")
+    div.list-container
+        div.list-set-container
+            div
+                div.list-title
+                    h1="热门直播"
+                    div.list-tag
+                        span.live-in="LIVE IN"
+                div.list-box-content
+                    ul#livePreview
+            div
+                div.list-title
+                    h1="精彩回放"
+                    div.list-tag
+                        span.live-in="HOT PLAYBACK"
+                div.list-box-content
+                    ul#playbackVideo
