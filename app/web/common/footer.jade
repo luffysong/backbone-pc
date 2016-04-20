@@ -1,4 +1,14 @@
-//
-   Created by xiangwenwen on 16/4/12.
-
-#footer.footer-container
+- var complie = htmlWebpackPlugin.options.complieConfig
+- var links = complie.footerLinks
+- var copyInfo = 'Copyright © 2009 - 2014 yinyuetai.com 广播电视节目制作经营 许可证编号(京)字第1891号 |'
+- copyInfo += '<a href="#">京网文[2014]2037-287号</a> |'
+- copyInfo += '<a href="#">网络视听许可证0110413号</a><br>'
+- copyInfo += '<img src="./images/ghs.png" alt="" class="ghs">'
+- copyInfo += '<a href="#">京公网安备11010502014900号</a>|'
+- copyInfo += '京ICP证060716号 |京ICP备11024134号-1 | 出版物经营许可证 新出发京零字第朝130062号 | 增值电信业务经营许可证B2-20140501'
+- copyInfo += '<img src="./images/biaoshi.gif" alt="" class="biaoshi">'
+#bottom
+    p.link
+        each obj in links
+            a(href=obj.href)=obj.value
+    div.copyright!=copyInfo
