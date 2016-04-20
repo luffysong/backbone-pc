@@ -1,13 +1,11 @@
 $mainColor: #27d5bf;
 $baseBackground: #fff;
-.index-center
 
-(
-$center: 1200px)
-{
+@mixin index-center($center: 1200px) {
   width: $center;
   margin: 0 auto;
 }
+
 :root .hover-wrap {
   filter: none;
 }
@@ -25,8 +23,7 @@ $center: 1200px)
 }
 
 .top-content {
-  .index-center
-(1014 px);
+  @include index-center(1014px);
   .top-title {
     width: 100%;
     height: 75px;
@@ -60,8 +57,6 @@ $center: 1200px)
       top: 10px;
       color: #fff;
       background-color: $mainColor;
-      .Hand
-    ;
     }
   }
 }
@@ -72,8 +67,7 @@ $center: 1200px)
 }
 
 .list-set-container {
-  .index-center
-;
+  @include index-center();
   .list-title {
     height: 95px;
     h1 {
@@ -118,11 +112,10 @@ $center: 1200px)
       height: 285px;
       .box-cover-hover {
         width: 386px;
-        height: 217px;
         position: absolute;
         height: $box-top-height;
         z-index: 100;
-        background-image: url('../../images/index/index-icepy-4.png');
+        background-image: url('../images/index/index-icepy-4.png');
         background-repeat: no-repeat;
         .box-popularity {
           height: 28px;
@@ -143,7 +136,7 @@ $center: 1200px)
         .box-click {
           width: 52px;
           height: 52px;
-          background-image: url('../../images/index/index-icepy-5.png');
+          background-image: url('../images/index/index-icepy-5.png');
           background-repeat: no-repeat;
           position: absolute;
           margin-top: -26px;
@@ -154,7 +147,7 @@ $center: 1200px)
         .box-show-trailer {
           width: 52px;
           height: 52px;
-          background-image: url('../../images/index/index-icepy-7.png');
+          background-image: url('../images/index/index-icepy-7.png');
           background-repeat: no-repeat;
           position: absolute;
           margin-top: -26px;
@@ -190,7 +183,7 @@ $center: 1200px)
               width: 18px;
               height: 18px;
               display: inline-block;
-              background-image: url('../../images/index/index-icepy-8.png');
+              background-image: url('../images/index/index-icepy-8.png');
               background-repeat: no-repeat;
             }
           }
@@ -204,7 +197,7 @@ $center: 1200px)
               width: 18px;
               height: 18px;
               display: inline-block;
-              background-image: url('../../images/index/index-icepy-9.png');
+              background-image: url('../images/index/index-icepy-9.png');
               background-repeat: no-repeat;
             }
           }
@@ -233,15 +226,15 @@ $center: 1200px)
           left: 0px;
         }
         .box-live-direct {
-          background-image: url('../../images/index/index-icepy-1.png');
+          background-image: url('../images/index/index-icepy-1.png');
           background-repeat: no-repeat;
         }
         .box-live-trailer {
-          background-image: url('../../images/index/index-icepy-3.png');
+          background-image: url('../images/index/index-icepy-3.png');
           background-repeat: no-repeat;
         }
         .box-foreshow {
-          background-image: url('../../images/index/index-icepy-3.png');
+          background-image: url('../images/index/index-icepy-3.png');
           background-repeat: no-repeat;
         }
       }
@@ -269,7 +262,7 @@ $center: 1200px)
             padding-right: 11px;
             color: #fff;
             font-size: 15px;
-            background: url('../../images/index/index-icepy-6.png') no-repeat;
+            background: url('../images/index/index-icepy-6.png') no-repeat;
           }
         }
       }
