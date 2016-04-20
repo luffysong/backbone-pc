@@ -1,0 +1,49 @@
+$a-hover : #690;
+.bottom{
+  height: 226px;
+  background: #181818;
+  text-align: center;
+  .link {
+    padding-top: 87px;
+    width: 946px;
+    margin:0 auto;
+    padding-bottom: 23px;
+    a{
+      color:#a3a3a3;
+      font-size: 13px;
+      display: inline-block;
+      padding:0 13px;
+      border-right: 1px dashed #a3a3a3;
+    }
+    a.last{
+      border-right: 0 none;
+    }
+  }
+  .copyright{
+    text-align: center;
+    width: 926px;
+    margin:0 auto;
+    line-height: 24px;
+    color:#757575;
+    font-size: 12px;
+    position: relative;
+    padding-right: 20px;
+    a{
+      color:#757575;
+      font-size: 12px;
+    }
+    img{
+      position: absolute;
+    }
+  }
+  a:hover{
+    color:$a-hover;
+  }
+  .biaoshi{
+    right: 0;
+    bottom: 0;
+  }
+  .ghs{
+    left: 0;
+  }
+}
