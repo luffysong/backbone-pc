@@ -34,3 +34,5 @@ node_modules
 www/
 app/link/**
 .idea
+.idea/
+
