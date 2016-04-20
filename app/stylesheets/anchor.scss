@@ -1,0 +1,10 @@
+@import 'common/topBar';
+@import 'common/base';
+@import 'common/footer';
+@import "anchor/main";
+//确认框
+@import "anchor/confirm";
+@import "anchor/dialog.less";
+//弹出框
+@import 'common/uploadFileDialog';
+
