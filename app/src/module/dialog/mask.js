@@ -11,7 +11,8 @@
 
 'use strict';
 
-var BaseView = require('BaseView'); //  View的基类
+var base = require('base-extend-backbone');
+var BaseView = base.View; //  View的基类
 var doc = $(document);
 var isIE6 = navigator.userAgent.indexOf('MSIE 6.0') !== -1;
 var style = {

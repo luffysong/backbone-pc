@@ -10,8 +10,8 @@
  */
 
 'use strict';
-
-var BaseView = require('BaseView'); // View的基类
+var base = require('base-extend-backbone');
+var BaseView = base.View; // View的基类
 var Mask = require('./mask.js');
 var mask;
 var uid = 999;

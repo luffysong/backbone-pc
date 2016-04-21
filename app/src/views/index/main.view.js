@@ -2,7 +2,9 @@
 
 var base = require('base-extend-backbone');
 var BaseView = base.View;
-
+// var RecommendView = require('./recommended.view');
+var LivePreView = require('./livePre.view');
+// var PlaybackView = require('./playback.view');
 var View = BaseView.extend({
   el: '#indexContent',
   rawLoader: function () {
@@ -22,7 +24,9 @@ var View = BaseView.extend({
 
   },
   ready: function () {
-
+    // this.recommendview = new RecommendView();
+    this.livepre = new LivePreView();
+    // this.playback = new PlaybackView();
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null

@@ -2,10 +2,10 @@
 
 var base = require('base-extend-backbone');
 var BaseView = base.View;
-var livePreviewTemp = require('./template/index/live-pre.html');
+var livePreviewTemp = require('./template/live-pre.html');
 var LivePreviewModel = require('../../models/index/live-pre.model');
 var PushLarityModel = require('../../models/index/push-larity.model');
-var UserInfoModel = require('../../models/anchor/anchor-info.model');
+// var UserInfoModel = require('../../models/anchor/anchor-info.model');
 var MsgBox = require('ui.MsgBox');
 var UserModel = require('UserModel');
 var uiConfirm = require('ui.Confirm');
@@ -51,7 +51,7 @@ var View = BaseView.extend({
     var self = this;
     this.liveModel = new LivePreviewModel();
     this.pushModel = new PushLarityModel();
-    this.userInfo = new UserInfoModel();
+    // this.userInfo = new UserInfoModel();
     this.topbar = options.topbar;
     promise = this.liveModel.executeJSONP(this.livePreviewParameter);
     promise.done(function (response) {
