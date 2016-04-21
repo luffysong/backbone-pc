@@ -55,21 +55,18 @@ var UserModel = BaseModel.extend({
    * @param  {[type]}   onCancel [description]
    * @return {[type]}            [description]
    */
-  login: function (callback, onCancel) {
-    var _this = this;
+  login: function () {
+    var defer = $.Deferred();
     if (this.isLogined()) {
       //  已经登录
-      callback.call(this);
+      defer.resolve();
     } else {
-      this.on('login', callback);
       loginbox.trigger('show');
       loginbox.once('hide', function () {
-        _this.off('login');
-        if (onCancel) {
-          onCancel();
-        }
+        defer.resolve();
       });
     }
+    return defer.promise();
   },
   /**
    * [getUserInfo 获取用户信息]

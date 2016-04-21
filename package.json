@@ -45,7 +45,7 @@
     "jade": "^1.11.0",
     "jade-loader": "^0.8.0",
     "mocha": "^2.4.5",
-    "node-sass": "^3.4.2",
+    "node-sass": "^3.5.1",
     "raw-loader": "^0.5.1",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",

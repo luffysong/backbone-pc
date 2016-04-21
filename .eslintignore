@@ -15,3 +15,4 @@ bin/**
 test/
 app/src/module/crypto/
 tools.js
+gulpfile.js

@@ -5,11 +5,14 @@
  */
 
 'use strict';
+
+var $ = require('jquery');
 var base = require('base-extend-backbone');
 var BaseModel = base.Model;
 var storage = base.storage;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+
 var Model = BaseModel.extend({
   url: '{{url_prefix}}/user/sig_get.json',
   beforeEmit: function () {
@@ -44,17 +47,18 @@ var Model = BaseModel.extend({
    * @param  {[type]}   error    [description]
    * @return {[type]}            [description]
    */
-  fetchIMUserSig: function (callback, error) {
+  fetchIMUserSig: function () {
       //  先获取本地签名
+    var defer = $.Deferred();
     var token;
     var imSig;
     imSig = storage.get('imSig');
     if (imSig) {
       if (typeof callback === 'function') {
         this.$set({ data: imSig });
-        callback(imSig);
+        defer.resolve(imSig);
       }
-      return;
+      return defer.promise();
     }
     token = user.getToken();
     if (token) {
@@ -63,17 +67,15 @@ var Model = BaseModel.extend({
     this.executeJSONP(this.imData, function (response) {
       var data = response.data;
       storage.set('imSig', data);
-      if (typeof callback === 'function') {
-        callback(data);
-      }
+      defer.resolve(data);
     }, function (e) {
-      if (typeof error === 'function') {
-        error(e);
-      }
+      defer.reject(e);
     });
+    return defer.promise();
   },
   //  更新缓存
-  updateIMUserSig: function (okFn, errFn) {
+  updateIMUserSig: function () {
+    var defer = $.Deferred();
     var token;
     storage.remove('imSig');
     token = user.getToken();
@@ -83,13 +85,9 @@ var Model = BaseModel.extend({
     this.executeJSONP(function (response) {
       var data = response.data;
       storage.set('imSig', data);
-      if (okFn) {
-        okFn(data);
-      }
+      defer.resolve(data);
     }, function (err) {
-      if (errFn) {
-        errFn(err);
-      }
+      defer.reject(err);
     });
   }
 });

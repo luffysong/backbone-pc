@@ -1,7 +1,12 @@
 {
 	"extends": "airbnb/legacy",
 	"rules": {
-    "semi": 2
+    "semi": 2,
+    "new-cap": [2, {
+      "capIsNewExceptions": [
+        "Deferred"
+      ]
+    }]
   },
   "env":{
   	"jquery":true,
