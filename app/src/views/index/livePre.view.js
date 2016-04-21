@@ -16,8 +16,7 @@ var View = BaseView.extend({
   events: {
     'click .box-praise': 'pushLiveVideo'
   },
-  context: function (args) {
-    console.log(args);
+  context: function () {
   },
   beforeMount: function () {
     //  初始化一些自定义属性
@@ -48,20 +47,23 @@ var View = BaseView.extend({
   },
   ready: function (options) {
     //  初始化
+    var promise;
     var self = this;
     this.liveModel = new LivePreviewModel();
     this.pushModel = new PushLarityModel();
     this.userInfo = new UserInfoModel();
     this.topbar = options.topbar;
-    this.liveModel.executeJSONP(this.livePreviewParameter, function (response) {
+    promise = this.liveModel.executeJSONP(this.livePreviewParameter);
+    promise.done(function (response) {
       var code = ~~response.code;
       if (code) {
         MsgBox.showError(response.msg);
       } else {
         self.livePreRender(response.data);
       }
-    }, function (e) {
-      if (e) {
+    });
+    promise.fail(function (xhr) {
+      if (xhr) {
         MsgBox.showError('获取数据错误');
       }
     });
@@ -98,16 +100,16 @@ var View = BaseView.extend({
   pushLiveVideo: function (e) {
     var self;
     var el;
-    var status;
+    var promise;
     if (user.isLogined()) {
       //  已经登录
       self = this;
       el = $(e.currentTarget);
       this.pushLarityParameter.roomId = el.attr('data-id');
-      status = el.attr('data-status');
       if (this.isNeedPopup) {
         this.userInfoParameter.access_token = 'web-' + user.getToken();
-        this.userInfo.executeJSONP(this.userInfoParameter, function (response) {
+        promise = this.userInfo.executeJSONP(this.userInfoParameter);
+        promise.done(function (response) {
           var code = parseInt(response.code, 10);
           if (code === 0) {
             self.totalMarks = response.data.totalMarks;
@@ -115,7 +117,8 @@ var View = BaseView.extend({
           } else {
             MsgBox.showError(response.msg || '操作失败,稍后重试');
           }
-        }, function () {
+        });
+        promise.fail(function () {
           MsgBox.showError('获取信息失败');
         });
       } else {
@@ -150,15 +153,17 @@ var View = BaseView.extend({
     });
   },
   executePushVideo: function () {
-    this.pushModel.executeJSONP(this.pushLarityParameter, function (response) {
+    var promise = this.pushModel.executeJSONP(this.pushLarityParameter);
+    promise.done(function (response) {
       var success = response.data.success;
       if (!success) {
         MsgBox.showError(response.data.message || '操作失败,请稍后重试');
       } else {
         MsgBox.showOK('感谢您的大力支持~');
       }
-    }, function (e) {
-      if (e) {
+    });
+    promise.fail(function (xhr) {
+      if (xhr) {
         MsgBox.showError('人气上推错误');
       }
     });
