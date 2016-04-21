@@ -222,8 +222,8 @@ $baseBackground: #fff;
           width: 65px;
           height: 65px;
           position: absolute;
-          top: 0px;
-          left: 0px;
+          top: 0;
+          left: 0;
         }
         .box-live-direct {
           background-image: url('../images/index/index-icepy-1.png');
@@ -268,4 +268,7 @@ $baseBackground: #fff;
       }
     }
   }
+}
+.test-class{
+  background-image: url(../images/index/index-icepy-2.png);
 }

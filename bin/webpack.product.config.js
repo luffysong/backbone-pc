@@ -19,7 +19,8 @@ var compile = require('./compile');
 rmdir('./app/www/');
 
 //  对complie配置文件进行处理
-compileConfig.cdn = compileConfig.cdn || 'http://127.0.0.1:3000/';
+//CDN配置
+//compileConfig.cdn = compileConfig.cdn || '';
 compileConfig = compile(compileConfig);
 
 //  配置入口文件
