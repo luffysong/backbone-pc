@@ -34,12 +34,6 @@ $a-hover: #690;
   width: 1200px;
   height: 100%;
   margin: 0 auto;
-  .log {
-    width: 97px;
-    margin-top: 24px;
-    height: 35px;
-    background: url('../images/logo.png') no-repeat center;
-  }
 
   .link-wrap {
     position: absolute;
@@ -54,9 +48,13 @@ $a-hover: #690;
       &:hover {
         color: #27d5bf;
       }
-
     }
-
+  }
+  .log {
+    width: 97px;
+    margin-top: 24px;
+    height: 35px;
+    background: url('../images/logo.png') no-repeat center;
   }
 
 }

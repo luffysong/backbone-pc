@@ -21,7 +21,7 @@ $a-hover : #690;
   }
   .copyright{
     text-align: center;
-    width: 926px;
+    width: 1000px;
     margin:0 auto;
     line-height: 24px;
     color:#757575;
@@ -40,10 +40,20 @@ $a-hover : #690;
     color:$a-hover;
   }
   .biaoshi{
-    right: 0;
-    bottom: 0;
+    //right: 0;
+    //bottom: 0;
+    margin-top: -25px;
+    background: url(../images/biaoshi.gif) no-repeat;
+    display: inline-block;
+    width: 40px;
+    height: 48px;
+    float: right;
   }
   .ghs{
-    left: 0;
+    margin-right:5px;
+    display: inline-block;
+    background: url(../images/ghs.png) no-repeat;
+    width: 20px;
+    height: 20px;
   }
 }

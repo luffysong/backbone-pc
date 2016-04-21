@@ -43,7 +43,6 @@ var View = BaseView.extend({
       this.fetchUserInfo();
     } else {
       //  未登录
-      console.log(sginHTML);
       this.$el.html(sginHTML);
     }
     this.hideDropMenu();
