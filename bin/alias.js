@@ -7,8 +7,11 @@ var containerPath = path.resolve('./');
 
 //	别名
 var alias = {
-  config:path.resolve(containerPath,'./app/src/module/config'),
-  tplEng:path.resolve(containerPath,'./app/link/artTemplate/dist/template')
+  config: path.resolve(containerPath,'./app/src/module/config'),
+  tplEng: path.resolve(containerPath,'./app/link/artTemplate/dist/template'),
+  UserModel: path.resolve(containerPath,'./app/src/module/UserModel/'),
+  TopbarView: path.resolve(containerPath,'./app/src/module/topbar/'),
+  IMModel: path.resolve(containerPath,'./app/src/module/IMModel/')
 };
 
 module.exports = alias;
