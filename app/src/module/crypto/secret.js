@@ -165,7 +165,8 @@ function yyt16(c, a) {
 }
 
 var chrsz = 8;
-var cookie = require('cookie');
+var Auxiliary = require('auxiliary-additions');
+var cookie =  Auxiliary.cookie;
 
 module.exports = function(p0) {
 	var t1, t2, p1, p2;

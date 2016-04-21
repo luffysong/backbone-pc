@@ -81,12 +81,12 @@ var UserModel = BaseModel.extend({
     var email;
     var getParam = function () {
       if (typeof key === 'function') {
-        return self.$get();
+        return self.get();
       }
-      return self.$get(key);
+      return self.get(key);
     };
     if (this.isLogined()) {
-      email = this.$get('isEmailVerified');
+      email = this.get('isEmailVerified');
       if (!callback) {
         // callback = key;
       }
@@ -139,7 +139,7 @@ var UserModel = BaseModel.extend({
         self.fetchVIPInfo(success, error);
       });
     } else {
-      vip = this.$get('vipInfo');
+      vip = this.get('vipInfo');
       if (vip) {
         if (vip && !vip.error && vip.realVip && ~~vip.realVip > 0) {
           success(vip);
@@ -194,7 +194,7 @@ var UserModel = BaseModel.extend({
     splitChar = String.fromCharCode(2);
     uinf = decodeURIComponent(uinfs);
     users = uinf.split(splitChar);
-    this.$set({
+    this.set({
       userId: ~~users[0],
       userName: users[1],
       bigheadImg: users[4]
@@ -208,7 +208,7 @@ var UserModel = BaseModel.extend({
   fetchUserInfo: function (callback) {
     var self = this;
     this.fetchUserInfoForDBModel.executeJSONP(function (response) {
-      self.$set(response);
+      self.set(response);
       if (typeof callback === 'function') {
         callback.call(self);
       }
@@ -257,7 +257,7 @@ var UserModel = BaseModel.extend({
    * @return {[type]} [description]
    */
   getUserId: function () {
-    return this.$get('userId');
+    return this.get('userId');
   }
 });
 

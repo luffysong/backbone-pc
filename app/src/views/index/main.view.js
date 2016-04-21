@@ -3,6 +3,7 @@
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 // var RecommendView = require('./recommended.view');
+var TopBarView = require('TopbarView');
 var LivePreView = require('./livePre.view');
 // var PlaybackView = require('./playback.view');
 var View = BaseView.extend({
@@ -18,6 +19,7 @@ var View = BaseView.extend({
     this.indexParameter = {
       id: 110
     };
+    this.topbarView = new TopBarView();
   },
   afterMount: function () {
     //  获取DOM Node
@@ -25,7 +27,9 @@ var View = BaseView.extend({
   },
   ready: function () {
     // this.recommendview = new RecommendView();
-    this.livepre = new LivePreView();
+    this.livepre = new LivePreView({
+      topbar: this.topbarView
+    });
     // this.playback = new PlaybackView();
   },
   beforeDestroy: function () {

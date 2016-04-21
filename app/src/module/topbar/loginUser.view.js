@@ -6,12 +6,12 @@ var BaseView = base.View;
 var storage = base.storage;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-// var LoginBox = require('LoginBox');
+var loginBox = require('LoginBox');
 var sginHTML = require('./template/sgin.html');
 var loginedTemp = require('./template/logined.html');
 var win = window;
 var location = win.location;
-var IMModel = require('../../lib/IMModel');
+var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 
 var View = BaseView.extend({
@@ -32,7 +32,7 @@ var View = BaseView.extend({
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
-    // this.loginBox = LoginBox();
+    this.loginBox = loginBox();
     this._dialog = this.loginBox.dialog;
     this.userDromMenu = this.findDOMNode('.pcNav');
   },
@@ -43,6 +43,7 @@ var View = BaseView.extend({
       this.fetchUserInfo();
     } else {
       //  未登录
+      console.log(sginHTML);
       this.$el.html(sginHTML);
     }
     this.hideDropMenu();
@@ -55,10 +56,10 @@ var View = BaseView.extend({
     //  销毁之后
   },
   /**
-  * [loginHandler 处理登录按钮]
-  * @param  {[type]} e [description]
-  * @return {[type]}   [description]
-  */
+   * [loginHandler 处理登录按钮]
+   * @param  {[type]} e [description]
+   * @return {[type]}   [description]
+   */
   loginHandler: function (e) {
     var _this = this;
     var status = this._dialog.status();
@@ -77,10 +78,10 @@ var View = BaseView.extend({
     }
   },
   /**
-  * [logoutHandler 退出]
-  * @param  {[type]} e [description]
-  * @return {[type]}   [description]
-  */
+   * [logoutHandler 退出]
+   * @param  {[type]} e [description]
+   * @return {[type]}   [description]
+   */
   logoutHandler: function () {
     storage.remove('imSig');
     storage.set('signout', 1);

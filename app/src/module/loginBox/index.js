@@ -178,7 +178,7 @@ function compileHTML(tplStr, data) {
   return tplEng.compile(tplStr)(data);
 }
 
-module.exports = function () {
+function LoginBox() {
   var dialogHTML = compileHTML(loginBoxTemp, {
     url: 'http://login.yinyuetai.com'
   });
@@ -226,4 +226,7 @@ module.exports = function () {
   return {
     dialog: dialog
   };
-};
+}
+
+module.exports = LoginBox;
+
