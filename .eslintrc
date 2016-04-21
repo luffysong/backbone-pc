@@ -6,7 +6,8 @@
       "capIsNewExceptions": [
         "Deferred"
       ]
-    }]
+    }],
+    "func-names": 0
   },
   "env":{
   	"jquery":true,
