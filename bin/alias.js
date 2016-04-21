@@ -14,7 +14,8 @@ var alias = {
   TopbarView: path.resolve(containerPath,'./app/src/module/topbar/'),
   IMModel: path.resolve(containerPath,'./app/src/module/IMModel/'),
   pwdencrypt: path.resolve(containerPath, './app/src/module/crypto/pwdencrypt'),
-  'ui.Dialog': path.resolve(containerPath, './app/src/module/dialog')
+  'ui.Dialog': path.resolve(containerPath, './app/src/module/dialog'),
+  'ui.MsgBox': path.resolve(containerPath, './app/src/module/msgbox')
 };
 
 module.exports = alias;

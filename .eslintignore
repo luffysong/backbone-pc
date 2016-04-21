@@ -14,5 +14,6 @@ app/images/**
 bin/**
 test/
 app/src/module/crypto/
+app/src/module/msgBox/
 tools.js
 gulpfile.js
