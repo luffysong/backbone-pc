@@ -169,8 +169,7 @@ function loginSubmit(e) {
   e.preventDefault();
   ajaxForm.encrypto(secret.apply(window, _crytoP));
   if (isPassTest()) {
-    console.log(ajaxForm);
-    ajaxForm.setIframeState(true);
+    // ajaxForm.setIframeState(true);
     this.submit();
   }
 }
