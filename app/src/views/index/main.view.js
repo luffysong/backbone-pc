@@ -6,7 +6,7 @@ var BaseView = base.View;
 var View = BaseView.extend({
   el: '#indexContent',
   rawLoader: function () {
-    return indexTemp;
+    // return indexTemp;
   },
   context: function (args) {
     console.log(args);
