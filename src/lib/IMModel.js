@@ -70,6 +70,10 @@ var Model = BaseModel.extend({
             }
         });
     },
+    remove: function() {
+        store.remove('imSig');
+        store.set('signout', 1);
+    },
     //更新缓存
     updateIMUserSig: function (okFn, errFn) {
         store.remove('imSig');
@@ -77,7 +81,7 @@ var Model = BaseModel.extend({
         if (token) {
             this.setTokenUrl(token);
         }
-        this.executeJSONP(function (response) {
+        this.executeJSONP(this.imData, function (response) {
             var data = response.data;
             store.set('imSig', data);
             okFn && okFn(data);

@@ -51,7 +51,7 @@ var View = BaseView.extend({
 
     this.roomDetailParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       roomId: ''
     };
 
@@ -59,11 +59,11 @@ var View = BaseView.extend({
 
     this.anchorInfoParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken()
+      access_token: user.getWebToken()
     };
     this.inAndRoomParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken()
+      access_token: user.getWebToken()
     };
 
 
@@ -77,9 +77,10 @@ var View = BaseView.extend({
   ready: function () {
     this.defineEventInterface();
 
-    if (!user.isLogined()) {
-      store.remove('imSig');
-      store.set('signout', 1);
+    if (!user.isLogined() || imModel.$get('data.roleType') === 2) {
+      imModel.remove();
+      //store.remove('imSig');
+      //store.set('signout', 1);
       msgBox.showTip('请登录后观看直播!');
       window.location.href = '/web/login.html';
     }
@@ -241,11 +242,11 @@ var View = BaseView.extend({
           this.init(self.roomInfo);
         });
 
-        self.joinRoom();
         imModel.updateIMUserSig(function () {
+          self.joinRoom();
           self.fetchUserIMSig(data.imGroupid);
+          self.checkRoomStatus(data.status);
         });
-        self.checkRoomStatus(data.status);
 
       } else {
         errFn();

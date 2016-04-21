@@ -22,6 +22,8 @@ var uiConfirm = require('ui.Confirm');
 var store = require('store');
 var GiftModel = require('../../model/anchor/gift.model.js');
 var auth = require('../../lib/auth');
+var IMModel = require('../../lib/IMModel');
+var imModel = IMModel.sharedInstanceIMModel();
 
 var View = BaseView.extend({
     clientRender: false,
@@ -67,8 +69,11 @@ var View = BaseView.extend({
     //当事件监听器，内部实例初始化完成，模板挂载到文档之后
     ready: function () {
         var self = this;
+        //imModel.updateIMUserSig(function () {
+        //    console.log(111);
+            self.userVerify();
+        //});
 
-        this.userVerify();
 
         Backbone.on('event:stopLoopRoomInfo', function () {
             //clearTimeout(self.roomInfoTimeId);
@@ -117,11 +122,11 @@ var View = BaseView.extend({
         var self = this;
 
         if (user.isLogined()) {
-            self.initWebIM();
-
-            //self.initGiftList();
-
-            self.initRoom();
+            imModel.updateIMUserSig(function () {
+                self.initWebIM();
+                //self.initGiftList();
+                self.initRoom();
+            });
         } else {
             store.remove('imSig');
             store.set('signout', 1);
