@@ -13,4 +13,5 @@ app/www/**
 app/images/**
 bin/**
 test/
+app/src/module/crypto/
 tools.js
