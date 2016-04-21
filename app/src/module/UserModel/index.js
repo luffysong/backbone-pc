@@ -2,10 +2,11 @@
  * Created by YYT on 2016/4/20.
  */
 var base = require('base-extend-backbone');
+var Auxiliary = require('auxiliary-additions');
 var BaseModel = base.Model;
 var Dialog = require('ui.Dialog');
 // var LoginBox = require('LoginBox');
-var cookie = require('cookie');
+var cookie = Auxiliary.cookie;
 var Config = require('config');
 var domains = Config.domains;
 var checkEmailTemplate = require('./template/email.html');
