@@ -3,16 +3,16 @@
  */
 var base = require('base-extend-backbone');
 var Auxiliary = require('auxiliary-additions');
+var _ = require('underscore');
 var BaseModel = base.Model;
 var Dialog = require('ui.Dialog');
-// var LoginBox = require('LoginBox');
+var loginBox = require('loginBox');
 var cookie = Auxiliary.cookie;
 var Config = require('config');
 var domains = Config.domains;
 var checkEmailTemplate = require('./template/email.html');
 var checkEmailHTML = checkEmailTemplate.replace('{homeSite}', domains.homeSite);
-var _LoginBox = {};
-var loginbox = _LoginBox.dialog;
+var loginbox = loginBox().dialog;
 
 var CheckVIPModel = BaseModel.extend({
   url: 'http://vip.yinyuetai.com/vip/check-vip',
@@ -76,30 +76,32 @@ var UserModel = BaseModel.extend({
    * @return {[type]}            [description]
    */
   getUserInfo: function (key, callback) {
-    var self = this;
     var value;
     var email;
+    var self = this;
+    var _key = key;
+    var _callback = callback;
     var getParam = function () {
-      if (typeof key === 'function') {
+      if (_.isFunction(_key)) {
         return self.get();
       }
-      return self.get(key);
+      return self.get(_key);
     };
     if (this.isLogined()) {
       email = this.get('isEmailVerified');
-      if (!callback) {
-        // callback = key;
+      if (!_callback) {
+        _callback = _key;
       }
       if (email) {
-        if (typeof callback === 'function') {
+        if (_.isFunction(_callback)) {
           value = getParam();
-          callback.call(this, value);
+          _callback.call(this, value);
         }
       } else {
         this.fetchUserInfo(function () {
-          if (typeof callback === 'function') {
+          if (_.isFunction(_callback)) {
             value = getParam();
-            callback.call(self, value);
+            _callback.call(self, value);
           }
         });
       }
@@ -207,39 +209,39 @@ var UserModel = BaseModel.extend({
    */
   fetchUserInfo: function (callback) {
     var self = this;
-    this.fetchUserInfoForDBModel.executeJSONP(function (response) {
+    var promise = this.fetchUserInfoForDBModel.executeJSONP();
+    promise.done(function (response) {
       self.set(response);
-      if (typeof callback === 'function') {
+      if (_.isFunction(callback)) {
         callback.call(self);
       }
-    }, function (e) {
-      if (typeof callback === 'function') {
-        callback.call(self, e);
+    });
+    promise.fail(function () {
+      if (_.isFunction(callback)) {
+        callback.call(self.e);
       }
     });
   },
   /**
    * [fetchVIPInfo 获取vip信息]
-   * @param  {[type]} success [description]
-   * @param  {[type]} error   [description]
    * @return {[type]}         [description]
    */
-  fetchVIPInfo: function (success, error) {
+  fetchVIPInfo: function () {
     var self = this;
-    this.checkVIPModel.executeJSONP(function (result) {
+    var defer = $.Deferred();
+    var promise = this.checkVIPModel.executeJSONP();
+    promise.done(function (result) {
       if (result && !result.error) {
         if ((result.realVip && parseInt(result.realVip, 10) > 0) || result.isWo) {
           self.set('vipInfo', result);
-          if (typeof success === 'function') {
-            success.call(self, result);
-          }
+          defer.resolve.call(self, result);
         }
       }
-    }, function (e) {
-      if (typeof error === 'function') {
-        error.call(self, e);
-      }
     });
+    promise.fail(function (e) {
+      defer.reject.call(self, e);
+    });
+    return defer.promise();
   },
   /**
    * [getToken 获取token]

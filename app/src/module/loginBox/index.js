@@ -5,11 +5,11 @@
  */
 
 'use strict';
+
 var Auxiliary = require('auxiliary-additions');
 // Diglog类
 var Dialog = require('ui.Dialog');
 var AjaxForm = Auxiliary.AjaxForm;
-
 var url = Auxiliary.url;
 var pwdencrypt = require('pwdencrypt');
 var loginBoxTemp = require('./template/loginBox.html');
@@ -78,27 +78,21 @@ function _initForm() {
   _setFocusEffect(email);
   _setFocusEffect(password);
   user = UserModel.sharedInstanceUserModel();
-  ajaxForm = AjaxForm.classInstanceAjaxForm(loginBoxForm, {
-    success: function () {
-      var cw = this.contentWindow;
-      // var loc = cw.location;
-      var search = decodeURIComponent(cw.location.search);
-      var response = url.parseSearch(search);
-      response = response.json;
-      if (!response.error) {
-        if (response.platFormRef) {
-          location.href = 'http://login.yinyuetai.com/platform';
-        } else {
-          user.$set(response);
-          dialog.trigger('hide');
-        }
+  ajaxForm = AjaxForm.classInstanceAjaxForm(loginBoxForm);
+  ajaxForm.done(function (cw) {
+    var search = decodeURIComponent(cw.location.search);
+    var response = url.parseSearch(search);
+    response = response.json;
+    if (!response.error) {
+      if (response.platFormRef) {
+        location.href = 'http://login.yinyuetai.com/platform';
       } else {
-        errorinfo.text(response.message).css('visibility', 'visible');
-        refreshGeetest();
+        user.$set(response);
+        dialog.trigger('hide');
       }
-    },
-    failure: function () {
-
+    } else {
+      errorinfo.text(response.message).css('visibility', 'visible');
+      refreshGeetest();
     }
   });
 }
@@ -214,7 +208,6 @@ function LoginBox() {
           .parent()
           .removeClass('emailerror')
           .removeClass('error');
-
       // 去掉悦单播放页面中下载悦单的active效果
       $('.J_pop_download').removeClass('v_button_curv');
       setTimeout(function () {
@@ -229,4 +222,3 @@ function LoginBox() {
 }
 
 module.exports = LoginBox;
-
