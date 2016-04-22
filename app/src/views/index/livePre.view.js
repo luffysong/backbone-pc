@@ -10,6 +10,7 @@ var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var confirm = require('ui.confirm');
 var user = UserModel.sharedInstanceUserModel();
+var space = require('../../../images/index/space.png');
 
 var View = BaseView.extend({
   el: '#livePreview',
@@ -88,7 +89,8 @@ var View = BaseView.extend({
     while (le < u) {
       le++;
       items.push({
-        completion: 1
+        completion: 1,
+        imageUrl: space
       });
     }
     html = this.compileHTML(livePreviewTemp, { items: items });

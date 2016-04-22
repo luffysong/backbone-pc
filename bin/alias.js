@@ -21,7 +21,8 @@ var alias = {
   loginBox: path.resolve(containerPath, './app/src/module/loginBox/'),
   BusinessDate: path.resolve(containerPath, './app/src/module/BusinessDate'),
   UploadFileDialog: path.resolve(containerPath, './app/src/module/UploadFileDialog/'),
-  imServer: path.resolve(containerPath, './app/src/models/webIM/imServer')
+  imServer: path.resolve(containerPath, './app/src/models/webIM/imServer'),
+  FlashApi: path.resolve(containerPath, './app/src/module/FlashApi/')
 };
 
 module.exports = alias;
