@@ -12,12 +12,12 @@
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var imServer = require('IMServer');
-var uiConfirm = require('ui.Confirm');
-var DateTime = require('DateTime');
+var uiConfirm = require('ui.confirm');
+var BusinessDate = require('BusinessDate');
 var FlashAPI = require('FlashAPI');
 var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var GiftModel = require('../../models/anchor/gift.model');
-var msgBox = require('ui.MsgBox');
+var msgBox = require('ui.msgbox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var _ = require('underscore');
@@ -464,7 +464,7 @@ var View = BaseView.extend({
   // 转换时间格式
   getDateStr: function (dateInt) {
     var date = new Date(dateInt);
-    return DateTime.format(date, 'hh:mm:ss');
+    return BusinessDate.format(date, 'hh:mm:ss');
   },
   // 检查当前直播状态
   checkLiveRoomReady: function () {

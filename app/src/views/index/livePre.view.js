@@ -6,9 +6,9 @@ var livePreviewTemp = require('./template/live-pre.html');
 var LivePreviewModel = require('../../models/index/live-pre.model');
 var PushLarityModel = require('../../models/index/push-larity.model');
 // var UserInfoModel = require('../../models/anchor/anchor-info.model');
-var MsgBox = require('ui.MsgBox');
+var MsgBox = require('ui.msgbox');
 var UserModel = require('UserModel');
-var uiConfirm = require('ui.Confirm');
+var uiConfirm = require('ui.confirm');
 var user = UserModel.sharedInstanceUserModel();
 
 var View = BaseView.extend({

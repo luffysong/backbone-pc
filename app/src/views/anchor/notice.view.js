@@ -20,7 +20,7 @@ var imServer = require('imServer');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
-var msgBox = require('ui.MsgBox');
+var msgBox = require('ui.msgbox');
 
 var View = BaseView.extend({
   el: '#noticeWraper', // 设置View对象作用于的根元素，比如id

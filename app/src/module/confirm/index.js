@@ -4,7 +4,7 @@
  *
  * 使用
  *
- var  uiConfirm = require('ui.Confirm');
+ var  uiConfirm = require('ui.confirm');
  uiConfirm.show({
             title: '消息',
             content: '您确定要结束直播吗',

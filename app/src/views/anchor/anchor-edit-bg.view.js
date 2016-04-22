@@ -13,7 +13,7 @@ var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var EditBgModel = require('../../models/anchor/anchor-edit-bg.model');
 var UploadFileDialog = require('UploadFileDialog');
-var msgBox = require('ui.MsgBox');
+var msgBox = require('ui.msgbox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 

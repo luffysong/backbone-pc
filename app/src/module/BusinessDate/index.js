@@ -1,14 +1,5 @@
-/**
- *
- * @time 2016年2月27日
- * @author icepy
- * @info 完成date
- */
 
-'use strict';
-
-var shared = null;
-var DateTime = function (long) {
+var BusinessDate = function (long) {
   this.temp = new Date();
   this.setCurNewDate(long);
 };
@@ -17,7 +8,7 @@ var DateTime = function (long) {
  * @param  {[type]} value [description]
  * @return {[type]}       [description]
  */
-DateTime.prototype.changeYear = function (value) {
+BusinessDate.prototype.changeYear = function (value) {
   this.temp.setFullYear(value);
 };
 /**
@@ -25,7 +16,7 @@ DateTime.prototype.changeYear = function (value) {
  * @param  {[type]} value [description]
  * @return {[type]}       [description]
  */
-DateTime.prototype.getCountDays = function (value) {
+BusinessDate.prototype.getCountDays = function (value) {
   this.temp.setMonth(value);
   this.temp.setDate(0);
   return this.temp.getDate();
@@ -35,7 +26,7 @@ DateTime.prototype.getCountDays = function (value) {
  * @param  {[type]} key [description]
  * @return {[type]}     [description]
  */
-DateTime.prototype.$get = function (key) {
+BusinessDate.prototype.$get = function (key) {
   return this.attrs[key];
 };
 /**
@@ -43,7 +34,7 @@ DateTime.prototype.$get = function (key) {
  * @param  {[type]} value [description]
  * @return {[type]}       [description]
  */
-DateTime.prototype.ceilYear = function (value) {
+BusinessDate.prototype.ceilYear = function (value) {
   var val = ~~value;
   var i = 0;
   var year = this.$get('year');
@@ -54,8 +45,7 @@ DateTime.prototype.ceilYear = function (value) {
   }
   return result;
 };
-
-DateTime.prototype._downDisplacement = function (key) {
+BusinessDate.prototype._downDisplacement = function (key) {
   var start = this.$get(key);
   var result = [];
   var end;
@@ -82,28 +72,28 @@ DateTime.prototype._downDisplacement = function (key) {
  * [downMonth 向下获取月份]
  * @return {[type]} [description]
  */
-DateTime.prototype.downMonth = function () {
+BusinessDate.prototype.downMonth = function () {
   return this._downDisplacement('month');
 };
 /**
  * [downDay 向下获取天数]
  * @return {[type]} [description]
  */
-DateTime.prototype.downDay = function () {
+BusinessDate.prototype.downDay = function () {
   return this._downDisplacement('day');
 };
 /**
  * [downHours 向下获取小时]
  * @return {[type]} [description]
  */
-DateTime.prototype.downHours = function () {
+BusinessDate.prototype.downHours = function () {
   return this._downDisplacement('hours');
 };
 /**
  * [downMinutes 向下获取分钟]
  * @return {[type]} [description]
  */
-DateTime.prototype.downMinutes = function () {
+BusinessDate.prototype.downMinutes = function () {
   return this._downDisplacement('minutes');
 };
 /**
@@ -111,7 +101,7 @@ DateTime.prototype.downMinutes = function () {
  * @param  {[type]} value [description]
  * @return {[type]}       [description]
  */
-DateTime.prototype.down = function (value) {
+BusinessDate.prototype.down = function (value) {
   return this._downDisplacement(value);
 };
 /**
@@ -119,7 +109,7 @@ DateTime.prototype.down = function (value) {
  * @param  {[type]} obj [description]
  * @return {[type]}     [description]
  */
-DateTime.prototype.getTime = function (obj) {
+BusinessDate.prototype.getTime = function (obj) {
   var val = '';
   var month = obj.month < 10 ? '0' + obj.month : obj.month;
   var day = obj.day < 10 ? '0' + obj.day : obj.day;
@@ -132,12 +122,12 @@ DateTime.prototype.getTime = function (obj) {
 /**
  * [setCurNewDate 设置一个当前新的时间对象]
  */
-DateTime.prototype.setCurNewDate = function (long) {
+BusinessDate.prototype.setCurNewDate = function (long) {
   this.date = null;
   this.date = long ? new Date(long) : new Date();
   this._setAttrs();
 };
-DateTime.prototype._setAttrs = function () {
+BusinessDate.prototype._setAttrs = function () {
   this.attrs = null;
   this.attrs = {
     year: this.date.getFullYear(),
@@ -152,30 +142,28 @@ DateTime.prototype._setAttrs = function () {
  * @param  {[type]} duration [description]
  * @return {[type]}          [description]
  */
-DateTime.difference = function (duration) {
+BusinessDate.difference = function (duration) {
   var result = {};
+  result.day = parseInt(duration / (24 * 3600 * 1000), 10);
   var leave1 = duration % (24 * 3600 * 1000);
   var hour = Math.floor(leave1 / (3600 * 1000));
+  result.hours = hour < 10 ? '0' + hour : hour;
   var leave2 = leave1 % (3600 * 1000);
   var minutes = Math.floor(leave2 / (60 * 1000));
+  result.minutes = minutes < 10 ? '0' + minutes : minutes;
   var leave3 = leave2 % (60 * 1000);
   var seconds = Math.floor(leave3 / 1000);
-
-  result.day = parseInt(duration / (24 * 3600 * 1000), 10);
-  result.hours = hour < 10 ? '0' + hour : hour;
-  result.minutes = minutes < 10 ? '0' + minutes : minutes;
   result.seconds = seconds < 10 ? '0' + seconds : seconds;
   return result;
 };
-
-DateTime.sharedInstanceDateTime = function () {
+var shared = null;
+BusinessDate.sharedInstanceBusinessDate = function () {
   if (!shared) {
-    shared = new DateTime();
+    shared = new BusinessDate();
   }
   return shared;
 };
-
-DateTime.format = function (date, fmt) { // author: meizz
+BusinessDate.format = function (date, fmt) { // author: meizz
   var o = {
     'M+': date.getMonth() + 1,                 // 月份
     'd+': date.getDate(),                    // 日
@@ -200,5 +188,4 @@ DateTime.format = function (date, fmt) { // author: meizz
   return format;
 };
 
-module.exports = DateTime;
-
+module.exports = BusinessDate;

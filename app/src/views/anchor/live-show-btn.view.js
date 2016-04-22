@@ -14,14 +14,14 @@ var Backbone = require('backbone');
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var imServer = require('imServer');
-var uiConfirm = require('ui.Confirm');
-var msgBox = require('ui.MsgBox');
+var uiConfirm = require('ui.confirm');
+var msgBox = require('ui.msgbox');
 var StartLiveModel = require('../../model/anchor/start-live.model');
 var EndLiveModel = require('../../model/anchor/end-live.model');
 var FlashAPI = require('FlashAPI');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var DateTime = require('DateTime');
+var BusinessDate = require('BusinessDate');
 
 var View = BaseView.extend({
   el: '#liveShowBtnWraper', // 设置View对象作用于的根元素，比如id
@@ -70,7 +70,7 @@ var View = BaseView.extend({
   isTooLate: function (time) {
     var currentTime = new Date();
     var timeSpan = time - currentTime.getTime();
-    var result = DateTime.difference(Math.abs(timeSpan));
+    var result = BusinessDate.difference(Math.abs(timeSpan));
     if (timeSpan < 0 && (result.hours >= 1 || result.day >= 1)) {
       return 1;
     } else if (timeSpan > 300000) {

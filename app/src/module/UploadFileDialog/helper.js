@@ -15,7 +15,7 @@ var BaseView = require('BaseView'); // View的基类
 var UploadFile = require('UploadFile');
 var uploadIng = '正在上传';
 var uploadDone = '上传完成!';
-var MsgBox = require('ui.MsgBox');
+var MsgBox = require('ui.msgbox');
 var loc = window.location;
 var View = BaseView.extend({
   rawLoader: function () {
