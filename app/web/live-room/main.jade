@@ -1,0 +1,102 @@
+//
+   Created by AaronYuan on 4/22/16.
+
+// ^内容区域
+#anchorContainerBg.anchor-container.live-room-wrap
+    .common_con
+        .content.clearfix
+            #set_Anchor_info.fl
+                #edit_background.edit_Bg.clearfix.room-header
+                    // 编辑背景
+                #broadCastFlash.BroadcastRoom
+                    ul.bulletScreen
+                        li
+                            .tm 弹幕消息加载中...
+                #giftwarp.gift-wrap
+                    // <div class="gift-list">
+                    .jcarousel-wrapper.Left
+                        .jcarousel
+                            ul#gift-items.gift-items
+                                // 礼物列表
+                                script#gift-item-tpl(type='text/template').
+                                    <% for(var i= 0, len = data.length; i < len; i++) {%>
+                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
+                                    data-giftId="<%=data[i].giftId%>">
+                                    <img src="<%=data[i].images.logo%>" alt="">
+                                    <span class="name"><%=data[i].name%></span>
+                                    </li>
+                                    <% } %>
+                        a.jcarousel-control-prev.ctrl.pre(href='#')
+                        a.jcarousel-control-next.ctrl.next(href='#')
+                    // </div>
+                    .like-wrap.Right
+                        .btns.boderRadAll_5
+                            button#btnShare.share.Left.Hand.boderRadAll_5
+                                i
+                            button#btnLike.Hand.like.Left.gary2
+                                i
+                                span#txtLikeCount 1
+                            .Clear
+                        button#btnTop.btn.Hand.btn-support.boderRadAll_3
+                            i
+                            |  顶一下
+                    .Clear
+            // 留言
+            .fl
+                #userInfoWrap.user-info-block
+                    // 主播名片
+                #anchorCtrlChat
+                    // 消息列表
+                #sendMessageWrap.send-msg-wrap.pAll10
+                    // <div class="msg-text">
+                    // <textarea class="pAll5 gary2 msg Left" cols="30" rows="5" placeholder="请输入消息"></textarea>
+                    // <button class="Hand btn send Left">发送</button>
+                    // <div class="Clear"></div>
+                    // </div>
+                    // <div class="msg-footer mTop5">
+                    // &lt;!&ndash;<button>face</button>&ndash;&gt;
+                    // <button class="size Hand"><i></i></button>
+                    // <div class="tip Right gary1">您还可以输入<span class="gary2">324</span>字</div>
+                    // <div class="Clear"></div>
+                    // </div>
+        #anchorPlayedList.recent-list-wrap.mTop15
+            .list-header 播主播过的
+            #palyedJcarousel.jcarousel-wrapper.list
+                .jcarousel
+                    ul#playedListWrap
+                        // 已播放列表
+                        script#anchorPlayedTpl(type='text/template').
+                            <%
+                            var item =null;
+                            for(var i = 0, len = roomList.length; i < len; i++ ) {
+                            item = roomList[i];
+                            %>
+                            <li>
+                            <div class="item Left mLeft10 mRight10">
+                            <a class="img-wrap" href="/web/playback.html?roomId=<%=item.roomId%>">
+                            <div class="hover-wrap Hand">
+                            <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                            </div>
+                            <img src="<%=item.posterPic%>" data-src="/img/user_47.jpg" alt="">
+                            </a>
+                            <div class="name mTop15"><%=item.roomName%></div>
+                            <div class="info mTop10 gary2">
+                            <div class="Clear"></div>
+                            </div>
+                            <div class="btn-wrap mTop10 pAll5">
+                            <div class="Left gary2 mTop10 pBottom10">人气: <span class="count"><%=item.popularity%></span>
+                            </div>
+                            <span class="Right mTop10 pBottom10"><i class="like-count"></i><%=item.assemble%></span>
+                            <span class="Right mRight20 mTop10 pBottom10"><i
+                            class="coments-count"></i><%=item.bulletCurtain%></span>
+                            <div class="Clear"></div>
+                            </div>
+                            </div>
+                            </li>
+                            <%
+                            }
+                            %>
+                a.jcarousel-control-prev.ctrl.pre(href='#')
+                a.jcarousel-control-next.ctrl.next(href='#')
+        .user-msg-color-warp
+// 内容区域$

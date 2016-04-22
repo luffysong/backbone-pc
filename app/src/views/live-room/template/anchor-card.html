@@ -1,0 +1,33 @@
+<div class="user-info-wrap clearfix">
+    <img id="anchorAvatar" class="Left avator boderRadAll_35"
+         src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg"
+         alt="">
+    <div class="info Left">
+        <div id="anchorName" class="name overflow_ellipsis"></div>
+        <div class="btn-wrap mTop10">
+            <!--<button class="btn Hand " id="btnAdd"><i class="add Left"></i> 加关注</button>-->
+            <!--<button class="btn Hand mLeft5" id="btnReport"><i class="Left report"></i> 举报</button>-->
+            <div class="Clear"></div>
+        </div>
+    </div>
+</div>
+<div class="tags mTop10">
+    <div class="gary1 Left">标签:</div>
+    <div class="Right" id="tagsWrap">
+        <script type="text/template" id="tagTpl">
+            <%
+                for(var i=0,l=tags.length; i < l; i++) {
+            %>
+            <span class="item"><%=tags[i]%></span>
+            <%
+            }
+            %>
+        </script>
+    </div>
+    <div class="Clear"></div>
+</div>
+<div class="room-notice mTop10 boderRadAll_5">
+    <i class="trumpet mLeft5 Left"></i>
+    <div id="noticWrap" class="gary2 WordBreak notice mLeft30"></div>
+    <div class="Clear"></div>
+</div>
