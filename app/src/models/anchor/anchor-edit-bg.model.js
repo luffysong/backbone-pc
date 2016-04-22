@@ -6,8 +6,7 @@ var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
 
 var Model = BaseModel.extend({
-  url: '{{url_prefix}}/room/bg_set.json?deviceinfo={"aid":"30001001"}' +
-  '&access_token=web-{{access_token}}&roomId={{roomId}}&imageUrl={{imageUrl}}',
+  url: '{{url_prefix}}/room/bg_set.json',
   beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {

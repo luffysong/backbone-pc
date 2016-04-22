@@ -15,10 +15,10 @@ var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var imServer = require('imServer');
 var uiConfirm = require('ui.confirm');
-var msgBox = require('ui.msgbox');
-var StartLiveModel = require('../../model/anchor/start-live.model');
-var EndLiveModel = require('../../model/anchor/end-live.model');
-var FlashAPI = require('FlashAPI');
+var msgBox = require('ui.msgBox');
+var StartLiveModel = require('../../models/anchor/start-live.model');
+var EndLiveModel = require('../../models/anchor/end-live.model');
+var FlashApi = require('FlashApi');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var BusinessDate = require('BusinessDate');
@@ -26,7 +26,7 @@ var BusinessDate = require('BusinessDate');
 var View = BaseView.extend({
   el: '#liveShowBtnWraper', // 设置View对象作用于的根元素，比如id
   rawLoader: function () { // 可用此方法返回字符串模版
-    return require('../../template/anchor/live-show-btn.html');
+    return require('./template/live-show-btn.html');
   },
   events: { // 监听事件
     'click .endLive': 'endLiveClick',
@@ -39,14 +39,14 @@ var View = BaseView.extend({
 
     this.startLiveParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       roomId: '',
       imGroupId: ''
     };
 
     this.endLiveParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       roomId: ''
     };
   },
@@ -58,7 +58,7 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+    this.FlashApi = FlashApi.sharedInstanceFlashAPI({
       el: 'broadCastFlash'
     });
   },
@@ -122,11 +122,13 @@ var View = BaseView.extend({
   startLive: function () {
     var self = this;
     var msg;
+    var promise;
 
     self.startLiveParams.roomId = self.roomInfo.id;
     self.startLiveParams.imGroupId = self.roomInfo.imGroupid;
 
-    self.startLiveModel.executeJSONP(this.startLiveParams, function (result) {
+    promise = self.startLiveModel.executeJSONP(this.startLiveParams);
+    promise.done(function (result) {
       if (result && result.code === 0) {
         msg = '您已成功开启直播，请复制下面的信息：</br>'
           + '视频连接：' + result.data.livePushStreamUrl
@@ -148,14 +150,15 @@ var View = BaseView.extend({
         self.btnStartLive.removeClass('m_disabled');
         msgBox.showError(result.msg || '开启直播失败,请稍后重试');
       }
-    }, function (err) {
+    });
+    promise.fail(function (err) {
       msgBox.showError(err.msg || '开启直播失败,请稍后重试');
     });
   },
 
   startFlash: function () {
     var self = this;
-    self.flashAPI.onReady(function () {
+    self.FlashApi.onReady(function () {
       //  this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
       this.init(self.roomInfo);
     });
@@ -185,14 +188,17 @@ var View = BaseView.extend({
    */
   endLive: function () {
     var self = this;
+    var promise;
 
     self.endLiveParams.roomId = self.roomInfo.id;
-    self.endLiveModel.executeJSONP(self.endLiveParams, function () {
+    promise = self.endLiveModel.executeJSONP(self.endLiveParams);
+    promise.done(function () {
       self.btnEndLive.addClass('m_disabled');
       self.isLiveShowing = false;
       msgBox.showOK('结束直播操作成功');
       Backbone.trigger('event:liveShowEnded');
-    }, function (err) {
+    });
+    promise.fail(function (err) {
       msgBox.showError(err.msg || '操作失败,稍后重试');
     });
   },

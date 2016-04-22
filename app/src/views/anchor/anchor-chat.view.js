@@ -13,10 +13,10 @@ var BaseView = base.View; // View的基类
 var imServer = require('imServer');
 var uiConfirm = require('ui.confirm');
 var BusinessDate = require('BusinessDate');
-var FlashAPI = require('FlashAPI');
+var FlashApi = require('FlashApi');
 var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var GiftModel = require('../../models/anchor/gift.model');
-var msgBox = require('ui.msgbox');
+var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var _ = require('underscore');
@@ -37,17 +37,17 @@ var View = BaseView.extend({
     // 禁言用户列表
     this.forbidUsers = [];
 
-    this.giftModel = GiftModel.sigleInstance();
+    this.giftModel = GiftModel.sharedInstanceModel();
     this.giftParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       offset: 0,
       size: 90000,
       type: 0
     };
 
-    this.roomDetail = RoomDetailModel.sigleInstance();
-    this.roomInfo = this.roomDetail.$get().data || {};
+    this.roomDetail = RoomDetailModel.sharedInstanceModel();
+    this.roomInfo = this.roomDetail.get('data') || {};
 
     this.initGiftList();
   },
@@ -58,11 +58,16 @@ var View = BaseView.extend({
     this.chatHistory = el.find('#chatHistory');
     this.btnLock = el.find('#btn-lock');
     this.defineEventInterface();
+    this.imgClear = el.find('#imgClear');
+    this.imgUnLock = el.find('#imgUnLock');
+
+    this.imgClear.attr('src', '/images/clear.png');
+    this.imgUnLock.attr('src', '/images/clock.png');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
     this.roomInfoReady();
-    this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+    this.FlashApi = FlashApi.sharedInstanceFlashAPI({
       el: 'broadCastFlash'
     });
   },
@@ -84,7 +89,7 @@ var View = BaseView.extend({
           msgType: 4,
           content: '主播已清屏'
         };
-        self.flashAPI.onReady(function () {
+        self.FlashApi.onReady(function () {
           this.notifying(msg);
         });
         imServer.clearScreen({
@@ -214,7 +219,7 @@ var View = BaseView.extend({
       }
     }, function () {
       msgBox.showOK('已将用户:<b>' + userInfo.name + ' 禁言10分钟.');
-      self.flashAPI.onReady(function () {
+      self.FlashApi.onReady(function () {
         this.notifying({
           roomId: self.roomInfo.id,
           userId: userInfo.id,
@@ -333,7 +338,7 @@ var View = BaseView.extend({
    * @returns {*}
    */
   getMessageTpl: function () {
-    return require('../../template/anchor/chat-message-tpl.html');
+    return require('./template/chat-message-tpl.html');
   },
   /**
    * 添加消息
@@ -358,7 +363,7 @@ var View = BaseView.extend({
       tpl = _.template(this.getMessageTpl());
       this.msgList.append(tpl(msgObj));
       this.chatHistory.scrollTop(this.msgList.height());
-      this.flashAPI.onReady(function () {
+      this.FlashApi.onReady(function () {
         this.notifying(msgObj);
       });
     }

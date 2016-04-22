@@ -3,9 +3,10 @@
  */
 
 'use strict';
-var IMModel = require('./IMModel');
+var base = require('base-extend-backbone');
+var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
-var store = require('store');
+var store = base.storage;
 var webim = require('webim');
 var _ = require('underscore');
 

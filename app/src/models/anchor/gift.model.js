@@ -41,7 +41,7 @@ GiftModel.prototype.findGift = function (giftId) {
   });
 };
 
-GiftModel.sigleInstance = function () {
+GiftModel.sharedInstanceModel = function () {
   if (!sigleInstance) {
     sigleInstance = new GiftModel();
   }

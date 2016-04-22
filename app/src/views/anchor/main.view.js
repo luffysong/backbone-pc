@@ -20,7 +20,7 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var URL = Auxiliary.url;
 var uiConfirm = require('ui.confirm');
-var store = require('store');
+var store = base.storage;
 var auth = require('auth');
 
 var RoomDetailModel = require('../../models/anchor/room-detail.model');
@@ -45,23 +45,23 @@ var View = BaseView.extend({
     if (!this.roomId) {
       this.goBack();
     }
-    this.giftModel = GiftModel.sigleInstance();
-    this.roomDetail = RoomDetailModel.sigleInstance();
+    this.giftModel = GiftModel.sharedInstanceModel();
+    this.roomDetail = RoomDetailModel.sharedInstanceModel();
 
     this.roomDetailParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       roomId: ''
     };
 
     this.giftParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       offset: 0,
       size: 90000,
       type: 0
     };
-    this.roomLongPolling = RoomLongPollingModel.sigleInstance();
+    this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
   },
   // 当模板挂载到元素之后
   afterMount: function () {
@@ -172,12 +172,15 @@ var View = BaseView.extend({
   },
   getRoomLoopInfo: function (okFn, errFn) {
     var self = this;
+    var promise;
     self.roomDetailParams.roomId = self.roomId;
-    this.roomLongPolling.executeJSONP(self.roomDetailParams, function (response) {
+    promise = this.roomLongPolling.executeJSONP(self.roomDetailParams);
+    promise.done(function (response) {
       if (okFn) {
         okFn(response);
       }
-    }, function (err) {
+    });
+    promise.fail(function (err) {
       if (errFn) {
         errFn(err);
       }

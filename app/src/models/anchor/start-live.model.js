@@ -6,8 +6,7 @@ var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
 
 var Model = BaseModel.extend({
-  url: '{{url_prefix}}/room/start.json?deviceinfo={{deviceinfo}}&' +
-  'access_token=web-{{accessToken}}&roomId={{roomId}}&imGroupId={{imGroupId}}', // 填写请求地址
+  url: '{{url_prefix}}/room/start.json', // 填写请求地址
   beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {

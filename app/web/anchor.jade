@@ -1,5 +1,7 @@
 //
    Created by AaronYuan on 4/20/16.
+- var complie = htmlWebpackPlugin.options.complieConfig
+- var src = complie.cdn || '/link/'
 doctype html
 html(lang="en")
     head
@@ -10,3 +12,5 @@ html(lang="en")
         include anchor/main
         include common/footer
         include common/lib
+        script(type="text/javascript",src=src+'webim/json2.js')
+        script(type="text/javascript",src=src+'webim/webim.js')

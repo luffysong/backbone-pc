@@ -20,7 +20,7 @@ var imServer = require('imServer');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
-var msgBox = require('ui.msgbox');
+var msgBox = require('ui.msgBox');
 
 var View = BaseView.extend({
   el: '#noticeWraper', // 设置View对象作用于的根元素，比如id
@@ -43,7 +43,7 @@ var View = BaseView.extend({
 
     this.noticeInfoParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       roomId: '',
       content: ''
     };
@@ -51,7 +51,7 @@ var View = BaseView.extend({
     this.noticeGetParams = {
       deviceinfo: '{"aid":"30001001"}',
       roomId: '',
-      access_token: 'web-' + user.getToken()
+      access_token: user.getWebToken()
     };
   },
   // 当模板挂载到元素之后
@@ -96,6 +96,7 @@ var View = BaseView.extend({
   submitClickHandler: function () {
     var content = this.txtNotice.val().trim();
     var self = this;
+    var promise;
     if (!content || content.length > 50 || content.length <= 0) {
       this.errNoticeTip.text('公告文字请在50字以内');
       return null;
@@ -104,7 +105,8 @@ var View = BaseView.extend({
     this.noticeInfoParams.roomId = this.roomInfo.id;
     this.noticeInfoParams.content = content;
 
-    this.noticeModel.executeJSONP(this.noticeInfoParams, function (res) {
+    promise = this.noticeModel.executeJSONP(this.noticeInfoParams);
+    promise.done(function (res) {
       if (res && res.code === '0') {
         Backbone.trigger('event:noticeChanged', content);
         self.noticeInfo.content = content;
@@ -113,7 +115,8 @@ var View = BaseView.extend({
         msgBox.showOK('公告发布成功');
         self.sendNotifyToIM(content);
       }
-    }, function () {
+    });
+    promise.fail(function () {
       msgBox.showError('数据保存失败,请稍后重试');
     });
     return null;
@@ -155,9 +158,12 @@ var View = BaseView.extend({
   getNoticeInfo: function () {
     var self = this;
     var notice = null;
+    var promise;
+
     this.noticeGetParams.roomId = this.roomInfo.id;
 
-    this.noticeGetModel.executeJSONP(this.noticeGetParams, function (res) {
+    promise = this.noticeGetModel.executeJSONP(this.noticeGetParams);
+    promise(function (res) {
       if (res && res.data) {
         if (res.data.placards) {
           notice = res.data.placards[0];
@@ -170,7 +176,8 @@ var View = BaseView.extend({
           self.noticeWrap.text('暂无公告');
         }
       }
-    }, function (err) {
+    });
+    promise.fail(function (err) {
       msgBox.showError(err.msg || '获取公告失败');
     });
   },
