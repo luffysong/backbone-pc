@@ -8,7 +8,9 @@
 
 var $ = require('jquery');
 var base = require('base-extend-backbone');
+var Config = require('config');
 var BaseModel = base.Model;
+var env = Config.env[Config.scheme];
 var storage = base.storage;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
@@ -19,6 +21,10 @@ var Model = BaseModel.extend({
     // 如果需要开启对请求数据的本地缓存，可将下列两行注释去掉
     // this.storageCache = true; //开启本地缓存
     // this.expiration = 1; //设置缓存过期时间（1表示60*60*1000 一小时）
+    // 给请求地址替换一下环境变量
+    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+    }
     this.notTokenURL = this.url;
     this.imData = null;
   },
@@ -27,8 +33,7 @@ var Model = BaseModel.extend({
    * @return {Boolean} [description]
    */
   isAnchor: function () {
-    //  deviceinfo={"aid":"30001001"}
-    return !!this.$get('data.anchor');
+    return !!this.get('data.anchor');
   },
   setTokenUrl: function (token) {
     this.imData = {
@@ -54,21 +59,21 @@ var Model = BaseModel.extend({
     var imSig;
     imSig = storage.get('imSig');
     if (imSig) {
-      if (typeof callback === 'function') {
-        this.$set({ data: imSig });
-        defer.resolve(imSig);
-      }
+      this.set({ data: imSig });
+      defer.resolve(imSig);
       return defer.promise();
     }
     token = user.getToken();
     if (token) {
       this.setTokenUrl(token);
     }
-    this.executeJSONP(this.imData, function (response) {
+    var sigModelPromise = this.executeJSONP(this.imData);
+    sigModelPromise.done(function (response) {
       var data = response.data;
       storage.set('imSig', data);
       defer.resolve(data);
-    }, function (e) {
+    });
+    sigModelPromise.fail(function (e) {
       defer.reject(e);
     });
     return defer.promise();
@@ -82,13 +87,16 @@ var Model = BaseModel.extend({
     if (token) {
       this.setTokenUrl(token);
     }
-    this.executeJSONP(function (response) {
+    var sigModelPromise = this.executeJSONP();
+    sigModelPromise.done(function (response) {
       var data = response.data;
       storage.set('imSig', data);
       defer.resolve(data);
-    }, function (err) {
-      defer.reject(err);
     });
+    sigModelPromise.fail(function (e) {
+      defer.reject(e);
+    });
+    return defer.promise();
   }
 });
 

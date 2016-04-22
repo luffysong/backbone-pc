@@ -88,7 +88,8 @@ var View = BaseView.extend({
   },
   fetchUserInfo: function () {
     var _this = this;
-    imModel.fetchIMUserSig(function (userImInfo) {
+    var fetchImUserSigPromise = imModel.fetchIMUserSig();
+    fetchImUserSigPromise.done(function (userImInfo) {
       var data;
       if (userImInfo.roleType === 2) {
         //  游客，未登录
