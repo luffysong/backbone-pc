@@ -139,12 +139,12 @@ imServer.removeUserFromGroup = function (options, okFn, errFn) {
   webim.deleteGroupMember(
     options,
     function (resp) {
-      if(okFn) {
+      if (okFn) {
         okFn(resp);
       }
     },
     function (err) {
-      if(errFn){
+      if (errFn) {
         errFn(err);
       }
     }
@@ -154,7 +154,7 @@ imServer.removeUserFromGroup = function (options, okFn, errFn) {
 /**
  * 消息通知回调
  */
-imServer.msgNotify = function (callback) {
+imServer.msgNotify = function () {
 
 };
 
@@ -173,7 +173,9 @@ imServer.getRoomMsgs = function (callback) {
       msg: 'asdfasdfasfjaslfjasklfasdklf' + i
     });
   }
-  callback && callback.call(this, data);
+  if (callback) {
+    callback.call(this, data);
+  }
 };
 
 /**
@@ -182,43 +184,49 @@ imServer.getRoomMsgs = function (callback) {
 imServer.createIMChatRoom = function (okFn, errFn) {
   var imSig = store.get('imSig');
   var options = {
-    'Owner_Account': imSig.imIdentifier,
-    'Type': 'ChatRoom', // Private/Public/ChatRoom
-    'Name': '测试聊天室',
-    // 'FaceUrl': '',
-    'Notification': '',
-    'Introduction': '',
-    'MemberList': []
+    Owner_Account: imSig.imIdentifier,
+    Type: 'ChatRoom', // Private/Public/ChatRoom
+    Name: '测试聊天室',
+    Notification: '',
+    Introduction: '',
+    MemberList: []
   };
 
   webim.createGroup(
     options,
     function (resp) {
-      okFn && okFn(resp);
+      if (okFn) {
+        okFn(resp);
+      }
     },
     function (err) {
-      errFn && errFn(err);
+      if (errFn) {
+        errFn(err);
+      }
     }
   );
 };
 
 imServer.applyJoinGroup = function (groupId, okFn, errFn) {
   var options = {
-    'GroupId': groupId,
-    'ApplyMsg': '直播间',
-    'UserDefinedField': ''
+    GroupId: groupId,
+    ApplyMsg: '直播间',
+    UserDefinedField: ''
   };
   webim.applyJoinGroup(
     options,
     function (resp) {
-      okFn && okFn(resp);
+      if (okFn) {
+        okFn(resp);
+      }
     },
     function (err) {
-      errFn && errFn(err);
+      if (errFn) {
+        errFn(err);
+      }
     }
   );
 };
-
 
 /**
  * 获取群组消息
@@ -228,10 +236,10 @@ imServer.applyJoinGroup = function (groupId, okFn, errFn) {
  */
 imServer.getGroupInfo = function (groupId, okFn, errFn) {
   var options = {
-    'GroupIdList': [
+    GroupIdList: [
       groupId
     ],
-    'GroupBaseInfoFilter': [
+    GroupBaseInfoFilter: [
       'Type',
       'Name',
       'Introduction',
@@ -246,7 +254,7 @@ imServer.getGroupInfo = function (groupId, okFn, errFn) {
       'MaxMemberNum',
       'ApplyJoinOption'
     ],
-    'MemberInfoFilter': [
+    MemberInfoFilter: [
       'Account',
       'Role',
       'JoinTime',
@@ -257,10 +265,14 @@ imServer.getGroupInfo = function (groupId, okFn, errFn) {
   webim.getGroupInfo(
     options,
     function (resp) {
-      okFn && okFn(resp);
+      if (okFn) {
+        okFn(resp);
+      }
     },
     function (err) {
-      errFn && errFn(err);
+      if (errFn) {
+        errFn(err);
+      }
     }
   );
 };
@@ -276,10 +288,14 @@ imServer.modifyGroupInfo = function (options, okFn, errFn) {
   webim.modifyGroupBaseInfo(
     options,
     function (resp) {
-      okFn && okFn(resp);
+      if (okFn) {
+        okFn(resp);
+      }
     },
     function (err) {
-      errFn && errFn(err);
+      if (errFn) {
+        errFn(err);
+      }
     }
   );
 };
