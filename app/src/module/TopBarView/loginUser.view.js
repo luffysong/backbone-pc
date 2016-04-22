@@ -13,7 +13,7 @@ var win = window;
 var location = win.location;
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
-
+var config = require('config');
 var View = BaseView.extend({
   el: '#loginUser',
   events: {
@@ -84,7 +84,7 @@ var View = BaseView.extend({
   logoutHandler: function () {
     storage.remove('imSig');
     storage.set('signout', 1);
-    location.href = '/web/login.html';
+    location.href = config.prefix + '/login.html';
   },
   fetchUserInfo: function () {
     var _this = this;

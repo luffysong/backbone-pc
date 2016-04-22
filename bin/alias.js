@@ -15,7 +15,7 @@ var alias = {
   IMModel: path.resolve(containerPath,'./app/src/module/IMModel/'),
   pwdencrypt: path.resolve(containerPath, './app/src/module/crypto/pwdencrypt'),
   secret: path.resolve(containerPath, './app/src/module/crypto/secret'),
-  'ui.Dialog': path.resolve(containerPath, './app/src/module/dialog/'),
+  'ui.Dialog': path.resolve(containerPath, './app/src/module/Dialog/'),
   'ui.confirm': path.resolve(containerPath, './app/src/module/confirm/'),
   'ui.msgBox': path.resolve(containerPath, './app/src/module/msgbox/'),
   loginBox: path.resolve(containerPath, './app/src/module/loginBox/'),
