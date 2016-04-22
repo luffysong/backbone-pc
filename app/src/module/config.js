@@ -11,6 +11,7 @@ var config = {
       url_prefix: 'http://lapi.yinyuetai.com'
     }
   },
+  prefix: '',
   domains: {
     urlStatic: 'http://s.yytcdn.com',
     loginSite: 'http://login.yinyuetai.com',
@@ -32,5 +33,6 @@ var config = {
 
 if (process.env.NODE_ENV !== 'product') {
   config.scheme = 'beta';
+  config.prefix = '/www';
 }
 module.exports = config;
