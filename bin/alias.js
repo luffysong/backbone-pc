@@ -11,14 +11,15 @@ var alias = {
   config: path.resolve(containerPath,'./app/src/module/config'),
   tplEng: path.resolve(containerPath,'./app/link/artTemplate/dist/template'),
   UserModel: path.resolve(containerPath,'./app/src/module/UserModel/'),
-  TopbarView: path.resolve(containerPath,'./app/src/module/topbar/'),
+  TopBarView: path.resolve(containerPath,'./app/src/module/TopBarView/'),
   IMModel: path.resolve(containerPath,'./app/src/module/IMModel/'),
   pwdencrypt: path.resolve(containerPath, './app/src/module/crypto/pwdencrypt'),
   secret: path.resolve(containerPath, './app/src/module/crypto/secret'),
   'ui.Dialog': path.resolve(containerPath, './app/src/module/dialog/'),
-  'ui.Confirm': path.resolve(containerPath, './app/src/module/confirm/'),
-  'ui.MsgBox': path.resolve(containerPath, './app/src/module/msgbox/'),
-  'LoginBox': path.resolve(containerPath, './app/src/module/loginBox/')
+  'ui.confirm': path.resolve(containerPath, './app/src/module/confirm/'),
+  'ui.msgBox': path.resolve(containerPath, './app/src/module/msgbox/'),
+  loginBox: path.resolve(containerPath, './app/src/module/loginBox/'),
+  BusinessDate: path.resolve(containerPath, './app/src/module/BusinessDate')
 };
 
 module.exports = alias;

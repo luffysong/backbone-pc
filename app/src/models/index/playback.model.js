@@ -6,8 +6,8 @@ var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
 
 var Model = BaseModel.extend({
-  url: '{{url_prefix}}/index?id={{id}}',
-  beforeEmit: function () {
+  url: '{{url_prefix}}/room/playback_list.json',
+  beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
       this.url = this.url.replace('{{url_prefix}}', env.url_prefix);

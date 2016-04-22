@@ -1,14 +1,14 @@
 var config = {
-  scheme: 'alpha',
+  scheme: 'release',
   env: {
     alpha: {
       url_prefix: 'http://127.0.0.1:4000'
     },
     beta: {
-      url_prefix: ''
+      url_prefix: 'http://beta.yinyuetai.com:9019'
     },
     release: {
-      url_prefix: ''
+      url_prefix: 'http://lapi.yinyuetai.com'
     }
   },
   domains: {
@@ -30,4 +30,7 @@ var config = {
   }
 };
 
+if (process.env.NODE_ENV !== 'product') {
+  config.scheme = 'beta';
+}
 module.exports = config;
