@@ -13,7 +13,7 @@ var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var EditBgModel = require('../../models/anchor/anchor-edit-bg.model');
 var UploadFileDialog = require('UploadFileDialog');
-var msgBox = require('ui.msgbox');
+var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
@@ -32,7 +32,7 @@ var View = BaseView.extend({
 
     // 数据参数
     this.bgModelParams = {
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       deviceinfo: '{"aid": "30001001"}',
       roomId: '',
       imageUrl: ''
@@ -119,6 +119,7 @@ var View = BaseView.extend({
   },
   setBackgroundImg: function () {
     var self = this;
+    var promise;
     if (!self.currentBgImg) {
       msgBox.showTip('请耐心等待图片上传完成!');
       return;
@@ -127,7 +128,8 @@ var View = BaseView.extend({
     self.bgModelParams.roomId = this.roomInfo.id;
     self.bgModelParams.imageUrl = this.currentBgImg;
 
-    self.editBgModel.executeJSONP(self.bgModelParams, function (res) {
+    promise = self.editBgModel.executeJSONP(self.bgModelParams);
+    promise.done(function (res) {
       if (res && res.code === '0') {
         self.setBgStyle(self.currentBgImg);
         self.uploadFile.hide();
@@ -135,7 +137,8 @@ var View = BaseView.extend({
       } else {
         msgBox.showError(res.msg || '背景图片设置失败,稍后重试');
       }
-    }, function () {
+    });
+    promise.fail(function () {
       msgBox.showError('背景图片设置失败,稍后重试');
     });
   },

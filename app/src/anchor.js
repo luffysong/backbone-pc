@@ -5,10 +5,10 @@
 var $ = require('jQuery');
 $(function () {
   var MainView = require('./views/anchor/main.view');
-  var TopbarView = require('TopbarView');
+  var TopBarView = require('TopBarView');
 
   var a = new MainView();
-  a = new TopbarView();
+  a = new TopBarView();
   console.log(a);
   // 载入CSS
   require('../stylesheets/anchor.scss');

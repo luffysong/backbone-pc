@@ -22,18 +22,16 @@ GiftModel.prototype.get = function (data, okFn, errFn) {
     data: data,
     dataType: 'jsonp',
     jsonp: 'callback'
-  })
-   .done(function (res) {
-     if (res) {
-       okFn(res);
-     }
-     cacheData = res;
-   })
-   .fail(function (err) {
-     if (errFn) {
-       errFn(err);
-     }
-   });
+  }).done(function (res) {
+    if (res) {
+      okFn(res);
+    }
+    cacheData = res;
+  }).fail(function (err) {
+    if (errFn) {
+      errFn(err);
+    }
+  });
 };
 
 GiftModel.prototype.findGift = function (giftId) {
@@ -43,7 +41,7 @@ GiftModel.prototype.findGift = function (giftId) {
   });
 };
 
-GiftModel.sigleInstance = function () {
+GiftModel.sharedInstanceModel = function () {
   if (!sigleInstance) {
     sigleInstance = new GiftModel();
   }

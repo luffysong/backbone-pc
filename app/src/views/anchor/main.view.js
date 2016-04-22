@@ -12,17 +12,20 @@
 'use strict';
 
 var Backbone = require('backbone');
-var BaseView = require('BaseView'); // View的基类
-var imServer = require('IMServer');
+var base = require('base-extend-backbone');
+var BaseView = base.View; // View的基类
+var Auxiliary = require('auxiliary-additions');
+var imServer = require('imServer');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var RoomDetailModel = require('../../model/anchor/room-detail.model');
-var RoomLongPollingModel = require('../../model/anchor/room-longPolling.model');
-var URL = require('url');
+var URL = Auxiliary.url;
 var uiConfirm = require('ui.confirm');
-var store = require('store');
-var GiftModel = require('../../model/anchor/gift.model.js');
-var auth = require('../../lib/auth');
+var store = base.storage;
+var auth = require('auth');
+
+var RoomDetailModel = require('../../models/anchor/room-detail.model');
+var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
+var GiftModel = require('../../models/anchor/gift.model');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -42,23 +45,23 @@ var View = BaseView.extend({
     if (!this.roomId) {
       this.goBack();
     }
-    this.giftModel = GiftModel.sigleInstance();
-    this.roomDetail = RoomDetailModel.sigleInstance();
+    this.giftModel = GiftModel.sharedInstanceModel();
+    this.roomDetail = RoomDetailModel.sharedInstanceModel();
 
     this.roomDetailParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       roomId: ''
     };
 
     this.giftParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       offset: 0,
       size: 90000,
       type: 0
     };
-    this.roomLongPolling = RoomLongPollingModel.sigleInstance();
+    this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
   },
   // 当模板挂载到元素之后
   afterMount: function () {
@@ -169,12 +172,15 @@ var View = BaseView.extend({
   },
   getRoomLoopInfo: function (okFn, errFn) {
     var self = this;
+    var promise;
     self.roomDetailParams.roomId = self.roomId;
-    this.roomLongPolling.executeJSONP(self.roomDetailParams, function (response) {
+    promise = this.roomLongPolling.executeJSONP(self.roomDetailParams);
+    promise.done(function (response) {
       if (okFn) {
         okFn(response);
       }
-    }, function (err) {
+    });
+    promise.fail(function (err) {
       if (errFn) {
         errFn(err);
       }
@@ -186,12 +192,15 @@ var View = BaseView.extend({
    */
   getRoomInfo: function (okFn, errFn) {
     var self = this;
+    var promise;
     self.roomDetailParams.roomId = self.roomId;
-    this.roomDetail.executeJSONP(self.roomDetailParams, function (response) {
+    promise = this.roomDetail.executeJSONP(self.roomDetailParams);
+    promise.done(function (response) {
       if (okFn) {
         okFn(response);
       }
-    }, function (err) {
+    });
+    promise.fail(function (err) {
       if (errFn) {
         errFn(err);
       }
