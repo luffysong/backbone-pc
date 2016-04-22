@@ -21,6 +21,7 @@ var alias = {
   loginBox: path.resolve(containerPath, './app/src/module/loginBox/'),
   BusinessDate: path.resolve(containerPath, './app/src/module/BusinessDate'),
   UploadFileDialog: path.resolve(containerPath, './app/src/module/UploadFileDialog/'),
+  auth: path.resolve(containerPath, './app/src/module/auth/'),
   imServer: path.resolve(containerPath, './app/src/models/webIM/imServer')
 };
 

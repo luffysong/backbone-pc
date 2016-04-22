@@ -2,7 +2,6 @@
  clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
  */
 
-
 /**
  * @time 2016-3-11
  * @author YuanXuJia
@@ -11,7 +10,7 @@
 
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
-var imServer = require('IMServer');
+var imServer = require('imServer');
 var uiConfirm = require('ui.confirm');
 var BusinessDate = require('BusinessDate');
 var FlashAPI = require('FlashAPI');
