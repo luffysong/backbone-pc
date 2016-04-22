@@ -101,7 +101,8 @@ var config = {
   externals: {
     jquery: 'window.jQuery',
     backbone: 'window.Backbone',
-    underscore: 'window._'
+    underscore: 'window._',
+    webim:'window.webim'
   }
 };
 module.exports = config;

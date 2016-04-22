@@ -3,13 +3,10 @@
 doctype html
 html(lang="en")
     head
-        - var titleValue = htmlWebpackPlugin.options.title
-        title=titleValue
-        meta(charset="UTF-8")
-        //include common/style
+        include common/head
+        include common/style
     body
+        include common/topbar
         include anchor/main
-        //include common/header
-        //include index/container
-        //include common/footer
-        //include common/lib
+        include common/footer
+        include common/lib

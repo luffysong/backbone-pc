@@ -2,9 +2,10 @@
 @import 'common/base';
 @import 'common/footer';
 @import "anchor/main";
+@import "common/loginbox";
 //确认框
 @import "anchor/confirm";
-@import "anchor/dialog.less";
+@import "anchor/dialog";
 //弹出框
 @import 'common/uploadFileDialog';
 

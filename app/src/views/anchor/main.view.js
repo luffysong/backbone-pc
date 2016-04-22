@@ -13,7 +13,7 @@
 
 var Backbone = require('backbone');
 var BaseView = require('BaseView'); // View的基类
-var YYTIMServer = require('../../lib/YYT_IM_Server');
+var imServer = require('IMServer');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../model/anchor/room-detail.model');
@@ -78,7 +78,7 @@ var View = BaseView.extend({
     }
 
     // 注册IM事件处理
-    YYTIMServer.init({
+    imServer.init({
       onConnNotify: function (notifyInfo) {
         Backbone.trigger('event:onConnNotify', notifyInfo);
       },
