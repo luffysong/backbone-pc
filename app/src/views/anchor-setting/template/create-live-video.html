@@ -1,0 +1,46 @@
+<ul>
+	<li class="Inp_name">
+		<span>*</span>直播名称：
+		<input type="text" maxlength="15" placeholder="输入直播名" id="liveVideoName"><i style="margin-left: 16px;">限15个字以内</i>
+	</li>
+	<li class="Inp_artist">
+		<span>*</span>选择艺人：
+		<input type="text" placeholder="输入文字" id="inputActorName">
+		<ul id="selectorActor">
+			 <script type="text/html" id="selectorActorTemp">
+				{{each items as item}}
+				      <li data-id="{{item[0]}}">{{item[1]}}</li>
+				{{/each}}
+			 </script>
+		</ul>
+	</li>
+	<li class="Inp_time">
+		<div class="tit"><span class="redX">*</span>直播时间：</div>
+		<div id="liveTime">
+			<script type="text/html" id="liveTimeTemp">
+				{{each items as item i}}
+					<div class="select" style="{{item.style}}" data-index="{{i}}">
+						<span class="date">{{item.cur}}</span>
+						<img src="../img/select-ico.jpg" alt="">
+						<ul class="selectDate" data-index="{{i}}" data-tag="{{item.tag}}">
+							{{each item.cells as cell}}
+								<li>{{cell}}</li>
+							{{/each}}
+						</ul>
+					</div>
+					<em>{{item.name}}</em>
+					{{if item.division}}
+						<br/>
+					{{/if}}
+				{{/each}}
+			</script>
+			<script type="text/html" id="cellsTemp">
+				{{each cells as cell}}
+					<li>{{cell}}</li>
+				{{/each}}
+			</script>
+		</div>
+
+	</li>
+	<div class="submit m_disabled" id="createVideo">创建</div>
+</ul>

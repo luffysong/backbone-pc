@@ -1,0 +1,15 @@
+<div  class="fl avatorBg">
+	<img style="width: 100p; height: 100px;" id="headAvatar" src="{{bigheadImg}}" alt="">
+</div>
+<div class="fl anchorrMsg">
+	<h2>
+		<span id="nickName" class="fl name">{{nickName}}</span>
+		<span class="fl aPnum">主持直播：<i>{{anchor.liveCount}}</i>场</span>
+	</h2>
+	<p id="tagsWrap">
+		标签：
+		{{each anchor.tags as item}}
+			<span>{{item}}</span>
+		{{/each}}
+	</p>
+</div>
