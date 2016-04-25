@@ -400,7 +400,6 @@ var View = BaseView.extend({
           Backbone.trigger('event:liveShowEnded', data);
         } else if (data.roomStatus === 2) {
           self.loopRoomInfo();
-          self.getGroupInfo(self.roomInfo.imGroupid);
         }
       });
     }, !!time ? time : self.roomInfoPeriod);
