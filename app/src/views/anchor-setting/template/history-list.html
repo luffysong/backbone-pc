@@ -1,0 +1,30 @@
+{{each items as item}}
+<li data-id="{{item.roomId}}">
+    <div class="uploadAd fl">
+        <a href="#">
+            <img src="{{item.posterPic}}" alt="">
+        </a>
+    </div>
+    <dl class="preLiveMsg fl">
+        <dt>{{item.roomName}}</dt>
+        <dd>
+            直播时间：<span class="date dark-color">{{item.liveVideoTime}}</span>
+            时长：<span class="dark-color">{{item.diff}}</span>
+        </dd>
+        <dd class="popularity">
+            <img src="../img/easy.png" alt="">
+            <span>{{item.seen}}</span>
+            <img src="../img/yun.png" alt="">
+            <span>{{item.bulletCurtain}}</span>
+            <img src="../img/love.png" alt="">
+            <span>{{item.assemble}}</span>
+        </dd>
+        <!--<dd class="popularity-wrap">-->
+            <!--<div class="progress-wrap border-radius">-->
+                <!--<div style="width: 45%;" class="progress border-radius"></div>-->
+            <!--</div>-->
+        <!--</dd>-->
+        <dd class="pop">人气：<span>{{item.popularity}}</span></dd>
+    </dl>
+</li>
+{{/each}}

@@ -1,0 +1,14 @@
+<span class="pre" data-state="1">&lt;</span>
+<span id='tipPreOmit' style="display: none;" class="disabled">...</span>
+<div class="fl">
+	<div id="nav">
+		{{each items as item i}}
+			<span class="{{if i === 0}}now{{/if}}" data-page="{{item}}" data-indice="{{i}}">{{item}}</span>
+		{{/each}}
+	</div>
+</div>
+<!-- {{if omit}} -->
+<span id='tipOmit' class="disabled" style="display: none;">...</span>
+<!-- {{/if}} -->
+<span class="next" data-state="2">&gt;</span>
+<p>共<i id="howPage">{{count}}</i>页</p>
