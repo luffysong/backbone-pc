@@ -26,7 +26,7 @@ $(function () {
         window.location.href = config.prefix + '/index.html';
       } else {
         //  处理登录成功跳转到设置页面
-        window.location.href = config.prefix + '/anchorsetting.html';
+        window.location.href = config.prefix + '/anchor-setting.html';
       }
     });
     promise.fail(function () {
