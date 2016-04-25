@@ -163,7 +163,7 @@ var View = BaseView.extend({
     this.noticeGetParams.roomId = this.roomInfo.id;
 
     promise = this.noticeGetModel.executeJSONP(this.noticeGetParams);
-    promise(function (res) {
+    promise.done(function (res) {
       if (res && res.data) {
         if (res.data.placards) {
           notice = res.data.placards[0];

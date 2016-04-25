@@ -78,11 +78,11 @@ var View = BaseView.extend({
     switch (status) {
       case 2:
         //  处理直播
-        window.location.href = '/web/liveRoom.html?roomId=' + id;
+        window.location.href = 'liveRoom.html?roomId=' + id;
         break;
       case 3:
         //  处理回放
-        window.location.href = '/web/playback.html?roomId=' + id;
+        window.location.href = 'playback.html?roomId=' + id;
         break;
       default:
         //  默认不处理

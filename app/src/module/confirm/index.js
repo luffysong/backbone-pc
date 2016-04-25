@@ -69,13 +69,8 @@ confirm.bindEvent = function (html, okFn, cancelFn) {
     self.remove();
     return false;
   });
-  html.find('#UIConfirmOk').on('click', function (e) {
-    e.preventDefault();
-    self.remove();
-    return false;
-  });
 
-  $('body').append(html);
+  $('body').append(ele);
 };
 
 /**

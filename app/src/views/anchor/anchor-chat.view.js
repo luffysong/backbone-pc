@@ -67,7 +67,7 @@ var View = BaseView.extend({
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
     this.roomInfoReady();
-    this.FlashApi = FlashApi.sharedInstanceFlashAPI({
+    this.FlashApi = FlashApi.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
   },
