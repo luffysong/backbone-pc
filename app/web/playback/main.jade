@@ -1,0 +1,68 @@
+//
+   Created by AaronYuan on 4/25/16.
+
+// ^内容区域
+#anchorContainerBg.anchor-container.live-room-wrap
+    .common_con
+        .content.clearfix
+            #set_Anchor_info.fl.play-back-main
+                .flash-header-wraper
+                    #edit_background.edit_Bg.clearfix.room-header
+                        // 编辑背景
+                #broadCastFlash.BroadcastRoom(style='width: 100%; background-color: #3a3737;')
+                div
+                    #userInfoWrap.user-info-block
+                        // 主播名片
+                    #giftwarp.gift-wrap
+                        .like-wrap.Right
+                            .btns.boderRadAll_5
+                                button#btnShare.share.Left.Hand.boderRadAll_5
+                                    i
+                                button#btnLike.Hand.like.Left.gary2
+                                    i
+                                    span#txtLikeCount 1
+                                .Clear
+                            button#btnTop.btn.Hand.btn-support.boderRadAll_3
+                                i
+                                |  顶一下
+                        .Clear
+                    .Clear
+        #anchorPlayedList.recent-list-wrap.mTop15
+            .list-header 播主播过的
+            #palyedJcarousel.jcarousel-wrapper.list
+                .jcarousel
+                    ul#playedListWrap
+                        // 已播放列表
+                        script#anchorPlayedTpl(type='text/template').
+                            <%
+                            var item =null;
+                            for(var i = 0, len = roomList.length; i < len; i++ ) {
+                            item = roomList[i];
+                            %>
+                            <li>
+                            <div class="item Left mLeft10 mRight10">
+                            <a class="img-wrap" href="/web/playback.html?roomId=<%=item.roomId%>">
+                            <div class="hover-wrap Hand">
+                            <span class="played-icon"></span>
+                            </div>
+                            <img src="<%=item.posterPic%>" data-src="/img/user_47.jpg" alt="">
+                            </a>
+                            <div class="name mTop15"><%=item.roomName%></div>
+                            <div class="info mTop10 gary2">
+                            <div class="Clear"></div>
+                            </div>
+                            <div class="btn-wrap mTop10 pAll5">
+                            <div class="Left gary2 mTop10 pBottom10">人气: <span class="count"><%=item.popularity%></span>
+                            </div>
+                            <span class="Right mTop10 pBottom10"><i class="like-count"></i><%=item.assemble%></span>
+                            <span class="Right mRight20 mTop10 pBottom10"><i class="coments-count"></i><%=item.bulletCurtain%></span>
+                            <div class="Clear"></div>
+                            </div>
+                            </div>
+                            </li>
+                            <%
+                            }
+                            %>
+                a.jcarousel-control-prev.ctrl.pre(href='#')
+                a.jcarousel-control-next.ctrl.next(href='#')
+        .user-msg-color-warp

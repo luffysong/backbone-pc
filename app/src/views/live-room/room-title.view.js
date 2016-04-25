@@ -13,7 +13,7 @@
 
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 
 var View = BaseView.extend({
   el: '#edit_background', // 设置View对象作用于的根元素，比如id

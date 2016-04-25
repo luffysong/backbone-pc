@@ -18,7 +18,7 @@ var user = UserModel.sharedInstanceUserModel();
 var uiConfirm = require('ui.confirm');
 var GiftModel = require('../../models/anchor/gift.model');
 var PopularityModel = require('../../models/live-room/popularity-add.model');
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 var _ = require('underscore');
 
 var msgBox = require('ui.msgBox');

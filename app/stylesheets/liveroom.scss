@@ -454,12 +454,16 @@
           }
         }
         .played-icon {
+          display: inline-block;
+          width: 52px;
+          height: 52px;
           position: absolute;
           z-index: 10;
           left: 50%;
           top: 50%;
           margin-top: -26px;
           margin-left: -26px;
+          background: url('../images/live_paly_03.png') no-repeat;
         }
         .img-wrap {
           width: 345px;
@@ -676,6 +680,10 @@
   .BroadcastRoom {
     width: 895px;
     margin: 0 auto;
+    object{
+      display: block;
+      margin: 0 auto;
+    }
   }
 
   .user-info-block {

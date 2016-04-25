@@ -25,7 +25,7 @@ var GiftModel = require('../../models/anchor/gift.model');
 var UserInfo = require('./user.js');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 var _ = require('underscore');
 
 var View = BaseView.extend({

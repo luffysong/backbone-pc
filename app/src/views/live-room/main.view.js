@@ -252,8 +252,19 @@ var View = BaseView.extend({
         Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
         self.checkUserIsKickout(self.currentGroupInfo.Notification);
       }
-    }, function (err) {
-      console.log(err);
+    }, function () {
+      // TODO
+      uiConfirm.show({
+        title: '进入失败',
+        content: '加入房间失败,请重新登陆后进入',
+        cancelBtn: false,
+        okFn: function () {
+          self.goBack('/');
+        },
+        cancelFn: function () {
+          self.goBack('/');
+        }
+      });
     });
   },
   getUserInfo: function () {
@@ -339,8 +350,12 @@ var View = BaseView.extend({
       }
     }
   },
-  goBack: function () {
-    window.history.go(-1);
+  goBack: function (url) {
+    if (url) {
+      window.location.href = url;
+    } else {
+      window.history.go(-1);
+    }
   },
   loopRoomInfo: function (time) {
     var self = this;

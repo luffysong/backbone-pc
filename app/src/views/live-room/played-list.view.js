@@ -16,7 +16,7 @@ var BaseView = base.View; // View的基类
 var PlayedListModel = require('../../models/live-room/played-list.model');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var Backbone = require('Backbone');
+var Backbone = window.Backbone;
 var _ = require('underscore');
 
 var View = BaseView.extend({
@@ -27,7 +27,7 @@ var View = BaseView.extend({
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
-
+    this.defineEventInterface();
   },
   // 当模板挂载到元素之后
   afterMount: function () {
@@ -49,8 +49,6 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    this.defineEventInterface();
-
     // this.initCarousel();
   },
   defineEventInterface: function () {
@@ -61,6 +59,7 @@ var View = BaseView.extend({
         self.bindData(data.creator.uid);
       }
     });
+    console.log(Backbone._events);
   },
   initCarousel: function () {
     var warp = $('#palyedJcarousel');
