@@ -95,7 +95,7 @@
     overflow: hidden;
     //height: 168px;
     padding: 8px;
-    //width: 289px;
+    width: 305px;
     .user-info-wrap {
       .avator {
         width: 65px;
@@ -162,7 +162,7 @@
     .room-notice {
       background-color: #333333;
       padding: 5px;
-      height: 38px;
+      height: 50px;
       .notice {
         font-size: 12px;
         line-height: 14px;
@@ -191,10 +191,11 @@
     position: relative;
     .msg-text {
       .msg {
-        height: 45px;
+        height: 55px;
         background-color: #313234;
         width: 235px;
         color: #999999;
+        margin-right: 10px;
       }
       .send {
         height: 55px;

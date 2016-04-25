@@ -13,14 +13,14 @@
 var Backbone = require('backbone');
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
+var _ = require('underscore');
 var Auxiliary = require('auxiliary-additions');
+
 var URL = Auxiliary.url;
-var uiConfirm = require('ui.confirm');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
-var msgBox = require('ui.msgBox');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('imServer');
@@ -29,7 +29,8 @@ var UserInfo = require('./user.js');
 var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model.js');
 var FlashAPI = require('FlashApi');
 var store = Auxiliary.storage;
-var _ = require('underscore');
+var uiConfirm = require('ui.confirm');
+var msgBox = require('ui.msgBox');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -107,7 +108,10 @@ var View = BaseView.extend({
   },
   fetchUserIMSig: function (groupId) {
     var self = this;
-    imModel.fetchIMUserSig(function (sig) {
+    var defer = imModel.fetchIMUserSig();
+
+    defer.then(function (sig) {
+      console.log('sig', sig);
       if (sig.roleType === 2) {
         uiConfirm.show({
           title: '请登录',
@@ -121,31 +125,35 @@ var View = BaseView.extend({
           }
         });
       } else {
-        self.userIMSig = sig;
-        self.initWebIM();
-        var goBack = function () {
-          // window.history.go(-1);
-          window.location.href = '/';
-        };
-        YYTIMServer.applyJoinGroup(groupId, function () {
-          Backbone.trigger('event:roomInfoReady', self.roomInfo);
-          if (self.roomInfo.status === 2) {
-            self.loopRoomInfo();
-          }
-        }, function (res) {
-          if (res.ErrorCode === 10013) {
-            Backbone.trigger('event:roomInfoReady', self.roomInfo);
-            if (self.roomInfo.status === 2) {
-              self.loopRoomInfo();
-            }
-          } else {
-            uiConfirm.show({
-              title: '进入房间',
-              content: '进入房间失败,请稍后重试',
-              cancelFn: goBack,
-              okFn: goBack
-            });
-          }
+        self.userJoinGroup(sig, groupId);
+      }
+    });
+  },
+  userJoinGroup: function (sig, groupId) {
+    var self = this;
+
+    self.userIMSig = sig;
+    self.initWebIM();
+    var goBack = function () {
+      window.location.href = '/';
+    };
+    YYTIMServer.applyJoinGroup(groupId, function () {
+      Backbone.trigger('event:roomInfoReady', self.roomInfo);
+      if (self.roomInfo.status === 2) {
+        self.loopRoomInfo();
+      }
+    }, function (res) {
+      if (res.ErrorCode === 10013) {
+        Backbone.trigger('event:roomInfoReady', self.roomInfo);
+        if (self.roomInfo.status === 2) {
+          self.loopRoomInfo();
+        }
+      } else {
+        uiConfirm.show({
+          title: '进入房间',
+          content: '进入房间失败,请稍后重试',
+          cancelFn: goBack,
+          okFn: goBack
         });
       }
     });
@@ -234,7 +242,8 @@ var View = BaseView.extend({
 
         self.joinRoom();
         self.fetchUserIMSig(data.imGroupid);
-        self.checkRoomStatus(data.status);
+        // TODO
+        // self.checkRoomStatus(data.status);
       } else {
         errFn();
       }
@@ -254,17 +263,17 @@ var View = BaseView.extend({
       }
     }, function () {
       // TODO
-      uiConfirm.show({
-        title: '进入失败',
-        content: '加入房间失败,请重新登陆后进入',
-        cancelBtn: false,
-        okFn: function () {
-          self.goBack('/');
-        },
-        cancelFn: function () {
-          self.goBack('/');
-        }
-      });
+      /*      uiConfirm.show({
+       title: '进入失败',
+       content: '加入房间失败,请重新登陆后进入',
+       cancelBtn: false,
+       okFn: function () {
+       self.goBack('/');
+       },
+       cancelFn: function () {
+       self.goBack('/');
+       }
+       });*/
     });
   },
   getUserInfo: function () {

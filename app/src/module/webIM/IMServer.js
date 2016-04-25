@@ -26,7 +26,8 @@ var imServer = {
  */
 imServer.init = function (options) {
   var self = this;
-  imModel.fetchIMUserSig(function (imSig) {
+  var defer = imModel.fetchIMUserSig();
+  defer.then(function (imSig) {
     var loginInfo = {
       sdkAppID: imSig.imAppid, // 用户所属应用id
       appIDAt3rd: imSig.imAppid, // 用户所属应用id

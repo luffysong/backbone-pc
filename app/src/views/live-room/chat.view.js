@@ -94,7 +94,8 @@ var View = BaseView.extend({
     });
 
     Backbone.on('event:visitorSendMessage', function (data) {
-      if (UserInfo.isDisbaleTalk(user.$get().userId, self.roomInfo.id)) {
+      console.log(user, user.get('userId'));
+      if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
         msgBox.showTip('您已经被禁言,不能发弹幕哦');
       } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
         msgBox.showTip('主播:进行了锁屏操作');
@@ -106,7 +107,7 @@ var View = BaseView.extend({
     });
 
     Backbone.on('event:visitorInteractive', function (data) {
-      if (UserInfo.isDisbaleTalk(user.$get().userId, self.roomInfo.id)) {
+      if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
         msgBox.showTip('您已经被主播禁言十分钟.');
       } else {
         // self.beforeSendMsg(data);
@@ -330,7 +331,8 @@ var View = BaseView.extend({
     });
   },
   checkUserStatus: function () {
-    if (UserInfo.isDisbaleTalk(user.$get().userId, self.roomInfo.id)) {
+    console.log(user, user.get('userId'));
+    if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
       msgBox.showTip('您已经被禁言,不能发弹幕哦');
       return false;
     }
@@ -343,7 +345,7 @@ var View = BaseView.extend({
       msgBox.showTip('您已被主播禁言10分钟!');
       Backbone.trigger('event:currentUserDisableTalk', true);
       var cur = new Date();
-      UserInfo.setDisableTalk(user.$get().userId, this.roomInfo.id, cur.getTime() + 10 * 60 * 1000);
+      UserInfo.setDisableTalk(user.get('userId'), this.roomInfo.id, cur.getTime() + 10 * 60 * 1000);
     }
   }
 });

@@ -263,6 +263,7 @@ var UserModel = BaseModel.extend({
   }
 });
 
+
 var shared = null;
 UserModel.sharedInstanceUserModel = function () {
   if (!shared) {
@@ -274,4 +275,12 @@ UserModel.sharedInstanceUserModel = function () {
   }
   return shared;
 };
+
+UserModel.get = function (name) {
+  if (shared) {
+    return shared.get(name);
+  }
+  return null;
+};
+
 module.exports = UserModel;

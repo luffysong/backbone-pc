@@ -5,8 +5,8 @@
 'use strict';
 
 var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
-var Auxiliary = require('auxiliary-additions');
-var Storage = Auxiliary.storage;
+var base = require('base-extend-backbone');
+var Storage = base.storage;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var instance = null;
@@ -44,6 +44,7 @@ module.exports = {
     instance.getInfo(okFn, errFn);
   },
   isDisbaleTalk: function (userId, roomId) {
+    console.log(Storage);
     var list = Storage.get('userDisableTalkTime');
     if (!list) {
       return false;

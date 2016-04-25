@@ -62,8 +62,8 @@ var View = BaseView.extend({
     });
     Backbone.on('event:visitorSendGift', function (data) {
       self.sendMessageToChat(_.extend({
-        nickName: user.$get('userName'),
-        smallAvatar: user.$get('bigheadImg'),
+        nickName: user.get('userName'),
+        smallAvatar: user.get('bigheadImg'),
         roomId: self.roomInfo.id || ''
       }, data));
     });
@@ -96,11 +96,11 @@ var View = BaseView.extend({
     this.sendMessageToChat({
       msgType: 0,
       content: $.trim(this.elements.txtMessage.val()),
-      nickName: user.$get('userName'),
+      nickName: user.get('userName'),
       style: {
         fontColor: this.elements.btnChooseColor.attr('data-color') || '#999999'
       },
-      smallAvatar: user.$get('bigheadImg'),
+      smallAvatar: user.get('bigheadImg'),
       roomId: this.roomInfo.id
     });
     this.elements.txtMessage.val('');
