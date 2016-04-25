@@ -131,32 +131,48 @@ var View = BaseView.extend({
   },
   userJoinGroup: function (sig, groupId) {
     var self = this;
-
     self.userIMSig = sig;
     self.initWebIM();
-    var goBack = function () {
-      window.location.href = '/';
-    };
+
     YYTIMServer.applyJoinGroup(groupId, function () {
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
       if (self.roomInfo.status === 2) {
         self.loopRoomInfo();
       }
     }, function (res) {
-      if (res.ErrorCode === 10013) {
-        Backbone.trigger('event:roomInfoReady', self.roomInfo);
-        if (self.roomInfo.status === 2) {
-          self.loopRoomInfo();
-        }
-      } else {
-        uiConfirm.show({
-          title: '进入房间',
-          content: '进入房间失败,请稍后重试',
-          cancelFn: goBack,
-          okFn: goBack
-        });
-      }
+      self.imErrorHandler(res);
     });
+  },
+  /**
+   * webim 错误处理
+   * @constructor
+   */
+  imErrorHandler: function (res) {
+    var self = this;
+    var callback = function () {
+      imModel.remove();
+      self.goBack();
+    };
+    if (res.ErrorCode === 10013) {
+      Backbone.trigger('event:roomInfoReady', self.roomInfo);
+      if (self.roomInfo.status === 2) {
+        self.loopRoomInfo();
+      }
+    } else if (res.ErrorCode === 70001) {
+      uiConfirm.show({
+        title: '登陆已过期',
+        content: '您的登陆信息已经过期,请重新登陆!',
+        cancelBtn: false,
+        okFn: callback
+      });
+    } else {
+      uiConfirm.show({
+        title: '进入房间',
+        content: '进入房间失败,请稍后重试',
+        cancelFn: self.goBack,
+        okFn: self.goBack
+      });
+    }
   },
   renderPage: function () {
     var RoomTitle = require('./room-title.view');

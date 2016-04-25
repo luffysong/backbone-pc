@@ -53,13 +53,15 @@ var Model = BaseModel.extend({
    * @return {[type]}            [description]
    */
   fetchIMUserSig: function () {
-      //  先获取本地签名
+    //  先获取本地签名
     var defer = $.Deferred();
     var token;
     var imSig;
     imSig = storage.get('imSig');
     if (imSig) {
-      this.set({ data: imSig });
+      this.set({
+        data: imSig
+      });
       defer.resolve(imSig);
       return defer.promise();
     }
@@ -97,6 +99,9 @@ var Model = BaseModel.extend({
       defer.reject(e);
     });
     return defer.promise();
+  },
+  remove: function () {
+    storage.remove('imSig');
   }
 });
 
