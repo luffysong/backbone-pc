@@ -7,11 +7,12 @@ var $ = require('jquery');
 $(function () {
   'use strict';
   var TopBarView = require('TopBarView');
+  var MainView = require('./views/live-room/main.view');
+
   var a = new TopBarView();
+
+  a = new MainView();
+
   console.log(a);
-
-  // var MainView = require('./view/live-room/main.view');
-  // new MainView();
-
   require('../stylesheets/liveroom.scss');
 });

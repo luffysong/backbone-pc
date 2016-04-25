@@ -15,7 +15,7 @@ var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var uiConfirm = require('ui.confirm');
 var DateTime = require('BusinessDate');
-var FlashAPI = require('FlashAPI');
+var FlashAPI = require('FlashApi');
 var msgBox = require('ui.msgBox');
 var YYTIMServer = require('imServer');
 // var RoomDetailModel = require('../../models/anchor/room-detail.model');
@@ -31,7 +31,7 @@ var _ = require('underscore');
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
   rawLoader: function () { // 可用此方法返回字符串模版
-    return require('../../template/live-room/chat.html');
+    return require('./template/chat.html');
   },
   events: { // 监听事件
 
@@ -53,7 +53,7 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+    this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
     this.defineEventInterface();
@@ -252,7 +252,7 @@ var View = BaseView.extend({
    * @returns {*}
    */
   getMessageTpl: function () {
-    return require('../../anchor/template/chat-message-tpl.html');
+    return require('../anchor/template/chat-message-tpl.html');
   },
   sendMsgToGroup: function (msgObj) {
     this.addMessage(msgObj);

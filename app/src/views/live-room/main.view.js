@@ -47,22 +47,22 @@ var View = BaseView.extend({
 
     this.roomInfoPeriod = 5 * 1000;
 
-    this.roomDetail = RoomDetailModel.sharedInstanceUserModel();
+    this.roomDetail = RoomDetailModel.sharedInstanceModel();
 
-    this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceUserModel();
-    this.inAndOutRoom = InAndOurRoomModel.sharedInstanceUserModel();
+    this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
+    this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
 
     this.roomDetailParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken(),
+      access_token: user.getWebToken(),
       roomId: ''
     };
 
-    this.roomLongPolling = RoomLongPollingModel.sharedInstanceUserModel();
+    this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
 
     this.anchorInfoParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: 'web-' + user.getToken()
+      access_token: user.getWebToken()
     };
     this.inAndRoomParams = {
       deviceinfo: '{"aid": "30001001"}',
@@ -83,7 +83,7 @@ var View = BaseView.extend({
       msgBox.showTip('请登录后观看直播!');
       window.location.href = '/web/login.html';
     }
-    this.flashAPI = FlashAPI.sharedInstanceFlashAPI({
+    this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
 

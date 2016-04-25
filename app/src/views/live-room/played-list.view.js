@@ -36,7 +36,7 @@ var View = BaseView.extend({
 
     this.playedList = el.find('#playedListWrap');
 
-    this.playedListModel = PlayedListModel.sharedInstanceUserModel();
+    this.playedListModel = PlayedListModel.sharedInstanceModel();
 
     this.playedListParams = {
       deviceinfo: '{"aid":"30001001"}',

@@ -5,8 +5,8 @@
 'use strict';
 
 var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
-var Storage = require('store');
-// var DateTimeHelper = require('DateTime');
+var Auxiliary = require('auxiliary-additions');
+var Storage = Auxiliary.storage;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var instance = null;
@@ -17,7 +17,7 @@ function UserInfoView() {
 
 UserInfoView.prototype.getInfo = function (okFn, errFn) {
   var promise;
-  this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceUserModel();
+  this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
   this.anchorInfoParams = {
     deviceinfo: '{"aid": "30001001"}',
     access_token: user.getWebToken()
