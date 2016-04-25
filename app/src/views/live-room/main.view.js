@@ -111,7 +111,6 @@ var View = BaseView.extend({
     var defer = imModel.fetchIMUserSig();
 
     defer.then(function (sig) {
-      console.log('sig', sig);
       if (sig.roleType === 2) {
         uiConfirm.show({
           title: '请登录',
@@ -259,7 +258,7 @@ var View = BaseView.extend({
         self.joinRoom();
         self.fetchUserIMSig(data.imGroupid);
         // TODO
-        // self.checkRoomStatus(data.status);
+        self.checkRoomStatus(data.status);
       } else {
         errFn();
       }
@@ -273,23 +272,22 @@ var View = BaseView.extend({
           return item.GroupId === self.roomInfo.imGroupid;
         });
 
-        // TODO
         Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
         self.checkUserIsKickout(self.currentGroupInfo.Notification);
+        self.checkUserIsDisabled(self.currentGroupInfo.Introduction);
       }
     }, function () {
-      // TODO
-      /*      uiConfirm.show({
-       title: '进入失败',
-       content: '加入房间失败,请重新登陆后进入',
-       cancelBtn: false,
-       okFn: function () {
-       self.goBack('/');
-       },
-       cancelFn: function () {
-       self.goBack('/');
-       }
-       });*/
+      uiConfirm.show({
+        title: '进入失败',
+        content: '加入房间失败,请重新登陆后进入',
+        cancelBtn: false,
+        okFn: function () {
+          self.goBack('/');
+        },
+        cancelFn: function () {
+          self.goBack('/');
+        }
+      });
     });
   },
   getUserInfo: function () {
@@ -299,12 +297,6 @@ var View = BaseView.extend({
       Backbone.trigger('event:currentUserInfoReady', userInfo);
       self.initRoom();
     });
-    // this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
-    //     if(res){
-    //         Backbone.trigger('event:currentUserInfoReady', res.data);
-    //     }
-    // }, function () {
-    // });
   },
   getRoomInfo: function (okFn, errFn) {
     var self = this;
@@ -338,8 +330,7 @@ var View = BaseView.extend({
         break;
     }
   },
-  checkUserIsKickout: function (notifyInfo) {
-    var self = this;
+  parseNotifyInfo: function (notifyInfo) {
     var notify = null;
     try {
       if (_.isString(notifyInfo)) {
@@ -348,10 +339,15 @@ var View = BaseView.extend({
         notify = notifyInfo;
       }
     } catch (e) {
-      console.log(e);
+      return null;
     }
+    return notify;
+  },
+  checkUserIsKickout: function (notifyInfo) {
+    var self = this;
+    var notify = self.parseNotifyInfo(notifyInfo);
     var msg = '您已经被主播踢出房间,肿么又回来了';
-    if (notifyInfo.isEvent) {
+    if (notify && notifyInfo.isEvent) {
       msg = '您已经被主播踢出房间!';
     }
     if (notify) {
@@ -375,6 +371,16 @@ var View = BaseView.extend({
       }
     }
   },
+  /**
+   * 检查用户是否已经被禁言
+   */
+  checkUserIsDisabled: function (notifyInfo) {
+    var self = this;
+    var notify = self.parseNotifyInfo(notifyInfo);
+    if (notify) {
+      UserInfo.setLockScreen(this.roomInfo.id, notify.blockState);
+    }
+  },
   goBack: function (url) {
     if (url) {
       window.location.href = url;
@@ -387,7 +393,6 @@ var View = BaseView.extend({
 
     self.roomInfoTimeId = setTimeout(function () {
       self.roomDetailParams.roomId = self.roomId;
-      // self.getRoomInfo(function (res) {
       self.getRoomLoopInfo(function (res) {
         var data = res.data;
         Backbone.trigger('event:updateRoomInfo', data);
@@ -395,6 +400,7 @@ var View = BaseView.extend({
           Backbone.trigger('event:liveShowEnded', data);
         } else if (data.roomStatus === 2) {
           self.loopRoomInfo();
+          self.getGroupInfo(self.roomInfo.imGroupid);
         }
       });
     }, !!time ? time : self.roomInfoPeriod);

@@ -44,7 +44,6 @@ module.exports = {
     instance.getInfo(okFn, errFn);
   },
   isDisbaleTalk: function (userId, roomId) {
-    console.log(Storage);
     var list = Storage.get('userDisableTalkTime');
     if (!list) {
       return false;
