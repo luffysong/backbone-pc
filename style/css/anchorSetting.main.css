@@ -2172,5 +2172,35 @@ img {
   height: 30px;
   font-size: 12px;
 }
+.anchorrMsg {
+  width: inherit !important;
+}
+.anchorrMsg .user-name {
+  margin-right: 16px!important;
+}
+.anchorrMsg .gender {
+  display: inline-block;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  margin-top: 18px;
+}
+.anchorrMsg .gender.male {
+  background-image: url(/img/gender_2.png);
+}
+.anchorrMsg .gender.female {
+  background-image: url(/img/gender_2.png);
+}
+.top-user-info {
+  font-size: 12px;
+  color: #999;
+}
+.top-user-info span {
+  margin-right: 16px;
+}
+.top-user-info span.black {
+  color: #000;
+  margin: 0 3px;
+}
 
 /*# sourceMappingURL=anchorSetting.main.css.map*/

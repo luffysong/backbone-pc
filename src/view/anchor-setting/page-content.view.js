@@ -63,8 +63,10 @@ var View = BaseView.extend({
     this.createLiveView = new CreateLiveView();
     this.noopenListView = new NoOpenListView();
     this.historyListView = new HistoryListView();
-    this.recordListView = new RecordLiveView();
-    this.followingView = new FollowingView();
+    if (!imModel.isAnchor()) {
+      this.recordListView = new RecordLiveView();
+      this.followingView = new FollowingView();
+    }
 
 
     var viewName = URL.parse(window.location.href).query.view || '';
@@ -155,8 +157,8 @@ var View = BaseView.extend({
       ];
     } else {
       this.menuList.list = [
-        {name: '观看记录', pannel: 'recordList'},
-        {name: '我的关注', pannel: 'followingList', active: true}
+        {name: '观看记录', pannel: 'recordList', active: true},
+        {name: '我的关注', pannel: 'followingList'}
       ];
     }
     this.menuList.list.push({name: '个人设置', pannel: 'tabSetting'});
@@ -164,6 +166,7 @@ var View = BaseView.extend({
     if (this.menuTpl) {
       var html = this.compileHTML(this.menuTpl, this.menuList);
       this.menuWrap.html(html);
+      this.menuWrap.children(':first').click();
     }
   }
 });
