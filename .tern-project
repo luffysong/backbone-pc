@@ -1,0 +1,10 @@
+{
+  "ecmaVersion": 5,
+  "libs": [
+    "jquery",
+    "underscore"
+  ],
+  "loadEagerly": [
+    "app/src/module/**/*.*"
+  ]
+}
