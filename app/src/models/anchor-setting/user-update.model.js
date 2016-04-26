@@ -4,9 +4,8 @@ var base = require('base-extend-backbone');
 var Config = require('config');
 var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
-var url = '{{url_prefix}}/user/update.json';
 var Model = BaseModel.extend({
-  url: url,
+  url: '{{url_prefix}}/user/update.json',
   beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {

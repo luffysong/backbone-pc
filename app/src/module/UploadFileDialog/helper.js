@@ -14,6 +14,7 @@ var base = require('base-extend-backbone');
 var Auxiliary = require('auxiliary-additions');
 var BaseView = base.View;
 var UploadFile = Auxiliary.UploadFile;
+
 var uploadIng = '正在上传';
 var uploadDone = '上传完成!';
 var msgBox = require('ui.msgBox');
@@ -29,13 +30,16 @@ var View = BaseView.extend({
   },
   // 当模板挂载到元素之后
   afterMount: function () {
+
+  },
+  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
+  ready: function (options) {
+    this.$el = $(options.id);
+    this._ICEinitEvent();
     this.formDOM = this.findDOMNode('.upload-form');
     this.imgSrcDOM = this.findDOMNode('.imgboxFile');
     this.imageStateDOM = this.findDOMNode('.upload-image-state');
     this.inputTextDOM = this.findDOMNode('.input-text');
-  },
-  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function (options) {
     var self = this;
     var temp = {
       gcmd: [
@@ -48,12 +52,12 @@ var View = BaseView.extend({
     var ctrlData = options.ctrlData || temp;
     var uploadParams = {
       el: this.formDOM,
-      url: 'http:// image.yinyuetai.com/edit',
+      url: 'http://image.yinyuetai.com/edit',
       data: ctrlData,
       filename: 'img',
       className: 'file'
     };
-    this.upload = UploadFile.classInstanceUploadFile(uploadParams);
+    this.upload = new UploadFile(uploadParams);
     this.upload.done(function (response) {
       self.imageStateDOM.html(uploadDone);
       self.previewImage(response);

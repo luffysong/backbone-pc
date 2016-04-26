@@ -6,9 +6,9 @@ var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
 var BusinessDate = require('BusinessDate');
 var businessDate = new BusinessDate();
-var url = '{{url_prefix}}/room/no_open_list.json';
+var posterPicImage = require('../../../images/aP-list-ad.jpg');
 var Model = BaseModel.extend({
-  url: url,
+  url: '{{url_prefix}}/room/no_open_list.json',
   beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
@@ -37,6 +37,9 @@ var Model = BaseModel.extend({
       value.liveVideoTime = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
       value.lookUrl = '/web/anchor.html?roomId=' + value.id;
       value.liCacheKey = value.id + '-' + value.streamName;
+      if (!value.posterPic) {
+        value.posterPic = posterPicImage;
+      }
     }
     return response;
   }

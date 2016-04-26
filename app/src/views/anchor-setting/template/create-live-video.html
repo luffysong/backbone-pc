@@ -21,7 +21,7 @@
 				{{each items as item i}}
 					<div class="select" style="{{item.style}}" data-index="{{i}}">
 						<span class="date">{{item.cur}}</span>
-						<img src="../img/select-ico.jpg" alt="">
+						<img src="{{timeImage}}" alt="" >
 						<ul class="selectDate" data-index="{{i}}" data-tag="{{item.tag}}">
 							{{each item.cells as cell}}
 								<li>{{cell}}</li>

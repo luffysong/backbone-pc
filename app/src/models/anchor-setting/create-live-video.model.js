@@ -4,9 +4,16 @@ var base = require('base-extend-backbone');
 var Config = require('config');
 var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
-
+/*
+  deviceinfo={{deviceinfo}}
+  access_token=web-{{access_token}}
+  roomName={{roomName}}
+  roomDesc={{roomDesc}}
+  artistId={{artistId}}
+  liveTime={{liveTime}}
+ */
 var Model = BaseModel.extend({
-  url: '{{url_prefix}}/index?id={{id}}',
+  url: '{{url_prefix}}/room/create.json',
   beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {

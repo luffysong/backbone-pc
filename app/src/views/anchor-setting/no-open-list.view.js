@@ -16,7 +16,7 @@ var user = UserModel.sharedInstanceUserModel();
 var businessDate = new BusinessDate();
 
 var View = BaseView.extend({
-  el: 'noOpenContent',
+  el: '#noOpenContent',
   events: {
     'click li': 'checkLiveVideoHandler',
     'click .uploadImage': 'editCoverImageHandler',

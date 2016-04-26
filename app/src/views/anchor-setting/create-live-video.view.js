@@ -9,8 +9,9 @@ var CreateLiveModel = require('../../models/anchor-setting/create-live-video.mod
 var ArtistCompleteModel = require('../../models/anchor-setting/artist-autocomplete.model');
 var lighten;
 var msgBox = require('ui.msgBox');
+var timeImage = require('../../../images/select-ico.jpg');
 var View = BaseView.extend({
-  el: 'createLiveVideo',
+  el: '#createLiveVideo',
   events: { //  监听事件
     'click #createVideo': 'createVideoHandler',
     'click .select': 'businessDateToggle',
@@ -79,7 +80,7 @@ var View = BaseView.extend({
   },
   initRender: function () {
     var data = this.dateDataStructure();
-    var dateHTML = this.compileHTML(this.liveTimeTemp, { items: data });
+    var dateHTML = this.compileHTML(this.liveTimeTemp, { items: data, timeImage: timeImage });
     this.liveTime.html(dateHTML);
     this.liveTimeUl = this.liveTime.find('.select>ul');
     this.liveTimeSpan = this.liveTime.find('.date');

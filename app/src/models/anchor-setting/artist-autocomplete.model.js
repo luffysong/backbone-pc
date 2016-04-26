@@ -4,9 +4,9 @@ var base = require('base-extend-backbone');
 var Config = require('config');
 var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
-
+// deviceinfo={{deviceinfo}}&keyword={{keyword}}&offset=100
 var Model = BaseModel.extend({
-  url: '{{url_prefix}}/index?id={{id}}',
+  url: '{{url_prefix}}/search/artist_autocomplete.json',
   beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
