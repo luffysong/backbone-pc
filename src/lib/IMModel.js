@@ -24,7 +24,6 @@ var Model = BaseModel.extend({
      * @return {Boolean} [description]
      */
     isAnchor: function () {
-        //deviceinfo={"aid":"30001001"}
         return !!this.$get('data.anchor');
     },
     setTokenUrl: function (token) {

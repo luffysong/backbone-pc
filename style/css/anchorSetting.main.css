@@ -2039,5 +2039,106 @@ img {
 .editor_bg_close_x:hover {
   color: #39c4b2;
 }
+.record-wrap {
+  font-family: '\5FAE\8F6F\96C5\9ED1';
+}
+.record-wrap .item {
+  position: relative;
+  border-left: 1px solid #e1e1e1;
+  padding-top: 20px;
+}
+.record-wrap .item .line {
+  position: absolute;
+  top: 50px;
+  left: -8px;
+  color: #666666;
+}
+.record-wrap .item .line .point {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 3px solid #fff;
+  background-color: #e1e1e1;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  vertical-align: middle;
+}
+.record-wrap .item .content {
+  margin-left: 110px;
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 20px;
+}
+.record-wrap .item .content .img-wrap {
+  width: 215px;
+  height: 120px;
+  overflow: hidden;
+  display: inline-block;
+}
+.record-wrap .item .content .info-wrap {
+  margin-left: 16px;
+}
+.record-wrap .item .content .info-wrap .item-title {
+  margin-top: 5px;
+  color: #4d4d4d;
+  font-size: 16px;
+  font-weight: 600;
+}
+.record-wrap .item .content .info-wrap .time {
+  margin: 10px 0;
+  color: #999999;
+}
+.record-wrap .item .content .info-wrap .time span {
+  color: #4d4d4d;
+}
+.record-wrap .item .content .info-wrap .anchor {
+  padding-top: 8px;
+  line-height: 35px;
+}
+.record-wrap .item .content .info-wrap .anchor img {
+  width: 36px;
+  height: 36px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.record-wrap .item .content .info-wrap .anchor .name {
+  color: #01ceb5;
+  margin-left: 5px;
+  font-size: 14px;
+}
+.record-wrap .item .icon-list {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #f8f8f8;
+  height: 40px;
+  text-align: center;
+  padding: 0 10px;
+}
+.record-wrap .item .icon-list span {
+  background-repeat: no-repeat;
+  display: inline-block;
+  padding-left: 30px;
+  background-position: 0 5px;
+  margin: 10px 5px 0;
+  vertical-align: middle;
+}
+.record-wrap .item .icon-list .view {
+  background-image: url(/img/record-icons_1.png);
+}
+.record-wrap .item .icon-list .chat {
+  background-image: url(/img/record-icons_2.png);
+}
+.record-wrap .item .icon-list .like {
+  background-image: url(/img/record-icons_3.png);
+}
+.record-wrap .item .icon-list .hot {
+  background-image: url(/img/record-icons_4.png);
+  background-position: 0 0;
+}
 
 /*# sourceMappingURL=anchorSetting.main.css.map*/

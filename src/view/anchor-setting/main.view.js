@@ -39,7 +39,7 @@ var View = BaseView.extend({
     },
     //当模板挂载到元素之前
     beforeMount: function () {
-        auth.onlyAnchorUse();
+        //auth.onlyAnchorUse();
         this.topbarView = new TopBarView();
         this.isLogined = false;
         this.upload = null;
@@ -125,8 +125,9 @@ var View = BaseView.extend({
         imModel.fetchIMUserSig(function (sig) {
             if (!sig.anchor) {
                 //console.log('跳转走人');
-                store.remove('imSig');
+                //store.remove('imSig');
                 //跳转走人
+                self.initRender();
             } else {
                 //继续处理主播
                 self.anchorSig = sig;
