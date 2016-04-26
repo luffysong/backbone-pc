@@ -9,5 +9,5 @@ $(function(){
   //var MainView = require('./view/playback/main.view');
   //new MainView();
 
-  require('../style/less/live-room.less');
+  require('../style/less/playbacklist.less');
 });

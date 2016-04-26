@@ -1,3 +1,63 @@
 @import "live-room";
-
-
+.am-container{
+  background-color: #fff;
+}
+.play-back-list {
+  .top-header{
+    margin: 10px 0 20px;
+    font-size: 18px;
+  }
+  .recent-list-wrap {
+    height:inherit;
+    .list {
+      padding: 0!important;
+      .item {
+        .img-wrap{
+          width: 378px!important;
+          height:218px!important;
+        }
+        .hover-wrap {
+          position: relative;
+          width: 378px!important;
+          height:218px!important;
+          div{
+            padding: 0 8px;
+            vertical-align: middle;
+            line-height: 30px;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7f000000', EndColorStr='#7f000000');
+          }
+          .top {
+            position: absolute;
+            display: inline-block;
+            color: #ccc;
+            top: 10px;
+            right: 10px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+          }
+          .bottom {
+            position: absolute;
+            display: inline-block;
+            left: 10px;
+            bottom: 10px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            .icons{
+              margin-right: 5px;
+              font-size: 12px;
+            }
+          }
+        }
+        .name {
+          border-bottom: 1px solid #e1e1e1;
+          padding: 15px 0;
+        }
+      }
+    }
+  }
+}

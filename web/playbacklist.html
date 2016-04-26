@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../style/loginbox.css">
     <!-- build:css ../style/css/playbacklist.main.css -->
     <link rel="stylesheet" type="text/css" href="../style/css/anchor.main.css">
-    <link rel="stylesheet" type="text/css" href="../style/css/liveRoom.main.css">
+    <link rel="stylesheet" type="text/css" href="../style/css/playbacklist.main.css">
     <!-- endbuild -->
 </head>
 <body>
@@ -37,39 +37,80 @@
 <!--顶部导航栏$  -->
 <!--^内容区域 -->
 <div class="am-container ">
-    <div class="common_con live-room-wrap">
-        <div class="top-header">
-            <h3>精彩回放</h3>
+    <div class="common_con live-room-wrap play-back-list">
+        <div class="top-header mLeft10">
+            <h3 class="green">精彩回放</h3>
         </div>
         <div class="recent-list-wrap">
             <div class="list">
+                <!---->
                 <div class="item Left mLeft10 mRight10">
                     <a class="img-wrap" href="/web/playback.html?roomId=<%=item.roomId%>">
                         <div class="hover-wrap Hand">
+                            <div class="top">人气: <span class="green">34234</span></div>
+                            <div class="bottom">
+                                <span class="icons chat">2312</span>
+                                <span class="icons like">2312</span>
+                            </div>
                             <img class="played-icon" src="/img/live_paly_03.png" alt="">
                         </div>
                         <img src="/img/bg-demo.jpg" data-src="/img/user_47.jpg" alt="">
                     </a>
-                    <div class="name mTop15"><%=item.roomName%></div>
-                    <div class="info mTop10 gary2">
-                        <div class="Clear"></div>
-                    </div>
-                    <!--<div class="btn-wrap mTop10 pAll5">-->
-                        <!--<div class="Left gary2 mTop10 pBottom10">人气: <span class="count"><%=item.popularity%></span>-->
-                        <!--</div>-->
-                                        <!--<span class="Right mTop10 pBottom10"><i-->
-                                                <!--class="like-count"></i>22</span>-->
-                                        <!--<span class="Right mRight20 mTop10 pBottom10"><i-->
-                                                <!--class="coments-count"></i>222</span>-->
-                        <!--<div class="Clear"></div>-->
-                    <!--</div>-->
+                    <div class="name  mBottom15"><%=item.roomName%></div>
                 </div>
+                <!---->
+                <div class="item Left mLeft10 mRight10">
+                    <a class="img-wrap" href="/web/playback.html?roomId=<%=item.roomId%>">
+                        <div class="hover-wrap Hand">
+                            <div class="top">人气: <span class="green">34234</span></div>
+                            <div class="bottom">
+                                <span class="icons chat">2312</span>
+                                <span class="icons like">2312</span>
+                            </div>
+                            <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                        </div>
+                        <img src="/img/bg-demo.jpg" data-src="/img/user_47.jpg" alt="">
+                    </a>
+                    <div class="name  mBottom15"><%=item.roomName%></div>
+                </div>
+                <!---->
+                <div class="item Left mLeft10 mRight10">
+                    <a class="img-wrap" href="/web/playback.html?roomId=<%=item.roomId%>">
+                        <div class="hover-wrap Hand">
+                            <div class="top">人气: <span class="green">34234</span></div>
+                            <div class="bottom">
+                                <span class="icons chat">2312</span>
+                                <span class="icons like">2312</span>
+                            </div>
+                            <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                        </div>
+                        <img src="/img/bg-demo.jpg" data-src="/img/user_47.jpg" alt="">
+                    </a>
+                    <div class="name  mBottom15"><%=item.roomName%></div>
+                </div>
+
+                <!---->
+                <div class="item Left mLeft10 mRight10">
+                    <a class="img-wrap" href="/web/playback.html?roomId=<%=item.roomId%>">
+                        <div class="hover-wrap Hand">
+                            <div class="top">人气: <span class="green">34234</span></div>
+                            <div class="bottom">
+                                <span class="icons chat">2312</span>
+                                <span class="icons like">2312</span>
+                            </div>
+                            <img class="played-icon" src="/img/live_paly_03.png" alt="">
+                        </div>
+                        <img src="/img/bg-demo.jpg" data-src="/img/user_47.jpg" alt="">
+                    </a>
+                    <div class="name  mBottom15"><%=item.roomName%></div>
+                </div>
+
             </div>
             <!---->
         </div>
         <!---->
         <div class="page-wrap">
-
+            1,2
         </div>
     </div>
 

@@ -10,5 +10,5 @@ $(function(){
     var MainView = require('./view/playback/main.view');
     new MainView();
 
-    require('../style/less/playbacklist.less');
+    require('../style/less/live-room.less');
 });

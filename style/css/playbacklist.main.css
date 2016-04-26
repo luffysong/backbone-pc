@@ -774,6 +774,25 @@ img {
   -webkit-border-radius: 35px;
   border-radius: 35px;
 }
+.icons {
+  background-repeat: no-repeat;
+  display: inline-block;
+  padding-left: 20px;
+  background-position: 0 8px;
+  vertical-align: middle;
+}
+.icons.view {
+  background-image: url(/img/record-icons_1.png);
+}
+.icons.chat {
+  background-image: url(/img/record-icons_2.png);
+}
+.icons.like {
+  background-image: url(/img/record-icons_3.png);
+}
+.icons.hot {
+  background-image: url(/img/record-icons_4.png);
+}
 .am-container {
   padding-bottom: 100px;
 }
@@ -1347,6 +1366,64 @@ img {
 }
 .play-back-main .room-notice {
   display: none!important;
+}
+.am-container {
+  background-color: #fff;
+}
+.play-back-list .top-header {
+  margin: 10px 0 20px;
+  font-size: 18px;
+}
+.play-back-list .recent-list-wrap {
+  height: inherit;
+}
+.play-back-list .recent-list-wrap .list {
+  padding: 0!important;
+}
+.play-back-list .recent-list-wrap .list .item .img-wrap {
+  width: 378px!important;
+  height: 218px!important;
+}
+.play-back-list .recent-list-wrap .list .item .hover-wrap {
+  position: relative;
+  width: 378px!important;
+  height: 218px!important;
+}
+.play-back-list .recent-list-wrap .list .item .hover-wrap div {
+  padding: 0 8px;
+  vertical-align: middle;
+  line-height: 30px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7f000000', EndColorStr='#7f000000');
+}
+.play-back-list .recent-list-wrap .list .item .hover-wrap .top {
+  position: absolute;
+  display: inline-block;
+  color: #ccc;
+  top: 10px;
+  right: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.play-back-list .recent-list-wrap .list .item .hover-wrap .bottom {
+  position: absolute;
+  display: inline-block;
+  left: 10px;
+  bottom: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.play-back-list .recent-list-wrap .list .item .hover-wrap .bottom .icons {
+  margin-right: 5px;
+  font-size: 12px;
+}
+.play-back-list .recent-list-wrap .list .item .name {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 15px 0;
 }
 
 /*# sourceMappingURL=playbacklist.main.css.map*/
