@@ -1185,7 +1185,7 @@ img {
   background: rgba(0, 0, 0, 0.3);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#4c000000', EndColorStr='#4c000000');
 }
-.live-room-wrap .recent-list-wrap .list .item .img-wrap .hover-wrap img {
+.live-room-wrap .recent-list-wrap .list .item .img-wrap .hover-wrap .played-icon {
   width: 52px;
   height: 52px;
 }

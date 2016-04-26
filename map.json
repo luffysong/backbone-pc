@@ -5,6 +5,7 @@
 		"login.main": "./src/login.main.js",
 		"liveRoom.main": "./src/live-room.main.js",
 		"playback.main": "./src/playback.main.js",
-		"index.main": "./src/index.main.js"
+		"index.main": "./src/index.main.js",
+		"playbacklist.main": "./src/playbacklist.main.js"
 	}
 }
