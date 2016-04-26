@@ -16,6 +16,7 @@ var CreateLiveView = require('./create-live-video.view');
 var NoOpenListView = require('./no-open-list.view');
 var HistoryListView = require('./history-list.view');
 var RecordLiveView = require('./watch-record.view');
+var FollowingView = require('./following.view');
 var UIConfirm = require('ui.Confirm');
 var store = require('store');
 var URL = require('url');
@@ -63,6 +64,7 @@ var View = BaseView.extend({
     this.noopenListView = new NoOpenListView();
     this.historyListView = new HistoryListView();
     this.recordListView = new RecordLiveView();
+    this.followingView = new FollowingView();
 
 
     var viewName = URL.parse(window.location.href).query.view || '';
@@ -153,8 +155,8 @@ var View = BaseView.extend({
       ];
     } else {
       this.menuList.list = [
-        {name: '观看记录', pannel: 'recordList', active: true},
-        {name: '我的关注', pannel: 'followingList'}
+        {name: '观看记录', pannel: 'recordList'},
+        {name: '我的关注', pannel: 'followingList', active: true}
       ];
     }
     this.menuList.list.push({name: '个人设置', pannel: 'tabSetting'});
