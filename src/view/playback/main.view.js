@@ -152,6 +152,7 @@ var View = BaseView.extend({
                     'url': data.url
                 };
                 self.roomInfo = data;
+
                 Backbone.trigger('event:roomInfoReady', self.roomInfo);
                 self.setRoomBgImg();
                 self.flashAPI.onReady(function () {

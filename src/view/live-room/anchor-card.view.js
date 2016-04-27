@@ -86,6 +86,7 @@ var View = BaseView.extend({
   },
   bindData: function (data) {
     var els = this.elements;
+    var self = this;
 
     els.anchorAvatar.attr('src', data.creator.largeAvatar);
     els.name.text(data.creator.nickName);
@@ -93,6 +94,11 @@ var View = BaseView.extend({
     var template = _.template(this.tagTpl);
 
     els.tagsWrap.html(template(data.creator));
+
+    if(data.creator.isFollowed){
+      self.btnFollow.addClass('followed').children('span').text('已关注');
+    }
+
   },
   getNoticeInfo: function () {
     var self = this;
@@ -117,7 +123,6 @@ var View = BaseView.extend({
     if (this.btnFollow.hasClass('followed')) {
       return false;
     }
-    console.log(this.roomInfo);
     this.followParams.anchorId = this.roomInfo.creator.uid;
     this.followModel.executeJSONP(self.followParams, function (res) {
       if(res.data && res.data.success){

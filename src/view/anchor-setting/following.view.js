@@ -95,7 +95,7 @@ var View = BaseView.extend({
   },
   getPageList: function (page) {
     var self = this;
-    this.params.offset = (page - 1) * 6;
+    this.params.offset = (page - 1) * 9;
     self.followListModel.executeJSONP(this.params, function (res) {
       self.renderList(res);
       if (!self.totalCount) {
