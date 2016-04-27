@@ -60,12 +60,13 @@ var View = BaseView.extend({
   ready: function () {
     this.initMenu();
 
-    this.createLiveView = new CreateLiveView();
-    this.noopenListView = new NoOpenListView();
-    this.historyListView = new HistoryListView();
     if (!imModel.isAnchor()) {
       this.recordListView = new RecordLiveView();
       this.followingView = new FollowingView();
+    }else{
+      this.noopenListView = new NoOpenListView();
+      this.historyListView = new HistoryListView();
+      this.createLiveView = new CreateLiveView();
     }
 
 
@@ -155,13 +156,13 @@ var View = BaseView.extend({
         {name: '我的直播', pannel: 'tab-my-live', active: true},
         {name: '创建直播', pannel: 'createLiveVideo'}
       ];
+      this.menuList.list.push({name: '个人设置', pannel: 'tabSetting'});
     } else {
       this.menuList.list = [
         {name: '观看记录', pannel: 'recordList', active: true},
         {name: '我的关注', pannel: 'followingList'}
       ];
     }
-    this.menuList.list.push({name: '个人设置', pannel: 'tabSetting'});
     this.menuList.list.push({name: '退出', pannel: 'signout'});
     if (this.menuTpl) {
       var html = this.compileHTML(this.menuTpl, this.menuList);

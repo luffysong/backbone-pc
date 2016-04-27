@@ -243,6 +243,10 @@ var View = BaseView.extend({
           'url': data.url
         };
         self.roomInfo = data;
+
+        //TODO
+        self.addWatchRecord(self.roomInfo.id);
+
         self.setRoomBgImg();
         self.flashAPI.onReady(function () {
           this.init(self.roomInfo);
@@ -253,7 +257,6 @@ var View = BaseView.extend({
           self.fetchUserIMSig(data.imGroupid);
           self.checkRoomStatus(data.status);
         });
-
       } else {
         errFn();
       }

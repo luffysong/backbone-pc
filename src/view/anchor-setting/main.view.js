@@ -115,7 +115,9 @@ var View = BaseView.extend({
         this.isLogined = true;
         this.profileView = new ProfileView();
         this.pageContentView = new PageContentView();
-        this.editProfileView = new EditProfileView();
+        if(imModel.isAnchor()){
+            this.editProfileView = new EditProfileView();
+        }
         this.updatePasswordView = new UpdatePasswordView();
 
     },
