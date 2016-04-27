@@ -16,6 +16,11 @@ var profileTemp = require('../../template/anchor-setting/profile.html');
 var userCard = require('../../template/anchor-setting/user-card.html');
 var IMModel = require('../../lib/IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
+var UserInfoModel = require('../../model/anchor/anchor-info.model');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+
+
 var View = BaseView.extend({
   el: '#settingProfile', //设置View对象作用于的根元素，比如id
   events: { //监听事件
@@ -30,6 +35,7 @@ var View = BaseView.extend({
       'bigheadImg': imModel.$get('data.largeAvatar'),
       'anchor': imModel.$get('data.anchor')
     };
+    this.userInfoModel = UserInfoModel.sigleInstance();
     this.userInfo = {
 
     };
@@ -54,6 +60,15 @@ var View = BaseView.extend({
       this.elements.headAvatar = el.find('#headAvatar');
       this.elements.tagsWrap = el.find('#tagsWrap');
     } else {
+      console.log(111);
+      this.userInfoModel.executeJSONP({
+        deviceinfo: '{"aid": "30001001"}',
+        access_token: user.getWebToken()
+      },function(res){
+        console.log(res);
+
+      });
+
       profileHTML = this.compileHTML(userCard, this.data);
       this.$el.html(profileHTML);
     }
