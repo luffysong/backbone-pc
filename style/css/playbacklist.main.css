@@ -1371,6 +1371,35 @@ img {
 .play-back-main .room-notice {
   display: none!important;
 }
+.page-block {
+  text-align: right;
+  padding: 16px 20px;
+}
+.page-wrap {
+  display: inline-block;
+}
+.page-wrap span,
+.page-wrap a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #f8f8f8;
+  padding: 0;
+  line-height: 40px;
+  text-align: center;
+  color: #999;
+}
+.page-wrap span:first-child,
+.page-wrap a:first-child,
+.page-wrap span:last-child,
+.page-wrap a:last-child {
+  color: #fff;
+  background-color: #27d6be;
+}
+.page-wrap .current {
+  color: #fff;
+  background-color: #27d6be;
+}
 .am-container {
   background-color: #fff;
 }

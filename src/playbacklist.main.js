@@ -6,8 +6,8 @@ $(function(){
   var TopbarView = require('./view/topbar/topbar.view');
   new TopbarView();
 
-  //var MainView = require('./view/playback/main.view');
-  //new MainView();
+  var MainView = require('./view/playback/list.view');
+  new MainView();
 
   require('../style/less/playbacklist.less');
 });
