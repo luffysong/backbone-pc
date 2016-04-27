@@ -244,9 +244,6 @@ var View = BaseView.extend({
         };
         self.roomInfo = data;
 
-        //TODO
-        self.addWatchRecord(self.roomInfo.id);
-
         self.setRoomBgImg();
         self.flashAPI.onReady(function () {
           this.init(self.roomInfo);

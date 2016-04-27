@@ -47,15 +47,15 @@ var View = BaseView.extend({
   },
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    //this.getPageList();
+    //this.getPageList(1);
     this.initPagination();
   },
-  initPagination: function () {
+  initPagination: function (total) {
     var self = this;
-    this.pageing = $('#page-wrap').paging(-1, {
+    this.pageing = $('#page-wrap').paging(total || -1, {
       format: '[ < .(qq -) nnncnn (- pp)> ] ',
       perpage: 6,
-      page: 1,
+      //page: 1,
       onFormat: function (type) {
         switch (type) {
           case 'block':
@@ -83,12 +83,6 @@ var View = BaseView.extend({
         return ""; // return nothing for missing branches
       },
       onSelect: function (page) {
-        console.log(page);
-
-
-        if (page > 4) {
-          return false;
-        }
         self.getPageList(page);
       }
     });
@@ -98,8 +92,9 @@ var View = BaseView.extend({
     this.params.offset = (page - 1) * 6;
     self.watchRecordModel.executeJSONP(this.params, function (res) {
       self.renderList(res);
-      if (res && res.data.length <= 0) {
-        self.pageing.setNumber(page);
+      if (!self.totalCount) {
+        self.totalCount = res.data.totalCount;
+        self.pageing.setNumber(self.totalCount);
         self.pageing.setPage();
       }
     }, function () {
@@ -109,15 +104,16 @@ var View = BaseView.extend({
   },
   renderList: function (data) {
     var result = this.formatData(data);
-    console.log('34', result);
     var html = this.compileHTML(this.recordTpl, result);
     this.recordList.html(html);
   },
   formatData: function (data) {
     if (data) {
-      _.each(data.data, function (item) {
-        var time = new Date(item.startTime);
-        item.startTimeTxt = time.Format('yyyy/MM/dd');
+      _.each(data.data.rooms, function (item) {
+        if(item.startTime){
+          var time = new Date(item.startTime);
+          item.startTimeTxt = time.Format('yyyy/MM/dd');
+        }
         var result = DateTime.difference(item.duration);
         item.durationTxt = result.hours + ':' + result.minutes + ':' + result.seconds;
       });
