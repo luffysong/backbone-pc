@@ -793,6 +793,11 @@ img {
 .icons.hot {
   background-image: url(/img/record-icons_4.png);
 }
+.disabled {
+  color: #fff;
+  background: #d3d1d1!important;
+  cursor: pointer;
+}
 .am-container {
   padding-bottom: 100px;
 }
@@ -888,7 +893,6 @@ img {
   color: #01ceb5;
   font-size: 18px;
   width: 212px;
-  margin-top: 20px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .tags {
   font-size: 12px;

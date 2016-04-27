@@ -27,6 +27,7 @@ var UserInfo = require('./user.js');
 var InAndOurRoomModel = require('../../model/live-room/inAndOut-room.model.js');
 var FlashAPI = require('FlashAPI');
 var store = require('store');
+var AddWatchReordModel = require('../../model/anchor-setting/add-watch-record.model');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -48,6 +49,7 @@ var View = BaseView.extend({
 
     this.anchorInfoModel = AnchorUserInfoModel.sigleInstance();
     this.inAndOutRoom = InAndOurRoomModel.sigleInstance();
+    this.addWatchRecordModel = AddWatchReordModel.sigleInstance();
 
     this.roomDetailParams = {
       deviceinfo: '{"aid": "30001001"}',
@@ -62,6 +64,10 @@ var View = BaseView.extend({
       access_token: user.getWebToken()
     };
     this.inAndRoomParams = {
+      deviceinfo: '{"aid": "30001001"}',
+      access_token: user.getWebToken()
+    };
+    this.addWatchRecordParams = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken()
     };
@@ -133,10 +139,10 @@ var View = BaseView.extend({
           }
         };
         YYTIMServer.applyJoinGroup(groupId, function (res) {
-          //self.renderPage();
           Backbone.trigger('event:roomInfoReady', self.roomInfo);
           if (self.roomInfo.status == 2) {
             self.loopRoomInfo();
+            self.addWatchRecord(self.roomInfo.id);
           }
         }, function (res) {
           if (res.ErrorCode == 10013) {
@@ -386,7 +392,14 @@ var View = BaseView.extend({
     if (this.roomInfo && this.roomInfo.imageUrl) {
       this.roomBg.css('background', 'url(' + this.roomInfo.imageUrl + ')');
     }
+  },
+  addWatchRecord: function (roomId) {
+    var self = this;
+    this.addWatchRecordParams.roomIds = roomId;
 
+    this.addWatchRecordModel.executeJSONP(this.addWatchRecordParams, function (res) {
+      console.log(res);
+    });
   }
 
 

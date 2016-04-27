@@ -979,6 +979,11 @@ img {
 .icons.hot {
   background-image: url(/img/record-icons_4.png);
 }
+.disabled {
+  color: #fff;
+  background: #d3d1d1!important;
+  cursor: pointer;
+}
 .bottom {
   height: 226px;
   background: #181818;
