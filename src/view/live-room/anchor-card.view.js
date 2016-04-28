@@ -39,7 +39,6 @@ var View = BaseView.extend({
       }
     },
     'mouseout #btnFollow': function(e){
-      //$(e.target).children('span').text('已关注');
       var target = $(e.target);
       if(e.target.typeName != 'BUTTON'){
         target = target.parent('button');
@@ -121,7 +120,7 @@ var View = BaseView.extend({
     els.tagsWrap.html(template(data.creator));
 
     if (data.creator.isFollowed) {
-      self.btnFollow.addClass('followed').children('span').text('取消关注');
+      self.btnFollow.addClass('followed').children('span').text('已关注');
     }
 
   },
