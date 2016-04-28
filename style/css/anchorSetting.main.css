@@ -2176,6 +2176,9 @@ img {
   overflow: hidden;
   margin-right: 10px;
 }
+.following-wrap .item .avatar:hover {
+  border: none;
+}
 .following-wrap .item .info-wrap .name {
   color: #01ceb5;
 }
