@@ -58,7 +58,7 @@ var View = BaseView.extend({
   },
   initPagination: function () {
     var self = this;
-    this.pageing = $('#followPageWrap').paging(-1, {
+    this.pageing = $('#followPageWrap').paging(1, {
       format: '[ < .(qq -) nnncnn (- pp)> ] ',
       perpage: 9,
       page: 1,
@@ -98,7 +98,7 @@ var View = BaseView.extend({
     this.params.offset = (page - 1) * 9;
     self.followListModel.executeJSONP(this.params, function (res) {
       self.renderList(res);
-      if (!self.totalCount) {
+      if (!self.totalCount && res.data.totalCount) {
         self.totalCount = res.data.totalCount;
         self.pageing.setNumber(self.totalCount);
         self.pageing.setPage();

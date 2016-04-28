@@ -36,9 +36,7 @@ var View = BaseView.extend({
       'anchor': imModel.$get('data.anchor')
     };
     this.userInfoModel = UserInfoModel.sigleInstance();
-    this.userInfo = {
-
-    };
+    this.userInfo = {};
   },
   //当模板挂载到元素之后
   afterMount: function () {
@@ -46,11 +44,14 @@ var View = BaseView.extend({
   },
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
+
+
     this.initRender();
     this.defineEventInterface();
   },
   initRender: function () {
     var el = this.$el;
+    var self = this;
     var profileHTML;
     if (imModel.isAnchor()) {
       profileHTML = this.compileHTML(profileTemp, this.data);
@@ -59,18 +60,24 @@ var View = BaseView.extend({
       this.elements.nickName = el.find('#nickName');
       this.elements.headAvatar = el.find('#headAvatar');
       this.elements.tagsWrap = el.find('#tagsWrap');
+
     } else {
-      console.log(111);
+      profileHTML = this.compileHTML(userCard, this.data);
+      this.$el.html(profileHTML);
+
+      this.elements.watchedLiveCount = el.find('#txtLive');
+      this.elements.totalCredits = el.find('#txtScore');
+      this.elements.fanTicket = el.find('#txtTicket');
+
       this.userInfoModel.executeJSONP({
         deviceinfo: '{"aid": "30001001"}',
         access_token: user.getWebToken()
-      },function(res){
-        console.log(res);
-
+      }, function (res) {
+        self.elements.watchedLiveCount.text(0);
+        self.elements.totalCredits.text(res.data.totalMarks || 0);
+        self.elements.fanTicket.text(0);
       });
 
-      profileHTML = this.compileHTML(userCard, this.data);
-      this.$el.html(profileHTML);
     }
   },
   partialRender: function (data) {

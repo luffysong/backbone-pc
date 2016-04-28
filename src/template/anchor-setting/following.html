@@ -6,7 +6,7 @@
     <script type="text/x-template" id="followTpl">
         {{each data.users as item}}
         <div class="item">
-            <a class="avatar Left" href="###"><img src="{{item.smallAvatar}}" onerror="this.src='../img/bg-demo.jpg'"
+            <a class="avatar Left" href="###"><img src="{{item.largeAvatar}}" onerror="this.src='../img/bg-demo.jpg'"
                                                 alt=""></a>
             <div class="info-wrap Left">
                 <div class="name">{{item.nickName}}</div>
@@ -19,7 +19,7 @@
             <div class="Clear"></div>
         </div>
         {{/each}}
-        {{ if data.length<= 0 }}
+        {{ if data.users.length<= 0 }}
         <div class="no-data">
             暂无数据
         </div>

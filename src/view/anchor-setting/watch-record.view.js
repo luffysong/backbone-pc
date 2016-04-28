@@ -52,7 +52,7 @@ var View = BaseView.extend({
   },
   initPagination: function (total) {
     var self = this;
-    this.pageing = $('#page-wrap').paging(total || -1, {
+    this.pageing = $('#page-wrap').paging(total || 1, {
       format: '[ < .(qq -) nnncnn (- pp)> ] ',
       perpage: 6,
       //page: 1,
@@ -92,14 +92,14 @@ var View = BaseView.extend({
     this.params.offset = (page - 1) * 6;
     self.watchRecordModel.executeJSONP(this.params, function (res) {
       self.renderList(res);
-      if (!self.totalCount) {
+      if (!self.totalCount && res.data.totalCount) {
         self.totalCount = res.data.totalCount;
         self.pageing.setNumber(self.totalCount);
         self.pageing.setPage();
       }
     }, function () {
       self.pageing.setNumber(1);
-      //self.pageing.setPage();
+      self.pageing.setPage();
     });
   },
   renderList: function (data) {
@@ -110,7 +110,7 @@ var View = BaseView.extend({
   formatData: function (data) {
     if (data) {
       _.each(data.data.rooms, function (item) {
-        if(item.startTime){
+        if (item.startTime) {
           var time = new Date(item.startTime);
           item.startTimeTxt = time.Format('yyyy/MM/dd');
         }
