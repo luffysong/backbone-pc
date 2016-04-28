@@ -62,12 +62,12 @@ var View = BaseView.extend({
 
     if (!imModel.isAnchor()) {
       this.recordListView = new RecordLiveView();
-      this.followingView = new FollowingView();
     }else{
       this.noopenListView = new NoOpenListView();
       this.historyListView = new HistoryListView();
       this.createLiveView = new CreateLiveView();
     }
+    this.followingView = new FollowingView();
 
 
     var viewName = URL.parse(window.location.href).query.view || '';
@@ -154,7 +154,8 @@ var View = BaseView.extend({
     if (imModel.isAnchor()) {
       this.menuList.list = [
         {name: '我的直播', pannel: 'tab-my-live', active: true},
-        {name: '创建直播', pannel: 'createLiveVideo'}
+        {name: '创建直播', pannel: 'createLiveVideo'},
+        {name: '我的关注', pannel: 'followingList'}
       ];
       this.menuList.list.push({name: '个人设置', pannel: 'tabSetting'});
     } else {
