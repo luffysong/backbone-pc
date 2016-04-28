@@ -28,7 +28,26 @@ var View = BaseView.extend({
     return require('../../template/live-room/anchor-card.html');
   },
   events: { //监听事件
-    'click #btnFollow': 'followClickHandler'
+    'click #btnFollow': 'followClickHandler',
+    'mouseover #btnFollow': function(e){
+      var target = $(e.target);
+      if(e.target.typeName != 'BUTTON'){
+        target = target.parent('button');
+      }
+      if(target.hasClass('followed')){
+        target.children('span').text('取消关注');
+      }
+    },
+    'mouseout #btnFollow': function(e){
+      //$(e.target).children('span').text('已关注');
+      var target = $(e.target);
+      if(e.target.typeName != 'BUTTON'){
+        target = target.parent('button');
+      }
+      if(target.hasClass('followed')){
+        target.children('span').text('已关注');
+      }
+    }
   },
   //当模板挂载到元素之前
   beforeMount: function () {

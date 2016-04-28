@@ -60,9 +60,7 @@ var View = BaseView.extend({
       this.elements.nickName = el.find('#nickName');
       this.elements.headAvatar = el.find('#headAvatar');
       this.elements.tagsWrap = el.find('#tagsWrap');
-
     } else {
-
       this.userInfoModel.executeJSONP({
         deviceinfo: '{"aid": "30001001"}',
         access_token: user.getWebToken()
@@ -73,6 +71,7 @@ var View = BaseView.extend({
   },
   bindUserInfo: function(res){
     var self = this;
+    var el = this.$el;
     var profileHTML;
     self.data.gender = res.data.sex || '';
     profileHTML = self.compileHTML(userCard, self.data);

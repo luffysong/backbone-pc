@@ -905,13 +905,20 @@ img {
   line-height: 27px;
   height: 27px;
   font-size: 12px;
-  padding-right: 10px;
+  padding: 0 10px;
+  text-align: center;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn i {
   background-repeat: no-repeat;
   display: inline-block;
   margin-left: 10px;
   margin-right: -10px;
+}
+.live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn.followed {
+  background-color: #ccc;
+}
+.live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn.followed:hover {
+  background-color: #01ceb5;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn .add {
   background-image: url(/img/live_bg_icons_10.png);

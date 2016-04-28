@@ -126,12 +126,19 @@
             line-height: 27px;
             height: 27px;
             font-size: 12px;
-            padding-right: 10px;
+            padding: 0 10px;
+            text-align: center;
             i {
               background-repeat: no-repeat;
               display: inline-block;
               margin-left: 10px;
               margin-right: -10px;
+            }
+            &.followed{
+              background-color: #ccc;
+              &:hover{
+                background-color: #01ceb5;
+              }
             }
             .add {
               background-image: url(/img/live_bg_icons_10.png);
