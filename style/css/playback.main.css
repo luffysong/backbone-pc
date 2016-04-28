@@ -902,10 +902,10 @@ img {
   margin: 0 2px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn {
-  width: 80px;
   line-height: 27px;
   height: 27px;
   font-size: 12px;
+  padding-right: 10px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn i {
   background-repeat: no-repeat;
@@ -914,10 +914,11 @@ img {
   margin-right: -10px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn .add {
-  background-image: url(/img/live_bg_icons_10.jpg);
+  background-image: url(/img/live_bg_icons_10.png);
   width: 14px;
   height: 14px;
   margin-top: 6px;
+  margin-right: 5px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn .report {
   background-image: url(/img/live_bg_icons_07.jpg);

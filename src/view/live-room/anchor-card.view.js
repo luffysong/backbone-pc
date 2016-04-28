@@ -16,6 +16,7 @@ var NoticeGetModel = require('../../model/anchor/notice-get.model');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var FollowModel = require('../../model/anchor-setting/follow.model');
+var UnFollowModel = require('../../model/anchor-setting/unfollow.model');
 var msgBox = require('ui.MsgBox');
 
 var View = BaseView.extend({
@@ -35,6 +36,8 @@ var View = BaseView.extend({
     var el = this.$el;
     this.noticeGetModel = new NoticeGetModel();
     this.followModel = FollowModel.sigleInstance();
+    this.unFollowModel = UnFollowModel.sigleInstance();
+
     this.followParams = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken()
@@ -95,8 +98,8 @@ var View = BaseView.extend({
 
     els.tagsWrap.html(template(data.creator));
 
-    if(data.creator.isFollowed){
-      self.btnFollow.addClass('followed').children('span').text('已关注');
+    if (data.creator.isFollowed) {
+      self.btnFollow.addClass('followed').children('span').text('取消关注');
     }
 
   },
@@ -120,21 +123,27 @@ var View = BaseView.extend({
   },
   followClickHandler: function () {
     var self = this;
-    if (this.btnFollow.hasClass('followed')) {
-      return false;
-    }
     this.followParams.anchorId = this.roomInfo.creator.uid;
-    this.followModel.executeJSONP(self.followParams, function (res) {
-      if(res.data && res.data.success){
-        msgBox.showOK('关注成功');
-        self.btnFollow.addClass('followed').children('span').text('已关注');
-      }
-    }, function () {
-      msgBox.showTip('关注失败,稍后重试');
-    });
+    if (this.btnFollow.hasClass('followed')) {
+      this.unFollowModel.executeJSONP(self.followParams, function(res){
+        if (res.data && res.data.success) {
+          msgBox.showOK('已取消关注主播');
+          self.btnFollow.removeClass('followed').children('span').text('加关注');
+        }
+      }, function(){
+        msgBox.showTip('操作失败,稍后重试');
+      });
 
-
-    return false;
+    } else {
+      this.followModel.executeJSONP(self.followParams, function (res) {
+        if (res.data && res.data.success) {
+          msgBox.showOK('已成功关注主播');
+          self.btnFollow.addClass('followed').children('span').text('取消关注');
+        }
+      }, function () {
+        msgBox.showTip('关注失败,稍后重试');
+      });
+    }
   }
 });
 
