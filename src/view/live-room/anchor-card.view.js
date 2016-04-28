@@ -19,6 +19,9 @@ var FollowModel = require('../../model/anchor-setting/follow.model');
 var UnFollowModel = require('../../model/anchor-setting/unfollow.model');
 var msgBox = require('ui.MsgBox');
 
+var IMModel = require('../../lib/IMModel');
+var imModel = IMModel.sharedInstanceIMModel();
+
 var View = BaseView.extend({
   el: '#userInfoWrap', //设置View对象作用于的根元素，比如id
   rawLoader: function () { //可用此方法返回字符串模版
@@ -135,6 +138,10 @@ var View = BaseView.extend({
       });
 
     } else {
+      if(imModel.$get('data.userId') === self.followParams.anchorId){
+        msgBox.showTip('不能关注自己!');
+        return null;
+      }
       this.followModel.executeJSONP(self.followParams, function (res) {
         if (res.data && res.data.success) {
           msgBox.showOK('已成功关注主播');
