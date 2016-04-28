@@ -62,23 +62,28 @@ var View = BaseView.extend({
       this.elements.tagsWrap = el.find('#tagsWrap');
 
     } else {
-      profileHTML = this.compileHTML(userCard, this.data);
-      this.$el.html(profileHTML);
-
-      this.elements.watchedLiveCount = el.find('#txtLive');
-      this.elements.totalCredits = el.find('#txtScore');
-      this.elements.fanTicket = el.find('#txtTicket');
 
       this.userInfoModel.executeJSONP({
         deviceinfo: '{"aid": "30001001"}',
         access_token: user.getWebToken()
       }, function (res) {
-        self.elements.watchedLiveCount.text(0);
-        self.elements.totalCredits.text(res.data.totalMarks || 0);
-        self.elements.fanTicket.text(0);
+        self.bindUserInfo(res);
       });
-
     }
+  },
+  bindUserInfo: function(res){
+    var self = this;
+    var profileHTML;
+    self.data.gender = res.data.sex || '';
+    profileHTML = self.compileHTML(userCard, self.data);
+    self.$el.html(profileHTML);
+
+    self.elements.watchedLiveCount = el.find('#txtLive');
+    self.elements.totalCredits = el.find('#txtScore');
+    self.elements.fanTicket = el.find('#txtTicket');
+    self.elements.watchedLiveCount.text(0);
+    self.elements.totalCredits.text(res.data.totalMarks || 0);
+    self.elements.fanTicket.text(0);
   },
   partialRender: function (data) {
     this.elements.nickName.text(data.nickName);

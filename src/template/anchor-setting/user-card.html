@@ -5,7 +5,12 @@
 <div class="fl anchorrMsg">
     <h2>
         <span id="nickName" class="fl name user-name">{{nickName}}</span>
+        {{if gender == 'Boy'}}
         <span class="gender male"></span>
+        {{/if}}
+        {{if gender =='Girl'}}
+        <span class="gender female"></span>
+        {{/if}}
     </h2>
     <div class="top-user-info">
         <span>观看直播:<span id="txtLive" class="black">0</span>次</span>
