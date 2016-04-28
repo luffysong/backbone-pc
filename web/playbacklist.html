@@ -51,7 +51,7 @@
         <script type="text/x-template" id="itemTpl">
             {{each data as item}}
             <div class="item Left mLeft10 mRight10">
-                <a class="img-wrap" href="/web/playback.html?roomId=<%=item.roomId%>">
+                <a class="img-wrap" href="/web/playback.html?roomId={{item.roomId}}">
                     <div class="hover-wrap Hand">
                         <div class="top">人气: <span class="green">{{item.popularity}}</span></div>
                         <div class="bottom">
