@@ -1,7 +1,7 @@
 {
-  "name": "generate-sapling-pc",
+  "name": "yinyuetai_pc_live_video",
   "version": "0.1.0",
-  "description": "PC端项目脚手架",
+  "description": "饭趴",
   "main": "index.js",
   "scripts": {
     "test": "mocha --colors test/*.spec.js",
@@ -13,18 +13,16 @@
     "precommit": "npm run eslint"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sapling-team/generate-sapling-pc.git"
+    "type": "git"
   },
   "keywords": [
     "yeoman-generator"
   ],
   "author": "icepy",
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sapling-team/generate-sapling-pc/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/sapling-team/generate-sapling-pc#readme",
+  "homepage": "",
   "devDependencies": {
     "browser-sync": "^2.11.2",
     "chai": "^3.5.0",
