@@ -6,8 +6,10 @@
         <div id="anchorName" class="name overflow_ellipsis"></div>
         <div class="btn-wrap mTop10">
             <button class="btn Hand" id="btnFollow">
+                关注
                 <!--<i class="add Left"></i>-->
-                <span>关注</span></button>
+                <!--<span>关注</span>-->
+            </button>
             <!--<button class="btn Hand mLeft5" id="btnReport"><i class="Left report"></i> 举报</button>-->
             <div class="Clear"></div>
         </div>
@@ -18,7 +20,7 @@
     <div class="Right" id="tagsWrap">
         <script type="text/template" id="tagTpl">
             <%
-                for(var i=0,l=tags.length; i < l; i++) {
+            for(var i=0,l=tags.length; i < l; i++) {
             %>
             <span class="item"><%=tags[i]%></span>
             <%
