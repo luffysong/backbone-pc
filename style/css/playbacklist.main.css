@@ -1429,8 +1429,11 @@ img {
   position: relative;
   width: 378px!important;
   height: 218px!important;
+  display: inline-block !important;
+  background: none!important;
 }
-.play-back-list .recent-list-wrap .list .item .hover-wrap div {
+.play-back-list .recent-list-wrap .list .item .hover-wrap .top,
+.play-back-list .recent-list-wrap .list .item .hover-wrap .bottom {
   padding: 0 8px;
   vertical-align: middle;
   line-height: 30px;
