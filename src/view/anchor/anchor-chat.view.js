@@ -264,8 +264,6 @@ var View = BaseView.extend({
     var self = this;
     var msgObj = {};
 
-    console.log('-------', notifyInfo);
-
     if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
       var elem = notifyInfo.elems[0];
       if (elem.type === 'TIMCustomElem') {

@@ -269,6 +269,8 @@ var View = BaseView.extend({
 
         Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
         self.checkUserIsKickout(self.currentGroupInfo.Notification);
+        //TODO
+        //self.checkLockScreen(self.currentGroupInfo.Introduction);
 
       } else {
       }
@@ -348,6 +350,20 @@ var View = BaseView.extend({
         });
       }
     }
+  },
+  checkLockScreen: function (notifyInfo) {
+    var notify = null;
+    try {
+      if (_.isString(notifyInfo)) {
+        notify = JSON.parse(notifyInfo);
+      } else {
+        notify = notifyInfo;
+      }
+    } catch (e) {
+    }
+
+    UserInfo.setLockScreen(this.roomInfo.id, notify.blockState || false);
+
   },
   goBack: function () {
     window.history.go(-1);
