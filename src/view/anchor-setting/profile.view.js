@@ -82,7 +82,7 @@ var View = BaseView.extend({
     self.elements.totalCredits = el.find('#txtScore');
     self.elements.fanTicket = el.find('#txtTicket');
 
-    self.elements.watchedLiveCount.text(0);
+    self.elements.watchedLiveCount.text(res.data.userCount.viewCount || 0);
     self.elements.totalCredits.text(res.data.totalMarks || 0);
     self.elements.fanTicket.text(0);
   },
