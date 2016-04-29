@@ -11,7 +11,7 @@
                 <span class="date">{{item.startTimeTxt}}</span>
             </div>
             <div class="content">
-                <a href="###" class="img-wrap Left">
+                <a href="/web/{{item.status==2?'liveRoom':'playback'}}.html?roomId={{item.roomId}}" class="img-wrap Left">
                     <img src="{{item.posterPic}}" onerror="src='../img/bg-demo.jpg'"
                          alt=""></a>
                 <div class="info-wrap Left">
