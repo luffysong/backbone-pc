@@ -31,20 +31,14 @@ var View = BaseView.extend({
     'click #btnFollow': 'followClickHandler',
     'mouseover #btnFollow': function(e){
       var target = $(e.target);
-      if(e.target.typeName != 'BUTTON'){
-        target = target.parent('button');
-      }
       if(target.hasClass('followed')){
-        target.children('span').text('取消关注');
+        target.text('取消关注');
       }
     },
     'mouseout #btnFollow': function(e){
       var target = $(e.target);
-      if(e.target.typeName != 'BUTTON'){
-        target = target.parent('button');
-      }
       if(target.hasClass('followed')){
-        target.children('span').text('已关注');
+        target.text('已关注');
       }
     }
   },
@@ -120,7 +114,7 @@ var View = BaseView.extend({
     els.tagsWrap.html(template(data.creator));
 
     if (data.creator.isFollowed) {
-      self.btnFollow.addClass('followed').children('span').text('已关注');
+      self.btnFollow.addClass('followed').text('已关注');
     }
 
   },
@@ -149,7 +143,7 @@ var View = BaseView.extend({
       this.unFollowModel.executeJSONP(self.followParams, function(res){
         if (res.data && res.data.success) {
           msgBox.showOK('已取消关注主播');
-          self.btnFollow.removeClass('followed').children('span').text('关注');
+          self.btnFollow.removeClass('followed').text('关注');
         }
       }, function(){
         msgBox.showTip('操作失败,稍后重试');
@@ -163,7 +157,7 @@ var View = BaseView.extend({
       this.followModel.executeJSONP(self.followParams, function (res) {
         if (res.data && res.data.success) {
           msgBox.showOK('已成功关注主播');
-          self.btnFollow.addClass('followed').children('span').text('取消关注');
+          self.btnFollow.addClass('followed').text('取消关注');
         }
       }, function () {
         msgBox.showTip('关注失败,稍后重试');
