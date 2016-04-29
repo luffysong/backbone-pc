@@ -69,17 +69,19 @@ var View = BaseView.extend({
       });
     }
   },
-  bindUserInfo: function(res){
+  bindUserInfo: function (res) {
     var self = this;
     var el = this.$el;
     var profileHTML;
     self.data.gender = res.data.sex || '';
+    self.data.bigheadImg = res.data.largeAvatar || '';
     profileHTML = self.compileHTML(userCard, self.data);
     self.$el.html(profileHTML);
 
     self.elements.watchedLiveCount = el.find('#txtLive');
     self.elements.totalCredits = el.find('#txtScore');
     self.elements.fanTicket = el.find('#txtTicket');
+
     self.elements.watchedLiveCount.text(0);
     self.elements.totalCredits.text(res.data.totalMarks || 0);
     self.elements.fanTicket.text(0);
