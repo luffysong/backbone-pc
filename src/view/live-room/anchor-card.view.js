@@ -149,7 +149,7 @@ var View = BaseView.extend({
       this.unFollowModel.executeJSONP(self.followParams, function(res){
         if (res.data && res.data.success) {
           msgBox.showOK('已取消关注主播');
-          self.btnFollow.removeClass('followed').children('span').text('加关注');
+          self.btnFollow.removeClass('followed').children('span').text('关注');
         }
       }, function(){
         msgBox.showTip('操作失败,稍后重试');

@@ -902,6 +902,7 @@ img {
   margin: 0 2px;
 }
 .live-room-wrap .user-info-block .user-info-wrap .info .btn-wrap .btn {
+  min-width: 60px;
   line-height: 27px;
   height: 27px;
   font-size: 12px;
