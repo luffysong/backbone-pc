@@ -2175,12 +2175,18 @@ img {
   height: 100px;
   overflow: hidden;
   margin-right: 10px;
+  border: none;
+  padding: 0;
 }
 .following-wrap .item .avatar:hover {
+  padding: 0;
   border: none;
 }
 .following-wrap .item .info-wrap .name {
   color: #01ceb5;
+  width: 108px;
+  height: 21px;
+  overflow: hidden;
 }
 .following-wrap .item .info-wrap .played {
   color: #999;
