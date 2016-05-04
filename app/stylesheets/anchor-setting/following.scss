@@ -1,0 +1,50 @@
+$black-color: #4d4d4d;
+$black2-color: #666666;
+.following-wrap {
+  .item {
+    display: inline-block;
+    padding: 10px;
+    width: 280px;
+    .avatar {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+      margin-right: 10px;
+      border: none;
+      padding: 0;
+      &:hover{
+        padding: 0;
+        border: none;
+      }
+    }
+    .info-wrap {
+      .name {
+        color: #01ceb5;
+        width:108px;
+        height: 21px;
+        overflow: hidden;
+      }
+      .played {
+        color: #999;
+        padding: 10px 0;
+        font-size: 12px;
+        .total{
+          margin: 0 3px;
+          color: $black-color;
+        }
+      }
+      .btn {
+        border: none;
+        margin-top: 10px;
+        color: #fff;
+        background-color: #01ceb5;
+        width: 84px;
+        height: 30px;
+        font-size: 12px;
+      }
+    }
+
+  }
+
+}

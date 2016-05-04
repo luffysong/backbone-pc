@@ -9,6 +9,10 @@ var HistoryListView = require('./history-list.view');
 var UIconfirm = require('ui.confirm');
 var Auxiliary = require('auxiliary-additions');
 var URL = Auxiliary.url;
+var IMModel = require('IMModel');
+var imModel = IMModel.sharedInstanceIMModel();
+var RecordLiveView = require('./watch-record.view');
+var FollowingView = require('./following.view');
 
 var View = BaseView.extend({
   el: '#pageContent',
@@ -25,6 +29,9 @@ var View = BaseView.extend({
   },
   beforeMount: function () {
     //  初始化一些自定义属性
+    this.menuList = {
+      list: []
+    };
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -35,12 +42,21 @@ var View = BaseView.extend({
     this.accountSettingsDOM = this.findDOMNode('#accountSettings');
     this.profileStateDOMS = this.findDOMNode('#profileSate>li');
     this.updatePasswordDom = this.findDOMNode('#updatePassword');
+
+    this.menuWrap = this.$el.find('#tab-menu-ctrl');
+    this.menuTpl = this.$el.find('#menuTpl').text();
   },
   ready: function () {
+    this.initMenu();
     //  初始化
-    this.createLiveView = new CreateLiveView();
-    this.noopenListView = new NoOpenListView();
-    this.historyListView = new HistoryListView();
+    if (imModel.isAnchor()) {
+      this.noopenListView = new NoOpenListView();
+      this.historyListView = new HistoryListView();
+      this.createLiveView = new CreateLiveView();
+    }
+    this.followingView = new FollowingView();
+    this.recordListView = new RecordLiveView();
+
     var viewName = URL.parse(window.location.href).query.view || '';
     this.changeView(viewName);
   },
@@ -118,6 +134,47 @@ var View = BaseView.extend({
       this.liveStateChanged({
         currentTarget: $('.myLiveControls').find('[data-state="1"]')
       });
+    }
+  },
+  /**
+   * 初始化菜单
+   */
+  initMenu: function () {
+    if (imModel.isAnchor()) {
+      this.menuList.list = [
+        {
+          name: '我的直播', pannel: 'tab-my-live', active: true
+        },
+        {
+          name: '创建直播', pannel: 'createLiveVideo'
+        },
+        {
+          name: '观看记录', pannel: 'recordList', active: true
+        },
+        {
+          name: '我的关注', pannel: 'followingList'
+        }
+      ];
+      this.menuList.list.push({
+        name: '个人设置', pannel: 'tabSetting'
+      });
+    } else {
+      this.menuList.list = [
+        {
+          name: '观看记录', pannel: 'recordList', active: true
+        },
+        {
+          name: '我的关注', pannel: 'followingList'
+        }
+      ];
+    }
+    this.menuList.list.push({
+      name: '退出', pannel: 'signout'
+    });
+    if (this.menuTpl) {
+      var html = this.compileHTML(this.menuTpl, this.menuList);
+      this.menuWrap.html(html);
+      this.menuWrap.children(':first').click();
     }
   }
 });

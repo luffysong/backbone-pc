@@ -9,7 +9,7 @@ $(function () {
   'use strict';
   var TopBarView = require('TopBarView');
   var a = new TopBarView();
-  var MainView = require('./view/playback/list.view');
+  var MainView = require('./views/playback/list.view');
   var b = new MainView();
 
   console.log(a, b);

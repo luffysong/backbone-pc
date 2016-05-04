@@ -5,24 +5,18 @@
     #playbackListWrap.common_con.live-room-wrap.play-back-list
         .top-header.mLeft10
             h3.green.Left &#x7CBE;&#x5F69;&#x56DE;&#x653E;
-            |
             .btn-left-wrap.Right
                 button.active.Hand.new.btnDataOrder(data-tag='TIME')
                     i
                     | '最新';
-                |
                 button.Hand.hot.btnDataOrder(data-tag='POPULARITY')
                     i
                     | '人气';
-            |
             .Clear
-        |
         .recent-list-wrap
             #playbackList.list
                 //
                 //
-            //
-        |
         script#itemTpl(type='text/x-template').
             {{each data as item}}
             <div class="item Left mLeft10 mRight10">

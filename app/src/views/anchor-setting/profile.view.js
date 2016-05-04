@@ -6,6 +6,11 @@ var BaseView = base.View;
 var profileTemp = require('./template/profile.html');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+var UserInfoModel = require('../../models/anchor/anchor-info.model');
+var userCard = require('./template/user-card.html');
+
 var View = BaseView.extend({
   el: '#settingProfile',
   context: function (args) {
@@ -19,6 +24,8 @@ var View = BaseView.extend({
       bigheadImg: data.largeAvatar,
       anchor: data.anchor
     };
+    this.userInfoModel = UserInfoModel.sharedInstanceModel();
+    this.userInfo = {};
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -36,13 +43,43 @@ var View = BaseView.extend({
     //  销毁之后
   },
   initRender: function () {
-    var profileHTML = this.compileHTML(profileTemp, this.data);
-    this.$el.html(profileHTML);
-    this.elements.nickName = this.findDOMNode('#nickName');
-    this.elements.headAvatar = this.findDOMNode('#headAvatar');
-    this.elements.tagsWrap = this.findDOMNode('#tagsWrap');
-  },
+    var el = this.$el;
+    var self = this;
+    var profileHTML;
+    if (imModel.isAnchor()) {
+      profileHTML = this.compileHTML(profileTemp, this.data);
+      this.$el.html(profileHTML);
 
+      this.elements.nickName = el.find('#nickName');
+      this.elements.headAvatar = el.find('#headAvatar');
+      this.elements.tagsWrap = el.find('#tagsWrap');
+    } else {
+      var promise = this.userInfoModel.executeJSONP({
+        deviceinfo: '{"aid": "30001001"}',
+        access_token: user.getWebToken()
+      });
+      promise.done(function (res) {
+        self.bindUserInfo(res);
+      });
+    }
+  },
+  bindUserInfo: function (res) {
+    var self = this;
+    var el = this.$el;
+    var profileHTML;
+    self.data.gender = res.data.sex || '';
+    self.data.bigheadImg = res.data.largeAvatar || '';
+    profileHTML = self.compileHTML(userCard, self.data);
+    self.$el.html(profileHTML);
+
+    self.elements.watchedLiveCount = el.find('#txtLive');
+    self.elements.totalCredits = el.find('#txtScore');
+    self.elements.fanTicket = el.find('#txtTicket');
+
+    self.elements.watchedLiveCount.text(res.data.userCount.viewCount || 0);
+    self.elements.totalCredits.text(res.data.totalMarks || 0);
+    self.elements.fanTicket.text(0);
+  },
   partialRender: function (data) {
     this.elements.nickName.text(data.nickName);
     this.elements.headAvatar.attr('src', data.headImg);

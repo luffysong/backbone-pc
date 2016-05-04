@@ -1,3 +1,5 @@
+- var complie = htmlWebpackPlugin.options.complieConfig
+- var src = complie.cdn || '/link/'
 doctype html
 html(lang="en")
   head
@@ -8,3 +10,4 @@ html(lang="en")
     include anchor-setting/container
     include common/footer
     include common/lib
+    script(type='text/javascript', src=src + 'jquery-plugins/jquery.paging.min.js')

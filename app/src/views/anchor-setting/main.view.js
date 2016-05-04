@@ -117,7 +117,10 @@ var View = BaseView.extend({
     this.isLogined = true;
     this.profileView = new ProfileView({ parent: this });
     this.pageContentView = new PageContentView({ parent: this });
-    this.editProfileView = new EditProfileView({ parent: this });
+    // this.editProfileView = new EditProfileView({ parent: this });
+    if (imModel.isAnchor()) {
+      this.editProfileView = new EditProfileView();
+    }
     this.updatePasswordView = new UpdatePasswordView({ parent: this });
   },
   fetchIMUserSig: function () {
@@ -127,8 +130,9 @@ var View = BaseView.extend({
     promise.done(function (sig) {
       if (!sig.anchor) {
         //  console.log('跳转走人');
-        storage.remove('imSig');
+        // storage.remove('imSig');
         //  跳转走人
+        self.initRender();
       } else {
         //  继续处理主播
         self.anchorSig = sig;
