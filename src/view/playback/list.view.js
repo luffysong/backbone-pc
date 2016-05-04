@@ -140,9 +140,7 @@ var View = BaseView.extend({
     var scrollTop = target.scrollTop();
     var wrapHeight = this.playbackList.height();
     var diff = scrollTop - wrapHeight;
-    console.log(diff);
     if (diff > -370) {
-      console.log('load data');
       this.currentPage ++;
       this.getPageList(this.currentPage);
     }
