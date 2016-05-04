@@ -1,0 +1,31 @@
+.anchorrMsg {
+  width: inherit !important;
+  .user-name{
+    margin-right: 16px!important;
+  }
+  .gender{
+    display: inline-block;
+    background-repeat:no-repeat;
+    width: 20px;
+    height: 20px;
+    margin-top: 18px;
+    &.male{
+      background-image: url(/img/gender_2.png);
+    }
+    &.female{
+      background-image: url(/img/gender_1.png);
+    }
+  }
+}
+
+.top-user-info {
+  font-size: 12px;
+  color: #999;
+  span {
+    margin-right: 16px;
+    &.black {
+      color: #000;
+      margin: 0 3px;
+    }
+  }
+}
