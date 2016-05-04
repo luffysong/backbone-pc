@@ -1415,6 +1415,50 @@ img {
 .play-back-list .top-header {
   margin: 10px 0 20px;
   font-size: 18px;
+  border-bottom: solid 1px #f1f1f1;
+  padding-bottom: 10px;
+}
+.play-back-list .top-header .btn-left-wrap {
+  font-size: 12px;
+}
+.play-back-list .top-header .btn-left-wrap i {
+  display: inline-block;
+  background-repeat: no-repeat;
+  margin-left: 15px;
+  float: left;
+}
+.play-back-list .top-header .btn-left-wrap button {
+  background-color: #f1f1f1;
+  width: 80px;
+  height: 35px;
+  color: #bcbcbc;
+  vertical-align: middle;
+}
+.play-back-list .top-header .btn-left-wrap button.active,
+.play-back-list .top-header .btn-left-wrap button:hover {
+  color: #fff;
+  background-color: #27d5bf;
+}
+.play-back-list .top-header .btn-left-wrap button.active.new i,
+.play-back-list .top-header .btn-left-wrap button:hover.new i {
+  background-image: url(/img/playback-icon-1_12.png);
+}
+.play-back-list .top-header .btn-left-wrap button.active.hot i,
+.play-back-list .top-header .btn-left-wrap button:hover.hot i {
+  background-image: url(/img/playback-icon-1_03.png);
+}
+.play-back-list .top-header .btn-left-wrap .new {
+  margin-right: -3px;
+}
+.play-back-list .top-header .btn-left-wrap .new i {
+  width: 18px;
+  height: 18px;
+  background-image: url(/img/playback-icon-1_06.png);
+}
+.play-back-list .top-header .btn-left-wrap .hot i {
+  width: 16px;
+  height: 20px;
+  background-image: url(/img/playback-icon-1_09.png);
 }
 .play-back-list .recent-list-wrap {
   height: inherit;

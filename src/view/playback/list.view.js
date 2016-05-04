@@ -25,16 +25,16 @@ var View = BaseView.extend({
   //},
   clientRender: false,
   events: { //监听事件
-
+    'click .btnDataOrder': 'dataOrderClick'
   },
   //当模板挂载到元素之前
   beforeMount: function () {
-
     this.playbackParameter = {
       deviceinfo: '{"aid":"30001001"}',
       access_token: user.getWebToken(),
       offset: 0,
-      size: 12
+      size: 15,
+      order: 'TIME'
     };
   },
   //当模板挂载到元素之后
@@ -46,9 +46,13 @@ var View = BaseView.extend({
   },
   //当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    //console.log(1);
-    //this.initPagination();
-    this.getPageList(1);
+    var self = this;
+    this.currentPage = 1;
+    this.getPageList(this.currentPage);
+
+    $(document).on('scroll', function (e) {
+      self.bodyScroll(e);
+    });
   },
   initPagination: function () {
     var self = this;
@@ -89,7 +93,7 @@ var View = BaseView.extend({
   },
   getPageList: function (page) {
     var self = this;
-    this.playbackParameter.offset = (page - 1) * 12;
+    this.playbackParameter.offset = (page - 1) * 15;
     self.playbackModel.executeJSONP(this.playbackParameter, function (res) {
       self.renderList(res);
       if (!self.totalCount) {
@@ -105,7 +109,7 @@ var View = BaseView.extend({
   renderList: function (data) {
     var result = this.formatData(data);
     var html = this.compileHTML(this.itemTpl, result);
-    this.playbackList.html(html);
+    this.playbackList.append(html);
   },
   formatData: function (data) {
     if (data) {
@@ -118,6 +122,31 @@ var View = BaseView.extend({
     }
     return data;
   },
+  dataOrderClick: function (e) {
+    var ele = $(e.target);
+    if (!ele.hasClass('btnDataOrder')) {
+      ele = ele.parent('button');
+    }
+    $('.btnDataOrder').removeClass('active');
+    ele.addClass('active');
+    this.playbackParameter.order = ele.data('tag');
+    this.playbackParameter.offset = 0;
+    this.currentPage = 1;
+    this.playbackList.children().remove();
+    this.getPageList(1);
+  },
+  bodyScroll: function (e) {
+    var target = $(e.target);
+    var scrollTop = target.scrollTop();
+    var wrapHeight = this.playbackList.height();
+    var diff = scrollTop - wrapHeight;
+    console.log(diff);
+    if (diff > -370) {
+      console.log('load data');
+      this.currentPage ++;
+      this.getPageList(this.currentPage);
+    }
+  }
 });
 
 module.exports = View;
