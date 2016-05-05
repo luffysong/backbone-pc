@@ -34,7 +34,7 @@ var View = BaseView.extend({
   },
   // 当模板挂载到元素之后
   afterMount: function () {
-    this.playbackModel = PlaybackModel.sigleInstance();
+    this.playbackModel = PlaybackModel.sharedInstanceModel();
 
     this.itemTpl = this.$el.find('#itemTpl').text();
     this.playbackList = this.$el.find('#playbackList');
@@ -91,12 +91,12 @@ var View = BaseView.extend({
   getPageList: function (page) {
     var self = this;
     this.playbackParameter.offset = (page - 1) * 15;
-    self.playbackModel.executeJSONP(this.playbackParameter, function (res) {
+    var promise = self.playbackModel.executeJSONP(this.playbackParameter);
+    promise.done(function (res) {
       self.renderList(res);
       if (!self.totalCount) {
         self.totalCount = res.data.totalCount;
       }
-    }, function () {
     });
   },
   renderList: function (data) {

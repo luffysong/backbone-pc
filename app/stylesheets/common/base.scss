@@ -980,3 +980,36 @@ img {
   -webkit-border-radius: 35px;
   border-radius: 35px;
 }
+
+
+
+.icons{
+  background-repeat:no-repeat;
+  display: inline-block;
+  padding-left: 20px;
+  background-position: 0 8px;
+  vertical-align: middle;
+}
+
+.icons{
+
+  &.view{
+    background-image: url(../images/record-icons_1.png);
+  }
+  &.chat{
+    background-image: url(../images/record-icons_2.png);
+  }
+  &.like{
+    background-image: url(../images/record-icons_3.png);
+  }
+  &.hot{
+    background-image: url(../images/record-icons_4.png);
+  }
+}
+.disabled{
+  color: #fff;
+  background: #d3d1d1!important;
+  cursor: pointer;
+}
+
+
