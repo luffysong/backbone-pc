@@ -548,11 +548,11 @@
   .select {
     cursor: pointer;
     display: inline-block;
-    width: 63px;
-    height: 23px;
+    width: 75px;
+    height: 35px;
     line-height: 23px;
     margin-bottom: 20px;
-    //padding: 5px;
+    padding: 5px;
     padding-left: 0;
     border: 1px solid #dadada;
     position: relative;
@@ -569,7 +569,7 @@
       position: absolute;
       top: 33px;
       left: -1px;
-      width: 70px;
+      width: 75px;
       z-index: 30;
       height: 200px;
       overflow: auto;
