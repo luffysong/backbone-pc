@@ -33,7 +33,7 @@ var Model = BaseModel.extend({
    * @return {Boolean} [description]
    */
   isAnchor: function () {
-    return !!this.get('data.anchor');
+    return !!this.get('data').anchor;
   },
   setTokenUrl: function (token) {
     this.imData = {
