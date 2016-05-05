@@ -10,6 +10,7 @@ var ArtistCompleteModel = require('../../models/anchor-setting/artist-autocomple
 var lighten;
 var msgBox = require('ui.msgBox');
 var timeImage = require('../../../images/select-ico.jpg');
+
 var View = BaseView.extend({
   el: '#createLiveVideo',
   events: { //  监听事件

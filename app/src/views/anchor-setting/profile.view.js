@@ -1,6 +1,6 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 var profileTemp = require('./template/profile.html');

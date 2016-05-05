@@ -1,6 +1,7 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 var UserUpdateModel = require('../../models/anchor-setting/user-update.model');
@@ -118,13 +119,11 @@ var View = BaseView.extend({
   tagsFilter: function (tags) {
     var _tags = tags.split(/[,，]/);
     var temp = [];
-    var val = '';
-    for (var j = _tags.length; j >= 0; j--) {
-      val = $.trim(tags[j]);
-      if (val.length >= 1) {
-        temp.push(val);
+    _.each(_tags, function (item) {
+      if (item.length >= 1) {
+        temp.push($.trim(item));
       }
-    }
+    });
     return temp;
   },
   initUploadFile: function () {
@@ -196,11 +195,12 @@ var View = BaseView.extend({
       self.btnSave.text('保存中');
       var userUpdateParameter = {
         deviceinfo: '{"aid": "30001001"}',
-        access_token: 'web-' + user.getToken(),
+        access_token: user.getWebToken(),
         nickname: $.trim(self.txtName.val()),
         headImg: self.txtImg.val(),
         tags: self.tagsFilter(self.txtTags.val()).join(',')
       };
+      console.log(userUpdateParameter);
       var promise = this.userUpdateModel.executeJSONP(userUpdateParameter);
       promise.done(function (res) {
         self.btnSave.text('保存');
