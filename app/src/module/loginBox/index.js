@@ -78,23 +78,11 @@ function _initForm() {
   _setFocusEffect(email);
   _setFocusEffect(password);
   user = UserModel.sharedInstanceUserModel();
-  ajaxForm = AjaxForm.classInstanceAjaxForm(loginBoxForm);
-  ajaxForm.done(function (cw) {
-    var search = decodeURIComponent(cw.location.search);
-    var response = url.parseSearch(search);
-    response = response.json;
-    if (!response.error) {
-      if (response.platFormRef) {
-        location.href = 'http://login.yinyuetai.com/platform';
-      } else {
-        user.$set(response);
-        dialog.trigger('hide');
-      }
-    } else {
-      errorinfo.text(response.message).css('visibility', 'visible');
-      refreshGeetest();
-    }
-  });
+  $('<input />').attr({
+    type: 'hidden',
+    name: 'cross_post',
+    value: '1'
+  }).appendTo(loginBoxForm);
 }
 // 加密字段
 function cryptoParam() {
@@ -161,9 +149,29 @@ function isPassTest() {
 function loginSubmit(e) {
   var _crytoP = cryptoParam();
   e.preventDefault();
-  ajaxForm.encrypto(secret.apply(window, _crytoP));
   if (isPassTest()) {
-    // ajaxForm.setIframeState(true);
+    ajaxForm = AjaxForm.classInstanceAjaxForm(loginBoxForm);
+    ajaxForm.encrypto(secret.apply(window, _crytoP));
+    ajaxForm.done(function (cw) {
+      var search = decodeURIComponent(cw.location.search);
+      var response = url.parseSearch(search);
+      response = response.json;
+      if (!response.error) {
+        if (response.platFormRef) {
+          location.href = 'http://login.yinyuetai.com/platform';
+        } else {
+          user.set(response);
+          dialog.trigger('hide');
+        }
+      } else {
+        errorinfo.text(response.message).css('visibility', 'visible');
+        refreshGeetest();
+      }
+    });
+    ajaxForm.fail(function (cw) {
+      console.log(cw);
+    });
+    ajaxForm.loadState = true;
     this.submit();
   }
 }
