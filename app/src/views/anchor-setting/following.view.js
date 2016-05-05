@@ -130,14 +130,16 @@ var View = BaseView.extend({
     var self = this;
     this.unFollowParams.anchorId = $(e.target).data('id');
     if (this.unFollowParams.anchorId) {
-      this.unFollowModel.executeJSONP(this.unFollowParams, function (res) {
-        if (res.code === 0) {
+      var promise = this.unFollowModel.executeJSONP(this.unFollowParams);
+      promise.done(function (res) {
+        if (res.code === '0') {
           msgBox.showOK('已取消关注');
           self.getPageList();
         } else {
           msgBox.showTip('取消关注失败,稍后重试');
         }
-      }, function () {
+      });
+      promise.fail(function () {
         msgBox.showTip('取消关注失败,稍后重试');
       });
     }
