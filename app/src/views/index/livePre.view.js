@@ -45,6 +45,8 @@ var View = BaseView.extend({
   afterMount: function () {
     //  获取findDOMNode DOM Node
     this.parentNode = this.$el.parent();
+
+    this.preViewBlock = $('#livePreviewBlock');
   },
   ready: function (options) {
     //  初始化
@@ -79,6 +81,10 @@ var View = BaseView.extend({
     var html;
     var le = items.length;
     var u = 6;
+    if (le <= 0) {
+      this.preViewBlock.hide();
+      return null;
+    }
     if (le <= 3) {
       u = 3;
     } else {
@@ -98,6 +104,7 @@ var View = BaseView.extend({
       height: 590 / (6 / u)
     });
     this.$el.html(html);
+    return this;
   },
   pushLiveVideo: function (e) {
     var self;
