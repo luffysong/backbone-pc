@@ -1361,6 +1361,9 @@ img {
   width: 895px;
   margin: 0 auto;
 }
+.play-back-main .BroadcastRoom embed {
+  margin-top: -1px;
+}
 .play-back-main .user-info-block {
   background-color: #fff!important;
   float: left;
