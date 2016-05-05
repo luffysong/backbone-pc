@@ -271,45 +271,43 @@ var View = BaseView.extend({
       msgType: 3
     });
     self.pushPopularity(1);
-    // msgBox.showOK('赞一下');
     setTimeout(function () {
       self.isClicked = false;
     }, 5000);
   },
   shareClick: function () {
     var title = encodeURIComponent(this.roomInfo.roomName + ',快来围观吧');
-    var url = 'http:// ' + window.location.host;
+    var url = 'http://' + window.location.host;
     var img = this.roomInfo.posterPic;
     var goUrl;
 
     if (this.roomInfo.status === 2) {
-      url = encodeURIComponent(url + '/web/liveRoom.html?roomId=' + this.roomInfo.id);
+      url = encodeURIComponent(url + '/liveRoom.html?roomId=' + this.roomInfo.id);
     } else {
-      url = encodeURIComponent(url + '/web/playback.html?roomId=' + this.roomInfo.id);
+      url = encodeURIComponent(url + '/playback.html?roomId=' + this.roomInfo.id);
     }
-    // msgBox.showOK('分享一下');
     var html = '<span class="share-wrap">' +
-      '<a href="http:// i.yinyuetai.com/share?title=' + title + '&amp;url=' + url + '&amp;cover=' + img + '?t=20160405161857" title="分享到音悦台我的家" class="myhome J_sharelink"></a> ' +
+      '<a href="http://i.yinyuetai.com/share?title=' + title + '&amp;url=' + url + '&amp;cover=' + img + '?t=20160405161857" title="分享到音悦台我的家" class="myhome J_sharelink"></a> ' +
 
-      '<a href="http:// v.t.sina.com.cn/share/share.php?appkey=2817290261&amp;url=' + url + '&amp;title=' + title + '&amp;content=gb2312&amp;pic=' + img + '?t=20160405161857&amp;ralateUid=1698229264" title="分享到新浪微博" class="weibo17 J_sharelink"></a>' +
+      '<a href="http://v.t.sina.com.cn/share/share.php?appkey=2817290261&amp;url=' + url + '&amp;title=' + title + '&amp;content=gb2312&amp;pic=' + img + '?t=20160405161857&amp;ralateUid=1698229264" title="分享到新浪微博" class="weibo17 J_sharelink"></a>' +
 
-      '<a href="http:// connect.qq.com/widget/shareqq/index.html?url=' + url + '&amp;showcount=1&amp;desc=' + title + '&amp;title=' + title + '&amp;site=饭趴&amp;pics=' + img + '?t=20160405161857&amp;style=201&amp;width=39&amp;height=39" title="分享到QQ" class="qq17 J_sharelink"></a>' +
+      '<a href="http://connect.qq.com/widget/shareqq/index.html?url=' + url + '&amp;showcount=1&amp;desc=' + title + '&amp;title=' + title + '&amp;site=饭趴&amp;pics=' + img + '?t=20160405161857&amp;style=201&amp;width=39&amp;height=39" title="分享到QQ" class="qq17 J_sharelink"></a>' +
 
-      '<a href="http:// sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + url + '&amp;desc=' + title + '" title="分享到QQ空间" class="qzone17 J_sharelink"></a>' +
+      '<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + url + '&amp;desc=' + title + '" title="分享到QQ空间" class="qzone17 J_sharelink"></a>' +
 
-      '<a href="http:// v.yinyuetai.com/share/weixin?title=' + title + '&amp;url=' + url + '" title="分享到微信"  class="weixin17 J_sharelink"></a>' +
+      '<a href="http://v.yinyuetai.com/share/weixin?title=' + title + '&amp;url=' + url + '" title="分享到微信"  class="weixin17 J_sharelink"></a>' +
 
-      '<a href="http:// widget.renren.com/dialog/share?resourceUrl=' + url + '?t=20160405161857&amp;charset=UTF-8&amp;message=' + title + '" title="分享到人人网" class="renren17 J_sharelink"></a>' +
+      '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + url + '?t=20160405161857&amp;charset=UTF-8&amp;message=' + title + '" title="分享到人人网" class="renren17 J_sharelink"></a>' +
 
-      '<a href="http:// sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&amp;url=' + url + '&amp;desc=' + title + '" title="分享到腾讯朋友" class="pengyou17 J_sharelink"></a>' +
+      '<a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?to=pengyou&amp;url=' + url + '&amp;desc=' + title + '" title="分享到腾讯朋友" class="pengyou17 J_sharelink"></a>' +
 
-      '<a href="http:// v.t.qq.com/share/share.php?title=' + title + '&amp;url=' + url + '&amp;pic=' + img + '?t=20160405161857" title="分享到腾讯微博" data-video-id="2539803" class="tencent17 J_sharelink"></a>' +
+      '<a href="http://v.t.qq.com/share/share.php?title=' + title + '&amp;url=' + url + '&amp;pic=' + img + '?t=20160405161857" title="分享到腾讯微博" data-video-id="2539803" class="tencent17 J_sharelink"></a>' +
 
-      '<a href="http:// huaban.com/bookmarklet?url=' + url + '&amp;video=&amp;title=' + title + '&amp;media=' + img + '?t=20160405161857&amp;description=' + title + '" title="分享到花瓣网" class="huaban17 J_sharelink"></a>' +
+      '<a href="http://huaban.com/bookmarklet?url=' + url + '&amp;video=&amp;title=' + title + '&amp;media=' + img + '?t=20160405161857&amp;description=' + title + '" title="分享到花瓣网" class="huaban17 J_sharelink"></a>' +
 
-      '<a href="http:// t.sohu.com/third/post.jsp?&amp;url=' + url + '&amp;title=' + title + '&amp;content=utf-8" title="分享到搜狐微博" class="sohu17 J_sharelink"></a>' +
+      '<a href="http://t.sohu.com/third/post.jsp?&amp;url=' + url + '&amp;title=' + title + '&amp;content=utf-8" title="分享到搜狐微博" class="sohu17 J_sharelink"></a>' +
 
-      '<a href="http:// fql.cc/yytafx?appkey=2817290261&amp;url=' + url + '&amp;title=' + title + '" title="分享到联通飞影" class="unicon17 J_sharelink"></a> ' +
+      '<a href="http://fql.cc/yytafx?appkey=2817290261&amp;url=' + url + '&amp;title=' + title + '" title="分享到联通飞影" class="unicon17 J_sharelink"></a> ' +
       '</span>';
     uiConfirm.show({
       title: '分享',
