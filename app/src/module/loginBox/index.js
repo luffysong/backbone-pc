@@ -160,7 +160,7 @@ function loginSubmit(e) {
         if (response.platFormRef) {
           location.href = 'http://login.yinyuetai.com/platform';
         } else {
-          user.$set(response);
+          user.set(response);
           dialog.trigger('hide');
         }
       } else {
