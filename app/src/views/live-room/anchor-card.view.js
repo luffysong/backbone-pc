@@ -107,7 +107,7 @@ var View = BaseView.extend({
     els.tagsWrap.html(template(data.creator));
 
     if (data.creator.isFollowed) {
-      self.btnFollow.addClass('followed').text('已关注');
+      this.btnFollow.addClass('followed').text('已关注');
     }
   },
   getNoticeInfo: function () {
