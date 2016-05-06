@@ -2099,6 +2099,9 @@ img {
   overflow: hidden;
   display: inline-block;
 }
+.record-wrap .item .content .img-wrap img {
+  max-width: 215px;
+}
 .record-wrap .item .content .info-wrap {
   margin-left: 16px;
 }

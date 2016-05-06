@@ -66,14 +66,14 @@ var View = BaseView.extend({
             return '<span class="current ">' + this.value + '</span>';
           case 'next':
             if (this.active) {
-              return '<a href="#' + this.value + '" class="next ">&raquo;</a>';
+              return '<a href="#' + this.value + '" class="next ">&gt;</a>';
             }
-            return '<span class="disabled ">&raquo;</span>';
+            return '<span class="disabled ">&gt;</span>';
           case 'prev':
             if (this.active) {
-              return '<a href="#' + this.value + '" class="prev ">&laquo;</a>';
+              return '<a href="#' + this.value + '" class="prev ">&lt;</a>';
             }
-            return '<span class="disabled ">&laquo;</span>';
+            return '<span class="disabled ">&lt;</span>';
           case 'fill':
             if (this.active) {
               return "<span>...</span>";
