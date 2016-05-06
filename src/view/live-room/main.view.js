@@ -352,6 +352,7 @@ var View = BaseView.extend({
     }
   },
   checkLockScreen: function (notifyInfo) {
+    console.log('-------', notifyInfo);
     var notify = null;
     try {
       if (_.isString(notifyInfo)) {
