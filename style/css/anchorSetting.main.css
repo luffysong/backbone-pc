@@ -2185,6 +2185,12 @@ img {
   padding: 0;
   border: none;
 }
+.following-wrap .item .avatar img {
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+}
 .following-wrap .item .info-wrap .name {
   color: #01ceb5;
   width: 108px;
