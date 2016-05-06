@@ -107,6 +107,7 @@ var View = BaseView.extend({
             roomId: this.roomInfo.id
         });
         this.elements.txtMessage.val('');
+        this.elements.limitTip.text(20);
         setTimeout(function () {
             self.canSendNow = true;
         }, self.speekPeriod);
