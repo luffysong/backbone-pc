@@ -17,6 +17,7 @@ var user = UserModel.sharedInstanceUserModel();
 
 var FollowingListModel = require('../../model/anchor-setting/following-list.model');
 var UnFollowModel = require('../../model/anchor-setting/unfollow.model');
+var AnchorLastestModel = require('../../model/anchor-setting/anchor-lastest.model');
 var msgBox = require('ui.MsgBox');
 
 var View = BaseView.extend({
@@ -26,6 +27,7 @@ var View = BaseView.extend({
   },
   events: { //监听事件
     'click #followList': 'cancelClicked'
+    //'click #followList': ''
   },
   //当模板挂载到元素之前
   beforeMount: function () {
@@ -35,6 +37,7 @@ var View = BaseView.extend({
   afterMount: function () {
     this.followListModel = FollowingListModel.sigleInstance();
     this.unFollowModel = UnFollowModel.sigleInstance();
+    this.anchorLastestModel = AnchorLastestModel.sigleInstance();
 
     this.followList = this.$el.find('#followList');
 
@@ -125,8 +128,8 @@ var View = BaseView.extend({
   },
   cancelClicked: function (e) {
     var self = this;
-    this.unFollowParams.anchorId = $(e.target).data('id');
-    if (this.unFollowParams.anchorId) {
+    if ($(e.target).data('id')) {
+      this.unFollowParams.anchorId = $(e.target).data('id');
       this.unFollowModel.executeJSONP(this.unFollowParams, function (res) {
         if (res.code == 0) {
           msgBox.showOK('已取消关注');
@@ -137,6 +140,17 @@ var View = BaseView.extend({
         }
       }, function () {
         msgBox.showTip('取消关注失败,稍后重试');
+      });
+    } else if ($(e.target).data('uid')) {
+      this.unFollowParams.anchor = $(e.target).data('uid');
+      this.anchorLastestModel.executeJSONP(this.unFollowParams, function (res) {
+        console.log(res);
+        if (res && res.data && res.data.status) {
+          if(res.data.status >=2){
+            var url = res.data.status == 2? '/web/liveRoom.html?roomId=': '/web/playback.html?roomId=';
+            window.location.href = url + res.data.id;
+          }
+        }
       });
 
     }

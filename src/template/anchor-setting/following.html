@@ -6,7 +6,7 @@
     <script type="text/x-template" id="followTpl">
         {{each data.users as item}}
         <div class="item">
-            <a class="avatar Left" href="###"><img src="{{item.largeAvatar}}" onerror="this.src='../img/bg-demo.jpg'"
+            <a data-uid="{{item.uid}}" class="avatar Left" href="###"><img data-uid="{{item.uid}}" src="{{item.largeAvatar}}" onerror="this.src='../img/bg-demo.jpg'"
                                                 alt=""></a>
             <div class="info-wrap Left">
                 <div class="name">{{item.nickName}}</div>
