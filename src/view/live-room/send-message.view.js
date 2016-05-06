@@ -27,7 +27,7 @@ var View = BaseView.extend({
         'click #btnChooseColor': 'showColorPanel',
         'click #colorList': 'chooseColor',
         'click #btnSendMsg': 'sendMsgClick',
-        'keypress #txtMessage': 'textMsgChanged'
+        'keyup #txtMessage': 'textMsgChanged'
     },
     //当模板挂载到元素之前
     beforeMount: function () {
