@@ -176,7 +176,6 @@ var View = BaseView.extend({
             content: '您确定要结束直播吗',
             okFn: function () {
                 self.endLive();
-                window.location.href = '/web/anchorsetting.html?view=history';
             },
             cancelFn: function () {
             }
@@ -194,6 +193,7 @@ var View = BaseView.extend({
             self.isLiveShowing = false;
             msgBox.showOK('结束直播操作成功');
             Backbone.trigger('event:liveShowEnded');
+            window.location.href = '/web/anchorsetting.html?view=history';
         }, function (err) {
             msgBox.showError(err.msg || '操作失败,稍后重试');
         });
