@@ -361,9 +361,7 @@ var View = BaseView.extend({
       }
     } catch (e) {
     }
-
     UserInfo.setLockScreen(this.roomInfo.id, notify.blockState || false);
-
   },
   goBack: function () {
     window.history.go(-1);
