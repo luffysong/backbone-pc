@@ -282,7 +282,7 @@ var View = BaseView.extend({
             img = this.roomInfo.posterPic;
 
         if (this.roomInfo.status == 2) {
-            url = encodeURIComponent(url + '/web/liveRoom.html?roomId=' + this.roomInfo.id);
+            url = encodeURIComponent(url + '/web/liveroom.html?roomId=' + this.roomInfo.id);
         } else {
             url = encodeURIComponent(url + '/web/playback.html?roomId=' + this.roomInfo.id);
         }

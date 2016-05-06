@@ -147,7 +147,7 @@ var View = BaseView.extend({
         console.log(res);
         if (res && res.data && res.data.status) {
           if(res.data.status >=2){
-            var url = res.data.status == 2? '/web/liveRoom.html?roomId=': '/web/playback.html?roomId=';
+            var url = res.data.status == 2? '/web/liveroom.html?roomId=': '/web/playback.html?roomId=';
             window.location.href = url + res.data.id;
           }
         }
