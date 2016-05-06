@@ -16,7 +16,12 @@
                          alt=""></a>
                 <div class="info-wrap Left">
                     <div class="item-title">{{item.roomName}}</div>
+                    {{if item.status == 2}}
+                    <div class="time">直播中</div>
+                    {{/if}}
+                    {{if item.status == 3}}
                     <div class="time">时长: <span class="">{{item.durationTxt}}</span></div>
+                    {{/if}}
                     <div class="anchor">
                         <img src="{{item.creator.smallAvatar}}" onerror="this.src='../img/bg-demo.jpg'" alt="">
                         <a class="name" href="##">{{item.creator.nickName}}</a>
