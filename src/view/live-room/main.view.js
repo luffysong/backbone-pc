@@ -270,7 +270,7 @@ var View = BaseView.extend({
         Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
         self.checkUserIsKickout(self.currentGroupInfo.Notification);
         //TODO
-        //self.checkLockScreen(self.currentGroupInfo.Introduction);
+        self.checkLockScreen(self.currentGroupInfo.Introduction);
 
       } else {
       }
