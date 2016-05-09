@@ -2,7 +2,7 @@
  * @project yinyuetai_pc_live_video
  * @description 音悦台直播PC版
  * @version v1.0.0
- * @time 2016-5-9   13:52:8
+ * @time 2016-5-9   15:10:15
  * @author YYT
  * @copy http://www.yinyuetai.com
  */
