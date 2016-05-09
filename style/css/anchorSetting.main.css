@@ -984,6 +984,9 @@ img {
   background: #d3d1d1!important;
   cursor: pointer;
 }
+.anPc-container {
+  background-position: 0 90px;
+}
 .bottom {
   height: 226px;
   background: #181818;
@@ -1036,6 +1039,9 @@ img {
   padding-bottom: 52px;
   padding-top: 90px;
   background: #333 top center no-repeat;
+}
+.anPc-container {
+  background-position: 0 90px;
 }
 .anPc-container .title {
   position: relative;

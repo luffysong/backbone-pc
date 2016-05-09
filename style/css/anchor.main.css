@@ -984,6 +984,9 @@ img {
   background: #d3d1d1!important;
   cursor: pointer;
 }
+.anPc-container {
+  background-position: 0 90px;
+}
 .am-container {
   background: url('/img/anchor-bg.jpg');
   min-height: 927px;

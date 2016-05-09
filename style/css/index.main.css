@@ -984,6 +984,9 @@ img {
   background: #d3d1d1!important;
   cursor: pointer;
 }
+.anPc-container {
+  background-position: 0 90px;
+}
 .bottom {
   height: 226px;
   background: #181818;

@@ -798,6 +798,9 @@ img {
   background: #d3d1d1!important;
   cursor: pointer;
 }
+.anPc-container {
+  background-position: 0 90px;
+}
 .am-container {
   padding-bottom: 100px;
 }
