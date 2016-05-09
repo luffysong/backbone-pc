@@ -45,7 +45,6 @@ var View = BaseView.extend({
   afterMount: function () {
     //  获取findDOMNode DOM Node
     this.parentNode = this.$el.parent();
-
     this.preViewBlock = $('#livePreviewBlock');
   },
   ready: function (options) {
