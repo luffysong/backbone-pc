@@ -80,6 +80,7 @@ var View = BaseView.extend({
     self.elements.watchedLiveCount.text(res.data.userCount.viewCount || 0);
     self.elements.totalCredits.text(res.data.totalMarks || 0);
     self.elements.fanTicket.text(0);
+    Backbone.trigger('event:setThemeBgImg', res.data.userProfile.bgTheme || '');
   },
   partialRender: function (data) {
     console.log(data);

@@ -1,5 +1,6 @@
 'use strict';
 
+var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 var storage = base.storage;
@@ -51,6 +52,9 @@ var View = BaseView.extend({
   ready: function () {
     //  初始化
     var self = this;
+
+    this.defineEventInterface();
+
     if (!user.isLogined()) {
       // 把签名清除一次
       storage.remove('imSig');
@@ -63,6 +67,12 @@ var View = BaseView.extend({
     } else {
       this.fetchIMUserSig();
     }
+  },
+  defineEventInterface: function () {
+    var self = this;
+    Backbone.on('event:setThemeBgImg', function (url) {
+      self.setPageBgimg(url);
+    });
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
@@ -115,13 +125,19 @@ var View = BaseView.extend({
     };
     this.upload = new UploadFileDialog(fileOptions);
     this.isLogined = true;
-    this.profileView = new ProfileView({ parent: this });
-    this.pageContentView = new PageContentView({ parent: this });
+    this.profileView = new ProfileView({
+      parent: this
+    });
+    this.pageContentView = new PageContentView({
+      parent: this
+    });
     // this.editProfileView = new EditProfileView({ parent: this });
     if (imModel.isAnchor()) {
       this.editProfileView = new EditProfileView();
     }
-    this.updatePasswordView = new UpdatePasswordView({ parent: this });
+    this.updatePasswordView = new UpdatePasswordView({
+      parent: this
+    });
   },
   fetchIMUserSig: function () {
     var self = this;
@@ -175,9 +191,9 @@ var View = BaseView.extend({
       var promise = this.updateBgModel.executeJSONP(this.updateBgParameter);
       promise.done(function (response) {
         var code = response.code;
-        if (!~~code) {
+        if (code === '0') {
           self.saveLock = true;
-          self.setPageBgimg(response.data.bgTheme);
+          self.setPageBgimg(response.data.userProfile.bgTheme || '');
           self.upload.hide();
           //  更新缓存
           imModel.updateIMUserSig();
@@ -194,6 +210,7 @@ var View = BaseView.extend({
   setPageBgimg: function (url) {
     if (url) {
       this.profileBg.css('background', 'url(' + url + ')');
+      this.profileBg.css('background-position', '0 90px');
     }
   }
 });
