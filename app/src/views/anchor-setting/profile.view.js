@@ -1,6 +1,7 @@
 'use strict';
 
 var Backbone = window.Backbone;
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 var profileTemp = require('./template/profile.html');
@@ -81,15 +82,13 @@ var View = BaseView.extend({
     self.elements.fanTicket.text(0);
   },
   partialRender: function (data) {
+    console.log(data);
     this.elements.nickName.text(data.nickName);
     this.elements.headAvatar.attr('src', data.headImg);
     var html = '';
-    var tags = data.tags || {};
-    for (var item in tags) {
-      if (Object.hasOwnProperty(item)) {
-        html += '<span>' + tags[item] + '</span>';
-      }
-    }
+    _.each(data.tags, function (item) {
+      html += '<span>' + item + '</span>';
+    });
     this.elements.tagsWrap.html(html);
   },
   /**

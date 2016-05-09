@@ -200,7 +200,6 @@ var View = BaseView.extend({
         headImg: self.txtImg.val(),
         tags: self.tagsFilter(self.txtTags.val()).join(',')
       };
-      console.log(userUpdateParameter);
       var promise = this.userUpdateModel.executeJSONP(userUpdateParameter);
       promise.done(function (res) {
         self.btnSave.text('保存');
