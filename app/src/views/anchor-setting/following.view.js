@@ -15,6 +15,7 @@ var DateTime = require('BusinessDate');
 
 var FollowingListModel = require('../../models/anchor-setting/following-list.model');
 var UnFollowModel = require('../../models/anchor-setting/unfollow.model');
+var AnchorLastestModel = require('../../models/anchor-setting/anchor-lastest.model');
 var msgBox = require('ui.msgBox');
 
 var View = BaseView.extend({
@@ -33,6 +34,7 @@ var View = BaseView.extend({
   afterMount: function () {
     this.followListModel = FollowingListModel.sharedInstanceModel();
     this.unFollowModel = UnFollowModel.sharedInstanceModel();
+    this.anchorLastestModel = AnchorLastestModel.sharedInstanceModel();
 
     this.followList = this.$el.find('#followList');
 
@@ -128,9 +130,13 @@ var View = BaseView.extend({
   },
   cancelClicked: function (e) {
     var self = this;
-    this.unFollowParams.anchorId = $(e.target).data('id');
-    if (this.unFollowParams.anchorId) {
-      var promise = this.unFollowModel.executeJSONP(this.unFollowParams);
+    var target = $(e.target);
+    var promise;
+    var promise2;
+    var url;
+    if (target.data('id')) {
+      this.unFollowParams.anchorId = target.data('id');
+      promise = this.unFollowModel.executeJSONP(this.unFollowParams);
       promise.done(function (res) {
         if (res.code === '0') {
           msgBox.showOK('已取消关注');
@@ -141,6 +147,18 @@ var View = BaseView.extend({
       });
       promise.fail(function () {
         msgBox.showTip('取消关注失败,稍后重试');
+      });
+    } else if (target.data('uid')) {
+      this.unFollowParams.anchor = target.data('uid');
+      promise2 = this.anchorLastestModel.executeJSONP(this.unFollowParams);
+      promise2.done(function (res) {
+        if (res && res.data && res.data.status) {
+          if (res.data.status >= 2) {
+            url = res.data.status === 2
+              ? 'liveroom.html?roomId=' : 'playback.html?roomId=';
+            window.location.href = url + res.data.id;
+          }
+        }
       });
     }
   }

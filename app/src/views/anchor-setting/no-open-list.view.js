@@ -148,7 +148,7 @@ var View = BaseView.extend({
   //  分页渲染，以及缓存li
   initRender: function (items) {
     var html = '';
-    if (items.length) {
+    if (items && items.length) {
       html = this.compileHTML(this.listTemp, { items: items });
     } else {
       html = '<h1>暂无数据</h1>';
