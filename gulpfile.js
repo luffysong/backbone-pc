@@ -5,7 +5,7 @@ var browserSync = browser.create();
 
 gulp.task('server', ['build'], function () {
   browserSync.init({
-    server: './app/www',
+    server: './app/www/',
     port: 4000
   });
   gulp.watch('./app/**/*.*', function (file) {
