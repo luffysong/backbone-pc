@@ -4,3 +4,22 @@
 @import "anchor/confirm";
 @import "anchor/dialog";
 @import "common/topBar";
+
+
+
+.not-found-wrap{
+  margin-top:90px;
+  min-height:300px;
+  text-align: center;
+  p{
+    padding-top: 100px;
+    font-size: 20px;
+    color: red;
+    a{
+      font-size: 14px;
+      margin-left: 16px;
+      color: #27d5bf;
+    }
+  }
+;
+}
