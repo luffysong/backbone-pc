@@ -33,6 +33,6 @@ var config = {
 
 if (process.env.NODE_ENV !== 'product') {
   config.scheme = 'beta';
-  config.prefix = '/www';
+  // config.prefix = '/www';
 }
 module.exports = config;
