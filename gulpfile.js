@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var browser = require('browser-sync');
 var browserSync = browser.create();
+var rimraf = require('rimraf');
 
 
 gulp.task('server', ['build'], function () {
@@ -19,14 +20,23 @@ gulp.task('server', ['build'], function () {
   });
 });
 
+gulp.task('clean', function () {
+  rimraf.sync('./dist');
+});
+
 var gutil = require('gulp-util');
-gulp.task('build', function () {
+gulp.task('build', ['clean'], function () {
   return gulp.src([
                'app/flash/*.*',
                'app/link/*.*',
                'app/link/**/*.*'
              ], {base: 'app/'})
              .pipe(gulp.dest('app/www/'));
+});
+
+gulp.task('copy-to-dist', ['build'], function () {
+  return gulp.src('app/www/**/*.*')
+             .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('webpack', function (callback) {

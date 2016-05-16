@@ -7,7 +7,7 @@
     "test": "mocha --colors test/*.spec.js",
     "start": "gulp server",
     "dev": "webpack --watch --colors --config bin/webpack.dev.config.js",
-    "product": "gulp build",
+    "product": "gulp copy-to-dist",
     "preproduct": "webpack --colors --config bin/webpack.product.config.js --optimize-minimize",
     "eslint": "eslint app/src/ app/stylesheets",
     "precommit": "npm run eslint"
@@ -45,6 +45,7 @@
     "mocha": "^2.4.5",
     "node-sass": "^3.5.1",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
