@@ -65,8 +65,9 @@ for(var chunkname in pages){
 //        warnings: false
 //    }
 //}));
-
-process.env.NODE_ENV = 'product';
+if(!process.env.NODE_ENV){
+  process.env.NODE_ENV = 'product';
+}
 //  注入环境变量
 plugins.push(new webpack.DefinePlugin({
   process:{
@@ -120,7 +121,8 @@ var config = {
   externals: {
     jquery: 'window.jQuery',
     backbone: 'window.Backbone',
-    underscore: 'window._'
+    underscore: 'window._',
+    webim: 'webim'
   }
 };
 module.exports = config;

@@ -8,6 +8,7 @@
     "start": "gulp server",
     "dev": "webpack --watch --colors --config bin/webpack.dev.config.js",
     "product": "gulp copy-to-dist",
+    "beta": "NODE_ENV=beta npm run product",
     "preproduct": "webpack --colors --config bin/webpack.product.config.js --optimize-minimize",
     "eslint": "eslint app/src/ app/stylesheets",
     "precommit": "npm run eslint"

@@ -7,7 +7,7 @@ var base = require('base-extend-backbone');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var store = base.storage;
-var webim = require('webim');
+var webim = window.webim;
 var _ = require('underscore');
 
 var imServer = {
