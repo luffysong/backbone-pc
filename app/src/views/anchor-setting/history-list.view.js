@@ -58,7 +58,7 @@ var View = BaseView.extend({
   initPageBox: function (prop) {
     var self = this;
     this.pageBoxView = new NoOpenPageBoxView({
-      id: '#historyPageBox',
+      el: '#historyPageBox',
       props: prop,
       listModel: this.historyModel,
       listRender: function (response) {
