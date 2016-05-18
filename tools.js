@@ -1,7 +1,6 @@
 /**
  * Created by xiangwenwen on 16/4/12.
  */
-
 var fs = require('fs');
 var path = require('path');
 var argv = process.argv;
