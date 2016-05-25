@@ -1,0 +1,495 @@
+@charset "UTF-8";
+body {
+  background: $main-bg-theme-color;
+}
+
+.index-wrap {
+  //顶部
+  &.top-bg {
+    background-color: #c8ddf4;
+    height: 716px;
+    .living {
+      header {
+        height: 65px;
+        span {
+          font-size: 20px;
+        }
+      }
+      .live-viedo {
+        width: 980px;
+        .viedo-wrap {
+          height: 550px;
+          background: url(../images/index/banner_03.jpg) no-repeat;
+        }
+        footer {
+          padding: 10px;
+          width: 980px;
+          height: 55px;
+          background: #fff;
+          .title {
+            font-size: 20px;
+          }
+          button {
+            font-size: 12px;
+            width: 120px;
+            height: 36px;
+          }
+        }
+      }
+      .viedo-list {
+        .item {
+          width: 215px;
+          position: relative;
+          display: block;
+          height: 121px;
+          border: 2px solid rgba(255, 255, 255, 0);
+          &:hover {
+            border: 2px solid $main-bg-purple;
+            &:before {
+              display: block;
+            }
+          }
+          img {
+            height: 117px;
+            width: 210px;
+          }
+          &:before {
+            content: '';
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: -8px;
+            margin-top: -3px;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid $main-bg-purple;
+          }
+        }
+      }
+    }
+  }
+
+  //通用头部
+  .section-header {
+    position: relative;
+    border-bottom: 1px solid $main-line-color;
+    height: 55px;
+    padding: 10px 0;
+    margin-top: 25px;
+    h2 {
+      margin: 0;
+    }
+    a {
+      color: $main-font-light-color;
+      font-size: 12px;
+      margin-top: 20px;
+      &:hover {
+        color: $main-bg-purple;
+      }
+    }
+    .tip {
+      font-size: 12px;
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      background: $main-bg-theme-color;
+      color: $main-font-light-color;
+    }
+  }
+
+  //视频列表
+  .viedo-content {
+    margin-top: 25px;
+    width: 1219px;
+    margin-left: -8px;
+    .am-u-sm-3{
+      padding-left: .8rem;
+      padding-right: .8rem;
+    }
+    $live-item-width: 288px;
+    .item {
+      .top-link {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        img {
+          width: $live-item-width;
+          height: 160px;
+        }
+        .link-hover {
+          width: $live-item-width;
+          height: 160px;
+          top: 0;
+          left: 0;
+          position: absolute;
+          .status {
+            width: 54px;
+            height: 54px;
+            &.living {
+              background: url(../images/index/hover-bg_05.png) no-repeat;
+            }
+            &.preview {
+              background: url(../images/index/hover-bg_03.png) no-repeat;
+            }
+          }
+          .right-top {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 5px;
+            span {
+              color: $main-text-color;
+            }
+          }
+          .left-bottom {
+            position: absolute;
+            left: 8px;
+            bottom: 8px;
+            color: #fff;
+            font-size: 12px;
+            z-index: 2;
+            &.info {
+              .sub-info{
+                display: block;
+              }
+            }
+            &.time {
+              .sub-time{
+                display: block;
+              }
+            }
+            .sub-info {
+              display: none;
+            }
+            .sub-time {
+              display: none;
+            }
+          }
+          .center {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            top: 50%;
+            left: 50%;
+            margin-top: -26px;
+            margin-left: -26px;
+            &.play {
+              background: url(../images/index/index-icepy-5.png) no-repeat;
+            }
+            &.wait {
+              background: url(../images/index/index-icepy-7.png) no-repeat;
+              &:before {
+                content: '敬请期待';
+                display: inline-block;
+                width: 25px;
+                font-size: 12px;
+                color: #fff;
+                margin-top: 8px;
+                margin-left: 13px;
+              }
+            }
+          }
+          footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+          }
+        }
+      }
+      .anchor-info {
+        //margin: 10px 0;
+        padding: 10px 5px;
+        background: #fff;
+        .title {
+          width: 198px;
+          font-weight: 600;
+          font-size: 12px;
+        }
+        .name{
+          color: $main-name-color;
+          font-size: 14px;
+          margin-left: 8px;
+        }
+        .avatar {
+          width: 25px;
+          height: 25px;
+        }
+        button{
+          text-align: center;
+          padding: 0;
+          font-size: 12px;
+          i{
+            background: url(../images/index/hover_10.png) no-repeat;
+            display: block;
+            height: 15px;
+            background-position-x: 25px;
+          }
+          width: 65px;
+          height: 45px;
+        }
+      }
+      footer{
+        height:15px;
+        width: 100%;
+      }
+      .viedo-bg {
+        background: url(../images/index/img-bottom-bg_03.png) no-repeat;
+        -webkit-background-size:100%;
+        background-size:100%;
+      }
+    }
+
+  }
+  //精彩饭趴
+  .perfect-wrap {
+    //.viedo-content {
+    //  margin-top: 25px;
+    //  width: 1219px;
+    //  margin-left: -8px;
+    //  .item {
+    //    padding-left: .8rem;
+    //    padding-right: .8rem;
+    //    .top-link {
+    //      display: block;
+    //      position: relative;
+    //      img {
+    //        width: 286px;
+    //        height: 160px;
+    //      }
+    //      .link-hover {
+    //        width: 286px;
+    //        height: 160px;
+    //        top: 0;
+    //        left: 0;
+    //        position: absolute;
+    //        .status {
+    //          width: 54px;
+    //          height: 54px;
+    //          &.living {
+    //            background: url(../images/index/hover-bg_05.png) no-repeat;
+    //          }
+    //          &.preview {
+    //            background: url(../images/index/hover-bg_03.png) no-repeat;
+    //          }
+    //        }
+    //        .right-top {
+    //          position: absolute;
+    //          top: 8px;
+    //          right: 8px;
+    //          color: #fff;
+    //          font-size: 12px;
+    //          padding: 2px 5px;
+    //          span {
+    //            color: $main-text-color;
+    //          }
+    //        }
+    //        .left-bottom {
+    //          position: absolute;
+    //          left: 8px;
+    //          bottom: 8px;
+    //          color: #fff;
+    //          font-size: 12px;
+    //          z-index: 2;
+    //          &.info {
+    //            .sub-info{
+    //              display: block;
+    //            }
+    //          }
+    //          &.time {
+    //            .sub-time{
+    //              display: block;
+    //            }
+    //          }
+    //          .sub-info {
+    //            display: none;
+    //          }
+    //          .sub-time {
+    //            display: none;
+    //          }
+    //        }
+    //        .center {
+    //          position: absolute;
+    //          width: 52px;
+    //          height: 52px;
+    //          top: 50%;
+    //          left: 50%;
+    //          margin-top: -26px;
+    //          margin-left: -26px;
+    //          &.play {
+    //            background: url(../images/index/index-icepy-5.png) no-repeat;
+    //          }
+    //          &.wait {
+    //            background: url(../images/index/index-icepy-7.png) no-repeat;
+    //            &:before {
+    //              content: '敬请期待';
+    //              display: inline-block;
+    //              width: 25px;
+    //              font-size: 12px;
+    //              color: #fff;
+    //              margin-top: 8px;
+    //              margin-left: 13px;
+    //            }
+    //          }
+    //        }
+    //        footer {
+    //          position: absolute;
+    //          left: 0;
+    //          bottom: 0;
+    //          width: 100%;
+    //          height: 80px;
+    //        }
+    //      }
+    //    }
+    //    .anchor-info {
+    //      margin: 10px 0;
+    //      padding: 0 5px;
+    //      .title {
+    //        width: 198px;
+    //        font-weight: 600;
+    //        font-size: 12px;
+    //      }
+    //      .name{
+    //        color: $main-name-color;
+    //        font-size: 14px;
+    //        margin-left: 8px;
+    //      }
+    //      .avatar {
+    //        width: 25px;
+    //        height: 25px;
+    //      }
+    //      button{
+    //        text-align: center;
+    //        padding: 0;
+    //        font-size: 12px;
+    //        i{
+    //          background: url(../images/index/hover_10.png) no-repeat;
+    //          display: block;
+    //          height: 15px;
+    //          background-position-x: 25px;
+    //        }
+    //        width: 65px;
+    //        height: 45px;
+    //      }
+    //    }
+    //    footer{
+    //      height:15px;
+    //      width: 100%;
+    //    }
+    //    .viedo-bg {
+    //      background: url(../images/index/img-bottom-bg_03.png) no-repeat;
+    //      -webkit-background-size:100%;
+    //      background-size:100%;
+    //    }
+    //  }
+    //
+    //}
+
+  }
+  //官方频道
+  .official-wrap {
+
+    .viedo-content{
+      .link-hover{
+        width: 589px!important;
+        height: 332px!important;
+        display: none;
+      }
+      .item{
+        .title{
+          width: 285px;
+        }
+        .name{
+          display: inline-block;
+          margin-top: 2px;
+        }
+      }
+      .center-wrap{
+        width: 604px!important;
+        height: 468px!important;
+        .item{
+          .top-link{
+            img{
+              width: 589px;
+              height: 332px;
+            }
+            .link-hover{
+              display: block;
+            }
+          }
+          .anchor-info{
+           padding-top: 20px;
+            .am-fl{
+            }
+            .title{
+              font-size: 20px;
+              width: 584px;
+            }
+            .avatar{
+              margin: 15px 0;
+              height: 40px;
+              width: 40px;
+            }
+            .name{
+              display: inline-block;
+              margin-top: 25px;
+            }
+          }
+
+        }
+      }
+    }
+
+
+  }
+
+  //站子
+  .fan-wrap{
+    margin-bottom: 30px;
+    .content{
+      margin-top: 25px;
+      width: 1228px;
+      margin-left: -13px;
+      .item{
+        position: relative;
+        display: inline-block;
+        color: #333;
+        margin: 0 13px 10px 11px;
+        &:hover{
+          color: #333;
+          span{
+            display: inline-block;
+          }
+        }
+        img{
+          width: 180px;
+          height: 120px;
+        }
+        .name{
+          padding: 2px 0;
+          width: 178px;
+          font-size: 12px;
+        }
+        span{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          display: none;
+          font-size: 12px;
+          width: 108px;
+          height: 30px;
+          margin-left: -54px;
+          margin-top: -15px;
+        }
+      }
+    }
+  }
+
+
+}
+

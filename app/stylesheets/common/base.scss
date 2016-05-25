@@ -1,4 +1,14 @@
+@charset "UTF-8";
 $main-bg-green-color: #01ceb5;
+$main-bg-theme-color: #f8f8f8;
+
+$main-bg-purple: #798fd8;
+$main-bg-red: #ff6666;
+$main-font-light-color: #999;
+$main-line-color: #d9d9d9;
+
+$main-text-color: #C5C5C5;
+$main-name-color: #666;
 
 body {
   font-size: 14px;
@@ -981,35 +991,95 @@ img {
   border-radius: 35px;
 }
 
+/* 扩展 */
 
-
-.icons{
-  background-repeat:no-repeat;
+.icons {
+  background-repeat: no-repeat;
   display: inline-block;
   padding-left: 20px;
   background-position: 0 8px;
   vertical-align: middle;
 }
 
-.icons{
-
-  &.view{
+.icons {
+  &.view {
     background-image: url(../images/record-icons_1.png);
   }
-  &.chat{
+  &.chat {
     background-image: url(../images/record-icons_2.png);
   }
-  &.like{
+  &.chat2 {
+    background-image: url(../images/record-icons_2.png);
+  }
+  &.like {
     background-image: url(../images/record-icons_3.png);
   }
-  &.hot{
+  &.hot {
     background-image: url(../images/record-icons_4.png);
   }
 }
-.disabled{
+
+.disabled {
   color: #fff;
-  background: #d3d1d1!important;
+  background: #d3d1d1 !important;
   cursor: pointer;
+}
+
+.am-container {
+  max-width: 1203px !important;
+  width: 1203px !important;
+  padding: 0 !important;
+}
+
+.margin-top90 {
+  margin-top: 90px;
+}
+
+//紫色按钮
+.am-btn-purple {
+  background-color: $main-bg-purple;
+  color: #fff;
+  border-color: $main-bg-purple;
+  &:hover, &:focus {
+    color: #fff;
+  }
+}
+.am-btn-red {
+  background-color: $main-bg-red;
+  color: #fff;
+  border-color: $main-bg-red;
+  &:hover, &:focus {
+    color: #fff;
+  }
+}
+
+$rgba-color-black: rgba(0, 0, 0, 0.6);
+$rgba-color-white: rgba(255,255,255,0);
+
+:root .gradient-up {
+  filter: none;
+}
+:root .gradient {
+  filter: none;
+}
+.gradient{
+  background: rgba(0,0,0,.6);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66000000', EndColorStr='#66000000');
+}
+
+.gradient-up {
+  background: $rgba-color-black;
+  background: -moz-linear-gradient(bottom, $rgba-color-black 0%, $rgba-color-white 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $rgba-color-black), color-stop(100%, $rgba-color-white));
+  background: -webkit-linear-gradient(bottom, $rgba-color-black 0%, $rgba-color-white 100%);
+  background: -o-linear-gradient(bottom, $rgba-color-black 0%, $rgba-color-black 100%);
+  background: -ms-linear-gradient(bottom, $rgba-color-black 0%, $rgba-color-white 100%);
+  background: linear-gradient(to top, $rgba-color-black 0%, $rgba-color-white 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#ffffff', GradientType=0);
+}
+
+.box-shadow-bottom {
+  box-shadow: rgba(0, 0, 0, 0.6) 0 0 107px 12px inset;
 }
 
 
