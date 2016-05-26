@@ -1,6 +1,9 @@
 //
    Created by AaronYuan on 5/25/16.
+
+//直播频道
 div.index-wrap.top-bg#topContainer
+    // 模板
     script#recommendTpl(type='text/html')
         div.am-container.has-top-bar
             section.living
@@ -30,6 +33,7 @@ div.index-wrap.top-bg#topContainer
                                         img(src='/images/banner_09.jpg')
                                         div.link-hover.gradient-up.am-vertical-align
                                             span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
+    // 右侧直播列表模板
     script#liveItemTpl(type='text/html')
         li
             a(href='#').item
@@ -37,8 +41,9 @@ div.index-wrap.top-bg#topContainer
                 div.link-hover.gradient-up.am-vertical-align
                     span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
 
-
+//其他频道
 div.index-wrap.am-container
+    //精彩饭趴
     section.perfect-wrap
         header.section-header.am-cf
             h2.am-fl='精彩饭趴'
@@ -157,7 +162,7 @@ div.index-wrap.am-container
                             i
                             span='顶上去'
                 footer.viedo-bg
-
+    //官方
     section.official-wrap
         header.section-header.am-cf
             h2.am-fl='官方频道'
@@ -216,7 +221,7 @@ div.index-wrap.am-container
                             img.am-circle.avatar(src='/images/banner_09.jpg')
                             span.name='天天'
                     footer.viedo-bg
-
+    //站子频道
     section.fan-channel-wrap
         header.section-header.am-cf
             h2.am-fl='站子频道'
@@ -233,8 +238,7 @@ div.index-wrap.am-container
                             img.am-circle.avatar(src='/images/banner_09.jpg')
                             span.name='天天'
                     footer.viedo-bg
-
-
+    //入驻站子
     section.fan-wrap
         header.section-header.am-cf
             h2.am-fl='入驻站子'
