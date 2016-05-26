@@ -6,6 +6,9 @@ var RecommendView = require('./recommended.view');
 var TopBarView = require('TopBarView');
 var LivePreView = require('./livePre.view');
 var PlaybackView = require('./playback.view');
+
+var WonderfulView = require('./wonderful.view');
+
 var View = BaseView.extend({
   clientRender: false,
   context: function (args) {
@@ -28,6 +31,8 @@ var View = BaseView.extend({
       topbar: this.topbar
     });
     this.playback = new PlaybackView();
+
+    this.wonderfulView = new WonderfulView();
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null

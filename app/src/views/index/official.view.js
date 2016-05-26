@@ -1,3 +1,6 @@
+/*
+  官方频道
+ */
 'use strict';
 
 var base = require('base-extend-backbone');

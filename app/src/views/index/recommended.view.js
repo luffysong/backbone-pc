@@ -1,8 +1,10 @@
+/*
+  直播频道
+ */
 'use strict';
 
 var base = require('base-extend-backbone');
 var BaseView = base.View;
-// var recommendTemp = require('./template/recommend.jade');
 var RecommendModel = require('../../models/index/recommended.model');
 var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
@@ -22,15 +24,14 @@ var View = BaseView.extend({
     this.recommendParameter = {
       deviceinfo: '{"aid":"30001001"}'
     };
-    var token = user.getToken();
-    if (token) {
-      this.recommendParameter.access_token = 'web-' + user.getToken();
-    }
+    this.recommendParameter.access_token = user.getWebToken();
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
-    // 读取模板
-    this.recommendTpl = $('#recommendTpl').html();
+    // 读取整个模块的模板
+    this.recommendTpl = this.$el.find('#recommendTpl').html();
+    // 获取右侧列表模板
+    this.livingItemTpl = this.$el.find('#liveItemTpl').html();
   },
   ready: function () {
     //  初始化
@@ -75,6 +76,13 @@ var View = BaseView.extend({
         this.init(flashData);
       });
     }
+
+    this.renderList({});
+  },
+  // 渲染右侧列表
+  renderList: function (data) {
+    var html = this.compileHTML(this.livingItemTpl, data || {});
+    this.$el.find('#livingList').html(html);
   },
   gotoLiveHome: function (e) {
     var el = $(e.currentTarget);

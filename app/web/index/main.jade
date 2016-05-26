@@ -22,24 +22,30 @@ div.index-wrap.top-bg#topContainer
                             | {{/if}}
                     aside.viedo-list.am-fr
                         ul#livingList
-                            li
-                                a(href='#').item.active
-                                    img(src='/images/banner_09.jpg')
-                                    div.link-hover.gradient-up.am-vertical-align
-                                        span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
-                            - for(var i = 4; i>0; i--)
-                                li
-                                    a(href='#').item
-                                        img(src='/images/banner_09.jpg')
-                                        div.link-hover.gradient-up.am-vertical-align
-                                            span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
+                            //li
+                            //    a(href='#').item.active
+                            //        img(src='/images/banner_09.jpg')
+                            //        div.link-hover.gradient-up.am-vertical-align
+                            //            span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
+                            //- for(var i = 4; i>0; i--)
+                            //    li
+                            //        a(href='#').item
+                            //            img(src='/images/banner_09.jpg')
+                            //            div.link-hover.gradient-up.am-vertical-align
+                            //                span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
     // 右侧直播列表模板
     script#liveItemTpl(type='text/html')
         li
-            a(href='#').item
+            a(href='#').item.active
                 img(src='/images/banner_09.jpg')
                 div.link-hover.gradient-up.am-vertical-align
                     span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
+        - for(var i = 4; i>0; i--)
+            li
+                a(href='#').item
+                    img(src='/images/banner_09.jpg')
+                    div.link-hover.gradient-up.am-vertical-align
+                        span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
 
 //其他频道
 div.index-wrap.am-container
@@ -49,35 +55,37 @@ div.index-wrap.am-container
             h2.am-fl='精彩饭趴'
             a(href='#').am-fr='查看全部>>'
             span.tip HOT LIVE
-        div.viedo-content.am-g
-            div.item.am-u-sm-3
-                a.top-link(href='###')
-                    img(src='/images/banner_09.jpg')
-                    div.link-hover
-                        div.status.living
-                        div.right-top.gradient.boderRadAll_3
-                            span='人气:'
-                            | 232
-                        div.left-bottom.info
-                            div.sub-info
-                                span.icons.chat
-                                | 123123
-                                span.icons.like
-                                | 324
-                            div.sub-time
-                                | 直播时间: 2016/2/12 12:23
-                        div.center.play.wait
-                        footer.gradient-up
-                div.anchor-info.am-cf
-                    div.am-fl
-                        div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                        img.am-circle.avatar(src='/images/banner_09.jpg')
-                        span.name='天天'
-                    div.am-fr
-                        button.am-btn.am-btn-red.boderRadAll_5
-                            i
-                            span='顶上去'
-                footer.viedo-bg
+        div#wonderfulList.viedo-content.am-g
+            // 列表模板
+            script#wonderfulItemTpl(type='text/html')
+                div.item.am-u-sm-3
+                    a.top-link(href='###')
+                        img(src='/images/banner_09.jpg')
+                        div.link-hover
+                            div.status.living.preview
+                            div.right-top.gradient.boderRadAll_3
+                                span='人气:'
+                                | 232
+                            div.left-bottom.info.time
+                                div.sub-info
+                                    span.icons.chat
+                                    | 123123
+                                    span.icons.like
+                                    | 324
+                                div.sub-time
+                                    | 直播时间: 2016/2/12 12:23
+                            div.center.play.wait
+                            footer.gradient-up
+                    div.anchor-info.am-cf
+                        div.am-fl
+                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
+                            img.am-circle.avatar(src='/images/banner_09.jpg')
+                            span.name='天天22'
+                        div.am-fr
+                            button.am-btn.am-btn-red.boderRadAll_5
+                                i
+                                span='顶上去'
+                    footer.viedo-bg
             div.item.am-u-sm-3
                 a.top-link
                     img(src='/images/banner_09.jpg')

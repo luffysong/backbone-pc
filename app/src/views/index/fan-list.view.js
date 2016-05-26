@@ -1,3 +1,6 @@
+/*
+  入驻站子
+ */
 'use strict';
 
 var base = require('base-extend-backbone');
