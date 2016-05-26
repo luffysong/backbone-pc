@@ -17,7 +17,6 @@ $a-hover: #690;
 .fl {
   float: left;
 }
-
 //样式
 .topBar {
   height: $main-top-bar-height;
@@ -173,11 +172,11 @@ $a-hover: #690;
         height: 32px;
         width: 100%;
         line-height: 32px;
-        background: $main-top-bar-bg-color;
+        background: #272727;
         margin-top: 0;
       }
       a:hover, .header-logout:hover {
-        background: #01ceb5;
+        background: #7991d7;
         color: #ffffff;
       }
       .header-logout {

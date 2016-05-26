@@ -8,6 +8,7 @@ body {
   &.top-bg {
     background-color: #c8ddf4;
     height: 716px;
+    background: url(../images/index/top_bg.jpg);
     .living {
       header {
         height: 65px;
@@ -44,7 +45,7 @@ body {
           height: 121px;
           border: 2px solid rgba(255, 255, 255, 0);
           //background: url(../images/index/banner_09.jpg) no-repeat;
-          &:hover {
+          &:hover,&.active {
             border: 2px solid $main-bg-purple;
             &:before {
               display: block;

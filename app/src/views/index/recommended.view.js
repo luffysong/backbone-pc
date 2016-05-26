@@ -2,16 +2,17 @@
 
 var base = require('base-extend-backbone');
 var BaseView = base.View;
-var recommendTemp = require('./template/recommend.html');
+// var recommendTemp = require('./template/recommend.jade');
 var RecommendModel = require('../../models/index/recommended.model');
 var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var FlashApi = require('FlashApi');
+
 var View = BaseView.extend({
   el: '#topContainer',
   events: {
-    'click .go-livehome': 'gotoLiveHome'
+    'click .gotoLiveHome': 'gotoLiveHome'
   },
   context: function () {
     // console.log(args);
@@ -28,6 +29,8 @@ var View = BaseView.extend({
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
+    // 读取模板
+    this.recommendTpl = $('#recommendTpl').html();
   },
   ready: function () {
     //  初始化
@@ -53,14 +56,16 @@ var View = BaseView.extend({
   recommendRender: function (data) {
     var status = data.status;
     var flashData = data;
-    var html = this.compileHTML(recommendTemp, { data: data });
+    var html = this.compileHTML(this.recommendTpl, {
+      data: data
+    });
     this.$el.html(html);
     if (status === 3 || status === 2) {
       this.FlashApi = FlashApi.sharedInstanceFlashApi({
         el: 'topFlash',
         props: {
-          width: 1014,
-          height: 570
+          width: 980,
+          height: 550
         }
       });
     }
@@ -85,7 +90,7 @@ var View = BaseView.extend({
         window.location.href = 'playback.html?roomId=' + id;
         break;
       default:
-        //  默认不处理
+      //  默认不处理
     }
   }
 });

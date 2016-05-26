@@ -1,24 +1,43 @@
 //
    Created by AaronYuan on 5/25/16.
-div.index-wrap.top-bg
-    div.am-container.has-top-bar
-        section.living
-            header.am-vertical-align
-                span.am-vertical-align-middle.am-serif="直播频道"
-            div.am-cf
-                div.live-viedo.am-fl
-                    div.viedo-wrap
-                    footer.am-fl
-                        span.title='EXO签收会'
-                        button.am-fr.am-btn.am-radius.am-btn-purple='进入直播间'
-                aside.viedo-list.am-fr
-                    ul
-                        - for(var i = 5; i>0; i--)
+div.index-wrap.top-bg#topContainer
+    script#recommendTpl(type='text/html')
+        div.am-container.has-top-bar
+            section.living
+                header.am-vertical-align
+                    span.am-vertical-align-middle.am-serif="直播频道"
+                div.am-cf
+                    div.live-viedo.am-fl
+                        div.viedo-wrap#topFlash
+                            | {{if data.status === 1}}
+                            img(src='{{data.posterPic}}')
+                            | {{/if}}
+                        footer.am-fl
+                            span.title='{{data.roomName}}'
+                            | {{if data.status !== 1}}
+                            button.gotoLiveHome.am-fr.am-btn.am-radius.am-btn-purple(data-id="{{data.id}}",data-status="{{data.status}}")='进入直播间'
+                            | {{/if}}
+                    aside.viedo-list.am-fr
+                        ul#livingList
                             li
-                                a(href='#').item
+                                a(href='#').item.active
                                     img(src='/images/banner_09.jpg')
                                     div.link-hover.gradient-up.am-vertical-align
                                         span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
+                            - for(var i = 4; i>0; i--)
+                                li
+                                    a(href='#').item
+                                        img(src='/images/banner_09.jpg')
+                                        div.link-hover.gradient-up.am-vertical-align
+                                            span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
+    script#liveItemTpl(type='text/html')
+        li
+            a(href='#').item
+                img(src='/images/banner_09.jpg')
+                div.link-hover.gradient-up.am-vertical-align
+                    span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
+
+
 div.index-wrap.am-container
     section.perfect-wrap
         header.section-header.am-cf
@@ -28,7 +47,7 @@ div.index-wrap.am-container
         div.viedo-content.am-g
             div.item.am-u-sm-3
                 a.top-link(href='###')
-                    img(src='/images/index-icepy-2.png')
+                    img(src='/images/banner_09.jpg')
                     div.link-hover
                         div.status.living
                         div.right-top.gradient.boderRadAll_3
