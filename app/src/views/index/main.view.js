@@ -9,6 +9,7 @@ var PlaybackView = require('./playback.view');
 
 var WonderfulView = require('./wonderful.view');
 var FanChannelView = require('./fan-channel.view');
+var JoinFanListView = require('./join-fan-list.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -36,6 +37,7 @@ var View = BaseView.extend({
     // 精彩饭趴
     this.wonderfulView = new WonderfulView();
     this.fanChannelView = new FanChannelView();
+    this.joinFanListView = new JoinFanListView();
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null

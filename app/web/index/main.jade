@@ -250,7 +250,7 @@ div.index-wrap.am-container
                             div.am-fl
                                 div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
                                 img.am-circle.avatar(src='/images/banner_09.jpg')
-                                span.name='天天'
+                                span.name='天天22'
                         footer.viedo-bg
     //入驻站子
     section.fan-wrap
@@ -258,11 +258,10 @@ div.index-wrap.am-container
             h2.am-fl='入驻站子'
             a(href='#').am-fr='查看全部>>'
             span.tip='JOIN FAN STATION'
-        div.content
-            - for(var i=12; i>0; i--)
-                a.item(href='###')
-                    img(src='/images/banner_09.jpg')
-                    div.am-text-truncate.name='呆呆萌呆萌呆萌呆萌呆萌萌萌呆萌'
-                    span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-
-
+        div.content.join-fan-wrap
+            script#joinFanListTpl(href='text/html')
+                - for(var i=12; i>0; i--)
+                    a.item(href='###')
+                        img(src='/images/banner_09.jpg')
+                        div.am-text-truncate.name='33呆呆萌呆萌呆萌呆萌呆萌萌萌呆萌'
+                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
