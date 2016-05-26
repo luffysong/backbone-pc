@@ -9,6 +9,9 @@ $main-line-color: #d9d9d9;
 
 $main-text-color: #C5C5C5;
 $main-name-color: #666;
+$main-top-bar-bg-color: #4b46a0;
+
+$main-top-bar-height: 50px;
 
 body {
   font-size: 14px;
@@ -1031,8 +1034,8 @@ img {
   padding: 0 !important;
 }
 
-.margin-top90 {
-  margin-top: 90px;
+.has-top-bar {
+  margin-top: $main-top-bar-height;
 }
 
 //紫色按钮

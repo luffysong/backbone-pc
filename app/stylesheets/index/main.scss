@@ -288,6 +288,15 @@ body {
             .link-hover {
               display: block;
             }
+            .center{
+              width: 83px;
+              height: 83px;
+              margin-left: -41px;
+              margin-top: -41px;
+              &.play{
+                background: url(../images/index/play_03.png) no-repeat!important;
+              }
+            }
           }
           .anchor-info {
             padding-top: 20px;

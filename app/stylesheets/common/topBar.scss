@@ -20,9 +20,9 @@ $a-hover: #690;
 
 //样式
 .topBar {
-  height: 90px;
+  height: $main-top-bar-height;
   width: 100%;
-  background: $tbC;
+  background: $main-top-bar-bg-color;
   position: fixed;
   top: 0;
   left: 0;
@@ -31,14 +31,18 @@ $a-hover: #690;
 
 .topBarCon {
   position: relative;
-  width: 1200px;
-  height: 100%;
+  //width: 1200px;
+  //height: 100%;
+  height:$main-top-bar-height;
   margin: 0 auto;
 
   .link-wrap {
-    position: absolute;
-    top: 35px;
-    left: 120px;
+    display: inline-block;
+    //position: absolute;
+    //top: 35px;
+    //left: 120px;
+    font-size: 14px;
+    margin-left: 32px;
     .split {
       color: #b2b2b2;
       margin: 0 5px;
@@ -51,18 +55,24 @@ $a-hover: #690;
     }
   }
   .log {
+    display: inline-block;
     width: 97px;
-    margin-top: 24px;
+    //margin-top: 10px;
     height: 35px;
-    background: url('../images/logo.png') no-repeat center;
+    //background: url('../images/logo.png') no-repeat center;
+    background: url('../images/index/logo_03.png') no-repeat center;
   }
 
 }
 
 .anchorPc {
-  padding-top: 24px;
+  font-size: 12px!important;
+  .login-user-wrap{
+    padding-top: 5px;
+  }
+  //padding-top: 24px;
   .avator {
-    margin-right: 9px;
+    //margin-right: 9px;
     width: 40px;
     height: 40px;
     img {
@@ -163,7 +173,7 @@ $a-hover: #690;
         height: 32px;
         width: 100%;
         line-height: 32px;
-        background: $c-27;
+        background: $main-top-bar-bg-color;
         margin-top: 0;
       }
       a:hover, .header-logout:hover {
