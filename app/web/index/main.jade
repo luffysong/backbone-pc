@@ -240,17 +240,18 @@ div.index-wrap.am-container
             a(href='#').am-fr='查看全部>>'
             span.tip='FAN CHANNEL'
         div.viedo-content.fan-list
-            - for(var i =8; i>0; i--)
-                div.item
-                    a.top-link(href="###")
-                        img(src='/images/banner_09.jpg')
-                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                    div.anchor-info.am-cf
-                        div.am-fl
-                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                            img.am-circle.avatar(src='/images/banner_09.jpg')
-                            span.name='天天'
-                    footer.viedo-bg
+            script#fanChannelItemTpl(type='text/html')
+                - for(var i =8; i>0; i--)
+                    div.item
+                        a.top-link(href="###")
+                            img(src='/images/banner_09.jpg')
+                            span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+                        div.anchor-info.am-cf
+                            div.am-fl
+                                div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
+                                img.am-circle.avatar(src='/images/banner_09.jpg')
+                                span.name='天天'
+                        footer.viedo-bg
     //入驻站子
     section.fan-wrap
         header.section-header.am-cf

@@ -8,6 +8,7 @@ var LivePreView = require('./livePre.view');
 var PlaybackView = require('./playback.view');
 
 var WonderfulView = require('./wonderful.view');
+var FanChannelView = require('./fan-channel.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -32,7 +33,9 @@ var View = BaseView.extend({
     });
     this.playback = new PlaybackView();
 
+    // 精彩饭趴
     this.wonderfulView = new WonderfulView();
+    this.fanChannelView = new FanChannelView();
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
