@@ -1053,6 +1053,7 @@ img {
   border-color: $main-bg-red;
   &:hover, &:focus {
     color: #fff;
+    background-color: #fe7373;
   }
 }
 
@@ -1066,7 +1067,7 @@ $rgba-color-white: rgba(255,255,255,0);
   filter: none;
 }
 .gradient{
-  background: rgba(0,0,0,.6);
+  background: rgba(0,0,0,.5);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66000000', EndColorStr='#66000000');
 }
 

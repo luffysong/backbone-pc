@@ -284,8 +284,8 @@ body {
 
     .viedo-content {
       .link-hover {
-        width: 589px !important;
-        height: 332px !important;
+        //width: 589px !important;
+        //height: 332px !important;
         display: none;
       }
       .item {
@@ -298,6 +298,9 @@ body {
         }
         &:hover{
           .am-btn{
+            display: inline-block;
+          }
+          .link-hover{
             display: inline-block;
           }
         }
@@ -324,6 +327,8 @@ body {
               height: 332px;
             }
             .link-hover {
+              width: 589px !important;
+              height: 332px !important;
               display: block;
             }
             .center{
@@ -379,6 +384,12 @@ body {
             .am-btn{
               display: inline-block;
             }
+            .link-hover{
+              display: inline-block;
+            }
+          }
+          .link-hover{
+            display: none;
           }
           .am-btn{
             position: absolute;
@@ -414,8 +425,17 @@ body {
           span {
             display: inline-block;
           }
+          .link-hover{
+            display: inline-block;
+          }
         }
-        img {
+        .link-hover{
+          display: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        img,.link-hover {
           width: 180px;
           height: 120px;
         }
