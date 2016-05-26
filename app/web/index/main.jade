@@ -13,21 +13,12 @@ div.index-wrap.top-bg
                         button.am-fr.am-btn.am-radius.am-btn-purple='进入直播间'
                 aside.viedo-list.am-fr
                     ul
-                        li
-                            a(href='#').item
-                                img(src='/images/banner_09.jpg')
-                        li
-                            a(href='#').item
-                                img(src='/images/banner_09.jpg')
-                        li
-                            a(href='#').item
-                                img(src='/images/banner_09.jpg')
-                        li
-                            a(href='#').item
-                                img(src='/images/banner_09.jpg')
-                        li
-                            a(href='#').item
-                                img(src='/images/banner_09.jpg')
+                        - for(var i = 5; i>0; i--)
+                            li
+                                a(href='#').item
+                                    img(src='/images/banner_09.jpg')
+                                    div.link-hover.gradient-up.am-vertical-align
+                                        span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
 div.index-wrap.am-container
     section.perfect-wrap
         header.section-header.am-cf
