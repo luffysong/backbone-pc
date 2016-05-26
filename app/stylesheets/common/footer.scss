@@ -1,15 +1,16 @@
 $a-hover : #690;
 .bottom{
-  height: 226px;
-  background: #181818;
+  height: 200px;
+  background: #fff;
   text-align: center;
+  border-top: 1px solid #e6e6e6;
   .link {
     padding-top: 87px;
     width: 946px;
     margin:0 auto;
     padding-bottom: 23px;
     a{
-      color:#a3a3a3;
+      color: $main-name-color;
       font-size: 13px;
       display: inline-block;
       padding:0 13px;
@@ -40,8 +41,6 @@ $a-hover : #690;
     color:$a-hover;
   }
   .biaoshi{
-    //right: 0;
-    //bottom: 0;
     margin-top: -25px;
     background: url(../images/biaoshi.gif) no-repeat;
     display: inline-block;
