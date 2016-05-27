@@ -6,6 +6,10 @@
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+var ChannelModel = require('../../models/index/channel.model');
+
 var View = BaseView.extend({
   el: '.fan-channel-wrap',
   rawLoader: function () {
@@ -16,6 +20,13 @@ var View = BaseView.extend({
   },
   beforeMount: function () {
     //  初始化一些自定义属性
+    this.queryParams = {
+      deviceinfo: '{"aid":"30001001"}',
+      access_token: user.getWebToken(),
+      size: 8,
+      type: 'YYT'
+    };
+    this.channelModel = new ChannelModel();
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -34,10 +45,18 @@ var View = BaseView.extend({
   destroyed: function () {
     //  销毁之后
   },
-  renderList: function (data) {
-    var html = this.compileHTML(this.channelItemTpl, data);
+  renderList: function () {
+    var self = this;
+    var html;
+    var promise = this.channelModel.executeJSONP(this.queryParams);
 
-    this.$el.find('.fan-list').html(html);
+    promise.done(function (res) {
+      if (res && res.data && res.msg === 'SUCCESS') {
+        html = self.compileHTML(self.channelItemTpl, res);
+
+        self.$el.find('.fan-list').html(html);
+      }
+    });
   }
 });
 

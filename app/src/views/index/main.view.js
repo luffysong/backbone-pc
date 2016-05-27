@@ -8,6 +8,7 @@ var TopBarView = require('TopBarView');
 var PlaybackView = require('./playback.view');
 
 var WonderfulView = require('./wonderful.view');
+var OfficialView = require('./official.view');
 var FanChannelView = require('./fan-channel.view');
 var JoinFanListView = require('./join-fan-list.view');
 
@@ -38,6 +39,7 @@ var View = BaseView.extend({
     this.wonderfulView = new WonderfulView({
       topbar: this.topbar
     });
+    this.officialView = new OfficialView();
     this.fanChannelView = new FanChannelView();
     this.joinFanListView = new JoinFanListView();
   },

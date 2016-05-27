@@ -98,67 +98,36 @@ div.index-wrap.am-container
             h2.am-fl='官方频道'
             a(href='#').am-fr='查看全部>>'
             span.tip='OFFICIAL CHANNEL'
-        div.viedo-content.am-g.am-cf
-            div.am-u-sm-3
-                div.item
-                    a.top-link(href="###1")
-                        img(src='/images/banner_09.jpg')
-                        div.link-hover.gradient
-                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                    div.anchor-info.am-cf
-                        div.am-fl
-                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                            img.am-circle.avatar(src='/images/banner_09.jpg')
-                            span.name='天天'
-                    footer.viedo-bg
-                div.item
-                    a.top-link
-                        img(src='/images/banner_09.jpg')
-                        div.link-hover.gradient
-                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                    div.anchor-info.am-cf
-                        div.am-fl
-                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                            img.am-circle.avatar(src='/images/banner_09.jpg')
-                            span.name='天天'
-                    footer.viedo-bg
+        div#officialList.viedo-content.am-g.am-cf
+            script#officialAsideTpl(type='text/html')
+                div.am-u-sm-3
+                    | {{each data as item}}
+                    div.item
+                        a.top-link(href="###1")
+                            img(src='{{item.posterPic}}')
+                            div.link-hover.gradient
+                            span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+                        div.anchor-info.am-cf
+                            div.am-fl
+                                div.title.am-text-truncate='{{item.desc}}'
+                                img.am-circle.avatar(src='{{item.creator.largeAvatar}}')
+                                span.name='{{item.creator.nickName}}'
+                        footer.viedo-bg
+                    | {{/each}}
+            script#officialCenterTpl(type='text/html')
+                div.am-u-sm-3.center-wrap
+                    div.item
+                        a.top-link(href='##1',data-videoId='{{channelId}}')
+                            img(src='{{posterPic}}')
+                            div.link-hover
+                                div.center.play
+                        div.anchor-info.am-cf
+                            div.am-fl
+                                div.title.am-text-truncate='{{desc}}'
+                                img.am-circle.avatar(src='{{creator.largeAvatar}}')
+                                span.name='{{creator.nickName}}'
+                        footer.viedo-bg
 
-            div.am-u-sm-3.center-wrap
-                div.item
-                    a.top-link
-                        img(src='/images/banner_09.jpg')
-                        div.link-hover
-                            div.center.play
-                    div.anchor-info.am-cf
-                        div.am-fl
-                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                            img.am-circle.avatar(src='/images/banner_09.jpg')
-                            span.name='天天'
-                    footer.viedo-bg
-
-            div.am-u-sm-3
-                div.item
-                    a.top-link
-                        img(src='/images/banner_09.jpg')
-                        div.link-hover.gradient
-                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                    div.anchor-info.am-cf
-                        div.am-fl
-                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                            img.am-circle.avatar(src='/images/banner_09.jpg')
-                            span.name='天天'
-                    footer.viedo-bg
-                div.item
-                    a.top-link
-                        img(src='/images/banner_09.jpg')
-                        div.link-hover.gradient
-                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                    div.anchor-info.am-cf
-                        div.am-fl
-                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                            img.am-circle.avatar(src='/images/banner_09.jpg')
-                            span.name='天天'
-                    footer.viedo-bg
     //站子频道
     section.fan-channel-wrap
         header.section-header.am-cf
@@ -167,18 +136,19 @@ div.index-wrap.am-container
             span.tip='FAN CHANNEL'
         div.viedo-content.fan-list
             script#fanChannelItemTpl(type='text/html')
-                - for(var i =8; i>0; i--)
-                    div.item
-                        a.top-link(href="###")
-                            img(src='/images/banner_09.jpg')
-                            div.link-hover.gradient
-                            span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                        div.anchor-info.am-cf
-                            div.am-fl
-                                div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                                img.am-circle.avatar(src='/images/banner_09.jpg')
-                                span.name='天天22'
-                        footer.viedo-bg
+                | {{each data as item}}
+                div.item
+                    a.top-link(href="###")
+                        img(src='{{item.posterPic}}')
+                        div.link-hover.gradient
+                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+                    div.anchor-info.am-cf
+                        div.am-fl
+                            div.title.am-text-truncate='{{item.desc}}'
+                            img.am-circle.avatar(src='{{item.creator.largeAvatar}}')
+                            span.name='{{item.creator.nickName}}'
+                    footer.viedo-bg
+                | {{/each}}
     //入驻站子
     section.fan-wrap
         header.section-header.am-cf
