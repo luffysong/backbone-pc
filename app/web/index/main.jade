@@ -157,9 +157,10 @@ div.index-wrap.am-container
             span.tip='JOIN FAN STATION'
         div.content.join-fan-wrap
             script#joinFanListTpl(type='text/html')
-                - for(var i=12; i>0; i--)
-                    a.item(href='###')
-                        img(src='/images/banner_09.jpg')
-                        div.link-hover.gradient
-                        div.am-text-truncate.name='33呆呆萌呆萌呆萌呆萌呆萌萌萌呆萌'
-                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+                | {{each data as item}}
+                a.item(href='###')
+                    img(src='{{item.posterPic}}')
+                    div.link-hover.gradient
+                    div.am-text-truncate.name='{{item.desc}}'
+                    span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+                | {{/each}}

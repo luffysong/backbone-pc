@@ -1,10 +1,14 @@
 /*
-  入驻站子
+ 入驻站子
  */
 'use strict';
 
 var base = require('base-extend-backbone');
 var BaseView = base.View;
+
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+var FanUserModel = require('../../models/index/fan-user.model');
 
 var View = BaseView.extend({
   el: '.fan-wrap',
@@ -16,6 +20,14 @@ var View = BaseView.extend({
   },
   beforeMount: function () {
     //  初始化一些自定义属性
+    this.queryParams = {
+      deviceinfo: '{"aid":"30001001"}',
+      access_token: user.getWebToken(),
+      size: 12,
+      offset: 0
+    };
+
+    this.fanUserModel = new FanUserModel();
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -33,10 +45,17 @@ var View = BaseView.extend({
   destroyed: function () {
     //  销毁之后
   },
-  renderList: function (data) {
-    var html = this.compileHTML(this.joinFanItemTpl, data);
+  renderList: function () {
+    var self = this;
+    var html;
+    var promise = this.fanUserModel.executeJSONP(this.queryParams);
+    promise.done(function (res) {
+      if (res && res.data && res.msg === 'SUCCESS') {
+        html = self.compileHTML(self.joinFanItemTpl, res);
 
-    this.$el.find('.join-fan-wrap').html(html);
+        self.$el.find('.join-fan-wrap').html(html);
+      }
+    });
   }
 });
 
