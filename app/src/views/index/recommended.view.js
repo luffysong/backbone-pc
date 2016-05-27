@@ -1,12 +1,17 @@
 /*
-  直播频道
+ 直播频道
  */
 'use strict';
 
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View;
-var RecommendModel = require('../../models/index/recommended.model');
-var msgBox = require('ui.msgBox');
+// 首页轮播
+var CarouselModel = require('../../models/index/carousel.model');
+var FanUserModel = require('../../models/index/fan-user.model');
+var ChannelModel = require('../../models/index/channel.model');
+
+// var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var FlashApi = require('FlashApi');
@@ -25,9 +30,17 @@ var View = BaseView.extend({
       deviceinfo: '{"aid":"30001001"}'
     };
     this.recommendParameter.access_token = user.getWebToken();
+
+    this.queryParams = {
+      deviceinfo: '{"aid":"30001001"}',
+      access_token: user.getWebToken()
+    };
+
+    this.carouselModel = new CarouselModel();
+    this.fanUserModel = new FanUserModel();
+    this.channelModel = new ChannelModel();
   },
   afterMount: function () {
-    //  获取findDOMNode DOM Node
     // 读取整个模块的模板
     this.recommendTpl = this.$el.find('#recommendTpl').html();
     // 获取右侧列表模板
@@ -35,24 +48,20 @@ var View = BaseView.extend({
   },
   ready: function () {
     //  初始化
-    var self = this;
-    this.recommendModel = new RecommendModel();
-    var promise = this.recommendModel.executeJSONP(this.recommendParameter);
-    promise.done(function (response) {
-      var code = ~~response.code;
-      if (!code) {
-        self.recommendRender(response.data[0]);
-      }
-    });
-    promise.fail(function () {
-      msgBox.showError('获取数据错误');
-    });
+    this.renderList();
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
   },
   destroyed: function () {
     //  销毁之后
+  },
+  getCarouselList: function () {
+    var params = _.extend(this.queryParams, {
+      offset: 0,
+      size: 5
+    });
+    return this.carouselModel.executeJSONP(params);
   },
   recommendRender: function (data) {
     var status = data.status;
@@ -80,9 +89,22 @@ var View = BaseView.extend({
     this.renderList({});
   },
   // 渲染右侧列表
-  renderList: function (data) {
-    var html = this.compileHTML(this.livingItemTpl, data || {});
-    this.$el.find('#livingList').html(html);
+  renderList: function () {
+    var self = this;
+    var html = '';
+    var promise = this.getCarouselList();
+    promise.done(function (res) {
+      if (res && res.data && res.msg === 'SUCCESS') {
+        html = self.compileHTML(self.recommendTpl, res.data[0]);
+        self.$el.html(html);
+
+        html = self.compileHTML(self.livingItemTpl, res);
+        self.$el.find('#livingList').html(html);
+      }
+    });
+  },
+  setFlash: function () {
+
   },
   gotoLiveHome: function (e) {
     var el = $(e.currentTarget);

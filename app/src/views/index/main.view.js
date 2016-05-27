@@ -4,7 +4,7 @@ var base = require('base-extend-backbone');
 var BaseView = base.View;
 var RecommendView = require('./recommended.view');
 var TopBarView = require('TopBarView');
-var LivePreView = require('./livePre.view');
+// var LivePreView = require('./livePre.view');
 var PlaybackView = require('./playback.view');
 
 var WonderfulView = require('./wonderful.view');
@@ -29,13 +29,15 @@ var View = BaseView.extend({
   },
   ready: function () {
     this.recommendview = new RecommendView();
-    this.livepre = new LivePreView({
-      topbar: this.topbar
-    });
+    // this.livepre = new LivePreView({
+    //  topbar: this.topbar
+    // });
     this.playback = new PlaybackView();
 
     // 精彩饭趴
-    this.wonderfulView = new WonderfulView();
+    this.wonderfulView = new WonderfulView({
+      topbar: this.topbar
+    });
     this.fanChannelView = new FanChannelView();
     this.joinFanListView = new JoinFanListView();
   },

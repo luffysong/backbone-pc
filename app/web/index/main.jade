@@ -12,14 +12,9 @@ div.index-wrap.top-bg#topContainer
                 div.am-cf
                     div.live-viedo.am-fl
                         div.viedo-wrap#topFlash
-                            | {{if data.status === 1}}
-                            img(src='{{data.posterPic}}')
-                            | {{/if}}
                         footer.am-fl
-                            span.title='{{data.roomName}}'
-                            | {{if data.status !== 1}}
-                            button.gotoLiveHome.am-fr.am-btn.am-radius.am-btn-red(data-id="{{data.id}}",data-status="{{data.status}}")='进入直播间'
-                            | {{/if}}
+                            span.title='EXO'
+                            button.gotoLiveHome.am-fr.am-btn.am-radius.am-btn-red(data-id="0",data-status="1")='进入直播间'
                     aside.viedo-list.am-fr
                         ul#livingList
                             //li
@@ -35,18 +30,21 @@ div.index-wrap.top-bg#topContainer
                             //                span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
     // 右侧直播列表模板
     script#liveItemTpl(type='text/html')
+        | {{ each data as item $index}}
+        | {{if $index == 0}}
         li
-            a(href='#').item.active
-                img(src='/images/banner_09.jpg')
+            a.item.active(href='javascript:;', data-channelId='{{item.videoId}}')
+                img(src='{{item.posterPic}}')
                 div.link-hover.gradient-up.am-vertical-align
-                    span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
-        - for(var i = 4; i>0; i--)
-            li
-                a(href='#').item
-                    img(src='/images/banner_09.jpg')
-                    div.link-hover.gradient-up.am-vertical-align
-                        span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
-
+                    span.am-text-truncate.am-vertical-align-bottom {{item.desc}}
+        |{{ else }}
+        li
+            a.item(href='javascript:;', data-channelId='{{item.videoId}}')
+                img(src='{{item.posterPic}}')
+                div.link-hover.gradient-up.am-vertical-align
+                    span.am-text-truncate.am-vertical-align-bottom {{item.desc}}
+        | {{/if}}
+        | {{/each}}
 //其他频道
 div.index-wrap.am-container
     //精彩饭趴
@@ -58,118 +56,42 @@ div.index-wrap.am-container
         div#wonderfulList.viedo-content.am-g
             // 列表模板
             script#wonderfulItemTpl(type='text/html')
+                | {{each data as item}}
                 div.item.am-u-sm-3
-                    a.top-link(href='###')
-                        img(src='/images/banner_09.jpg')
+                    a.top-link(href="{{item.status ===2? '/liveroom.html?roomId=':'/playback.html?roomId='}}{{item.roomId}}")
+                        img(src="{{item.posterPic}}")
                         div.link-hover
-                            div.status.living.preview
-                            div.right-top.gradient.boderRadAll_3
-                                span='人气:'
-                                | 232
-                            div.left-bottom.info.time
+                            | {{if item.status == 2}}
+                            div.status.living
+                            div.left-bottom.info
                                 div.sub-info
                                     span.icons.chat
-                                    | 123123
+                                    | {{item.online}}
                                     span.icons.like
-                                    | 324
+                                    | {{item.assemble}}
+                            div.center.play
+                            | {{else if item.status == 1}}
+                            div.status.preview
+                            div.left-bottom.time
                                 div.sub-time
-                                    | 直播时间: 2016/2/12 12:23
-                            div.center.play.wait
+                                    | 直播时间: {{item.startTime}}
+                            div.center.wait
+                            | {{/if}}
+                            div.right-top.gradient.boderRadAll_3
+                                span='人气:'
+                                | {{item.popularity}}
                             footer.gradient-up
                     div.anchor-info.am-cf
                         div.am-fl
-                            div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                            img.am-circle.avatar(src='/images/banner_09.jpg')
-                            span.name='天天22'
+                            div.title.am-text-truncate='{{item.roomName}}'
+                            img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
+                            span.name='{{item.creator.nickName}}'
                         div.am-fr
-                            button.am-btn.am-btn-red.boderRadAll_5
+                            button.am-btn.am-btn-red.boderRadAll_5(data-roomId='{{item.roomId}}')
                                 i
                                 span='顶上去'
                     footer.viedo-bg
-            div.item.am-u-sm-3
-                a.top-link
-                    img(src='/images/banner_09.jpg')
-                    div.link-hover
-                        div.status.preview
-                        div.right-top.gradient.boderRadAll_3
-                            span='人气:'
-                            | 232
-                        div.left-bottom.time
-                            div.sub-info
-                                span.icons.chat
-                                | 123123
-                                span.icons.like
-                                | 324
-                            div.sub-time
-                                | 直播时间: 2016/2/12 12:23
-                        div.center.play.wait
-                        footer.gradient-up
-                div.anchor-info.am-cf
-                    div.am-fl
-                        div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                        img.am-circle.avatar(src='/images/banner_09.jpg')
-                        span.name='天天'
-                    div.am-fr
-                        button.am-btn.am-btn-red.boderRadAll_5
-                            i
-                            span='顶上去'
-                footer.viedo-bg
-            div.item.am-u-sm-3
-                a.top-link
-                    img(src='/images/banner_09.jpg')
-                    div.link-hover
-                        div.status.preview
-                        div.right-top.gradient.boderRadAll_3
-                            span='人气:'
-                            | 232
-                        div.left-bottom.info
-                            div.sub-info
-                                span.icons.chat
-                                | 123123
-                                span.icons.like
-                                | 324
-                            div.sub-time
-                                | 直播时间: 2016/2/12 12:23
-                        div.center.play
-                        footer.gradient-up
-                div.anchor-info.am-cf
-                    div.am-fl
-                        div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                        img.am-circle.avatar(src='/images/banner_09.jpg')
-                        span.name='天天'
-                    div.am-fr
-                        button.am-btn.am-btn-red.boderRadAll_5
-                            i
-                            span='顶上去'
-                footer.viedo-bg
-            div.item.am-u-sm-3
-                a.top-link
-                    img(src='/images/banner_09.jpg')
-                    div.link-hover
-                        div.status.living
-                        div.right-top.gradient.boderRadAll_3
-                            span='人气:'
-                            | 232
-                        div.left-bottom.time
-                            div.sub-info
-                                span.icons.chat
-                                | 123123
-                                span.icons.like
-                                | 324
-                            div.sub-time
-                                | 直播时间: 2016/2/12 12:23
-                        div.center.play.wait
-                        footer.gradient-up
-                div.anchor-info.am-cf
-                    div.am-fl
-                        div.title.am-text-truncate='TTFBoys的直播TFBoys的直播TFBoys的直播FBoys的直播'
-                        img.am-circle.avatar(src='/images/banner_09.jpg')
-                        span.name='天天'
-                    div.am-fr
-                        button.am-btn.am-btn-red.boderRadAll_5
-                            i
-                            span='顶上去'
-                footer.viedo-bg
+                | {{/each}}
     //官方
     section.official-wrap
         header.section-header.am-cf
@@ -264,10 +186,10 @@ div.index-wrap.am-container
             a(href='#').am-fr='查看全部>>'
             span.tip='JOIN FAN STATION'
         div.content.join-fan-wrap
-        script#joinFanListTpl(type='text/html')
-            - for(var i=12; i>0; i--)
-                a.item(href='###')
-                    img(src='/images/banner_09.jpg')
-                    div.link-hover.gradient
-                    div.am-text-truncate.name='33呆呆萌呆萌呆萌呆萌呆萌萌萌呆萌'
-                    span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+            script#joinFanListTpl(type='text/html')
+                - for(var i=12; i>0; i--)
+                    a.item(href='###')
+                        img(src='/images/banner_09.jpg')
+                        div.link-hover.gradient
+                        div.am-text-truncate.name='33呆呆萌呆萌呆萌呆萌呆萌萌萌呆萌'
+                        span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
