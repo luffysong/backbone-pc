@@ -9,12 +9,14 @@ $main-line-color: #d9d9d9;
 
 $main-text-color: #C5C5C5;
 $main-name-color: #666;
+$main-title-color: #7a7a7a;
 $main-top-bar-bg-color: #4b46a0;
 
 $main-top-bar-height: 50px;
 
 body {
   font-size: 14px;
+  background: $main-bg-theme-color;
 }
 
 * {
