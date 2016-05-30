@@ -1087,5 +1087,8 @@ $rgba-color-white: rgba(255,255,255,0);
 .box-shadow-bottom {
   box-shadow: rgba(0, 0, 0, 0.6) 0 0 107px 12px inset;
 }
-
+// 修正Amazue UI 的的浮动方向为向左
+[class*=am-u-]+[class*=am-u-]:last-child {
+  float: left;
+}
 

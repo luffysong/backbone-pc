@@ -2,38 +2,38 @@
 
 @import "../index/viedo-list";
 
-.channel-top-header{
+.channel-top-header {
   background-color: #fff;
   border-bottom: 1px solid $main-line-color;
-  section{
+  section {
     height: 50px;
-    h3{
+    h3 {
       display: inline-block;
       font-size: 20px;
       font-weight: normal;
     }
-    nav{
+    nav {
       display: inline-block;
       margin-left: 16px;
-      a{
+      a {
         position: relative;
         display: inline-block;
         margin: 0 16px;
-        font-size :12px;
+        font-size: 12px;
         color: $main-title-color;
         font-weight: 600;
-        &:hover,&.active{
+        &:hover, &.active {
           color: $main-bg-purple;
-          &:before{
+          &:before {
             display: block;
           }
         }
-        &:before{
+        &:before {
           position: absolute;
           content: ' ';
           display: none;
           height: 2px;
-          width:100%;
+          width: 100%;
           background-color: $main-bg-purple;
           left: 0;
           bottom: -15px;
@@ -43,27 +43,75 @@
   }
 }
 
-.section-header{
+.section-header {
   font-size: 14px;
   margin-top: 20px;
   border-bottom: 1px solid $main-line-color;
   color: $main-name-color;
 }
 
-.viedo-content{
+.viedo-content {
   margin-top: 16px;
-  .item{
-    &:hover{
-      .center{
+  display: inline-block;
+  .item {
+    .top-link {
+      height: 160px;
+      overflow: hidden;
+      img {
+        height: auto;
+      }
+    }
+    &:hover {
+      .center {
         display: inline-block;
       }
     }
-    .center{
+    .center {
       display: none;
     }
   }
 }
 
-.channel-footer{
+.channel-footer {
   height: 80px;
+}
+
+.section-1, .section-2 {
+  .viedo-content {
+    width: 1225px !important;
+    margin-left: -6px !important;
+  }
+  .item {
+    margin: 0 12px 10px 6px;
+    display: inline-block !important;
+    .title {
+      width: 270px;
+    }
+    .top-link {
+      position: relative;
+      &:hover {
+        .am-btn {
+          display: inline-block;
+        }
+        .link-hover {
+          display: inline-block;
+        }
+      }
+      .link-hover {
+        display: none;
+      }
+      .am-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: none;
+        font-size: 12px;
+        width: 108px;
+        height: 30px;
+        margin-left: -54px;
+        margin-top: -15px;
+
+      }
+    }
+  }
 }

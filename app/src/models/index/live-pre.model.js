@@ -34,6 +34,7 @@ var Model = BaseModel.extend({
           var minutes = _minutes < 10 ? '0' + _minutes : _minutes;
           item.liveVideoTime = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
         }
+        item.startTimeTxt = BusinessDate.format(new Date(item.startTime), 'yyyy-MM-dd hh:mm');
       }
     }
     return response;
