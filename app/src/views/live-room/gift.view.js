@@ -30,8 +30,8 @@ var View = BaseView.extend({
   events: { // 监听事件
     'click #gift-items': 'giftClick',
     'click #btnTop': 'topClick',
-    'click #btnLike': 'lickClick',
-    'click #btnShare': 'shareClick'
+    'click #btnLike': 'lickClick' // ,
+    // 'click #btnShare': 'shareClick'
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
@@ -73,6 +73,7 @@ var View = BaseView.extend({
     this.initGiftList();
 
     this.initCarousel();
+    $('#btnShare').click(this.shareClick.bind(this));
   },
   defineEventInterface: function () {
     var self = this;

@@ -1,7 +1,16 @@
 @import 'anchor';
 
+body{
+  background: $main-bg-anchor-color;
+}
+
+#anchorCtrlChat{
+  width: 300px;
+}
 .anchor-container {
   padding-bottom: 100px;
+  padding-top: 10px;
+  background-color: $main-bg-anchor-color;
 }
 
 :root .hover-wrap {
@@ -9,11 +18,20 @@
 }
 
 .content {
-  background-color: #fff;
+  //background-color: #fff;
 }
 
 //直播间
 .live-room-wrap {
+  .header-bg{
+    margin: 0 auto 10px;
+    width: 1200px;
+    height: 270px;
+    overflow: hidden;
+    img{
+      width: 100%;
+    }
+  }
 
   .btn-support {
     margin-left: 20px;
@@ -65,10 +83,12 @@
   }
   .room-header {
     padding-top: 0 !important;
-    height: 60px;
-    line-height: 60px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
     .room-name {
       font-size: 20px;
+      color: black;
     }
     .room-title-right {
       //width: 330px;
@@ -91,25 +111,47 @@
   }
 
   .user-info-block {
-    background-color: #1a1c19;
-    overflow: hidden;
-    //height: 168px;
-    padding: 8px;
-    width: 305px;
+    background-color: #fff;
+    //overflow: hidden;
+    height: 65px;
+    //padding: 8px;
+    //width: 305px;
+    padding-left: 18px;
     .user-info-wrap {
       .avator {
-        width: 65px;
-        height: 65px;
+        width: 55px;
+        height: 55px;
+      }
+      .btn-share{
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        background-image: url(../images/liveroom/liveroom-icons-bg_07.png);
+        margin-top: 12px;
+        margin-right: 22px;
       }
       .info {
         //height: 85px;
         margin-left: 12px;
-        width: 210px;
+        //width: 210px;
+
+        .sub-info{
+          display: inline-block;
+        }
         .name {
+          //display: inline-block;
           color: $main-bg-green-color;
           font-size: 18px;
-          width: 212px;
+          //width: 212px;
           //margin-top: 20px;
+        }
+        .btn{
+          margin-top: -3px;
+          height: 25px;
+          min-width: 50px;
+          width: inherit;
+          padding: 0 4px;
+          font-size: 12px;
         }
         .tags {
           font-size: 12px;
@@ -118,51 +160,46 @@
             margin: 0 2px;
           }
         }
-        .btn-wrap {
-          .btn {
-            width: 80px;
-            line-height: 27px;
-            height: 27px;
-            font-size: 12px;
-            i {
-              background-repeat: no-repeat;
-              display: inline-block;
-              margin-left: 10px;
-              margin-right: -10px;
-            }
-            .add {
-              background-image: url(../images/live_bg_icons_10.jpg);
-              width: 14px;
-              height: 14px;
-              margin-top: 6px;
-            }
-            .report {
-              background-image: url(../images/live_bg_icons_07.jpg);
-              width: 18px;
-              height: 18px;
-              margin-top: 4px;
-            }
-          }
-        }
+        //.btn-wrap {
+        //  .btn {
+        //    width: 80px;
+        //    line-height: 27px;
+        //    height: 27px;
+        //    font-size: 12px;
+        //    i {
+        //      background-repeat: no-repeat;
+        //      display: inline-block;
+        //      margin-left: 10px;
+        //      margin-right: -10px;
+        //    }
+        //    .add {
+        //      background-image: url(../images/live_bg_icons_10.jpg);
+        //      width: 14px;
+        //      height: 14px;
+        //      margin-top: 6px;
+        //    }
+        //    .report {
+        //      background-image: url(../images/live_bg_icons_07.jpg);
+        //      width: 18px;
+        //      height: 18px;
+        //      margin-top: 4px;
+        //    }
+        //  }
+        //}
       }
     }
-    .tags {
-      .Right {
-        display: inline-block;
-        word-break: keep-all;
-        width: 250px;
-        height: 42px;
-      }
-      .item {
-        font-size: 12px;
-        color: #999999;
-        margin: 0 2px;
-      }
-    }
+    //.tags {
+    //  .item {
+    //    font-size: 12px;
+    //    color: #999999;
+    //    margin: 0 2px;
+    //  }
+    //}
     .room-notice {
       background-color: #333333;
       padding: 5px;
       height: 50px;
+      color: #fff;
       .notice {
         font-size: 12px;
         line-height: 14px;
@@ -178,6 +215,31 @@
       }
     }
   }
+  .room-notice-wrap{
+    background-color: $main-bg-light-purple;
+    header{
+      background-color: $main-bg-purple;
+      height: 35px;
+      padding-left: 10px;
+      .title{
+        color: #fff;
+        margin-left: 8px;
+      }
+      .icon-voice{
+        display: inline-block;
+        background-image: url(../images/liveroom/liveroom-icons-bg_03.png);
+        width: 21px;
+        height: 18px;
+      }
+    }
+    .content{
+      height: 95px;
+      .detail{
+        font-size: 12px;
+        margin: 0 16px;
+      }
+    }
+  }
 
   .chatCon {
     height: 411px !important;
@@ -187,27 +249,35 @@
   }
 
   .send-msg-wrap {
-    background-color: #000;
+    background-color: #fff;
     position: relative;
+    border-top: 1px solid #efefef;
     .msg-text {
       .msg {
         height: 55px;
-        background-color: #313234;
+        background-color: #f0f0f0;
         width: 235px;
         color: #999999;
-        margin-right: 10px;
+        //margin-right: 10px;
       }
       .send {
         height: 55px;
         width: 40px;
         line-height: 55px;
+        -webkit-border-top-right-radius: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        -moz-border-radius-topright: 5px;
+        -moz-border-radius-bottomright: 5px;
       }
     }
     .msg-footer {
       .size {
+        background-color: #fff;
         width: 20px;
         height: 20px;
-        background: #000;
+        //background: #000;
         &.actived {
           i {
             background-image: url(../images/live_color_2_03.png);
@@ -215,10 +285,10 @@
         }
         i {
           display: inline-block;
-          background-image: url(../images/live_bg_icons_38.png);
+          background-image: url(../images/liveroom/liveroom_font_size_03.png);
           background-repeat: no-repeat;
           width: 15px;
-          height: 19px;
+          height: 17px;
         }
       }
 
@@ -277,9 +347,27 @@
   }
 
   .gift-wrap {
-    height: 138px;
+    height: 90px;
     background-color: #fff;
     padding-top: 10px;
+
+    .lucky-draw{
+      position: relative;
+      .btn{
+        display: inline-block;
+        background: #000;
+        
+      }
+      .tip{
+        position:absolute;
+        top: 0;
+        right: 0;
+        width: 2px;
+        height: 2px;
+        border: 1px solid #fff;
+      }
+
+    }
 
     .gift-items {
       li {
@@ -299,58 +387,105 @@
     }
 
     .like-wrap {
-      margin-right: 20px;
-      padding-top: 10px;
-      .btns {
-        background-color: #f2f1f2;
-        button {
-          background-color: #f2f1f2;
+      margin-right: 16px;
+      margin-top: 8px;
+      .like,.push{
+        display: inline-block;
+      }
+      .like{
+        vertical-align: middle;
+        margin-right: 20px;
+        .number{
+          color: $main-font-light-color;
+          margin: 0 10px 0;
+          //padding-top: 10px;
+          display: inline-block;
+          height: 36px;
+          font-size: 12px;
+          line-height: 36px;
         }
-
-        i {
-          background-repeat: no-repeat;
-          -webkit-background-size: 100%;
-          background-size: 100%;
-        }
-
-        .share {
-          width: 50px;
-          height: 100%;
-          i {
+        .btn-like{
+          background-color: $main-bg-red;
+          width: 36px;
+          height: 36px;
+          i{
             display: inline-block;
-            width: 30px;
-            height: 29px;
-            background-image: url(../images/live_btn_bg_03.jpg);
+            background: url(../images/liveroom/liveroom-icons-bg_14.png) no-repeat;
+            width: 18px;
+            height: 14px;
+
           }
         }
-        .like {
-          height: 100%;
-          line-height: 25px;
-          margin-left: 10px;
-          i {
-            margin-right: 5px;
-            float: left;
+      }
+      .push{
+        .btn-push{
+          height: 55px;
+          width: 120px;
+          vertical-align: middle;
+          i{
             display: inline-block;
-            width: 28px;
-            height: 24px;
-            background-image: url(../images/live_btn_bg_06.jpg);
+            background: url(../images/index/hover_10.png) no-repeat;
+            -webkit-background-size:100%;
+            background-size:100%;
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
           }
         }
 
       }
-      .btns, .btn {
-        width: 150px;
-        height: 46px;
-      }
-      .btn {
-        margin-left: 0;
-        margin-top: 10px;
-        i {
-          background-image: url(../images/btn_support_20.jpg);
-          top: 14px;
-          left: 22px;
-        }
-      }
+      //margin-right: 20px;
+      //padding-top: 10px;
+      //.btns {
+      //  background-color: #f2f1f2;
+      //  button {
+      //    background-color: #f2f1f2;
+      //  }
+      //
+      //  i {
+      //    background-repeat: no-repeat;
+      //    -webkit-background-size: 100%;
+      //    background-size: 100%;
+      //  }
+      //
+      //  .share {
+      //    width: 50px;
+      //    height: 100%;
+      //    i {
+      //      display: inline-block;
+      //      width: 30px;
+      //      height: 29px;
+      //      background-image: url(../images/live_btn_bg_03.jpg);
+      //    }
+      //  }
+      //  .like {
+      //    height: 100%;
+      //    line-height: 25px;
+      //    margin-left: 10px;
+      //    i {
+      //      margin-right: 5px;
+      //      float: left;
+      //      display: inline-block;
+      //      width: 28px;
+      //      height: 24px;
+      //      background-image: url(../images/live_btn_bg_06.jpg);
+      //    }
+      //  }
+      //
+      //}
+      //.btns, .btn {
+      //  width: 150px;
+      //  height: 46px;
+      //}
+      //.btn {
+      //  margin-left: 0;
+      //  margin-top: 10px;
+      //  i {
+      //    background-image: url(../images/btn_support_20.jpg);
+      //    top: 14px;
+      //    left: 22px;
+      //  }
+      //}
 
     }
 

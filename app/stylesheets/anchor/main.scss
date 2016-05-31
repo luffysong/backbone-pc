@@ -232,13 +232,14 @@
       cursor: pointer;
     }
     li:hover {
-      background: #01ceb5;
+      background: $main-bg-purple;
+      //#01ceb5
       .visitorName {
         color: #ffffff;
       }
     }
     p {
-      width: 215px;
+      width: 238px;
       line-height: 20px;
       padding-top: 6px;
       padding-left: 5px;

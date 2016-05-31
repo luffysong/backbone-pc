@@ -1,8 +1,10 @@
 @charset "UTF-8";
 $main-bg-green-color: #01ceb5;
 $main-bg-theme-color: #f8f8f8;
+$main-bg-anchor-color: #e9f9f9;
 
 $main-bg-purple: #798fd8;
+$main-bg-light-purple: #e6ebfb;
 $main-bg-red: #ff6666;
 $main-font-light-color: #999;
 $main-line-color: #d9d9d9;
@@ -18,6 +20,7 @@ body {
   font-size: 14px;
   background: $main-bg-theme-color;
 }
+
 
 * {
   margin: 0;
@@ -995,6 +998,14 @@ img {
   -webkit-border-radius: 35px;
   border-radius: 35px;
 }
+.boderRadTop_5 {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
 
 /* 扩展 */
 
@@ -1096,3 +1107,5 @@ $rgba-color-white: rgba(255,255,255,0);
   background-color: #c3c3c3!important;
   color: #fff;
 }
+
+

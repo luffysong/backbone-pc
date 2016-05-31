@@ -2,19 +2,25 @@
    Created by AaronYuan on 4/22/16.
 
 // ^内容区域
-#anchorContainerBg.anchor-container.live-room-wrap
+#anchorContainerBg.anchor-container.live-room-wrap.has-top-bar
+    div.header-bg
+        img(src='../images/anchor-bg.jpg')
     .common_con
         .content.clearfix
             #set_Anchor_info.fl
-                #edit_background.edit_Bg.clearfix.room-header
-                    // 编辑背景
+                #edit_background.edit_Bg.clearfix.room-header.boderRadTop_5
+                #userInfoWrap.user-info-block
+
+                // 编辑背景
                 #broadCastFlash.BroadcastRoom
                     ul.bulletScreen
                         li
                             .tm 弹幕消息加载中...
-                #giftwarp.gift-wrap
-                    // <div class="gift-list">
-                    .jcarousel-wrapper.Left
+                #giftwarp.gift-wrap.am-cf
+                    div.lucky-draw
+                        a.btn
+                        div.tip
+                    //.jcarousel-wrapper.Left
                         .jcarousel
                             ul#gift-items.gift-items
                                 // 礼物列表
@@ -28,22 +34,36 @@
                                     <% } %>
                         a.jcarousel-control-prev.ctrl.pre(href='#')
                         a.jcarousel-control-next.ctrl.next(href='#')
-                    // </div>
-                    .like-wrap.Right
-                        .btns.boderRadAll_5
+
+                    .like-wrap.am-fr.am-vertical-align
+                        div#btnLike.like.am-vertical-align-middle
+                            button.btn-like.am-btn-red.am-circle
+                                i
+                            span#txtLikeCount.number 23423423
+                        div.push.am-vertical-align
+                            button#btnTop.btn-push.am-btn-red.am-round
+                                i.am-vertical-align-middle
+                                span.am-vertical-align-middle 顶上去
+                        //.btns.boderRadAll_5
                             button#btnShare.share.Left.Hand.boderRadAll_5
                                 i
                             button#btnLike.Hand.like.Left.gary2
                                 i
                                 span#txtLikeCount 1
                             .Clear
-                        button#btnTop.btn.Hand.btn-support.boderRadAll_3
+                        //button#btnTop.btn.Hand.btn-support.boderRadAll_3
                             i
                             |  顶一下
-                    .Clear
+                    //.Clear
             // 留言
-            .fl
-                #userInfoWrap.user-info-block
+            .fr(style='width:300px')
+                div.room-notice-wrap
+                    header.boderRadTop_5.am-vertical-align
+                        i.icon-voice.am-vertical-align-middle
+                        span.title.am-vertical-align-middle 直播公告
+                    section.content.am-vertical-align
+                        p.am-vertical-align-middle.detail 公公告内容公告内容公告内容公告内容公告内容公告内ppp公告内容公告内容容告内容
+                //#userInfoWrap.user-info-block
                     // 主播名片
                 #anchorCtrlChat
                     // 消息列表
