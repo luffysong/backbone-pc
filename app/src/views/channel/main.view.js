@@ -102,6 +102,7 @@ var View = BaseView.extend({
       }
     });
   },
+  // 获取分页列表
   getPageList: function (pageIndex) {
     var self = this;
     var promise;
@@ -122,10 +123,9 @@ var View = BaseView.extend({
           }
         });
         break;
-      case '1':
-      case '2':
-        // TODO
-        self.channelParams.type = this.channelType === '1' ? 'YYT' : 'YYT';
+      case '1': // 官方频道
+      case '2': // 站子频道
+        self.channelParams.type = this.channelType === '1' ? 'YYT' : 'FANS';
         self.channelParams.offset = (page - 1) * self.channelParams.size;
         promise = self.channelModel.executeJSONP(this.channelParams);
         promise.done(function (res) {
@@ -148,6 +148,7 @@ var View = BaseView.extend({
     var html = this.compileHTML(this.viedoItemTpl, data);
     $('#channelSection-' + this.channelType).append(html);
   },
+  // 格式化时间
   formatData: function (data) {
     var time;
     var result;
@@ -162,6 +163,7 @@ var View = BaseView.extend({
     }
     return data;
   },
+  // 绑定页面滚动事件
   bodyScroll: function (e) {
     var target = $(e.target);
     var scrollTop = target.scrollTop();
@@ -193,11 +195,15 @@ var View = BaseView.extend({
       this.getPageList(this.currentPage[this.channelType]);
     }
   },
+  // 切换频道是清空dom
   clearSection: function () {
     // this.livepreViewList.find('.item').remove();
     // this.playbackList.find('.item').remove();
     // $('#channelSection-' + this.channelType).find('.item').remove();
     $('.viedo-content:not([id="livePreViewWrap"])').find('.item').remove();
+  },
+  // 设置默认频道
+  setDefaultChannel: function () {
   }
 });
 
