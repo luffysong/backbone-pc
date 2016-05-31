@@ -122,7 +122,7 @@ var View = BaseView.extend({
     } else {
       store.remove('imSig');
       store.set('signout', 1);
-      window.location.href = '/web/login.html';
+      window.location.href = '/login.html';
     }
   },
   /**
@@ -229,7 +229,7 @@ var View = BaseView.extend({
     console.log(a);
   },
   goBack: function () {
-    window.location.href = '/web/anchorsetting.html';
+    window.location.href = '/anchorsetting.html';
   },
   initGiftList: function () {
     this.giftModel.get(this.giftParams, function () {

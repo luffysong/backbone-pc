@@ -82,7 +82,7 @@ var View = BaseView.extend({
             storage.remove('imSig');
             // 跳转走人
             storage.set('signout', 1);
-            window.location.href = '/web/login.html';
+            window.location.href = '/login.html';
           }
         });
       } else {

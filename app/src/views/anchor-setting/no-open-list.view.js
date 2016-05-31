@@ -232,7 +232,7 @@ var View = BaseView.extend({
         var item = response.data;
         item.liCacheKey = item.id + '-' + item.streamName;
         item.liveVideoTime = self.forMatterDate(item.liveTime);
-        item.lookUrl = '/web/anchor.html?roomId=' + item.id;
+        item.lookUrl = '/anchor.html?roomId=' + item.id;
         self.liRender(item);
       });
       promise.fail(function () {
