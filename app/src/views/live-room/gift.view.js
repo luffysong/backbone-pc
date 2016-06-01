@@ -109,15 +109,7 @@ var View = BaseView.extend({
       .on('jcarousel:reload jcarousel:create', function () {
         carousel = $(this);
         width = carousel.innerWidth();
-
-        // if (width >= 600) {
         width = width / 5;
-        // } else if (width >= 350) {
-        //  width = width / 5;
-        // }
-        console.log('width = ', width);
-
-        console.log(carousel.jcarousel('items'));
         carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
       })
       .jcarousel({

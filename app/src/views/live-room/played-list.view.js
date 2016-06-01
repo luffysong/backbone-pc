@@ -32,7 +32,7 @@ var View = BaseView.extend({
   // 当模板挂载到元素之后
   afterMount: function () {
     var el = this.$el;
-    this.anchorPlayedTpl = el.find('#anchorPlayedTpl').html();
+    this.anchorPlayedTpl = $('#anchorPlayedTpl').html();
 
     this.playedList = el.find('#playedListWrap');
 
@@ -72,11 +72,11 @@ var View = BaseView.extend({
         carousel = $(this);
         width = carousel.innerWidth();
 
-        if (width >= 600) {
-          width = width / 3;
-        } else if (width >= 350) {
-          width = width / 2;
-        }
+        //if (width >= 600) {
+          width = width / 4;
+        //} else if (width >= 350) {
+        //  width = width / 2;
+        //}
 
         carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
       })
@@ -103,8 +103,10 @@ var View = BaseView.extend({
     promise = this.playedListModel.executeJSONP(this.playedListParams);
     promise.done(function (res) {
       if (res && res.msg === 'SUCCESS' && res.data.totalCount > 0) {
-        template = _.template(self.anchorPlayedTpl);
-        self.playedList.html(template(res.data));
+        // template = _.template(self.anchorPlayedTpl);
+        console.log('res=', res, self.anchorPlayedTpl);
+        template = self.compileHTML(self.anchorPlayedTpl, res);
+        self.playedList.html(template);
         self.initCarousel();
       } else {
         self.hideListWrap();

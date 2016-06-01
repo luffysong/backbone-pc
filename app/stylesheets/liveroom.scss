@@ -1,12 +1,15 @@
 @import 'anchor';
+@import "live-room/msg-board";
+@import "index/viedo-list";
 
-body{
+body {
   background: $main-bg-anchor-color;
 }
 
-#anchorCtrlChat{
+#anchorCtrlChat {
   width: 300px;
 }
+
 .anchor-container {
   padding-bottom: 100px;
   padding-top: 10px;
@@ -23,12 +26,12 @@ body{
 
 //直播间
 .live-room-wrap {
-  .header-bg{
+  .header-bg {
     margin: 0 auto 10px;
     width: 1200px;
     height: 270px;
     overflow: hidden;
-    img{
+    img {
       width: 100%;
     }
   }
@@ -112,17 +115,14 @@ body{
 
   .user-info-block {
     background-color: #fff;
-    //overflow: hidden;
     height: 65px;
-    //padding: 8px;
-    //width: 305px;
     padding-left: 18px;
     .user-info-wrap {
       .avator {
         width: 55px;
         height: 55px;
       }
-      .btn-share{
+      .btn-share {
         display: inline-block;
         width: 36px;
         height: 36px;
@@ -131,21 +131,15 @@ body{
         margin-right: 22px;
       }
       .info {
-        //height: 85px;
         margin-left: 12px;
-        //width: 210px;
-
-        .sub-info{
+        .sub-info {
           display: inline-block;
         }
         .name {
-          //display: inline-block;
           color: $main-bg-green-color;
           font-size: 18px;
-          //width: 212px;
-          //margin-top: 20px;
         }
-        .btn{
+        .btn {
           margin-top: -3px;
           height: 25px;
           min-width: 50px;
@@ -160,41 +154,8 @@ body{
             margin: 0 2px;
           }
         }
-        //.btn-wrap {
-        //  .btn {
-        //    width: 80px;
-        //    line-height: 27px;
-        //    height: 27px;
-        //    font-size: 12px;
-        //    i {
-        //      background-repeat: no-repeat;
-        //      display: inline-block;
-        //      margin-left: 10px;
-        //      margin-right: -10px;
-        //    }
-        //    .add {
-        //      background-image: url(../images/live_bg_icons_10.jpg);
-        //      width: 14px;
-        //      height: 14px;
-        //      margin-top: 6px;
-        //    }
-        //    .report {
-        //      background-image: url(../images/live_bg_icons_07.jpg);
-        //      width: 18px;
-        //      height: 18px;
-        //      margin-top: 4px;
-        //    }
-        //  }
-        //}
       }
     }
-    //.tags {
-    //  .item {
-    //    font-size: 12px;
-    //    color: #999999;
-    //    margin: 0 2px;
-    //  }
-    //}
     .room-notice {
       background-color: #333333;
       padding: 5px;
@@ -215,26 +176,26 @@ body{
       }
     }
   }
-  .room-notice-wrap{
+  .room-notice-wrap {
     background-color: $main-bg-light-purple;
-    header{
+    header {
       background-color: $main-bg-purple;
       height: 35px;
       padding-left: 10px;
-      .title{
+      .title {
         color: #fff;
         margin-left: 8px;
       }
-      .icon-voice{
+      .icon-voice {
         display: inline-block;
         background-image: url(../images/liveroom/liveroom-icons-bg_03.png);
         width: 21px;
         height: 18px;
       }
     }
-    .content{
+    .content {
       height: 95px;
-      .detail{
+      .detail {
         font-size: 12px;
         margin: 0 16px;
       }
@@ -351,11 +312,11 @@ body{
     background-color: #fff;
     padding-top: 10px;
 
-    .lucky-draw{
+    .lucky-draw {
       position: relative;
       display: inline-block;
       margin-left: 32px;
-      .btn{
+      .btn {
         display: inline-block;
         margin-top: 5px;
         background: #000;
@@ -363,8 +324,8 @@ body{
         width: 62px;
         height: 62px;
       }
-      .tip{
-        position:absolute;
+      .tip {
+        position: absolute;
         top: 5px;
         right: 8px;
         width: 10px;
@@ -396,13 +357,13 @@ body{
       margin-right: 16px;
       margin-top: 8px;
       margin-left: 32px;
-      .like,.push{
+      .like, .push {
         display: inline-block;
       }
-      .like{
+      .like {
         vertical-align: middle;
         margin-right: 20px;
-        .number{
+        .number {
           color: $main-font-light-color;
           margin: 0 10px 0;
           //padding-top: 10px;
@@ -411,11 +372,11 @@ body{
           font-size: 12px;
           line-height: 36px;
         }
-        .btn-like{
+        .btn-like {
           background-color: $main-bg-red;
           width: 36px;
           height: 36px;
-          i{
+          i {
             display: inline-block;
             background: url(../images/liveroom/liveroom-icons-bg_14.png) no-repeat;
             width: 18px;
@@ -424,76 +385,22 @@ body{
           }
         }
       }
-      .push{
-        .btn-push{
+      .push {
+        .btn-push {
           height: 55px;
           width: 120px;
           vertical-align: middle;
-          i{
+          i {
             display: inline-block;
             background: url(../images/index/hover_10.png) no-repeat;
-            -webkit-background-size:100%;
-            background-size:100%;
+            -webkit-background-size: 100%;
+            background-size: 100%;
             width: 20px;
             height: 20px;
             margin-right: 4px;
           }
         }
-
       }
-      //margin-right: 20px;
-      //padding-top: 10px;
-      //.btns {
-      //  background-color: #f2f1f2;
-      //  button {
-      //    background-color: #f2f1f2;
-      //  }
-      //
-      //  i {
-      //    background-repeat: no-repeat;
-      //    -webkit-background-size: 100%;
-      //    background-size: 100%;
-      //  }
-      //
-      //  .share {
-      //    width: 50px;
-      //    height: 100%;
-      //    i {
-      //      display: inline-block;
-      //      width: 30px;
-      //      height: 29px;
-      //      background-image: url(../images/live_btn_bg_03.jpg);
-      //    }
-      //  }
-      //  .like {
-      //    height: 100%;
-      //    line-height: 25px;
-      //    margin-left: 10px;
-      //    i {
-      //      margin-right: 5px;
-      //      float: left;
-      //      display: inline-block;
-      //      width: 28px;
-      //      height: 24px;
-      //      background-image: url(../images/live_btn_bg_06.jpg);
-      //    }
-      //  }
-      //
-      //}
-      //.btns, .btn {
-      //  width: 150px;
-      //  height: 46px;
-      //}
-      //.btn {
-      //  margin-left: 0;
-      //  margin-top: 10px;
-      //  i {
-      //    background-image: url(../images/btn_support_20.jpg);
-      //    top: 14px;
-      //    left: 22px;
-      //  }
-      //}
-
     }
 
     $jcarousel-height: 75px;
@@ -561,161 +468,103 @@ body{
 
   }
 
+  // 主播播过的
   .recent-list-wrap {
     background-color: #fff;
-    height: 450px;
+    padding-bottom: 30px;
+    //height: 450px;
     .list-header {
       font-size: 18px;
       padding: 20px;
       //padding-left:20px;
       //margin: 20px 0;
     }
-    .list {
-      //height:345px;
-      overflow: hidden;
-      padding: 10px 40px;
-      .ctrl {
-        background-color: #f2f1f2;
-        width: 40px;
-        height: 100px;
-        background-repeat: no-repeat;
-        //&.pre {
-        //  background-image: url(/img/live_btn_05.jpg);
-        //  &:hover {
-        //    background-image: url(/img/live_btn_03.jpg);
-        //  }
-        //}
-        //&.next {
-        //  background-image: url(/img/live_btn_07.jpg);
-        //  &:hover {
-        //    background-image: url(/img/live_btn_09.png);
-        //  }
-        //}
+    .item{
+      .wrap{
+        margin: 0 auto;
+        width: 260px;
       }
-      .item {
+      &:hover{
+
+        .anchor-info{
+          .title{
+            color: $main-bg-purple;
+          }
+        }
+      }
+    }
+    .viedo-content {
+      .top-link {
+        width: 260px;
+        height: 145px;
+        overflow: hidden;
 
         &:hover {
-          .name {
-            color: $main-bg-green-color;
-          }
-        }
-        .played-icon {
-          display: inline-block;
-          width: 52px;
-          height: 52px;
-          position: absolute;
-          z-index: 10;
-          left: 50%;
-          top: 50%;
-          margin-top: -26px;
-          margin-left: -26px;
-          background: url('../images/live_paly_03.png') no-repeat;
-        }
-        .img-wrap {
-          width: 345px;
-          height: 195px;
-          display: inline-block;
-          overflow: hidden;
-          img {
-            //width: 345px;
-            //max-width: 345px;
-            //height: 195px;
-            //max-height: 195px;
-          }
-          position: relative;
-          &:hover {
-            .hover-wrap {
-              display: inline-block;
-            }
-          }
-          .hover-wrap {
-            position: absolute;
-            display: none;
-            background-color: #000;
-            width: 345px;
-            height: 195px;
-            //opacity: 0.3;
-            //filter: alpha(opacity=30);
-            background: rgba(0, 0, 0, 0.3);
-            filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#4c000000', EndColorStr='#4c000000');
-            img {
-              width: 52px;
-              height: 52px;
+          .link-hover {
+            .center {
+              display: block;
             }
           }
         }
-        .name {
-          font-size: 14px;
-        }
-        .info {
-          font-size: 12px;
-          //  i {
-          //    display: inline-block;
-          //    width: 16px;
-          //    height: 13px;
-          //    background-repeat: no-repeat;
-          //    -webkit-background-size: 100%;
-          //    background-size: 100%;
-          //    margin-right: 8px;
-          //    float: left;
-          //  }
-          //  .coments-count {
-          //    background-image: url(/img/live_bg_07.png);
-          //  }
-          //  .like-count {
-          //    background-image: url(/img/love.png);
-          //  }
-        }
-        .btn-wrap {
-          font-size: 12px;
-          border-top: 1px solid #e1e1e1;
-          border-bottom: 1px solid #e1e1e1;
-          //line-height: 35px;
-          .block-left {
-            .progress {
-              width: 185px;
-              background-color: #434343;
-              height: 8px;
-              .value {
-                width: 34%;
-                height: 8px;
-                background-color: $main-bg-green-color;
-              }
-            }
-            //.count {
-            //  color: #3d3938;
-            //  font-size: 14px;
-            //}
-          }
-          .count {
-            color: $main-bg-green-color;
-            font-size: 14px;
-          }
-          .btn {
-            width: 114px;
-            height: 40px;
-            line-height: 40px;
-          }
-          //font-size: 12px;
-          i {
-            display: inline-block;
-            width: 16px;
-            height: 13px;
-            background-repeat: no-repeat;
-            -webkit-background-size: 100%;
-            background-size: 100%;
-            margin-right: 8px;
-            float: left;
-          }
-          .coments-count {
-            background-image: url(../images/live_bg_07.png);
-          }
-          .like-count {
-            background-image: url(../images/love.png);
-          }
 
+        .link-hover {
+          width: 260px;
+          height: 145px;
+          .center {
+            display: none;
+          }
         }
       }
+      .anchor-info{
+        .title{
+          padding: 5px 0;
+          font-weight: 600;
+          font-size: 14px;
+        }
+        .avatar{
+          width: 30px;
+          height: 30px;
+          display: inline-block!important;
+        }
+        .name{
+          margin-top: 10px;
+          display: inline-block;
+        }
+      }
+    }
+    .list{
+        padding: 10px 40px;
+        .ctrl {
+          background-color: #c7e2f3;
+          width: 40px;
+          height: 56px;
+          background-repeat: no-repeat;
+          background-position: 10px 16px;
+          &.pre {
+            background-image: url(../images/liveroom/jcar_ctrl_bg_03.png);
+
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+            -webkit-border-top-right-radius: 30px;
+            -webkit-border-bottom-right-radius: 30px;
+            -moz-border-radius-topright: 30px;
+            -moz-border-radius-bottomright: 30px;
+            &:hover {
+            }
+          }
+          &.next {
+            background-position: 18px 16px;
+            background-image: url(../images/liveroom/jcar_ctrl_bg_05.png);
+
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            -webkit-border-top-left-radius: 30px;
+            -webkit-border-bottom-left-radius: 30px;
+            -moz-border-radius-topleft: 30px;
+            -moz-border-radius-bottomleft: 30px;
+          }
+        }
+
     }
 
     .jcarousel-wrapper {
@@ -826,7 +675,7 @@ body{
   .BroadcastRoom {
     width: 895px;
     margin: 0 auto;
-    object{
+    object {
       display: block;
       margin: 0 auto;
     }

@@ -78,42 +78,112 @@
                     // <div class="tip Right gary1">您还可以输入<span class="gary2">324</span>字</div>
                     // <div class="Clear"></div>
                     // </div>
+        div.msg-board-wrap
+            div.header.am-cf
+                span.title 告白墙
+                button.am-btn.am-btn-purple.am-fr.am-round 我要告白
+                div.tabs.am-fr
+                    a.active(href='###')
+                        span.boderRadAll_5.am-round 99
+                        | 最新告白
+                    a(href='###') 精彩告白
+
+            div.content.am-g
+                div.am-u-sm-4.column-0
+                    div.item
+                        p.detail.am-text-break
+                            | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+                    div.item
+                        p.detail.am-text-break
+                            | sfa是的爱疯了啊发案发后啊发发上课lfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+                div.am-u-sm-4.column-1
+                    - for(var i=3;i>0;i--)
+                        div.item
+                            p.detail.am-text-break
+                                | sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                            div.sender
+                                div.am-g
+                                    div.am-u-sm-2
+                                        img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                    div.am-u-sm-10.info
+                                        p.name asfsadfasf
+                                        p.send-time
+                                            | 发布于
+                                            span.am-margin-left-sm 2016-10-23 34:34:00
+                                        a.btn-like.am-btn.am-round.am-vertical-align
+                                            i.icon-heart.am-vertical-align-middle
+                                            span.am-vertical-align-middle 32433
+                div.am-u-sm-4.column-2
+                    div.item
+                        p.detail.am-text-break
+                            | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+
         #anchorPlayedList.recent-list-wrap.mTop15
             .list-header 播主播过的
             #palyedJcarousel.jcarousel-wrapper.list
                 .jcarousel
-                    ul#playedListWrap
-                        // 已播放列表
-                        script#anchorPlayedTpl(type='text/template').
-                            <%
-                            var item =null;
-                            for(var i = 0, len = roomList.length; i < len; i++ ) {
-                            item = roomList[i];
-                            %>
-                            <li>
-                            <div class="item Left mLeft10 mRight10">
-                            <a class="img-wrap" href="playback.html?roomId=<%=item.roomId%>">
-                            <div class="hover-wrap Hand">
-                            <span class="played-icon"></span>
-                            </div>
-                            <img src="<%=item.posterPic%>" data-src="/img/user_47.jpg" alt="">
-                            </a>
-                            <div class="name mTop15"><%=item.roomName%></div>
-                            <div class="info mTop10 gary2">
-                            <div class="Clear"></div>
-                            </div>
-                            <div class="btn-wrap mTop10 pAll5">
-                            <div class="Left gary2 mTop10 pBottom10">人气: <span class="count"><%=item.popularity%></span>
-                            </div>
-                            <span class="Right mTop10 pBottom10"><i class="like-count"></i><%=item.assemble%></span>
-                            <span class="Right mRight20 mTop10 pBottom10"><i class="coments-count"></i><%=item.bulletCurtain%></span>
-                            <div class="Clear"></div>
-                            </div>
-                            </div>
-                            </li>
-                            <%
-                            }
-                            %>
+                    ul#playedListWrap.viedo-content
+                        script#anchorPlayedTpl(type='text/html')
+                            | {{each data.roomList as item}}
+                            li.item
+                                div.wrap
+                                    a.top-link(href="{{item.status ===2? '/liveroom.html?roomId=':'/playback.html?roomId='}}{{item.roomId}}")
+                                        img(src="{{item.posterPic}}")
+                                        div.link-hover
+                                            div.status
+                                            div.left-bottom.info
+                                                div.sub-info
+                                                    span.icons.chat
+                                                    | {{item.online}}
+                                                    span.icons.like
+                                                    | {{item.assemble}}
+                                            div.center.play
+                                            div.right-top.gradient.boderRadAll_3
+                                                span='人气:'
+                                                | {{item.popularity}}
+                                            footer.gradient-up
+                                    div.anchor-info.am-cf
+                                        div.am-fl
+                                            div.title.am-text-truncate='{{item.roomName}}'
+                                            img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
+                                            span.name='{{item.creator.nickName}}'
+                            | {{/each}}
                 a.jcarousel-control-prev.ctrl.pre(href='#')
                 a.jcarousel-control-next.ctrl.next(href='#')
         .user-msg-color-warp

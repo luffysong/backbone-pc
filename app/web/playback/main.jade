@@ -31,38 +31,33 @@
             .list-header 播主播过的
             #palyedJcarousel.jcarousel-wrapper.list
                 .jcarousel
-                    ul#playedListWrap
+                    ul#playedListWrap.viedo-content
                         // 已播放列表
-                        script#anchorPlayedTpl(type='text/template').
-                            <%
-                            var item =null;
-                            for(var i = 0, len = roomList.length; i < len; i++ ) {
-                            item = roomList[i];
-                            %>
-                            <li>
-                            <div class="item Left mLeft10 mRight10">
-                            <a class="img-wrap" href="playback.html?roomId=<%=item.roomId%>">
-                            <div class="hover-wrap Hand">
-                            <span class="played-icon"></span>
-                            </div>
-                            <img src="<%=item.posterPic%>" data-src="/img/user_47.jpg" alt="">
-                            </a>
-                            <div class="name mTop15"><%=item.roomName%></div>
-                            <div class="info mTop10 gary2">
-                            <div class="Clear"></div>
-                            </div>
-                            <div class="btn-wrap mTop10 pAll5">
-                            <div class="Left gary2 mTop10 pBottom10">人气: <span class="count"><%=item.popularity%></span>
-                            </div>
-                            <span class="Right mTop10 pBottom10"><i class="like-count"></i><%=item.assemble%></span>
-                            <span class="Right mRight20 mTop10 pBottom10"><i class="coments-count"></i><%=item.bulletCurtain%></span>
-                            <div class="Clear"></div>
-                            </div>
-                            </div>
-                            </li>
-                            <%
-                            }
-                            %>
+                        script#anchorPlayedTpl(type='text/html')
+                            | {{each data.roomList as item}}
+                            li.item
+                                div.wrap
+                                    a.top-link(href="{{item.status ===2? '/liveroom.html?roomId=':'/playback.html?roomId='}}{{item.roomId}}")
+                                        img(src="{{item.posterPic}}")
+                                        div.link-hover
+                                            div.status
+                                            div.left-bottom.info
+                                                div.sub-info
+                                                    span.icons.chat
+                                                    | {{item.online}}
+                                                    span.icons.like
+                                                    | {{item.assemble}}
+                                            div.center.play
+                                            div.right-top.gradient.boderRadAll_3
+                                                span='人气:'
+                                                | {{item.popularity}}
+                                            footer.gradient-up
+                                    div.anchor-info.am-cf
+                                        div.am-fl
+                                            div.title.am-text-truncate='{{item.roomName}}'
+                                            img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
+                                            span.name='{{item.creator.nickName}}'
+                            | {{/each}}
                 a.jcarousel-control-prev.ctrl.pre(href='#')
                 a.jcarousel-control-next.ctrl.next(href='#')
         .user-msg-color-warp
