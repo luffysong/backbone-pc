@@ -19,21 +19,7 @@
                 #giftwarp.gift-wrap.am-cf
                     div.lucky-draw
                         a.btn
-                        div.tip
-                    //.jcarousel-wrapper.Left
-                        .jcarousel
-                            ul#gift-items.gift-items
-                                // 礼物列表
-                                script#gift-item-tpl(type='text/template').
-                                    <% for(var i= 0, len = data.length; i < len; i++) {%>
-                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
-                                    data-giftId="<%=data[i].giftId%>">
-                                    <img src="<%=data[i].images.logo%>" alt="">
-                                    <span class="name"><%=data[i].name%></span>
-                                    </li>
-                                    <% } %>
-                        a.jcarousel-control-prev.ctrl.pre(href='#')
-                        a.jcarousel-control-next.ctrl.next(href='#')
+                        div.tip.am-circle
 
                     .like-wrap.am-fr.am-vertical-align
                         div#btnLike.like.am-vertical-align-middle
@@ -55,6 +41,19 @@
                             i
                             |  顶一下
                     //.Clear
+                    .jcarousel-wrapper.am-fr
+                        .jcarousel
+                            ul#gift-items.gift-items
+                                // 礼物列表
+                                script#gift-item-tpl(type='text/template').
+                                    <% for(var i= 0, len = data.length; i < len; i++) {%>
+                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
+                                    data-giftId="<%=data[i].giftId%>">
+                                    <img src="<%=data[i].images.logo%>" alt="">
+                                    </li>
+                                    <% } %>
+                        //a.jcarousel-control-prev.ctrl.pre(href='#')
+                        //a.jcarousel-control-next.ctrl.next(href='#')
             // 留言
             .fr(style='width:300px')
                 div.room-notice-wrap

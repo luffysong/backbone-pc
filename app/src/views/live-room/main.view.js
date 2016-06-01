@@ -165,12 +165,13 @@ var View = BaseView.extend({
         okFn: callback
       });
     } else {
-      uiConfirm.show({
+      // TODO
+/*      uiConfirm.show({
         title: '进入房间',
         content: '进入房间失败,请稍后重试',
         cancelFn: self.goBack,
         okFn: self.goBack
-      });
+      });*/
     }
   },
   renderPage: function () {

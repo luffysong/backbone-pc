@@ -176,7 +176,7 @@ var View = BaseView.extend({
       content: '您确定要结束直播吗',
       okFn: function () {
         self.endLive();
-        window.location.href = '/anchorsetting.html?view=history';
+        window.location.href = '/anchor-setting.html?view=history';
       },
       cancelFn: function () {
       }

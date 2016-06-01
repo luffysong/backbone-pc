@@ -72,7 +72,6 @@ var View = BaseView.extend({
 
     this.initGiftList();
 
-    this.initCarousel();
     $('#btnShare').click(this.shareClick.bind(this));
   },
   defineEventInterface: function () {
@@ -111,12 +110,14 @@ var View = BaseView.extend({
         carousel = $(this);
         width = carousel.innerWidth();
 
-        if (width >= 600) {
-          width = width / 5;
-        } else if (width >= 350) {
-          width = width / 5;
-        }
+        // if (width >= 600) {
+        width = width / 5;
+        // } else if (width >= 350) {
+        //  width = width / 5;
+        // }
+        console.log('width = ', width);
 
+        console.log(carousel.jcarousel('items'));
         carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
       })
       .jcarousel({

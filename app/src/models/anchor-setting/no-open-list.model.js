@@ -35,7 +35,7 @@ var Model = BaseModel.extend({
       var _minutes = businessDate.$get('minutes');
       var minutes = _minutes < 10 ? '0' + _minutes : _minutes;
       value.liveVideoTime = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
-      value.lookUrl = '/web/anchor.html?roomId=' + value.id;
+      value.lookUrl = '/anchor.html?roomId=' + value.id;
       value.liCacheKey = value.id + '-' + value.streamName;
       if (!value.posterPic) {
         value.posterPic = posterPicImage;
