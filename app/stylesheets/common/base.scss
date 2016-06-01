@@ -21,7 +21,6 @@ body {
   background: $main-bg-theme-color;
 }
 
-
 * {
   margin: 0;
   padding: 0;
@@ -998,6 +997,7 @@ img {
   -webkit-border-radius: 35px;
   border-radius: 35px;
 }
+
 .boderRadTop_5 {
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
@@ -1060,6 +1060,7 @@ img {
     color: #fff;
   }
 }
+
 .am-btn-red {
   background-color: $main-bg-red;
   color: #fff;
@@ -1071,16 +1072,18 @@ img {
 }
 
 $rgba-color-black: rgba(0, 0, 0, 0.6);
-$rgba-color-white: rgba(255,255,255,0);
+$rgba-color-white: rgba(255, 255, 255, 0);
 
 :root .gradient-up {
   filter: none;
 }
+
 :root .gradient {
   filter: none;
 }
-.gradient{
-  background: rgba(0,0,0,.5);
+
+.gradient {
+  background: rgba(0, 0, 0, .5);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66000000', EndColorStr='#66000000');
 }
 
@@ -1098,14 +1101,31 @@ $rgba-color-white: rgba(255,255,255,0);
 .box-shadow-bottom {
   box-shadow: rgba(0, 0, 0, 0.6) 0 0 107px 12px inset;
 }
+
 // 修正Amazue UI 的的浮动方向为向左
-[class*=am-u-]+[class*=am-u-]:last-child {
+[class*=am-u-] + [class*=am-u-]:last-child {
   float: left;
 }
 
-.m_disabled{
-  background-color: #c3c3c3!important;
+// 禁用
+.m_disabled {
+  background-color: #c3c3c3 !important;
   color: #fff;
 }
 
+// 性别
+.icon-gender {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+
+  &.male{
+    background: url(../images/gender_2.png) no-repeat;
+    background-position: 2px 0;
+  }
+  &.famle{
+    background: url(../images/gender_1.png) no-repeat;
+    background-position: 1px 0;
+  }
+}
 

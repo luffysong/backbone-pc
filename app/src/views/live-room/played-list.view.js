@@ -17,7 +17,6 @@ var PlayedListModel = require('../../models/live-room/played-list.model');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var Backbone = window.Backbone;
-var _ = require('underscore');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -71,12 +70,7 @@ var View = BaseView.extend({
       .on('jcarousel:reload jcarousel:create', function () {
         carousel = $(this);
         width = carousel.innerWidth();
-
-        //if (width >= 600) {
-          width = width / 4;
-        //} else if (width >= 350) {
-        //  width = width / 2;
-        //}
+        width = width / 4;
 
         carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
       })
