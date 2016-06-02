@@ -67,7 +67,7 @@ var View = BaseView.extend({
       btnAdd: el.find('#btnAdd'),
       btnReport: el.find('#btnReport'),
       tagsWrap: el.find('#tagsWrap'),
-      noticeWrap: el.find('#noticWrap')
+      noticeWrap: $('#noticWrap')
     };
 
     this.noticeGetParams = {
@@ -76,6 +76,7 @@ var View = BaseView.extend({
       access_token: user.getWebToken()
     };
     this.btnFollow = el.find('#btnFollow');
+    this.genderDOM = el.find('.icon-gender');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
@@ -90,6 +91,17 @@ var View = BaseView.extend({
         self.getNoticeInfo();
       }
     });
+
+    Backbone.on('event:currentUserInfoReady', function (userInfo) {
+      var gender = {
+        Boy: 'male',
+        Gril: 'famle'
+      };
+      if (userInfo && userInfo.sex) {
+        self.genderDOM.addClass(gender[userInfo.sex] || 'male');
+      }
+    });
+
     Backbone.on('event:updateRoomNotice', function (data) {
       if (data) {
         self.elements.noticeWrap.text(data.content || '暂无公告');

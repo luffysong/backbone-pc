@@ -48,7 +48,6 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    // this.initCarousel();
   },
   defineEventInterface: function () {
     var self = this;
@@ -58,7 +57,6 @@ var View = BaseView.extend({
         self.bindData(data.creator.uid);
       }
     });
-    console.log(Backbone._events);
   },
   initCarousel: function () {
     var warp = $('#palyedJcarousel');
@@ -97,8 +95,6 @@ var View = BaseView.extend({
     promise = this.playedListModel.executeJSONP(this.playedListParams);
     promise.done(function (res) {
       if (res && res.msg === 'SUCCESS' && res.data.totalCount > 0) {
-        // template = _.template(self.anchorPlayedTpl);
-        console.log('res=', res, self.anchorPlayedTpl);
         template = self.compileHTML(self.anchorPlayedTpl, res);
         self.playedList.html(template);
         self.initCarousel();

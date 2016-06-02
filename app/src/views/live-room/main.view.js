@@ -164,14 +164,20 @@ var View = BaseView.extend({
         cancelBtn: false,
         okFn: callback
       });
+    } else if (res.ErrorCode === 10010) {
+      uiConfirm.show({
+        title: '进入房间失败',
+        content: '该房间已经关闭,无法观看直播',
+        cancelFn: self.goBack,
+        okFn: self.goBack
+      });
     } else {
-      // TODO
-/*      uiConfirm.show({
+      uiConfirm.show({
         title: '进入房间',
         content: '进入房间失败,请稍后重试',
         cancelFn: self.goBack,
         okFn: self.goBack
-      });*/
+      });
     }
   },
   renderPage: function () {
