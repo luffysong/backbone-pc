@@ -1,3 +1,5 @@
+@import "../common/popup";
+
 .anchor-container {
   background: url('../images/anchor-bg.jpg');
   min-height: 927px;
@@ -374,7 +376,7 @@
 
     }
 
-    .am-btn{
+    .am-btn {
       margin-top: 25px;
       height: 45px;
       font-size: 14px;
@@ -521,4 +523,56 @@
 
 .edit_Bg_form_x {
   margin-top: -171px !important;
+}
+
+.field-control-wrap {
+  width: 560px;
+  .detail {
+    color: $main-font-light-color;
+    padding: 10px;
+    .am-g {
+      margin: 5px 0;
+      div {
+        text-align: center;
+      }
+      .avatar {
+        width: 28px;
+        height: 28px;
+      }
+      .id {
+        font-size: 12px;
+      }
+      .name, .id {
+        color: #5c5c5c;
+      }
+      .btn-link {
+        padding: 4px 8px;
+        font-size: 14px;
+        border: 1px solid $main-line-color;
+        color: $main-font-light-color;
+      }
+    }
+  }
+  .footer {
+    .form-input {
+      width: 370px;
+      margin: 10px auto;
+      .input-user-id {
+        border: 1px solid #c8c8c8;
+        height: 38px;
+        padding: 0 10px;
+        background-color: #f5f4f4;
+        width: 220px;
+      }
+    }
+    .am-btn{
+      font-size: 14px;
+    }
+    .tip {
+      font-size: 12px;
+      margin-top: 5px;
+      color: $main-font-light-color;
+    }
+  }
+
 }

@@ -191,10 +191,12 @@ View.sharedInstanceDialog = function (options) {
 };
 View.classInstanceDialog = function (content, options) {
   var ops = options || {};
-  ops.el = content || '<b></b>';
+  ops.el = content || '<b>11111111</b>';
+  console.log('abc');
   if (!mask) {
     mask = Mask.classInstanceMask();
   }
+  console.log(mask);
   return new View(ops);
 };
 module.exports = View;

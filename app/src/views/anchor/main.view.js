@@ -27,6 +27,8 @@ var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
 var GiftModel = require('../../models/anchor/gift.model');
 
+var FieldControl = require('./field-control.view');
+
 var View = BaseView.extend({
   clientRender: false,
   el: '#anchorContainerBg', // 设置View对象作用于的根元素，比如id
@@ -65,11 +67,12 @@ var View = BaseView.extend({
   },
   // 当模板挂载到元素之后
   afterMount: function () {
-
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
     this.userVerify();
+
+    this.fieldControl = new FieldControl();
 
     Backbone.on('event:stopLoopRoomInfo', function () {
       // clearTimeout(self.roomInfoTimeId);

@@ -30,6 +30,7 @@ var View = BaseView.extend({
   clientRender: false,
   // 当模板挂载到元素之前
   beforeMount: function () {
+    console.log(123);
     this.element = $('<iframe/>').attr({
       frameborder: 0,
       scrolling: 'no'

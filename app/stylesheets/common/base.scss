@@ -1020,6 +1020,7 @@ img {
 }
 
 .icons {
+  display: inline-block;
   &.view {
     background-image: url(../images/record-icons_1.png);
   }
@@ -1034,6 +1035,12 @@ img {
   }
   &.hot {
     background-image: url(../images/record-icons_4.png);
+  }
+  &.close{
+    background-image: url(../images/base/icon/pupup_close_03.png);
+  }
+  &.close-gray{
+    background-image: url(../images/base/icon/pupup_close_07.png);
   }
 }
 
