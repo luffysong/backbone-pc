@@ -1,15 +1,19 @@
-<dt><%=creator.nickName%></dt>
-<dd>在线人数:<span id="txtOnline"><%=online%></span></dd>
-<dd>标签:
+<span class="name"><%=creator.nickName%></span>
+<span class="icon-gender"></span>
+<div class="tags">
+    <span class="gary1">标签</span>:
+            <span id="tagsWrap">
     <%
     var allTags = creator.tags || [];
     for(var i = 0,j = allTags.length; i < j; i++){
     %>
-    <i><%=allTags[i] %></i>
+    <span><%=allTags[i] %></span>
     <%
     }
     if(allTags.length ==0){
     %>
     <i>暂无</i>
     <% }%>
-</dd>
+            </span>
+</div>
+

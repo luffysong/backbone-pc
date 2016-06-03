@@ -1,10 +1,39 @@
-<div class="controls clearfix">
-    <div id="btn-clear" class="fl"><img id="imgClear" src="../img/clear.png" alt="">清屏</div>
-    <div id="btn-lock" class="fl"><img id="imgUnLock" src="../img/clock.png" alt="" class="lock"><span>锁屏</span></div>
-</div>
+<!--<div class="controls clearfix">-->
+<!--<div id="btn-clear" class="fl"><img id="imgClear" src="../img/clear.png" alt="">清屏</div>-->
+<!--<div id="btn-lock" class="fl"><img id="imgUnLock" src="../img/clock.png" alt="" class="lock"><span>锁屏</span></div>-->
+<!--</div>-->
 <div class="chatCon" id="chatHistory">
     <!--聊天记录-->
     <ul id="msgList">
+        <li class="clearfix " data-msgtype="0" data-name="袁家小黑球" data-id="44648642$0">
+
+            <img onerror="this.src='../img/visitor_avator.jpg'" src="http://tp1.sinaimg.cn/1973769700/50/5678264169/1"
+                 alt="" class="fl visitor_avator">
+
+            <p class="visitor_chat fl">
+
+                <span class="visitorName">袁家小黑球:</span>
+
+                staff
+                <span class="time fr">11:58:11</span>
+            </p>
+            <div class="controls_forbid_reject">
+                <a href="javascript:;" class="forbid">禁言</a>
+                <a href="javascript:;" class="reject">踢出</a>
+                <a href="javascript:;" class="ctrl">场控</a>
+            </div>
+        </li>
 
     </ul>
+</div>
+
+<div id="sendMessageWrap" class="send-msg-wrap anchor-ctrl pAll10 am-vertical-align">
+    <a id="btn-clear" class="am-btn am-btn-purple am-vertical-align-middle boderRadAll_5">
+        <i class="clear"></i><span>清屏</span></a>
+    <a id="btn-lock" class="am-btn am-btn-purple am-vertical-align-middle boderRadAll_5">
+        <i class="lock"></i><span>锁屏</span></a>
+    <a class="am-btn am-btn-purple am-vertical-align-middle boderRadAll_5">
+        <span class="ctrl first">场控</span>
+        <span class="ctrl">管理</span>
+    </a>
 </div>

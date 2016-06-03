@@ -3,8 +3,194 @@
   min-height: 927px;
   width: 100%;
   background-size: 100% auto;
-  background: #ccc;
-  padding-top: 108px;
+  background: $main-bg-anchor-color;
+  padding-top: 10px;
+
+  .header-bg {
+    margin: 0 auto 10px;
+    width: 1200px;
+    overflow: hidden;
+    height: 270px;
+    background: url(../images/anchor_bg_013.jpg);
+    img {
+      min-height: 270px;
+      width: 100%;
+    }
+  }
+
+  // 1.房间头部信息
+  .room-header {
+    padding-top: 0 !important;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    .room-name {
+      font-size: 20px;
+      color: black;
+    }
+    .room-title-right {
+      //width: 330px;
+      span {
+        color: #999999;
+      }
+      .count {
+        font-size: 20px;
+      }
+      .red {
+        color: #e74e75;
+      }
+      .green {
+        color: $main-bg-green-color;
+      }
+      .online {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  // 2.用户信息模块
+  .user-info-block {
+    background-color: #fff;
+    height: 65px;
+    padding-left: 18px;
+    .user-info-wrap {
+      .avator {
+        width: 55px;
+        height: 55px;
+      }
+      .btn-share {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        background-image: url(../images/liveroom/liveroom-icons-bg_07.png);
+        margin-top: 12px;
+        margin-right: 22px;
+      }
+      .info {
+        margin-left: 12px;
+        .sub-info {
+          display: inline-block;
+        }
+        .name {
+          color: $main-bg-green-color;
+          font-size: 18px;
+        }
+        .btn {
+          margin-top: -3px;
+          height: 25px;
+          min-width: 50px;
+          width: inherit;
+          padding: 0 4px;
+          font-size: 12px;
+        }
+        .tags {
+          font-size: 12px;
+          .item {
+            color: #999999;
+            margin: 0 2px;
+          }
+        }
+      }
+    }
+    .room-notice {
+      background-color: #333333;
+      padding: 5px;
+      height: 50px;
+      color: #fff;
+      .notice {
+        font-size: 12px;
+        line-height: 14px;
+        height: 44px;
+        overflow: hidden;
+      }
+      .trumpet {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url(../images/live-bg-012.png);
+        background-repeat: no-repeat;
+      }
+    }
+  }
+
+  // 3. 公告
+  .room-notice-wrap {
+    background-color: $main-bg-light-purple;
+    header {
+      position: relative;
+      background-color: $main-bg-purple;
+      height: 35px;
+      padding-left: 10px;
+      .title {
+        color: #fff;
+        margin-left: 8px;
+      }
+      .icon-voice {
+        display: inline-block;
+        background-image: url(../images/liveroom/liveroom-icons-bg_03.png);
+        width: 21px;
+        height: 18px;
+      }
+      .edit {
+        position: absolute;
+        display: block;
+        top: 8px;
+        right: 16px;
+        color: #fff;
+        font-size: 12px;
+      }
+    }
+    .content {
+      height: 95px;
+      .detail {
+        font-size: 12px;
+        margin: 0 16px;
+      }
+    }
+  }
+  .anchor-ctrl {
+    height: 90px;
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  // 4. 发送消息
+  .send-msg-wrap {
+    background-color: #fff;
+    position: relative;
+    border-top: 1px solid #efefef;
+    .am-btn {
+      width: 62px;
+      height: 60px;
+      margin: 0 8px;
+      span {
+        font-size: 14px;
+        &.ctrl {
+          display: block;
+        }
+        &.first {
+          margin-top: 5px;
+        }
+      }
+      i {
+        margin: 0 auto;
+        background-size: 100%;
+        -webkit-background-size: 100%;
+        display: block;
+        width: 22px;
+        height: 22px;
+        &.clear {
+          background-image: url(../images/clear.png);
+          background-repeat: no-repeat;
+        }
+        &.lock {
+          background-image: url(../images/clock.png);
+          background-repeat: no-repeat;
+        }
+
+      }
+    }
+  }
+
 }
 
 .edit_Bg {
@@ -159,36 +345,71 @@
   }
   .anchor_control {
     background: #fff;
-    padding-bottom: 32px;
-    padding-right: 72px;
-    div {
-      float: right;
-      width: 155px;
-      height: 47px;
-      line-height: 47px;
-      text-align: center;
-      color: #fff;
-      cursor: pointer;
+    height: 90px;
+    // 5. 抽奖
+    .luck-draw {
+      width: 62px;
+      height: 62px;
+      position: relative;
+      display: inline-block;
+      margin-left: 32px;
+      margin-top: 8px;
+      .btn {
+        display: inline-block;
+        margin-top: 5px;
+        background: #000;
+        background: url(../images/liveroom/liveroom-icons-bg_11.png) no-repeat;
+        width: 62px;
+        height: 62px;
+      }
+      .tip {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        width: 10px;
+        height: 10px;
+        border: 1px solid #fff;
+        background-color: #fe4646;
+      }
+
     }
-    .endLive {
-      background: #ff1d66;
-      margin-left: 65px;
+
+    .am-btn{
+      margin-top: 25px;
+      height: 45px;
+      font-size: 14px;
+      margin-left: 5px;
     }
-    .endLive:hover {
-      background: #ff6e9d;
-    }
-    .startLive {
-      background: #01ceb5;
-    }
-    .startLive:hover {
-      background: #5fe0cf;
-    }
+    //padding-bottom: 32px;
+    //padding-right: 72px;
+    //div {
+    //  float: right;
+    //  width: 155px;
+    //  height: 47px;
+    //  line-height: 47px;
+    //  text-align: center;
+    //  color: #fff;
+    //  cursor: pointer;
+    //}
+    //.endLive {
+    //  background: #ff1d66;
+    //  margin-left: 65px;
+    //}
+    //.endLive:hover {
+    //  background: #ff6e9d;
+    //}
+    //.startLive {
+    //  background: #01ceb5;
+    //}
+    //.startLive:hover {
+    //  background: #5fe0cf;
+    //}
 
   }
 }
 
 #anchorCtrlChat {
-  width: 305px;
+  width: 300px;
   .controls {
     padding: 15px 0 14px 19px;
     background: #e2dfdf;
@@ -217,7 +438,7 @@
   }
   .chatCon {
     background: #fff;
-    height: 653px;
+    height: 476px;
     overflow: auto;
     .system-info {
       p {

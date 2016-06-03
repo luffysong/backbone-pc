@@ -45,7 +45,7 @@ var View = BaseView.extend({
         tpl = _.template(self.infoTpl);
         html = tpl(data);
         self.roomInfoWrap.append(html);
-        self.txtOnline = self.$el.find('#txtOnline');
+        self.txtOnline = $('#txtOnline');
         if (data.creator.smallAvatar) {
           self.imgRoomPic.attr('src', data.creator.smallAvatar);
         }

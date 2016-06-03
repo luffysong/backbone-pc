@@ -6,6 +6,8 @@ $main-bg-anchor-color: #e9f9f9;
 $main-bg-purple: #798fd8;
 $main-bg-light-purple: #e6ebfb;
 $main-bg-red: #ff6666;
+$main-hover-red: #fe7373;
+
 $main-font-light-color: #999;
 $main-line-color: #d9d9d9;
 
@@ -1058,6 +1060,7 @@ img {
   border-color: $main-bg-purple;
   &:hover, &:focus {
     color: #fff;
+    background-color: #839ae9;
   }
 }
 
@@ -1111,6 +1114,7 @@ $rgba-color-white: rgba(255, 255, 255, 0);
 .m_disabled {
   background-color: #c3c3c3 !important;
   color: #fff;
+  border: 1px solid #c3c3c3;
 }
 
 // 性别
@@ -1119,11 +1123,11 @@ $rgba-color-white: rgba(255, 255, 255, 0);
   width: 14px;
   height: 14px;
 
-  &.male{
+  &.male {
     background: url(../images/gender_2.png) no-repeat;
     background-position: 2px 0;
   }
-  &.famle{
+  &.famle {
     background: url(../images/gender_1.png) no-repeat;
     background-position: 1px 0;
   }

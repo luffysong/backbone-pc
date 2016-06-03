@@ -2,21 +2,25 @@
    Created by AaronYuan on 4/20/16.
 // ^内容区域
 #anchorContainerBg.anchor-container.has-top-bar
-    //section.header-bg
-        img(src='/images/anchor-bg.jpg')
+    section#anchorThemeBg.header-bg
+        //img#anchorThemeBg(src='/images/anchor-bg.jpg')
     .common_con
-        #edit_background.clearfix.edit_Bg
+        //#edit_background.clearfix.edit_Bg
             // 编辑背景
         .content.clearfix
             #set_Anchor_info.fl
+                #edit_background.edit_Bg.clearfix.room-header.boderRadTop_5
+                #currentAnchorInfo.user-info-block
                 #broadCastFlash.BroadcastRoom
                     ul.bulletScreen
                         li
                             .tm 弹幕消息...
-                .BR_Msg.clearfix
-                    #currentAnchorInfo.hostMsg.fl
-                    #noticeWraper.fr.annoucementCon
-                #liveShowBtnWraper.anchor_control.clearfix
+                //.BR_Msg.clearfix
+                    //#currentAnchorInfo.hostMsg.fl
+                    //#noticeWraper.fr.annoucementCon
+                #liveShowBtnWraper.anchor_control.am-cf
             // 留言
-            #anchorCtrlChat.fl
+            .fr
+                div#noticeWraper.room-notice-wrap
+                #anchorCtrlChat
 // 内容区域$

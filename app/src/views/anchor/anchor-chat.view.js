@@ -159,7 +159,7 @@ var View = BaseView.extend({
     } else {
       li = $(e.target).parents('li');
       // 确认是文本消息
-      if (li.attr('data-msgType') === 0) {
+      if (~~li.attr('data-msgType') === 0) {
         this.showMsgControlMenu(li);
       }
     }

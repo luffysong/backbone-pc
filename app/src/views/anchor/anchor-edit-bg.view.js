@@ -46,6 +46,7 @@ var View = BaseView.extend({
     this.txtRoomName = $('#txtRoomName');
 
     this.anchorContainerBg = $('#anchorContainerBg');
+    this.anchorThemeBgDOM = $('#anchorThemeBg');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
@@ -144,7 +145,7 @@ var View = BaseView.extend({
   },
   setBgStyle: function (url) {
     if (url) {
-      this.anchorContainerBg.css('background', 'url(' + url + ')');
+      this.anchorThemeBgDOM.css('background', 'url(' + url + ')');
     }
   }
 });

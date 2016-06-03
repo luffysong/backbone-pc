@@ -12,29 +12,13 @@ body {
 
 .anchor-container {
   padding-bottom: 100px;
-  padding-top: 10px;
-  background-color: $main-bg-anchor-color;
 }
-
 :root .hover-wrap {
   filter: none;
 }
 
-.content {
-  //background-color: #fff;
-}
-
 //直播间
 .live-room-wrap {
-  .header-bg {
-    margin: 0 auto 10px;
-    width: 1200px;
-    height: 270px;
-    overflow: hidden;
-    img {
-      width: 100%;
-    }
-  }
 
   .btn-support {
     margin-left: 20px;
@@ -479,15 +463,15 @@ body {
       //padding-left:20px;
       //margin: 20px 0;
     }
-    .item{
-      .wrap{
+    .item {
+      .wrap {
         margin: 0 auto;
         width: 260px;
       }
-      &:hover{
+      &:hover {
 
-        .anchor-info{
-          .title{
+        .anchor-info {
+          .title {
             color: $main-bg-purple;
           }
         }
@@ -515,55 +499,55 @@ body {
           }
         }
       }
-      .anchor-info{
-        .title{
+      .anchor-info {
+        .title {
           padding: 5px 0;
           font-weight: 600;
           font-size: 14px;
         }
-        .avatar{
+        .avatar {
           width: 30px;
           height: 30px;
-          display: inline-block!important;
+          display: inline-block !important;
         }
-        .name{
+        .name {
           margin-top: 10px;
           display: inline-block;
         }
       }
     }
-    .list{
-        padding: 10px 40px;
-        .ctrl {
-          background-color: #c7e2f3;
-          width: 40px;
-          height: 56px;
-          background-repeat: no-repeat;
-          background-position: 10px 16px;
-          &.pre {
-            background-image: url(../images/liveroom/jcar_ctrl_bg_03.png);
+    .list {
+      padding: 10px 40px;
+      .ctrl {
+        background-color: #c7e2f3;
+        width: 40px;
+        height: 56px;
+        background-repeat: no-repeat;
+        background-position: 10px 16px;
+        &.pre {
+          background-image: url(../images/liveroom/jcar_ctrl_bg_03.png);
 
-            border-top-right-radius: 30px;
-            border-bottom-right-radius: 30px;
-            -webkit-border-top-right-radius: 30px;
-            -webkit-border-bottom-right-radius: 30px;
-            -moz-border-radius-topright: 30px;
-            -moz-border-radius-bottomright: 30px;
-            &:hover {
-            }
-          }
-          &.next {
-            background-position: 18px 16px;
-            background-image: url(../images/liveroom/jcar_ctrl_bg_05.png);
-
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
-            -webkit-border-top-left-radius: 30px;
-            -webkit-border-bottom-left-radius: 30px;
-            -moz-border-radius-topleft: 30px;
-            -moz-border-radius-bottomleft: 30px;
+          border-top-right-radius: 30px;
+          border-bottom-right-radius: 30px;
+          -webkit-border-top-right-radius: 30px;
+          -webkit-border-bottom-right-radius: 30px;
+          -moz-border-radius-topright: 30px;
+          -moz-border-radius-bottomright: 30px;
+          &:hover {
           }
         }
+        &.next {
+          background-position: 18px 16px;
+          background-image: url(../images/liveroom/jcar_ctrl_bg_05.png);
+
+          border-top-left-radius: 30px;
+          border-bottom-left-radius: 30px;
+          -webkit-border-top-left-radius: 30px;
+          -webkit-border-bottom-left-radius: 30px;
+          -moz-border-radius-topleft: 30px;
+          -moz-border-radius-bottomleft: 30px;
+        }
+      }
 
     }
 
