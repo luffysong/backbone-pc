@@ -38,7 +38,7 @@ var View = BaseView.extend({
       effect: 'fade',    // 显示效果 可选none, fade
       draggable: false,
       mainClass: 'dialog',
-      closeClass: 'ico_close J_close',
+      closeClass: 'ico_close J_close icons close',
       closeText: '关闭',
       onShow: function () {
       },

@@ -1,0 +1,21 @@
+@charset "UTF-8";
+// 主播页, 公告弹出层
+
+.edit_annmoucement_con {
+  background-color: #fff !important;
+  .editCon {
+    background-color: #fff;
+  }
+  .txt-notice {
+    width: 100%!important;
+    border: 1px solid #c8c8c8;
+    background-color: #f5f4f4;
+    margin-bottom: 20px;
+  }
+  .tipTextarea {
+    margin-top: -15px;
+    text-align: right;
+    padding-right: 0;
+    font-size: 13px;
+  }
+}

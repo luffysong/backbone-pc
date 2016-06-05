@@ -27,7 +27,7 @@ var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
 var GiftModel = require('../../models/anchor/gift.model');
 
-var FieldControl = require('./field-control.view');
+// var FieldControl = require('./field-control.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -72,7 +72,7 @@ var View = BaseView.extend({
   ready: function () {
     this.userVerify();
 
-    this.fieldControl = new FieldControl();
+    // this.fieldControl = new FieldControl();
 
     Backbone.on('event:stopLoopRoomInfo', function () {
       // clearTimeout(self.roomInfoTimeId);

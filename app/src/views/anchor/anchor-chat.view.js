@@ -8,19 +8,24 @@
  * @info 聊天控制
  */
 
+var _ = require('underscore');
+var Backbone = require('backbone');
+
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var imServer = require('imServer');
 var uiConfirm = require('ui.confirm');
 var BusinessDate = require('BusinessDate');
 var FlashApi = require('FlashApi');
+var uiDialog = require('ui.Dialog');
+
+
 var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var GiftModel = require('../../models/anchor/gift.model');
 var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var _ = require('underscore');
-var Backbone = require('backbone');
+
 
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
@@ -30,7 +35,8 @@ var View = BaseView.extend({
   events: { // 监听事件
     'click #btn-clear': 'clearHandler',
     'click #btn-lock': 'lockClickHandler',
-    'click #msgList': 'messageClickHandler'
+    'click #msgList': 'messageClickHandler',
+    'click #btnFieldControl': 'fieldContrlClickHandler'
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
@@ -489,6 +495,14 @@ var View = BaseView.extend({
       default:
         return false;
     }
+  },
+  fieldContrlClickHandler: function () {
+    var tpl = require('./template/field-control.html');
+    this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
+      width: 560,
+      height: 335
+    });
+    this.fieldControlDialog.show();
   }
 });
 
