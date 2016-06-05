@@ -1,7 +1,6 @@
-
 <div class="field-control-wrap" id="field-control">
 
-    <div class="popup-wrap" >
+    <div class="popup-wrap">
         <div class="popup-header am-cf boderRadTop_5"><span class="am-fl">场控管理</span>
             <!--<a class="am-btn am-btn-close am-fr icons close"></a>-->
         </div>
@@ -12,50 +11,32 @@
                     <div class="am-u-sm-6">用户名</div>
                     <div class="am-u-sm-3">操作</div>
                 </div>
-                <div class="am-g">
-                    <div class="am-u-sm-3 am-vertical-align"><img
-                            src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg"
-                            class="am-vertical-align-middle am-circle avatar"><span
-                            class="id am-vertical-align-middle am-margin-left-sm">用户ID22</span></div>
-                    <div class="am-u-sm-6 name">用户名sdfasfasfas</div>
-                    <div class="am-u-sm-3"><a class="am-btn btn-link">删除</a></div>
-                </div>
-                <div class="am-g">
-                    <div class="am-u-sm-3 am-vertical-align"><img
-                            src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg"
-                            class="am-vertical-align-middle am-circle avatar"><span
-                            class="id am-vertical-align-middle am-margin-left-sm">用户ID22</span></div>
-                    <div class="am-u-sm-6 name">用户名sdfasfasfas</div>
-                    <div class="am-u-sm-3"><a class="am-btn btn-link">删除</a></div>
-                </div>
-                <div class="am-g">
-                    <div class="am-u-sm-3 am-vertical-align"><img
-                            src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg"
-                            class="am-vertical-align-middle am-circle avatar"><span
-                            class="id am-vertical-align-middle am-margin-left-sm">用户ID22</span></div>
-                    <div class="am-u-sm-6 name">用户名sdfasfasfas</div>
-                    <div class="am-u-sm-3"><a class="am-btn btn-link">删除</a></div>
-                </div>
-                <div class="am-g">
-                    <div class="am-u-sm-3 am-vertical-align"><img
-                            src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg"
-                            class="am-vertical-align-middle am-circle avatar"><span
-                            class="id am-vertical-align-middle am-margin-left-sm">用户ID22</span></div>
-                    <div class="am-u-sm-6 name">用户名sdfasfasfas</div>
-                    <div class="am-u-sm-3"><a class="am-btn btn-link">删除</a></div>
-                </div>
-                <div class="am-g">
-                    <div class="am-u-sm-3 am-vertical-align"><img
-                            src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg"
-                            class="am-vertical-align-middle am-circle avatar"><span
-                            class="id am-vertical-align-middle am-margin-left-sm">用户ID22</span></div>
-                    <div class="am-u-sm-6 name">用户名sdfasfasfas</div>
-                    <div class="am-u-sm-3"><a class="am-btn btn-link">删除</a></div>
+                <script type="text/html" id="itemTpl">
+                    {{each data as item}}
+                    <div class="am-g" dom-id="{{item.user.uid}}">
+                        <div class="am-u-sm-3 am-vertical-align"><img
+                                src="{{item.user.largeAvatar}}"
+                                class="am-vertical-align-middle am-circle avatar"><span
+                                class="id am-vertical-align-middle am-margin-left-sm">{{item.user.uid}}</span></div>
+                        <div class="am-u-sm-6 name">{{item.user.nickName}}</div>
+                        <div class="am-u-sm-3"><a data-id="{{item.user.uid}}" class="am-btn btn-link">删除</a></div>
+                    </div>
+                    {{/each}}
+                </script>
+                <div class="user-list">
+                    <!--<div class="am-g">-->
+                        <!--<div class="am-u-sm-3 am-vertical-align"><img-->
+                                <!--src="http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg"-->
+                                <!--class="am-vertical-align-middle am-circle avatar"><span-->
+                                <!--class="id am-vertical-align-middle am-margin-left-sm">用户ID22</span></div>-->
+                        <!--<div class="am-u-sm-6 name">用户名sdfasfasfas</div>-->
+                        <!--<div class="am-u-sm-3"><a class="am-btn btn-link">删除</a></div>-->
+                    <!--</div>-->
                 </div>
             </div>
             <div class="footer am-padding-bottom">
-                <div class="form-input"><input type="number" class="input-user-id boderRadAll_5">
-                    <buttion class="am-btn am-btn-red boderRadAll_5 am-margin-left-xs">添加场控</buttion>
+                <div class="form-input"><input id="txtUserID" type="number" class="input-user-id boderRadAll_5">
+                    <button id="btnAdd" class=" am-btn am-btn-red boderRadAll_5 am-margin-left-xs">添加场控</button>
                     <p class="tip">输入用户音悦台ID,或者从聊天列表中选择用户添加场控权限</p></div>
             </div>
         </div>

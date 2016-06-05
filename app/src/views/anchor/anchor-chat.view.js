@@ -26,6 +26,8 @@ var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
+var FieldControlView = require('./room-manager.view');
+
 
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
@@ -72,6 +74,12 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
+    var self = this;
+    Backbone.on('event:roomInfoReady', function (data) {
+      if (data) {
+        self.roomInfo = data;
+      }
+    });
     this.roomInfoReady();
     this.FlashApi = FlashApi.sharedInstanceFlashApi({
       el: 'broadCastFlash'
@@ -496,13 +504,22 @@ var View = BaseView.extend({
         return false;
     }
   },
+  // 场控管理
   fieldContrlClickHandler: function () {
     var tpl = require('./template/field-control.html');
-    this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
-      width: 560,
-      height: 335
-    });
+    if (!this.fieldControlDialog) {
+      this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
+        width: 560,
+        height: 335,
+        isRemoveAfterHide: false
+      });
+    }
     this.fieldControlDialog.show();
+    if (!this.fieldControlView) {
+      this.fieldControlView = new FieldControlView({
+        roomInfo: this.roomInfo
+      });
+    }
   }
 });
 

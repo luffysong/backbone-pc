@@ -537,6 +537,8 @@
   .detail {
     color: $main-font-light-color;
     padding: 10px;
+    height: 195px;
+    overflow-y: auto;
     .am-g {
       margin: 5px 0;
       div {
