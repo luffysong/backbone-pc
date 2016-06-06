@@ -20,6 +20,36 @@ body {
 //直播间
 .live-room-wrap {
 
+
+  //喜欢按钮
+
+  .like {
+    vertical-align: middle;
+    margin-right: 20px;
+    .number {
+      color: $main-font-light-color;
+      margin: 0 10px 0;
+      //padding-top: 10px;
+      display: inline-block;
+      height: 36px;
+      font-size: 12px;
+      line-height: 36px;
+    }
+
+    .btn-like {
+      background-color: $main-bg-red;
+      width: 36px;
+      height: 36px;
+      i {
+        display: inline-block;
+        background: url(../images/liveroom/liveroom-icons-bg_14.png) no-repeat;
+        width: 18px;
+        height: 14px;
+
+      }
+    }
+  }
+
   .btn-support {
     margin-left: 20px;
     position: relative;
@@ -105,6 +135,10 @@ body {
       .avator {
         width: 55px;
         height: 55px;
+      }
+      .like{
+        display:none;
+        margin-top: -28px;
       }
       .btn-share {
         display: inline-block;
@@ -344,31 +378,31 @@ body {
       .like, .push {
         display: inline-block;
       }
-      .like {
-        vertical-align: middle;
-        margin-right: 20px;
-        .number {
-          color: $main-font-light-color;
-          margin: 0 10px 0;
-          //padding-top: 10px;
-          display: inline-block;
-          height: 36px;
-          font-size: 12px;
-          line-height: 36px;
-        }
-        .btn-like {
-          background-color: $main-bg-red;
-          width: 36px;
-          height: 36px;
-          i {
-            display: inline-block;
-            background: url(../images/liveroom/liveroom-icons-bg_14.png) no-repeat;
-            width: 18px;
-            height: 14px;
-
-          }
-        }
-      }
+      //.like {
+      //  vertical-align: middle;
+      //  margin-right: 20px;
+      //  .number {
+      //    color: $main-font-light-color;
+      //    margin: 0 10px 0;
+      //    //padding-top: 10px;
+      //    display: inline-block;
+      //    height: 36px;
+      //    font-size: 12px;
+      //    line-height: 36px;
+      //  }
+      //  .btn-like {
+      //    background-color: $main-bg-red;
+      //    width: 36px;
+      //    height: 36px;
+      //    i {
+      //      display: inline-block;
+      //      background: url(../images/liveroom/liveroom-icons-bg_14.png) no-repeat;
+      //      width: 18px;
+      //      height: 14px;
+      //
+      //    }
+      //  }
+      //}
       .push {
         .btn-push {
           height: 55px;
@@ -646,11 +680,22 @@ body {
 }
 
 //回放页面
+
+.palyback-wrap{
+  .common_con .content{
+    background-color: #fff;
+  }
+  .like{
+    display: inline-block!important;
+  }
+}
+
 .play-back-main {
-  width: 100% !important;
+  margin: 0 auto;
   .flash-header-wraper {
     text-align: center;
     background: #48443d;
+    height:105px;
     .edit_Bg {
       margin: 0 auto;
       //width: 800px;
@@ -667,13 +712,14 @@ body {
 
   .user-info-block {
     background-color: #fff !important;
-    float: left;
-    margin-left: 192px;
-    width: 450px;
+    //float: left;
+    //margin-left: 192px;
+    //width: 450px;
     .tags {
+      text-align: left;
       .Right {
-        float: left !important;
-        width: 300px !important;
+        //float: left !important;
+        //width: 300px !important;
       }
     }
   }

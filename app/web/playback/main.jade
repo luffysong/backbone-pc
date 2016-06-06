@@ -2,18 +2,21 @@
    Created by AaronYuan on 4/25/16.
 
 // ^内容区域
-#anchorContainerBg.anchor-container.live-room-wrap
+#anchorContainerBg.anchor-container.live-room-wrap.has-top-bar.palyback-wrap
+    div.header-bg
+        img(src='../images/anchor-bg.jpg')
     .common_con
-        .content.clearfix
-            #set_Anchor_info.fl.play-back-main
+        .content.boderRadTop_5
+            #set_Anchor_info.play-back-main
                 .flash-header-wraper
                     #edit_background.edit_Bg.clearfix.room-header
+                    #userInfoWrap.user-info-block
                         // 编辑背景
                 #broadCastFlash.BroadcastRoom(style='width: 100%; background-color: #3a3737;')
-                div
-                    #userInfoWrap.user-info-block
+                //div
+                    //#userInfoWrap.user-info-block
                         // 主播名片
-                    #giftwarp.gift-wrap
+                    //#giftwarp.gift-wrap
                         .like-wrap.Right
                             .btns.boderRadAll_5
                                 button#btnShare.share.Left.Hand.boderRadAll_5
@@ -26,7 +29,83 @@
                                 i
                                 |  顶一下
                         .Clear
-                    .Clear
+                    //.Clear
+        div.msg-board-wrap
+            div.header.am-cf
+                span.title 告白墙
+                a.am-btn.am-btn-purple.am-fr.am-round 我要告白
+                div.tabs.am-fr
+                    a.active(href='###')
+                        span.boderRadAll_5.am-round 99
+                        | 最新告白
+                    a(href='###') 精彩告白
+
+            div.content.am-g
+                div.am-u-sm-4.column-0
+                    div.item
+                        p.detail.am-text-break
+                            | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+                    div.item
+                        p.detail.am-text-break
+                            | sfa是的爱疯了啊发案发后啊发发上课lfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+                div.am-u-sm-4.column-1
+                    - for(var i=2;i>0;i--)
+                        div.item
+                            p.detail.am-text-break
+                                | sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                            div.sender
+                                div.am-g
+                                    div.am-u-sm-2
+                                        img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                    div.am-u-sm-10.info
+                                        p.name asfsadfasf
+                                        p.send-time
+                                            | 发布于
+                                            span.am-margin-left-sm 2016-10-23 34:34:00
+                                        a.btn-like.am-btn.am-round.am-vertical-align
+                                            i.icon-heart.am-vertical-align-middle
+                                            span.am-vertical-align-middle 32433
+                div.am-u-sm-4.column-2
+                    div.item
+                        p.detail.am-text-break
+                            | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+
         #anchorPlayedList.recent-list-wrap.mTop15
             .list-header 播主播过的
             #palyedJcarousel.jcarousel-wrapper.list
