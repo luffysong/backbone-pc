@@ -208,9 +208,10 @@ var View = BaseView.extend({
     }
   },
   setPageBgimg: function (url) {
+    // TODO
     if (url) {
-      this.profileBg.css('background', 'url(' + url + ')');
-      this.profileBg.css('background-position', '0 90px');
+      // this.profileBg.css('background', 'url(' + url + ')');
+      // this.profileBg.css('background-position', '0 90px');
     }
   }
 });

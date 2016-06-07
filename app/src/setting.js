@@ -3,6 +3,5 @@
  */
 var $ = require('jquery');
 $(function () {
-  require('../images/user_avatar_03.jpg');
   require('../stylesheets/setting.scss');
 });

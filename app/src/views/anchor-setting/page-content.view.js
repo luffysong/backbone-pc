@@ -17,8 +17,8 @@ var FollowingView = require('./following.view');
 var View = BaseView.extend({
   el: '#pageContent',
   events: { //  监听事件
-    'click #tab-menu-ctrl>li': 'menuChanged',
-    'click #liveState>li': 'liveStateChanged',
+    // 'click #tab-menu-ctrl>li': 'menuChanged',
+    'click #liveState a': 'liveStateChanged',
     'click #profileSate>li': 'profileStateChanged'
   },
   rawLoader: function () {
@@ -37,16 +37,17 @@ var View = BaseView.extend({
     //  获取findDOMNode DOM Node
     this.noListDOM = this.findDOMNode('#noOpenListLive');
     this.historyDOM = this.findDOMNode('#historyListLive');
-    this.liveStateDOMS = this.findDOMNode('#liveState>li');
+    this.liveStateDOMS = this.findDOMNode('#liveState a');
     this.editProfileDOM = this.findDOMNode('#editProfile');
     this.accountSettingsDOM = this.findDOMNode('#accountSettings');
     this.profileStateDOMS = this.findDOMNode('#profileSate>li');
     this.updatePasswordDom = this.findDOMNode('#updatePassword');
 
-    this.menuWrap = this.$el.find('#tab-menu-ctrl');
-    this.menuTpl = this.$el.find('#menuTpl').text();
+    this.menuWrap = $('#tab-menu-ctrl');
+    this.menuTpl = $('#menuTpl').text();
   },
   ready: function () {
+    this.menuWrap.on('click', this.menuChanged.bind(this));
     this.initMenu();
     //  初始化
     if (imModel.isAnchor()) {
@@ -71,7 +72,7 @@ var View = BaseView.extend({
    */
   menuChanged: function (e) {
     var target = $(e.target);
-    if (e.target.tagName === 'SPAN') {
+    if (e.target.tagName === 'A') {
       target = target.parent();
     }
     if (target) {
@@ -86,9 +87,9 @@ var View = BaseView.extend({
           }
         });
       } else {
-        target.parent().children('li').removeClass('on');
-        target.addClass('on');
-        $('.tab-panel').hide();
+        target.parent().children('li').removeClass('am-active');
+        target.addClass('am-active');
+        $('.tab-content').hide();
         $('#' + target.attr('data-panel')).show();
       }
     }
@@ -101,8 +102,8 @@ var View = BaseView.extend({
   liveStateChanged: function (e) {
     var target = $(e.currentTarget);
     var state = target.data('state');
-    this.liveStateDOMS.removeClass('on');
-    target.addClass('on');
+    this.liveStateDOMS.removeClass('active');
+    target.addClass('active');
     if (~~state) {
       this.noListDOM.hide();
       this.historyDOM.show();

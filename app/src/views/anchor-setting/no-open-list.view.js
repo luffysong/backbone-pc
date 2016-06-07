@@ -147,6 +147,7 @@ var View = BaseView.extend({
   },
   //  分页渲染，以及缓存li
   initRender: function (items) {
+    console.log('============', items);
     var html = '';
     if (items && items.length) {
       html = this.compileHTML(this.listTemp, { items: items });

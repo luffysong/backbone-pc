@@ -35,6 +35,7 @@
         background: url(../images/anchor/upload_tip_05.png) no-repeat;
         img {
           width: 100%;
+          min-height: 100%;
         }
         &:hover {
           background: url(../images/anchor/upload_tip_03.jpg) no-repeat;
@@ -45,7 +46,7 @@
       }
       .time, .viedo, .info {
         font-size: 12px;
-        margin: 10px 0;
+        margin: 3px 0;
       }
     }
     // 未开始的直播
@@ -59,7 +60,7 @@
           }
         }
         .btn-wrap {
-          button {
+          .am-btn {
             font-size: 12px;
             margin-right: 32px;
             min-width: 62px;
@@ -83,6 +84,12 @@
           }
           display: inline-block;
         }
+      }
+      .item {
+        .time, .viedo, .info {
+          margin: 10px 0;
+        }
+
       }
 
     }
