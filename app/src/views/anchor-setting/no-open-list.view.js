@@ -18,7 +18,7 @@ var businessDate = new BusinessDate();
 var View = BaseView.extend({
   el: '#noOpenContent',
   events: {
-    'click li': 'checkLiveVideoHandler',
+    'click button': 'checkLiveVideoHandler',
     'click .uploadImage': 'editCoverImageHandler',
     'click .copy-video-url': 'copyUrlHandler',
     'click .copy-video-name': 'copyNameHandler'
@@ -28,7 +28,6 @@ var View = BaseView.extend({
   },
   beforeMount: function () {
     //  初始化一些自定义属性
-    var token = user.getToken();
     this.listTemp = require('./template/no-open-list.html');
     this.liTemp = require('./template/no-open-li.html');
     this.noOpenParameter = {
@@ -36,21 +35,21 @@ var View = BaseView.extend({
       order: 'time',
       offset: 0,
       size: 6,
-      access_token: 'web-' + token
+      access_token: user.getWebToken()
     };
     this.removeParameter = {
       deviceinfo: '{"aid":"30001001"}',
       roomId: '',
-      access_token: 'web-' + token
+      access_token: user.getWebToken()
     };
     this.releaseParameter = {
       deviceinfo: '{"aid":"30001001"}',
       roomId: '',
-      access_token: 'web-' + token
+      access_token: user.getWebToken()
     };
     this.saveCoverParameter = {
       deviceinfo: '{"aid":"30001001"}',
-      access_token: 'web-' + token,
+      access_token: user.getWebToken(),
       roomId: '',
       posterUrl: ''
     };
@@ -147,7 +146,6 @@ var View = BaseView.extend({
   },
   //  分页渲染，以及缓存li
   initRender: function (items) {
-    console.log('============', items);
     var html = '';
     if (items && items.length) {
       html = this.compileHTML(this.listTemp, { items: items });
@@ -157,7 +155,7 @@ var View = BaseView.extend({
     this.$el.html(html);
     this.liCache = null;
     this.liCache = {};
-    var lis = this.$el.find('li');
+    var lis = this.$el.find('.item');
     var i = 0;
     var l = lis.length;
     for (; i < l; i++) {

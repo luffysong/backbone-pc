@@ -3,7 +3,7 @@
      data-key="{{item.liCacheKey}}" data-img="{{item.posterPic}}" data-liveTime="{{item.liveTime}}">
     <div class="am-u-sm-3 img am-margin-right">
         {{if item.posterPic}}
-        <img src="{{item.posterPic}}" alt="">
+        <img src="{{item.posterPic}}" alt="" class="uploadImage">
         {{/if}}
     </div>
     <div class="am-u-sm-9">
@@ -14,12 +14,12 @@
         <div class="viedo">
             <span class="tip am-margin-right-sm">视频连接</span>
             <span class="value">{{item.livePushStreamUrl}}</span>
-            <a href="javascript:;" class="copy am-margin-left-xl" data-value="{{item.livePushStreamUrl}}">复制</a>
+            <a href="javascript:;" class="copy am-margin-left-xl copy-video-url" data-value="{{item.livePushStreamUrl}}">复制</a>
         </div>
         <div class="viedo">
             <span class="tip am-margin-right-sm">视频流</span>
             <span class="value">{{item.streamName}}</span>
-            <a href="javascript:;" class="copy am-margin-left-xl" data-value="{{item.livePushStreamUrl}}">复制</a>
+            <a href="javascript:;" class="copy am-margin-left-xl copy-video-name" data-value="{{item.streamName}}">复制</a>
         </div>
         <div class="btn-wrap">
             <a href="{{item.lookUrl}}" class="am-btn am-btn-red boderRadAll_3">查看</a>
