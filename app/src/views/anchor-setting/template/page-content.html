@@ -70,17 +70,32 @@
                     </div>
                 </div>
             </div>
-            <div id="historyPageBox"  class="page-wrap"></div>
+            <div id="historyPageBox" class="page-wrap"></div>
 
 
         </div>
     </div>
 </div>
 <!--创建直播-->
-<div id="createLiveVideo" class="tab-content Hidden"></div>
+<div id="createLiveVideo" class="tab-content Hidden creatLive"></div>
 <!--观看记录-->
 <div id="recordList" class="tab-content Hidden"></div>
 <!--我的关注-->
 <div id="followingList" class="tab-content Hidden"></div>
 <!---->
-<div id="tabSetting" class="tab-content Hidden"></div>
+<div id="tabSetting" class="tab-content Hidden setting">
+    <ol class="setContrl clearfix" id="profileSate">
+        <li class="fl on" data-state="0">个人资料</li>
+        <li class="fl" data-state="1">修改密码</li>
+    </ol>
+    <div class="set_Con">
+        <div class="personInfo show" id="editProfile">
+
+        </div>
+        <div class="modifyPwd" id="updatePassword">
+
+        </div>
+
+    </div>
+
+</div>

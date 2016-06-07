@@ -59,7 +59,7 @@
     width: 317px;
     text-align: center;
     position: relative;
-    #file {
+    #file,[type='file'] {
       position: absolute;
       top: 4px;
       left: 98px;
