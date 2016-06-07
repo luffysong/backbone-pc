@@ -1036,14 +1036,14 @@ img {
   &.hot {
     background-image: url(../images/record-icons_4.png);
   }
-  &.close{
+  &.close {
     background-image: url(../images/base/icon/pupup_close_03.png);
     background-position: 0 0;
-    &:hover{
-      background-position: 0 0!important;
+    &:hover {
+      background-position: 0 0 !important;
     }
   }
-  &.close-gray{
+  &.close-gray {
     background-image: url(../images/base/icon/pupup_close_07.png);
   }
 }
@@ -1052,6 +1052,7 @@ img {
   color: #fff;
   background: #d3d1d1 !important;
   cursor: pointer;
+  border-color: #d3d1d1!important;
 }
 
 .am-container {

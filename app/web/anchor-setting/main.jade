@@ -1,0 +1,125 @@
+//
+   Created by AaronYuan on 6/6/16.
+
+div.anchor-setting-header-wrap.has-top-bar
+    div.header.am-container
+        div.anchor-info-wrap
+            div.am-circle.avatar-wrap.center
+                img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+            div.name-wrap.center.am-margin-top-sm.am-vertical-align
+                span.name.white.am-vertical-align-middle Exo全球粉丝站
+                i.icon-gender.male.am-vertical-align-middle.am-margin-left-sm
+            div.basic-wrap.am-margin-top-lg
+                div.center
+                    span.create
+                        | 主持的直播:
+                        span.white.big 55
+                        | 场
+                    span.watch
+                        | 观看直播:
+                        span.white 6222
+                        | 次
+                    span.score
+                        | 积分:
+                        span.white 24312
+            div.tags-wrap.center
+                | 标签:
+                div.list
+                    span EXO
+                    span 粉丝
+
+        div.nav-wrap
+            ul.am-nav.am-nav-tabs
+                li
+                    a 我的直播
+                li.am-active
+                    a 创建直播
+                li
+                    a 我的直播
+                li
+                    a 我的直播
+
+
+div.am-container.anchor-setting-body
+    div.tab-content.my-live-show-wrap
+        div.top-header.am-margin-top-xl.am-margin-bottom
+            div.live-status-wrap.boderRadAll_5
+                a(href='javascript:;').right-border.active 未开播
+                a(href='javascript:;') 历史直播
+        div.list-wrap
+            div.unClosed-list-wrap
+                div.item.am-g.am-g-collapse.am-margin-top.am-margin-bottom.am-padding-bottom
+                    div.am-u-sm-3.img.am-margin-right
+                        //img(src='http://img3.c.yinyuetai.com/user/avatar/160516/20634338/-M-9e1acc1a265ea969e45e4cb4735ad6b9_386x217.jpg')
+                    div.am-u-sm-9
+                        div.room-title
+                            | 签签收会签收会签收会签收会收会
+                        div.time
+                            span.tip.am-margin-right-sm 直播时间
+                            span.value.date 2016-05-12 12:34
+                        div.viedo
+                            span.tip.am-margin-right-sm 视频连接
+                            span.value http://www.baidu.com
+                            a.copy(href='javascript:;').am-margin-left-xl 复制
+                        div.btn-wrap
+                            button.am-btn.am-btn-red.boderRadAll_3 查看
+                            button.am-btn.am-btn-red.boderRadAll_3.disabled 发布
+                            button.am-btn.am-btn-red.boderRadAll_3 删除
+                - for(var i=3; i>0;i--)
+                    div.item.am-g.am-g-collapse.am-margin-top.am-margin-bottom.am-padding-bottom
+                        div.am-u-sm-3.img.am-margin-right
+                            img(src='http://img3.c.yinyuetai.com/user/avatar/160516/20634338/-M-9e1acc1a265ea969e45e4cb4735ad6b9_386x217.jpg')
+                        div.am-u-sm-9
+                            div.room-title
+                                | 签签收会签收会签收会签收会收会
+                            div.time
+                                span.tip.am-margin-right-sm 直播时间
+                                span.value.date 2016-05-12 12:34
+                            div.viedo
+                                span.tip.am-margin-right-sm 视频连接
+                                span.value http://www.baidu.com
+                                a.copy.am-margin-left-xl(href='javascript:;') 复制
+                            div.btn-wrap
+                                button.am-btn.am-btn-red.boderRadAll_3 查看
+                                button.am-btn.am-btn-red.boderRadAll_3.disabled 发布
+                                button.am-btn.am-btn-red.boderRadAll_3 删除
+
+            div.closed-list-wrap
+                - for(var i=3; i>0;i--)
+                    div.item.am-g.am-g-collapse.am-margin-top.am-margin-bottom.am-padding-bottom
+                        div.am-u-sm-3.img.am-margin-right
+                            img(src='http://img3.c.yinyuetai.com/user/avatar/160516/20634338/-M-9e1acc1a265ea969e45e4cb4735ad6b9_386x217.jpg')
+                        div.am-u-sm-9
+                            div.room-title
+                                | 历历史直播历史直播历史直播历史直播史直播
+                            div.time
+                                span.tip.am-margin-right-sm 时长
+                                span.value.date 12:34:34
+                            div.number
+                                div.num
+                                    i.icons.view
+                                    span 23423
+                                div.num
+                                    i.icons.chat
+                                    span 23423
+                                div.num
+                                    i.icons.like
+                                    span 23423
+
+                            //div.viedo
+                                span.tip.am-margin-right-sm 视频连接
+                                span.value http://www.baidu.com
+                                a.copy.am-margin-left-xl(href='javascript:;') 复制
+                            div.info
+                                span.tip.am-margin-right-sm 人气:
+                                span.value 234234
+
+                            //div.btn-wrap
+                            //    button.am-btn.am-btn-red.boderRadAll_3 查看
+                            //    button.am-btn.am-btn-red.boderRadAll_3.disabled 发布
+                            //    button.am-btn.am-btn-red.boderRadAll_3 删除
+        div.page-wrap
+            | 分页
+
+    div.tab-content
+    div.tab-content
