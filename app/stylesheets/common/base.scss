@@ -1036,13 +1036,14 @@ img {
   &.hot {
     background-image: url(../images/record-icons_4.png);
   }
-  &.close {
-    background-image: url(../images/base/icon/pupup_close_03.png);
-    background-position: 0 0;
-    &:hover {
-      background-position: 0 0 !important;
-    }
-  }
+  //&.close {
+  //  background-image: url(../images/base/icon/pupup_close_03.png);
+  //  background-position: 0 0;
+  //  &:hover {
+  //    background-position: 0 0 !important;
+  //    background-image: url(../images/base/icon/pupup_close_03.png);
+  //  }
+  //}
   &.close-gray {
     background-image: url(../images/base/icon/pupup_close_07.png);
   }
