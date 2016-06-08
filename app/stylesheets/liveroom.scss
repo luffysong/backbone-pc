@@ -220,12 +220,20 @@ body {
     }
   }
 
-  .chatCon {
-    height: 466px !important;
+  #anchorCtrlChat {
+    .chatCon {
+      height: 466px;
+    }
     ul {
       border-top: 1px solid #eee;
     }
   }
+  //.chatCon {
+  //  height: 466px !important;
+  //  ul {
+  //    border-top: 1px solid #eee;
+  //  }
+  //}
 
   .send-msg-wrap {
     background-color: #fff;

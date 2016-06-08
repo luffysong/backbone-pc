@@ -1,6 +1,14 @@
 // 频道直播页面
 
 .channel-live {
+  //.live-room-wrap {
+  #anchorCtrlChat {
+    .chatCon {
+      height: 560px;
+    }
+  }
+  //}
+
   .aside-right {
     background-color: #fff;
     height: 698px;
@@ -26,21 +34,21 @@
     .tab-content-video-list {
       height: 662px;
       overflow-y: auto;
-      .item{
+      .item {
         border-bottom: 1px solid $main-line-color;
         padding: 10px 0;
-        .time{
+        .time {
           text-align: center;
-          color:$main-font-light-color;
+          color: $main-font-light-color;
         }
-        .detail{
+        .detail {
           position: relative;
           width: 180px;
           word-break: break-all;
           white-space: normal;
           font-size: 12px;
 
-          .icon-play{
+          .icon-play {
             position: absolute;
             top: 50%;
             right: -26px;
@@ -51,20 +59,19 @@
             background: url(../images/liveroom/channel_playing_03.png) no-repeat;
           }
         }
-        &.active{
+        &.active {
           background-color: $main-bg-purple;
-          .time{
+          .time {
             color: #bfcefd;
           }
-          .detail{
+          .detail {
             color: #fff;
           }
-          .icon-play{
+          .icon-play {
             display: inline-block;
           }
         }
       }
-
 
     }
 

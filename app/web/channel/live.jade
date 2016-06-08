@@ -56,9 +56,9 @@
                         //a.jcarousel-control-next.ctrl.next(href='#')
             // 留言
             .fr.aside-right.boderRadTop_5(style='width:300px')
-                div.tab-header
-                    a.chat-list(href='javascript:;') 弹幕
-                    a.video-list.active(href='javascript:;') 节目单
+                div.tab-header#channelTab
+                    a.chat-list(href='javascript:;',data-id='chatList') 弹幕
+                    a.video-list.active(href='javascript:;', data-id='videoList') 节目单
                 //div.room-notice-wrap
                     header.boderRadTop_5.am-vertical-align
                         i.icon-voice.am-vertical-align-middle
@@ -68,7 +68,7 @@
                 //#userInfoWrap.user-info-block
                     // 主播名片
                 // 节目预告
-                div.tab-content-video-list
+                div.tab-content.tab-content-video-list#videoList
                     div.am-g.am-g-collapse.item
                         div.am-u-sm-3.time 10:23
                         div.am-u-sm-9.detail
@@ -97,9 +97,8 @@
                                 | 收到了附件是
                                 | 收到了附件是
                                 span.icon-play
-
                 // 聊天界面
-                div.tab-content-chat.Hidden
+                div.tab-content.tab-content-chat.Hidden#chatList
                     #anchorCtrlChat
                     // 消息列表
                     #sendMessageWrap.send-msg-wrap.pAll10
@@ -158,21 +157,21 @@
                                         span.am-vertical-align-middle 32433
                 div.am-u-sm-4.column-1
                     - for(var i=3;i>0;i--)
-                    div.item
-                        p.detail.am-text-break
-                            | sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
-                        div.sender
-                            div.am-g
-                                div.am-u-sm-2
-                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
-                                div.am-u-sm-10.info
-                                    p.name asfsadfasf
-                                    p.send-time
-                                        | 发布于
-                                        span.am-margin-left-sm 2016-10-23 34:34:00
-                                    a.btn-like.am-btn.am-round.am-vertical-align
-                                        i.icon-heart.am-vertical-align-middle
-                                        span.am-vertical-align-middle 32433
+                        div.item
+                            p.detail.am-text-break
+                                | sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                            div.sender
+                                div.am-g
+                                    div.am-u-sm-2
+                                        img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                    div.am-u-sm-10.info
+                                        p.name asfsadfasf
+                                        p.send-time
+                                            | 发布于
+                                            span.am-margin-left-sm 2016-10-23 34:34:00
+                                        a.btn-like.am-btn.am-round.am-vertical-align
+                                            i.icon-heart.am-vertical-align-middle
+                                            span.am-vertical-align-middle 32433
                 div.am-u-sm-4.column-2
                     div.item
                         p.detail.am-text-break

@@ -36,7 +36,7 @@ var View = BaseView.extend({
   clientRender: false,
   el: '#anchorContainerBg', // 设置View对象作用于的根元素，比如id
   events: { // 监听事件
-
+    'click #channelTab': 'asideChanged'
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
@@ -449,6 +449,16 @@ var View = BaseView.extend({
     if (this.roomInfo && this.roomInfo.imageUrl) {
       this.roomBg.css('background', 'url(' + this.roomInfo.imageUrl + ')');
     }
+  },
+  // 右侧边栏切换
+  asideChanged: function (e) {
+    console.log(e.target);
+    var target = $(e.target);
+    var id = target.attr('data-id');
+    target.parent().children().removeClass('active');
+    target.addClass('active');
+    $('.tab-content').hide();
+    $('#' + id).show();
   }
 });
 
