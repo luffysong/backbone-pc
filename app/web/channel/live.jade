@@ -1,170 +1,227 @@
 //
    Created by AaronYuan on 6/7/16.
     频道直播页面
-e
-    i
-span#txtLikeCount.number 23423423
-div.push.am-vertical-align
-    button#btnTop.btn-push.am-btn-red.am-round
-        i.am-vertical-align-middle
-        span.am-vertical-align-middle 顶上去
-//.btns.boderRadAll_5
-    button#btnShare.share.Left.Hand.boderRadAll_5
-        i
-    button#btnLike.Hand.like.Left.gary2
-        i
-        span#txtLikeCount 1
-    .Clear
-//button#btnTop.btn.Hand.btn-support.boderRadAll_3
-    i
-    |  顶一下
-//.Clear
-.jcarousel-wrapper.am-fr
-    .jcarousel
-        ul#gift-items.gift-items
-            // 礼物列表
-            script#gift-item-tpl(type='text/template').
-                <% for(var i= 0, len = data.length; i < len; i++) {%>
-                <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
-                data-giftId="<%=data[i].giftId%>">
-                <img src="<%=data[i].images.logo%>" alt="">
-                </li>
-                <% } %>
-    //a.jcarousel-control-prev.ctrl.pre(href='#')
-    //a.jcarousel-control-next.ctrl.next(href='#')
-// 留言
-.fr(style='width:300px')
-    div.room-notice-wrap
-        header.boderRadTop_5.am-vertical-align
-            i.icon-voice.am-vertical-align-middle
-            span.title.am-vertical-align-middle 直播公告
-        section.content.am-vertical-align
-            p#noticWrap.am-vertical-align-middle.detail 暂无公告!
-    //#userInfoWrap.user-info-block
-        // 主播名片
-    #anchorCtrlChat
-        // 消息列表
-    #sendMessageWrap.send-msg-wrap.pAll10
-        // <div class="msg-text">
-        // <textarea class="pAll5 gary2 msg Left" cols="30" rows="5" placeholder="请输入消息"></textarea>
-        // <button class="Hand btn send Left">发送</button>
-        // <div class="Clear"></div>
-        // </div>
-        // <div class="msg-footer mTop5">
-        // &lt;!&ndash;<button>face</button>&ndash;&gt;
-        // <button class="size Hand"><i></i></button>
-        // <div class="tip Right gary1">您还可以输入<span class="gary2">324</span>字</div>
-        // <div class="Clear"></div>
-        // </div>
-div.msg-board-wrap
-    div.header.am-cf
-        span.title 告白墙
-        a.am-btn.am-btn-purple.am-fr.am-round 我要告白
-        div.tabs.am-fr
-            a.active(href='###')
-                span.boderRadAll_5.am-round 99
-                | 最新告白
-            a(href='###') 精彩告白
 
-    div.content.am-g
-        div.am-u-sm-4.column-0
-            div.item
-                p.detail.am-text-break
-                    | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
-                div.sender
-                    div.am-g
-                        div.am-u-sm-2
-                            img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
-                        div.am-u-sm-10.info
-                            p.name asfsadfasf
-                            p.send-time
-                                | 发布于
-                                span.am-margin-left-sm 2016-10-23 34:34:00
-                            a.btn-like.am-btn.am-round.am-vertical-align
-                                i.icon-heart.am-vertical-align-middle
-                                span.am-vertical-align-middle 32433
-            div.item
-                p.detail.am-text-break
-                    | sfa是的爱疯了啊发案发后啊发发上课lfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
-                div.sender
-                    div.am-g
-                        div.am-u-sm-2
-                            img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
-                        div.am-u-sm-10.info
-                            p.name asfsadfasf
-                            p.send-time
-                                | 发布于
-                                span.am-margin-left-sm 2016-10-23 34:34:00
-                            a.btn-like.am-btn.am-round.am-vertical-align
-                                i.icon-heart.am-vertical-align-middle
-                                span.am-vertical-align-middle 32433
-        div.am-u-sm-4.column-1
-            - for(var i=3;i>0;i--)
-            div.item
-                p.detail.am-text-break
-                    | sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
-                div.sender
-                    div.am-g
-                        div.am-u-sm-2
-                            img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
-                        div.am-u-sm-10.info
-                            p.name asfsadfasf
-                            p.send-time
-                                | 发布于
-                                span.am-margin-left-sm 2016-10-23 34:34:00
-                            a.btn-like.am-btn.am-round.am-vertical-align
-                                i.icon-heart.am-vertical-align-middle
-                                span.am-vertical-align-middle 32433
-        div.am-u-sm-4.column-2
-            div.item
-                p.detail.am-text-break
-                    | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
-                div.sender
-                    div.am-g
-                        div.am-u-sm-2
-                            img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
-                        div.am-u-sm-10.info
-                            p.name asfsadfasf
-                            p.send-time
-                                | 发布于
-                                span.am-margin-left-sm 2016-10-23 34:34:00
-                            a.btn-like.am-btn.am-round.am-vertical-align
-                                i.icon-heart.am-vertical-align-middle
-                                span.am-vertical-align-middle 32433
+#anchorContainerBg.anchor-container.live-room-wrap.has-top-bar.channel-live
+    div.header-bg
+        img(src='../images/anchor-bg.jpg')
+    .common_con
+        .content.clearfix
+            #set_Anchor_info.fl
+                #edit_background.edit_Bg.clearfix.room-header.boderRadTop_5
+                #userInfoWrap.user-info-block
 
-#anchorPlayedList.recent-list-wrap.mTop15
-    .list-header 播主播过的
-    #palyedJcarousel.jcarousel-wrapper.list
-        .jcarousel
-            ul#playedListWrap.viedo-content
-                script#anchorPlayedTpl(type='text/html')
-                    | {{each data.roomList as item}}
-                    li.item
-                        div.wrap
-                            a.top-link(href="{{item.status ===2? '/liveroom.html?roomId=':'/playback.html?roomId='}}{{item.roomId}}")
-                                img(src="{{item.posterPic}}")
-                                div.link-hover
-                                    div.status
-                                    div.left-bottom.info
-                                        div.sub-info
-                                            span.icons.chat
-                                            | {{item.online}}
-                                            span.icons.like
-                                            | {{item.assemble}}
-                                    div.center.play
-                                    div.right-top.gradient.boderRadAll_3
-                                        span='人气:'
-                                        | {{item.popularity}}
-                                    footer.gradient-up
-                            div.anchor-info.am-cf
-                                div.am-fl
-                                    div.title.am-text-truncate='{{item.roomName}}'
-                                    img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
-                                    span.name='{{item.creator.nickName}}'
-                    | {{/each}}
-        a.jcarousel-control-prev.ctrl.pre(href='#')
-        a.jcarousel-control-next.ctrl.next(href='#')
-.user-msg-color-warp
+                // 编辑背景
+                #broadCastFlash.BroadcastRoom
+                    ul.bulletScreen
+                        li
+                            .tm 弹幕消息加载中...
+                #giftwarp.gift-wrap.am-cf
+                    div.lucky-draw
+                        a.btn
+                        div.tip.am-circle
+
+                    .like-wrap.am-fr.am-vertical-align
+                        div#btnLike.like.am-vertical-align-middle
+                            button.btn-like.am-btn-red.am-circle
+                                i
+                            span#txtLikeCount.number 23423423
+                        div.push.am-vertical-align
+                            button#btnTop.btn-push.am-btn-red.am-round
+                                i.am-vertical-align-middle
+                                span.am-vertical-align-middle 顶上去
+                        //.btns.boderRadAll_5
+                            button#btnShare.share.Left.Hand.boderRadAll_5
+                                i
+                            button#btnLike.Hand.like.Left.gary2
+                                i
+                                span#txtLikeCount 1
+                            .Clear
+                        //button#btnTop.btn.Hand.btn-support.boderRadAll_3
+                            i
+                            |  顶一下
+                    //.Clear
+                    .jcarousel-wrapper.am-fr
+                        .jcarousel
+                            ul#gift-items.gift-items
+                                // 礼物列表
+                                script#gift-item-tpl(type='text/template').
+                                    <% for(var i= 0, len = data.length; i < len; i++) {%>
+                                    <li data-name="<%=data[i].name%>" data-appid="<%=data[i].appId%>"
+                                    data-giftId="<%=data[i].giftId%>">
+                                    <img src="<%=data[i].images.logo%>" alt="">
+                                    </li>
+                                    <% } %>
+                        //a.jcarousel-control-prev.ctrl.pre(href='#')
+                        //a.jcarousel-control-next.ctrl.next(href='#')
+            // 留言
+            .fr.aside-right.boderRadTop_5(style='width:300px')
+                div.tab-header
+                    a.chat-list(href='javascript:;') 弹幕
+                    a.video-list.active(href='javascript:;') 节目单
+                //div.room-notice-wrap
+                    header.boderRadTop_5.am-vertical-align
+                        i.icon-voice.am-vertical-align-middle
+                        span.title.am-vertical-align-middle 直播公告
+                    section.content.am-vertical-align
+                        p#noticWrap.am-vertical-align-middle.detail 暂无公告!
+                //#userInfoWrap.user-info-block
+                    // 主播名片
+                // 节目预告
+                div.tab-content-video-list
+                    div.am-g.am-g-collapse.item
+                        div.am-u-sm-3.time 10:23
+                        div.am-u-sm-9.detail
+                            | 收到了附件是
+                            | 收到了附件是
+                            | 收到了附件是
+                            | 收到了附件是
+                            | 收到了附件是
+                            span.icon-play
+                    div.am-g.am-g-collapse.item.active
+                        div.am-u-sm-3.time 10:23
+                        div.am-u-sm-9.detail
+                            | 收到了附件是
+                            | 收到了附件是
+                            | 收到了附件是
+                            | 收到了附件是
+                            | 收到了附件是
+                            span.icon-play
+                    - for(var i = 10; i>0; i--)
+                        div.am-g.am-g-collapse.item
+                            div.am-u-sm-3.time 10:23
+                            div.am-u-sm-9.detail
+                                | 收到了附件是
+                                | 收到了附件是
+                                | 收到了附件是
+                                | 收到了附件是
+                                | 收到了附件是
+                                span.icon-play
+
+                // 聊天界面
+                div.tab-content-chat.Hidden
+                    #anchorCtrlChat
+                    // 消息列表
+                    #sendMessageWrap.send-msg-wrap.pAll10
+                    // <div class="msg-text">
+                    // <textarea class="pAll5 gary2 msg Left" cols="30" rows="5" placeholder="请输入消息"></textarea>
+                    // <button class="Hand btn send Left">发送</button>
+                    // <div class="Clear"></div>
+                    // </div>
+                    // <div class="msg-footer mTop5">
+                    // &lt;!&ndash;<button>face</button>&ndash;&gt;
+                    // <button class="size Hand"><i></i></button>
+                    // <div class="tip Right gary1">您还可以输入<span class="gary2">324</span>字</div>
+                    // <div class="Clear"></div>
+                    // </div>
+        div.msg-board-wrap
+            div.header.am-cf
+                span.title 告白墙
+                a.am-btn.am-btn-purple.am-fr.am-round 我要告白
+                div.tabs.am-fr
+                    a.active(href='###')
+                        span.boderRadAll_5.am-round 99
+                        | 最新告白
+                    a(href='###') 精彩告白
+
+            div.content.am-g
+                div.am-u-sm-4.column-0
+                    div.item
+                        p.detail.am-text-break
+                            | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+                    div.item
+                        p.detail.am-text-break
+                            | sfa是的爱疯了啊发案发后啊发发上课lfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+                div.am-u-sm-4.column-1
+                    - for(var i=3;i>0;i--)
+                    div.item
+                        p.detail.am-text-break
+                            | sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+                div.am-u-sm-4.column-2
+                    div.item
+                        p.detail.am-text-break
+                            | sfaslfjasdkfjasl;fjal;sjdf;aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl
+                        div.sender
+                            div.am-g
+                                div.am-u-sm-2
+                                    img.avatar.am-circle(src='http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg')
+                                div.am-u-sm-10.info
+                                    p.name asfsadfasf
+                                    p.send-time
+                                        | 发布于
+                                        span.am-margin-left-sm 2016-10-23 34:34:00
+                                    a.btn-like.am-btn.am-round.am-vertical-align
+                                        i.icon-heart.am-vertical-align-middle
+                                        span.am-vertical-align-middle 32433
+
+        #anchorPlayedList.recent-list-wrap.mTop15
+            .list-header 播主播过的
+            #palyedJcarousel.jcarousel-wrapper.list
+                .jcarousel
+                    ul#playedListWrap.viedo-content
+                        script#anchorPlayedTpl(type='text/html')
+                            | {{each data.roomList as item}}
+                            li.item
+                                div.wrap
+                                    a.top-link(href="{{item.status ===2? '/liveroom.html?roomId=':'/playback.html?roomId='}}{{item.roomId}}")
+                                        img(src="{{item.posterPic}}")
+                                        div.link-hover
+                                            div.status
+                                            div.left-bottom.info
+                                                div.sub-info
+                                                    span.icons.chat
+                                                    | {{item.online}}
+                                                    span.icons.like
+                                                    | {{item.assemble}}
+                                            div.center.play
+                                            div.right-top.gradient.boderRadAll_3
+                                                span='人气:'
+                                                | {{item.popularity}}
+                                            footer.gradient-up
+                                    div.anchor-info.am-cf
+                                        div.am-fl
+                                            div.title.am-text-truncate='{{item.roomName}}'
+                                            img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
+                                            span.name='{{item.creator.nickName}}'
+                            | {{/each}}
+                a.jcarousel-control-prev.ctrl.pre(href='#')
+                a.jcarousel-control-next.ctrl.next(href='#')
+        .user-msg-color-warp
 // 内容区域$
-
 

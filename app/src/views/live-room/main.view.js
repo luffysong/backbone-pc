@@ -75,15 +75,21 @@ var View = BaseView.extend({
     this.roomBg = $('#anchorContainerBg');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    if (ops && ops.roomType === 'channel-live') {
+      // 频道直播页面
+      console.log(ops);
+    } else {
+      // 直播页面
+      if (!user.isLogined()) {
+        store.remove('imSig');
+        store.set('signout', 1);
+        msgBox.showTip('请登录后观看直播!');
+        window.location.href = '/web/login.html';
+      }
+    }
     this.defineEventInterface();
 
-    if (!user.isLogined()) {
-      store.remove('imSig');
-      store.set('signout', 1);
-      msgBox.showTip('请登录后观看直播!');
-      window.location.href = '/web/login.html';
-    }
     this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
