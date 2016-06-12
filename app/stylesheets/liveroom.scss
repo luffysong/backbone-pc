@@ -284,7 +284,7 @@ body {
     .choose-color {
       position: absolute;
       width: 100%;
-      background-color: #f4f4f6;
+      background-color: $main-top-bar-bg-color;
       height: 65px;
       top: 0;
       left: 0;
@@ -292,6 +292,7 @@ body {
         padding: 5px 0;
         font-size: 12px;
         text-align: center;
+        color: #fff;
       }
       .color-list {
         text-align: center;
