@@ -103,7 +103,7 @@ div.index-wrap.am-container
                 div.am-u-sm-3
                     | {{each data as item}}
                     div.item
-                        a.top-link(href="###1")
+                        a.top-link(href="/channellive.html?channelId={{item.channelId}}")
                             img(src='{{item.posterPic}}')
                             div.link-hover.gradient
                             span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间

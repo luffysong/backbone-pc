@@ -6,7 +6,7 @@
 /**
  * @time {时间}
  * @author {编写者}
- * @info {实现的功能}
+ * @info 频道播放页
  */
 
 'use strict';
@@ -25,7 +25,7 @@ var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('imServer');
 var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
-var UserInfo = require('./user.js');
+var UserInfo = require('../live-room/user.js');
 var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model.js');
 var FlashAPI = require('FlashApi');
 var store = Auxiliary.storage;
@@ -44,7 +44,7 @@ var View = BaseView.extend({
     if (!url.query.roomId && !url.query.channelId) {
       window.history.go(-1);
     }
-    this.roomId = url.query.roomId || 1;
+    this.roomId = url.query.channelId || 1;
 
     this.roomInfoPeriod = 5 * 1000;
 
@@ -182,12 +182,12 @@ var View = BaseView.extend({
     }
   },
   renderPage: function () {
-    var RoomTitle = require('./room-title.view');
-    var ChatView = require('./chat.view');
-    var SendMessageView = require('./send-message.view');
-    var AnchorCardView = require('./anchor-card.view');
-    var PlayedListView = require('./played-list.view');
-    var GiftView = require('./gift.view');
+    var RoomTitle = require('../live-room/room-title.view');
+    var ChatView = require('../live-room/chat.view');
+    var SendMessageView = require('../live-room/send-message.view');
+    var AnchorCardView = require('../live-room/anchor-card.view');
+    var PlayedListView = require('../live-room/played-list.view');
+    var GiftView = require('../live-room/gift.view');
 
     var a = new RoomTitle();
 

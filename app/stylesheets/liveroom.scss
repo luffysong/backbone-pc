@@ -567,6 +567,9 @@ body {
         height: 56px;
         background-repeat: no-repeat;
         background-position: 10px 16px;
+        &:hover {
+          background-color: $main-bg-purple;
+        }
         &.pre {
           background-image: url(../images/liveroom/jcar_ctrl_bg_03.png);
 
@@ -576,8 +579,6 @@ body {
           -webkit-border-bottom-right-radius: 30px;
           -moz-border-radius-topright: 30px;
           -moz-border-radius-bottomright: 30px;
-          &:hover {
-          }
         }
         &.next {
           background-position: 18px 16px;

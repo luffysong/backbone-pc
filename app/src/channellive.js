@@ -8,12 +8,12 @@ var $ = require('jquery');
 $(function () {
   'use strict';
   var TopBarView = require('TopBarView');
-  var MainView = require('./views/live-room/main.view');
+  var MainView = require('./views/channel/live.main.js');
 
   var a = new TopBarView();
 
   a = new MainView({
-    roomType: 'channel-live'
+    roomType: 'channel'
   });
 
   console.log(a);
