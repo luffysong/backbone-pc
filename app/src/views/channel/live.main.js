@@ -32,6 +32,8 @@ var store = Auxiliary.storage;
 var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 
+var AdvertisingWallView = require('../advertising-wall/main.view');
+
 var View = BaseView.extend({
   clientRender: false,
   el: '#anchorContainerBg', // 设置View对象作用于的根元素，比如id
@@ -89,9 +91,8 @@ var View = BaseView.extend({
       el: 'broadCastFlash'
     });
 
-    this.getUserInfo();
-    // this.initRoom();
     this.renderPage();
+    this.getUserInfo();
   },
   defineEventInterface: function () {
     var self = this;
@@ -201,6 +202,10 @@ var View = BaseView.extend({
 
     a = new GiftView();
 
+    this.adWallView = new AdvertisingWallView({
+      el: '#advertisingWall'
+    });
+
     console.log(a);
   },
   initWebIM: function () {
@@ -261,6 +266,9 @@ var View = BaseView.extend({
         self.setRoomBgImg();
         self.flashAPI.onReady(function () {
           this.init(self.roomInfo);
+        });
+        self.adWallView.setOptions({
+          roomId: data.id
         });
 
         self.joinRoom();
