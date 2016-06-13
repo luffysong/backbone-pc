@@ -1,0 +1,161 @@
+// 频道预告
+.channel-live-pre-wrap {
+  background-color: #fff;
+  margin: 16px 0;
+
+  .room-detail-wrap {
+    width: 887px;
+
+    .header {
+      margin: 10px 0;
+      .room-title {
+        font-size: 20px;
+      }
+      .popularity {
+        font-size: 12px;
+        color: $main-font-light-color;
+        .red {
+          color: $main-bg-red;
+          font-size: 14px;
+        }
+      }
+    }
+    .notice-wrap {
+      font-size: 12px;
+      background-color: #e5ebfa;
+      padding: 10px;
+      span {
+        color: #7d90cd;
+        display: inline-block;
+        //height: 56px;
+        overflow: hidden;
+      }
+      .detail {
+        margin-left: 4px;
+        display: inline-block;
+        color: $main-name-color;
+        width: 575px;
+        height: 36px;
+        overflow: hidden;
+      }
+      .line-clamp {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; // 这里修改为要显示的行数
+        -webkit-box-orient: vertical;
+      }
+    }
+
+    .btn-wrap {
+      height: 55px;
+      .btn-push {
+        width: 120px;
+        height: 57px;
+        line-height:40px;
+      }
+      i {
+        display: inline-block;
+        background: url(../images/index/hover_10.png) no-repeat;
+        -webkit-background-size: 100%;
+        background-size: 100%;
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
+        margin-bottom: -4px;
+      }
+    }
+
+    .anchor-info-wrap {
+      font-size: 12px;
+      .avatar {
+        width: 80px;
+        img {
+          width: 60px;
+          height: 60px;
+        }
+      }
+      .name {
+        font-size: 14px;
+      }
+      .name-wrap {
+        width: 658px;
+      }
+      .icon-gender {
+        margin: 0 5px -3px;
+      }
+      .btn-follow {
+        font-size: 12px;
+        min-width: 50px;
+        height: 22px;
+        margin: 0 4px;
+        line-height: 10px;
+      }
+      .tags {
+        color: $main-name-color;
+        .tag-list {
+          color: $main-font-light-color;
+          span {
+            margin: 0 5px;
+          }
+        }
+      }
+      //.btn-wrap {
+      //  height: 99px;
+      //  .btn-push {
+      //    width: 120px;
+      //    height: 57px;
+      //    line-height:40px;
+      //  }
+      //  i {
+      //    display: inline-block;
+      //    background: url(../images/index/hover_10.png) no-repeat;
+      //    -webkit-background-size: 100%;
+      //    background-size: 100%;
+      //    width: 20px;
+      //    height: 20px;
+      //    margin-right: 4px;
+      //    margin-bottom: -4px;
+      //  }
+      //}
+    }
+
+  }
+
+  .time-wrap {
+    position: relative;
+    background-color: $main-bg-purple;
+    height: 176px;
+    width: 313px;
+    border-top-right-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+
+    border-bottom-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    .arrow {
+      position: absolute;
+      top: 50%;
+      left: -15px;
+      border-color: transparent $main-bg-purple transparent transparent;
+    }
+
+    text-align: center;
+    .time-top{
+      color: #a8bcec;
+      margin-top: 50px;
+    }
+    .time-info{
+      .num{
+        font-size: 32px;
+        color: #fff;
+      }
+      .tip{
+        color: #a8bcec;
+        margin: 0 10px;
+      }
+    }
+
+  }
+}
