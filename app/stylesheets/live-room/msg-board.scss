@@ -1,11 +1,13 @@
 @charset "UTF-8";
 
-// 告白墙
+$wall-bg-color: #f0f0f0;
 
+// 告白墙
 .msg-board-wrap {
-  background-color: #f0f0f0;
+  background-color: $wall-bg-color;
   height: 460px;
   margin: 16px 0;
+
   .header {
     height: 56px;
     background-color: #fff;
@@ -13,7 +15,7 @@
     .title {
       height: 56px;
       line-height: 56px;
-      font-size: 14px;
+      font-size: 16px;
     }
     .am-btn {
       margin-top: 10px;
@@ -42,6 +44,25 @@
           padding: 0 2px;
           text-align: center;
         }
+      }
+    }
+    .btn-back-wrap {
+      display: none;
+      color: #a1a1a1;
+      .back {
+        display: inline-block;
+        background: url(../images/liveroom/wall_back_03.png) no-repeat;
+        width: 21px;
+        height: 21px;
+        margin-bottom: -5px;
+      }
+
+      &:hover {
+        color: #ff6666;
+        .back {
+          background: url(../images/liveroom/wall_back_05.png) no-repeat;
+        }
+
       }
     }
 
@@ -93,14 +114,109 @@
             background: url(../images/liveroom/liveroom-heart_03.png) no-repeat;
             width: 18px;
             height: 14px;
+            margin-right: 5px;
           }
-          span{
+          span {
             font-size: 12px;
           }
         }
       }
 
     }
+  }
+
+  &.active-create {
+    background-color: #fff;
+    .header {
+      background-color: $wall-bg-color;
+    }
+
+  }
+
+  // 创建
+  .create-wrap {
+    .red {
+      color: #ff6666;
+      font-weight: 600;
+    }
+    .top {
+      color: $main-bg-purple;
+      font-size: 20px;
+    }
+    .input-text {
+      background-color: #f5f4f4;
+      border: 1px solid #c8c8c8;
+      width: 765px;
+      height: 184px;
+      padding: 10px;
+    }
+
+    .options-wrap {
+      position: relative;
+      .color-wrap {
+        display: inline-block;
+        color: $main-font-light-color;
+        font-size: 14px;
+      }
+
+      .checkbox {
+
+      }
+
+      .tip {
+        position: absolute;
+        font-size: 12px;
+        color: $main-font-light-color;
+        top: -15px;
+        right: -15px;
+
+      }
+
+      .color-title {
+        display: inline-block;
+        height: 30px;
+      }
+
+      .colors {
+        display: inline-block;
+        a {
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          margin-bottom: -10px;
+        }
+        .black {
+          background-color: #666;
+        }
+        .red {
+          background-color: #fb6274;
+        }
+        .yellow {
+          background-color: #fa9d52;
+        }
+        .green {
+          background-color: #53e2c2;
+        }
+        .blue {
+          background-color: #569ef8;
+        }
+        .purple {
+          background-color: #cf57cf;
+        }
+      }
+
+    }
+
+    .input-tip {
+      font-size: 12px;
+      color: $main-font-light-color;
+    }
+    .send-tip {
+      font-size: 12px;
+      margin-top: 10px;
+      color: $main-font-light-color;
+    }
+
   }
 
 }

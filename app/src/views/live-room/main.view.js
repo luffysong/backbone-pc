@@ -189,6 +189,8 @@ var View = BaseView.extend({
     var PlayedListView = require('./played-list.view');
     var GiftView = require('./gift.view');
 
+    var AdvertisingWallView = require('../advertising-wall/main.view');
+
     var a = new RoomTitle();
 
     a = new ChatView();
@@ -200,6 +202,10 @@ var View = BaseView.extend({
     a = new PlayedListView();
 
     a = new GiftView();
+
+    a = new AdvertisingWallView({
+      el: '#advertisingWall'
+    });
 
     console.log(a);
   },

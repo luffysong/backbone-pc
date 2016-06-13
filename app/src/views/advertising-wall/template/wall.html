@@ -1,0 +1,136 @@
+<!--<div class="msg-board-wrap  active-create">-->
+<div class="msg-board-wrap">
+    <div class="header am-cf">
+        <span class="title">告白墙</span>
+        <a id="btnShowCreate" class="show-when-list am-btn am-btn-purple am-fr am-round">我要告白</a>
+        <div class="tabs am-fr show-when-list">
+            <a href="javascript:;" class="active"><span class="boderRadAll_5 am-round ">99</span>最新告白</a>
+            <a href="javascript:;">精彩告白</a>
+        </div>
+        <!-- 返回按钮-->
+        <a id="btnBacktoList" href="javascript:;" class="am-fr show-when-create btn-back-wrap am-margin-top">
+            <i class="back"></i>
+            返回告白墙
+        </a>
+    </div>
+
+    <script type="text/html" id="itemTpl">
+        <div class="item">
+            <p class="detail am-text-break">
+                内容</p>
+            <div class="sender">
+                <div class="am-g">
+                    <div class="am-u-sm-2"><img
+                            src="http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg"
+                            class="avatar am-circle"></div>
+                    <div class="am-u-sm-10 info"><p class="name">asfsadfasf</p>
+                        <p class="send-time">发布于<span class="am-margin-left-sm">2016-10-23 34:34:00</span></p>
+                        <a class="btn-like am-btn am-round am-vertical-align" data-likeid="11">
+                            <i data-likeid="11" class="icon-heart am-vertical-align-middle"></i>
+                            <span data-likeid="11" class="am-vertical-align-middle">32433</span></a></div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+
+    <div class="content am-g show-when-list wall-list" >
+        <!--列表-->
+        <div class="newList">
+            <div class="am-u-sm-4 column-0">
+                <!--第一列-->
+                <!--<div class="item"><p class="detail am-text-break">-->
+                <!--sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl</p>-->
+                <!--<div class="sender">-->
+                <!--<div class="am-g">-->
+                <!--<div class="am-u-sm-2"><img-->
+                <!--src="http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg"-->
+                <!--class="avatar am-circle"></div>-->
+                <!--<div class="am-u-sm-10 info"><p class="name">asfsadfasf</p>-->
+                <!--<p class="send-time">发布于<span class="am-margin-left-sm">2016-10-23 34:34:00</span></p><a-->
+                <!--class="btn-like am-btn am-round am-vertical-align"><i-->
+                <!--class="icon-heart am-vertical-align-middle"></i><span-->
+                <!--class="am-vertical-align-middle">32433</span></a></div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+            <div class="am-u-sm-4 column-1">
+                <!--第二列-->
+            </div>
+            <div class="am-u-sm-4 column-2">
+                <!--第三列-->
+            </div>
+
+        </div>
+
+        <!--精彩告白-->
+        <div class="hotList Hidden">
+            <div class="am-u-sm-4 column-0">
+                <!--第一列-->
+                <!--<div class="item"><p class="detail am-text-break">-->
+                    <!--sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl</p>-->
+                    <!--<div class="sender">-->
+                        <!--<div class="am-g">-->
+                            <!--<div class="am-u-sm-2"><img-->
+                                    <!--src="http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg"-->
+                                    <!--class="avatar am-circle"></div>-->
+                            <!--<div class="am-u-sm-10 info"><p class="name">asfsadfasf</p>-->
+                                <!--<p class="send-time">发布于<span class="am-margin-left-sm">2016-10-23 34:34:00</span></p><a-->
+                                        <!--class="btn-like am-btn am-round am-vertical-align"><i-->
+                                        <!--class="icon-heart am-vertical-align-middle"></i><span-->
+                                        <!--class="am-vertical-align-middle">32433</span></a></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+            <div class="am-u-sm-4 column-1">
+                <!--第二列-->
+            </div>
+            <div class="am-u-sm-4 column-2">
+                <!--第三列-->
+            </div>
+        </div>
+
+    </div>
+
+    <!--创建-->
+    <div class="content show-when-create create-wrap am-margin-top-lg Hidden">
+        <div class="top am-margin-left am-padding-horizontal">
+            爱,就要大声告白!
+        </div>
+        <div class="am-g am-padding-horizontal">
+            <div class="am-u-sm-8">
+                <textarea class="input-text boderRadAll_5" placeholder="请输入告白" name="" id="" cols="30"
+                          rows="10"></textarea>
+                <div class="options-wrap am-vertical-align am-margin-top">
+                    <div class="color-wrap am-vertical-align-middle">
+                        文字颜色:
+                        <!--<span class="color-title">文字颜色</span>-->
+                        <div class="colors">
+                            <a class="black am-circle active" href="javascript:;"></a>
+                            <a class="red am-circle" href="javascript:;"></a>
+                            <a class="yellow am-circle" href="javascript:;"></a>
+                            <a class="green am-circle" href="javascript:;"></a>
+                            <a class="blue am-circle" href="javascript:;"></a>
+                            <a class="purple am-circle" href="javascript:;"></a>
+                        </div>
+                    </div>
+                    <div class="am-checkbox-inline am-vertical-align-middle am-margin-left">
+                        <label>
+                            <input type="checkbox"> 匿名告白
+                        </label>
+                    </div>
+                    <div class="tip am-vertical-align-middle">您还可以输入<span class="red">34</span>字</div>
+                </div>
+                <div class="am-cf">
+                    <button id="btnSendText" class="am-btn am-btn-red am-fr boderRadAll_3 am-margin-top-xl">发布告白</button>
+                </div>
+                <div class="am-cf">
+                    <span class="am-fr send-tip">发布公告需要消耗5积分,您当前共有<span class="red">2342</span>积分</span>
+                </div>
+            </div>
+            <div class="input-tip am-u-sm-4">至少用20字来表达你的爱!输入文字不能超过200. <p>表白中请勿发布广告,严禁发布违法内容.</p></div>
+        </div>
+    </div>
+</div>
