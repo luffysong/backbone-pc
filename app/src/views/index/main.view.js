@@ -9,8 +9,8 @@ var PlaybackView = require('./playback.view');
 
 var WonderfulView = require('./wonderful.view');
 var OfficialView = require('./official.view');
-var FanChannelView = require('./fan-channel.view');
-var JoinFanListView = require('./join-fan-list.view');
+// var FanChannelView = require('./fan-channel.view');
+// var JoinFanListView = require('./join-fan-list.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -40,8 +40,8 @@ var View = BaseView.extend({
       topbar: this.topbar
     });
     this.officialView = new OfficialView();
-    this.fanChannelView = new FanChannelView();
-    this.joinFanListView = new JoinFanListView();
+    // this.fanChannelView = new FanChannelView();
+    // this.joinFanListView = new JoinFanListView();
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
