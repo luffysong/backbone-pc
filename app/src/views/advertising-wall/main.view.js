@@ -267,7 +267,7 @@ var View = BaseView.extend({
   },
   // 设置用户积分
   setUserInfo: function (userInfo) {
-    this.userInfo = userInfo;
+    this.options.userInfo = userInfo;
     if (userInfo.totalMarks) {
       this.elements.userScoreDom.text(userInfo.totalMarks);
     }
