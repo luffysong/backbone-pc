@@ -9,15 +9,15 @@ gulp.task('server', ['build'], function () {
     server: './app/www/',
     port: 4000
   });
-  gulp.watch('./app/**/*.*', function (file) {
-    console.log(file.path);
-    browserSync.reload();
-  });
-  gulp.watch('./app/link/**/*.*', function () {
+  //gulp.watch('./app/**/*.*', function (file) {
+  //  console.log(file.path);
+  //  browserSync.reload();
+  //});
+  //gulp.watch('./app/link/**/*.*', function () {
     gulp.start('build', function () {
       browserSync.reload();
     });
-  });
+  //});
 });
 
 gulp.task('clean', function () {

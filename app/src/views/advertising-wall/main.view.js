@@ -4,7 +4,7 @@
 'use strict';
 
 var _ = require('underscore');
-
+var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 
@@ -26,7 +26,10 @@ var View = BaseView.extend({
     'click #btnShowCreate': 'showCreateClicked',
     'click #btnBacktoList': 'backToList',
     'click .wall-list': 'itemClicked',
-    'click #btnSendText': 'sendClicked'
+    'click #btnSendText': 'sendClicked',
+    'click .tabs a': 'changeTab',
+    'click .colors a': 'chooseColorClicked',
+    'keyup #txtMsg': 'calcTextLength'
   },
   context: function (args) {
     console.log(args);
@@ -55,14 +58,30 @@ var View = BaseView.extend({
     this.elements.showWhenListDom = this.$el.find('.show-when-list');
     this.elements.boardDom = this.$el.find('.msg-board-wrap');
 
+    this.elements.txtInputDom = this.$el.find('#txtMsg');
+    this.elements.txtLengthDom = this.$el.find('#txtLength');
+    this.elements.anonymousDom = this.$el.find('#cbAnonymous');
+    this.elements.userScoreDom = this.$el.find('#userScore');
+
     // 一个公告的模板
     this.itemTpl = this.$el.find('#itemTpl').html();
 
     this.newestListDOM = this.$el.find('.newList .am-u-sm-4');
   },
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
+    this.defineEventInterface();
     //  初始化
     this.renderNewestList();
+  },
+  setOptions: function (ops) {
+    this.options = _.extend(this.options, ops);
+  },
+  defineEventInterface: function () {
+    var self = this;
+    Backbone.on('event:currentUserInfoReady', function (data) {
+      self.setUserInfo(data);
+    });
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
@@ -86,13 +105,12 @@ var View = BaseView.extend({
   renderNewestList: function (ops) {
     var self = this;
     this.listParams = _.extend({
-      roomId: 1,
+      roomId: self.options.roomId || 0,
       sortField: 'TIME', // LIKE
       limit: 9
     }, ops);
     var promise = this.listModel.executeJSONP(this.listParams);
     promise.done(function (res) {
-      console.log(res);
       self.appendToNewestList(res.data || []);
     });
 
@@ -156,14 +174,104 @@ var View = BaseView.extend({
       }
     });
   },
+  // 切换列表
+  changeTab: function (e) {
+    var target = $(e.target);
+    var tab = target.attr('data-tab');
+    if (tab) {
+      $('.tabs a').toggleClass('active');
+      $('.tab').hide();
+      $('.' + tab).show();
+    }
+  },
+  getSendText: function () {
+    var text = $.trim(this.elements.txtInputDom.val());
+    var reg = /<[^>]+?>/g;
+    text = text.replace(reg, '');
+    return text;
+  },
   // 校验发布内容
   verifyText: function () {
-
+    var text = this.getSendText();
+    if (text.length > 200) {
+      msgBox.showTip('告白内容不能超过200字');
+      return false;
+    } else if (text.length < 20) {
+      msgBox.showTip('告白内容至少输入20个字');
+      return false;
+    }
+    return true;
   },
   sendClicked: function () {
+    var isAnonymous = this.elements.anonymousDom.is(':checked');
+    if (this.verifyText()) {
+      this.createParams = _.extend({
+        roomId: this.options.roomId,
+        isAnonymous: isAnonymous,
+        fontColor: this.selectedColor || '',
+        content: this.getSendText()
+      }, this.queryParams);
 
+      var promise = this.createModel.executeJSONP(this.createParams);
+
+      promise.done(function (res) {
+        if (res && res.code === '0') {
+          msgBox.showOK('告白发布成功!');
+        } else {
+          msgBox.showError(res.msg || '发布告白失败,请稍后重试');
+        }
+      });
+    }
+  },
+  // 设置文字颜色
+  setTextColor: function (dom, color) {
+    if (dom && color) {
+      var col = this.rgb2hex(color + '');
+      dom.css('color', col);
+      this.selectedColor = col;
+    }
+  },
+  // 选择颜色
+  chooseColorClicked: function (e) {
+    var target = $(e.target);
+    var color = target.css('background-color');
+    this.setTextColor(this.elements.txtInputDom, color);
+  },
+  // 计算文字长度
+  calcTextLength: function () {
+    var txt = $.trim(this.elements.txtInputDom.val());
+    var maxLength = 200;
+    if (maxLength >= txt.length) {
+      this.elements.txtLengthDom.text(maxLength - txt.length);
+      return true;
+    }
+    return false;
+  },
+  // 数字转16进制
+  zeroFillHex: function (num, digits) {
+    var s = num.toString(16);
+    while (s.length < digits) {
+      s = '0' + s;
+    }
+    return s;
+  },
+  // 颜色转换
+  rgb2hex: function (rgb) {
+    if (rgb.charAt(0) === '#') {
+      return rgb;
+    }
+
+    var ds = rgb.split(/\D+/);
+    var decimal = Number(ds[1]) * 65536 + Number(ds[2]) * 256 + Number(ds[3]);
+    return '#' + this.zeroFillHex(decimal, 6);
+  },
+  // 设置用户积分
+  setUserInfo: function (userInfo) {
+    this.userInfo = userInfo;
+    if (userInfo.totalMarks) {
+      this.elements.userScoreDom.text(userInfo.totalMarks);
+    }
   }
-
 });
 
 module.exports = View;

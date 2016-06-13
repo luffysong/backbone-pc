@@ -10,7 +10,7 @@
  */
 
 'use strict';
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var _ = require('underscore');
@@ -31,6 +31,8 @@ var FlashAPI = require('FlashApi');
 var store = Auxiliary.storage;
 var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
+
+var AdvertisingWallView = require('../advertising-wall/main.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -88,10 +90,9 @@ var View = BaseView.extend({
     this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
-
-    this.getUserInfo();
     // this.initRoom();
     this.renderPage();
+    this.getUserInfo();
   },
   defineEventInterface: function () {
     var self = this;
@@ -189,7 +190,6 @@ var View = BaseView.extend({
     var PlayedListView = require('./played-list.view');
     var GiftView = require('./gift.view');
 
-    var AdvertisingWallView = require('../advertising-wall/main.view');
 
     var a = new RoomTitle();
 
@@ -203,7 +203,7 @@ var View = BaseView.extend({
 
     a = new GiftView();
 
-    a = new AdvertisingWallView({
+    this.adWallView = new AdvertisingWallView({
       el: '#advertisingWall'
     });
 
@@ -264,6 +264,14 @@ var View = BaseView.extend({
           url: data.url
         };
         self.roomInfo = data;
+/*        var view = new AdvertisingWallView({
+          el: '#advertisingWall',
+          roomId: data.id
+        });*/
+        self.adWallView.setOptions({
+          roomId: data.id
+        });
+
         self.setRoomBgImg();
         self.flashAPI.onReady(function () {
           this.init(self.roomInfo);
@@ -309,6 +317,7 @@ var View = BaseView.extend({
     UserInfo.getInfo(function (userInfo) {
       self.userInfo = userInfo;
       Backbone.trigger('event:currentUserInfoReady', userInfo);
+      console.log('11111111111', userInfo);
       self.initRoom();
     });
   },
