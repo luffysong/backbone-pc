@@ -19,7 +19,7 @@ var View = BaseView.extend({
   events: { //  监听事件
     // 'click #tab-menu-ctrl>li': 'menuChanged',
     'click #liveState a': 'liveStateChanged',
-    'click #profileSate>li': 'profileStateChanged'
+    'click #profileSate>a': 'profileStateChanged'
   },
   rawLoader: function () {
     return require('./template/page-content.html');
@@ -40,7 +40,7 @@ var View = BaseView.extend({
     this.liveStateDOMS = this.findDOMNode('#liveState a');
     this.editProfileDOM = this.findDOMNode('#editProfile');
     this.accountSettingsDOM = this.findDOMNode('#accountSettings');
-    this.profileStateDOMS = this.findDOMNode('#profileSate>li');
+    this.profileStateDOMS = this.findDOMNode('#profileSate>a');
     this.updatePasswordDom = this.findDOMNode('#updatePassword');
 
     this.menuWrap = $('#tab-menu-ctrl');
@@ -120,8 +120,8 @@ var View = BaseView.extend({
   profileStateChanged: function (e) {
     var target = $(e.currentTarget);
     var state = target.data('state');
-    this.profileStateDOMS.removeClass('on');
-    target.addClass('on');
+    this.profileStateDOMS.removeClass('active');
+    target.addClass('active');
     if (~~state) {
       this.editProfileDOM.hide();
       this.updatePasswordDom.show();
