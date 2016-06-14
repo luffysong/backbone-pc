@@ -14,9 +14,10 @@
       display: block;
       position: relative;
       overflow: hidden;
+      //height: 160px;
       img {
         width: $live-item-width;
-        height: 160px;
+        //height: 160px;
       }
       .link-hover {
         width: $live-item-width;

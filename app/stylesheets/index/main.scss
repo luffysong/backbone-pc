@@ -278,7 +278,9 @@
   //}
   //精彩饭趴
   .perfect-wrap {
-
+    .top-link{
+      height: 160px;
+    }
   }
   //官方频道
   .official-wrap {
@@ -290,6 +292,9 @@
         display: none;
       }
       .item {
+        .top-link{
+          height: 160px;
+        }
         .title {
           width: 285px;
         }
@@ -323,9 +328,10 @@
         height: 468px !important;
         .item {
           .top-link {
+            height: 332px;
             img {
               width: 589px;
-              height: 332px;
+              min-height:332px;
             }
             .link-hover {
               width: 589px !important;
