@@ -27,6 +27,8 @@ var YYTIMServer = require('imServer');
 var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
 var UserInfo = require('../live-room/user.js');
 var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model.js');
+var ChannelDetailModel = require('../../models/channel/detail.model');
+
 var FlashAPI = require('FlashApi');
 var store = Auxiliary.storage;
 var uiConfirm = require('ui.confirm');
@@ -54,11 +56,18 @@ var View = BaseView.extend({
 
     this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
     this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
+    this.channelDetailModel = new ChannelDetailModel();
 
     this.roomDetailParams = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken(),
       roomId: ''
+    };
+
+    this.channelDetailParams = {
+      deviceinfo: '{"aid": "30001001"}',
+      access_token: user.getWebToken(),
+      channelId: ''
     };
 
     this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
@@ -87,9 +96,11 @@ var View = BaseView.extend({
     }
     this.defineEventInterface();
 
-    this.flashAPI = FlashAPI.sharedInstanceFlashApi({
-      el: 'broadCastFlash'
-    });
+    if ($('#broadCastFlash').length > 0) {
+      this.flashAPI = FlashAPI.sharedInstanceFlashApi({
+        el: 'broadCastFlash'
+      });
+    }
 
     this.renderPage();
     this.getUserInfo();
@@ -101,7 +112,7 @@ var View = BaseView.extend({
     });
 
     Backbone.on('event:pleaseUpdateRoomInfo', function () {
-      self.roomDetailParams.roomId = self.roomId;
+      // self.roomDetailParams.roomId = self.roomId;
       self.getRoomLoopInfo(function (res) {
         var data = res.data;
         Backbone.trigger('event:updateRoomInfo', data);
@@ -192,6 +203,9 @@ var View = BaseView.extend({
 
     var a = new RoomTitle();
 
+    this.adWallView = new AdvertisingWallView({
+      el: '#advertisingWall'
+    });
     a = new ChatView();
 
     a = new SendMessageView();
@@ -202,9 +216,7 @@ var View = BaseView.extend({
 
     a = new GiftView();
 
-    this.adWallView = new AdvertisingWallView({
-      el: '#advertisingWall'
-    });
+    $('#btnShare').hide();
 
     console.log(a);
   },
@@ -263,18 +275,19 @@ var View = BaseView.extend({
           url: data.url
         };
         self.roomInfo = data;
-        self.setRoomBgImg();
-        self.flashAPI.onReady(function () {
-          this.init(self.roomInfo);
-        });
+        // self.setRoomBgImg();
+        /*        self.flashAPI.onReady(function () {
+         this.init(self.roomInfo);
+         });*/
         self.adWallView.setOptions({
           roomId: data.id
         });
 
         self.joinRoom();
-        self.fetchUserIMSig(data.imGroupid);
         // TODO
-        self.checkRoomStatus(data.status);
+        self.fetchUserIMSig(data.imGroupid || '@TGS#3GTTRWAEA');
+        // TODO
+        // self.checkRoomStatus(data.status);
       } else {
         errFn();
       }
@@ -317,8 +330,9 @@ var View = BaseView.extend({
   getRoomInfo: function (okFn, errFn) {
     var self = this;
     var promise;
-    self.roomDetailParams.roomId = self.roomId;
-    promise = this.roomDetail.executeJSONP(self.roomDetailParams);
+    // self.roomDetailParams.roomId = self.roomId;
+    self.channelDetailParams.channelId = self.roomId;
+    promise = this.channelDetailModel.executeJSONP(self.channelDetailParams);
     promise.done(function (response) {
       if (okFn) {
         okFn(response);

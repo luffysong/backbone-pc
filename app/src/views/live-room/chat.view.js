@@ -53,9 +53,11 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    this.flashAPI = FlashAPI.sharedInstanceFlashApi({
-      el: 'broadCastFlash'
-    });
+    if ($('#broadCastFlash').length > 0) {
+      this.flashAPI = FlashAPI.sharedInstanceFlashApi({
+        el: 'broadCastFlash'
+      });
+    }
     this.defineEventInterface();
   },
   defineEventInterface: function () {

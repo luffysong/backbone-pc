@@ -270,6 +270,9 @@ var View = BaseView.extend({
     }, 5000);
   },
   shareClick: function () {
+    if (!this.roomInfo || this.roomInfo.hasOwnProperty('channelId')) {
+      return;
+    }
     var title = encodeURIComponent(this.roomInfo.roomName + ',快来围观吧');
     var url = 'http://' + window.location.host;
     var img = this.roomInfo.posterPic;
@@ -319,6 +322,7 @@ var View = BaseView.extend({
       uiConfirm.close();
       return false;
     });
+    return this;
   }
 });
 

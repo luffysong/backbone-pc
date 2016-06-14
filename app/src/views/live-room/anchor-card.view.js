@@ -30,14 +30,14 @@ var View = BaseView.extend({
     return require('./template/anchor-card.html');
   },
   events: { // 监听事件
-    'click #btnFollow': 'followClickHandler',
-    'mouseover #btnFollow': function (e) {
+    'click .btnFollow': 'followClickHandler',
+    'mouseover .btnFollow': function (e) {
       var target = $(e.target);
       if (target.hasClass('followed')) {
         target.text('取消关注');
       }
     },
-    'mouseout #btnFollow': function (e) {
+    'mouseout .btnFollow': function (e) {
       var target = $(e.target);
       if (target.hasClass('followed')) {
         target.text('已关注');
@@ -75,7 +75,8 @@ var View = BaseView.extend({
       roomId: '',
       access_token: user.getWebToken()
     };
-    this.btnFollow = el.find('#btnFollow');
+    this.btnFollow = el.find('.btnFollow');
+    console.log('==========', this.btnFollow);
     this.genderDOM = el.find('.icon-gender');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -115,7 +116,6 @@ var View = BaseView.extend({
     els.name.text(data.creator.nickName);
 
     var template = _.template(this.tagTpl);
-
     els.tagsWrap.html(template(data.creator));
 
     if (data.creator.isFollowed) {
@@ -147,6 +147,7 @@ var View = BaseView.extend({
   },
   followClickHandler: function () {
     var self = this;
+    console.log('followClickHandler', this.roomInfo);
     this.followParams.anchorId = this.roomInfo.creator.uid;
     if (this.btnFollow.hasClass('followed')) {
       var promise1 = this.unFollowModel.executeJSONP(self.followParams);
@@ -169,6 +170,8 @@ var View = BaseView.extend({
         if (res.data && res.data.success) {
           msgBox.showOK('已成功关注主播');
           self.btnFollow.addClass('followed').text('取消关注');
+        } else {
+          msgBox.showTip('关注失败,稍后重试');
         }
       });
       promise.fail(function () {

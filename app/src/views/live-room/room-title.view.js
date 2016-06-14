@@ -16,7 +16,7 @@ var BaseView = base.View; // View的基类
 var Backbone = window.Backbone;
 
 var View = BaseView.extend({
-  el: '#edit_background', // 设置View对象作用于的根元素，比如id
+  el: '.edit_background', // 设置View对象作用于的根元素，比如id
   rawLoader: function () { // 可用此方法返回字符串模版
     return require('./template/room-title.html');
   },
@@ -34,7 +34,8 @@ var View = BaseView.extend({
       roomName: el.find('.room-name'),
       onLine: el.find('#onlineCount'),
       popularity: el.find('#popularityCount'),
-      onlineTxt: el.find('#onlineTxt')
+      onlineTxt: el.find('#onlineTxt'),
+      onLineBlock: el.find('.online')
     };
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -45,10 +46,16 @@ var View = BaseView.extend({
     var self = this;
     Backbone.on('event:roomInfoReady', function (data) {
       if (data) {
-        if (data.status === 3) {
-          self.whenPalypack(data);
-        } else {
+        // 频道
+        if (data.channelId) {
           self.bindData(data);
+        } else {
+          // 直播
+          if (data.status === 3) {
+            self.whenPalypack(data);
+          } else {
+            self.bindData(data);
+          }
         }
       }
     });
@@ -61,9 +68,16 @@ var View = BaseView.extend({
   },
   bindData: function (data) {
     var els = this.elements;
-    els.roomName.text(data.roomName || '');
-    els.onLine.text(data.online || 0);
-    els.popularity.text(data.popularity || 0);
+    if (data.channelId) {
+      els.roomName.text(data.channelName || '');
+      els.onLineBlock.hide();
+      // els.onLine.text(data.online || 0);
+      els.popularity.text(data.popularity || 0);
+    } else {
+      els.roomName.text(data.roomName || '');
+      els.onLine.text(data.online || 0);
+      els.popularity.text(data.popularity || 0);
+    }
   },
   whenPalypack: function (data) {
     var els = this.elements;
