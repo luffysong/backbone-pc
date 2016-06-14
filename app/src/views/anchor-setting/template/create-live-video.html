@@ -21,7 +21,9 @@
 				{{each items as item i}}
 					<div class="select" style="{{item.style}}" data-index="{{i}}">
 						<span class="date">{{item.cur}}</span>
-						<img src="{{timeImage}}" alt="" >
+						<!--<img src="{{timeImage}}" alt="" >-->
+						<span class="split"></span>
+						<span class="arrowDownOuter"></span>
 						<ul class="selectDate" data-index="{{i}}" data-tag="{{item.tag}}">
 							{{each item.cells as cell}}
 								<li>{{cell}}</li>
@@ -29,9 +31,9 @@
 						</ul>
 					</div>
 					<em>{{item.name}}</em>
-					{{if item.division}}
-						<br/>
-					{{/if}}
+					<!--{{if item.division}}-->
+						<!--<br/>-->
+					<!--{{/if}}-->
 				{{/each}}
 			</script>
 			<script type="text/html" id="cellsTemp">
@@ -42,5 +44,8 @@
 		</div>
 
 	</li>
-	<div class="submit m_disabled" id="createVideo">创建</div>
+	<!--<div class="submit m_disabled" id="createVideo">创建</div>-->
 </ul>
+<div class="button-wrap">
+	<button class="submit am-btn am-btn-red am-center boderRadAll_3" id="createVideo">创建</button>
+</div>
