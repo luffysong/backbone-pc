@@ -63,8 +63,12 @@ var View = BaseView.extend({
     this.liveTime = this.findDOMNode('#liveTime');
     this.liveTimeTemp = this.findDOMNode('#liveTimeTemp').html();
     this.cellsTemp = this.findDOMNode('#cellsTemp').html();
-    this.hours = this.compileHTML(this.cellsTemp, {cells: this.eachMost(0, 23)});
-    this.minutes = this.compileHTML(this.cellsTemp, {cells: this.eachMost(0, 59)});
+    this.hours = this.compileHTML(this.cellsTemp, {
+      cells: this.eachMost(0, 23)
+    });
+    this.minutes = this.compileHTML(this.cellsTemp, {
+      cells: this.eachMost(0, 59)
+    });
   },
   ready: function () {
     //  初始化
@@ -81,7 +85,9 @@ var View = BaseView.extend({
   },
   initRender: function () {
     var data = this.dateDataStructure();
-    var dateHTML = this.compileHTML(this.liveTimeTemp, {items: data, timeImage: timeImage});
+    var dateHTML = this.compileHTML(this.liveTimeTemp, {
+      items: data, timeImage: timeImage
+    });
     this.liveTime.html(dateHTML);
     this.liveTimeUl = this.liveTime.find('.select>ul');
     this.liveTimeSpan = this.liveTime.find('.date');
@@ -184,7 +190,9 @@ var View = BaseView.extend({
       downs = null;
       if (curs) {
         downs = this.businessDate.down(_tag);
-        html = this.compileHTML(this.cellsTemp, {cells: downs});
+        html = this.compileHTML(this.cellsTemp, {
+          cells: downs
+        });
         curSpan.text(downs[0]);
         curUl.html(html);
         continue;
@@ -192,7 +200,9 @@ var View = BaseView.extend({
       switch (_tag) {
         case 'day':
           days = this.businessDate.getCountDays(val);
-          html = this.compileHTML(this.cellsTemp, {cells: this.eachMost(1, days)});
+          html = this.compileHTML(this.cellsTemp, {
+            cells: this.eachMost(1, days)
+          });
           curSpan.text(defaD);
           curUl.html(html);
           break;
@@ -230,7 +240,9 @@ var View = BaseView.extend({
     });
     promise.done(function (response) {
       var items = response.data.list;
-      self.selectorActor.html(self.compileHTML(self.actorTemp, {items: items}));
+      self.selectorActor.html(self.compileHTML(self.actorTemp, {
+        items: items
+      }));
       self.selectorActor.show();
     });
     promise.fail(function () {
