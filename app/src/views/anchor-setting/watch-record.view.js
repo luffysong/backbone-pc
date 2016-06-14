@@ -40,7 +40,7 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    // this.getPageList(1);
+    this.getPageList(1);
     this.initPagination();
   },
   initPagination: function (total) {
