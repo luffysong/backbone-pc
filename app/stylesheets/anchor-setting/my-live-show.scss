@@ -1,5 +1,26 @@
 //我的直播
 
+.two-tab {
+  border: 1px solid $main-line-color;
+  display: inline-block;
+  overflow: hidden;
+  a {
+    display: inline-block;
+    text-align: center;
+    width: 125px;
+    height: 48px;
+    line-height: 48px;
+    color: $main-font-light-color;
+    &:hover, &.active {
+      border-bottom: 3px solid $main-bg-purple;
+      color: $main-bg-purple;
+    }
+    &.right-border {
+      border-right: 1px dashed $main-line-color;
+    }
+  }
+}
+
 .my-live-show-wrap {
   .top-header {
     .live-status-wrap {
