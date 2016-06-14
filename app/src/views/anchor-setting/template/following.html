@@ -6,14 +6,15 @@
     <script type="text/x-template" id="followTpl">
         {{each data.users as item}}
         <div class="item">
-            <a class="avatar Left" href="###" data-uid="{{item.uid}}"><img data-uid="{{item.uid}}" src="{{item.largeAvatar}}" alt=""></a>
+            <a class="avatar Left" href="###" data-uid="{{item.uid}}">
+                <img data-uid="{{item.uid}}" src="{{item.largeAvatar}}" alt=""></a>
             <div class="info-wrap Left">
                 <div class="name">{{item.nickName}}</div>
                 <div class="played">主持的主播:
                     <sapn class="total">{{item.liveCount}}</sapn>
                     场
                 </div>
-                <button data-id="{{item.uid}}" class="btn Hand">取消关注</button>
+                <button data-id="{{item.uid}}" class="am-btn am-btn-red boderRadAll_3">取消关注</button>
             </div>
             <div class="Clear"></div>
         </div>
