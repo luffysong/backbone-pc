@@ -10,7 +10,7 @@
  */
 
 'use strict';
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var _ = require('underscore');
@@ -35,6 +35,7 @@ var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 
 var AdvertisingWallView = require('../advertising-wall/main.view');
+var LivePreviewView = require('./live-preview.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -216,7 +217,8 @@ var View = BaseView.extend({
 
     a = new GiftView();
 
-    $('#btnShare').hide();
+    a = new LivePreviewView();
+
 
     console.log(a);
   },

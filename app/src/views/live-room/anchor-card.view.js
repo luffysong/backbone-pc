@@ -76,7 +76,6 @@ var View = BaseView.extend({
       access_token: user.getWebToken()
     };
     this.btnFollow = el.find('.btnFollow');
-    console.log('==========', this.btnFollow);
     this.genderDOM = el.find('.icon-gender');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后

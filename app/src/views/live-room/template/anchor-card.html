@@ -21,6 +21,7 @@
 </div>
 <script type="text/template" id="tagTpl">
     <%
+    tags = tags || [];
     for(var i=0,l=tags.length; i < l; i++) {
     %>
     <span class="item"><%=tags[i]%></span>
