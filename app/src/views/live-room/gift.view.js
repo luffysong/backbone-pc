@@ -322,7 +322,6 @@ var View = BaseView.extend({
       uiConfirm.close();
       return false;
     });
-    return this;
   }
 });
 
