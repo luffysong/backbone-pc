@@ -14,6 +14,7 @@ var RoomManagerAddModel = require('../../models/anchor/room-manager-add.model.js
 var RoomManagerRemoveModel = require('../../models/anchor/room-manager-delete.model.js');
 
 var msgBox = require('ui.msgBox');
+var uiConfirm = require('ui.confirm');
 
 var View = BaseView.extend({
   el: '#field-control',
@@ -61,11 +62,15 @@ var View = BaseView.extend({
   },
   // 删除场控
   removeClickHandler: function (e) {
-    console.log(e);
     var target = $(e.target);
     var userId = target.attr('data-id');
-    console.log(userId);
-    this.removeRoomManger(userId);
+    var self = this;
+    uiConfirm.show({
+      content: '您确定要删除该场控吗?',
+      okFn: function () {
+        self.removeRoomManger(userId);
+      }
+    });
   },
   removeRoomManger: function (id) {
     var promise = this.roomManRemoveModel.executeJSONP(_.extend({
