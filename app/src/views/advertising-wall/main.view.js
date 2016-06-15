@@ -13,6 +13,7 @@ var LikeModel = require('../../models/advertising-wall/like.model');
 var CreateModel = require('../../models/advertising-wall/create.model');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var LoopModel = require('../../models/advertising-wall/loop.model');
 
 // var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
@@ -45,6 +46,9 @@ var View = BaseView.extend({
       access_token: user.getWebToken()
     };
 
+    // 循环接口时间
+    this.loopTime = 60 * 1000;
+
     this.listParams = _.extend({
       size: 9
     }, this.queryParams);
@@ -52,6 +56,7 @@ var View = BaseView.extend({
     this.listModel = new ListModel();
     this.likeModel = new LikeModel();
     this.createModel = new CreateModel();
+    this.loopModel = new LoopModel();
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -75,8 +80,10 @@ var View = BaseView.extend({
   ready: function (ops) {
     this.options = _.extend({}, ops);
     this.defineEventInterface();
+    this.lastTime = new Date();
     //  初始化
     this.renderNewestList();
+    this.loopGetUnreadCount();
   },
   setOptions: function (ops) {
     this.options = _.extend(this.options, ops);
@@ -287,9 +294,25 @@ var View = BaseView.extend({
     }
   },
   refreshList: function () {
+    this.lastTime = new Date();
     this.elements.unReadCnt.text(0).hide();
     $('.newList .am-u-sm-4').children().remove();
     this.renderNewestList();
+  },
+  loopGetUnreadCount: function () {
+    var self = this;
+    var promise = this.loopModel.executeJSONP(_.extend({
+      roomId: self.options.roomId,
+      lastTime: self.lastTime.getTime()
+    }, this.queryParams));
+    promise.done(function (res) {
+      if (res && res.code === '0' && res.data.newMsgCount > 0) {
+        self.elements.unReadCnt.text(res.data.newMsgCount).show();
+      }
+      setTimeout(function () {
+        self.loopGetUnreadCount();
+      }, self.loopTime);
+    });
   }
 });
 
