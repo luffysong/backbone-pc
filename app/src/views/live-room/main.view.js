@@ -34,6 +34,7 @@ var msgBox = require('ui.msgBox');
 
 var AdvertisingWallView = require('../advertising-wall/main.view');
 var LivePreviewView = require('./live-preview.view');
+// var RoomManagerView = require('./room-manager.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -56,22 +57,19 @@ var View = BaseView.extend({
     this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
     this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
 
-    this.roomDetailParams = {
+    this.queryParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken(),
-      roomId: ''
+      access_token: user.getWebToken()
     };
+
+    this.roomDetailParams = _.extend({
+      roomId: ''
+    }, this.queryParams);
 
     this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
 
-    this.anchorInfoParams = {
-      deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken()
-    };
-    this.inAndRoomParams = {
-      deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken()
-    };
+    this.anchorInfoParams = _.extend({}, this.queryParams);
+    this.inAndRoomParams = _.extend({}, this.queryParams);
   },
   // 当模板挂载到元素之后
   afterMount: function () {
@@ -206,6 +204,7 @@ var View = BaseView.extend({
 
     a = new LivePreviewView();
 
+
     this.adWallView = new AdvertisingWallView({
       el: '#advertisingWall'
     });
@@ -267,10 +266,10 @@ var View = BaseView.extend({
           url: data.url
         };
         self.roomInfo = data;
-/*        var view = new AdvertisingWallView({
-          el: '#advertisingWall',
-          roomId: data.id
-        });*/
+        /*        var view = new AdvertisingWallView({
+         el: '#advertisingWall',
+         roomId: data.id
+         });*/
         self.adWallView.setOptions({
           roomId: data.id
         });
@@ -279,6 +278,11 @@ var View = BaseView.extend({
         self.flashAPI.onReady(function () {
           this.init(self.roomInfo);
         });
+/*        self.roomManagerView = new RoomManagerView({
+          roomInfo: self.roomInfo,
+          FlashApi: self.FlashApi // ,
+          // msgList: this.options.msgList
+        });*/
 
         self.joinRoom();
         self.fetchUserIMSig(data.imGroupid);
@@ -320,7 +324,6 @@ var View = BaseView.extend({
     UserInfo.getInfo(function (userInfo) {
       self.userInfo = userInfo;
       Backbone.trigger('event:currentUserInfoReady', userInfo);
-      console.log('11111111111', userInfo);
       self.initRoom();
     });
   },
@@ -465,7 +468,6 @@ var View = BaseView.extend({
   },
   // 右侧边栏切换
   asideChanged: function (e) {
-    console.log(e.target);
     var target = $(e.target);
     var id = target.attr('data-id');
     target.parent().children().removeClass('active');

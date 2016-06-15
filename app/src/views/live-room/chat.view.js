@@ -11,8 +11,11 @@
 
 'use strict';
 
+var Backbone = window.Backbone;
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
+
 var uiConfirm = require('ui.confirm');
 var DateTime = require('BusinessDate');
 var FlashAPI = require('FlashApi');
@@ -25,8 +28,8 @@ var GiftModel = require('../../models/anchor/gift.model');
 var UserInfo = require('./user.js');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var Backbone = window.Backbone;
-var _ = require('underscore');
+// 清屏,锁屏
+var RoomManagerView = require('./room-manager.view');
 
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
@@ -59,6 +62,12 @@ var View = BaseView.extend({
       });
     }
     this.defineEventInterface();
+
+    this.roomCtrlView = new RoomManagerView({
+      roomInfo: this.roomInfo,
+      FlashApi: this.flashAPI,
+      msgList: this.elements.msgList
+    });
   },
   defineEventInterface: function () {
     var self = this;

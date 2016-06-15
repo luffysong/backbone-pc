@@ -35,12 +35,16 @@ var View = BaseView.extend({
     //  获取findDOMNode DOM Node
     var el = this.$el;
     this.btnLock = el.find('#btn-lock');
+    this.btnFieldControl = el.find('#btnFieldControl');
   },
   ready: function (ops) {
     //  初始化
     this.roomInfo = ops.roomInfo || {};
     this.FlashApi = ops.FlashApi || {};
     this.msgList = ops.msgList || {};
+    if (ops.hideCtrl) {
+      this.btnFieldControl.hide();
+    }
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
