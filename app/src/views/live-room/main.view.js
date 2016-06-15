@@ -205,9 +205,9 @@ var View = BaseView.extend({
     a = new LivePreviewView();
 
 
-    this.adWallView = new AdvertisingWallView({
-      el: '#advertisingWall'
-    });
+    // this.adWallView = new AdvertisingWallView({
+    //  el: '#advertisingWall'
+    // });
 
     console.log(a);
   },
@@ -266,10 +266,10 @@ var View = BaseView.extend({
           url: data.url
         };
         self.roomInfo = data;
-        /*        var view = new AdvertisingWallView({
-         el: '#advertisingWall',
-         roomId: data.id
-         });*/
+        self.adWallView = new AdvertisingWallView({
+          el: '#advertisingWall',
+          roomId: data.id
+        });
         self.adWallView.setOptions({
           roomId: data.id
         });
@@ -278,11 +278,11 @@ var View = BaseView.extend({
         self.flashAPI.onReady(function () {
           this.init(self.roomInfo);
         });
-/*        self.roomManagerView = new RoomManagerView({
-          roomInfo: self.roomInfo,
-          FlashApi: self.FlashApi // ,
-          // msgList: this.options.msgList
-        });*/
+        /*        self.roomManagerView = new RoomManagerView({
+         roomInfo: self.roomInfo,
+         FlashApi: self.FlashApi // ,
+         // msgList: this.options.msgList
+         });*/
 
         self.joinRoom();
         self.fetchUserIMSig(data.imGroupid);

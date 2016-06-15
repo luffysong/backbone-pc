@@ -16,6 +16,7 @@ var user = UserModel.sharedInstanceUserModel();
 
 // var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
+var BusinessDate = require('BusinessDate');
 
 var View = BaseView.extend({
   el: '',
@@ -29,7 +30,8 @@ var View = BaseView.extend({
     'click #btnSendText': 'sendClicked',
     'click .tabs a': 'changeTab',
     'click .colors a': 'chooseColorClicked',
-    'keyup #txtMsg': 'calcTextLength'
+    'keyup #txtMsg': 'calcTextLength',
+    'click #unReadCnt': 'refreshList'
   },
   context: function (args) {
     console.log(args);
@@ -62,6 +64,8 @@ var View = BaseView.extend({
     this.elements.txtLengthDom = this.$el.find('#txtLength');
     this.elements.anonymousDom = this.$el.find('#cbAnonymous');
     this.elements.userScoreDom = this.$el.find('#userScore');
+    this.elements.unReadCnt = this.$el.find('#unReadCnt');
+
 
     // 一个公告的模板
     this.itemTpl = this.$el.find('#itemTpl').html();
@@ -104,21 +108,22 @@ var View = BaseView.extend({
   // 最新列表
   renderNewestList: function (ops) {
     var self = this;
-    this.listParams = _.extend({
+    this.listParams = _.extend(this.listParams, {
       roomId: self.options.roomId || 0,
       sortField: 'TIME', // LIKE
       limit: 9
     }, ops);
     var promise = this.listModel.executeJSONP(this.listParams);
     promise.done(function (res) {
-      self.appendToNewestList(res.data || []);
+      self.appendToNewestList(res.data.list || []);
     });
 
     // TODO
-    self.appendToNewestList([1, 2, 3, 4, 5, 6, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 554]);
+    // self.appendToNewestList([1, 2, 3, 4, 5, 6, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 554]);
   },
   appendToNewestList: function (data) {
     var htmls = this.createItemHtml(data);
+    console.log(htmls);
     this.newestListDOM.eq(0).append(htmls[0]);
     this.newestListDOM.eq(1).append(htmls[1]);
     this.newestListDOM.eq(2).append(htmls[2]);
@@ -131,9 +136,12 @@ var View = BaseView.extend({
     var html = '';
     var self = this;
     var result = [[], [], []];
-    _.map(data, function (item, index) {
-      html = self.compileHTML(self.itemTpl, item);
-      switch (index % 3) {
+    _.each(data, function (item, index) {
+      var curItem = item;
+      curItem.time = BusinessDate.format(new Date(item.createTime), 'yyyy-MM-dd hh:mm:ss');
+      html = self.compileHTML(self.itemTpl, curItem);
+      var res = index % 3;
+      switch (res) {
         default:
         case 0:
           result[0].push(html);
@@ -156,19 +164,23 @@ var View = BaseView.extend({
     if (!target.attr('data-likeid')) {
       target = target.parent('a');
     }
+    var liked = target.attr('data-liked') === 'true';
     if (target.attr('data-likeid')) {
-      this.likeItem(target.attr('data-likeid'));
+      this.likeItem(target.attr('data-likeid'), target, !liked);
     }
   },
   // 喜欢某个告白
-  likeItem: function (id) {
-    this.likeParams = _.extend({
-      id: id
+  likeItem: function (id, dom, like) {
+    this.likeParams = _.extend(this.queryParams, {
+      cmtId: id,
+      like: like
     });
     var promise = this.likeModel.executeJSONP(this.likeParams);
+    var cnt = ~~dom.find('span').text();
     promise.done(function (res) {
       if (res && res.code === '0') {
-        msgBox.showOK('成功');
+        dom.attr('data-liked', like ? 'true' : 'false');
+        dom.find('span').text(like ? cnt + 1 : cnt - 1);
       } else {
         msgBox.showTip('支持失败,稍后重新尝试吧');
       }
@@ -204,6 +216,7 @@ var View = BaseView.extend({
   },
   sendClicked: function () {
     var isAnonymous = this.elements.anonymousDom.is(':checked');
+    var self = this;
     if (this.verifyText()) {
       this.createParams = _.extend({
         roomId: this.options.roomId,
@@ -217,6 +230,7 @@ var View = BaseView.extend({
       promise.done(function (res) {
         if (res && res.code === '0') {
           msgBox.showOK('告白发布成功!');
+          self.elements.txtInputDom.val('');
         } else {
           msgBox.showError(res.msg || '发布告白失败,请稍后重试');
         }
@@ -271,6 +285,11 @@ var View = BaseView.extend({
     if (userInfo.totalMarks) {
       this.elements.userScoreDom.text(userInfo.totalMarks);
     }
+  },
+  refreshList: function () {
+    this.elements.unReadCnt.text(0).hide();
+    $('.newList .am-u-sm-4').children().remove();
+    this.renderNewestList();
   }
 });
 

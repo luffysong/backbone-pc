@@ -4,7 +4,7 @@
         <span class="title">告白墙</span>
         <a id="btnShowCreate" class="show-when-list am-btn am-btn-purple am-fr am-round">我要告白</a>
         <div class="tabs am-fr show-when-list">
-            <a data-tab="newList" href="javascript:;" class="active"><span class="boderRadAll_5 am-round ">99</span>最新告白</a>
+            <a data-tab="newList" href="javascript:;" class="active"><span id="unReadCnt" class="boderRadAll_5 am-round ">99</span>最新告白</a>
             <a data-tab="hotList" href="javascript:;">精彩告白</a>
         </div>
         <!-- 返回按钮-->
@@ -16,18 +16,18 @@
 
     <script type="text/html" id="itemTpl">
         <div class="item">
-            <p class="detail am-text-break">
-                内容</p>
+            <p class="detail am-text-break" style="color:{{fontColor}}">
+                {{content}}
+            </p>
             <div class="sender">
                 <div class="am-g">
-                    <div class="am-u-sm-2"><img
-                            src="http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg"
-                            class="avatar am-circle"></div>
-                    <div class="am-u-sm-10 info"><p class="name">asfsadfasf</p>
-                        <p class="send-time">发布于<span class="am-margin-left-sm">2016-10-23 34:34:00</span></p>
-                        <a class="btn-like am-btn am-round am-vertical-align" data-likeid="11">
-                            <i data-likeid="11" class="icon-heart am-vertical-align-middle"></i>
-                            <span data-likeid="11" class="am-vertical-align-middle">32433</span></a></div>
+                    <div class="am-u-sm-2">
+                        <img src="{{user.largeAvatar}}" class="avatar am-circle"></div>
+                    <div class="am-u-sm-10 info"><p class="name">{{user.nickName}}</p>
+                        <p class="send-time">发布于<span class="am-margin-left-sm">{{time}}</span></p>
+                        <a class="btn-like am-btn am-round am-vertical-align" data-likeid="{{id}}" data-liked="{{liked+''}}">
+                            <i  class="icon-heart am-vertical-align-middle"></i>
+                            <span class="am-vertical-align-middle">{{likeCount}}</span></a></div>
                 </div>
             </div>
         </div>
