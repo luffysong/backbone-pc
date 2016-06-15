@@ -17,8 +17,6 @@ var imServer = require('imServer');
 var uiConfirm = require('ui.confirm');
 var BusinessDate = require('BusinessDate');
 var FlashApi = require('FlashApi');
-var uiDialog = require('ui.Dialog');
-
 
 var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var GiftModel = require('../../models/anchor/gift.model');
@@ -26,7 +24,8 @@ var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 
-var FieldControlView = require('./room-manager.view');
+// 清屏,锁屏
+var RoomControlView = require('./room-control.view');
 
 
 var View = BaseView.extend({
@@ -35,10 +34,7 @@ var View = BaseView.extend({
     return require('./template/chat.html');
   },
   events: { // 监听事件
-    'click #btn-clear': 'clearHandler',
-    'click #btn-lock': 'lockClickHandler',
-    'click #msgList': 'messageClickHandler',
-    'click #btnFieldControl': 'fieldContrlClickHandler'
+    'click #msgList': 'messageClickHandler'
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
@@ -64,7 +60,6 @@ var View = BaseView.extend({
     var el = this.$el;
     this.msgList = el.find('#msgList');
     this.chatHistory = el.find('#chatHistory');
-    this.btnLock = el.find('#btn-lock');
     this.defineEventInterface();
     this.imgClear = el.find('#imgClear');
     this.imgUnLock = el.find('#imgUnLock');
@@ -84,84 +79,11 @@ var View = BaseView.extend({
     this.FlashApi = FlashApi.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
-  },
-  // 清屏
-  clearHandler: function () {
-    var self = this;
-    var flag = self.checkLiveRoomReady();
-    if (!flag) {
-      return;
-    }
-
-    uiConfirm.show({
-      content: '您确定要清屏吗?',
-      okFn: function () {
-        var msg = {
-          roomId: self.roomInfo.id,
-          nickName: '主播',
-          smallAvatar: '',
-          msgType: 4,
-          content: '主播已清屏'
-        };
-        self.FlashApi.onReady(function () {
-          this.notifying(msg);
-        });
-        imServer.clearScreen({
-          groupId: self.roomInfo.imGroupid,
-          msg: msg
-        });
-      }
+    this.roomCtrlView = new RoomControlView({
+      roomInfo: this.roomInfo,
+      FlashApi: this.FlashApi,
+      msgList: this.msgList
     });
-  },
-  // 锁屏
-  lockClickHandler: function () {
-    var flag = this.checkLiveRoomReady();
-    var target = this.btnLock.children('span');
-    var self = this;
-    var txt = target.text() === '锁屏' ? '锁定屏幕' : '解开屏幕';
-    if (!flag) {
-      return;
-    }
-    uiConfirm.show({
-      content: '您确定要' + txt + '吗?',
-      okFn: function () {
-        self.lockIMHandler(target.text() === '锁屏');
-      }
-    });
-  },
-  lockIMHandler: function (isLock) {
-    var self = this;
-    var options = {
-      GroupId: this.roomInfo.imGroupid
-    };
-    var txt = isLock === true ? '锁屏' : '解屏';
-
-    if (isLock === true) {
-      options.Introduction = JSON.stringify({
-        blockState: !!isLock,
-        alert: '主播已锁屏'
-      });
-    } else {
-      options.Introduction = JSON.stringify({
-        blockState: false,
-        alert: '主播解除锁屏'
-      });
-    }
-
-    imServer.modifyGroupInfo(options, function (result) {
-      if (result && result.ActionStatus === 'OK') {
-        self.btnLock.children('span').text(isLock === true ? '解屏' : '锁屏');
-        msgBox.showOK(txt + '成功!');
-      } else {
-        msgBox.showError(txt + '操作失败,请稍后重试');
-      }
-    }, function () {
-      msgBox.showError(txt + '操作失败,请稍后重试');
-    });
-  },
-  // 清空消息
-  clearMessageList: function () {
-    this.msgList.children().remove();
   },
   // 单击某用户发送的消息
   messageClickHandler: function (e) {
@@ -502,23 +424,6 @@ var View = BaseView.extend({
         return false;
       default:
         return false;
-    }
-  },
-  // 场控管理
-  fieldContrlClickHandler: function () {
-    var tpl = require('./template/field-control.html');
-    if (!this.fieldControlDialog) {
-      this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
-        width: 560,
-        height: 335,
-        isRemoveAfterHide: false
-      });
-    }
-    this.fieldControlDialog.show();
-    if (!this.fieldControlView) {
-      this.fieldControlView = new FieldControlView({
-        roomInfo: this.roomInfo
-      });
     }
   }
 });
