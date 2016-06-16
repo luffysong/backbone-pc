@@ -68,7 +68,6 @@ var View = BaseView.extend({
 
     promise.done(function (res) {
       if (res && res.code === '0') {
-        console.log('999999999999', res);
         self.hasAccess(res.data);
       }
     });
@@ -85,7 +84,6 @@ var View = BaseView.extend({
   render: function () {
     this.elements.roomManagerWrap.show();
     this.elements.sendMessageWrap.hide();
-    console.log(this.elements);
     this.roomCtrlView = new RoomControlView({
       el: '#roomManagerWrap',
       roomInfo: this.roomInfo,

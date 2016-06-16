@@ -32,6 +32,7 @@ var View = BaseView.extend({
     'click .colors a': 'chooseColorClicked',
     'keyup #txtMsg': 'calcTextLength',
     'click #unReadCnt': 'refreshUnreadList'
+    // 'scroll .wall-list': 'tabScrollDown'
   },
   context: function (args) {
     console.log(args);
@@ -48,9 +49,9 @@ var View = BaseView.extend({
     // 循环接口时间
     this.loopTime = 60 * 1000;
 
-    this.listParams = _.extend({
-      size: 9
-    }, this.queryParams);
+    this.listParams = _.extend({}, this.queryParams);
+
+    this.pageParams = {};
 
     this.listModel = new ListModel();
     this.likeModel = new LikeModel();
@@ -93,6 +94,8 @@ var View = BaseView.extend({
     this.loopGetUnreadCount();
     this.renderHotList();
     this.setUserInfo();
+
+    $('.msg-board-wrap .wall-list').on('scroll', this.tabScrollDown.bind(this));
   },
   setOptions: function (ops) {
     this.options = _.extend(this.options, ops);
@@ -134,6 +137,12 @@ var View = BaseView.extend({
     var promise = this.getData(ops);
     promise.done(function (res) {
       self.appendToNewestList(res.data.list || []);
+      if (res && res.code === '0') {
+        self.pageParams.newList = {
+          nextCursor: res.data.nextCursor || null,
+          hasNext: res.data.hasNext || false
+        };
+      }
       if (ops.tag === 'first' && res.data.list.length < 0) {
         self.newestListDOM.eq(0).append('<div class="first">快来成为第一个告白的幸运儿</div>');
       }
@@ -155,6 +164,12 @@ var View = BaseView.extend({
 
     var promise = this.getData(op);
     promise.done(function (res) {
+      if (res && res.code === '0') {
+        self.pageParams.hotList = {
+          nextCursor: res.data.nextCursor || null,
+          hasNext: res.data.hasNext || false
+        };
+      }
       self.appendToHotList(res.data.list || []);
     });
   },
@@ -359,6 +374,20 @@ var View = BaseView.extend({
     this.tabClicked({
       target: $('.tabs a').eq(index)
     });
+  },
+  tabScrollDown: function (e) {
+    var tag = $('.tab-menu .active').attr('data-tab');
+    var target = $(e.target);
+    var maxHeight = $('.' + tag).find('.am-u-sm-4').height() - 404;
+    var top = target.scrollTop();
+    var diff = maxHeight - top;
+    if (diff < 30 && this.pageParams[tag].hasNext) {
+      if (tag === 'newList') {
+        this.renderNewestList(this.pageParams[tag]);
+      } else {
+        this.renderHotList(this.pageParams[tag]);
+      }
+    }
   }
 });
 
