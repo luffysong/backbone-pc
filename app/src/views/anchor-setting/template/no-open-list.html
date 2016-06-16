@@ -1,9 +1,9 @@
 {{each items as item}}
 <div class="item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom" data-id="{{item.id}}"
      data-key="{{item.liCacheKey}}" data-img="{{item.posterPic}}" data-liveTime="{{item.liveTime}}">
-    <div class="am-u-sm-3 img am-margin-right">
+    <div class="am-u-sm-3 img am-margin-right uploadImage uploadImageWrap">
         {{if item.posterPic}}
-        <img src="{{item.posterPic}}" alt="" class="uploadImage">
+        <img src="{{item.posterPic}}" alt="" class="uploadImage cover-image">
         {{/if}}
     </div>
     <div class="am-u-sm-9">
@@ -28,7 +28,11 @@
             {{else if item.status == 2}}
             <button class="am-btn am-btn-red boderRadAll_3 disabled">直播中</button>
             {{else if item.status == 0}}
-            <button data-state="2" class="am-btn am-btn-red boderRadAll_3 disabled">发布</button>
+                {{if item.posterPic.length > 0}}
+                <button data-state="2" class="am-btn am-btn-red boderRadAll_3">发布</button>
+                {{else}}
+                <button data-state="2" class="am-btn am-btn-red boderRadAll_3 disabled">发布</button>
+                {{/if}}
             <button data-state="3" class="am-btn am-btn-red boderRadAll_3">删除</button>
             {{/if}}
         </div>

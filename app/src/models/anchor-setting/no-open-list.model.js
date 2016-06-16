@@ -6,7 +6,7 @@ var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
 var BusinessDate = require('BusinessDate');
 var businessDate = new BusinessDate();
-var posterPicImage = require('../../../images/aP-list-ad.jpg');
+// var posterPicImage = require('../../../images/aP-list-ad.jpg');
 var Model = BaseModel.extend({
   url: '{{url_prefix}}/room/no_open_list.json',
   beforeEmit: function beforeEmit() {
@@ -38,7 +38,7 @@ var Model = BaseModel.extend({
       value.lookUrl = '/anchor.html?roomId=' + value.id;
       value.liCacheKey = value.id + '-' + value.streamName;
       if (!value.posterPic) {
-        value.posterPic = posterPicImage;
+        // value.posterPic = posterPicImage;
       }
     }
     return response;

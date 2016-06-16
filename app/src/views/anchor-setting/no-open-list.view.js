@@ -148,7 +148,9 @@ var View = BaseView.extend({
   initRender: function (items) {
     var html = '';
     if (items && items.length) {
-      html = this.compileHTML(this.listTemp, { items: items });
+      html = this.compileHTML(this.listTemp, {
+        items: items
+      });
     } else {
       html = '<h1>暂无数据</h1>';
     }
@@ -167,11 +169,11 @@ var View = BaseView.extend({
   //  点击发布或删除时的处理
   checkLiveVideoHandler: function (e) {
     var self = this;
-    var el = $(e.currentTarget);
     var span = $(e.target);
+    var el = span.parents('.item');
     var state = span.data('state');
     var id = el.attr('data-id');
-    var postImg = span.parents('li').attr('data-img');
+    var postImg = el.attr('data-img');
     switch (state) {
       case 2: //  发布
         self.publishLiveShow(id, span, postImg);
@@ -212,7 +214,7 @@ var View = BaseView.extend({
   // 发布直播
   publishLiveShow: function (id, span, postImg) {
     var self = this;
-    var time = span.parents('li').attr('data-liveTime');
+    var time = span.parents('.item').attr('data-liveTime');
     if (span.attr('class') === 'disable') {
       return;
     }
@@ -245,15 +247,19 @@ var View = BaseView.extend({
   //  点击编辑封面
   editCoverImageHandler: function (e) {
     var el = $(e.currentTarget);
+    if (el.hasClass('uploadImageWrap')) {
+      el.append('<img class="uploadImage cover-image">');
+    }
     var attrs = null;
     var posterpic = el.attr('data-posterpic');
     if (this.upload) {
-      this.currentLiveItem = $(el.parents('li'));
-      this.singleLiDOM = el.parent();
+      this.currentLiveItem = $(el.parents('.item'));
+      this.singleLiDOM = this.currentLiveItem;
       this.saveCoverParameter.roomId = this.singleLiDOM.data('id');
       this.upload.emptyValue();
       if (posterpic) {
         var img = el.find('.cover-image');
+
         attrs = {
           breviaryUrl: img.attr('src'),
           inputText: '编辑图片'
@@ -290,6 +296,7 @@ var View = BaseView.extend({
         msgBox.showOK('保存成功');
         self.upload.hide();
         self.uploadState = false;
+        self.currentLiveItem.find('[data-state="2"]').removeClass('disabled');
       }
     });
     promise.fail(function () {
@@ -310,7 +317,9 @@ var View = BaseView.extend({
   },
   // 发布时，重新渲染li
   liRender: function (item) {
-    var html = this.compileHTML(this.liTemp, { item: item });
+    var html = this.compileHTML(this.liTemp, {
+      item: item
+    });
     var li = this.liCache[item.liCacheKey];
     li.html(html);
   },
