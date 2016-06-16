@@ -4,7 +4,6 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 
@@ -77,6 +76,9 @@ var View = BaseView.extend({
 
     this.newestListDOM = this.$el.find('.newList .am-u-sm-4');
     this.hotListDOM = this.$el.find('.hotList .am-u-sm-4');
+
+    // 每个告白价值
+    this.perItemFee = 5;
   },
   ready: function (ops) {
     this.options = _.extend({}, ops);
@@ -85,19 +87,17 @@ var View = BaseView.extend({
     // 隐藏未读小红点
     this.elements.unReadCnt.text(0).hide();
     //  初始化
-    this.renderNewestList();
+    this.renderNewestList({
+      tag: 'first'
+    });
     this.loopGetUnreadCount();
     this.renderHotList();
-    this.randomSetColor();
+    this.setUserInfo();
   },
   setOptions: function (ops) {
     this.options = _.extend(this.options, ops);
   },
   defineEventInterface: function () {
-    var self = this;
-    Backbone.on('event:currentUserInfoReady', function (data) {
-      self.setUserInfo(data);
-    });
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
@@ -110,6 +110,7 @@ var View = BaseView.extend({
     this.elements.showWhenCreateDom.show();
     this.elements.showWhenListDom.hide();
     this.elements.boardDom.addClass('active-create');
+    this.randomSetColor();
   },
   // 返回列表
   backToList: function () {
@@ -133,13 +134,14 @@ var View = BaseView.extend({
     var promise = this.getData(ops);
     promise.done(function (res) {
       self.appendToNewestList(res.data.list || []);
+      if (ops.tag === 'first' && res.data.list.length < 0) {
+        self.newestListDOM.eq(0).append('<div class="first">快来成为第一个告白的幸运儿</div>');
+      }
     });
-
-    // TODO
-    // self.appendToNewestList([1, 2, 3, 4, 5, 6, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 554]);
   },
   appendToNewestList: function (data) {
     var htmls = this.createItemHtml(data);
+    this.newestListDOM.eq(0).find('.first').remove();
     this.newestListDOM.eq(0).append(htmls[0]);
     this.newestListDOM.eq(1).append(htmls[1]);
     this.newestListDOM.eq(2).append(htmls[2]);
@@ -264,6 +266,10 @@ var View = BaseView.extend({
           msgBox.showOK('告白发布成功!');
           self.elements.txtInputDom.val('');
           self.backToList();
+          self.options.userInfo.totalMarks -= self.perItemFee;
+          self.setUserInfo();
+          self.newestListDOM.children().remove();
+          self.renderNewestList();
         } else {
           msgBox.showError(res.msg || '发布告白失败,请稍后重试');
         }
@@ -297,11 +303,7 @@ var View = BaseView.extend({
   calcTextLength: function () {
     var txt = $.trim(this.elements.txtInputDom.val());
     var maxLength = 200;
-    if (maxLength >= txt.length) {
-      this.elements.txtLengthDom.text(maxLength - txt.length);
-      return true;
-    }
-    return false;
+    this.elements.txtLengthDom.text(maxLength - txt.length);
   },
   // 数字转16进制
   zeroFillHex: function (num, digits) {
@@ -323,9 +325,11 @@ var View = BaseView.extend({
   },
   // 设置用户积分
   setUserInfo: function (userInfo) {
-    this.options.userInfo = userInfo;
-    if (userInfo.totalMarks) {
-      this.elements.userScoreDom.text(userInfo.totalMarks);
+    if (userInfo) {
+      this.options.userInfo = userInfo;
+    }
+    if (this.options.userInfo.totalMarks) {
+      this.elements.userScoreDom.text(this.options.userInfo.totalMarks);
     }
   },
   refreshUnreadList: function () {

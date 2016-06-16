@@ -135,7 +135,7 @@ var View = BaseView.extend({
     self.initWebIM();
 
     YYTIMServer.applyJoinGroup(groupId, function () {
-      Backbone.trigger('event:roomInfoReady', self.roomInfo);
+      // TODO
       if (self.roomInfo.status === 2) {
         self.loopRoomInfo();
       }
@@ -266,27 +266,17 @@ var View = BaseView.extend({
           url: data.url
         };
         self.roomInfo = data;
+        // 告白墙
         self.adWallView = new AdvertisingWallView({
           el: '#advertisingWall',
-          roomId: data.id
+          roomId: data.id,
+          userInfo: self.userInfo
         });
-        self.adWallView.setOptions({
-          roomId: data.id
-        });
-
+        Backbone.trigger('event:roomInfoReady', self.roomInfo);
         self.setRoomBgImg();
         self.flashAPI.onReady(function () {
           this.init(self.roomInfo);
         });
-        /*        self.roomManagerView = new RoomManagerView({
-         roomInfo: self.roomInfo,
-         FlashApi: self.FlashApi // ,
-         // msgList: this.options.msgList
-         });*/
-
-        self.joinRoom();
-        self.fetchUserIMSig(data.imGroupid);
-        // TODO
         self.checkRoomStatus(data.status);
       } else {
         errFn();
@@ -349,9 +339,12 @@ var View = BaseView.extend({
         msgBox.showTip('该直播尚未发布!');
         break;
       case 1:
+        $('.living-block').hide();
         break;
       case 2:
         this.getGroupInfo(this.roomInfo.imGroupid);
+        this.joinRoom();
+        this.fetchUserIMSig(this.roomInfo.imGroupid);
         break;
       case 3:
         break;

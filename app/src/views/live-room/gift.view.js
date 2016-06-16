@@ -29,7 +29,7 @@ var View = BaseView.extend({
   el: '#giftwarp', // 设置View对象作用于的根元素，比如id
   events: { // 监听事件
     'click #gift-items': 'giftClick',
-    'click #btnTop': 'topClick',
+    'click .btn-push': 'topClick',
     'click #btnLike': 'lickClick' // ,
     // 'click #btnShare': 'shareClick'
   },
@@ -72,7 +72,8 @@ var View = BaseView.extend({
 
     this.initGiftList();
 
-    $('#btnShare').click(this.shareClick.bind(this));
+    $('#btnShare').on('click', this.shareClick.bind(this));
+    $('.btn-push').on('click', this.topClick.bind(this));
   },
   defineEventInterface: function () {
     var self = this;

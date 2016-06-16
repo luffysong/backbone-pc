@@ -74,7 +74,9 @@ var View = BaseView.extend({
     Backbone.on('event:roomInfoReady', function (data) {
       if (data) {
         self.roomInfo = data;
-        self.checkUserCanJoinRoom();
+        if (data.status === 2) {
+          self.checkUserCanJoinRoom();
+        }
       }
     });
 

@@ -1,3 +1,6 @@
+/**
+ * 预告
+ */
 'use strict';
 
 var Backbone = window.Backbone;
@@ -33,7 +36,7 @@ var View = BaseView.extend({
   defineEventInterface: function () {
     var self = this;
     Backbone.on('event:roomInfoReady', function (roomInfo) {
-      self.startTime = roomInfo.startTime || new Date('2016-06-13 13:14:33');
+      self.startTime = roomInfo.liveTime || new Date('2016-06-13 13:14:33');
       self.setTime();
     });
   },
@@ -49,15 +52,19 @@ var View = BaseView.extend({
   setTime: function () {
     var self = this;
     var cur = new Date();
-    var diff = cur - this.startTime;
-    var result = BusinessDate.difference(diff);
-    if (result) {
-      this.elements.day.text(result.day);
-      this.elements.hour.text(result.hours);
-      this.elements.minutes.text(result.minutes);
-      setTimeout(function () {
-        self.setTime();
-      }, 60 * 1000);
+    var diff = new Date(this.startTime) - cur;
+    if (diff > 0) {
+      var result = BusinessDate.difference(diff);
+      if (result) {
+        this.elements.day.text(result.day);
+        this.elements.hour.text(result.hours);
+        this.elements.minutes.text(result.minutes);
+        setTimeout(function () {
+          self.setTime();
+        }, 60 * 1000);
+      }
+    } else if (diff === 0) {
+      window.location.reload();
     }
   }
 });
