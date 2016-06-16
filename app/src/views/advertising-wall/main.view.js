@@ -29,10 +29,10 @@ var View = BaseView.extend({
     'click #btnBacktoList': 'backToList',
     'click .wall-list': 'itemClicked',
     'click #btnSendText': 'sendClicked',
-    'click .tabs a': 'changeTab',
+    'click .tabs a': 'tabClicked',
     'click .colors a': 'chooseColorClicked',
     'keyup #txtMsg': 'calcTextLength',
-    'click #unReadCnt': 'refreshList'
+    'click #unReadCnt': 'refreshUnreadList'
   },
   context: function (args) {
     console.log(args);
@@ -76,14 +76,19 @@ var View = BaseView.extend({
     this.itemTpl = this.$el.find('#itemTpl').html();
 
     this.newestListDOM = this.$el.find('.newList .am-u-sm-4');
+    this.hotListDOM = this.$el.find('.hotList .am-u-sm-4');
   },
   ready: function (ops) {
     this.options = _.extend({}, ops);
     this.defineEventInterface();
     this.lastTime = new Date();
+    // 隐藏未读小红点
+    this.elements.unReadCnt.text(0).hide();
     //  初始化
     this.renderNewestList();
     this.loopGetUnreadCount();
+    this.renderHotList();
+    this.randomSetColor();
   },
   setOptions: function (ops) {
     this.options = _.extend(this.options, ops);
@@ -112,15 +117,20 @@ var View = BaseView.extend({
     this.elements.showWhenListDom.show();
     this.elements.boardDom.removeClass('active-create');
   },
-  // 最新列表
-  renderNewestList: function (ops) {
+
+  getData: function (ops) {
     var self = this;
     this.listParams = _.extend(this.listParams, {
       roomId: self.options.roomId || 0,
       sortField: 'TIME', // LIKE
       limit: 9
     }, ops);
-    var promise = this.listModel.executeJSONP(this.listParams);
+    return this.listModel.executeJSONP(this.listParams);
+  },
+  // 最新列表
+  renderNewestList: function (ops) {
+    var self = this;
+    var promise = this.getData(ops);
     promise.done(function (res) {
       self.appendToNewestList(res.data.list || []);
     });
@@ -130,14 +140,27 @@ var View = BaseView.extend({
   },
   appendToNewestList: function (data) {
     var htmls = this.createItemHtml(data);
-    console.log(htmls);
     this.newestListDOM.eq(0).append(htmls[0]);
     this.newestListDOM.eq(1).append(htmls[1]);
     this.newestListDOM.eq(2).append(htmls[2]);
   },
   // 最热列表
-  renderHotList: function () {
+  renderHotList: function (ops) {
+    var self = this;
+    var op = _.extend(ops, {
+      sortField: 'LIKE'
+    });
 
+    var promise = this.getData(op);
+    promise.done(function (res) {
+      self.appendToHotList(res.data.list || []);
+    });
+  },
+  appendToHotList: function (data) {
+    var htmls = this.createItemHtml(data);
+    this.hotListDOM.eq(0).append(htmls[0]);
+    this.hotListDOM.eq(1).append(htmls[1]);
+    this.hotListDOM.eq(2).append(htmls[2]);
   },
   createItemHtml: function (data) {
     var html = '';
@@ -188,17 +211,19 @@ var View = BaseView.extend({
       if (res && res.code === '0') {
         dom.attr('data-liked', like ? 'true' : 'false');
         dom.find('span').text(like ? cnt + 1 : cnt - 1);
+        dom.toggleClass('active');
       } else {
         msgBox.showTip('支持失败,稍后重新尝试吧');
       }
     });
   },
   // 切换列表
-  changeTab: function (e) {
+  tabClicked: function (e) {
     var target = $(e.target);
     var tab = target.attr('data-tab');
-    if (tab) {
-      $('.tabs a').toggleClass('active');
+    var link = $('.tabs a');
+    if (tab && !target.hasClass('active')) {
+      link.toggleClass('active');
       $('.tab').hide();
       $('.' + tab).show();
     }
@@ -238,6 +263,7 @@ var View = BaseView.extend({
         if (res && res.code === '0') {
           msgBox.showOK('告白发布成功!');
           self.elements.txtInputDom.val('');
+          self.backToList();
         } else {
           msgBox.showError(res.msg || '发布告白失败,请稍后重试');
         }
@@ -256,7 +282,16 @@ var View = BaseView.extend({
   chooseColorClicked: function (e) {
     var target = $(e.target);
     var color = target.css('background-color');
+    target.parent('.colors').children().removeClass('active');
+    target.addClass('active');
     this.setTextColor(this.elements.txtInputDom, color);
+  },
+  // 随机设置颜色
+  randomSetColor: function () {
+    var index = Math.random() * 10 % 5 ^ 0;
+    this.chooseColorClicked({
+      target: $('.colors a').eq(index)
+    });
   },
   // 计算文字长度
   calcTextLength: function () {
@@ -293,11 +328,12 @@ var View = BaseView.extend({
       this.elements.userScoreDom.text(userInfo.totalMarks);
     }
   },
-  refreshList: function () {
+  refreshUnreadList: function () {
     this.lastTime = new Date();
     this.elements.unReadCnt.text(0).hide();
     $('.newList .am-u-sm-4').children().remove();
     this.renderNewestList();
+    this.changeTab(0);
   },
   loopGetUnreadCount: function () {
     var self = this;
@@ -312,6 +348,12 @@ var View = BaseView.extend({
       setTimeout(function () {
         self.loopGetUnreadCount();
       }, self.loopTime);
+    });
+  },
+  // 切换列表
+  changeTab: function (index) {
+    this.tabClicked({
+      target: $('.tabs a').eq(index)
     });
   }
 });

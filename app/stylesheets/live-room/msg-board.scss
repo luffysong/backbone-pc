@@ -109,6 +109,9 @@ $wall-bg-color: #f0f0f0;
           background-color: #fff;
           border: 1px solid $main-line-color;
           height: 36px;
+          &:hover, &.active {
+            border-color: $main-bg-red;
+          }
           .icon-heart {
             display: inline-block;
             background: url(../images/liveroom/liveroom-heart_03.png) no-repeat;
@@ -184,6 +187,11 @@ $wall-bg-color: #f0f0f0;
           width: 30px;
           height: 30px;
           margin-bottom: -10px;
+          &.active {
+            background-image: url(../images/liveroom/wall_bg_selected_10.png);
+            background-repeat: no-repeat;
+            background-position: 7px 9px;
+          }
         }
         .black {
           background-color: #666;
