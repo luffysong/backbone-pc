@@ -33,7 +33,7 @@ var View = BaseView.extend({
     this.elements = {
       roomName: el.find('.room-name'),
       onLine: el.find('#onlineCount'),
-      popularity: el.find('#popularityCount'),
+      popularity: el.find('.popularityCount'),
       onlineTxt: el.find('#onlineTxt'),
       onLineBlock: el.find('.online')
     };
@@ -68,16 +68,10 @@ var View = BaseView.extend({
   },
   bindData: function (data) {
     var els = this.elements;
-    if (data.channelId) {
-      els.roomName.text(data.channelName || '');
-      els.onLineBlock.hide();
-      // els.onLine.text(data.online || 0);
-      els.popularity.text(data.popularity || 0);
-    } else {
-      els.roomName.text(data.roomName || '');
-      els.onLine.text(data.online || 0);
-      els.popularity.text(data.popularity || 0);
-    }
+    els.roomName.text(data.roomName || '');
+    els.onLine.text(data.online || 0);
+    var num = data.popularity < data.realPopularity ? data.realPopularity : data.popularity;
+    els.popularity.text(num || 0);
   },
   whenPalypack: function (data) {
     var els = this.elements;

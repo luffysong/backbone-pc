@@ -67,7 +67,7 @@ var View = BaseView.extend({
       btnAdd: el.find('#btnAdd'),
       btnReport: el.find('#btnReport'),
       tagsWrap: el.find('#tagsWrap'),
-      noticeWrap: $('#noticWrap')
+      noticeWrap: $('.noticWrap')
     };
 
     this.noticeGetParams = {

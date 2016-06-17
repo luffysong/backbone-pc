@@ -192,9 +192,9 @@ var View = BaseView.extend({
   },
   topClick: function () {
     var self = this;
-    if (!this.roomStatusCheck()) {
-      return;
-    }
+    // if (!this.roomStatusCheck()) {
+    //  return;
+    // }
     if (!this.isNeedPopup) {
       self.pushPopularity(2);
       return;
@@ -221,9 +221,9 @@ var View = BaseView.extend({
   pushPopularity: function (type) {
     var self = this;
     var promise;
-    if (!this.roomStatusCheck()) {
-      return;
-    }
+    // if (!this.roomStatusCheck()) {
+    //  return;
+    // }
     this.popularityParams.type = type;
     this.popularityParams.roomId = this.roomInfo.id;
     promise = this.popularityModel.executeJSONP(this.popularityParams);
