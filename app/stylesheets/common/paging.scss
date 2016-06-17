@@ -7,21 +7,24 @@
   span,a{
     cursor: pointer;
     display: inline-block;
-    width: 40px;
-    height: 40px;
-    background-color: #f8f8f8;
-    padding: 0;
-    line-height: 40px;
-    text-align: center;
-    &:first-child, &:last-child{
-      color: #fff;
-      background-color: #27d6be;
-    }
+    width: 30px;
+    height: 30px;
     color: #999;
+    // background-color: #f8f8f8;
+    padding: 0;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 25px;
+    margin: 0 5px;
+    &:first-child, &:last-child{
+      color: $main-name-color;
+      background-color: #fff;
+      border: 1px solid $main-line-color;
+    }
+    &:hover, &.current{
+      color: #fff;
+      background-color: $main-bg-purple;
+      // border-radius: 25px;
+    }
   }
-  .current{
-    color: #fff;
-    background-color: #27d6be;
-  }
-
 }

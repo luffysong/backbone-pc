@@ -17,6 +17,7 @@ var FollowingListModel = require('../../models/anchor-setting/following-list.mod
 var UnFollowModel = require('../../models/anchor-setting/unfollow.model');
 var AnchorLastestModel = require('../../models/anchor-setting/anchor-lastest.model');
 var msgBox = require('ui.msgBox');
+var Pagenation = require('Pagenation');
 
 var View = BaseView.extend({
   el: '#followingList', // 设置View对象作用于的根元素，比如id
@@ -38,10 +39,12 @@ var View = BaseView.extend({
 
     this.followList = this.$el.find('#followList');
 
+    // 每页条数
+    this.perpage = 9;
     this.params = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken(),
-      size: 9,
+      size: this.perpage,
       offset: 0
     };
     this.unFollowParams = {
@@ -58,46 +61,53 @@ var View = BaseView.extend({
   },
   initPagination: function () {
     var self = this;
-    this.pageing = $('#followPageWrap').paging(1, {
-      format: '[ < .(qq -) nnncnn (- pp)> ] ',
-      perpage: 9,
-      page: 1,
-      onFormat: function (type) {
-        switch (type) {
-          case 'block':
-            if (!this.active) {
-              return '<span class="disabled ">' + this.value + '</span>';
-            } else if (this.value !== this.page) {
-              return '<a href="#' + this.value + '">' + this.value + '</a>';
-            }
-            return '<span class="current ">' + this.value + '</span>';
-          case 'next':
-            if (this.active) {
-              return '<a href="#' + this.value + '" class="next ">&gt;</a>';
-            }
-            return '<span class="disabled ">&gt;</span>';
-          case 'prev':
-            if (this.active) {
-              return '<a href="#' + this.value + '" class="prev ">&lt;</a>';
-            }
-            return '<span class="disabled ">&lt;</span>';
-          case 'fill':
-            if (this.active) {
-              return '<span>...</span>';
-            }
-            return '';
-          default:
-            return '';
-        }
-      },
+    self.pageing = Pagenation.create('#followPageWrap', {
+      total: 1,
+      perpage: self.perpage,
       onSelect: function (page) {
         self.getPageList(page);
       }
     });
+    // this.pageing = $('#followPageWrap').paging(1, {
+    //   format: '[ < .(qq -) nnncnn (- pp)> ] ',
+    //   perpage: 9,
+    //   page: 1,
+    //   onFormat: function (type) {
+    //     switch (type) {
+    //       case 'block':
+    //         if (!this.active) {
+    //           return '<span class="disabled ">' + this.value + '</span>';
+    //         } else if (this.value !== this.page) {
+    //           return '<a href="#' + this.value + '">' + this.value + '</a>';
+    //         }
+    //         return '<span class="current ">' + this.value + '</span>';
+    //       case 'next':
+    //         if (this.active) {
+    //           return '<a href="#' + this.value + '" class="next ">&gt;</a>';
+    //         }
+    //         return '<span class="disabled ">&gt;</span>';
+    //       case 'prev':
+    //         if (this.active) {
+    //           return '<a href="#' + this.value + '" class="prev ">&lt;</a>';
+    //         }
+    //         return '<span class="disabled ">&lt;</span>';
+    //       case 'fill':
+    //         if (this.active) {
+    //           return '<span>...</span>';
+    //         }
+    //         return '';
+    //       default:
+    //         return '';
+    //     }
+    //   },
+    //   onSelect: function (page) {
+    //     self.getPageList(page);
+    //   }
+    // });
   },
   getPageList: function (page) {
     var self = this;
-    this.params.offset = (page - 1) * 9;
+    this.params.offset = (page - 1) * this.perpage;
     var promise = self.followListModel.executeJSONP(this.params);
     promise.done(function (res) {
       self.renderList(res);

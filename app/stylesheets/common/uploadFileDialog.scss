@@ -14,24 +14,27 @@
     opacity: 0.5;
     filter: alpha(opacity=50);
     z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 }
-
 .edit_Bg_form_x {
   width: 580px;
-  height: 341px;
-  border: 3px solid #252929;
+  z-index: 2;
   position: absolute;
+  background-color: #fff;
+  overflow: hidden;
   top: 50%;
   left: 50%;
   margin-left: -290px;
   margin-top: -176px;
-  background: #fff;
+  border-radius: 5px;
   .edit_title {
     height: 56px;
-    background: #000;
+    background: $main-bg-purple;
     width: 100%;
-    color: #8a8a8a;
+    color: #fff;
     font-size: 14px;
     line-height: 56px;
     text-indent: 15px;
@@ -59,7 +62,8 @@
     width: 317px;
     text-align: center;
     position: relative;
-    #file,[type='file'] {
+    #file,
+    [type='file'] {
       position: absolute;
       top: 4px;
       left: 98px;
@@ -105,7 +109,6 @@
     }
   }
 }
-
 .editor_bg_close_x {
   font-size: 28px;
   padding-right: 7px;
@@ -113,11 +116,11 @@
   font-weight: lighter;
   cursor: pointer;
   position: absolute;
-  top: 10px;
+  top: 0;
   right: 0;
-  color: #616161;
+  color: #fff;
+  z-index: 3;
 }
-
 .editor_bg_close_x:hover {
   color: #39c4b2;
 }

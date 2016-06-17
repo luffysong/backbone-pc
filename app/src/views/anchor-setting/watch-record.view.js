@@ -13,6 +13,8 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var WatchRecordModel = require('../../models/anchor-setting/watch-record.model');
 
+var Pagenation = require('Pagenation');
+
 var View = BaseView.extend({
   el: '#recordList', // 设置View对象作用于的根元素，比如id
   rawLoader: function () { // 可用此方法返回字符串模版
@@ -25,10 +27,12 @@ var View = BaseView.extend({
   beforeMount: function () {
     this.watchRecordModel = WatchRecordModel.sharedInstanceModel();
 
+    this.perpage = 6;
+
     this.params = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken(),
-      size: 6,
+      size: this.perpage,
       offset: 0
     };
   },
@@ -45,38 +49,10 @@ var View = BaseView.extend({
   },
   initPagination: function (total) {
     var self = this;
-    this.pageing = $('#page-wrap').paging(total || 1, {
-      format: '[ < .(qq -) nnncnn (- pp)> ] ',
-      perpage: 6,
-      // page: 1,
-      onFormat: function (type) {
-        switch (type) {
-          case 'block':
-            if (!this.active) {
-              return '<span class="disabled ">' + this.value + '</span>';
-            } else if (this.value !== this.page) {
-              return '<a href="#' + this.value + '">' + this.value + '</a>';
-            }
-            return '<span class="current ">' + this.value + '</span>';
-          case 'next':
-            if (this.active) {
-              return '<a href="#' + this.value + '" class="next ">&gt;</a>';
-            }
-            return '<span class="disabled ">&gt;</span>';
-          case 'prev':
-            if (this.active) {
-              return '<a href="#' + this.value + '" class="prev ">&lt;</a>';
-            }
-            return '<span class="disabled ">&lt;</span>';
-          case 'fill':
-            if (this.active) {
-              return '<span>...</span>';
-            }
-            return '';
-          default:
-            return '';
-        }
-      },
+
+    self.pageing = Pagenation.create('#page-wrap', {
+      total: total,
+      perpage: self.perpage,
       onSelect: function (page) {
         self.getPageList(page);
       }
@@ -84,7 +60,7 @@ var View = BaseView.extend({
   },
   getPageList: function (page) {
     var self = this;
-    this.params.offset = (page - 1) * 6;
+    this.params.offset = (page - 1) * this.perpage;
     var promise = self.watchRecordModel.executeJSONP(this.params);
     promise.done(function (res) {
       self.renderList(res);

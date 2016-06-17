@@ -23,7 +23,8 @@ var alias = {
   UploadFileDialog: path.resolve(containerPath, './app/src/module/UploadFileDialog/'),
   auth: path.resolve(containerPath, './app/src/module/auth/'),
   imServer: path.resolve(containerPath, './app/src/module/webIM/IMServer'),
-  FlashApi: path.resolve(containerPath, './app/src/module/FlashApi/')
+  FlashApi: path.resolve(containerPath, './app/src/module/FlashApi/'),
+  Pagenation: path.resolve(containerPath, './app/src/module/pagenation')
 };
 
 module.exports = alias;
