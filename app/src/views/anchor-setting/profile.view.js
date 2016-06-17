@@ -1,3 +1,4 @@
+// 顶部用户信息
 'use strict';
 
 var Backbone = window.Backbone;
@@ -10,10 +11,9 @@ var imModel = IMModel.sharedInstanceIMModel();
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var UserInfoModel = require('../../models/anchor/anchor-info.model');
-var userCard = require('./template/user-card.html');
 
 var View = BaseView.extend({
-  el: '#settingProfile',
+  el: '.userInfoWrap',
   context: function (args) {
     console.log(args);
   },
@@ -32,6 +32,16 @@ var View = BaseView.extend({
     //  获取findDOMNode DOM Node
     this.elements = {};
   },
+  findDom: function () {
+    var el = this.$el;
+    this.elements.nickName = el.find('#nickName');
+    this.elements.headAvatar = el.find('#headAvatar');
+    this.elements.tagsWrap = el.find('#tagsWrap');
+    this.elements.createCount = el.find('#createCount');
+    this.elements.watchedLiveCount = el.find('#txtLive');
+    this.elements.totalCredits = el.find('#txtScore');
+    this.elements.fanTicket = el.find('#txtTicket');
+  },
   ready: function () {
     //  初始化
     this.initRender();
@@ -44,46 +54,29 @@ var View = BaseView.extend({
     //  销毁之后
   },
   initRender: function () {
-    var el = this.$el;
     var self = this;
     var profileHTML;
-    if (imModel.isAnchor()) {
-      profileHTML = this.compileHTML(profileTemp, this.data);
-      this.$el.html(profileHTML);
-
-      this.elements.nickName = el.find('#nickName');
-      this.elements.headAvatar = el.find('#headAvatar');
-      this.elements.tagsWrap = el.find('#tagsWrap');
-    } else {
-      var promise = this.userInfoModel.executeJSONP({
-        deviceinfo: '{"aid": "30001001"}',
-        access_token: user.getWebToken()
-      });
-      promise.done(function (res) {
-        self.bindUserInfo(res);
-      });
-    }
+    profileHTML = this.compileHTML(profileTemp, this.data);
+    this.$el.html(profileHTML);
+    this.findDom();
+    var promise = this.userInfoModel.executeJSONP({
+      deviceinfo: '{"aid": "30001001"}',
+      access_token: user.getWebToken()
+    });
+    promise.done(function (res) {
+      self.bindUserInfo(res);
+    });
   },
   bindUserInfo: function (res) {
     var self = this;
-    var el = this.$el;
-    var profileHTML;
     self.data.gender = res.data.sex || '';
     self.data.bigheadImg = res.data.largeAvatar || '';
-    profileHTML = self.compileHTML(userCard, self.data);
-    self.$el.html(profileHTML);
-
-    self.elements.watchedLiveCount = el.find('#txtLive');
-    self.elements.totalCredits = el.find('#txtScore');
-    self.elements.fanTicket = el.find('#txtTicket');
-
     self.elements.watchedLiveCount.text(res.data.userCount.viewCount || 0);
     self.elements.totalCredits.text(res.data.totalMarks || 0);
     self.elements.fanTicket.text(0);
-    Backbone.trigger('event:setThemeBgImg', res.data.userProfile.bgTheme || '');
+    // Backbone.trigger('event:setThemeBgImg', res.data.userProfile.bgTheme || '');
   },
   partialRender: function (data) {
-    console.log(data);
     this.elements.nickName.text(data.nickName);
     this.elements.headAvatar.attr('src', data.headImg);
     var html = '';

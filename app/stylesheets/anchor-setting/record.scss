@@ -37,6 +37,9 @@ $black2-color: #666666;
         height: 120px;
         overflow: hidden;
         display: inline-block;
+        img{
+          width: 100%;
+        }
         &:hover .play {
           display: inline-block;
         }
@@ -120,4 +123,3 @@ $black2-color: #666666;
     }
   }
 }
-
