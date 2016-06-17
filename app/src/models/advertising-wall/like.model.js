@@ -9,7 +9,7 @@ var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
 
 var Model = BaseModel.extend({
-  url: '{{url_prefix}}/room/love_cmt_like.json',
+  url: '{{url_prefix}}/common/love_cmt_like.json',
   beforeEmit: function beforeEmit() {
     // 给请求地址替换一下环境变量
     if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {

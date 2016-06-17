@@ -125,7 +125,8 @@ var View = BaseView.extend({
   getData: function (ops) {
     var self = this;
     this.listParams = _.extend(this.listParams, {
-      roomId: self.options.roomId || 0,
+      subType: this.options.type || 1,
+      subId: self.options.roomId || 0,
       sortField: 'TIME', // LIKE
       limit: 9
     }, ops);
@@ -219,6 +220,7 @@ var View = BaseView.extend({
   // 喜欢某个告白
   likeItem: function (id, dom, like) {
     this.likeParams = _.extend(this.queryParams, {
+      subType: this.options.type,
       cmtId: id,
       like: like
     });
@@ -268,7 +270,8 @@ var View = BaseView.extend({
     var self = this;
     if (this.verifyText()) {
       this.createParams = _.extend({
-        roomId: this.options.roomId,
+        subType: self.options.type,
+        subId: this.options.roomId,
         isAnonymous: isAnonymous,
         fontColor: this.selectedColor || '',
         content: this.getSendText()

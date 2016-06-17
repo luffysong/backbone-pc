@@ -203,12 +203,6 @@ var View = BaseView.extend({
     a = new GiftView();
 
     a = new LivePreviewView();
-
-
-    // this.adWallView = new AdvertisingWallView({
-    //  el: '#advertisingWall'
-    // });
-
     console.log(a);
   },
   initWebIM: function () {
@@ -270,7 +264,8 @@ var View = BaseView.extend({
         self.adWallView = new AdvertisingWallView({
           el: '#advertisingWall',
           roomId: data.id,
-          userInfo: self.userInfo
+          userInfo: self.userInfo,
+          type: 1 // 直播
         });
         Backbone.trigger('event:roomInfoReady', self.roomInfo);
         self.setRoomBgImg();
