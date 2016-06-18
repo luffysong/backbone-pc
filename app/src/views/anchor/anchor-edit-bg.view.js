@@ -51,6 +51,9 @@ var View = BaseView.extend({
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
     this.defineEventInterface();
+
+    // 修改背景图片按钮
+    $('.edit_bg_btn').on('click', this.showFileUploadDialog.bind(this));
   },
   /**
    * 定义事件
@@ -67,7 +70,6 @@ var View = BaseView.extend({
         }
       }
     });
-
     Backbone.on('event:updateRoomInfo', function (data) {
       if (data) {
         // self.roomInfo = data;
@@ -87,12 +89,19 @@ var View = BaseView.extend({
       closeText: 'X',
       title: '上传主题背景图片',
       ctrlData: {
-        cmd: [
-          {
-            saveOriginal: 1, op: 'save', plan: 'avatar', belongId: '20634338', srcImg: 'img'
-          }
-        ],
-        redirect: 'http:// ' + window.location.host + '/cross-url/upload.html'
+        cmd: [{
+          point: '+1+1',
+          srcImg: 'img',
+          op: 'crop',
+          size: '1200x270'
+        }, {
+          saveOriginal: 1,
+          op: 'save',
+          plan: 'avatar',
+          belongId: '20634338',
+          srcImg: 'img'
+        }],
+        redirect: 'http://' + window.location.host + '/cross-url/upload.html'
       },
       uploadFileSuccess: function (response) {
         var result = self.uploadFile.parseErrorMsg(response);
@@ -151,4 +160,3 @@ var View = BaseView.extend({
 });
 
 module.exports = View;
-

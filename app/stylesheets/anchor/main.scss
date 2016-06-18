@@ -1,7 +1,6 @@
 @import "../common/popup";
 @import "notice";
 @import "room-control";
-
 .anchor-container {
   background: url('../images/anchor-bg.jpg');
   min-height: 927px;
@@ -9,19 +8,28 @@
   background-size: 100% auto;
   background: $main-bg-anchor-color;
   padding-top: 10px;
-
   .header-bg {
+    position: relative;
     margin: 0 auto 10px;
     width: 1200px;
     overflow: hidden;
     height: 270px;
-    background: url(../images/anchor_bg_013.jpg);
+    background: url("../images/anchor_bg_013.jpg");
     img {
       min-height: 270px;
       width: 100%;
     }
+    .edit_bg_btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 12px;
+      padding-top: 4px;
+      color: $main-bg-purple;
+      cursor: pointer;
+      font-weight: 600;
+    }
   }
-
   // 1.房间头部信息
   .room-header {
     padding-top: 0 !important;
@@ -51,7 +59,6 @@
       }
     }
   }
-
   // 2.用户信息模块
   .user-info-block {
     background-color: #fff;
@@ -66,7 +73,7 @@
         display: inline-block;
         width: 36px;
         height: 36px;
-        background-image: url(../images/liveroom/liveroom-icons-bg_07.png);
+        background-image: url("../images/liveroom/liveroom-icons-bg_07.png");
         margin-top: 12px;
         margin-right: 22px;
       }
@@ -111,12 +118,11 @@
         width: 20px;
         height: 20px;
         display: inline-block;
-        background-image: url(../images/live-bg-012.png);
+        background-image: url("../images/live-bg-012.png");
         background-repeat: no-repeat;
       }
     }
   }
-
   // 3. 公告
   .room-notice-wrap {
     background-color: $main-bg-light-purple;
@@ -131,7 +137,7 @@
       }
       .icon-voice {
         display: inline-block;
-        background-image: url(../images/liveroom/liveroom-icons-bg_03.png);
+        background-image: url("../images/liveroom/liveroom-icons-bg_03.png");
         width: 21px;
         height: 18px;
       }
@@ -159,46 +165,7 @@
     border-top: 1px solid #efefef;
     background-color: #fff;
   }
-  // 4. 发送消息
-  //.send-msg-wrap {
-  //  background-color: #fff;
-  //  position: relative;
-  //  border-top: 1px solid #efefef;
-  //  .am-btn {
-  //    width: 62px;
-  //    height: 60px;
-  //    margin: 0 8px;
-  //    span {
-  //      font-size: 14px;
-  //      &.ctrl {
-  //        display: block;
-  //      }
-  //      &.first {
-  //        margin-top: 5px;
-  //      }
-  //    }
-  //    i {
-  //      margin: 0 auto;
-  //      background-size: 100%;
-  //      -webkit-background-size: 100%;
-  //      display: block;
-  //      width: 22px;
-  //      height: 22px;
-  //      &.clear {
-  //        background-image: url(../images/clear.png);
-  //        background-repeat: no-repeat;
-  //      }
-  //      &.lock {
-  //        background-image: url(../images/clock.png);
-  //        background-repeat: no-repeat;
-  //      }
-  //
-  //    }
-  //  }
-  //}
-
 }
-
 .edit_Bg {
   height: 65px;
   padding: 20px 20px 0 18px;
@@ -218,17 +185,7 @@
       font-family: '微软雅黑';
     }
   }
-  .edit_bg_btn {
-    font-size: 12px;
-    padding-top: 4px;
-    color: #c2c0c0;
-    cursor: pointer;
-    &:hover {
-      color: #01e7cc;
-    }
-  }
 }
-
 #set_Anchor_info {
   width: 895px;
   .BroadcastRoom {
@@ -290,7 +247,6 @@
       height: 64px;
       border-radius: 50%;
       background: #f90;
-      margin-right: 14px;
       margin: 10px 13px 0 0;
     }
   }
@@ -364,7 +320,7 @@
         display: inline-block;
         margin-top: 5px;
         background: #000;
-        background: url(../images/liveroom/liveroom-icons-bg_11.png) no-repeat;
+        background: url("../images/liveroom/liveroom-icons-bg_11.png") no-repeat;
         width: 62px;
         height: 62px;
       }
@@ -377,43 +333,15 @@
         border: 1px solid #fff;
         background-color: #fe4646;
       }
-
     }
-
     .am-btn {
       margin-top: 25px;
       height: 45px;
       font-size: 14px;
       margin-left: 5px;
     }
-    //padding-bottom: 32px;
-    //padding-right: 72px;
-    //div {
-    //  float: right;
-    //  width: 155px;
-    //  height: 47px;
-    //  line-height: 47px;
-    //  text-align: center;
-    //  color: #fff;
-    //  cursor: pointer;
-    //}
-    //.endLive {
-    //  background: #ff1d66;
-    //  margin-left: 65px;
-    //}
-    //.endLive:hover {
-    //  background: #ff6e9d;
-    //}
-    //.startLive {
-    //  background: #01ceb5;
-    //}
-    //.startLive:hover {
-    //  background: #5fe0cf;
-    //}
-
   }
 }
-
 #anchorCtrlChat {
   width: 300px;
   .controls {
@@ -497,12 +425,8 @@
         background: #ff1d66;
       }
     }
-    .forbid {
-
-    }
-    .reject {
-
-    }
+    .forbid {}
+    .reject {}
   }
   .visitor_avator {
     width: 35px;
@@ -510,11 +434,9 @@
     background: blue;
   }
 }
-
 .errTip {
   color: #FF005B;
 }
-
 .pseudo-uploadBtn .file {
   position: absolute;
   width: 100%;
@@ -524,13 +446,10 @@
   left: 0;
   cursor: pointer;
 }
-
 .edit_Bg_form_x {
   margin-top: -171px !important;
 }
-
-
-.ico_close{
+.ico_close {
   top: 10px!important;
 }
 // 场控
@@ -554,7 +473,8 @@
       .id {
         font-size: 12px;
       }
-      .name, .id {
+      .id,
+      .name {
         color: #5c5c5c;
       }
       .btn-link {
@@ -586,5 +506,4 @@
       color: $main-font-light-color;
     }
   }
-
 }
