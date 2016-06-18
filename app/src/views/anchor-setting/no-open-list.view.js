@@ -37,7 +37,7 @@ var View = BaseView.extend({
       deviceinfo: '{"aid":"30001001"}',
       order: 'time',
       offset: 0,
-      size: 1,
+      size: 6,
       access_token: user.getWebToken()
     };
     this.removeParameter = {
@@ -108,23 +108,7 @@ var View = BaseView.extend({
       }
     };
     this.upload = new UploadFileDialog(fileOptions);
-    var promise = this.noOpenModel.executeJSONP(this.noOpenParameter);
-    promise.done(function (response) {
-      var data = response.data;
-      var roomList = data.roomList;
-      var count = Math.ceil(data.totalCount / self.noOpenParameter.size);
-      if (count > 1) {
-        self.initPageBox({
-          offset: self.noOpenParameter.offset,
-          size: self.noOpenParameter.size,
-          count: count
-        });
-      }
-      self.initRender(roomList);
-    });
-    promise.fail(function () {
-      msgBox.showError('获取未直播列表：第1页失败');
-    });
+    this.getPageList(1);
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
@@ -148,14 +132,6 @@ var View = BaseView.extend({
         self.totalCount = data.totalCount;
         self.initPageBox(data.totalCount);
       }
-      // var count = Math.ceil(data.totalCount / self.noOpenParameter.size);
-      // if (count > 1) {
-      //   self.initPageBox({
-      //     offset: self.noOpenParameter.offset,
-      //     size: self.noOpenParameter.size,
-      //     count: count
-      //   });
-      // }
       self.initRender(roomList);
     });
     promise.fail(function () {
@@ -164,24 +140,13 @@ var View = BaseView.extend({
   },
   initPageBox: function (total) {
     var self = this;
-    this.pagingBox = Pagenation.create('.page-wrap', {
+    this.pagingBox = Pagenation.create('#noOpenPageBox', {
       total: total,
       perpage: this.noOpenParameter.size,
       onSelect: function (page) {
         self.getPageList(page);
       }
     });
-    // var self = this;
-    // this.pageBoxView = new NoOpenPageBoxView({
-    //   el: '#noOpenPageBox',
-    //   props: prop,
-    //   listModel: this.noOpenModel,
-    //   listRender: function (response) {
-    //     var data = response.data;
-    //     var roomList = data.roomList;
-    //     self.initRender(roomList);
-    //   }
-    // });
   },
   //  分页渲染，以及缓存li
   initRender: function (items) {

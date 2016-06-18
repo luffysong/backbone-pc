@@ -3,12 +3,14 @@
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 var HistoryListModel = require('../../models/anchor-setting/history-list.model');
-var NoOpenPageBoxView = require('./page-box.view');
+// var NoOpenPageBoxView = require('./page-box.view');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var easyImage = require('../../../images/easy.png');
 var yunImage = require('../../../images/yun.png');
 var loveImage = require('../../../images/love.png');
+var Pagenation = require('Pagenation');
+
 var View = BaseView.extend({
   el: '#historyContent',
   context: function (args) {
@@ -32,22 +34,23 @@ var View = BaseView.extend({
   },
   ready: function () {
     //  初始化
-    var self = this;
-    var promise = this.historyModel.executeJSONP(this.historyParameter);
-    promise.done(function (response) {
-      var data = response.data;
-      var roomList = data.roomList || [];
-      var count = Math.ceil(data.totalCount / self.historyParameter.size);
-      if (count > 1) {
-        self.initPageBox({
-          offset: self.historyParameter.offset,
-          size: self.historyParameter.size,
-          count: count
-        });
-      }
-      self.initRender(roomList);
-    });
-    promise.fail(function () {});
+    // var self = this;
+    // var promise = this.historyModel.executeJSONP(this.historyParameter);
+    // promise.done(function (response) {
+    //   var data = response.data;
+    //   var roomList = data.roomList || [];
+    //   var count = Math.ceil(data.totalCount / self.historyParameter.size);
+    //   if (count > 1) {
+    //     self.initPageBox({
+    //       offset: self.historyParameter.offset,
+    //       size: self.historyParameter.size,
+    //       count: count
+    //     });
+    //   }
+    //   self.initRender(roomList);
+    // });
+    // promise.fail(function () {});
+    this.getPageList(1);
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
@@ -55,18 +58,50 @@ var View = BaseView.extend({
   destroyed: function () {
     //  销毁之后
   },
-  initPageBox: function (prop) {
+  getPageList: function (page) {
     var self = this;
-    this.pageBoxView = new NoOpenPageBoxView({
-      el: '#historyPageBox',
-      props: prop,
-      listModel: this.historyModel,
-      listRender: function (response) {
-        var data = response.data;
-        var roomList = data.roomList;
-        self.initRender(roomList);
+    this.historyParameter = $.extend(this.historyParameter, {
+      offset: this.historyParameter.size * (page - 1)
+    });
+    var promise = this.historyModel.executeJSONP(this.historyParameter);
+    promise.done(function (response) {
+      var data = response.data;
+      var roomList = data.roomList || [];
+      // var count = Math.ceil(data.totalCount / self.historyParameter.size);
+      // if (count > 1) {
+      //   self.initPageBox({
+      //     offset: self.historyParameter.offset,
+      //     size: self.historyParameter.size,
+      //     count: count
+      //   });
+      // }
+      if (!self.totalCount && data.totalCount) {
+        self.totalCount = data.totalCount;
+        self.initPageBox(data.totalCount);
+      }
+      self.initRender(roomList);
+    });
+    promise.fail(function () {});
+  },
+  initPageBox: function (total) {
+    var self = this;
+    this.pagingBox = Pagenation.create('#historyPageBox', {
+      total: total || 1,
+      perpage: self.historyParameter.size,
+      onSelect: function (page) {
+        self.getPageList(page);
       }
     });
+    // this.pageBoxView = new NoOpenPageBoxView({
+    //   el: '#historyPageBox',
+    //   props: prop,
+    //   listModel: this.historyModel,
+    //   listRender: function (response) {
+    //     var data = response.data;
+    //     var roomList = data.roomList;
+    //     self.initRender(roomList);
+    //   }
+    // });
   },
   initRender: function (items) {
     var html = '';
