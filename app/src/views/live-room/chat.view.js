@@ -107,7 +107,6 @@ var View = BaseView.extend({
     });
 
     Backbone.on('event:visitorSendMessage', function (data) {
-      console.log(user, user.get('userId'));
       if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
         msgBox.showTip('您已经被禁言,不能发弹幕哦');
       } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
@@ -344,7 +343,6 @@ var View = BaseView.extend({
     });
   },
   checkUserStatus: function () {
-    console.log(user, user.get('userId'));
     if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
       msgBox.showTip('您已经被禁言,不能发弹幕哦');
       return false;

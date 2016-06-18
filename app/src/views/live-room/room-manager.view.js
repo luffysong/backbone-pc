@@ -32,6 +32,9 @@ var View = BaseView.extend({
       access_token: user.getWebToken()
     };
     this.permsssionModel = new PermissionModel();
+    this.userControlTpl = '<div class="controls_forbid_reject" style="display: block;"> ' +
+      '<a href="javascript:;" class="forbid">禁言</a> ' +
+      '<a href="javascript:;" class="reject">踢出</a></div>';
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -43,6 +46,7 @@ var View = BaseView.extend({
     //  初始化
     this.defineEventInterface();
     this.options = _.extend({}, ops);
+    this.elements.roomManagerWrap.hide();
   },
   defineEventInterface: function () {
     var self = this;
@@ -74,7 +78,6 @@ var View = BaseView.extend({
   },
   hasAccess: function (data) {
     var self = this;
-    self.render();
     _.each(data, function (item) {
       if (item.roomId === self.roomInfo.id) {
         self.render();
@@ -91,6 +94,17 @@ var View = BaseView.extend({
       msgList: this.options.msgList,
       hideCtrl: true // 隐藏场控管理
     });
+  },
+  // 控制用户的禁言， 踢出
+  renderUserControl: function (msgList) {
+    var self = this;
+    if (msgList) {
+      $(msgList).on('click', function (e) {
+        self.userControlClick(e);
+      });
+    }
+  },
+  userControlClick: function () {
   }
 });
 

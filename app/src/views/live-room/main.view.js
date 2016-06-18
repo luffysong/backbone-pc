@@ -280,6 +280,7 @@ var View = BaseView.extend({
   },
   getGroupInfo: function (imGroupId) {
     var self = this;
+    // var callback = function () {};
     YYTIMServer.getGroupInfo(imGroupId, function (res) {
       if (res && res.ErrorCode === 0) {
         self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
@@ -291,17 +292,18 @@ var View = BaseView.extend({
         self.checkUserIsDisabled(self.currentGroupInfo.Introduction);
       }
     }, function () {
-      uiConfirm.show({
-        title: '进入失败',
-        content: '加入房间失败,请重新登陆后进入',
-        cancelBtn: false,
-        okFn: function () {
-          self.goBack('/');
-        },
-        cancelFn: function () {
-          self.goBack('/');
-        }
-      });
+      // TODO
+      // uiConfirm.show({
+      //   title: '进入失败',
+      //   content: '加入房间失败,请重新登陆后进入',
+      //   cancelBtn: false,
+      //   okFn: function () {
+      //     self.goBack('/');
+      //   },
+      //   cancelFn: function () {
+      //     self.goBack('/');
+      //   }
+      // });
     });
   },
   getUserInfo: function () {

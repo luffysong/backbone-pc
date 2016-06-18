@@ -36,8 +36,12 @@ var View = BaseView.extend({
   defineEventInterface: function () {
     var self = this;
     Backbone.on('event:roomInfoReady', function (roomInfo) {
-      self.startTime = roomInfo.liveTime || new Date('2016-06-13 13:14:33');
-      self.setTime();
+      if (roomInfo.status === 1) {
+        self.startTime = roomInfo.liveTime || new Date('2016-06-13 13:14:33');
+        self.setTime();
+      } else {
+        self.$el.hide();
+      }
     });
   },
   beforeDestroy: function () {
