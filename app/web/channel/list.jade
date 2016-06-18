@@ -15,7 +15,7 @@ section.am-container#liveHotSection.section-0.section
         script#livePreViewTpl(type='text/html')
             | {{each data as item}}
             div.item.am-u-sm-3
-                a.top-link(href="{{item.status ===2? '/liveroom.html?roomId=':'/playback.html?roomId='}}{{item.roomId}}")
+                a.top-link(href="/liveroom.html?roomId={{item.roomId}}")
                     img(src='{{item.posterPic}}')
                     div.link-hover
                         | {{if item.status === 2}}
@@ -37,7 +37,7 @@ section.am-container#liveHotSection.section-0.section
                             | {{item.popularity}}
                         div.left-bottom.info.time
                             div.sub-time
-                                | 直播时间: {{item.startTimeTxt}}
+                                | 直播时间: {{item.liveVideoTime}}
                         div.center.wait
                         | {{/if}}
                         footer.gradient-up
@@ -107,5 +107,3 @@ section.am-container.section-2.section.Hidden
     div.viedo-content#channelSection-2.scroll-2
 
 footer.channel-footer
-
-

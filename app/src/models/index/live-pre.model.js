@@ -5,7 +5,6 @@ var Config = require('config');
 var BaseModel = base.Model;
 var env = Config.env[Config.scheme];
 var BusinessDate = require('BusinessDate');
-var businessDate = new BusinessDate();
 
 var Model = BaseModel.extend({
   url: '{{url_prefix}}/room/home_hot_list.json',
@@ -24,15 +23,7 @@ var Model = BaseModel.extend({
       while (i--) {
         var item = data[i];
         if (item.status === 1) {
-          businessDate.setCurNewDate(item.liveTime);
-          var year = businessDate.$get('year');
-          var month = businessDate.$get('month');
-          var day = businessDate.$get('day');
-          var _hours = businessDate.$get('hours');
-          var hours = _hours < 10 ? '0' + _hours : _hours;
-          var _minutes = businessDate.$get('minutes');
-          var minutes = _minutes < 10 ? '0' + _minutes : _minutes;
-          item.liveVideoTime = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+          item.liveVideoTime = BusinessDate.format(new Date(item.liveTime), 'yyyy-MM-dd hh:mm');
         }
         item.startTimeTxt = BusinessDate.format(new Date(item.startTime), 'yyyy-MM-dd hh:mm');
       }
