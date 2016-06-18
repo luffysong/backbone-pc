@@ -12,8 +12,10 @@ var user = UserModel.sharedInstanceUserModel();
 var LivePreviewModel = require('../../models/index/live-pre.model');
 var PlaybackModel = require('../../models/index/playback.model');
 var ChannelModel = require('../../models/index/channel.model');
-
+var PushRoom = require('../live-room/push-room');
 var DateTime = require('BusinessDate');
+
+var msgBox = require('ui.msgBox');
 
 var View = BaseView.extend({
   el: '.channelHeader',
@@ -57,6 +59,8 @@ var View = BaseView.extend({
 
     // 当前频道
     this.channelType = 0;
+
+    this.pushRoom = new PushRoom({});
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -81,6 +85,9 @@ var View = BaseView.extend({
 
     $(document).on('scroll', function (e) {
       self.bodyScroll(e);
+    });
+    $('.viedo-content').on('click', function (e) {
+      self.pushRoomHandler(e);
     });
   },
   beforeDestroy: function () {
@@ -169,7 +176,6 @@ var View = BaseView.extend({
     var scrollTop = target.scrollTop();
     var wrapHeight = $('.scroll-' + this.channelType).height();
     var diff = scrollTop - wrapHeight;
-    console.log('scrollTop:' + scrollTop, 'wrapHeight:', wrapHeight, diff);
     var temp = {
       0: -165,
       1: -520,
@@ -204,6 +210,23 @@ var View = BaseView.extend({
   },
   // 设置默认频道
   setDefaultChannel: function () {
+  },
+  // 顶上去
+  pushRoomHandler: function (e) {
+    var target = $(e.target);
+    if (!target.hasClass('am-btn')) {
+      target = target.parent('.am-btn');
+    }
+    var roomId = target.attr('data-roomId');
+    if (roomId) {
+      this.pushRoom.setOptions({
+        roomId: roomId,
+        okFn: function () {
+          msgBox.showOK('感谢您的支持');
+        }
+      });
+      this.pushRoom.topClick();
+    }
   }
 });
 

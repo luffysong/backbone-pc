@@ -35,7 +35,7 @@ var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 
 var AdvertisingWallView = require('../advertising-wall/main.view');
-var LivePreviewView = require('./live-preview.view');
+// var LivePreviewView = require('./live-preview.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -217,7 +217,7 @@ var View = BaseView.extend({
 
     a = new GiftView();
 
-    a = new LivePreviewView();
+    // a = new LivePreviewView();
 
 
     console.log(a);

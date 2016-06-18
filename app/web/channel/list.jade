@@ -1,109 +1,109 @@
 //
-   Created by AaronYuan on 5/27/16.
+  Created by AaronYuan on 5/27/16.
 header.channel-top-header.has-top-bar.channelHeader
-    section.am-container.am-vertical-align
-        h3.am-serif.am-vertical-align-middle 全部频道
-        nav.am-vertical-align-middle.channelNav
-            a.active(href="javascript:;",data-tag='0') 饭趴
-            a(href="javascript:;", data-tag='1') 官方频道
-            a(href="javascript:;", data-tag='2') 站子频道
+  section.am-container.am-vertical-align
+    h3.am-serif.am-vertical-align-middle 全部频道
+    nav.am-vertical-align-middle.channelNav
+      a.active(href="javascript:;",data-tag='0') 饭趴
+      a(href="javascript:;", data-tag='1') 官方频道
+      a(href="javascript:;", data-tag='2') 站子频道
 // 热门直播
 section.am-container#liveHotSection.section-0.section
-    header.section-header
-        h2 热门直播
-    article.viedo-content#livePreViewWrap
-        script#livePreViewTpl(type='text/html')
-            | {{each data as item}}
-            div.item.am-u-sm-3
-                a.top-link(href="/liveroom.html?roomId={{item.roomId}}")
-                    img(src='{{item.posterPic}}')
-                    div.link-hover
-                        | {{if item.status === 2}}
-                        div.status.living
-                        div.right-top.gradient.boderRadAll_3
-                            span='人气:'
-                            | {{item.popularity}}
-                        div.left-bottom.info
-                            div.sub-info
-                                span.icons.chat
-                                | {{item.bulletCurtain}}
-                                span.icons.like
-                                | {{item.push}}
-                        div.center.play
-                        | {{else}}
-                        div.status.preview
-                        div.right-top.gradient.boderRadAll_3
-                            span='人气:'
-                            | {{item.popularity}}
-                        div.left-bottom.info.time
-                            div.sub-time
-                                | 直播时间: {{item.liveVideoTime}}
-                        div.center.wait
-                        | {{/if}}
-                        footer.gradient-up
-                div.anchor-info.am-cf
-                    div.am-fl
-                        div.title.am-text-truncate='{{item.roomName}}'
-                        img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
-                        span.name='{{item.creator.nickName}}'
-                    div.am-fr
-                        button.am-btn.am-btn-red.boderRadAll_5
-                            i
-                            span='顶上去'
-                footer.viedo-bg
-            | {{/each}}
+  header.section-header
+    h2 热门直播
+  article.viedo-content#livePreViewWrap
+    script#livePreViewTpl(type='text/html')
+      | {{each data as item}}
+      div.item.am-u-sm-3
+        a.top-link(href="/liveroom.html?roomId={{item.roomId}}")
+          img(src='{{item.posterPic}}')
+          div.link-hover
+            | {{if item.status === 2}}
+            div.status.living
+            div.right-top.gradient.boderRadAll_3
+              span='人气:'
+              | {{item.popularity}}
+            div.left-bottom.info
+              div.sub-info
+                span.icons.chat
+                | {{item.bulletCurtain}}
+                span.icons.like
+                | {{item.push}}
+            div.center.play
+            | {{else}}
+            div.status.preview
+            div.right-top.gradient.boderRadAll_3
+              span='人气:'
+              | {{item.realPopularity}}
+            div.left-bottom.info.time
+              div.sub-time
+                | 直播时间: {{item.liveVideoTime}}
+            div.center.wait
+            | {{/if}}
+            footer.gradient-up
+        div.anchor-info.am-cf
+          div.am-fl
+            div.title.am-text-truncate='{{item.roomName}}'
+            img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
+            span.name='{{item.creator.nickName}}'
+          div.am-fr
+            button.am-btn.am-btn-red.boderRadAll_5(data-roomId='{{item.roomId}}')
+              i
+              span='顶上去'
+        footer.viedo-bg
+      | {{/each}}
 // 精彩回放
 section.am-container.section-0.section
-    header.section-header
-        h2 精彩回放
-    div.viedo-content#playbackWrap.scroll-0
-        script#playbackTpl(type='text/html')
-            | {{each data as item}}
-            div.item.am-u-sm-3
-                a.top-link(href='/playbacklist.html?roomId={{item.roomId}}')
-                    img(src='{{item.posterPic}}')
-                    div.link-hover
-                        div.right-top.gradient.boderRadAll_3
-                            span='人气:'
-                            | {{item.popularity}}
-                        div.left-bottom.info.time
-                            div.sub-info
-                                span.icons.chat
-                                | {{item.bulletCurtain}}
-                                span.icons.like
-                                | {{item.push}}
-                        div.center.play
-                        footer.gradient-up
-                div.anchor-info.am-cf
-                    div.am-fl
-                        div.title.am-text-truncate='{{item.roomName}}'
-                        img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
-                        span.name='{{item.creator.nickName}}'
-                footer.viedo-bg
-            | {{/each}}
+  header.section-header
+    h2 精彩回放
+  div.viedo-content#playbackWrap.scroll-0
+    script#playbackTpl(type='text/html')
+      | {{each data as item}}
+      div.item.am-u-sm-3
+        a.top-link(href='/playbacklist.html?roomId={{item.roomId}}')
+          img(src='{{item.posterPic}}')
+          div.link-hover
+            div.right-top.gradient.boderRadAll_3
+              span='人气:'
+              | {{item.popularity}}
+            div.left-bottom.info.time
+              div.sub-info
+                span.icons.chat
+                | {{item.bulletCurtain}}
+                span.icons.like
+                | {{item.push}}
+            div.center.play
+            footer.gradient-up
+        div.anchor-info.am-cf
+          div.am-fl
+            div.title.am-text-truncate='{{item.roomName}}'
+            img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
+            span.name='{{item.creator.nickName}}'
+        footer.viedo-bg
+      | {{/each}}
 //  官方频道
 section.am-container.section-1.section.Hidden
-    header.section-header
-        h2 官方频道
-    div.viedo-content#channelSection-1.scroll-1
-        script#viedoItemTpl(type='text/html')
-            | {{each data as item}}
-            div.item
-                a.top-link(href="###")
-                    img(src='{{item.posterPic}}')
-                    div.link-hover.gradient
-                    span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                div.anchor-info.am-cf
-                    div.am-fl
-                        div.title.am-text-truncate='{{item.desc}}'
-                        img.am-circle.avatar(src='{{item.creator.largeAvatar}}')
-                        span.name='{{item.creator.nickName}}'
-                footer.viedo-bg
-            | {{/each}}
+  header.section-header
+    h2 官方频道
+  div.viedo-content#channelSection-1.scroll-1
+    script#viedoItemTpl(type='text/html')
+      | {{each data as item}}
+      div.item
+        a.top-link(href="###")
+          img(src='{{item.posterPic}}')
+          div.link-hover.gradient
+          span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+        div.anchor-info.am-cf
+          div.am-fl
+            div.title.am-text-truncate='{{item.desc}}'
+            img.am-circle.avatar(src='{{item.creator.largeAvatar}}')
+            span.name='{{item.creator.nickName}}'
+        footer.viedo-bg
+      | {{/each}}
 //  站子频道
 section.am-container.section-2.section.Hidden
-    header.section-header
-        h2 站子频道
-    div.viedo-content#channelSection-2.scroll-2
+  header.section-header
+    h2 站子频道
+  div.viedo-content#channelSection-2.scroll-2
 
 footer.channel-footer
