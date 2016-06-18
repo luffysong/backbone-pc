@@ -2,18 +2,21 @@
 
 var base = require('base-extend-backbone');
 var BaseView = base.View;
+
 var NoOpenListModel = require('../../models/anchor-setting/no-open-list.model');
 var ReleaseModel = require('../../models/anchor-setting/release-video.model');
 var RemoveModel = require('../../models/anchor-setting/remove-video.model');
 var SaveCoverImageModel = require('../../models/anchor-setting/save-coverimage.model');
-var NoOpenPageBoxView = require('./page-box.view');
+// var NoOpenPageBoxView = require('./page-box.view');
+var UserModel = require('UserModel');
+var user = UserModel.sharedInstanceUserModel();
+
 var msgBox = require('ui.msgBox');
 var confirm = require('ui.confirm');
-var UserModel = require('UserModel');
 var UploadFileDialog = require('UploadFileDialog');
 var BusinessDate = require('BusinessDate');
-var user = UserModel.sharedInstanceUserModel();
 var businessDate = new BusinessDate();
+var Pagenation = require('Pagenation');
 
 var View = BaseView.extend({
   el: '#noOpenContent',
@@ -34,7 +37,7 @@ var View = BaseView.extend({
       deviceinfo: '{"aid":"30001001"}',
       order: 'time',
       offset: 0,
-      size: 6,
+      size: 1,
       access_token: user.getWebToken()
     };
     this.removeParameter = {
@@ -81,15 +84,13 @@ var View = BaseView.extend({
       closeText: 'X',
       title: '封面设置',
       ctrlData: {
-        cmd: [
-          {
-            saveOriginal: 1,
-            op: 'save',
-            plan: 'avatar',
-            belongId: '20634338',
-            srcImg: 'img'
-          }
-        ],
+        cmd: [{
+          saveOriginal: 1,
+          op: 'save',
+          plan: 'avatar',
+          belongId: '20634338',
+          srcImg: 'img'
+        }],
         redirect: 'http://' + window.location.host + '/cross-url/upload.html'
       },
       uploadFileSuccess: function (response) {
@@ -131,18 +132,56 @@ var View = BaseView.extend({
   destroyed: function () {
     //  销毁之后
   },
-  initPageBox: function (prop) {
+  /**
+   * 获取分页数据
+   */
+  getPageList: function (page) {
     var self = this;
-    this.pageBoxView = new NoOpenPageBoxView({
-      el: '#noOpenPageBox',
-      props: prop,
-      listModel: this.noOpenModel,
-      listRender: function (response) {
-        var data = response.data;
-        var roomList = data.roomList;
-        self.initRender(roomList);
+    this.noOpenParameter = $.extend(this.noOpenParameter, {
+      offset: this.noOpenParameter.size * (page - 1)
+    });
+    var promise = this.noOpenModel.executeJSONP(this.noOpenParameter);
+    promise.done(function (response) {
+      var data = response.data;
+      var roomList = data.roomList || [];
+      if (!self.totalCount && data.totalCount) {
+        self.totalCount = data.totalCount;
+        self.initPageBox(data.totalCount);
+      }
+      // var count = Math.ceil(data.totalCount / self.noOpenParameter.size);
+      // if (count > 1) {
+      //   self.initPageBox({
+      //     offset: self.noOpenParameter.offset,
+      //     size: self.noOpenParameter.size,
+      //     count: count
+      //   });
+      // }
+      self.initRender(roomList);
+    });
+    promise.fail(function () {
+      msgBox.showError('获取未直播列表：第1页失败');
+    });
+  },
+  initPageBox: function (total) {
+    var self = this;
+    this.pagingBox = Pagenation.create('.page-wrap', {
+      total: total,
+      perpage: this.noOpenParameter.size,
+      onSelect: function (page) {
+        self.getPageList(page);
       }
     });
+    // var self = this;
+    // this.pageBoxView = new NoOpenPageBoxView({
+    //   el: '#noOpenPageBox',
+    //   props: prop,
+    //   listModel: this.noOpenModel,
+    //   listRender: function (response) {
+    //     var data = response.data;
+    //     var roomList = data.roomList;
+    //     self.initRender(roomList);
+    //   }
+    // });
   },
   //  分页渲染，以及缓存li
   initRender: function (items) {
