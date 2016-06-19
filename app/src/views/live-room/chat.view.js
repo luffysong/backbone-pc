@@ -202,6 +202,9 @@ var View = BaseView.extend({
 
     switch (msgObj.msgType) {
       case 0: // 文本消息
+        msgObj = $.extend(msgObj, {
+          userId: user.get('userId')
+        });
         callback(msgObj);
         break;
       case 1: // 发送礼物
@@ -258,8 +261,7 @@ var View = BaseView.extend({
       Backbone.trigger('event:UserKickOut', notify);
     }
   },
-  groupSystemNotifys: function () {
-  },
+  groupSystemNotifys: function () {},
   /**
    * 获取消息模板
    * @returns {*}

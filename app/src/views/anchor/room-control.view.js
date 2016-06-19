@@ -4,6 +4,7 @@
  */
 'use strict';
 
+var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 
@@ -45,6 +46,16 @@ var View = BaseView.extend({
     if (ops.hideCtrl) {
       this.btnFieldControl.hide();
     }
+    this.defineEventInterface();
+    this.fieldControlView = new FieldControlView({
+      roomInfo: this.roomInfo
+    });
+  },
+  defineEventInterface: function () {
+    var self = this;
+    Backbone.on('event:showFieldControllDialog', function () {
+      self.fieldContrlClickHandler();
+    });
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
@@ -163,13 +174,8 @@ var View = BaseView.extend({
       });
     }
     this.fieldControlDialog.show();
-    if (!this.fieldControlView) {
-      this.fieldControlView = new FieldControlView({
-        roomInfo: this.roomInfo
-      });
-    }
+    this.fieldControlView.renderPage();
   }
-
 });
 
 module.exports = View;

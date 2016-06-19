@@ -124,10 +124,14 @@ var View = BaseView.extend({
       id: li.attr('data-id')
     };
 
-    if (target.text() === '禁言') {
+    var text = target.text();
+
+    if (text === '禁言') {
       this.disableSendMsgConfirm(userInfo);
-    } else if (target.text() === '踢出') {
+    } else if (text === '踢出') {
       this.removeUserFromRoom(userInfo);
+    } else if (text === '场控') {
+      Backbone.trigger('event:addUserToManager', target.attr('data-uid'));
     }
   },
   /**

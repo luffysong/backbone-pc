@@ -16,6 +16,8 @@
   <div class="controls_forbid_reject">
     <a href="javascript:;" class="forbid">禁言</a>
     <a href="javascript:;" class="reject">踢出</a>
-    <a href="javascript:;" class="ctrl">场控</a>
+    <%if(userId) {%>
+    <a href="javascript:;" data-uid='<%=userId%>' class="ctrl">场控</a>
+    <%}%>
   </div>
 </li>
