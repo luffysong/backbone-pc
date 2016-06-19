@@ -404,7 +404,8 @@ var View = BaseView.extend({
     if (url) {
       window.location.href = url;
     } else {
-      window.history.go(-1);
+      // window.history.go(-1);
+      window.location.href = '/';
     }
   },
   loopRoomInfo: function (time) {
