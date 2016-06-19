@@ -87,13 +87,15 @@ var View = BaseView.extend({
   render: function () {
     this.elements.roomManagerWrap.show();
     this.elements.sendMessageWrap.hide();
-    this.roomCtrlView = new RoomControlView({
-      el: '#roomManagerWrap',
-      roomInfo: this.roomInfo,
-      FlashApi: this.options.FlashApi,
-      msgList: this.options.msgList,
-      hideCtrl: true // 隐藏场控管理
-    });
+    if (!this.roomCtrlView) {
+      this.roomCtrlView = new RoomControlView({
+        el: '#roomManagerWrap',
+        roomInfo: this.roomInfo,
+        FlashApi: this.options.FlashApi,
+        msgList: this.options.msgList,
+        hideCtrl: true // 隐藏场控管理
+      });
+    }
   },
   // 控制用户的禁言， 踢出
   renderUserControl: function (msgList) {
@@ -104,8 +106,7 @@ var View = BaseView.extend({
       });
     }
   },
-  userControlClick: function () {
-  }
+  userControlClick: function () {}
 });
 
 module.exports = View;

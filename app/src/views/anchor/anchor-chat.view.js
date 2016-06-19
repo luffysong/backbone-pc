@@ -359,13 +359,6 @@ var View = BaseView.extend({
           self.onMsgNotify(notifyInfo);
         }
       }
-      // if (notifyInfo && notifyInfo.constructor.name === 'Array') {
-      //     for (var i = 0, len = notifyInfo.length; i < len; i++) {
-      //         self.onMsgNotify(notifyInfo[i]);
-      //     }
-      // } else {
-      //     self.onMsgNotify(notifyInfo);
-      // }
     });
     Backbone.on('event:onGroupInfoChangeNotify', function (notifyInfo) {
       self.onGroupInfoChangeNotify(notifyInfo);
