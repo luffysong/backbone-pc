@@ -9,6 +9,9 @@ body {
 
 #anchorCtrlChat {
   width: 300px;
+  .controls_forbid_reject{
+    top: -26px!important;
+  }
 }
 
 .anchor-container {
@@ -20,8 +23,6 @@ body {
 
 //直播间
 .live-room-wrap {
-
-
   //喜欢按钮
 
   .like {

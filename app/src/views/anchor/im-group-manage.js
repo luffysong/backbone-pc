@@ -43,12 +43,15 @@ View.prototype = $.extend(View.prototype, {
   // 显示,隐藏禁言/踢出按钮
   showMsgControlMenu: function (target) {
     var control = target.find('.controls_forbid_reject');
+    if (this.options.isAssistant) {
+      control.find('.ctrl').hide();
+    }
     var index = $('#msgList').find('li').index(target);
     if (target.length <= 0) return;
 
     $('.controls_forbid_reject').not(control).hide();
     if (index === 0) {
-      control.css('margin-top', '33px');
+      control.css('margin-top', '26px');
     }
     control.toggle();
   },
