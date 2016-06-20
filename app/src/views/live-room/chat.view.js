@@ -336,7 +336,7 @@ var View = BaseView.extend({
   checkUserCanJoinRoom: function () {
     var info;
     YYTIMServer.getGroupInfo(this.roomInfo.imGroupid, function (res) {
-      if (res && res.ErrorCode === 0 || res.GroupInfo[0]) {
+      if (res && ~~res.ErrorCode === 0 || res.GroupInfo[0]) {
         info = res.GroupInfo[0];
         console.log(info);
       }

@@ -298,7 +298,7 @@ var View = BaseView.extend({
   getGroupInfo: function (imGroupId) {
     var self = this;
     YYTIMServer.getGroupInfo(imGroupId, function (res) {
-      if (res && res.ErrorCode === 0) {
+      if (res && ~~res.ErrorCode === 0) {
         self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
           return item.GroupId === self.roomInfo.imGroupid;
         });

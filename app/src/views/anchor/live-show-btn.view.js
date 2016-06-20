@@ -85,7 +85,7 @@ var View = BaseView.extend({
     var current = $(e.target);
     var self = this;
     var result = self.isTooLate(self.roomInfo.liveTime);
-    var status = self.roomInfo.status;
+    var status = ~~self.roomInfo.status;
 
     if (status === 0) {
       msgBox.showTip('该直播尚未发布,无法开启直播!');
@@ -119,6 +119,9 @@ var View = BaseView.extend({
     }
     return null;
   },
+  /**
+   * 开启直播
+   */
   startLive: function () {
     var self = this;
     var msg;
@@ -129,7 +132,7 @@ var View = BaseView.extend({
 
     promise = self.startLiveModel.executeJSONP(this.startLiveParams);
     promise.done(function (result) {
-      if (result && result.code === 0) {
+      if (result && ~~result.code === 0) {
         msg = '您已成功开启直播，请复制下面的信息：</br>'
           + '视频连接：' + result.data.livePushStreamUrl
           + '</br>视频流：' + result.data.streamName;
