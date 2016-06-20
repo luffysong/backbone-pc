@@ -56,7 +56,6 @@ var View = BaseView.extend({
 
     promise.done(function (res) {
       if (res && res.data && res.msg === 'SUCCESS') {
-        console.log(res);
         self.bindAside(res.data.slice(1, 3));
         self.bindCenter(res.data[0]);
         self.bindAside(res.data.slice(3));
@@ -64,7 +63,6 @@ var View = BaseView.extend({
     });
   },
   bindAside: function (arr) {
-    console.log('arr', arr);
     var html = this.compileHTML(this.asideTpl, {
       data: arr
     });

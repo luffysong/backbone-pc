@@ -1,0 +1,10 @@
+{{ each data as item $index}}
+<li>
+  <a href="javascript:;" data-videoid="{{item.videoId}}" class="item">
+    <img src="{{item.posterPic}}">
+    <div class="link-hover gradient-up am-vertical-align">
+      <span class="am-text-truncate am-vertical-align-bottom">{{item.desc}}</span>
+    </div>
+  </a>
+</li>
+{{/each}}

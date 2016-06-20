@@ -8,8 +8,8 @@ var base = require('base-extend-backbone');
 var BaseView = base.View;
 // 首页轮播
 var CarouselModel = require('../../models/index/carousel.model');
-var FanUserModel = require('../../models/index/fan-user.model');
-var ChannelModel = require('../../models/index/channel.model');
+// var FanUserModel = require('../../models/index/fan-user.model');
+// var ChannelModel = require('../../models/index/channel.model');
 
 // var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
@@ -18,14 +18,16 @@ var FlashApi = require('FlashApi');
 
 var View = BaseView.extend({
   el: '#topContainer',
-  events: {
-    'click .gotoLiveHome': 'gotoLiveHome'
+  rawLoader: function () {
+    return require('./template/recommend.html');
   },
-  context: function () {
-    // console.log(args);
+  events: {
+    'click .gotoLiveHome': 'gotoLiveHome',
+    'click #livingList': 'videoListClicked'
   },
   beforeMount: function () {
     //  初始化一些自定义属性
+    this.elements = {};
     this.recommendParameter = {
       deviceinfo: '{"aid":"30001001"}'
     };
@@ -37,14 +39,19 @@ var View = BaseView.extend({
     };
 
     this.carouselModel = new CarouselModel();
-    this.fanUserModel = new FanUserModel();
-    this.channelModel = new ChannelModel();
+    // this.fanUserModel = new FanUserModel();
+    // this.channelModel = new ChannelModel();
   },
   afterMount: function () {
     // 读取整个模块的模板
-    this.recommendTpl = this.$el.find('#recommendTpl').html();
+    // this.recommendTpl = this.$el.find('#recommendTpl').html();
     // 获取右侧列表模板
-    this.livingItemTpl = this.$el.find('#liveItemTpl').html();
+    // this.livingItemTpl = this.$el.find('#liveItemTpl').html();
+    this.livingItemTpl = require('./template/recommend-item-tpl.html');
+    this.elements.videoList = this.$el.find('#livingList');
+    this.elements.videoName = this.$el.find('#viedoName');
+    this.elements.btnGoLiveRoom = this.$el.find('#btnGoLiveRoom');
+    this.elements.flashWrap = this.$el.find('#topFlash');
   },
   ready: function () {
     //  初始化
@@ -63,14 +70,41 @@ var View = BaseView.extend({
     });
     return this.carouselModel.executeJSONP(params);
   },
-  recommendRender: function (data) {
-    var status = data.status;
-    var flashData = data;
-    var html = this.compileHTML(this.recommendTpl, {
-      data: data
+  // 渲染右侧列表
+  renderList: function () {
+    var self = this;
+    var html = '';
+    var promise = this.getCarouselList();
+    promise.done(function (res) {
+      if (res && res.data && res.msg === 'SUCCESS') {
+        self.videoListData = res.data || [];
+        html = self.compileHTML(self.livingItemTpl, res);
+        self.elements.videoList.html(html);
+        if (res.data && res.data.length > 0) {
+          self.selectedFirstToPlay();
+        }
+      }
     });
-    this.$el.html(html);
-    if (status === 3 || status === 2) {
+  },
+  // xuanz
+  selectedFirstToPlay: function () {
+    var target = this.elements.videoList.find('.item').eq(0);
+    this.videoListClicked({
+      target: target
+    });
+  },
+  /**
+   * 查找视频信息
+   */
+  findVideo: function (videoid) {
+    return _.find(this.videoListData, function (item) {
+      return item.videoId === ~~videoid;
+    });
+  },
+  // 设置flash
+  setFlash: function (video) {
+    var videoInfo = video;
+    if (!this.FlashApi) {
       this.FlashApi = FlashApi.sharedInstanceFlashApi({
         el: 'topFlash',
         props: {
@@ -81,31 +115,12 @@ var View = BaseView.extend({
     }
     if (this.FlashApi) {
       this.FlashApi.onReady(function () {
-        flashData.isIndex = true;
-        this.init(flashData);
+        videoInfo.isIndex = true;
+        this.init(videoInfo);
       });
     }
-
-    this.renderList({});
   },
-  // 渲染右侧列表
-  renderList: function () {
-    var self = this;
-    var html = '';
-    var promise = this.getCarouselList();
-    promise.done(function (res) {
-      if (res && res.data && res.msg === 'SUCCESS') {
-        html = self.compileHTML(self.recommendTpl, res.data[0]);
-        self.$el.html(html);
-
-        html = self.compileHTML(self.livingItemTpl, res);
-        self.$el.find('#livingList').html(html);
-      }
-    });
-  },
-  setFlash: function () {
-
-  },
+  // 进入直播间
   gotoLiveHome: function (e) {
     var el = $(e.currentTarget);
     var id = el.attr('data-id');
@@ -120,9 +135,30 @@ var View = BaseView.extend({
         window.location.href = 'playback.html?roomId=' + id;
         break;
       default:
-      //  默认不处理
+        //  默认不处理
+    }
+  },
+  videoListClicked: function (e) {
+    var target = $(e.target).parents('li').find('.item');
+    var videoId = target.attr('data-videoid');
+    this.elements.videoList.find('.item').removeClass('active');
+    target.addClass('active');
+    this.setVideoToPlay(videoId);
+  },
+  setVideoToPlay: function (videoId) {
+    var video = this.findVideo(videoId);
+    console.log(video);
+    if (video) {
+      this.elements.videoName.text(video.videoName);
+      this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
+      this.elements.flashWrap.css({
+        'background-image': 'url(' + video.posterPic + ')',
+        'background-size': '100%'
+      });
+      this.setFlash(video);
     }
   }
+
 });
 
 module.exports = View;

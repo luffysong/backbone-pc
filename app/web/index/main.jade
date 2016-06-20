@@ -3,48 +3,7 @@
 
 //直播频道
 div.index-wrap.top-bg#topContainer
-    // 模板
-    script#recommendTpl(type='text/html')
-        div.am-container.has-top-bar
-            section.living
-                header.am-vertical-align
-                    span.am-vertical-align-middle.am-serif="直播频道"
-                div.am-cf
-                    div.live-viedo.am-fl
-                        div.viedo-wrap#topFlash
-                        footer.am-fl
-                            span.title='EXO'
-                            button.gotoLiveHome.am-fr.am-btn.am-radius.am-btn-red(data-id="0",data-status="1")='进入直播间'
-                    aside.viedo-list.am-fr
-                        ul#livingList
-                            //li
-                            //    a(href='#').item.active
-                            //        img(src='/images/banner_09.jpg')
-                            //        div.link-hover.gradient-up.am-vertical-align
-                            //            span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
-                            //- for(var i = 4; i>0; i--)
-                            //    li
-                            //        a(href='#').item
-                            //            img(src='/images/banner_09.jpg')
-                            //            div.link-hover.gradient-up.am-vertical-align
-                            //                span.am-text-truncate.am-vertical-align-bottom 圣诞快乐撒的发生圣诞快乐撒的诞快乐撒的发生
-    // 右侧直播列表模板
-    script#liveItemTpl(type='text/html')
-        | {{ each data as item $index}}
-        | {{if $index == 0}}
-        li
-            a.item.active(href='javascript:;', data-channelId='{{item.videoId}}')
-                img(src='{{item.posterPic}}')
-                div.link-hover.gradient-up.am-vertical-align
-                    span.am-text-truncate.am-vertical-align-bottom {{item.desc}}
-        |{{ else }}
-        li
-            a.item(href='javascript:;', data-channelId='{{item.videoId}}')
-                img(src='{{item.posterPic}}')
-                div.link-hover.gradient-up.am-vertical-align
-                    span.am-text-truncate.am-vertical-align-bottom {{item.desc}}
-        | {{/if}}
-        | {{/each}}
+//- 顶部推荐视频模块
 //其他频道
 div.index-wrap.am-container
     //精彩饭趴
