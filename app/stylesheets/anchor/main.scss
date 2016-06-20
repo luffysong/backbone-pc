@@ -21,13 +21,17 @@
     }
     .edit_bg_btn {
       position: absolute;
-      top: 10px;
+      bottom: 10px;
       right: 10px;
       font-size: 12px;
       padding-top: 4px;
-      color: $main-bg-purple;
+      color: #fff;
       cursor: pointer;
       font-weight: 600;
+      padding: 3px 15px;
+      &:hover {
+        background-color: $main-bg-red;
+      }
     }
   }
   // 1.房间头部信息

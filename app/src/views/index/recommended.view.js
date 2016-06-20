@@ -138,6 +138,7 @@ var View = BaseView.extend({
         //  默认不处理
     }
   },
+  // 推荐列表点击
   videoListClicked: function (e) {
     var target = $(e.target).parents('li').find('.item');
     var videoId = target.attr('data-videoid');
@@ -145,6 +146,7 @@ var View = BaseView.extend({
     target.addClass('active');
     this.setVideoToPlay(videoId);
   },
+  // 开始播放推荐视频
   setVideoToPlay: function (videoId) {
     var video = this.findVideo(videoId);
     console.log(video);
