@@ -6,7 +6,8 @@
 var $ = require('jquery');
 
 var View = function (ops) {
-  this.options = $.extend({}, ops);
+  this.options = {};
+  $.extend(this.options, ops);
 };
 
 var uiConfirm = require('ui.confirm');

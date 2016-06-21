@@ -146,7 +146,7 @@ var View = BaseView.extend({
           hasNext: res.data.hasNext || false
         };
       }
-      if (ops.tag === 'first' && res.data.list.length <= 0) {
+      if (ops.tag === 'first' && _.isArray(res.data.list) && res.data.list.length <= 0) {
         self.newestListDOM.eq(0).append('<div class="first">快来成为第一个告白的幸运儿</div>');
       }
     });

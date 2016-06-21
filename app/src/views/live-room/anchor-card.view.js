@@ -53,7 +53,6 @@ var View = BaseView.extend({
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken()
     };
-    this.snsShareView = new SNSShareView();
   },
   // 当模板挂载到元素之后
   afterMount: function () {
@@ -86,6 +85,7 @@ var View = BaseView.extend({
     this.options = _.extend({
       share: null
     }, ops);
+    this.snsShareView = new SNSShareView(this.options.share || {});
     this.defineEventInterface();
   },
   defineEventInterface: function () {

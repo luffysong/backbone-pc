@@ -17,17 +17,19 @@ var Auxiliary = require('auxiliary-additions');
 var URL = Auxiliary.url;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-// var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('imServer');
 var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
 var UserInfo = require('../live-room/user.js');
-var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model.js');
+var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model');
 var ChannelDetailModel = require('../../models/channel/detail.model');
+var LiveVideoListModel = require('../../models/channel/live-play.model');
 
-var FlashAPI = require('FlashApi');
+var AnchorCardView = require('../live-room/anchor-card.view');
+
+// var FlashAPI = require('FlashApi');
 var store = Auxiliary.storage;
 var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
@@ -44,27 +46,22 @@ var View = BaseView.extend({
   // 当模板挂载到元素之前
   beforeMount: function () {
     var url = URL.parse(location.href);
-    if (!url.query.roomId && !url.query.channelId) {
+    if (!url.query.channelId && !url.query.channelId) {
       window.history.go(-1);
     }
-    this.roomId = url.query.channelId || 1;
+    this.channelId = url.query.channelId || 1;
 
     this.roomInfoPeriod = 5 * 1000;
-
-    // this.roomDetail = RoomDetailModel.sharedInstanceModel();
 
     this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
     this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
     this.channelDetailModel = new ChannelDetailModel();
+    this.liveVideoListModel = LiveVideoListModel.sharedInstanceModel();
 
     this.queryParams = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken()
     };
-
-    // this.roomDetailParams = _.extend({
-    //   roomId: ''
-    // }, this.queryParams);
 
     this.channelDetailParams = _.extend({
       channelId: ''
@@ -97,13 +94,14 @@ var View = BaseView.extend({
     this.defineEventInterface();
 
     if ($('#broadCastFlash').length > 0) {
-      this.flashAPI = FlashAPI.sharedInstanceFlashApi({
-        el: 'broadCastFlash'
-      });
+      // this.flashAPI = FlashAPI.sharedInstanceFlashApi({
+      //   el: 'broadCastFlash'
+      // });
     }
 
     this.renderPage();
     this.getUserInfo();
+    this.getLiveViedoList();
   },
   defineEventInterface: function () {
     var self = this;
@@ -112,7 +110,7 @@ var View = BaseView.extend({
     });
 
     Backbone.on('event:pleaseUpdateRoomInfo', function () {
-      // self.roomDetailParams.roomId = self.roomId;
+      // self.roomDetailParams.channelId = self.channelId;
       self.getRoomLoopInfo(function (res) {
         var data = res.data;
         Backbone.trigger('event:updateRoomInfo', data);
@@ -197,9 +195,9 @@ var View = BaseView.extend({
     var RoomTitle = require('../live-room/room-title.view');
     var ChatView = require('../live-room/chat.view');
     var SendMessageView = require('../live-room/send-message.view');
-    var AnchorCardView = require('../live-room/anchor-card.view');
     var PlayedListView = require('../live-room/played-list.view');
     var GiftView = require('../live-room/gift.view');
+    var LiveVideoListView = require('./live-video-list.view');
 
     var a = new RoomTitle();
 
@@ -207,13 +205,12 @@ var View = BaseView.extend({
 
     a = new SendMessageView();
 
-    a = new AnchorCardView({
-      type: 2 // 频道
-    });
 
     a = new PlayedListView();
 
     a = new GiftView();
+
+    a = new LiveVideoListView();
 
     // a = new LivePreviewView();
     console.log(a);
@@ -273,13 +270,20 @@ var View = BaseView.extend({
           url: data.url
         };
         self.roomInfo = data;
-        // self.setRoomBgImg();
-        self.flashAPI.onReady(function () {
-          this.init(self.roomInfo);
+        self.anchorView = new AnchorCardView({
+          share: {
+            url: '/channellive.html?channelId=' + self.channelId,
+            img: data.posterPic || '',
+            title: data.channelName || ''
+          }
         });
+        // self.setRoomBgImg();
+        // self.flashAPI.onReady(function () {
+        //   this.init(self.roomInfo);
+        // });
         self.adWallView = new AdvertisingWallView({
           el: '#advertisingWall',
-          roomId: data.channelId,
+          channelId: data.channelId,
           userInfo: self.userInfo,
           type: 2
         });
@@ -331,8 +335,8 @@ var View = BaseView.extend({
   getRoomInfo: function (okFn, errFn) {
     var self = this;
     var promise;
-    // self.roomDetailParams.roomId = self.roomId;
-    self.channelDetailParams.channelId = self.roomId;
+    // self.roomDetailParams.channelId = self.channelId;
+    self.channelDetailParams.channelId = self.channelId;
     promise = this.channelDetailModel.executeJSONP(self.channelDetailParams);
     promise.done(function (response) {
       if (okFn) {
@@ -386,7 +390,7 @@ var View = BaseView.extend({
         return item.replace('$0', '') === self.userIMSig.userId;
       });
       if (result) {
-        UserInfo.setKickout(self.roomId, true);
+        UserInfo.setKickout(self.channelId, true);
 
         uiConfirm.show({
           title: '禁止进入',
@@ -423,7 +427,7 @@ var View = BaseView.extend({
     console.log(time);
     // var self = this;
     // self.roomInfoTimeId = setTimeout(function () {
-    //   self.roomDetailParams.roomId = self.roomId;
+    //   self.roomDetailParams.channelId = self.channelId;
     //   self.getRoomLoopInfo(function (res) {
     //     var data = res.data;
     //     Backbone.trigger('event:updateRoomInfo', data);
@@ -439,7 +443,7 @@ var View = BaseView.extend({
     console.log(okFn, errFn);
     // var self = this;
     // var promise;
-    // self.roomDetailParams.roomId = self.roomId;
+    // self.roomDetailParams.channelId = self.channelId;
     // promise = this.roomLongPolling.executeJSONP(self.roomDetailParams);
     // promise.done(function (response) {
     //   if (okFn) {
@@ -458,7 +462,7 @@ var View = BaseView.extend({
     this.inAndRoomParams.type = 1;
 
     if (this.roomInfo) {
-      this.inAndRoomParams.roomId = this.roomInfo.id;
+      this.inAndRoomParams.channelId = this.roomInfo.id;
     }
     promise = this.inAndOutRoom.executeJSONP(this.inAndRoomParams);
     promise.done(function () {});
@@ -470,13 +474,34 @@ var View = BaseView.extend({
   },
   // 右侧边栏切换
   asideChanged: function (e) {
-    console.log(e.target);
     var target = $(e.target);
     var id = target.attr('data-id');
     target.parent().children().removeClass('active');
     target.addClass('active');
     $('.tab-content').hide();
     $('#' + id).show();
+  },
+  // 获取房间视频信息，以及节目单
+  getLiveViedoList: function () {
+    // var self = this;
+    var promise = this.liveVideoListModel.executeJSONP(_.extend({
+      channelId: this.channelId,
+      videoSize: 10
+    }, this.queryParams));
+    promise.done(function (res) {
+      if (res && ~~res.code === 0) {
+        // 视频数据
+        if (res.data.channelShow) {
+          // self.flashAPI.onReady(function () {
+          // this.init(self.roomInfo);
+          // });
+        }
+        // 节目单
+        if (res.data && res.data.videos) {
+          Backbone.trigger('event:ChannelLiveVideoListReady', res.data.videos || []);
+        }
+      }
+    });
   }
 });
 
