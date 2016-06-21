@@ -198,17 +198,20 @@ var View = BaseView.extend({
     var PlayedListView = require('../live-room/played-list.view');
     var GiftView = require('../live-room/gift.view');
     var LiveVideoListView = require('./live-video-list.view');
+    var type = {
+      type: 'channel'
+    };
 
     var a = new RoomTitle();
 
-    a = new ChatView();
+    a = new ChatView(type);
 
-    a = new SendMessageView();
+    a = new SendMessageView(type);
 
 
     a = new PlayedListView();
 
-    a = new GiftView();
+    a = new GiftView(type);
 
     a = new LiveVideoListView();
 
@@ -283,7 +286,7 @@ var View = BaseView.extend({
         // });
         self.adWallView = new AdvertisingWallView({
           el: '#advertisingWall',
-          channelId: data.channelId,
+          roomId: data.channelId,
           userInfo: self.userInfo,
           type: 2
         });

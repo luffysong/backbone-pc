@@ -59,7 +59,8 @@ var View = BaseView.extend({
     });
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
     if ($('#broadCastFlash').length > 0) {
       this.flashAPI = FlashAPI.sharedInstanceFlashApi({
         el: 'broadCastFlash'
@@ -111,15 +112,20 @@ var View = BaseView.extend({
     });
 
     Backbone.on('event:visitorSendMessage', function (data) {
-      if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
-        msgBox.showTip('您已经被禁言,不能发弹幕哦');
-      } else if (UserInfo.isLockScreen(self.roomInfo.id)) {
-        msgBox.showTip('主播:进行了锁屏操作');
-      } else {
-        self.beforeSendMsg(data, function (msgObj) {
-          self.sendMsgToGroup(msgObj);
-        });
+      if (self.options.type !== 'channel') {
+        if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
+          msgBox.showTip('您已经被禁言,不能发弹幕哦');
+          return null;
+        }
+        if (UserInfo.isLockScreen(self.roomInfo.id)) {
+          msgBox.showTip('主播:进行了锁屏操作');
+          return null;
+        }
       }
+      self.beforeSendMsg(data, function (msgObj) {
+        self.sendMsgToGroup(msgObj);
+      });
+      return null;
     });
 
     Backbone.on('event:visitorInteractive', function (data) {
@@ -195,13 +201,17 @@ var View = BaseView.extend({
     var self = this;
     var msgObj = msg;
     var tempInfo;
+    var isChannel = this.options.type === 'channel';
+    var roomId = isChannel ? this.roomInfo.channelId : this.roomInfo.id;
 
-    if (msgObj.roomId !== this.roomInfo.id) {
-      return;
-    }
-    if (self.roomInfo && self.roomInfo.status === 3) {
-      msgBox.showTip('直播已结束,无法进行互动');
-      return;
+    if (!isChannel) {
+      if (msgObj.roomId !== roomId) {
+        return;
+      }
+      if (self.roomInfo && self.roomInfo.status === 3) {
+        msgBox.showTip('直播已结束,无法进行互动');
+        return;
+      }
     }
 
     switch (msgObj.msgType) {
@@ -285,6 +295,7 @@ var View = BaseView.extend({
   addMessage: function (msg) {
     var self = this;
     var msgObj;
+    var roomId = this.options.type === 'channel' ? this.roomInfo.channelId : this.roomInfo.id;
     msgObj = _.extend({
       nickName: '匿名',
       content: '',
@@ -294,7 +305,7 @@ var View = BaseView.extend({
       userId: ''
     }, msg);
 
-    if (msgObj && msgObj.roomId !== self.roomInfo.id) {
+    if (msgObj && msgObj.roomId !== roomId) {
       return;
     }
     msgObj.content = self.filterEmoji(msgObj.content);

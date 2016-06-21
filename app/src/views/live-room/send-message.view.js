@@ -49,7 +49,8 @@ var View = BaseView.extend({
     };
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
     this.defineEventInterface();
     this.setTextAreatColor();
   },
@@ -61,10 +62,11 @@ var View = BaseView.extend({
       }
     });
     Backbone.on('event:visitorSendGift', function (data) {
+      var id = self.options.type === 'channel' ? self.roomInfo.channelId : self.roomInfo.id;
       self.sendMessageToChat(_.extend({
         nickName: user.get('userName'),
         smallAvatar: user.get('bigheadImg'),
-        roomId: self.roomInfo.id || ''
+        roomId: id
       }, data));
     });
   },
@@ -101,7 +103,7 @@ var View = BaseView.extend({
         fontColor: this.elements.btnChooseColor.attr('data-color') || '#999999'
       },
       smallAvatar: user.get('bigheadImg'),
-      roomId: this.roomInfo.id
+      roomId: this.roomInfo.id || this.roomInfo.channelId
     });
     this.elements.txtMessage.val('');
     setTimeout(function () {
@@ -110,10 +112,12 @@ var View = BaseView.extend({
     return null;
   },
   sendMessageToChat: function (msg) {
-    if (!this.roomInfo || this.roomInfo.status !== 2) {
-      msgBox.showTip('该直播不在直播中,无法进行互动');
-      this.elements.txtMessage.val('');
-      return;
+    if (this.options.type !== 'channel') {
+      if (!this.roomInfo || this.roomInfo.status !== 2) {
+        msgBox.showTip('该直播不在直播中,无法进行互动');
+        this.elements.txtMessage.val('');
+        return;
+      }
     }
     Backbone.trigger('event:visitorSendMessage', msg);
   },

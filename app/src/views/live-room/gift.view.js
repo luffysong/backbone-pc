@@ -11,15 +11,18 @@
 
 'use strict';
 
+var Backbone = window.Backbone;
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
+
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var uiConfirm = require('ui.confirm');
 var GiftModel = require('../../models/anchor/gift.model');
 var PopularityModel = require('../../models/live-room/popularity-add.model');
-var Backbone = window.Backbone;
-var _ = require('underscore');
+var ChannelPopularityModel = require('../../models/channel/popularity-add.model');
+
 
 var msgBox = require('ui.msgBox');
 var UserInfo = require('./user.js');
@@ -31,7 +34,7 @@ var View = BaseView.extend({
     'click #gift-items': 'giftClick',
     'click .btn-push': 'topClick',
     'click #btnLike': 'lickClick' // ,
-    // 'click #btnShare': 'shareClick'
+      // 'click #btnShare': 'shareClick'
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
@@ -44,15 +47,18 @@ var View = BaseView.extend({
       size: 90000,
       type: 0
     };
+    this.queryParams = {
+      deviceinfo: '{"aid": "30001001"}',
+      access_token: user.getWebToken()
+    };
 
     this.giftModel = GiftModel.sharedInstanceModel();
     this.popularityModel = PopularityModel.sharedInstanceModel();
-    this.popularityParams = {
-      deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken(),
+    this.channelPopularityModel = ChannelPopularityModel.sharedInstanceModel();
+    this.popularityParams = _.extend({
       type: 1,
       roomId: 0
-    };
+    }, this.queryParams);
 
     this.isNeedPopup = true;
     this.elements = {};
@@ -67,7 +73,8 @@ var View = BaseView.extend({
     };
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
     this.defineEventInterface();
 
     this.initGiftList();
@@ -118,14 +125,14 @@ var View = BaseView.extend({
       });
 
     warp.find('.jcarousel-control-prev')
-        .jcarouselControl({
-          target: '-=1'
-        });
+      .jcarouselControl({
+        target: '-=1'
+      });
 
     warp.find('.jcarousel-control-next')
-        .jcarouselControl({
-          target: '+=1'
-        });
+      .jcarouselControl({
+        target: '+=1'
+      });
   },
   initGiftList: function () {
     var self = this;
@@ -143,6 +150,10 @@ var View = BaseView.extend({
     });
   },
   roomStatusCheck: function () {
+    if (this.options.type === 'channel') {
+      // 如果是频道，直接通过
+      return true;
+    }
     if (!this.roomInfo || this.roomInfo.status !== 2) {
       msgBox.showTip('该直播不在直播中,无法进行互动');
       return false;
@@ -168,46 +179,49 @@ var View = BaseView.extend({
 
   sendGift: function (data) {
     var self = this;
-    if (UserInfo.isDisbaleTalk(user.get('userId'), this.roomInfo.id)) {
-      msgBox.showTip('您已经被主播禁言10分钟');
-    } else if (UserInfo.isLockScreen(this.roomInfo.id)) {
-      msgBox.showTip('主播锁屏中');
-    } else {
-      if (this.notSend) {
+    if (this.options.type !== 'channel') {
+      if (UserInfo.isDisbaleTalk(user.get('userId'), this.roomInfo.id)) {
+        msgBox.showTip('您已经被主播禁言10分钟');
         return null;
       }
-      this.notSend = true;
-
-      Backbone.trigger('event:visitorSendGift', {
-        msgType: 1,
-        giftId: data.giftId,
-        giftNum: 1
-      });
-
-      setTimeout(function () {
-        self.notSend = false;
-      }, self.sendGiftPeriod);
+      if (UserInfo.isLockScreen(this.roomInfo.id)) {
+        msgBox.showTip('主播锁屏中');
+        return null;
+      }
     }
+    if (this.notSend) {
+      return null;
+    }
+    this.notSend = true;
+
+    Backbone.trigger('event:visitorSendGift', {
+      msgType: 1,
+      giftId: data.giftId,
+      giftNum: 1
+    });
+
+    setTimeout(function () {
+      self.notSend = false;
+    }, self.sendGiftPeriod);
     return null;
   },
   topClick: function () {
     var self = this;
-    // if (!this.roomStatusCheck()) {
-    //  return;
-    // }
     if (!this.isNeedPopup) {
-      self.pushPopularity(2);
+      // self.pushPopularity(2);
+      self.beforePushPopularity(2);
       return;
     }
-    var content = '<div>使用 <span class="green">20</span>积分支持一下MC,当前共有<span class="green">'
-      + (this.currentUserInfo.totalMarks || 0) + '</span>积分</div></br>'
-      + '<div style="text-align:right; color:#999;"> <label>' +
+    var content = '<div>使用 <span class="green">20</span>积分支持一下MC,当前共有<span class="green">' +
+      (this.currentUserInfo.totalMarks || 0) + '</span>积分</div></br>' +
+      '<div style="text-align:right; color:#999;"> <label>' +
       '<input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
     uiConfirm.show({
       title: '顶一下',
       content: content,
       okFn: function () {
-        self.pushPopularity(2);
+        // self.pushPopularity(2);
+        self.beforePushPopularity(2);
         var check = $('#popupCheckBox');
         if (check.is(':checked')) {
           self.isNeedPopup = false;
@@ -217,7 +231,34 @@ var View = BaseView.extend({
       }
     });
   },
-
+  beforePushPopularity: function (type) {
+    var channelType = 2;
+    if (this.options.type === 'channel') {
+      channelType = type === 2 ? 3 : channelType;
+      this.pushChannelPopularity(channelType);
+    } else {
+      this.pushPopularity(type);
+    }
+  },
+  pushChannelPopularity: function (type) {
+    var self = this;
+    var promise = this.channelPopularityModel.executeJSONP(_.extend({
+      type: type,
+      channelId: this.roomInfo.channelId
+    }, this.queryParams));
+    promise.done(function (res) {
+      if (~~res.code === 0 && type === 2) {
+        Backbone.trigger('event:pleaseUpdateRoomInfo');
+        self.getUserInfo();
+      } else if (~~res.code === 0 && type === 3) {
+        msgBox.showOK('非常感谢您的大力支持');
+        Backbone.trigger('event:pleaseUpdateRoomInfo');
+        self.getUserInfo();
+      } else {
+        msgBox.showTip(res.data.message || '操作失败请您稍后重试');
+      }
+    });
+  },
   pushPopularity: function (type) {
     var self = this;
     var promise;
@@ -265,7 +306,8 @@ var View = BaseView.extend({
       roomId: self.roomInfo.id || '',
       msgType: 3
     });
-    self.pushPopularity(1);
+    // self.pushPopularity(1);
+    self.beforePushPopularity(1);
     setTimeout(function () {
       self.isClicked = false;
     }, 5000);
