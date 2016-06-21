@@ -440,6 +440,7 @@ var View = BaseView.extend({
       }
     });
   },
+  // 告诉服务器加入该房间
   joinRoom: function () {
     var promise;
     this.inAndRoomParams.type = 1;
@@ -448,9 +449,7 @@ var View = BaseView.extend({
       this.inAndRoomParams.roomId = this.roomInfo.id;
     }
     promise = this.inAndOutRoom.executeJSONP(this.inAndRoomParams);
-    promise.done(function (res) {
-      console.log(res);
-    });
+    promise.done(function () {});
   },
   setRoomBgImg: function () {
     if (this.roomInfo && this.roomInfo.imageUrl) {

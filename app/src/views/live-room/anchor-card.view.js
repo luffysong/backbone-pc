@@ -23,6 +23,7 @@ var _ = require('underscore');
 var msgBox = require('ui.msgBox');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
+var SNSShareView = require('./sns-share.view');
 
 var View = BaseView.extend({
   el: '.userInfoWrap', // 设置View对象作用于的根元素，比如id
@@ -31,6 +32,7 @@ var View = BaseView.extend({
   },
   events: { // 监听事件
     'click .btnFollow': 'followClickHandler',
+    'click #btnShare': 'shareClick',
     'mouseover .btnFollow': function (e) {
       var target = $(e.target);
       if (target.hasClass('followed')) {
@@ -51,6 +53,7 @@ var View = BaseView.extend({
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken()
     };
+    this.snsShareView = new SNSShareView();
   },
   // 当模板挂载到元素之后
   afterMount: function () {
@@ -79,7 +82,10 @@ var View = BaseView.extend({
     this.genderDOM = el.find('.icon-gender');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({
+      share: null
+    }, ops);
     this.defineEventInterface();
   },
   defineEventInterface: function () {
@@ -178,6 +184,21 @@ var View = BaseView.extend({
       });
     }
     return this;
+  },
+  shareClick: function (e) {
+    console.log(e);
+    var ops = {
+      url: '/liveroom.html?roomId=' + this.roomInfo.id,
+      title: this.roomInfo.roomName || '',
+      img: this.roomInfo.posterPic || '',
+      type: 1
+    };
+    console.log(this.options);
+    if (this.options.share) {
+      $.extend(ops, this.options.share);
+    }
+    this.snsShareView.setOptions(ops);
+    this.snsShareView.open();
   }
 });
 

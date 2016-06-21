@@ -1,15 +1,13 @@
-/*
- clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
- */
-
-
 /**
  * @time {时间}
  * @author {编写者}
  * @info 频道播放页
  */
-
+/*
+ clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+ */
 'use strict';
+
 var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
@@ -19,7 +17,7 @@ var Auxiliary = require('auxiliary-additions');
 var URL = Auxiliary.url;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var RoomDetailModel = require('../../models/anchor/room-detail.model');
+// var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
@@ -53,23 +51,24 @@ var View = BaseView.extend({
 
     this.roomInfoPeriod = 5 * 1000;
 
-    this.roomDetail = RoomDetailModel.sharedInstanceModel();
+    // this.roomDetail = RoomDetailModel.sharedInstanceModel();
 
     this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
     this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
     this.channelDetailModel = new ChannelDetailModel();
 
-    this.roomDetailParams = {
+    this.queryParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken(),
-      roomId: ''
+      access_token: user.getWebToken()
     };
 
-    this.channelDetailParams = {
-      deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken(),
+    // this.roomDetailParams = _.extend({
+    //   roomId: ''
+    // }, this.queryParams);
+
+    this.channelDetailParams = _.extend({
       channelId: ''
-    };
+    }, this.queryParams);
 
     this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
 
@@ -204,22 +203,19 @@ var View = BaseView.extend({
 
     var a = new RoomTitle();
 
-    this.adWallView = new AdvertisingWallView({
-      el: '#advertisingWall'
-    });
     a = new ChatView();
 
     a = new SendMessageView();
 
-    a = new AnchorCardView();
+    a = new AnchorCardView({
+      type: 2 // 频道
+    });
 
     a = new PlayedListView();
 
     a = new GiftView();
 
     // a = new LivePreviewView();
-
-
     console.log(a);
   },
   initWebIM: function () {
@@ -278,11 +274,14 @@ var View = BaseView.extend({
         };
         self.roomInfo = data;
         // self.setRoomBgImg();
-        /*        self.flashAPI.onReady(function () {
-         this.init(self.roomInfo);
-         });*/
-        self.adWallView.setOptions({
-          roomId: data.id
+        self.flashAPI.onReady(function () {
+          this.init(self.roomInfo);
+        });
+        self.adWallView = new AdvertisingWallView({
+          el: '#advertisingWall',
+          roomId: data.channelId,
+          userInfo: self.userInfo,
+          type: 2
         });
 
         self.joinRoom();
@@ -421,37 +420,39 @@ var View = BaseView.extend({
     }
   },
   loopRoomInfo: function (time) {
-    var self = this;
-
-    self.roomInfoTimeId = setTimeout(function () {
-      self.roomDetailParams.roomId = self.roomId;
-      self.getRoomLoopInfo(function (res) {
-        var data = res.data;
-        Backbone.trigger('event:updateRoomInfo', data);
-        if (data.roomStatus === 3) {
-          Backbone.trigger('event:liveShowEnded', data);
-        } else if (data.roomStatus === 2) {
-          self.loopRoomInfo();
-        }
-      });
-    }, !!time ? time : self.roomInfoPeriod);
+    console.log(time);
+    // var self = this;
+    // self.roomInfoTimeId = setTimeout(function () {
+    //   self.roomDetailParams.roomId = self.roomId;
+    //   self.getRoomLoopInfo(function (res) {
+    //     var data = res.data;
+    //     Backbone.trigger('event:updateRoomInfo', data);
+    //     if (data.roomStatus === 3) {
+    //       Backbone.trigger('event:liveShowEnded', data);
+    //     } else if (data.roomStatus === 2) {
+    //       self.loopRoomInfo();
+    //     }
+    //   });
+    // }, !!time ? time : self.roomInfoPeriod);
   },
   getRoomLoopInfo: function (okFn, errFn) {
-    var self = this;
-    var promise;
-    self.roomDetailParams.roomId = self.roomId;
-    promise = this.roomLongPolling.executeJSONP(self.roomDetailParams);
-    promise.done(function (response) {
-      if (okFn) {
-        okFn(response);
-      }
-    });
-    promise.fail(function (err) {
-      if (errFn) {
-        errFn(err);
-      }
-    });
+    console.log(okFn, errFn);
+    // var self = this;
+    // var promise;
+    // self.roomDetailParams.roomId = self.roomId;
+    // promise = this.roomLongPolling.executeJSONP(self.roomDetailParams);
+    // promise.done(function (response) {
+    //   if (okFn) {
+    //     okFn(response);
+    //   }
+    // });
+    // promise.fail(function (err) {
+    //   if (errFn) {
+    //     errFn(err);
+    //   }
+    // });
   },
+  // 告诉服务器加入该房间
   joinRoom: function () {
     var promise;
     this.inAndRoomParams.type = 1;
@@ -460,9 +461,7 @@ var View = BaseView.extend({
       this.inAndRoomParams.roomId = this.roomInfo.id;
     }
     promise = this.inAndOutRoom.executeJSONP(this.inAndRoomParams);
-    promise.done(function (res) {
-      console.log(res);
-    });
+    promise.done(function () {});
   },
   setRoomBgImg: function () {
     if (this.roomInfo && this.roomInfo.imageUrl) {

@@ -68,7 +68,7 @@ var View = BaseView.extend({
   },
   bindData: function (data) {
     var els = this.elements;
-    els.roomName.text(data.roomName || '');
+    els.roomName.text(data.roomName || data.channelName || '');
     els.onLine.text(data.online || 0);
     var num = data.popularity < data.realPopularity ? data.realPopularity : data.popularity;
     els.popularity.text(num || 0);

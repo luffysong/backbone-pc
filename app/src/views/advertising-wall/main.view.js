@@ -82,7 +82,9 @@ var View = BaseView.extend({
     this.perItemFee = 5;
   },
   ready: function (ops) {
-    this.options = _.extend({}, ops);
+    this.options = _.extend({
+      totalMarks: 0
+    }, ops);
     this.defineEventInterface();
     this.lastTime = new Date();
     // 隐藏未读小红点

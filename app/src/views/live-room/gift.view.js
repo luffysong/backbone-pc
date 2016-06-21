@@ -72,7 +72,7 @@ var View = BaseView.extend({
 
     this.initGiftList();
 
-    $('#btnShare').on('click', this.shareClick.bind(this));
+    // $('#btnShare').on('click', this.shareClick.bind(this));
     $('.btn-push').on('click', this.topClick.bind(this));
   },
   defineEventInterface: function () {
@@ -271,7 +271,7 @@ var View = BaseView.extend({
     }, 5000);
   },
   shareClick: function () {
-    if (!this.roomInfo || this.roomInfo.hasOwnProperty('channelId')) {
+    if (!this.roomInfo) {
       return;
     }
     var title = encodeURIComponent(this.roomInfo.roomName + ',快来围观吧');

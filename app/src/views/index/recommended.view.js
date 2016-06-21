@@ -125,17 +125,25 @@ var View = BaseView.extend({
     var el = $(e.currentTarget);
     var id = el.attr('data-id');
     var status = ~~(el.attr('data-status'));
+    var url = '';
     switch (status) {
       case 2:
         //  处理直播
-        window.location.href = 'liveRoom.html?roomId=' + id;
+        url = '/liveRoom.html?roomId=';
         break;
       case 3:
         //  处理回放
-        window.location.href = 'playback.html?roomId=' + id;
+        url = '/playback.html?roomId=';
+        break;
+      case 5:
+        // 处理频道
+        url = '/channellive.html?channelId=';
         break;
       default:
         //  默认不处理
+    }
+    if (url) {
+      window.location.href = url + id;
     }
   },
   // 推荐列表点击
@@ -153,6 +161,7 @@ var View = BaseView.extend({
     if (video) {
       this.elements.videoName.text(video.videoName);
       this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
+      this.elements.btnGoLiveRoom.attr('data-status', 5);
       this.elements.flashWrap.css({
         'background-image': 'url(' + video.posterPic + ')',
         'background-size': '100%'

@@ -12,9 +12,7 @@ $(function () {
 
   var a = new TopBarView();
 
-  a = new MainView({
-    roomType: 'channel'
-  });
+  a = new MainView();
 
   console.log(a);
   require('../stylesheets/channel-live.scss');
