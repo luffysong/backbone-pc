@@ -2,56 +2,50 @@
 @import "live-room/msg-board";
 @import "index/viedo-list";
 @import "live-room/preview";
+@import "live-room/sns-share";
 
 body {
   background: $main-bg-anchor-color;
 }
-
 #anchorCtrlChat {
   width: 300px;
-  .controls_forbid_reject{
+  .controls_forbid_reject {
     top: -26px!important;
   }
 }
-
 .anchor-container {
   padding-bottom: 100px;
 }
 :root .hover-wrap {
   filter: none;
 }
-
 //直播间
 .live-room-wrap {
   //喜欢按钮
-
   .like {
     vertical-align: middle;
     margin-right: 20px;
     .number {
       color: $main-font-light-color;
-      margin: 0 10px 0;
+      margin: 0 10px;
       //padding-top: 10px;
       display: inline-block;
       height: 36px;
       font-size: 12px;
       line-height: 36px;
     }
-
     .btn-like {
       background-color: $main-bg-red;
       width: 36px;
       height: 36px;
       i {
         display: inline-block;
-        background: url(../images/liveroom/liveroom-icons-bg_14.png) no-repeat;
+        background: url("../images/liveroom/liveroom-icons-bg_14.png") no-repeat;
         width: 18px;
         height: 14px;
-
       }
     }
   }
-
   .btn-support {
     margin-left: 20px;
     position: relative;
@@ -65,7 +59,7 @@ body {
       display: inline-block;
       width: 25px;
       height: 32px;
-      background-image: url(../images/live-bg_03.jpg);
+      background-image: url("../images/live-bg_03.jpg");
       background-repeat: no-repeat;
       -webkit-background-size: 100%;
       background-size: 100%;
@@ -73,20 +67,19 @@ body {
   }
   .ctrl {
     &.pre {
-      background-image: url(../images/live_btn_05.jpg);
+      background-image: url("../images/live_btn_05.jpg");
       &:hover {
-        background-image: url(../images/live_btn_03.jpg);
+        background-image: url("../images/live_btn_03.jpg");
         background-color: #01e7cc;
       }
     }
     &.next {
-      background-image: url(../images/live_btn_07.jpg);
+      background-image: url("../images/live_btn_07.jpg");
       &:hover {
-        background-image: url(../images/live_btn_09.png);
+        background-image: url("../images/live_btn_09.png");
         background-color: #01e7cc;
       }
     }
-
   }
   .gary1 {
     color: #585757 !important;
@@ -128,7 +121,6 @@ body {
       }
     }
   }
-
   .user-info-block {
     background-color: #fff;
     height: 65px;
@@ -138,15 +130,15 @@ body {
         width: 55px;
         height: 55px;
       }
-      .like{
-        display:none;
+      .like {
+        display: none;
         margin-top: -28px;
       }
       .btn-share {
         display: inline-block;
         width: 36px;
         height: 36px;
-        background-image: url(../images/liveroom/liveroom-icons-bg_07.png);
+        background-image: url("../images/liveroom/liveroom-icons-bg_07.png");
         margin-top: 12px;
         margin-right: 22px;
       }
@@ -191,7 +183,7 @@ body {
         width: 20px;
         height: 20px;
         display: inline-block;
-        background-image: url(../images/live-bg-012.png);
+        background-image: url("../images/live-bg-012.png");
         background-repeat: no-repeat;
       }
     }
@@ -208,7 +200,7 @@ body {
       }
       .icon-voice {
         display: inline-block;
-        background-image: url(../images/liveroom/liveroom-icons-bg_03.png);
+        background-image: url("../images/liveroom/liveroom-icons-bg_03.png");
         width: 21px;
         height: 18px;
       }
@@ -221,7 +213,6 @@ body {
       }
     }
   }
-
   #anchorCtrlChat {
     .chatCon {
       height: 466px;
@@ -236,13 +227,12 @@ body {
   //    border-top: 1px solid #eee;
   //  }
   //}
-
   .send-msg-wrap {
     background-color: #fff;
     position: relative;
     border-top: 1px solid #efefef;
-    height:101px;
-    .room-manager-block{
+    height: 101px;
+    .room-manager-block {
       margin-top: 10px;
     }
     .msg-text {
@@ -273,20 +263,18 @@ body {
         //background: #000;
         &.actived {
           i {
-            background-image: url(../images/live_color_2_03.png);
+            background-image: url("../images/live_color_2_03.png");
           }
         }
         i {
           display: inline-block;
-          background-image: url(../images/liveroom/liveroom_font_size_03.png);
+          background-image: url("../images/liveroom/liveroom_font_size_03.png");
           background-repeat: no-repeat;
           width: 15px;
           height: 17px;
         }
       }
-
     }
-
     .choose-color {
       position: absolute;
       width: 100%;
@@ -335,16 +323,12 @@ body {
           background-color: #fff;
         }
       }
-
     }
-
   }
-
   .gift-wrap {
     height: 90px;
     background-color: #fff;
     padding-top: 10px;
-
     .lucky-draw {
       position: relative;
       display: inline-block;
@@ -353,7 +337,7 @@ body {
         display: inline-block;
         margin-top: 5px;
         background: #000;
-        background: url(../images/liveroom/liveroom-icons-bg_11.png) no-repeat;
+        background: url("../images/liveroom/liveroom-icons-bg_11.png") no-repeat;
         width: 62px;
         height: 62px;
       }
@@ -366,9 +350,7 @@ body {
         border: 1px solid #fff;
         background-color: #fe4646;
       }
-
     }
-
     .gift-items {
       li {
         width: 110px;
@@ -385,12 +367,12 @@ body {
         color: #aaaaaa;
       }
     }
-
     .like-wrap {
       margin-right: 16px;
       margin-top: 8px;
       margin-left: 32px;
-      .like, .push {
+      .like,
+      .push {
         display: inline-block;
       }
       //.like {
@@ -425,7 +407,7 @@ body {
           vertical-align: middle;
           i {
             display: inline-block;
-            background: url(../images/index/hover_10.png) no-repeat;
+            background: url("../images/index/hover_10.png") no-repeat;
             -webkit-background-size: 100%;
             background-size: 100%;
             width: 20px;
@@ -435,9 +417,7 @@ body {
         }
       }
     }
-
     $jcarousel-height: 75px;
-
     .jcarousel-wrapper {
       display: inline-block;
       //border: 1px solid #ccc;
@@ -458,7 +438,6 @@ body {
       width: 100%;
       height: $jcarousel-height;
     }
-
     .jcarousel ul {
       width: 20000em;
       position: relative;
@@ -466,7 +445,6 @@ body {
       margin: 0;
       padding: 0;
     }
-
     .jcarousel li {
       //width: 70px;
       height: $jcarousel-height;
@@ -476,31 +454,25 @@ body {
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
     }
-
     .jcarousel img {
       display: block;
       max-width: 100%;
       height: auto !important;
     }
-
-    .jcarousel-control-prev,
-    .jcarousel-control-next {
+    .jcarousel-control-next,
+    .jcarousel-control-prev {
       position: absolute;
       top: 50%;
       margin-top: -50px;
       background-color: #f2f1f2;
     }
-
     .jcarousel-control-prev {
       left: 0;
     }
-
     .jcarousel-control-next {
       right: 0;
     }
-
   }
-
   // 主播播过的
   .recent-list-wrap {
     background-color: #fff;
@@ -518,7 +490,6 @@ body {
         width: 260px;
       }
       &:hover {
-
         .anchor-info {
           .title {
             color: $main-bg-purple;
@@ -531,7 +502,6 @@ body {
         width: 260px;
         height: 145px;
         overflow: hidden;
-
         &:hover {
           .link-hover {
             .center {
@@ -539,7 +509,6 @@ body {
             }
           }
         }
-
         .link-hover {
           width: 260px;
           height: 145px;
@@ -577,8 +546,7 @@ body {
           background-color: $main-bg-purple;
         }
         &.pre {
-          background-image: url(../images/liveroom/jcar_ctrl_bg_03.png);
-
+          background-image: url("../images/liveroom/jcar_ctrl_bg_03.png");
           border-top-right-radius: 30px;
           border-bottom-right-radius: 30px;
           -webkit-border-top-right-radius: 30px;
@@ -588,8 +556,7 @@ body {
         }
         &.next {
           background-position: 18px 16px;
-          background-image: url(../images/liveroom/jcar_ctrl_bg_05.png);
-
+          background-image: url("../images/liveroom/jcar_ctrl_bg_05.png");
           border-top-left-radius: 30px;
           border-bottom-left-radius: 30px;
           -webkit-border-top-left-radius: 30px;
@@ -598,9 +565,7 @@ body {
           -moz-border-radius-bottomleft: 30px;
         }
       }
-
     }
-
     .jcarousel-wrapper {
       margin: 20px auto;
       position: relative;
@@ -610,7 +575,6 @@ body {
       overflow: hidden;
       width: 100%;
     }
-
     .jcarousel ul {
       width: 20000em;
       position: relative;
@@ -618,7 +582,6 @@ body {
       margin: 0;
       padding: 0;
     }
-
     .jcarousel li {
       width: 280px;
       float: left;
@@ -627,32 +590,25 @@ body {
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
     }
-
     .jcarousel img {
       display: block;
       //max-width: 100%;
       height: auto !important;
     }
-
-    .jcarousel-control-prev,
-    .jcarousel-control-next {
+    .jcarousel-control-next,
+    .jcarousel-control-prev {
       position: absolute;
       top: 50%;
       margin-top: -50px;
     }
-
     .jcarousel-control-prev {
-      left: 0px;
+      left: 0;
     }
-
     .jcarousel-control-next {
-      right: 0px;
+      right: 0;
     }
-
   }
-
 }
-
 .share-wrap {
   a {
     float: left;
@@ -673,7 +629,7 @@ body {
   }
   .weixin17 {
     background: url('../images/weixin1.png') no-repeat 0 0;
-    background-position: 0px -21px;
+    background-position: 0 -21px;
   }
   .renren17 {
     background-position: -19px -40px;
@@ -694,24 +650,21 @@ body {
     background-position: -19px -180px;
   }
 }
-
 //回放页面
-
-.palyback-wrap{
-  .common_con .content{
+.palyback-wrap {
+  .common_con .content {
     background-color: #fff;
   }
-  .like{
+  .like {
     display: inline-block!important;
   }
 }
-
 .play-back-main {
   margin: 0 auto;
   .flash-header-wraper {
     text-align: center;
     background: #48443d;
-    height:105px;
+    height: 105px;
     .edit_Bg {
       margin: 0 auto;
       //width: 800px;
@@ -725,7 +678,6 @@ body {
       margin: 0 auto;
     }
   }
-
   .user-info-block {
     background-color: #fff !important;
     //float: left;
@@ -739,7 +691,6 @@ body {
       }
     }
   }
-
   .gift-wrap {
     margin-right: 172px;
     .btn-support {
@@ -749,5 +700,4 @@ body {
   .room-notice {
     display: none !important;
   }
-
 }

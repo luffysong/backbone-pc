@@ -198,7 +198,8 @@ var View = BaseView.extend({
       $.extend(ops, this.options.share);
     }
     this.snsShareView.setOptions(ops);
-    this.snsShareView.open();
+    this.snsShareView.show($(e.target));
+    // this.snsShareView.open();
   }
 });
 

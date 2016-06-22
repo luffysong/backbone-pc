@@ -1,0 +1,74 @@
+/* 社交分享*/
+
+.sns-share-wrap{
+  position: absolute;
+  // overflow: hidden;
+  margin: 5px;
+  .sns-block{
+    background-color: #fff;
+    border: 1px solid #87d7ec;
+    position: relative;
+    .arrow{
+      position: absolute;
+      top: -5px;
+      right: 38px;
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      border: 1px solid #87d7ec;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+    }
+    .list{
+      text-align: center;
+      padding: 5px;
+      height: 43px;
+      a {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        margin: 0 3px;
+        background: url(../images/liveroom/sns_share_icons_03.png) no-repeat;
+        &:nth-child(1){
+          background-position: 0 0;
+          &:hover {
+            background-position: 0 -57px;
+          }
+        }
+        &:nth-child(2){
+          background-position: -38px 0;
+          &:hover {
+            background-position: -38px -57px;
+          }
+        }
+        &:nth-child(3){
+          background-position: -76px 0;
+          &:hover {
+            background-position: -76px -57px;
+          }
+        }
+        &:nth-child(4){
+          background-position: -113px 0;
+          &:hover {
+            background-position: -113px -57px;
+          }
+        }
+        &:nth-child(5){
+          background-position: -150px 0;
+          &:hover {
+            background-position: -150px -57px;
+          }
+        }
+        &:nth-child(6){
+          background-position: -186px 0;
+          &:hover {
+            background-position: -186px -57px;
+          }
+        }
+      }
+    }
+  }
+}
