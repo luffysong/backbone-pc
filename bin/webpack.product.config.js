@@ -16,7 +16,7 @@ var alias = require('./alias');
 var compile = require('./compile');
 
 //  清除www目录
-rmdir('./app/www/');
+rmdir('./dist');
 
 //  对complie配置文件进行处理
 //CDN配置
@@ -81,7 +81,7 @@ plugins.push(new webpack.DefinePlugin({
 var config = {
   entry: entrys,
   output: {
-    path: path.resolve(containerPath,'app/www'),
+    path: path.resolve(containerPath,'dist'),
     publicPath: './',
     filename: '[name]-[hash].js'
   },
