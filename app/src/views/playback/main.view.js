@@ -28,6 +28,8 @@ var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
 var UserInfo = require('../live-room/user.js');
 var FlashAPI = require('FlashApi');
 
+var AdvertisingWallView = require('../advertising-wall/main.view');
+
 var View = BaseView.extend({
   clientRender: false,
   el: '#anchorContainerBg', // 设置View对象作用于的根元素，比如id
@@ -72,8 +74,8 @@ var View = BaseView.extend({
       el: 'broadCastFlash'
     });
 
-    // this.getUserInfo();
-    this.initRoom();
+    this.getUserInfo();
+    // this.initRoom();
     this.renderPage();
   },
   defineEventInterface: function () {
@@ -115,6 +117,13 @@ var View = BaseView.extend({
           streamName: data.streamName,
           url: data.url
         };
+        // 告白墙
+        self.adWallView = new AdvertisingWallView({
+          el: '#advertisingWall',
+          roomId: data.id,
+          userInfo: self.userInfo,
+          type: 1 // 直播
+        });
         self.roomInfo = data;
         Backbone.trigger('event:roomInfoReady', self.roomInfo);
         self.setRoomBgImg();
@@ -130,6 +139,7 @@ var View = BaseView.extend({
     var self = this;
     UserInfo.getInfo(function (userInfo) {
       self.userInfo = userInfo;
+      self.initRoom();
       Backbone.trigger('event:currentUserInfoReady', userInfo);
     });
     // this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {

@@ -83,7 +83,8 @@ var View = BaseView.extend({
   },
   ready: function (ops) {
     this.options = _.extend({
-      totalMarks: 0
+      totalMarks: 0,
+      userInfo: {}
     }, ops);
     this.defineEventInterface();
     this.lastTime = new Date();
@@ -348,8 +349,9 @@ var View = BaseView.extend({
     if (userInfo) {
       this.options.userInfo = userInfo;
     }
-    if (this.options.userInfo.totalMarks) {
-      this.elements.userScoreDom.text(this.options.userInfo.totalMarks);
+    console.log(this.options);
+    if (_.isNumber(this.options.userInfo.totalMarks)) {
+      this.elements.userScoreDom.text(this.options.userInfo.totalMarks || 0);
     }
   },
   refreshUnreadList: function () {
