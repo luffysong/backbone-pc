@@ -453,7 +453,7 @@ var View = BaseView.extend({
   },
   setRoomBgImg: function () {
     if (this.roomInfo && this.roomInfo.imageUrl) {
-      this.roomBg.css('background', 'url(' + this.roomInfo.imageUrl + ')');
+      this.roomBg.find('.header-bg').css('background', 'url(' + this.roomInfo.imageUrl + ')');
     }
   },
   // 右侧边栏切换
