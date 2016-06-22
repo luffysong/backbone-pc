@@ -1,5 +1,5 @@
 /*
- 直播频道
+  首页顶部推荐频道列表
  */
 'use strict';
 
@@ -11,7 +11,6 @@ var CarouselModel = require('../../models/index/carousel.model');
 // var FanUserModel = require('../../models/index/fan-user.model');
 // var ChannelModel = require('../../models/index/channel.model');
 
-// var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var FlashApi = require('FlashApi');
@@ -149,6 +148,9 @@ var View = BaseView.extend({
   // 推荐列表点击
   videoListClicked: function (e) {
     var target = $(e.target).parents('li').find('.item');
+    if (target.hasClass('active')) {
+      return;
+    }
     var videoId = target.attr('data-videoid');
     this.elements.videoList.find('.item').removeClass('active');
     target.addClass('active');
@@ -157,7 +159,6 @@ var View = BaseView.extend({
   // 开始播放推荐视频
   setVideoToPlay: function (videoId) {
     var video = this.findVideo(videoId);
-    console.log(video);
     if (video) {
       this.elements.videoName.text(video.videoName);
       this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
@@ -169,7 +170,6 @@ var View = BaseView.extend({
       this.setFlash(video);
     }
   }
-
 });
 
 module.exports = View;
