@@ -29,7 +29,8 @@ gulp.task('build', ['clean'], function () {
   return gulp.src([
                'app/flash/*.*',
                'app/link/*.*',
-               'app/link/**/*.*'
+               'app/link/**/*.*',
+               'app/extend/**/*.*'
              ], {base: 'app/'})
              .pipe(gulp.dest('app/www/'));
 });

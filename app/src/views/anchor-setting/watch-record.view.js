@@ -1,4 +1,5 @@
 /**
+ * 观看记录
  * Created by AaronYuan on 5/4/16.
  */
 
@@ -45,16 +46,19 @@ var View = BaseView.extend({
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
     this.getPageList(1);
-    this.initPagination();
+    // this.initPagination();
   },
   initPagination: function (total) {
     var self = this;
 
     self.pageing = Pagenation.create('#page-wrap', {
-      total: total,
+      total: total || 1,
       perpage: self.perpage,
       onSelect: function (page) {
         self.getPageList(page);
+      },
+      change: function () {
+        alert(2);
       }
     });
   },
@@ -66,8 +70,9 @@ var View = BaseView.extend({
       self.renderList(res);
       if (!self.totalCount && res.data.totalCount) {
         self.totalCount = res.data.totalCount;
-        self.pageing.setNumber(self.totalCount);
-        self.pageing.setPage();
+        self.initPagination(self.totalCount);
+        // self.pageing.setNumber(self.totalCount);
+        // self.pageing.setPage();
       }
     });
     promise.fail(function () {

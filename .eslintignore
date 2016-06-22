@@ -3,6 +3,7 @@
 node_modules/**
 app/link/**
 bower_components/**
+app/extend/**
 
 # Ignore files compiled from TypeScript and CoffeeScript
 **/*.{ts,coffee}.js

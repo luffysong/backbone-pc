@@ -1,5 +1,5 @@
 /**
- *
+ * 关注者列表
  * Created by AaronYuan on 5/4/16.
  */
 
@@ -116,10 +116,6 @@ var View = BaseView.extend({
         self.pageing.setNumber(self.totalCount);
         self.pageing.setPage();
       }
-    });
-    promise.fail(function () {
-      // self.pageing.setNumber(1);
-      // self.pageing.setPage();
     });
   },
   renderList: function (data) {

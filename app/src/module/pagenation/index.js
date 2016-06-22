@@ -16,10 +16,16 @@ var pagenation = {
     var setting = $.extend({
       total: 1,
       perpage: 10,
-      onSelect: null
+      onSelect: null,
+      change: null
     }, ops);
-    return $(el).paging(setting.total, {
+    return $(el).change(function () {
+      if (setting.change) {
+        setting.change();
+      }
+    }).paging(setting.total, {
       format: '[ < .(qq -) nncnn (- pp)> ] ',
+      page: 1,
       perpage: setting.perpage,
       onFormat: function (type) {
         switch (type) {
@@ -34,12 +40,12 @@ var pagenation = {
             if (this.active) {
               return '<a href="#' + this.value + '" class="next ">&gt;</a>';
             }
-            return '<span>&gt;</span>';
+            return '<span style="cursor:no-drop" >&gt;</span>';
           case 'prev':
             if (this.active) {
               return '<a href="#' + this.value + '" class="prev ">&lt;</a>';
             }
-            return '<span>&lt;</span>';
+            return '<span style="cursor:no-drop">&lt;</span>';
           case 'fill':
             if (this.active) {
               return '<span>...</span>';
@@ -50,7 +56,8 @@ var pagenation = {
         }
       },
       onSelect: function (page) {
-        if (setting.onSelect) {
+        console.log('onSelect=======', this);
+        if (setting.onSelect && this.isFinished) {
           setting.onSelect(page);
         }
       }

@@ -1,3 +1,6 @@
+/**
+ * 历史直播
+ */
 'use strict';
 
 var base = require('base-extend-backbone');
