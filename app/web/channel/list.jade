@@ -6,12 +6,13 @@ header.channel-top-header.has-top-bar.channelHeader
     nav.am-vertical-align-middle.channelNav
       a.active(href="javascript:;",data-tag='0') 饭趴
       a(href="javascript:;", data-tag='1') 官方频道
-      a(href="javascript:;", data-tag='2') 站子频道
+      //- a(href="javascript:;", data-tag='2') 站子频道
 // 热门直播
 section.am-container#liveHotSection.section-0.section
   header.section-header
     h2 热门直播
   article.viedo-content#livePreViewWrap
+    | 数据加载中...
     script#livePreViewTpl(type='text/html')
       | {{each data as item}}
       div.item.am-u-sm-3
@@ -57,6 +58,7 @@ section.am-container.section-0.section
   header.section-header
     h2 精彩回放
   div.viedo-content#playbackWrap.scroll-0
+    | 数据加载中...
     script#playbackTpl(type='text/html')
       | {{each data as item}}
       div.item.am-u-sm-3
@@ -89,7 +91,7 @@ section.am-container.section-1.section.Hidden
     script#viedoItemTpl(type='text/html')
       | {{each data as item}}
       div.item
-        a.top-link(href="###")
+        a.top-link(href="/channellive.html?channelId={{item.channelId}}")
           img(src='{{item.posterPic}}')
           div.link-hover.gradient
           span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
