@@ -40,14 +40,12 @@ $.extend(View.prototype, {
       });
       $(document).on('click', function (e) {
         var temp = $(e.target);
-        console.log(temp.attr('id') === target.attr('id'), temp, target);
         if (self.snsDom && temp.attr('id') !== target.attr('id')) {
           self.snsDom.hide();
         }
         return false;
       });
     } else {
-      console.log(this.snsDom.css('display'));
       if (this.snsDom.css('display') === 'block') {
         this.snsDom.hide();
       } else {
@@ -60,7 +58,6 @@ $.extend(View.prototype, {
     var url = 'http://' + window.location.host;
     var img = this.options.img;
     var goUrl;
-    console.log(this.options);
 
     url = encodeURIComponent(url + this.options.url);
     var html = '<span class="share-wrap">' +
