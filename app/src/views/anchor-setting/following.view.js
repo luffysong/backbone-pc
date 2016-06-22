@@ -57,7 +57,8 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
-    this.initPagination();
+    this.getPageList(1);
+    // this.initPagination();
   },
   initPagination: function () {
     var self = this;
@@ -113,8 +114,8 @@ var View = BaseView.extend({
       self.renderList(res);
       if (!self.totalCount && res.data.totalCount) {
         self.totalCount = res.data.totalCount;
-        self.pageing.setNumber(self.totalCount);
-        self.pageing.setPage();
+        // self.pageing.setNumber(self.totalCount);
+        // self.pageing.setPage();
       }
     });
   },
