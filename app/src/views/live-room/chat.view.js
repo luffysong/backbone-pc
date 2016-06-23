@@ -356,8 +356,7 @@ var View = BaseView.extend({
         info = res.GroupInfo[0];
         console.log(info);
       }
-    }, function (err) {
-      console.log(err);
+    }, function () {
     });
   },
   checkUserStatus: function () {
