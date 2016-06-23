@@ -104,7 +104,8 @@ var View = BaseView.extend({
   setFlash: function (video) {
     var videoInfo = video;
     // if (!this.FlashApi) {
-    this.FlashApi = FlashApi.sharedInstanceFlashApi({
+    // this.FlashApi = FlashApi.sharedInstanceFlashApi({
+    this.FlashApi = new FlashApi({
       el: 'topFlash',
       props: {
         width: 980,
@@ -166,7 +167,9 @@ var View = BaseView.extend({
         'background-image': 'url(' + video.posterPic + ')',
         'background-size': '100%'
       });
-      this.setFlash(video);
+      this.setFlash(_.extend({
+        isLive: video.status === 'LIVE'
+      }, video));
     }
   }
 });
