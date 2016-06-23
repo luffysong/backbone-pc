@@ -27,13 +27,10 @@ var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
 var GiftModel = require('../../models/anchor/gift.model');
 
-// var FieldControl = require('./field-control.view');
-
 var View = BaseView.extend({
   clientRender: false,
   el: '#anchorContainerBg', // 设置View对象作用于的根元素，比如id
   events: { // 监听事件
-
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
