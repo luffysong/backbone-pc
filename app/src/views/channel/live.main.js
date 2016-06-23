@@ -30,7 +30,7 @@ var LiveVideoListModel = require('../../models/channel/live-play.model');
 var AnchorCardView = require('../live-room/anchor-card.view');
 
 // var FlashAPI = require('FlashApi');
-var store = Auxiliary.storage;
+var store = base.storage;
 var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 
@@ -89,7 +89,7 @@ var View = BaseView.extend({
       store.remove('imSig');
       store.set('signout', 1);
       msgBox.showTip('请登录后观看直播!');
-      window.location.href = '/web/login.html';
+      window.location.href = '/login.html';
     }
     this.defineEventInterface();
 
