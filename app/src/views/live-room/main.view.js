@@ -270,7 +270,9 @@ var View = BaseView.extend({
         Backbone.trigger('event:roomInfoReady', self.roomInfo);
         self.setRoomBgImg();
         self.flashAPI.onReady(function () {
-          this.init(self.roomInfo);
+          this.init(_.extend({
+            isLive: true
+          }, self.roomInfo));
         });
         self.checkRoomStatus(data.status);
       } else {
