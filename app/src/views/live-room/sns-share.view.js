@@ -5,9 +5,11 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
+var ZeroClipboard = window.ZeroClipboard;
 
 var uiConfirm = require('ui.confirm');
 var shareTpl = require('./template/sns-share.html');
+var msgBox = require('ui.msgBox');
 
 var View = function (ops) {
   this.options = {};
@@ -33,7 +35,13 @@ $.extend(View.prototype, {
         top: offset.top + height + 8,
         left: offset.left - dom.width() + 61
       });
+
+      this._bindCopy('#shareCopy');
+
       dom.find('a').on('click', function () {
+        if ($(this).attr('data-tag') === 'copy') {
+          return false;
+        }
         self.shareWidnow($(this).attr('href'));
         self.snsDom.hide();
         return false;
@@ -109,6 +117,23 @@ $.extend(View.prototype, {
   shareWidnow: function (url) {
     window.open(url, 'newwindow', 'height=750px,width=700px' +
       ',toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+  },
+  // 设置复制按钮
+  _bindCopy: function (id) {
+    var target = $(id);
+    this.clipBoard = new ZeroClipboard(target);
+    var text = this.options.title + ',快来围观吧!' + 'http://' + window.location.host + this.options.url;
+    target.attr({
+      'data-clipboard-text': text
+    });
+    this.clipBoard.on('ready', function () {
+      this.on('aftercopy', function () {
+        msgBox.showOK('房间地址复制成功！');
+      });
+    });
+    this.clipBoard.on('error', function () {
+      msgBox.showTip('复制失败，请尝试分享吧');
+    });
   }
 });
 
