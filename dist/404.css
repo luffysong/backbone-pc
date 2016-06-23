@@ -1500,9 +1500,9 @@ button, input, select, textarea {
       color: #b2b2b2;
       margin: 0 5px; }
     .topBarCon .link-wrap .btn-link {
-      color: #b2b2b2; }
+      color: #fff; }
       .topBarCon .link-wrap .btn-link:hover {
-        color: #27d5bf; }
+        color: #adc0fe; }
   .topBarCon .log {
     display: inline-block;
     width: 97px;
@@ -1568,10 +1568,12 @@ button, input, select, textarea {
     position: relative;
     min-width: 70px; }
     .anchorPc .loginMsg a {
-      color: #b2b2b2;
+      color: #fff;
       float: left;
       line-height: 22px;
       height: 22px; }
+      .anchorPc .loginMsg a:hover {
+        color: #adc0fe; }
     .anchorPc .loginMsg span {
       border: 5px solid transparent;
       border-top: 5px solid #b2b2b2;

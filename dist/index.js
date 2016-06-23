@@ -7,10 +7,10 @@ webpackJsonp([5],[
 	 */
 	var $ = __webpack_require__(1);
 	$(function indexMain() {
-	  var MainView = __webpack_require__(207);
+	  var MainView = __webpack_require__(205);
 	  var mainView = new MainView();
 	  console.log(mainView);
-	  __webpack_require__(218);
+	  __webpack_require__(216);
 	});
 
 
@@ -3487,7 +3487,7 @@ webpackJsonp([5],[
 	  this._props = options.props || {};
 	  this.$attrs = {
 	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160603.1', //  引入swf文件
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=201606023.1', //  引入swf文件
 	    width: this._props.width || 895,
 	    height: this._props.height || 502,
 	    wmode: this._props.wmode || 'transparent', // 控制显示模型
@@ -4083,21 +4083,19 @@ webpackJsonp([5],[
 /* 202 */,
 /* 203 */,
 /* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(18);
 	var BaseView = base.View;
-	var RecommendView = __webpack_require__(208);
+	var RecommendView = __webpack_require__(206);
 	var TopBarView = __webpack_require__(82);
-	var PlaybackView = __webpack_require__(212);
+	var PlaybackView = __webpack_require__(210);
 	
-	var WonderfulView = __webpack_require__(215);
-	var OfficialView = __webpack_require__(217);
+	var WonderfulView = __webpack_require__(213);
+	var OfficialView = __webpack_require__(215);
 	
 	var View = BaseView.extend({
 	  clientRender: false,
@@ -4141,7 +4139,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 208 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4153,7 +4151,7 @@ webpackJsonp([5],[
 	var base = __webpack_require__(18);
 	var BaseView = base.View;
 	// 首页轮播
-	var CarouselModel = __webpack_require__(209);
+	var CarouselModel = __webpack_require__(207);
 	// var FanUserModel = require('../../models/index/fan-user.model');
 	// var ChannelModel = require('../../models/index/channel.model');
 	
@@ -4164,7 +4162,7 @@ webpackJsonp([5],[
 	var View = BaseView.extend({
 	  el: '#topContainer',
 	  rawLoader: function () {
-	    return __webpack_require__(210);
+	    return __webpack_require__(208);
 	  },
 	  events: {
 	    'click .gotoLiveHome': 'gotoLiveHome',
@@ -4192,7 +4190,7 @@ webpackJsonp([5],[
 	    // this.recommendTpl = this.$el.find('#recommendTpl').html();
 	    // 获取右侧列表模板
 	    // this.livingItemTpl = this.$el.find('#liveItemTpl').html();
-	    this.livingItemTpl = __webpack_require__(211);
+	    this.livingItemTpl = __webpack_require__(209);
 	    this.elements.videoList = this.$el.find('#livingList');
 	    this.elements.videoName = this.$el.find('#viedoName');
 	    this.elements.btnGoLiveRoom = this.$el.find('#btnGoLiveRoom');
@@ -4249,15 +4247,16 @@ webpackJsonp([5],[
 	  // 设置flash
 	  setFlash: function (video) {
 	    var videoInfo = video;
-	    if (!this.FlashApi) {
-	      this.FlashApi = FlashApi.sharedInstanceFlashApi({
-	        el: 'topFlash',
-	        props: {
-	          width: 980,
-	          height: 550
-	        }
-	      });
-	    }
+	    // if (!this.FlashApi) {
+	    // this.FlashApi = FlashApi.sharedInstanceFlashApi({
+	    this.FlashApi = new FlashApi({
+	      el: 'topFlash',
+	      props: {
+	        width: 980,
+	        height: 550
+	      }
+	    });
+	    // }
 	    if (this.FlashApi) {
 	      this.FlashApi.onReady(function () {
 	        videoInfo.isIndex = true;
@@ -4269,18 +4268,14 @@ webpackJsonp([5],[
 	  gotoLiveHome: function (e) {
 	    var el = $(e.currentTarget);
 	    var id = el.attr('data-id');
-	    var status = ~~(el.attr('data-status'));
+	    var status = el.attr('data-type');
 	    var url = '';
 	    switch (status) {
-	      case 2:
+	      case 'FANPA_ROOM':
 	        //  处理直播
 	        url = '/liveRoom.html?roomId=';
 	        break;
-	      case 3:
-	        //  处理回放
-	        url = '/playback.html?roomId=';
-	        break;
-	      case 5:
+	      case 'YYT_VIDEO':
 	        // 处理频道
 	        url = '/channellive.html?channelId=';
 	        break;
@@ -4307,13 +4302,18 @@ webpackJsonp([5],[
 	    var video = this.findVideo(videoId);
 	    if (video) {
 	      this.elements.videoName.text(video.videoName);
-	      this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
-	      this.elements.btnGoLiveRoom.attr('data-status', 5);
+	      // this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
+	      this.elements.btnGoLiveRoom.attr({
+	        'data-id': video.videoId,
+	        'data-type': video.videoType
+	      });
 	      this.elements.flashWrap.css({
 	        'background-image': 'url(' + video.posterPic + ')',
 	        'background-size': '100%'
 	      });
-	      this.setFlash(video);
+	      this.setFlash(_.extend({
+	        isLive: video.status === 'LIVE'
+	      }, video));
 	    }
 	  }
 	});
@@ -4322,7 +4322,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 209 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4357,31 +4357,31 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 210 */
+/* 208 */
 /***/ function(module, exports) {
 
 	module.exports = "<!-- <div class=\"top-content\">\n  <h1 class=\"top-title\">直播频道</h1>\n  <div class=\"top-flash-content\" id=\"topFlash\">\n    {{if data.status === 1}}\n      <img src=\"{{data.posterPic}}\" width=\"100%\" height=\"100%\"/>\n    {{/if}}\n  </div>\n  <div class=\"top-go-home\">\n    <div class=\"go-home-title\">{{data.roomName}}</div>\n    {{if data.status !== 1}}\n      <div class=\"go-livehome\" data-id=\"{{data.id}}\" data-status=\"{{data.status}}\">进入房间</div>\n    {{/if}}\n  </div>\n</div> -->\n<div class=\"am-container has-top-bar\">\n  <section class=\"living\">\n    <header class=\"am-vertical-align\"><span class=\"am-vertical-align-middle am-serif\">直播频道</span></header>\n    <div class=\"am-cf\">\n      <div class=\"live-viedo am-fl\">\n        <div id=\"topFlash\" class=\"viedo-wrap\"></div>\n        <footer class=\"am-fl\"><span id=\"viedoName\" class=\"title\">EXO2222</span>\n          <button id=\"btnGoLiveRoom\" data-id=\"0\" data-status=\"1\" class=\"gotoLiveHome am-fr am-btn am-radius am-btn-red\">进入直播间</button>\n        </footer>\n      </div>\n      <aside class=\"viedo-list am-fr\">\n        <ul id=\"livingList\">\n          <!-- 视频列表-->\n        </ul>\n      </aside>\n    </div>\n  </section>\n</div>\n"
 
 /***/ },
-/* 211 */
+/* 209 */
 /***/ function(module, exports) {
 
-	module.exports = "{{ each data as item $index}}\n<li>\n  <a href=\"javascript:;\" data-videoid=\"{{item.videoId}}\" class=\"item\">\n    <img src=\"{{item.posterPic}}\">\n    <div class=\"link-hover gradient-up am-vertical-align\">\n      <span class=\"am-text-truncate am-vertical-align-bottom\">{{item.desc}}</span>\n    </div>\n  </a>\n</li>\n{{/each}}\n"
+	module.exports = "{{ each data as item $index}}\n<li>\n  <a href=\"javascript:;\" data-videoid=\"{{item.videoId}}\" data-type={{item.videoType}} class=\"item\">\n    <div class=\"img-wrap\">\n    <img src=\"{{item.posterPic}}\">\n    </div>\n    <div class=\"link-hover gradient-up am-vertical-align\">\n      <span class=\"am-text-truncate am-vertical-align-bottom\">{{item.videoName}}</span>\n    </div>\n  </a>\n</li>\n{{/each}}\n"
 
 /***/ },
-/* 212 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(18);
 	var BaseView = base.View;
-	var playbackTemp = __webpack_require__(213);
+	var playbackTemp = __webpack_require__(211);
 	var PlaybackModel = __webpack_require__(147);
 	var msgBox = __webpack_require__(56);
 	var UserModel = __webpack_require__(34);
 	var user = UserModel.sharedInstanceUserModel();
-	var space = __webpack_require__(214);
+	var space = __webpack_require__(212);
 	
 	var View = BaseView.extend({
 	  el: '#playbackVideo',
@@ -4457,19 +4457,19 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 213 */
+/* 211 */
 /***/ function(module, exports) {
 
 	module.exports = "{{each items as item i}}\n\t<li>\n\t\t<div class=\"box-content box-live-direct-video\">\n\t\t\t{{if item.status === 3}}\n\t\t\t\t<a href=\"playback.html?roomId={{item.roomId}}\">\n\t\t\t\t\t<div class=\"box-top\">\n\t\t\t\t\t\t<img class=\"box-top-img\" src=\"{{item.posterPic}}\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"box-cover-hover\">\n\t\t\t\t\t\t<div class=\"box-popularity boderRadAll_3\">\n\t\t\t\t\t\t\t人气：<span>{{item.realPopularity}}</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"box-click\"></div>\n\t\t\t\t\t\t<div class=\"box-praise-push boderRadAll_3\">\n\t\t\t\t\t\t\t<div class=\"praise\">\n\t\t\t\t\t\t\t\t<span class=\"praise-img\"></span>\n\t\t\t\t\t\t\t\t<span class=\"praise-text\">{{item.bulletCurtain}}</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"push\">\n\t\t\t\t\t\t\t\t<span class=\"push-img\"></span>\n\t\t\t\t\t\t\t\t<span class=\"push-text\">{{item.assemble}}</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</a>\n\t\t\t{{/if}}\n\n\t\t\t{{if item.completion === 1}}\n\t\t\t\t<div class=\"box-trailer\">\n\t\t\t\t\t<div class=\"box-top\">\n\t\t\t\t\t\t\t<img class=\"box-top-img\" src=\"{{item.imageUrl}}\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t{{/if}}\n\t\t\t<div class=\"box-bottom\">\n\t\t\t\t\t<div class=\"box-title\">{{item.roomName}}</div>\n\t\t\t</div>\n\t\t</div>\n\t</li>\n{{/each}}\n"
 
 /***/ },
-/* 214 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "images/space.png";
 
 /***/ },
-/* 215 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4484,7 +4484,7 @@ webpackJsonp([5],[
 	var user = UserModel.sharedInstanceUserModel();
 	var LivePreviewModel = __webpack_require__(146);
 	var UserInfoModel = __webpack_require__(103);
-	var PushLarityModel = __webpack_require__(216);
+	var PushLarityModel = __webpack_require__(214);
 	
 	var confirm = __webpack_require__(45);
 	var msgBox = __webpack_require__(56);
@@ -4640,7 +4640,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 216 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4672,7 +4672,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 217 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4755,7 +4755,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 218 */
+/* 216 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

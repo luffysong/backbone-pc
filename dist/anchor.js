@@ -67,13 +67,10 @@ webpackJsonp([1],[
 	var RoomLongPollingModel = __webpack_require__(49);
 	var GiftModel = __webpack_require__(50);
 	
-	// var FieldControl = require('./field-control.view');
-	
 	var View = BaseView.extend({
 	  clientRender: false,
 	  el: '#anchorContainerBg', // 设置View对象作用于的根元素，比如id
 	  events: { // 监听事件
-	
 	  },
 	  // 当模板挂载到元素之前
 	  beforeMount: function () {
@@ -5117,7 +5114,7 @@ webpackJsonp([1],[
 	  this._props = options.props || {};
 	  this.$attrs = {
 	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160603.1', //  引入swf文件
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=201606023.1', //  引入swf文件
 	    width: this._props.width || 895,
 	    height: this._props.height || 502,
 	    wmode: this._props.wmode || 'transparent', // 控制显示模型
@@ -6123,9 +6120,9 @@ webpackJsonp([1],[
 	    promise = self.startLiveModel.executeJSONP(this.startLiveParams);
 	    promise.done(function (result) {
 	      if (result && ~~result.code === 0) {
-	        msg = '您已成功开启直播，请复制下面的信息：</br>'
-	          + '视频连接：' + result.data.livePushStreamUrl
-	          + '</br>视频流：' + result.data.streamName;
+	        msg = '您已成功开启直播，请复制下面的信息：</br>' +
+	          '视频连接：' + result.data.livePushStreamUrl +
+	          '</br>视频流：' + result.data.streamName;
 	        uiConfirm.show({
 	          title: '开启直播成功',
 	          content: msg,
@@ -6171,8 +6168,7 @@ webpackJsonp([1],[
 	        self.endLive();
 	        window.location.href = '/anchor-setting.html?view=history';
 	      },
-	      cancelFn: function () {
-	      }
+	      cancelFn: function () {}
 	    });
 	    return null;
 	  },
@@ -6221,6 +6217,10 @@ webpackJsonp([1],[
 	    switch (status) {
 	      case 0:
 	        this.btnStartLive.addClass('m_disabled');
+	        this.btnEndLive.addClass('m_disabled');
+	        break;
+	      case 1:
+	        this.btnEndLive.addClass('m_disabled');
 	        break;
 	      case 2:
 	        this.btnStartLive.addClass('m_disabled').text('直播中');

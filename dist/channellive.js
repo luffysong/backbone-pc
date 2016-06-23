@@ -19,7 +19,7 @@ webpackJsonp([4],[
 	  a = new MainView();
 	
 	  console.log(a);
-	  __webpack_require__(188);
+	  __webpack_require__(186);
 	});
 
 
@@ -3894,7 +3894,7 @@ webpackJsonp([4],[
 	  this._props = options.props || {};
 	  this.$attrs = {
 	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160603.1', //  引入swf文件
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=201606023.1', //  引入swf文件
 	    width: this._props.width || 895,
 	    height: this._props.height || 502,
 	    wmode: this._props.wmode || 'transparent', // 控制显示模型
@@ -5134,7 +5134,7 @@ webpackJsonp([4],[
 	var AnchorCardView = __webpack_require__(162);
 	
 	// var FlashAPI = require('FlashApi');
-	var store = Auxiliary.storage;
+	var store = base.storage;
 	var uiConfirm = __webpack_require__(45);
 	var msgBox = __webpack_require__(56);
 	
@@ -5193,7 +5193,7 @@ webpackJsonp([4],[
 	      store.remove('imSig');
 	      store.set('signout', 1);
 	      msgBox.showTip('请登录后观看直播!');
-	      window.location.href = '/web/login.html';
+	      window.location.href = '/login.html';
 	    }
 	    this.defineEventInterface();
 	
@@ -5282,7 +5282,7 @@ webpackJsonp([4],[
 	    } else if (res.ErrorCode === 10010) {
 	      uiConfirm.show({
 	        title: '进入房间失败',
-	        content: '该房间已经关闭,无法观看直播',
+	        content: '该房间已经关闭,无法观看直播!',
 	        cancelFn: self.goBack,
 	        okFn: self.goBack
 	      });
@@ -5299,9 +5299,9 @@ webpackJsonp([4],[
 	    var RoomTitle = __webpack_require__(173);
 	    var ChatView = __webpack_require__(175);
 	    var SendMessageView = __webpack_require__(180);
-	    var PlayedListView = __webpack_require__(182);
-	    var GiftView = __webpack_require__(184);
-	    var LiveVideoListView = __webpack_require__(186);
+	    // var PlayedListView = require('../live-room/played-list.view');
+	    var GiftView = __webpack_require__(182);
+	    var LiveVideoListView = __webpack_require__(184);
 	    var type = {
 	      type: 'channel'
 	    };
@@ -5312,8 +5312,7 @@ webpackJsonp([4],[
 	
 	    a = new SendMessageView(type);
 	
-	
-	    a = new PlayedListView();
+	    // a = new PlayedListView();
 	
 	    a = new GiftView(type);
 	
@@ -5527,7 +5526,7 @@ webpackJsonp([4],[
 	    if (url) {
 	      window.location.href = url;
 	    } else {
-	      window.history.go(-1);
+	      window.location.href = '/';
 	    }
 	  },
 	  loopRoomInfo: function (time) {
@@ -5888,7 +5887,6 @@ webpackJsonp([4],[
 	  },
 	  followClickHandler: function () {
 	    var self = this;
-	    console.log('followClickHandler', this.roomInfo);
 	    this.followParams.anchorId = this.roomInfo.creator.uid;
 	    if (this.btnFollow.hasClass('followed')) {
 	      var promise1 = this.unFollowModel.executeJSONP(self.followParams);
@@ -5922,14 +5920,12 @@ webpackJsonp([4],[
 	    return this;
 	  },
 	  shareClick: function (e) {
-	    console.log(e);
 	    var ops = {
 	      url: '/liveroom.html?roomId=' + this.roomInfo.id,
 	      title: this.roomInfo.roomName || '',
 	      img: this.roomInfo.posterPic || '',
 	      type: 1
 	    };
-	    console.log(this.options);
 	    if (this.options.share) {
 	      $.extend(ops, this.options.share);
 	    }
@@ -5985,9 +5981,11 @@ webpackJsonp([4],[
 	
 	var $ = __webpack_require__(1);
 	var _ = __webpack_require__(35);
+	var ZeroClipboard = window.ZeroClipboard;
 	
 	var uiConfirm = __webpack_require__(45);
 	var shareTpl = __webpack_require__(165);
+	var msgBox = __webpack_require__(56);
 	
 	var View = function (ops) {
 	  this.options = {};
@@ -6013,7 +6011,13 @@ webpackJsonp([4],[
 	        top: offset.top + height + 8,
 	        left: offset.left - dom.width() + 61
 	      });
+	
+	      this._bindCopy('#shareCopy');
+	
 	      dom.find('a').on('click', function () {
+	        if ($(this).attr('data-tag') === 'copy') {
+	          return false;
+	        }
 	        self.shareWidnow($(this).attr('href'));
 	        self.snsDom.hide();
 	        return false;
@@ -6089,6 +6093,23 @@ webpackJsonp([4],[
 	  shareWidnow: function (url) {
 	    window.open(url, 'newwindow', 'height=750px,width=700px' +
 	      ',toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+	  },
+	  // 设置复制按钮
+	  _bindCopy: function (id) {
+	    var target = $(id);
+	    this.clipBoard = new ZeroClipboard(target);
+	    var text = this.options.title + ',快来围观吧!' + 'http://' + window.location.host + this.options.url;
+	    target.attr({
+	      'data-clipboard-text': text
+	    });
+	    this.clipBoard.on('ready', function () {
+	      this.on('aftercopy', function () {
+	        msgBox.showOK('房间地址复制成功！');
+	      });
+	    });
+	    this.clipBoard.on('error', function () {
+	      msgBox.showTip('复制失败，请尝试分享吧');
+	    });
 	  }
 	});
 	
@@ -6099,7 +6120,7 @@ webpackJsonp([4],[
 /* 165 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"sns-share-wrap\">\n  <div class=\"sns-block am-round\">\n    <div class=\"arrow\"></div>\n    <div class=\"list\">\n      <a href=\"http://v.yinyuetai.com/share/weixin?title=<%=title%>&amp;url=<%=url%>\" title=\"分享到微信\"></a>\n      <a style=\"display:none\" href=\"javascript:;\"></a>\n      <a href=\"http://connect.qq.com/widget/shareqq/index.html?url=<%=url%>&amp;showcount=1&amp;desc=<%=title%>&amp;title=<%=title%>&amp;site=饭趴&amp;pics=<%=img%>?t=20160405161857&amp;style=201&amp;width=39&amp;height=39\" title=\"分享到QQ\"></a>\n      <a  href=\"http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=<%=url%>&amp;desc=<%=title%>\" title=\"分享到QQ空间\"></a>\n      <a href=\"http://v.t.sina.com.cn/share/share.php?appkey=2817290261&amp;url=<%=url%>&amp;title=<%=title%>&amp;content=gb2312&amp;pic=<%=img%>?t=20160405161857&amp;ralateUid=1698229264\" title=\"分享到新浪微博\"></a>\n      <a href=\"javascript:;\"></a>\n    </div>\n  </div>\n</div>\n"
+	module.exports = "<div class=\"sns-share-wrap\">\n  <div class=\"sns-block am-round\">\n    <div class=\"arrow\"></div>\n    <div class=\"list\">\n      <a href=\"http://v.yinyuetai.com/share/weixin?title=<%=title%>&amp;url=<%=url%>\" title=\"分享到微信\"></a>\n      <a style=\"display:none\" href=\"javascript:;\"></a>\n      <a href=\"http://connect.qq.com/widget/shareqq/index.html?url=<%=url%>&amp;showcount=1&amp;desc=<%=title%>&amp;title=<%=title%>&amp;site=饭趴&amp;pics=<%=img%>?t=20160405161857&amp;style=201&amp;width=39&amp;height=39\" title=\"分享到QQ\"></a>\n      <a  href=\"http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=<%=url%>&amp;desc=<%=title%>\" title=\"分享到QQ空间\"></a>\n      <a href=\"http://v.t.sina.com.cn/share/share.php?appkey=2817290261&amp;url=<%=url%>&amp;title=<%=title%>&amp;content=gb2312&amp;pic=<%=img%>?t=20160405161857&amp;ralateUid=1698229264\" title=\"分享到新浪微博\"></a>\n      <a data-tag='copy' id=\"shareCopy\" href=\"javascript:;\"></a>\n    </div>\n  </div>\n</div>\n"
 
 /***/ },
 /* 166 */
@@ -6127,7 +6148,6 @@ webpackJsonp([4],[
 	var user = UserModel.sharedInstanceUserModel();
 	var LoopModel = __webpack_require__(171);
 	
-	// var uiConfirm = require('ui.confirm');
 	var msgBox = __webpack_require__(56);
 	var BusinessDate = __webpack_require__(62);
 	
@@ -6145,7 +6165,6 @@ webpackJsonp([4],[
 	    'click .colors a': 'chooseColorClicked',
 	    'keyup #txtMsg': 'calcTextLength',
 	    'click #unReadCnt': 'refreshUnreadList'
-	    // 'scroll .wall-list': 'tabScrollDown'
 	  },
 	  context: function (args) {
 	    console.log(args);
@@ -6183,7 +6202,6 @@ webpackJsonp([4],[
 	    this.elements.anonymousDom = this.$el.find('#cbAnonymous');
 	    this.elements.userScoreDom = this.$el.find('#userScore');
 	    this.elements.unReadCnt = this.$el.find('#unReadCnt');
-	
 	
 	    // 一个公告的模板
 	    this.itemTpl = this.$el.find('#itemTpl').html();
@@ -6462,7 +6480,6 @@ webpackJsonp([4],[
 	    if (userInfo) {
 	      this.options.userInfo = userInfo;
 	    }
-	    console.log(this.options);
 	    if (_.isNumber(this.options.userInfo.totalMarks)) {
 	      this.elements.userScoreDom.text(this.options.userInfo.totalMarks || 0);
 	    }
@@ -7119,8 +7136,7 @@ webpackJsonp([4],[
 	        info = res.GroupInfo[0];
 	        console.log(info);
 	      }
-	    }, function (err) {
-	      console.log(err);
+	    }, function () {
 	    });
 	  },
 	  checkUserStatus: function () {
@@ -7633,158 +7649,6 @@ webpackJsonp([4],[
 	
 	'use strict';
 	
-	var base = __webpack_require__(18);
-	var BaseView = base.View; // View的基类
-	var PlayedListModel = __webpack_require__(183);
-	var UserModel = __webpack_require__(34);
-	var user = UserModel.sharedInstanceUserModel();
-	var Backbone = window.Backbone;
-	
-	var View = BaseView.extend({
-	  clientRender: false,
-	  el: '#anchorPlayedList', // 设置View对象作用于的根元素，比如id
-	  events: { // 监听事件
-	
-	  },
-	  // 当模板挂载到元素之前
-	  beforeMount: function () {
-	    this.defineEventInterface();
-	  },
-	  // 当模板挂载到元素之后
-	  afterMount: function () {
-	    var el = this.$el;
-	    this.anchorPlayedTpl = $('#anchorPlayedTpl').html();
-	
-	    this.playedList = el.find('#playedListWrap');
-	
-	    this.playedListModel = PlayedListModel.sharedInstanceModel();
-	
-	    this.playedListParams = {
-	      deviceinfo: '{"aid":"30001001"}',
-	      access_token: user.getWebToken(),
-	      anchor: '',
-	      order: 'time',
-	      offset: 0,
-	      size: 9
-	    };
-	  },
-	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	  ready: function () {
-	  },
-	  defineEventInterface: function () {
-	    var self = this;
-	    Backbone.on('event:roomInfoReady', function (data) {
-	      if (data) {
-	        self.roomInfo = data;
-	        self.bindData(data.creator.uid);
-	      }
-	    });
-	  },
-	  initCarousel: function () {
-	    var warp = $('#palyedJcarousel');
-	    var jcarousel = warp.find('.jcarousel');
-	    var carousel;
-	    var width;
-	
-	    jcarousel
-	      .on('jcarousel:reload jcarousel:create', function () {
-	        carousel = $(this);
-	        width = carousel.innerWidth();
-	        width = width / 4;
-	
-	        carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
-	      })
-	      .jcarousel({
-	        wrap: 'circular'
-	      });
-	
-	    warp.find('.jcarousel-control-prev')
-	        .jcarouselControl({
-	          target: '-=1'
-	        });
-	
-	    warp.find('.jcarousel-control-next')
-	        .jcarouselControl({
-	          target: '+=1'
-	        });
-	  },
-	  bindData: function (anchorId) {
-	    var self = this;
-	    var template;
-	    var promise;
-	    this.playedListParams.anchor = anchorId;
-	
-	    promise = this.playedListModel.executeJSONP(this.playedListParams);
-	    promise.done(function (res) {
-	      if (res && res.msg === 'SUCCESS' && res.data.totalCount > 0) {
-	        template = self.compileHTML(self.anchorPlayedTpl, res);
-	        self.playedList.html(template);
-	        self.initCarousel();
-	      } else {
-	        self.hideListWrap();
-	      }
-	    });
-	    promise.fail(function () {
-	      self.hideListWrap();
-	    });
-	  },
-	  hideListWrap: function () {
-	    this.$el.hide();
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(18);
-	var Config = __webpack_require__(33);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/anchor_end_list.json',
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	
-	/**
-	 * @time {时间}
-	 * @author {编写者}
-	 * @info {实现的功能}
-	 */
-	
-	'use strict';
-	
 	var Backbone = window.Backbone;
 	var _ = __webpack_require__(35);
 	var base = __webpack_require__(18);
@@ -7795,7 +7659,7 @@ webpackJsonp([4],[
 	var uiConfirm = __webpack_require__(45);
 	var GiftModel = __webpack_require__(50);
 	var PopularityModel = __webpack_require__(151);
-	var ChannelPopularityModel = __webpack_require__(185);
+	var ChannelPopularityModel = __webpack_require__(183);
 	
 	
 	var msgBox = __webpack_require__(56);
@@ -8146,7 +8010,7 @@ webpackJsonp([4],[
 
 
 /***/ },
-/* 185 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8181,7 +8045,7 @@ webpackJsonp([4],[
 
 
 /***/ },
-/* 186 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8204,7 +8068,7 @@ webpackJsonp([4],[
 	  },
 	  beforeMount: function () {
 	    //  初始化一些自定义属性
-	    this.itemTpl = __webpack_require__(187);
+	    this.itemTpl = __webpack_require__(185);
 	  },
 	  afterMount: function () {
 	    //  获取findDOMNode DOM Node
@@ -8238,13 +8102,13 @@ webpackJsonp([4],[
 
 
 /***/ },
-/* 187 */
+/* 185 */
 /***/ function(module, exports) {
 
 	module.exports = "<!-- <div class=\"am-g am-g-collapse item active\"> -->\n{{each data as item }}\n<div class=\"am-g am-g-collapse item\">\n  <div class=\"am-u-sm-3 time\">{{item.playTime}}</div>\n  <div class=\"am-u-sm-9 detail\">{{item.videoName}}<span class=\"icon-play\"></span></div>\n</div>\n{{/each}}\n"
 
 /***/ },
-/* 188 */
+/* 186 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
