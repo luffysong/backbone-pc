@@ -128,7 +128,7 @@ var View = BaseView.extend({
     var url = '';
     switch (status) {
       case 'FANPA_ROOM':
-        //  处理直播
+        //  处理直播,注意大小写
         url = '/liveroom.html?roomId=';
         break;
       case 'YYT_VIDEO':
