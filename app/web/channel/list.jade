@@ -62,7 +62,7 @@ section.am-container.section-0.section
     script#playbackTpl(type='text/html')
       | {{each data as item}}
       div.item.am-u-sm-3
-        a.top-link(href='/playbacklist.html?roomId={{item.roomId}}')
+        a.top-link(href='/playback.html?roomId={{item.roomId}}')
           img(src='{{item.posterPic}}')
           div.link-hover
             div.right-top.gradient.boderRadAll_3
