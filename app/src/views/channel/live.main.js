@@ -195,7 +195,7 @@ var View = BaseView.extend({
     var RoomTitle = require('../live-room/room-title.view');
     var ChatView = require('../live-room/chat.view');
     var SendMessageView = require('../live-room/send-message.view');
-    var PlayedListView = require('../live-room/played-list.view');
+    // var PlayedListView = require('../live-room/played-list.view');
     var GiftView = require('../live-room/gift.view');
     var LiveVideoListView = require('./live-video-list.view');
     var type = {
@@ -208,8 +208,7 @@ var View = BaseView.extend({
 
     a = new SendMessageView(type);
 
-
-    a = new PlayedListView();
+    // a = new PlayedListView();
 
     a = new GiftView(type);
 
