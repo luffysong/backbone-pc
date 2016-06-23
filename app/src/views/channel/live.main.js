@@ -178,7 +178,7 @@ var View = BaseView.extend({
     } else if (res.ErrorCode === 10010) {
       uiConfirm.show({
         title: '进入房间失败',
-        content: '该房间已经关闭,无法观看直播',
+        content: '该房间已经关闭,无法观看直播!',
         cancelFn: self.goBack,
         okFn: self.goBack
       });
@@ -423,7 +423,7 @@ var View = BaseView.extend({
     if (url) {
       window.location.href = url;
     } else {
-      window.history.go(-1);
+      window.location.href = '/';
     }
   },
   loopRoomInfo: function (time) {
