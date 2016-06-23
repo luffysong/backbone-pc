@@ -1,12 +1,11 @@
-
-// 视频列表通用样式
+/* 视频列表通用样式*/
 .viedo-content {
   margin-top: 25px;
   width: 1219px;
   margin-left: -8px;
   .am-u-sm-3 {
-    padding-left: .8rem;
-    padding-right: .8rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
   }
   $live-item-width: 288px;
   .item {
@@ -14,10 +13,10 @@
       display: block;
       position: relative;
       overflow: hidden;
-      //height: 160px;
+      /*height: 160px;*/
       img {
         width: $live-item-width;
-        //height: 160px;
+        /*height: 160px;*/
       }
       .link-hover {
         width: $live-item-width;
@@ -29,10 +28,10 @@
           width: 54px;
           height: 54px;
           &.living {
-            background: url(../images/index/hover-bg_05.png) no-repeat;
+            background: url("../images/index/hover-bg_05.png") no-repeat;
           }
           &.preview {
-            background: url(../images/index/hover-bg_03.png) no-repeat;
+            background: url("../images/index/hover-bg_03.png") no-repeat;
           }
         }
         .right-top {
@@ -86,10 +85,10 @@
           margin-top: -26px;
           margin-left: -26px;
           &.play {
-            background: url(../images/index/index-icepy-5.png) no-repeat;
+            background: url("../images/index/index-icepy-5.png") no-repeat;
           }
           &.wait {
-            background: url(../images/index/index-icepy-7.png) no-repeat;
+            background: url("../images/index/index-icepy-7.png") no-repeat;
             &:before {
               content: '敬请期待';
               display: inline-block;
@@ -111,7 +110,7 @@
       }
     }
     .anchor-info {
-      //margin: 10px 0;
+      /*margin: 10px 0;*/
       padding: 10px 5px;
       background: #fff;
       .title {
@@ -132,14 +131,17 @@
         text-align: center;
         padding: 0;
         font-size: 12px;
-        i {
-          background: url(../images/index/hover_10.png) no-repeat;
-          display: block;
-          height: 15px;
-          background-position-x: 25px;
-        }
         width: 65px;
         height: 45px;
+        i {
+          background: url("../images/index/hover_10.png") no-repeat;
+          display: inline-block;
+          height: 15px;
+          width: 15px;
+        }
+        span {
+          display: block;
+        }
       }
     }
     footer {
@@ -147,10 +149,8 @@
       width: 100%;
     }
     .viedo-bg {
-      background: url(../images/index/img-bottom-bg_03.png) no-repeat;
-      -webkit-background-size: 100%;
+      background: url("../images/index/img-bottom-bg_03.png") no-repeat;
       background-size: 100%;
     }
   }
-
 }

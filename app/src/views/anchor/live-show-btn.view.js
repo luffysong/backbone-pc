@@ -133,9 +133,9 @@ var View = BaseView.extend({
     promise = self.startLiveModel.executeJSONP(this.startLiveParams);
     promise.done(function (result) {
       if (result && ~~result.code === 0) {
-        msg = '您已成功开启直播，请复制下面的信息：</br>'
-          + '视频连接：' + result.data.livePushStreamUrl
-          + '</br>视频流：' + result.data.streamName;
+        msg = '您已成功开启直播，请复制下面的信息：</br>' +
+          '视频连接：' + result.data.livePushStreamUrl +
+          '</br>视频流：' + result.data.streamName;
         uiConfirm.show({
           title: '开启直播成功',
           content: msg,
@@ -181,8 +181,7 @@ var View = BaseView.extend({
         self.endLive();
         window.location.href = '/anchor-setting.html?view=history';
       },
-      cancelFn: function () {
-      }
+      cancelFn: function () {}
     });
     return null;
   },
@@ -231,6 +230,10 @@ var View = BaseView.extend({
     switch (status) {
       case 0:
         this.btnStartLive.addClass('m_disabled');
+        this.btnEndLive.addClass('m_disabled');
+        break;
+      case 1:
+        this.btnEndLive.addClass('m_disabled');
         break;
       case 2:
         this.btnStartLive.addClass('m_disabled').text('直播中');

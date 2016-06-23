@@ -56,7 +56,6 @@ var pagenation = {
         }
       },
       onSelect: function (page) {
-        console.log('onSelect=======', this);
         if (setting.onSelect && this.isFinished) {
           setting.onSelect(page);
         }

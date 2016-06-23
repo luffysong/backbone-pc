@@ -14,7 +14,6 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var LoopModel = require('../../models/advertising-wall/loop.model');
 
-// var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 var BusinessDate = require('BusinessDate');
 
@@ -32,7 +31,6 @@ var View = BaseView.extend({
     'click .colors a': 'chooseColorClicked',
     'keyup #txtMsg': 'calcTextLength',
     'click #unReadCnt': 'refreshUnreadList'
-    // 'scroll .wall-list': 'tabScrollDown'
   },
   context: function (args) {
     console.log(args);
@@ -70,7 +68,6 @@ var View = BaseView.extend({
     this.elements.anonymousDom = this.$el.find('#cbAnonymous');
     this.elements.userScoreDom = this.$el.find('#userScore');
     this.elements.unReadCnt = this.$el.find('#unReadCnt');
-
 
     // 一个公告的模板
     this.itemTpl = this.$el.find('#itemTpl').html();
@@ -349,7 +346,6 @@ var View = BaseView.extend({
     if (userInfo) {
       this.options.userInfo = userInfo;
     }
-    console.log(this.options);
     if (_.isNumber(this.options.userInfo.totalMarks)) {
       this.elements.userScoreDom.text(this.options.userInfo.totalMarks || 0);
     }

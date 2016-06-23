@@ -103,15 +103,16 @@ var View = BaseView.extend({
   // 设置flash
   setFlash: function (video) {
     var videoInfo = video;
-    if (!this.FlashApi) {
-      this.FlashApi = FlashApi.sharedInstanceFlashApi({
-        el: 'topFlash',
-        props: {
-          width: 980,
-          height: 550
-        }
-      });
-    }
+    // if (!this.FlashApi) {
+    // this.FlashApi = FlashApi.sharedInstanceFlashApi({
+    this.FlashApi = new FlashApi({
+      el: 'topFlash',
+      props: {
+        width: 980,
+        height: 550
+      }
+    });
+    // }
     if (this.FlashApi) {
       this.FlashApi.onReady(function () {
         videoInfo.isIndex = true;
@@ -123,18 +124,14 @@ var View = BaseView.extend({
   gotoLiveHome: function (e) {
     var el = $(e.currentTarget);
     var id = el.attr('data-id');
-    var status = ~~(el.attr('data-status'));
+    var status = el.attr('data-type');
     var url = '';
     switch (status) {
-      case 2:
+      case 'FANPA_ROOM':
         //  处理直播
         url = '/liveRoom.html?roomId=';
         break;
-      case 3:
-        //  处理回放
-        url = '/playback.html?roomId=';
-        break;
-      case 5:
+      case 'YYT_VIDEO':
         // 处理频道
         url = '/channellive.html?channelId=';
         break;
@@ -161,13 +158,18 @@ var View = BaseView.extend({
     var video = this.findVideo(videoId);
     if (video) {
       this.elements.videoName.text(video.videoName);
-      this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
-      this.elements.btnGoLiveRoom.attr('data-status', 5);
+      // this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
+      this.elements.btnGoLiveRoom.attr({
+        'data-id': video.videoId,
+        'data-type': video.videoType
+      });
       this.elements.flashWrap.css({
         'background-image': 'url(' + video.posterPic + ')',
         'background-size': '100%'
       });
-      this.setFlash(video);
+      this.setFlash(_.extend({
+        isLive: video.status === 'LIVE'
+      }, video));
     }
   }
 });

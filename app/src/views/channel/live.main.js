@@ -30,7 +30,7 @@ var LiveVideoListModel = require('../../models/channel/live-play.model');
 var AnchorCardView = require('../live-room/anchor-card.view');
 
 // var FlashAPI = require('FlashApi');
-var store = Auxiliary.storage;
+var store = base.storage;
 var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 
@@ -89,7 +89,7 @@ var View = BaseView.extend({
       store.remove('imSig');
       store.set('signout', 1);
       msgBox.showTip('请登录后观看直播!');
-      window.location.href = '/web/login.html';
+      window.location.href = '/login.html';
     }
     this.defineEventInterface();
 
@@ -178,7 +178,7 @@ var View = BaseView.extend({
     } else if (res.ErrorCode === 10010) {
       uiConfirm.show({
         title: '进入房间失败',
-        content: '该房间已经关闭,无法观看直播',
+        content: '该房间已经关闭,无法观看直播!',
         cancelFn: self.goBack,
         okFn: self.goBack
       });
@@ -195,7 +195,7 @@ var View = BaseView.extend({
     var RoomTitle = require('../live-room/room-title.view');
     var ChatView = require('../live-room/chat.view');
     var SendMessageView = require('../live-room/send-message.view');
-    var PlayedListView = require('../live-room/played-list.view');
+    // var PlayedListView = require('../live-room/played-list.view');
     var GiftView = require('../live-room/gift.view');
     var LiveVideoListView = require('./live-video-list.view');
     var type = {
@@ -208,8 +208,7 @@ var View = BaseView.extend({
 
     a = new SendMessageView(type);
 
-
-    a = new PlayedListView();
+    // a = new PlayedListView();
 
     a = new GiftView(type);
 
@@ -423,7 +422,7 @@ var View = BaseView.extend({
     if (url) {
       window.location.href = url;
     } else {
-      window.history.go(-1);
+      window.location.href = '/';
     }
   },
   loopRoomInfo: function (time) {

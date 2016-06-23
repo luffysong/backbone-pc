@@ -152,7 +152,6 @@ var View = BaseView.extend({
   },
   followClickHandler: function () {
     var self = this;
-    console.log('followClickHandler', this.roomInfo);
     this.followParams.anchorId = this.roomInfo.creator.uid;
     if (this.btnFollow.hasClass('followed')) {
       var promise1 = this.unFollowModel.executeJSONP(self.followParams);
@@ -186,14 +185,12 @@ var View = BaseView.extend({
     return this;
   },
   shareClick: function (e) {
-    console.log(e);
     var ops = {
       url: '/liveroom.html?roomId=' + this.roomInfo.id,
       title: this.roomInfo.roomName || '',
       img: this.roomInfo.posterPic || '',
       type: 1
     };
-    console.log(this.options);
     if (this.options.share) {
       $.extend(ops, this.options.share);
     }

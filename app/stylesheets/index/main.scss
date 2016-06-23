@@ -56,9 +56,14 @@
               display: inline-block;
             }
           }
-          img {
+          .img-wrap{
             height: 117px;
             width: 210px;
+            overflow: hidden;
+          }
+          img {
+            // height: 117px;
+            width: 100%;
           }
           &:before {
             content: '';
@@ -467,4 +472,3 @@
   }
 
 }
-
