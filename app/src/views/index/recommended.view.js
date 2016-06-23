@@ -103,15 +103,15 @@ var View = BaseView.extend({
   // 设置flash
   setFlash: function (video) {
     var videoInfo = video;
-    if (!this.FlashApi) {
-      this.FlashApi = FlashApi.sharedInstanceFlashApi({
-        el: 'topFlash',
-        props: {
-          width: 980,
-          height: 550
-        }
-      });
-    }
+    // if (!this.FlashApi) {
+    this.FlashApi = FlashApi.sharedInstanceFlashApi({
+      el: 'topFlash',
+      props: {
+        width: 980,
+        height: 550
+      }
+    });
+    // }
     if (this.FlashApi) {
       this.FlashApi.onReady(function () {
         videoInfo.isIndex = true;
