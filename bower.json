@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "paging": "^1.2.0",
-    "jcarousel": "^0.3.4"
+    "jcarousel": "^0.3.4",
+    "zeroclipboard": "^2.2.0"
   }
 }
