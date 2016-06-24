@@ -17,7 +17,7 @@ div.index-wrap.am-container
             script#wonderfulItemTpl(type='text/html')
                 | {{each data as item}}
                 div.item.am-u-sm-3
-                    a.top-link(href="{{item.status ===2? '/liveroom.html?roomId=':'/playback.html?roomId='}}{{item.roomId}}")
+                    a.top-link(href="{{item.status ===3? '/playback.html?roomId=':'/liveroom.html?roomId='}}{{item.roomId}}")
                         img(src="{{item.posterPic}}")
                         div.link-hover
                             | {{if item.status == 2}}
