@@ -1,10 +1,15 @@
-@charset "UTF-8";
-// 主播页, 公告弹出层
-
+@charset "UTF-8"; // 主播页, 公告弹出层
 .edit_annmoucement_con {
   background-color: #fff !important;
   .editCon {
+    position: relative;
     background-color: #fff;
+    .errTip {
+      position: absolute;
+      bottom: 65px;
+      left: 25px;
+      font-size: 12px;
+    }
   }
   .txt-notice {
     width: 100%!important;
