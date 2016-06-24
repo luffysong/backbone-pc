@@ -70,7 +70,7 @@ View.prototype = $.extend({
     this.popularityParams.roomId = this.options.roomId;
     var promise = this.popularityModel.executeJSONP(this.popularityParams);
     promise.done(function (res) {
-      if (res && res.data && res.msg === 'SUCCESS') {
+      if (res && res.data && res.msg === 'SUCCESS' && res.data.success) {
         if (self.options.okFn) {
           self.options.okFn(res);
         }
