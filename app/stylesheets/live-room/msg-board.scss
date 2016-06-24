@@ -86,7 +86,11 @@ $wall-bg-color: #f0f0f0;
         border-top: 1px solid $main-line-color;
         font-size: 12px;
         color: $main-font-light-color;
-        .avatar {
+        .anonymous {
+          display: inline-block;
+          background: url('../images/default_avatar.jpg') no-repeat;
+        }
+        .avatar,.anonymous {
           width: 40px;
           height: 40px;
         }
@@ -228,5 +232,3 @@ $wall-bg-color: #f0f0f0;
   }
 
 }
-
-
