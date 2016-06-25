@@ -177,17 +177,12 @@ var View = BaseView.extend({
           self.loopRoomInfo();
         }
       }).fail(function () {
-        console.log('=======', data);
-        // self.goBack();
-        if (~~data.status > 1 && !data.mine) {
+        if (!data.mine) {
           self.goBack();
         } else {
           Backbone.trigger('event:roomInfoReady', data);
         }
       });
-      // if (!data.mine) {
-      // self.goBack();
-      // }
     }, function () {
       uiConfirm.show({
         title: '提示',
