@@ -119,7 +119,7 @@ var View = BaseView.extend({
     }
 
     switch (this.channelType) {
-      default:
+      default: break;
       case '0':
         this.playbackParameter.offset = (page - 1) * this.playbackPageSize;
         promise = self.playbackModel.executeJSONP(this.playbackParameter);
@@ -209,11 +209,11 @@ var View = BaseView.extend({
     $('.viedo-content:not([id="livePreViewWrap"])').find('.item').remove();
   },
   // 设置默认频道
-  setDefaultChannel: function () {
-  },
+  setDefaultChannel: function () {},
   // 顶上去
   pushRoomHandler: function (e) {
     var target = $(e.target);
+    var self = this;
     if (!target.hasClass('am-btn')) {
       target = target.parent('.am-btn');
     }
@@ -223,9 +223,18 @@ var View = BaseView.extend({
         roomId: roomId,
         okFn: function () {
           msgBox.showOK('感谢您的支持');
+          self.updateNumber(target.parents('.item'));
         }
       });
       this.pushRoom.topClick();
+    }
+  },
+  updateNumber: function (el) {
+    var target = el.find('.white');
+    if (target) {
+      var txt = target.text();
+      // 积分
+      target.text(~~txt + 10);
     }
   }
 });

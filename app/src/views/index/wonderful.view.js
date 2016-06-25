@@ -167,6 +167,7 @@ var View = BaseView.extend({
     var target = this.currentItemDom.find('.white');
     if (target) {
       var txt = target.text();
+      // 积分
       target.text(~~txt + 10);
     }
   }
