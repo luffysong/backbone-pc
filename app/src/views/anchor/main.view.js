@@ -27,6 +27,7 @@ var auth = require('auth');
 var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
 var GiftModel = require('../../models/anchor/gift.model');
+var PermissionModel = require('../../models/live-room/permission.model');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -45,8 +46,13 @@ var View = BaseView.extend({
     if (!this.roomId) {
       this.goBack();
     }
+    this.queryParams = {
+      deviceinfo: '{"aid": "30001001"}',
+      access_token: user.getWebToken()
+    };
     this.giftModel = GiftModel.sharedInstanceModel();
     this.roomDetail = RoomDetailModel.sharedInstanceModel();
+    this.permsssionModel = new PermissionModel();
 
     this.roomDetailParams = {
       deviceinfo: '{"aid": "30001001"}',
@@ -126,6 +132,31 @@ var View = BaseView.extend({
       window.location.href = '/login.html';
     }
   },
+  checkRoomAccess: function () {
+    var self = this;
+    var defer = $.Deferred();
+    var promise = this.permsssionModel.executeJSONP(_.extend({
+      roomId: this.roomId || 0
+    }, this.queryParams));
+    promise.done(function (res) {
+      console.log('--------', res);
+      if (res && res.data) {
+        var curRoom = _.find(res.data, function (item) {
+          return item.roomId === ~~self.roomId;
+        });
+        if (curRoom) {
+          if (curRoom.operationRole === 1 || curRoom.operationRole === 2) {
+            defer.resolve();
+          } else {
+            defer.reject();
+          }
+        } else {
+          defer.reject();
+        }
+      }
+    });
+    return defer.promise();
+  },
   /**
    * 初始化房间信息
    */
@@ -139,13 +170,17 @@ var View = BaseView.extend({
         url: data.url
       };
       self.renderPage();
-      if (!data.mine) {
+      self.checkRoomAccess().done(function () {
+        Backbone.trigger('event:roomInfoReady', data);
+        if (data.status === 2) {
+          self.loopRoomInfo();
+        }
+      }).fail(function () {
         self.goBack();
-      }
-      Backbone.trigger('event:roomInfoReady', data);
-      if (data.status === 2) {
-        self.loopRoomInfo();
-      }
+      });
+      // if (!data.mine) {
+      // self.goBack();
+      // }
     }, function () {
       uiConfirm.show({
         title: '提示',
