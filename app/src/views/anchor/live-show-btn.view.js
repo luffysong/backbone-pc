@@ -174,6 +174,7 @@ var View = BaseView.extend({
   endLiveClick: function () {
     var self = this;
     if (this.btnEndLive.hasClass('m_disabled')) {
+      msgBox.showTip('直播尚未开始，不能结束直播.');
       return null;
     }
     uiConfirm.show({
