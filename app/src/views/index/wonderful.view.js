@@ -89,6 +89,7 @@ var View = BaseView.extend({
       el = el.parent('button');
     }
     if (el.attr('data-roomId')) {
+      this.currentItemDom = el.parents('.item');
       this.pushViedo(el.attr('data-roomId'));
     }
   },
@@ -127,9 +128,9 @@ var View = BaseView.extend({
   showConfirm: function () {
     var self = this;
     var content =
-      '<div>使用20积分支持一下MC,当前共有' + (this.totalMarks || 0) + '积分</div> '
-      + '<div style="text-align:right;">'
-      + '<label><input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
+      '<div>使用20积分支持一下MC,当前共有' + (this.totalMarks || 0) + '积分</div> ' +
+      '<div style="text-align:right;">' +
+      '<label><input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
     confirm.show({
       title: '顶上去',
       content: content,
@@ -145,6 +146,7 @@ var View = BaseView.extend({
     });
   },
   executePushVideo: function () {
+    var self = this;
     var promise = this.pushModel.executeJSONP(this.pushLarityParameter);
     promise.done(function (response) {
       var success = response.data.success;
@@ -152,6 +154,7 @@ var View = BaseView.extend({
         msgBox.showError(response.data.message || '操作失败,请稍后重试');
       } else {
         msgBox.showOK('感谢您的大力支持~');
+        self.updateNumber();
       }
     });
     promise.fail(function (xhr) {
@@ -159,6 +162,13 @@ var View = BaseView.extend({
         msgBox.showError('人气上推错误');
       }
     });
+  },
+  updateNumber: function () {
+    var target = this.currentItemDom.find('.white');
+    if (target) {
+      var txt = target.text();
+      target.text(~~txt + 10);
+    }
   }
 });
 
