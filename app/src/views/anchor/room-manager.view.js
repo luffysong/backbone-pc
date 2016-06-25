@@ -173,7 +173,12 @@ var View = BaseView.extend({
     });
   },
   renderRoomManItem: function (res) {
-    var html = this.compileHTML(this.itemTpl, res);
+    var result = _.filter(res.data, function (item) {
+      return item.user && item.user.uid !== user.get('userId');
+    });
+    var html = this.compileHTML(this.itemTpl, {
+      data: result
+    });
     this.userListDom.html(html);
   }
 });
