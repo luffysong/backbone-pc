@@ -1,5 +1,6 @@
 /**
  * Created by AaronYuan on 4/21/16.
+ * 场控页面
  */
 
 var $ = require('jquery');

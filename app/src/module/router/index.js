@@ -2,7 +2,7 @@
  * Created by xiangwenwen on 16/4/12.
  */
 
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 var AppRouter = require('./routers');
 var appRouter = null;
 var router = {

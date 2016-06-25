@@ -12,7 +12,7 @@
 'use strict';
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 
 var NoticeModel = require('../../models/anchor/notice-create.model');
 var NoticeGetModel = require('../../models/anchor/notice-get.model');

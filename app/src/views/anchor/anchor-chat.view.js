@@ -9,7 +9,7 @@
  */
 
 var _ = require('underscore');
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
@@ -68,7 +68,8 @@ var View = BaseView.extend({
     this.imgUnLock.attr('src', '/images/clock.png');
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
     var self = this;
     Backbone.on('event:roomInfoReady', function (data) {
       if (data) {

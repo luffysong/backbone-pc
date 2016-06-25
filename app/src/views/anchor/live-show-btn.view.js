@@ -10,7 +10,8 @@
  */
 
 'use strict';
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var imServer = require('imServer');
@@ -57,7 +58,8 @@ var View = BaseView.extend({
     this.defineEventInterface();
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
     this.FlashApi = FlashApi.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });

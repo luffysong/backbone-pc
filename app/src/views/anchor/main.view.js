@@ -11,7 +11,8 @@
 
 'use strict';
 
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var Auxiliary = require('auxiliary-additions');
@@ -63,10 +64,10 @@ var View = BaseView.extend({
     this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
   },
   // 当模板挂载到元素之后
-  afterMount: function () {
-  },
+  afterMount: function () {},
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
     this.userVerify();
 
     // this.fieldControl = new FieldControl();
@@ -221,20 +222,21 @@ var View = BaseView.extend({
     // 直播开始,结束控制
     var LiveShowBtnView = require('./live-show-btn.view');
 
+    var AssistantView = require('./assistant.view');
+
     var a = new EditBgView();
     a = new InfoView();
     a = new ChatView();
     a = new NoticeView();
     a = new LiveShowBtnView();
+    a = new AssistantView(this.options);
     console.log(a);
   },
   goBack: function () {
     window.location.href = '/anchor-setting.html';
   },
   initGiftList: function () {
-    this.giftModel.get(this.giftParams, function () {
-    }, function () {
-    });
+    this.giftModel.get(this.giftParams, function () {}, function () {});
   }
 });
 

@@ -8,7 +8,7 @@
  * @author YuanXuJia
  * @info 更换主题背景
  */
-var Backbone = require('backbone');
+var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var EditBgModel = require('../../models/anchor/anchor-edit-bg.model');
