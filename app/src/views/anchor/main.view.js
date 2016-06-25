@@ -141,7 +141,6 @@ var View = BaseView.extend({
       roomId: this.roomId || 0
     }, this.queryParams));
     promise.done(function (res) {
-      console.log('--------', res);
       if (res && res.data) {
         var curRoom = _.find(res.data, function (item) {
           return item.roomId === ~~self.roomId;
@@ -178,7 +177,13 @@ var View = BaseView.extend({
           self.loopRoomInfo();
         }
       }).fail(function () {
-        self.goBack();
+        console.log('=======', data);
+        // self.goBack();
+        if (~~data.status > 1 && !data.mine) {
+          self.goBack();
+        } else {
+          Backbone.trigger('event:roomInfoReady', data);
+        }
       });
       // if (!data.mine) {
       // self.goBack();
