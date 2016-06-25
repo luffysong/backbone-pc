@@ -30,7 +30,6 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 // 清屏,锁屏
 var RoomManagerView = require('./room-manager.view');
-var IMGroupManageView = require('../anchor/im-group-manage.js');
 
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
@@ -38,7 +37,7 @@ var View = BaseView.extend({
     return require('./template/chat.html');
   },
   events: { // 监听事件
-    'click #msgList': 'msgListClicked'
+    // 'click #msgList': 'msgListClicked'
   },
   // 当模板挂载到元素之前
   beforeMount: function () {
@@ -53,10 +52,6 @@ var View = BaseView.extend({
     };
 
     this.giftModel = GiftModel.sharedInstanceModel();
-    // this.roomDetail = RoomDetailModel.sharedInstanceModel();
-    this.imGroupManageView = new IMGroupManageView({
-      isAssistant: true
-    });
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function (ops) {
@@ -132,7 +127,6 @@ var View = BaseView.extend({
       if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
         msgBox.showTip('您已经被主播禁言十分钟.');
       } else {
-        // self.beforeSendMsg(data);
         self.beforeSendMsg(data, function (msgObj) {
           self.sendMsgToGroup(msgObj);
         });
@@ -356,8 +350,7 @@ var View = BaseView.extend({
         info = res.GroupInfo[0];
         console.log(info);
       }
-    }, function () {
-    });
+    }, function () {});
   },
   checkUserStatus: function () {
     if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
@@ -375,10 +368,6 @@ var View = BaseView.extend({
       var cur = new Date();
       UserInfo.setDisableTalk(user.get('userId'), this.roomInfo.id, cur.getTime() + 10 * 60 * 1000);
     }
-  },
-  // 消息列表点击
-  msgListClicked: function (e) {
-    this.imGroupManageView.messageClickHandler(e);
   }
 });
 

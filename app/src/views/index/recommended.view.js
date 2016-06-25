@@ -131,9 +131,13 @@ var View = BaseView.extend({
         //  处理直播,注意大小写
         url = '/liveroom.html?roomId=';
         break;
-      case 'YYT_VIDEO':
+      case 'FANPA_CHANNEL':
         // 处理频道
         url = '/channellive.html?channelId=';
+        break;
+        // 站内视频
+      case 'YYT_VIDEO':
+        url = '';
         break;
       default:
         //  默认不处理

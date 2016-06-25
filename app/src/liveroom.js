@@ -11,9 +11,7 @@ $(function () {
 
   var a = new TopBarView();
 
-  a = new MainView({
-    roomType: 'live'
-  });
+  a = new MainView();
 
   console.log(a);
   require('../stylesheets/liveroom.scss');

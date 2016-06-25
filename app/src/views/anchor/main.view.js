@@ -226,7 +226,9 @@ var View = BaseView.extend({
 
     var a = new EditBgView();
     a = new InfoView();
-    a = new ChatView();
+    a = new ChatView({
+      type: 'control'
+    });
     a = new NoticeView();
     a = new LiveShowBtnView();
     a = new AssistantView(this.options);

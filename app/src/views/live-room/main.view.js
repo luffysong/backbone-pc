@@ -34,7 +34,6 @@ var msgBox = require('ui.msgBox');
 
 var AdvertisingWallView = require('../advertising-wall/main.view');
 var LivePreviewView = require('./live-preview.view');
-// var RoomManagerView = require('./room-manager.view');
 
 var View = BaseView.extend({
   clientRender: false,

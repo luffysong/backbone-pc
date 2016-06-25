@@ -109,7 +109,7 @@ var View = BaseView.extend({
 
     $('.controls_forbid_reject').not(control).hide();
     if (index === 0) {
-      control.css('margin-top', '33px');
+      control.css('margin-top', '26px');
     }
     control.toggle();
   },
@@ -293,9 +293,10 @@ var View = BaseView.extend({
       nickName: '匿名',
       content: '',
       smallAvatar: '',
-      time: self.getDateStr(new Date())
+      time: self.getDateStr(new Date()),
+      userId: ''
     }, msgObj);
-
+    console.log(msgObj);
     if (msgObj && msgObj.roomId !== self.roomInfo.id) {
       return;
     }

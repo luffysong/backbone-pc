@@ -13,7 +13,7 @@ var user = UserModel.sharedInstanceUserModel();
 var PermissionModel = require('../../models/live-room/permission.model');
 
 // 清屏,锁屏
-var RoomControlView = require('../anchor/room-control.view');
+// var RoomControlView = require('../anchor/room-control.view');
 
 var View = BaseView.extend({
   el: '',
@@ -46,7 +46,7 @@ var View = BaseView.extend({
     //  初始化
     this.defineEventInterface();
     this.options = _.extend({}, ops);
-    this.elements.roomManagerWrap.hide();
+    // this.elements.roomManagerWrap.hide();
   },
   defineEventInterface: function () {
     var self = this;
@@ -85,17 +85,18 @@ var View = BaseView.extend({
     });
   },
   render: function () {
-    this.elements.roomManagerWrap.show();
-    this.elements.sendMessageWrap.hide();
-    if (!this.roomCtrlView) {
-      this.roomCtrlView = new RoomControlView({
-        el: '#roomManagerWrap',
-        roomInfo: this.roomInfo,
-        FlashApi: this.options.FlashApi,
-        msgList: this.options.msgList,
-        hideCtrl: true // 隐藏场控管理
-      });
-    }
+    // this.elements.roomManagerWrap.show();
+    // this.elements.sendMessageWrap.hide();
+    // if (!this.roomCtrlView) {
+    //   this.roomCtrlView = new RoomControlView({
+    //     el: '#roomManagerWrap',
+    //     roomInfo: this.roomInfo,
+    //     FlashApi: this.options.FlashApi,
+    //     msgList: this.options.msgList,
+    //     hideCtrl: true // 隐藏场控管理
+    //   });
+    // }
+    window.location.href = '/assistant.html?roomId=' + this.roomInfo.id;
   },
   // 控制用户的禁言， 踢出
   renderUserControl: function (msgList) {
