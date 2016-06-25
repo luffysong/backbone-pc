@@ -73,7 +73,9 @@ var View = BaseView.extend({
   afterMount: function () {},
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function (ops) {
-    this.options = _.extend({}, ops);
+    this.options = _.extend({
+      assistant: false
+    }, ops);
     this.userVerify();
 
     // this.fieldControl = new FieldControl();
@@ -261,9 +263,9 @@ var View = BaseView.extend({
 
     var a = new EditBgView();
     a = new InfoView();
-    a = new ChatView({
+    a = new ChatView(_.extend({
       type: 'control'
-    });
+    }, this.options));
     a = new NoticeView();
     a = new LiveShowBtnView();
     a = new AssistantView(this.options);

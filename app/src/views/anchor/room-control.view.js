@@ -43,6 +43,7 @@ var View = BaseView.extend({
     this.roomInfo = ops.roomInfo || {};
     this.FlashApi = ops.FlashApi || {};
     this.msgList = ops.msgList || {};
+    this.assistant = ops.assistant || false;
     if (ops.hideCtrl) {
       this.btnFieldControl.hide();
     }
@@ -96,10 +97,10 @@ var View = BaseView.extend({
       okFn: function () {
         var msg = {
           roomId: self.roomInfo.id,
-          nickName: '主播',
+          nickName: self.assistant ? '场控' : '主播',
           smallAvatar: '',
           msgType: 4,
-          content: '主播已清屏'
+          content: (self.assistant ? '场控' : '主播') + '已清屏'
         };
         self.FlashApi.onReady(function () {
           this.notifying(msg);

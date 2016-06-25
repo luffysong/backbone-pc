@@ -80,11 +80,11 @@ var View = BaseView.extend({
     this.FlashApi = FlashApi.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
-    this.roomCtrlView = new RoomControlView({
+    this.roomCtrlView = new RoomControlView(_.extend({
       roomInfo: this.roomInfo,
       FlashApi: this.FlashApi,
       msgList: this.msgList
-    });
+    }, this.options));
   },
   // 单击某用户发送的消息
   messageClickHandler: function (e) {
@@ -263,8 +263,7 @@ var View = BaseView.extend({
     }
   },
   initGiftList: function () {
-    this.giftModel.get(this.giftParams, function () {
-    }, function (err) {
+    this.giftModel.get(this.giftParams, function () {}, function (err) {
       console.log(err);
     });
   },
@@ -290,13 +289,12 @@ var View = BaseView.extend({
     var msgObj = msg;
     var tpl;
     msgObj = _.extend({
-      nickName: '匿名',
+      nickName: '',
       content: '',
       smallAvatar: '',
       time: self.getDateStr(new Date()),
       userId: ''
     }, msgObj);
-    console.log(msgObj);
     if (msgObj && msgObj.roomId !== self.roomInfo.id) {
       return;
     }
@@ -378,8 +376,7 @@ var View = BaseView.extend({
   /**
    * 从服务器端拉去消息
    */
-  getMessageFromServer: function () {
-  },
+  getMessageFromServer: function () {},
   /**
    * 获取群组公告以及介绍
    */
