@@ -88,7 +88,7 @@
           display: inline-block;
         }
         .name {
-          color: $main-bg-green-color;
+          color: #666;
           font-size: 14px!important;
         }
         .btn {
@@ -105,8 +105,8 @@
           .first{
             color: #ccc;
           }
-          .item {
-            color: #a8a8a8;
+          .item,span {
+            color: #999999;
             margin: 0 2px;
           }
         }
