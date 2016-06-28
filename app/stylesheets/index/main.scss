@@ -13,6 +13,11 @@
         height: 65px;
         span {
           font-size: 20px;
+          text-indent: -1000px;
+          display: inline-block;
+          width: 70px;
+          height: 18px;
+          background: url(../images/index/index_live.png) no-repeat;
         }
       }
       .live-viedo {
@@ -24,7 +29,7 @@
         footer {
           padding: 10px;
           width: 980px;
-          height: 55px;
+          height: 58px;
           background: #fff;
           .title {
             font-size: 20px;
@@ -38,15 +43,19 @@
       }
       .viedo-list {
         .item {
-          width: 215px;
+          width: 214px;
           position: relative;
           display: block;
-          height: 121px;
-          border: 2px solid rgba(255, 255, 255, 0);
+          height: 120px;
+          margin-bottom: 2px;
+          // border: 2px solid rgba(255, 255, 255, 0);
           //background: url(../images/index/banner_09.jpg) no-repeat;
           &.active,
           &:hover {
-            border: 2px solid $main-bg-purple;
+            // border: 2px solid $main-bg-purple;
+            .img-wrap {
+              border: 2px solid $main-bg-purple;
+            }
             &:before {
               display: block;
             }
@@ -55,12 +64,13 @@
             }
           }
           .img-wrap {
-            height: 117px;
-            width: 210px;
+            height: 120px;
+            width: 214px;
             overflow: hidden;
+            // border: 2px solid $main-bg-purple;
           }
           img {
-            // height: 117px;
+            height: 100%;
             width: 100%;
           }
           &:before {
@@ -68,7 +78,7 @@
             display: none;
             position: absolute;
             top: 50%;
-            left: -8px;
+            left: -6px;
             margin-top: -3px;
             width: 0;
             height: 0;

@@ -1,19 +1,16 @@
 $tbC: #0c0b0b;
 $b2: #b2b2b2;
 $c-27: #272727;
-$a-hover: #690;
-// 共有样式
+$a-hover: #690; // 共有样式
 .com {
   width: 1200px;
   margin: 0 auto;
   height: 100%;
 }
-
 .bb50 {
   border-radius: 50%;
   overflow: hidden;
 }
-
 .fl {
   float: left;
 }
@@ -27,14 +24,12 @@ $a-hover: #690;
   left: 0;
   z-index: 200;
 }
-
 .topBarCon {
   position: relative;
   //width: 1200px;
   //height: 100%;
-  height:$main-top-bar-height;
+  height: $main-top-bar-height;
   margin: 0 auto;
-
   .link-wrap {
     display: inline-block;
     //position: absolute;
@@ -61,12 +56,10 @@ $a-hover: #690;
     //background: url('../images/logo.png') no-repeat center;
     background: url('../images/index/logo_03.png') no-repeat center;
   }
-
 }
-
 .anchorPc {
   font-size: 12px!important;
-  .login-user-wrap{
+  .login-user-wrap {
     padding-top: 5px;
   }
   //padding-top: 24px;
@@ -82,7 +75,6 @@ $a-hover: #690;
     padding-top: 10px;
     a {
       color: $b2;
-
     }
     a:hover {
       color: #27d5bf;
@@ -139,21 +131,30 @@ $a-hover: #690;
     margin-left: 14px;
     position: relative;
     min-width: 70px;
+    &:hover {
+      span {
+        background: url("../images/index/index_arrow_up.png") no-repeat;
+      }
+    }
     a {
       color: #fff;
       float: left;
       line-height: 22px;
       height: 22px;
-      &:hover{
-        color:#adc0fe;
+      &:hover {
+        // color: #adc0fe;
       }
     }
     span {
-      border: 5px solid transparent;
-      border-top: 5px solid $b2;
+      // border: 5px solid transparent;
+      // border-top: 5px solid $b2;
       float: right;
       margin-top: 10px;
       margin-left: 8px;
+      display: inline-block;
+      background: url("../images/index/index_arrow_down.png") no-repeat;
+      width: 9px;
+      height: 4px;
     }
     .pcNav {
       display: none;
@@ -162,15 +163,13 @@ $a-hover: #690;
       min-width: 90px;
       width: 100%;
       left: -10px;
-      padding-top: 20px;
-      padding-left: 0;
-      padding-right: 0;
-      padding-bottom: 0;
+      padding: 20px 0 0;
     }
     li {
       text-align: center;
       width: 100%;
-      a, .header-logout {
+      .header-logout,
+      a {
         display: block;
         height: 32px;
         width: 100%;
@@ -178,7 +177,8 @@ $a-hover: #690;
         background: #272727;
         margin-top: 0;
       }
-      a:hover, .header-logout:hover {
+      .header-logout:hover,
+      a:hover {
         background: #7991d7;
         color: #ffffff;
       }
@@ -202,7 +202,6 @@ $a-hover: #690;
     margin-top: 10px;
     padding-left: 13px;
     color: $b2;
-
   }
   .goHome:hover {
     color: #27d5bf;
