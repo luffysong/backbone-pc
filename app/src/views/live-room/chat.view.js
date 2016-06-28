@@ -170,14 +170,17 @@ var View = BaseView.extend({
       var elem = notifyInfo.elems[0];
       if (elem.type === 'TIMCustomElem') {
         msgObj = elem.content.data;
+      } else if (elem.type === 'TIMGroupTipElem') {
+        msgObj = elem.content.groupInfoList[0];
       } else {
         msgObj = elem.content.text + '';
         // msgObj = msgObj.replace(/&quot;/g, '\'');
         msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
       }
       try {
-        // eval('msgObj = ' + msgObj);
-        msgObj = JSON.parse(msgObj);
+        if (_.isString(msgObj)) {
+          msgObj = JSON.parse(msgObj);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -361,7 +364,7 @@ var View = BaseView.extend({
     return false;
   },
   forbidUserSendMsgHandler: function (notifyInfo) {
-    var imIdentifier = imModel.$get('data.imIdentifier');
+    var imIdentifier = imModel.get('data').imIdentifier || '';
     if (notifyInfo.userId === imIdentifier) {
       msgBox.showTip('您已被主播禁言10分钟!');
       Backbone.trigger('event:currentUserDisableTalk', true);

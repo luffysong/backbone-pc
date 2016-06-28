@@ -372,7 +372,7 @@ var View = BaseView.extend({
     }
     if (notify) {
       var result = _.find(notify.forbidUsers, function (item) {
-        return item.replace('$0', '') === self.userIMSig.userId;
+        return ~~item.replace('$0', '') === self.userIMSig.userId;
       });
       if (result) {
         UserInfo.setKickout(self.roomId, true);
