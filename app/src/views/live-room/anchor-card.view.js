@@ -42,7 +42,7 @@ var View = BaseView.extend({
     'mouseout .btnFollow': function (e) {
       var target = $(e.target);
       if (target.hasClass('followed')) {
-        target.text('已关注');
+        target.text('已关注').addClass('m_disabled');
       }
     }
   },
@@ -124,7 +124,7 @@ var View = BaseView.extend({
     els.tagsWrap.html(template(data.creator));
 
     if (data.creator.isFollowed) {
-      this.btnFollow.addClass('followed').text('已关注');
+      this.btnFollow.addClass('followed').text('已关注').addClass('m_disabled');
     }
   },
   getNoticeInfo: function () {
@@ -158,7 +158,7 @@ var View = BaseView.extend({
       promise1.done(function (res) {
         if (res.data && res.data.success) {
           msgBox.showOK('已取消关注主播');
-          self.btnFollow.removeClass('followed').text('关注');
+          self.btnFollow.removeClass('followed').removeClass('m_disabled').text('关注');
         }
       });
       promise1.fail(function () {
@@ -173,7 +173,7 @@ var View = BaseView.extend({
       promise.done(function (res) {
         if (res.data && res.data.success) {
           msgBox.showOK('已成功关注主播');
-          self.btnFollow.addClass('followed').text('取消关注');
+          self.btnFollow.addClass('followed').addClass('m_disabled').text('取消关注');
         } else {
           msgBox.showTip('关注失败,稍后重试');
         }

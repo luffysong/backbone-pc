@@ -53,10 +53,10 @@
         font-size: 20px;
       }
       .red {
-        color: #e74e75;
+        color: #ff6f6e!important;
       }
       .green {
-        color: $main-bg-green-color;
+        color: #ff6f6e!important;
       }
       .online {
         margin-right: 20px;
@@ -83,12 +83,13 @@
       }
       .info {
         margin-left: 12px;
+        padding-top: 5px;
         .sub-info {
           display: inline-block;
         }
         .name {
           color: $main-bg-green-color;
-          font-size: 18px;
+          font-size: 14px!important;
         }
         .btn {
           margin-top: -3px;
@@ -100,8 +101,12 @@
         }
         .tags {
           font-size: 12px;
+          margin-top: 5px;
+          .first{
+            color: #ccc;
+          }
           .item {
-            color: #999999;
+            color: #a8a8a8;
             margin: 0 2px;
           }
         }
@@ -186,8 +191,8 @@
     span {
       color: #0fbaa5;
       font-size: 18px;
-      font-weight: bold;
-      font-family: '微软雅黑';
+      // font-weight: bold;
+      // font-family: '微软雅黑';
     }
   }
 }
@@ -397,6 +402,12 @@
       .visitorName {
         color: #ffffff;
       }
+      p {
+        color: #bfcefd;
+      }
+      .time{
+        color: #4459a0;
+      }
     }
     p {
       width: 235px;
@@ -407,7 +418,7 @@
       color: #666;
     }
     .visitorName {
-      color: #01ceb5;
+      color: #ff6f6e;
       margin-right: 7px;
     }
     .time {
@@ -432,7 +443,6 @@
   .visitor_avator {
     width: 35px;
     height: 35px;
-    background: url(../images/default_avatar.jpg);
   }
 }
 .errTip {

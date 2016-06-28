@@ -61,6 +61,9 @@ $.extend(View.prototype, {
       }
     }
   },
+  hide: function () {
+    this.snsDom.hide();
+  },
   open: function () {
     var title = encodeURIComponent(this.options.title + ',快来围观吧');
     var url = 'http://' + window.location.host;

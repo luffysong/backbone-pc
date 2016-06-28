@@ -3,7 +3,6 @@
 @import "index/viedo-list";
 @import "live-room/preview";
 @import "live-room/sns-share";
-
 body {
   background: $main-bg-anchor-color;
 }
@@ -24,7 +23,7 @@ body {
   //喜欢按钮
   .like {
     vertical-align: middle;
-    margin-right: 20px;
+    // margin-right: 20px;
     .number {
       color: $main-font-light-color;
       margin: 0 10px;
@@ -35,7 +34,6 @@ body {
       line-height: 36px;
     }
     .btn-like {
-      background-color: $main-bg-red;
       width: 36px;
       height: 36px;
       i {
@@ -241,6 +239,7 @@ body {
         background-color: #f0f0f0;
         width: 235px;
         color: #999999;
+        font-size: 12px;
         //margin-right: 10px;
       }
       .send {
@@ -253,6 +252,7 @@ body {
         border-bottom-right-radius: 5px;
         -moz-border-radius-topright: 5px;
         -moz-border-radius-bottomright: 5px;
+        font-size: 12px;
       }
     }
     .msg-footer {
@@ -274,16 +274,20 @@ body {
           height: 17px;
         }
       }
+      .number {
+        color: #ff6f6e;
+      }
     }
     .choose-color {
       position: absolute;
       width: 100%;
       background-color: $main-top-bar-bg-color;
-      height: 65px;
+      height: 80px;
+      margin-top: -15px;
       top: 0;
       left: 0;
       .title {
-        padding: 5px 0;
+        padding: 10px 0;
         font-size: 12px;
         text-align: center;
         color: #fff;
