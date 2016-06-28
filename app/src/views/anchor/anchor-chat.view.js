@@ -27,7 +27,6 @@ var user = UserModel.sharedInstanceUserModel();
 // 清屏,锁屏
 var RoomControlView = require('./room-control.view');
 
-
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
   rawLoader: function () { // 可用此方法返回字符串模版
@@ -110,6 +109,9 @@ var View = BaseView.extend({
     $('.controls_forbid_reject').not(control).hide();
     if (index === 0) {
       control.css('margin-top', '26px');
+    }
+    if (this.options.assistant) {
+      control.find('.ctrl').hide();
     }
     control.toggle();
   },
