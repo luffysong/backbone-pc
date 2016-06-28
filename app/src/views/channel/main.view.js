@@ -117,10 +117,9 @@ var View = BaseView.extend({
     if (!pageIndex) {
       this.currentPage[this.channelType] = page;
     }
-
     switch (this.channelType) {
       default: break;
-      case '0':
+      case 0:
         this.playbackParameter.offset = (page - 1) * this.playbackPageSize;
         promise = self.playbackModel.executeJSONP(this.playbackParameter);
         promise.done(function (res) {
@@ -130,9 +129,9 @@ var View = BaseView.extend({
           }
         });
         break;
-      case '1': // 官方频道
-      case '2': // 站子频道
-        self.channelParams.type = this.channelType === '1' ? 'YYT' : 'FANS';
+      case 1: // 官方频道
+      case 2: // 站子频道
+        self.channelParams.type = this.channelType === 1 ? 'YYT' : 'FANS';
         self.channelParams.offset = (page - 1) * self.channelParams.size;
         promise = self.channelModel.executeJSONP(this.channelParams);
         promise.done(function (res) {
@@ -193,7 +192,7 @@ var View = BaseView.extend({
     var target = $(e.target);
     if (target.attr('data-tag') !== undefined) {
       this.clearSection();
-      this.channelType = target.attr('data-tag');
+      this.channelType = ~~target.attr('data-tag');
       target.parent().children().removeClass('active');
       target.addClass('active');
       this.allContainerDOM.hide();
