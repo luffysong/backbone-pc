@@ -4,7 +4,7 @@
 
 .channel-top-header {
   background-color: #fff;
-  border-bottom: 1px solid $main-line-color;
+  border-bottom: 1px solid #eee;
   section {
     height: 50px;
     h3 {
@@ -52,10 +52,13 @@
   margin-top: 20px;
   border-bottom: 1px solid $main-line-color;
   color: $main-name-color;
+  h2 {
+    font-weight: normal;
+  }
 }
 
 .viedo-content {
-  margin-top: 16px;
+  margin-top: 18px;
   display: inline-block;
   .item {
     .top-link {
