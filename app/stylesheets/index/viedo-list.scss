@@ -9,6 +9,11 @@
   }
   $live-item-width: 288px;
   .item {
+    &:hover {
+      .title {
+        color: $main-bg-purple;
+      }
+    }
     .top-link {
       display: block;
       position: relative;
@@ -44,7 +49,7 @@
           span {
             color: $main-text-color;
           }
-          .white{
+          .white {
             color: #fff;
           }
         }
@@ -59,6 +64,7 @@
             .sub-info {
               display: block;
               margin-left: -5px;
+              color: #ccc;
               .icons {
                 margin-left: 5px;
                 width: 20px;
@@ -118,8 +124,10 @@
       background: #fff;
       .title {
         width: 198px;
-        font-weight: 600;
+        // font-weight: 600;
         font-size: 12px;
+        margin-top: -3px;
+        margin-bottom: 5px;
       }
       .name {
         color: $main-name-color;

@@ -32,7 +32,10 @@
           height: 58px;
           background: #fff;
           .title {
-            font-size: 20px;
+            font-size: 18px;
+            color: #333;
+            display: inline-block;
+            margin-top: 5px;
           }
           button {
             font-size: 12px;
@@ -114,6 +117,9 @@
     margin-top: 16px;
     h2 {
       margin: 0;
+      font-size: 18px;
+      font-weight: normal;
+      color: #333;
     }
     a {
       color: $main-font-light-color;
@@ -127,9 +133,10 @@
       font-size: 12px;
       position: absolute;
       left: 0;
-      bottom: -1px;
+      bottom: -6px;
       background: $main-bg-theme-color;
       color: $main-font-light-color;
+      padding-right: 5px;
     }
   }
   //视频列表
@@ -287,6 +294,12 @@
   //}
   //精彩饭趴
   .perfect-wrap {
+    .item{
+      &:hover {
+        color: $main-bg-purple;
+      }
+
+    }
     .top-link {
       height: 160px;
       .center {
@@ -301,6 +314,7 @@
   }
   //官方频道
   .official-wrap {
+    margin-bottom: 100px;
     .viedo-content {
       .link-hover {
         //width: 589px !important;
@@ -369,7 +383,7 @@
             .title {
               font-size: 20px;
               width: 584px;
-              color: $main-bg-purple;
+              // color: $main-bg-purple;
             }
             .avatar {
               margin: 15px 0;
