@@ -169,6 +169,7 @@ var View = BaseView.extend({
     var tpl = require('./template/field-control.html');
     if (!this.fieldControlDialog) {
       this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
+        closeClass: 'editor_bg_close_x', // 'icons am-yyt-close close-white',
         width: 560,
         height: 335,
         isRemoveAfterHide: false

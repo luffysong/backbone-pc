@@ -1,6 +1,9 @@
 @charset "UTF-8"; // 主播页, 公告弹出层
 .edit_annmoucement_con {
   background-color: #fff !important;
+  .close{
+    height: 24px!important;
+  }
   .editCon {
     position: relative;
     background-color: #fff;

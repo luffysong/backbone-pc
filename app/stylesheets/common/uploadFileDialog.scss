@@ -39,7 +39,7 @@
     text-indent: 15px;
     overflow: hidden;
     .upload-status {
-      color: #ccc;
+      color: #bfcefd;
       font-weight: normal;
       margin-left: 38px;
     }
@@ -103,14 +103,15 @@
   }
 }
 .editor_bg_close_x {
+  height: 24px!important;
   font-size: 28px;
   padding-right: 7px;
   font-family: 'arial';
   font-weight: lighter;
   cursor: pointer;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 7px;
+  right: 8px;
   color: #fff;
   z-index: 3;
 }

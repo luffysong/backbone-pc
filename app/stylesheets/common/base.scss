@@ -835,8 +835,25 @@ img {
   //    background-image: url(../images/base/icon/pupup_close_03.png);
   //  }
   //}
+  &.am-yyt-close{
+    width: 14px;
+    height: 14px;
+    padding-left: 0!important;
+  }
   &.close-gray {
     background-image: url("../images/base/icon/pupup_close_07.png");
+  }
+  &.close-white {
+    background-image: url(../images/icons/icons_close_white.png);
+  }
+  &.close-red {
+    background-image: url(../images/icons/icons_close_red.png);
+  }
+  &.close-blue {
+    background-image: url(../images/icons/icons_close_blue.png);
+  }
+  &.close-black {
+    background-image: url(../images/icons/icons_close_black.png);
   }
 }
 .disabled {
@@ -881,6 +898,8 @@ img {
     outline-offset: inherit;
   }
 }
+
+
 $rgba-color-black: rgba(0, 0, 0, 0.6);
 $rgba-color-white: rgba(255, 255, 255, 0);
 :root .gradient-up {
