@@ -293,14 +293,16 @@ var View = BaseView.extend({
   },
   roomInfoReady: function (data) {
     var self = this;
-    this.getUserInfo().done(function (info) {
-      self.adWallView = new AdvertisingWallView({
-        el: '#advertisingWall',
-        roomId: data.id,
-        userInfo: info,
-        type: 1 // 直播
+    if (this.options.assistant) {
+      this.getUserInfo().done(function (info) {
+        self.adWallView = new AdvertisingWallView({
+          el: '#advertisingWall',
+          roomId: data.id,
+          userInfo: info,
+          type: 1 // 直播
+        });
       });
-    });
+    }
   }
 });
 
