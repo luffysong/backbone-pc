@@ -38,14 +38,14 @@ var pagenation = {
             return '<span class="current ">' + this.value + '</span>';
           case 'next':
             if (this.active) {
-              return '<a href="#' + this.value + '" class="next ">&gt;</a>';
+              return '<a href="#' + this.value + '" class="next icons paging-right"></a>';
             }
-            return '<span style="cursor:no-drop" >&gt;</span>';
+            return '<span style="cursor:no-drop" class="icons paging-right" ></span>';
           case 'prev':
             if (this.active) {
-              return '<a href="#' + this.value + '" class="prev ">&lt;</a>';
+              return '<a href="#' + this.value + '" class="prev icons paging-left"></a>';
             }
-            return '<span style="cursor:no-drop">&lt;</span>';
+            return '<span style="cursor:no-drop" class="icons paging-left"></span>';
           case 'fill':
             if (this.active) {
               return '<span>...</span>';

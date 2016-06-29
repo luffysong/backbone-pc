@@ -857,6 +857,18 @@ img {
   &.close-black {
     background-image: url(../images/icons/icons_close_black.png);
   }
+  &.paging-left{
+    background-image: url(../images/icons/paging_left.png);
+  }
+  &.paging-left:hover{
+    background-image: url(../images/icons/paging_left_hover.png);
+  }
+  &.paging-right{
+    background-image: url(../images/icons/paging_right.png);
+  }
+  &.paging-right:hover{
+    background-image: url(../images/icons/paging_right_hover.png);
+  }
 }
 .disabled {
   color: #fff;

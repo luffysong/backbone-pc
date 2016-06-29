@@ -38,15 +38,14 @@ body{
       .basic-wrap {
         font-size: 12px;
         .white {
-          margin: 0 8px;
-          font-weight: 600;
+          margin: 0 3px;
         }
         .big {
-          font-size: 20px;
+          font-size: 16px;
         }
       }
       .tags-wrap {
-        font-size: 14px;
+        font-size: 12px;
         .list {
           display: inline-block;
           span {
@@ -70,7 +69,7 @@ body{
         text-align: center;
         &.am-active {
           a {
-            color: black;
+            color: #515151;
             background-color: #fff;
           }
         }
@@ -81,7 +80,7 @@ body{
           height: 50px;
           line-height: 40px;
           font-size: 16px;
-          font-weight: 600;
+          // font-weight: 600;
         }
       }
 
