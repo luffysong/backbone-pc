@@ -199,10 +199,15 @@ var View = BaseView.extend({
     var msgObj = msg;
     var tempInfo;
     var isChannel = this.options.type === 'channel';
-    var roomId = isChannel ? this.roomInfo.channelId : this.roomInfo.id;
+    var roomId = this.roomInfo.id;
 
-    if (!isChannel) {
-      if (msgObj.roomId !== roomId) {
+    // 频道接收消息
+    if (isChannel) {
+      if (~~this.options.channelId !== ~~this.roomInfo.channelId) {
+        return;
+      }
+    } else {
+      if (~~msgObj.roomId !== ~~roomId) {
         return;
       }
       if (self.roomInfo && self.roomInfo.status === 3) {
@@ -289,10 +294,11 @@ var View = BaseView.extend({
     });
     this.autoDeleteMsgList();
   },
+  // 将消息追加到dom中
   addMessage: function (msg) {
     var self = this;
     var msgObj;
-    var roomId = this.options.type === 'channel' ? this.roomInfo.channelId : this.roomInfo.id;
+    // var roomId = this.roomInfo.id;
     msgObj = _.extend({
       nickName: '匿名',
       content: '',
@@ -302,9 +308,9 @@ var View = BaseView.extend({
       userId: ''
     }, msg);
 
-    if (msgObj && msgObj.roomId !== roomId) {
-      return;
-    }
+    // if (msgObj && msgObj.roomId !== roomId) {
+    //   return;
+    // }
     msgObj.content = self.filterEmoji(msgObj.content);
     if (msgObj && msgObj.content) {
       var tpl = _.template(this.getMessageTpl());
@@ -322,7 +328,7 @@ var View = BaseView.extend({
     self.autoDeleteMsgList();
   },
   filterEmoji: function (content) {
-    var reg = /[\u4e00-\u9fa5\w\d@\.\-,\+\?，。（）!#【】！~“：《》？<>]/g;
+    var reg = /[\u4e00-\u9fa5\w\s\d@\.\-,\+\?，。（）!#【】！~“：《》？<>]/g;
     if (content) {
       var result = content.match(reg) || [];
       if (result.length > 0) {

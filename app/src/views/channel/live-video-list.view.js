@@ -40,7 +40,6 @@ var View = BaseView.extend({
     //  销毁之后
   },
   renderList: function (videos) {
-    console.log('22222222', videos);
     var html = this.compileHTML(this.itemTpl, {
       data: videos || []
     });

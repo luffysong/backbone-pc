@@ -95,7 +95,7 @@ var View = BaseView.extend({
       return null;
     }
     this.canSendNow = false;
-    this.sendMessageToChat({
+    var msg = {
       msgType: 0,
       content: $.trim(this.elements.txtMessage.val()),
       nickName: user.get('userName'),
@@ -103,8 +103,14 @@ var View = BaseView.extend({
         fontColor: this.elements.btnChooseColor.attr('data-color') || '#999999'
       },
       smallAvatar: user.get('bigheadImg'),
-      roomId: this.roomInfo.id || this.roomInfo.channelId
-    });
+      roomId: this.roomInfo.id
+    };
+    // 处理频道发言
+    if (this.options.type === 'channel') {
+      msg.channelId = this.options.channelId;
+      msg.roomId = -1;
+    }
+    this.sendMessageToChat(msg);
     this.elements.txtMessage.val('');
     setTimeout(function () {
       self.canSendNow = true;

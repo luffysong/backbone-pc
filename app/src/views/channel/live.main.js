@@ -35,7 +35,6 @@ var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 
 var AdvertisingWallView = require('../advertising-wall/main.view');
-// var LivePreviewView = require('./live-preview.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -69,10 +68,6 @@ var View = BaseView.extend({
 
     this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
 
-    this.anchorInfoParams = {
-      deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken()
-    };
     this.inAndRoomParams = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken()
@@ -195,11 +190,11 @@ var View = BaseView.extend({
     var RoomTitle = require('../live-room/room-title.view');
     var ChatView = require('../live-room/chat.view');
     var SendMessageView = require('../live-room/send-message.view');
-    // var PlayedListView = require('../live-room/played-list.view');
     var GiftView = require('../live-room/gift.view');
     var LiveVideoListView = require('./live-video-list.view');
     var type = {
-      type: 'channel'
+      type: 'channel',
+      channelId: this.channelId
     };
 
     var a = new RoomTitle();
@@ -208,13 +203,10 @@ var View = BaseView.extend({
 
     a = new SendMessageView(type);
 
-    // a = new PlayedListView();
-
     a = new GiftView(type);
 
     a = new LiveVideoListView();
 
-    // a = new LivePreviewView();
     console.log(a);
   },
   initWebIM: function () {
