@@ -1,22 +1,27 @@
 {{each items as item}}
 
 <div data-id="{{item.roomId}}" class="item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom">
-    <div class="am-u-sm-3 img am-margin-right">
-        <img src="{{item.posterPic}}">
+  <div class="am-u-sm-3 img am-margin-right">
+    <img src="{{item.posterPic}}">
+  </div>
+  <div class="am-u-sm-9">
+    <div class="room-title">{{item.roomName}}</div>
+    <div class="time">
+      <span class="tip am-margin-right-sm">直播时间:</span>
+      <span class="value date am-margin-right">{{item.startTimeTxt}}</span>
+      <span class="tip am-margin-right-sm">时长:</span>
+      <span class="value date">{{item.diff}}</span>
     </div>
-    <div class="am-u-sm-9">
-        <div class="room-title">{{item.roomName}}</div>
-        <div class="time"><span class="tip am-margin-right-sm">时长</span><span
-                class="value date">{{item.diff}}</span>
-        </div>
-        <div class="number">
-            <div class="num"><i class="icons view"></i><span>{{item.seen}}</span></div>
-            <div class="num"><i class="icons chat"></i><span>{{item.bulletCurtain}}</span></div>
-            <div class="num"><i class="icons like"></i><span>{{item.assemble}}</span></div>
-        </div>
-        <div class="info"><span class="tip am-margin-right-sm">人气:</span><span
-                class="value">{{item.popularity}}</span></div>
+    <div class="number">
+      <div class="num"><i class="icons view"></i><span class="value">{{item.seen}}</span></div>
+      <div class="num"><i class="icons chat"></i><span class="value">{{item.bulletCurtain}}</span></div>
+      <div class="num"><i class="icons like"></i><span class="value">{{item.assemble}}</span></div>
     </div>
+    <div class="info am-vertical-align">
+      <span class="tip am-margin-right-sm am-vertical-align-middle am-text-xs">人气:</span>
+      <span class="value am-text-sm am-vertical-align-middle">{{item.popularity}}</span>
+    </div>
+  </div>
 </div>
 
 {{/each}}

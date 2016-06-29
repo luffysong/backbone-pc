@@ -44,6 +44,8 @@ var Model = BaseModel.extend({
       var _minutes = businessDate.$get('minutes');
       var minutes = _minutes < 10 ? '0' + _minutes : _minutes;
       value.liveVideoTime = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+
+      value.startTimeTxt = BusinessDate.format(new Date(value.startTime), 'yyyy/MM/dd hh:mm:ss');
     }
     return response;
   }

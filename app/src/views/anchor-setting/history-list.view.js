@@ -107,6 +107,7 @@ var View = BaseView.extend({
     // });
   },
   initRender: function (items) {
+    console.log('history list', items);
     var html = '';
     if (items.length) {
       html = this.compileHTML(this.listTemp, {
