@@ -480,11 +480,15 @@ body {
   // 主播播过的
   .recent-list-wrap {
     background-color: #fff;
-    padding-bottom: 30px;
-    //height: 450px;
+    height: 312px;
+    .right-top {
+      height: 23px;
+      line-height: 23px;
+      padding-top: 0 !important;
+    }
     .list-header {
       font-size: 18px;
-      padding: 20px;
+      padding: 20px 20px 0;
       //padding-left:20px;
       //margin: 20px 0;
     }
@@ -571,7 +575,7 @@ body {
       }
     }
     .jcarousel-wrapper {
-      margin: 20px auto;
+      margin: 10px auto 20px;
       position: relative;
     }
     .jcarousel {
