@@ -155,8 +155,11 @@
         display: block;
         top: 8px;
         right: 16px;
-        color: #fff;
+        color: #bfcefd;
         font-size: 12px;
+        &:hover{
+          color: #fff;
+        }
       }
     }
     .content {
@@ -428,11 +431,11 @@
       display: none;
       position: absolute;
       right: 18px;
-      top: -26px;
+      top: -30px;
       a {
         width: 70px;
-        height: 25px;
-        line-height: 25px;
+        height: 30px;
+        line-height: 30px;
         text-align: center;
         display: inline-block;
       }

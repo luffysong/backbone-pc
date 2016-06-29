@@ -133,9 +133,7 @@ var View = BaseView.extend({
         msgType: 2,
         content: content
       }
-    }, function () {
-    }, function () {
-    });
+    }, function () {}, function () {});
   },
   /**
    * 定义事件
@@ -182,11 +180,12 @@ var View = BaseView.extend({
     });
   },
   noticeChanged: function () {
-    if (this.txtNotice.val().length < 50) {
-      this.tipTextarea.text('您还可以输入' + (50 - this.txtNotice.val().length) + '个字');
-    } else {
-      this.tipTextarea.text('您的输入超出了' + (this.txtNotice.val().length - 50) + '个字');
-    }
+    this.tipTextarea.find('.red').text(50 - this.txtNotice.val().length);
+    // if (this.txtNotice.val().length < 50) {
+    //   this.tipTextarea.text('您还可以输入' + (50 - this.txtNotice.val().length) + '个字');
+    // } else {
+    //   this.tipTextarea.text('您的输入超出了' + (this.txtNotice.val().length - 50) + '个字');
+    // }
   }
 });
 

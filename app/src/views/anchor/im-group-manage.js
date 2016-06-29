@@ -51,7 +51,7 @@ View.prototype = $.extend(View.prototype, {
 
     $('.controls_forbid_reject').not(control).hide();
     if (index === 0) {
-      control.css('margin-top', '26px');
+      control.css('margin-top', control.find('a').height);
     }
     control.toggle();
   },

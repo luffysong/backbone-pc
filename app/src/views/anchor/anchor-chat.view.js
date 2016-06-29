@@ -108,7 +108,7 @@ var View = BaseView.extend({
 
     $('.controls_forbid_reject').not(control).hide();
     if (index === 0) {
-      control.css('margin-top', '26px');
+      control.css('margin-top', control.find('a').height());
     }
     if (this.options.assistant) {
       control.find('.ctrl').hide();

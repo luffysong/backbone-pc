@@ -43,11 +43,11 @@
   margin: -1px;
   .detail {
     color: $main-font-light-color;
-    padding: 10px;
+    padding: 20px 10px 10px;
     height: 195px;
     overflow-y: auto;
     .am-g {
-      margin: 5px 0;
+      margin: 8px 0;
       div {
         text-align: center;
       }
@@ -67,15 +67,15 @@
       }
       .btn-link {
         padding: 4px 8px;
-        font-size: 14px;
+        font-size: 12px;
         border: 1px solid $main-line-color;
-        color: $main-font-light-color;
+        color: $main-font-light-color2;
       }
     }
   }
   .footer {
     .form-input {
-      width: 370px;
+      width: 320px;
       margin: 10px auto;
       .input-user-id {
         border: 1px solid #c8c8c8;
@@ -87,6 +87,7 @@
     }
     .am-btn {
       font-size: 14px;
+      height: 38px;
     }
     .tip {
       font-size: 12px;

@@ -10,8 +10,9 @@
     .errTip {
       position: absolute;
       bottom: 65px;
-      left: 25px;
+      left: 0;
       font-size: 12px;
+      color: #ff6f6e;
     }
   }
   .txt-notice {
@@ -25,5 +26,9 @@
     text-align: right;
     padding-right: 0;
     font-size: 13px;
+    color:#585757;
+    .red{
+      color: #ff6f6e;
+    }
   }
 }

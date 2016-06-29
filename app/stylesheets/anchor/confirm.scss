@@ -1,6 +1,5 @@
-@charset "UTF-8";
-//弹出框
-.shadow_screen{
+@charset "UTF-8"; //弹出框
+.shadow_screen {
   z-index: 1000;
 }
 .edit_annmoucement_con {
@@ -19,18 +18,15 @@
   margin-left: -290px;
   margin-top: -170px;
   background: #f5f4f4;
-
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-
-  .title{
+  .title {
     display: none;
   }
-
   .edit_title {
     height: 40px;
-    background: #f5f4f4;
+    // background: #f5f4f4;
     width: 100%;
     color: #8a8a8a;
     font-size: 14px;
@@ -42,7 +38,7 @@
       font-weight: normal;
       margin-left: 38px;
     }
-    &.has-title{
+    &.has-title {
       background-color: $main-bg-purple;
       color: #fff;
     }
@@ -54,7 +50,7 @@
     font-family: 'arial';
     font-weight: lighter;
     cursor: pointer;
-    margin-right: 15px;
+    margin-right: 10px;
     margin-top: 5px;
     height: 24px;
   }
@@ -70,7 +66,8 @@
     padding-top: inherit;
     padding-bottom: 16px;
     //position: relative;
-    h3,.title-tip {
+    .title-tip,
+    h3 {
       color: #7a7a7a;
       font-size: 14px;
       margin-bottom: 10px;
@@ -95,12 +92,14 @@
     p {
       text-align: center;
     }
-
     .btn-wrap {
+      margin-top: 25px;
+      height: 36px;
+      margin-bottom: 10px;
       a {
-        width: 120px;
-        height: 38px;
-        line-height: 38px;
+        width: 84px;
+        height: 36px;
+        line-height: 36px;
         text-align: center;
         display: inline-block;
         background: #e2e2e2;
@@ -111,14 +110,13 @@
       //  background: #27d5bf !important;
       //  color: #fff;
       //}
-
-      .submit{
+      .submit {
         background-color: $main-bg-red;
+        margin-right: 50px;
       }
-      .cancel{
+      .cancel {
         background-color: #bab9b9;
       }
-
     }
     .content {
       min-height: 55px;

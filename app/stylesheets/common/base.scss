@@ -7,6 +7,8 @@ $main-bg-light-purple: #e6ebfb;
 $main-bg-red: #ff6666;
 $main-hover-red: #fe7373;
 $main-font-light-color: #999;
+$main-font-light-color2: #5c5c5c;
+
 $main-line-color: #d9d9d9;
 $main-text-color: #C5C5C5;
 $main-name-color: #666;
@@ -836,8 +838,8 @@ img {
   //  }
   //}
   &.am-yyt-close{
-    width: 14px;
-    height: 14px;
+    width: 24px;
+    height: 24px;
     padding-left: 0!important;
   }
   &.close-gray {

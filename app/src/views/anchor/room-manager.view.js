@@ -90,8 +90,10 @@ var View = BaseView.extend({
     if (!userId) {
       return;
     }
+    var msg = '<div style="text-align:center;color:#a1a1a1;" >' +
+      target.attr('data-name') + '(' + userId + ')</div>';
     uiConfirm.show({
-      content: '您确定要删除该场控吗?',
+      content: '您确定要删除该场控吗?' + msg,
       okFn: function () {
         self.removeRoomManger(userId);
       }
