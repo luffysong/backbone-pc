@@ -6,7 +6,7 @@
 /**
  * @time {时间}
  * @author {编写者}
- * @info {实现的功能}
+ * @info 主播直播间，场控直播间
  */
 
 'use strict';
@@ -28,6 +28,9 @@ var RoomDetailModel = require('../../models/anchor/room-detail.model');
 var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
 var GiftModel = require('../../models/anchor/gift.model');
 var PermissionModel = require('../../models/live-room/permission.model');
+var UserInfo = require('../live-room/user.js');
+
+var AdvertisingWallView = require('../advertising-wall/main.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -83,6 +86,7 @@ var View = BaseView.extend({
     Backbone.on('event:stopLoopRoomInfo', function () {
       // clearTimeout(self.roomInfoTimeId);
     });
+    Backbone.on('event:roomInfoReady', this.roomInfoReady.bind(this));
   },
   initWebIM: function () {
     function callback(notifyInfo) {
@@ -276,6 +280,27 @@ var View = BaseView.extend({
   },
   initGiftList: function () {
     this.giftModel.get(this.giftParams, function () {}, function () {});
+  },
+  // 读取当前用户信息
+  getUserInfo: function () {
+    var defer = $.Deferred();
+    var self = this;
+    UserInfo.getInfo(function (info) {
+      self.userInfo = info;
+      defer.resolve(info);
+    });
+    return defer.promise();
+  },
+  roomInfoReady: function (data) {
+    var self = this;
+    this.getUserInfo().done(function (info) {
+      self.adWallView = new AdvertisingWallView({
+        el: '#advertisingWall',
+        roomId: data.id,
+        userInfo: info,
+        type: 1 // 直播
+      });
+    });
   }
 });
 

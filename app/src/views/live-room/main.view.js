@@ -6,7 +6,7 @@
 /**
  * @time {时间}
  * @author {编写者}
- * @info {实现的功能}
+ * @info 用户直播间
  */
 
 'use strict';
