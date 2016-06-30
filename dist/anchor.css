@@ -850,7 +850,9 @@ img {
   border-color: #798fd8; }
   .am-btn-purple:focus, .am-btn-purple:hover {
     color: #fff;
-    background-color: #839ae9; }
+    background-color: #839ae9;
+    outline: inherit !important;
+    outline-offset: inherit; }
 
 .am-btn-red {
   background-color: #ff6666;
@@ -1356,7 +1358,6 @@ img {
   .anchor-container .anchor-ctrl {
     height: 90px;
     text-align: center;
-    margin-bottom: 100px;
     border-top: 1px solid #efefef;
     background-color: #fff; }
 

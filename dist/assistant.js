@@ -9,8 +9,8 @@ webpackJsonp([3],[
 	
 	var $ = __webpack_require__(1);
 	$(function () {
-	  var MainView = __webpack_require__(18);
-	  var TopBarView = __webpack_require__(86);
+	  var MainView = __webpack_require__(26);
+	  var TopBarView = __webpack_require__(102);
 	
 	  var a = new MainView({
 	    assistant: true
@@ -18,7 +18,7 @@ webpackJsonp([3],[
 	  a = new TopBarView();
 	  console.log(a);
 	  // 载入CSS
-	  __webpack_require__(90);
+	  __webpack_require__(106);
 	});
 
 
@@ -40,7 +40,15 @@ webpackJsonp([3],[
 /* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -57,25 +65,25 @@ webpackJsonp([3],[
 	'use strict';
 	
 	var Backbone = window.Backbone;
-	var _ = __webpack_require__(19);
-	var base = __webpack_require__(20);
+	var _ = __webpack_require__(27);
+	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
-	var Auxiliary = __webpack_require__(33);
-	var imServer = __webpack_require__(34);
-	var UserModel = __webpack_require__(37);
+	var Auxiliary = __webpack_require__(41);
+	var imServer = __webpack_require__(42);
+	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	var URL = Auxiliary.url;
-	var uiConfirm = __webpack_require__(47);
+	var uiConfirm = __webpack_require__(55);
 	var store = base.storage;
-	var auth = __webpack_require__(49);
+	var auth = __webpack_require__(57);
 	
-	var RoomDetailModel = __webpack_require__(50);
-	var RoomLongPollingModel = __webpack_require__(51);
-	var GiftModel = __webpack_require__(52);
-	var PermissionModel = __webpack_require__(53);
-	var UserInfo = __webpack_require__(154);
+	var RoomDetailModel = __webpack_require__(58);
+	var RoomLongPollingModel = __webpack_require__(59);
+	var GiftModel = __webpack_require__(60);
+	var PermissionModel = __webpack_require__(61);
+	var UserInfo = __webpack_require__(62);
 	
-	var AdvertisingWallView = __webpack_require__(172);
+	var AdvertisingWallView = __webpack_require__(64);
 	
 	var View = BaseView.extend({
 	  clientRender: false,
@@ -298,17 +306,17 @@ webpackJsonp([3],[
 	   */
 	  renderPage: function () {
 	    // 组件一，编辑背景图片
-	    var EditBgView = __webpack_require__(54);
+	    var EditBgView = __webpack_require__(72);
 	    // 组件二，主播信息
-	    var InfoView = __webpack_require__(61);
+	    var InfoView = __webpack_require__(78);
 	    // 组件三，主播控制消息
-	    var ChatView = __webpack_require__(64);
+	    var ChatView = __webpack_require__(81);
 	    // 公告组件
-	    var NoticeView = __webpack_require__(77);
+	    var NoticeView = __webpack_require__(93);
 	    // 直播开始,结束控制
-	    var LiveShowBtnView = __webpack_require__(81);
+	    var LiveShowBtnView = __webpack_require__(97);
 	
-	    var AssistantView = __webpack_require__(85);
+	    var AssistantView = __webpack_require__(101);
 	
 	    var a = new EditBgView();
 	    a = new InfoView();
@@ -338,16 +346,16 @@ webpackJsonp([3],[
 	  },
 	  roomInfoReady: function (data) {
 	    var self = this;
-	    if (this.options.assistant) {
-	      this.getUserInfo().done(function (info) {
-	        self.adWallView = new AdvertisingWallView({
-	          el: '#advertisingWall',
-	          roomId: data.id,
-	          userInfo: info,
-	          type: 1 // 直播
-	        });
+	    // if (this.options.assistant) {
+	    this.getUserInfo().done(function (info) {
+	      self.adWallView = new AdvertisingWallView({
+	        el: '#advertisingWall',
+	        roomId: data.id,
+	        userInfo: info,
+	        type: 1 // 直播
 	      });
-	    }
+	    });
+	    // }
 	  }
 	});
 	
@@ -355,20 +363,20 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 19 */
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = window._;
 
 /***/ },
-/* 20 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var BaseView = __webpack_require__(21);
-	var BaseModel = __webpack_require__(29);
-	var BaseRouter = __webpack_require__(31);
-	var ManagedObject = __webpack_require__(32);
-	var storage = __webpack_require__(30);
+	var BaseView = __webpack_require__(29);
+	var BaseModel = __webpack_require__(37);
+	var BaseRouter = __webpack_require__(39);
+	var ManagedObject = __webpack_require__(40);
+	var storage = __webpack_require__(38);
 	module.exports = {
 	    'View':BaseView,
 	    'Model':BaseModel,
@@ -379,7 +387,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 21 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -394,11 +402,11 @@ webpackJsonp([3],[
 	
 	'use strict';
 	
-	var Backbone = __webpack_require__(22);
-	var tplEng = __webpack_require__(23);
-	var warn = __webpack_require__(24);
-	var Tools = __webpack_require__(27);
-	var error = __webpack_require__(28);
+	var Backbone = __webpack_require__(30);
+	var tplEng = __webpack_require__(31);
+	var warn = __webpack_require__(32);
+	var Tools = __webpack_require__(35);
+	var error = __webpack_require__(36);
 	var uid = 999;
 	var createID = function(){
 		return 'view_'+(uid++)+'_'+(new Date().getTime())+Math.floor(Math.random(100)*100);
@@ -569,20 +577,20 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 22 */
+/* 30 */
 /***/ function(module, exports) {
 
 	module.exports = window.Backbone;
 
 /***/ },
-/* 23 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!art-template - Template Engine | http://aui.github.com/artTemplate/*/
 	!function(){function a(a){return a.replace(t,"").replace(u,",").replace(v,"").replace(w,"").replace(x,"").split(/^$|,+/)}function b(a){return"'"+a.replace(/('|\\)/g,"\\$1").replace(/\r/g,"\\r").replace(/\n/g,"\\n")+"'"}function c(c,d){function e(a){return m+=a.split(/\n/).length-1,k&&(a=a.replace(/\s+/g," ").replace(/<!--.*?-->/g,"")),a&&(a=s[1]+b(a)+s[2]+"\n"),a}function f(b){var c=m;if(j?b=j(b,d):g&&(b=b.replace(/\n/g,function(){return m++,"$line="+m+";"})),0===b.indexOf("=")){var e=l&&!/^=[=#]/.test(b);if(b=b.replace(/^=[=#]?|[\s;]*$/g,""),e){var f=b.replace(/\s*\([^\)]+\)/,"");n[f]||/^(include|print)$/.test(f)||(b="$escape("+b+")")}else b="$string("+b+")";b=s[1]+b+s[2]}return g&&(b="$line="+c+";"+b),r(a(b),function(a){if(a&&!p[a]){var b;b="print"===a?u:"include"===a?v:n[a]?"$utils."+a:o[a]?"$helpers."+a:"$data."+a,w+=a+"="+b+",",p[a]=!0}}),b+"\n"}var g=d.debug,h=d.openTag,i=d.closeTag,j=d.parser,k=d.compress,l=d.escape,m=1,p={$data:1,$filename:1,$utils:1,$helpers:1,$out:1,$line:1},q="".trim,s=q?["$out='';","$out+=",";","$out"]:["$out=[];","$out.push(",");","$out.join('')"],t=q?"$out+=text;return $out;":"$out.push(text);",u="function(){var text=''.concat.apply('',arguments);"+t+"}",v="function(filename,data){data=data||$data;var text=$utils.$include(filename,data,$filename);"+t+"}",w="'use strict';var $utils=this,$helpers=$utils.$helpers,"+(g?"$line=0,":""),x=s[0],y="return new String("+s[3]+");";r(c.split(h),function(a){a=a.split(i);var b=a[0],c=a[1];1===a.length?x+=e(b):(x+=f(b),c&&(x+=e(c)))});var z=w+x+y;g&&(z="try{"+z+"}catch(e){throw {filename:$filename,name:'Render Error',message:e.message,line:$line,source:"+b(c)+".split(/\\n/)[$line-1].replace(/^\\s+/,'')};}");try{var A=new Function("$data","$filename",z);return A.prototype=n,A}catch(B){throw B.temp="function anonymous($data,$filename) {"+z+"}",B}}var d=function(a,b){return"string"==typeof b?q(b,{filename:a}):g(a,b)};d.version="3.0.0",d.config=function(a,b){e[a]=b};var e=d.defaults={openTag:"<%",closeTag:"%>",escape:!0,cache:!0,compress:!1,parser:null},f=d.cache={};d.render=function(a,b){return q(a,b)};var g=d.renderFile=function(a,b){var c=d.get(a)||p({filename:a,name:"Render Error",message:"Template not found"});return b?c(b):c};d.get=function(a){var b;if(f[a])b=f[a];else if("object"==typeof document){var c=document.getElementById(a);if(c){var d=(c.value||c.innerHTML).replace(/^\s*|\s*$/g,"");b=q(d,{filename:a})}}return b};var h=function(a,b){return"string"!=typeof a&&(b=typeof a,"number"===b?a+="":a="function"===b?h(a.call(a)):""),a},i={"<":"&#60;",">":"&#62;",'"':"&#34;","'":"&#39;","&":"&#38;"},j=function(a){return i[a]},k=function(a){return h(a).replace(/&(?![\w#]+;)|[<>"']/g,j)},l=Array.isArray||function(a){return"[object Array]"==={}.toString.call(a)},m=function(a,b){var c,d;if(l(a))for(c=0,d=a.length;d>c;c++)b.call(a,a[c],c,a);else for(c in a)b.call(a,a[c],c)},n=d.utils={$helpers:{},$include:g,$string:h,$escape:k,$each:m};d.helper=function(a,b){o[a]=b};var o=d.helpers=n.$helpers;d.onerror=function(a){var b="Template Error\n\n";for(var c in a)b+="<"+c+">\n"+a[c]+"\n\n";"object"==typeof console&&console.error(b)};var p=function(a){return d.onerror(a),function(){return"{Template Error}"}},q=d.compile=function(a,b){function d(c){try{return new i(c,h)+""}catch(d){return b.debug?p(d)():(b.debug=!0,q(a,b)(c))}}b=b||{};for(var g in e)void 0===b[g]&&(b[g]=e[g]);var h=b.filename;try{var i=c(a,b)}catch(j){return j.filename=h||"anonymous",j.name="Syntax Error",p(j)}return d.prototype=i.prototype,d.toString=function(){return i.toString()},h&&b.cache&&(f[h]=d),d},r=n.$each,s="break,case,catch,continue,debugger,default,delete,do,else,false,finally,for,function,if,in,instanceof,new,null,return,switch,this,throw,true,try,typeof,var,void,while,with,abstract,boolean,byte,char,class,const,double,enum,export,extends,final,float,goto,implements,import,int,interface,long,native,package,private,protected,public,short,static,super,synchronized,throws,transient,volatile,arguments,let,yield,undefined",t=/\/\*[\w\W]*?\*\/|\/\/[^\n]*\n|\/\/[^\n]*$|"(?:[^"\\]|\\[\w\W])*"|'(?:[^'\\]|\\[\w\W])*'|\s*\.\s*[$\w\.]+/g,u=/[^\w$]+/g,v=new RegExp(["\\b"+s.replace(/,/g,"\\b|\\b")+"\\b"].join("|"),"g"),w=/^\d[^,]*|,\d[^,]*/g,x=/^,+|,+$/g;e.openTag="{{",e.closeTag="}}";var y=function(a,b){var c=b.split(":"),d=c.shift(),e=c.join(":")||"";return e&&(e=", "+e),"$helpers."+d+"("+a+e+")"};e.parser=function(a,b){a=a.replace(/^\s/,"");var c=a.split(" "),e=c.shift(),f=c.join(" ");switch(e){case"if":a="if("+f+"){";break;case"else":c="if"===c.shift()?" if("+c.join(" ")+")":"",a="}else"+c+"{";break;case"/if":a="}";break;case"each":var g=c[0]||"$data",h=c[1]||"as",i=c[2]||"$value",j=c[3]||"$index",k=i+","+j;"as"!==h&&(g="[]"),a="$each("+g+",function("+k+"){";break;case"/each":a="});";break;case"echo":a="print("+f+");";break;case"print":case"include":a=e+"("+c.join(",")+");";break;default:if(-1!==f.indexOf("|")){var l=b.escape;0===a.indexOf("#")&&(a=a.substr(1),l=!1);for(var m=0,n=a.split("|"),o=n.length,p=l?"$escape":"$string",q=p+"("+n[m++]+")";o>m;m++)q=y(q,n[m]);a="=#"+q}else a=d.helpers[e]?"=#"+e+"("+c.join(",")+");":"="+a}return a}, true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return d}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!=typeof exports?module.exports=d:this.template=d}();
 
 /***/ },
-/* 24 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -593,7 +601,7 @@ webpackJsonp([3],[
 	
 	'use strict';
 	
-	var log = __webpack_require__(25);
+	var log = __webpack_require__(33);
 	
 	var warn = function(msg,e){
 		log.warn(msg,e);
@@ -602,7 +610,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 25 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -652,10 +660,10 @@ webpackJsonp([3],[
 	}
 	module.exports = log;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
-/* 26 */
+/* 34 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -752,7 +760,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 27 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -875,7 +883,7 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 28 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -886,7 +894,7 @@ webpackJsonp([3],[
 	
 	'use strict';
 	
-	var log = __webpack_require__(25);
+	var log = __webpack_require__(33);
 	
 	var error = function(msg,e){
 		log.error(msg,e);
@@ -895,7 +903,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 29 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -915,10 +923,10 @@ webpackJsonp([3],[
 	
 	
 	'use strict';
-	var Backbone = __webpack_require__(22)
-	var storage = __webpack_require__(30);
-	var Tools = __webpack_require__(27);
-	var warn = __webpack_require__(24);
+	var Backbone = __webpack_require__(30)
+	var storage = __webpack_require__(38);
+	var Tools = __webpack_require__(35);
+	var warn = __webpack_require__(32);
 	var uid = 1314;
 	var expiration = storage.expiration;
 	var BaseModel = Backbone.Model.extend({
@@ -1165,7 +1173,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 30 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -1435,7 +1443,7 @@ webpackJsonp([3],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 31 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1446,8 +1454,8 @@ webpackJsonp([3],[
 	
 	'use strict'
 	
-	var Backbone = __webpack_require__(22);
-	var warn = __webpack_require__(24);
+	var Backbone = __webpack_require__(30);
+	var warn = __webpack_require__(32);
 	var stack = [];
 	var routerHash = {};
 	var curr = null;
@@ -1545,7 +1553,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 32 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1553,7 +1561,7 @@ webpackJsonp([3],[
 	 * @author icepy
 	 * @info 实体管理类
 	 */
-	var Tools = __webpack_require__(27);
+	var Tools = __webpack_require__(35);
 	var baseModelSort = [];
 	
 	var ManagedObject = function(options){
@@ -1756,14 +1764,14 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 33 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.Auxiliary=t():e.Auxiliary=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return e[r].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){var r=n(1),o=n(2),i=n(3),a=n(4),s=n(5),c=n(7);e.exports={url:r,sheet:o,isNativeFunction:i,cookie:a,AjaxForm:s,UploadFile:c}},function(e,t){"use strict";var n=[];window.location;e.exports={parse:function(e){var t=document.createElement("a");t.href=e;for(var n,r={port:t.port,protocol:t.protocol.replace(":",""),hash:t.hash.replace("#",""),host:t.host,href:t.href,hostname:t.hostname,pathname:t.pathname,search:t.search,query:{}},o=r.search.replace(/^\?/,"").split("&"),i=o.length,a=0;i>a;a++)o[a]&&(n=o[a].split("="),r.query[n[0]]=n[1]);return t=null,r},format:function(e,t){var r=0,o=t.query,i=t.hash;if(n.length=0,n.push(e.lastIndexOf("?")>-1?e:e+"?"),o)for(var a in o){var s=o[a];r?n.push("&"+a+"="+s):(r++,n.push(a+"="+s))}return i&&n.push(i.indexOf("#")>-1?i:"#"+i),n.join("")},resolve:function(e,t){return/^(.\/)/.test(t)&&(t=t.replace(/^(.\/)/,"/")),/^(..\/)/.test(t)&&(e=e.substr(0,e.lastIndexOf("/")),t=t.replace(/^(..\/)/,"/")),e+t},extname:function(e){var t=e.split(".");return t[t.length-1]||""},parseSearch:function(e){for(var t,n,r={},o=e.replace(/^\?/,"").split("&"),i=o.length,a=0;i>a;a++)o[a]&&(n=o[a].split("="),t=n[1],(/^\[/.test(t)&&/\]$/.test(t)||/^{/.test(t)||/\}$/.test(t))&&(t=JSON.parse(t)),r[n[0]]=t);return r}}},function(e,t){"use strict";function n(){var e=document.createElement("style");return e.appendChild(document.createTextNode("")),document.head.appendChild(e),e.sheet}e.exports=n()},function(e,t){"use strict";function n(e){var t=typeof e;return"function"===t?a.test(o.call(e)):e&&"object"===t&&i.test(r.call(e))||!1}e.exports=n;var r=Object.prototype.toString,o=Function.prototype.toString,i=/^\[object .+?Constructor\]$/,a=RegExp("^"+String(r).replace(/[.*+?^${}()|[\]\/\\]/g,"\\$&").replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$")},function(e,t){"use strict";function n(){for(var e=0,t={};e<arguments.length;e++){var n=arguments[e];for(var r in n)t[r]=n[r]}return t}function r(e){function t(r,o,i){var a;if(arguments.length>1){if(i=n({path:"/"},t.defaults,i),"number"==typeof i.expires){var s=new Date;s.setMilliseconds(s.getMilliseconds()+864e5*i.expires),i.expires=s}try{a=JSON.stringify(o),/^[\{\[]/.test(a)&&(o=a)}catch(c){}return o=e.write?e.write(o,r):encodeURIComponent(String(o)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),r=encodeURIComponent(String(r)),r=r.replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent),r=r.replace(/[\(\)]/g,escape),document.cookie=[r,"=",o,i.expires&&"; expires="+i.expires.toUTCString(),i.path&&"; path="+i.path,i.domain&&"; domain="+i.domain,i.secure?"; secure":""].join("")}r||(a={});for(var p=document.cookie?document.cookie.split("; "):[],l=/(%[0-9A-Z]{2})+/g,u=0;u<p.length;u++){var f=p[u].split("="),h=f[0].replace(l,decodeURIComponent),d=f.slice(1).join("=");'"'===d.charAt(0)&&(d=d.slice(1,-1));try{if(d=e.read?e.read(d,h):e(d,h)||d.replace(l,decodeURIComponent),this.json)try{d=JSON.parse(d)}catch(c){}if(r===h){a=d;break}r||(a[h]=d)}catch(c){}}return a}return t.get=t.set=t,t.getJSON=function(){return t.apply({json:!0},[].slice.call(arguments))},t.defaults={},t.remove=function(e,r){t(e,"",n(r,{expires:-1}))},t.withConverter=r,t}e.exports=r(function(){})},function(e,t,n){"use strict";var r=(n(1),n(6)),o=function(e){e=e||{},this.$el="string"==typeof e.el?$(e.el):e.el,this.uid=r("AjaxForm-"),this.loadState=!1,this._init()};o.prototype._init=function(){var e=$.Deferred();$.extend(this,e.promise()),this._createIframe(),this._addEvent(e)},o.prototype._createIframe=function(){var e='<iframe id="'+this.uid+'" name="'+this.uid+'"  style="display: none;" src="about:blank"></iframe>';this.$el.attr("target",this.uid),this.$el.append(e),this._iframe=$("#"+this.uid),$("<input />").attr({type:"hidden",name:"cross_post",value:"1"}).appendTo(this.$el)},o.prototype._addEvent=function(e){var t=this;this._iframe.on("load",function(){if(t.loadState){var n=this.contentWindow,r=n.location;if("about:blank"===r.href)e.reject(n);else try{var o=this._iframe[0].contentWindow.document.body;innerText=o.innerText,innerText||(innerText=o.innerHTML),innerText&&e.resolve($.parseJSON(innerText))}catch(i){e.resolve(n)}t.loadState=!1}})},o.prototype.encrypto=function(e){var t=this;$.each(e,function(e,n){var r=t.$el.find("[name="+e+"]");0===r.length?$("<input />").attr({type:"hidden",name:e,value:n}).appendTo(t.$el):r.val(n)})};var i=null;o.sharedInstanceAjaxForm=function(e,t){return i||(t=t||{},t.el=e,i=new o(t)),i},o.classInstanceAjaxForm=function(e,t){return t=t||{},t.el=e,new o(t)},e.exports=o},function(e,t){function n(e){var t=++r+"";return e?e+t:t}e.exports=n;var r=0},function(e,t,n){"use strict";var r=n(1),o=n(5),i=n(6),a=function(e){if(this.$el="string"==typeof e.el?$(e.el):e.el,this.uid=i("UploadFile-"),this.options=e,this._data=e.data||{},this._filename=e.filename||"image",this._url=e.url,!this._url)return void console.warn("配置上传URL");this._init();var t=$.Deferred();$.extend(this,t.promise()),this.ajaxForm=o.classInstanceAjaxForm(this.$el,{type:"img"}),this.ajaxForm.done(function(e){var n=e.location,o=decodeURIComponent(n.search),i=r.parseSearch(o);t.resolve(i)}),this.ajaxForm.fail(function(){t.reject(this)})};a.prototype._init=function(){this._createElement()},a.prototype._createElement=function(){var e="";for(var t in this._data){var n=this._data[t],r=Object.prototype.toString.call(n);"[object Object]"!==r&&"[object Array]"!==r||(n=JSON.stringify(n)),e+='<input type="hidden" name="'+t+"\" value='"+n+"'/>"}e+='<input type="file" class="opacity0 upload-file '+this.options.className+'" name="'+this._filename+'"  />',this.$el.attr("method","POST"),this.$el.attr("action",this._url),this.$el.attr("enctype","multipart/form-data"),this.$el.append(e)},a.prototype.parseErrorMsg=function(e){if(e&&"SUCCESS"==e.state)return!0;var t=1*e.errCode||0;switch(t){case 29:return"上传的文件太大了,请重新上传";case 31:return"请上传JPGE,JPG,PNG,GIF等格式的图片文件"}return"文件上传失败,请重新上传"},a.prototype.submit=function(){this.ajaxForm.loadState=!0,"function"==typeof this._before&&this._before(),this.$el.submit()};var s=null;a.sharedInstanceUploadFile=function(e){return s||(s=new a(e)),s},a.classInstanceUploadFile=function(e){return new a(e)},e.exports=a}])});
 	//# sourceMappingURL=auxiliary.min.js.map
 
 /***/ },
-/* 34 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1771,12 +1779,13 @@ webpackJsonp([3],[
 	 */
 	
 	'use strict';
-	var base = __webpack_require__(20);
-	var IMModel = __webpack_require__(35);
+	var base = __webpack_require__(28);
+	var IMModel = __webpack_require__(43);
 	var imModel = IMModel.sharedInstanceIMModel();
 	var store = base.storage;
 	var webim = window.webim;
-	var _ = __webpack_require__(19);
+	var _ = __webpack_require__(27);
+	var $ = __webpack_require__(1);
 	
 	var imServer = {
 	  setting: {
@@ -2070,12 +2079,34 @@ webpackJsonp([3],[
 	  );
 	};
 	
+	/**
+	 * 修改组内成员角色
+	 */
+	imServer.modifyGroupMember = function (ops) {
+	  var defer = $.Deferred();
+	  console.log(ops);
+	  var options = _.extend({
+	    GroupId: '',
+	    Member_Account: '',
+	    Role: ''
+	  }, ops);
+	  webim.modifyGroupMember(
+	    options,
+	    function (resp) {
+	      defer.resolve(resp);
+	    },
+	    function (err) {
+	      defer.reject(err);
+	    }
+	  );
+	  return defer.promise();
+	};
 	
 	module.exports = imServer;
 
 
 /***/ },
-/* 35 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2087,12 +2118,12 @@ webpackJsonp([3],[
 	'use strict';
 	
 	var $ = __webpack_require__(1);
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var storage = base.storage;
-	var UserModel = __webpack_require__(37);
+	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	
 	var Model = BaseModel.extend({
@@ -2196,7 +2227,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 36 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var config = {
@@ -2238,25 +2269,25 @@ webpackJsonp([3],[
 	}
 	module.exports = config;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
-/* 37 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Created by YYT on 2016/4/20.
 	 */
-	var base = __webpack_require__(20);
-	var Auxiliary = __webpack_require__(33);
-	var _ = __webpack_require__(19);
+	var base = __webpack_require__(28);
+	var Auxiliary = __webpack_require__(41);
+	var _ = __webpack_require__(27);
 	var BaseModel = base.Model;
-	var Dialog = __webpack_require__(38);
-	var loginBox = __webpack_require__(42);
+	var Dialog = __webpack_require__(46);
+	var loginBox = __webpack_require__(50);
 	var cookie = Auxiliary.cookie;
-	var Config = __webpack_require__(36);
+	var Config = __webpack_require__(44);
 	var domains = Config.domains;
-	var checkEmailTemplate = __webpack_require__(46);
+	var checkEmailTemplate = __webpack_require__(54);
 	var checkEmailHTML = checkEmailTemplate.replace('{homeSite}', domains.homeSite);
 	var loginbox = loginBox().dialog;
 	
@@ -2533,7 +2564,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 38 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -2548,12 +2579,12 @@ webpackJsonp([3],[
 	 */
 	
 	'use strict';
-	var base = __webpack_require__(20);
+	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
-	var Mask = __webpack_require__(39);
+	var Mask = __webpack_require__(47);
 	var mask;
 	var uid = 999;
-	var _ = __webpack_require__(19);
+	var _ = __webpack_require__(27);
 	
 	var View = BaseView.extend({
 	  clientRender: false,
@@ -2594,8 +2625,8 @@ webpackJsonp([3],[
 	  },
 	  // 当模板挂载到元素之后
 	  afterMount: function () {
-	    this.closeTemp = __webpack_require__(40);
-	    this.titleTemp = __webpack_require__(41);
+	    this.closeTemp = __webpack_require__(48);
+	    this.titleTemp = __webpack_require__(49);
 	  },
 	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	  ready: function () {
@@ -2739,7 +2770,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 39 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -2755,7 +2786,7 @@ webpackJsonp([3],[
 	
 	'use strict';
 	
-	var base = __webpack_require__(20);
+	var base = __webpack_require__(28);
 	var BaseView = base.View; //  View的基类
 	var doc = $(document);
 	var isIE6 = navigator.userAgent.indexOf('MSIE 6.0') !== -1;
@@ -2809,19 +2840,19 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 40 */
+/* 48 */
 /***/ function(module, exports) {
 
 	module.exports = "<!-- <a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}}\">{{if closeText}}{{closeText}}{{/if}}</a> -->\n<a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}} icons am-yyt-close close-white\"></a>\n"
 
 /***/ },
-/* 41 */
+/* 49 */
 /***/ function(module, exports) {
 
 	module.exports = "<h3 class=\"dialog_title J_title\">{{title}}</h3>\n"
 
 /***/ },
-/* 42 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2832,15 +2863,15 @@ webpackJsonp([3],[
 	
 	'use strict';
 	
-	var Auxiliary = __webpack_require__(33);
+	var Auxiliary = __webpack_require__(41);
 	// Diglog类
-	var Dialog = __webpack_require__(38);
+	var Dialog = __webpack_require__(46);
 	var AjaxForm = Auxiliary.AjaxForm;
 	var url = Auxiliary.url;
-	var pwdencrypt = __webpack_require__(43);
-	var loginBoxTemp = __webpack_require__(44);
-	var tplEng = __webpack_require__(23);
-	var secret = __webpack_require__(45);
+	var pwdencrypt = __webpack_require__(51);
+	var loginBoxTemp = __webpack_require__(52);
+	var tplEng = __webpack_require__(31);
+	var secret = __webpack_require__(53);
 	// 邮件
 	var EMAIL_PATTERN =
 	  /^([a-zA-Z0-9_\.\-\+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -2897,7 +2928,7 @@ webpackJsonp([3],[
 	}
 	// 初始化登录表单
 	function _initForm() {
-	  var UserModel = __webpack_require__(37);
+	  var UserModel = __webpack_require__(45);
 	  errorinfo = loginBoxForm.find('.errorinfo');
 	  email = loginBoxForm.find('[name=email]');
 	  password = loginBoxForm.find('.pwd');
@@ -3059,7 +3090,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 43 */
+/* 51 */
 /***/ function(module, exports) {
 
 	function yytcrypt(o) {
@@ -3269,13 +3300,13 @@ webpackJsonp([3],[
 	module.exports = yytcrypt;
 
 /***/ },
-/* 44 */
+/* 52 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"loginbox\">\n    <div class=\"external\">\n        <p class=\"title\">使用合作账号登录<span>(推荐)</span></p>\n        <ul>\n            <li>\n                <a href=\"{{url}}/api/login/sina-auth\" target=\"_blank\" class=\"weibo\" hidefocus>微博帐号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/qq-auth\" target=\"_blank\" class=\"qq\" hidefocus>QQ帐号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/renren-auth\" target=\"_blank\" class=\"renren\" hidefocus>人人账号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/baidu-auth\" target=\"_blank\" class=\"baidu\" hidefocus>百度帐号</a>\n            </li>\n        </ul>\n        <div class=\"loginbox-placehold\"></div>\n        <p class=\"text\">快捷登录，无需注册</p>\n        <p class=\"text\">与你的朋友分享你的爱！</p>\n    </div>\n    <div class=\"site\">\n        <p class=\"title\">音悦Tai账号登录</p>\n        <form id=\"loginBoxForm\" action=\"https://login.yinyuetai.com/login-ajax\" method=\"post\">\n            <p class=\"errorinfo\">错误信息提示</p>\n            <div class=\"email focuss\">\n                <input type=\"text\" name=\"email\" placeholder=\"您的邮箱地址或绑定手机\"/>\n            </div>\n            <div class=\"password\">\n                <input type=\"password\" class=\"pwd\" placeholder=\"请输入密码\"/>\n            </div>\n            <div id=\"captcha\"></div>\n            <div>\n                <p class=\"autologin\"><input type=\"checkbox\" id=\"autocheckbox\" name=\"autologin\" checked hidefocus/><label for=\"autocheckbox\">下次自动登录</label></p>\n                <a class=\"forgot\" href=\"{{url}}/forgot-password\" target=\"_blank\" hidefocus>忘记密码</a>\n            </div>\n            <div>\n                <input class=\"submit\" type=\"submit\" hidefocus/>\n                <p class=\"reg\">还没有音悦Tai账号？<a href=\"{{url}}/register\" target=\"_blank\" hidefocus>立即注册！</a></p>\n            </div>\n        </form>\n    </div>\n</div>"
 
 /***/ },
-/* 45 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	function hex_y(a) {
@@ -3445,7 +3476,7 @@ webpackJsonp([3],[
 	}
 	
 	var chrsz = 8;
-	var Auxiliary = __webpack_require__(33);
+	var Auxiliary = __webpack_require__(41);
 	var cookie =  Auxiliary.cookie;
 	
 	module.exports = function(p0) {
@@ -3471,13 +3502,13 @@ webpackJsonp([3],[
 	};
 
 /***/ },
-/* 46 */
+/* 54 */
 /***/ function(module, exports) {
 
 	module.exports = "<div style=\"padding: 20px 30px;\">\n  <p>您好像还没有进行邮箱验证。</p>\n  <p>为不影响部分功能的使用，请先进行\n    <a href=\"{homeSite}/settings/bind\" target=\"_blank\" class=\"special f14\">邮箱验证</a>\n  </p>\n</div>\n"
 
 /***/ },
-/* 47 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3502,7 +3533,7 @@ webpackJsonp([3],[
 	
 	
 	var confirm = {};
-	var _ = __webpack_require__(19);
+	var _ = __webpack_require__(27);
 	
 	var setting = {
 	  title: '消息',
@@ -3528,7 +3559,7 @@ webpackJsonp([3],[
 	};
 	
 	confirm.getHTML = function () {
-	  return __webpack_require__(48);
+	  return __webpack_require__(56);
 	};
 	
 	confirm.bindEvent = function (html, okFn, cancelFn) {
@@ -3585,13 +3616,13 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 48 */
+/* 56 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"UIConfigWrap\" class=\"shadow_screen\">\n    <div class=\"shadow\"></div>\n    <div class=\"edit_annmoucement_con\" style=\"margin-bottom: 16px; width: 400px;margin-left:-200px;\">\n        <h2 class=\"edit_title\"><span class=\"title\" id=\"UIConfirmTitle\"><%=title%></span> <span class=\"close icons am-yyt-close close-black UIConfirmClose\"></span></h2>\n        <div class=\"editCon\" style=\"\">\n            <div class=\"content\" style=\"padding:16px; font-size: 14px;\"><%=content%></div>\n            <p class=\"btn-wrap am-margin-top\" >\n                <a style=\"display: <%= okBtn?'inline-block':'none'%>;\" id=\"UIConfirmOk\" href=\"javascript:;\" class=\"boderRadAll_5 submit active am-margin-right\">确定</a>\n                <a style=\"display: <%= cancelBtn?'inline-block':'none'%>;\" href=\"javascript:;\" class=\"boderRadAll_5 cancel UIConfirmClose am-margin-left\">取消</a>\n            </p>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
-/* 49 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3602,7 +3633,7 @@ webpackJsonp([3],[
 	
 	'use strict';
 	
-	var IMModel = __webpack_require__(35);
+	var IMModel = __webpack_require__(43);
 	var imModel = IMModel.sharedInstanceIMModel();
 	
 	module.exports = {
@@ -3620,13 +3651,13 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 50 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -3652,13 +3683,13 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 51 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -3684,7 +3715,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 52 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3697,7 +3728,7 @@ webpackJsonp([3],[
 	
 	var sigleInstance = null;
 	var cacheData = null;
-	var _ = __webpack_require__(19);
+	var _ = __webpack_require__(27);
 	
 	function GiftModel() {
 	}
@@ -3741,7 +3772,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 53 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3749,8 +3780,8 @@ webpackJsonp([3],[
 	 */
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -3776,3046 +3807,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 54 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	
-	/**
-	 * @time 2016-03-09
-	 * @author YuanXuJia
-	 * @info 更换主题背景
-	 */
-	var Backbone = window.Backbone;
-	var base = __webpack_require__(20);
-	var BaseView = base.View; // View的基类
-	var EditBgModel = __webpack_require__(55);
-	var UploadFileDialog = __webpack_require__(56);
-	var msgBox = __webpack_require__(59);
-	var UserModel = __webpack_require__(37);
-	var user = UserModel.sharedInstanceUserModel();
-	
-	var View = BaseView.extend({
-	  el: '#edit_background', // 设置View对象作用于的根元素，比如id
-	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(60);
-	  },
-	  events: { // 监听事件
-	    'click .edit_bg_btn': 'showFileUploadDialog'
-	  },
-	  // 当模板挂载到元素之前
-	  beforeMount: function () {
-	    this.editBgModel = new EditBgModel();
-	    this.uploadFile = new UploadFileDialog(this.getFileUploadOptions());
-	
-	    // 数据参数
-	    this.bgModelParams = {
-	      access_token: user.getWebToken(),
-	      deviceinfo: '{"aid": "30001001"}',
-	      roomId: '',
-	      imageUrl: ''
-	    };
-	  },
-	  // 当模板挂载到元素之后
-	  afterMount: function () {
-	    // 修改背景按钮
-	    this.changeBgBtn = $('.edit_bg_btn');
-	    this.txtPopularity = $('#txtPopularity');
-	    this.txtRoomName = $('#txtRoomName');
-	
-	    this.anchorContainerBg = $('#anchorContainerBg');
-	    this.anchorThemeBgDOM = $('#anchorThemeBg');
-	  },
-	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	  ready: function () {
-	    this.defineEventInterface();
-	
-	    // 修改背景图片按钮
-	    $('.edit_bg_btn').on('click', this.showFileUploadDialog.bind(this));
-	  },
-	  /**
-	   * 定义事件
-	   */
-	  defineEventInterface: function () {
-	    var self = this;
-	    Backbone.on('event:roomInfoReady', function (data) {
-	      if (data) {
-	        self.roomInfo = data;
-	        self.txtRoomName.text(data.roomName || '');
-	        self.txtPopularity.text(data.realPopularity || 0);
-	        if (self.roomInfo.imageUrl) {
-	          self.setBgStyle(self.roomInfo.imageUrl);
-	        }
-	      }
-	    });
-	    Backbone.on('event:updateRoomInfo', function (data) {
-	      if (data) {
-	        // self.roomInfo = data;
-	        self.txtPopularity.text(data.popularity || 0);
-	      }
-	    });
-	  },
-	  getFileUploadOptions: function () {
-	    var self = this;
-	    return {
-	      width: 580,
-	      height: 341,
-	      isRemoveAfterHide: false,
-	      isAutoShow: false,
-	      mainClass: 'shadow_screen_x',
-	      closeClass: 'editor_bg_close_x',
-	      closeText: 'X',
-	      title: '上传主题背景图片',
-	      ctrlData: {
-	        cmd: [{
-	          point: '+1+1',
-	          srcImg: 'img',
-	          op: 'crop',
-	          size: '1200x270'
-	        }, {
-	          saveOriginal: 1,
-	          op: 'save',
-	          plan: 'avatar',
-	          belongId: '20634338',
-	          srcImg: 'img'
-	        }],
-	        redirect: 'http://' + window.location.host + '/cross-url/upload.html'
-	      },
-	      uploadFileSuccess: function (response) {
-	        var result = self.uploadFile.parseErrorMsg(response);
-	        if (result === true) {
-	          self.currentBgImg = response.images[0].path;
-	        } else {
-	          msgBox.showTip(result);
-	        }
-	      },
-	      saveFile: function () {
-	        self.setBackgroundImg();
-	      }
-	    };
-	  },
-	  showFileUploadDialog: function () {
-	    var attrs = null;
-	    if (this.roomInfo.imageUrl) {
-	      attrs = {
-	        inputText: '编辑图片',
-	        breviaryUrl: this.roomInfo.imageUrl
-	      };
-	    }
-	    this.currentBgImg = '';
-	    this.uploadFile.show(attrs);
-	  },
-	  setBackgroundImg: function () {
-	    var self = this;
-	    var promise;
-	    if (!self.currentBgImg) {
-	      msgBox.showTip('请耐心等待图片上传完成!');
-	      return;
-	    }
-	
-	    self.bgModelParams.roomId = this.roomInfo.id;
-	    self.bgModelParams.imageUrl = this.currentBgImg;
-	
-	    promise = self.editBgModel.executeJSONP(self.bgModelParams);
-	    promise.done(function (res) {
-	      if (res && res.code === '0') {
-	        self.setBgStyle(self.currentBgImg);
-	        self.uploadFile.hide();
-	        msgBox.showOK('背景图片设置成功');
-	      } else {
-	        msgBox.showError(res.msg || '背景图片设置失败,稍后重试');
-	      }
-	    });
-	    promise.fail(function () {
-	      msgBox.showError('背景图片设置失败,稍后重试');
-	    });
-	  },
-	  setBgStyle: function (url) {
-	    if (url) {
-	      this.anchorThemeBgDOM.css('background', 'url(' + url + ')');
-	    }
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 55 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/bg_set.json',
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 56 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} //默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	
-	/**
-	 * @time {时间}
-	 * @author {编写者}
-	 * @info {实现的功能}
-	 */
-	
-	'use strict';
-	var shared = null;
-	var dialogTemp = __webpack_require__(57);
-	var Dialog = __webpack_require__(38);
-	var Helper = __webpack_require__(58);
-	
-	var UploadFileDialog = function (options) {
-	  var self = this;
-	  this.options = options;
-	  this.dialog = Dialog.classInstanceDialog(dialogTemp, options);
-	  this.helper = new Helper({
-	    ctrlData: this.options.ctrlData,
-	    id: '#' + this.dialog.id
-	  });
-	  this.helper.on('uploadFileSuccess', function (response) {
-	    if (typeof self.options.uploadFileSuccess === 'function') {
-	      self.options.uploadFileSuccess(response);
-	    }
-	  });
-	  this.helper.on('saveFile', function () {
-	    if (typeof self.options.saveFile === 'function') {
-	      self.options.saveFile();
-	    }
-	  });
-	};
-	UploadFileDialog.prototype.show = function (obj) {
-	  if (this.helper && obj) {
-	    this.helper.trigger('successBreviary', obj);
-	  }
-	  this.dialog.show();
-	};
-	UploadFileDialog.prototype.hide = function () {
-	  this.dialog.hide();
-	};
-	UploadFileDialog.prototype.emptyValue = function () {
-	  if (this.helper) {
-	    this.helper.emptyValue();
-	  }
-	};
-	
-	UploadFileDialog.prototype.parseErrorMsg = function (res) {
-	  var code;
-	  if (res && res.state === 'SUCCESS') {
-	    return true;
-	  }
-	  code = res.errCode * 1 || 0;
-	  switch (code) {
-	    case 29:
-	      return '上传的文件太大了,请重新上传';
-	    case 31:
-	      return '请上传JPGE,JPG,PNG,GIF等格式的图片文件';
-	    default:
-	      return '文件上传失败,请重新上传';
-	  }
-	};
-	
-	
-	UploadFileDialog.sharedInstanceUploadFileDialog = function (options) {
-	  if (!shared) {
-	    shared = new UploadFileDialog(options);
-	  }
-	  return shared;
-	};
-	module.exports = UploadFileDialog;
-
-
-/***/ },
-/* 57 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"shadow\"></div>\n<div class=\"edit_Bg_form_x\">\n\t<div class=\"edit_title\">\n\t\t<span class=\"upload-title\">背景图设置</span>\n\t\t<span class=\"upload-status upload-image-state\"></span>\n\t</div>\n\t<div class=\"formCon clearfix\">\n\t\t<div class=\"imgBox fl\">\n\t\t\t<img src=\"\" alt=\"\" width=\"100%\" height=\"100%\"  style=\"display: none;\" class=\"imgboxFile\">\n\t\t</div>\n\t\t<div class=\"formBox fl\">\n\t\t\t<div class=\"pseudo-uploadBtn am-btn-red boderRadAll_3\">\n\t\t\t\t<span class=\"input-text\">选择图片</span>\n\t\t\t\t<form class=\"upload-form\">\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<p>支持5M以内的gif、jpg、jpge、png图片上传</p>\n\t\t\t<div class=\"submit am-btn-red boderRadAll_3\">保存</div>\n\t\t</div>\n\t</div>\n</div>\n"
-
-/***/ },
-/* 58 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	
-	/**
-	 * @time {时间}
-	 * @author {编写者}
-	 * @info {实现的功能}
-	 */
-	
-	'use strict';
-	var base = __webpack_require__(20);
-	var Auxiliary = __webpack_require__(33);
-	var BaseView = base.View;
-	var UploadFile = Auxiliary.UploadFile;
-	
-	var uploadIng = '正在上传';
-	var uploadDone = '上传完成!';
-	var msgBox = __webpack_require__(59);
-	var loc = window.location;
-	var View = BaseView.extend({
-	  events: { // 监听事件
-	    'click .submit': 'saveHandler',
-	    'change .upload-file': 'changeFile'
-	  },
-	  // 当模板挂载到元素之前
-	  beforeMount: function () {
-	
-	  },
-	  // 当模板挂载到元素之后
-	  afterMount: function () {
-	
-	  },
-	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	  ready: function (options) {
-	    this.$el = $(options.id);
-	    this._ICEinitEvent();
-	    this.formDOM = this.findDOMNode('.upload-form');
-	    this.imgSrcDOM = this.findDOMNode('.imgboxFile');
-	    this.imageStateDOM = this.findDOMNode('.upload-image-state');
-	    this.inputTextDOM = this.findDOMNode('.input-text');
-	    var self = this;
-	    var temp = {
-	      gcmd: [
-	        {
-	          gsaveOriginal: 1, op: 'save', plan: 'avatar', belongId: '20634338', srcImg: 'img'
-	        }
-	      ],
-	      gredirect: loc.origin + '/web/upload.html'
-	    };
-	    var ctrlData = options.ctrlData || temp;
-	    var uploadParams = {
-	      el: this.formDOM,
-	      url: 'http://image.yinyuetai.com/edit',
-	      data: ctrlData,
-	      filename: 'img',
-	      className: 'file'
-	    };
-	    this.upload = new UploadFile(uploadParams);
-	    this.upload.done(function (response) {
-	      self.imageStateDOM.html(uploadDone);
-	      self.previewImage(response);
-	      self.trigger('uploadFileSuccess', response);
-	    });
-	    this.upload.fail(function () {
-	      msgBox.showError('上传失败');
-	    });
-	    this.on('successBreviary', function (obj) {
-	      this.successBreviary(obj);
-	    });
-	  },
-	  successBreviary: function (obj) {
-	    this.emptyValue();
-	    if (obj.breviaryUrl) {
-	      this.imgSrcDOM.attr('src', obj.breviaryUrl);
-	      this.imgSrcDOM.show();
-	    }
-	    if (obj.inputText) {
-	      this.inputTextDOM.text(obj.inputText);
-	    }
-	  },
-	  saveHandler: function () {
-	    this.trigger('saveFile');
-	  },
-	  changeFile: function () {
-	    this.imageStateDOM.html(uploadIng);
-	    this.upload.submit();
-	  },
-	  previewImage: function (response) {
-	    var images = response.images;
-	    var imagePath;
-	    if (images && images.length > 0) {
-	      imagePath = images[0].path;
-	      this.imgSrcDOM.attr('src', imagePath);
-	      this.imgSrcDOM.show();
-	    }
-	  },
-	  emptyValue: function () {
-	    this.imageStateDOM.html('');
-	    this.imgSrcDOM.hide();
-	    this.inputTextDOM.text('上传图片');
-	  }
-	});
-	
-	var shared = null;
-	View.sharedInstanceUploadFileDialog = function (options) {
-	  if (!shared) {
-	    shared = new View(options);
-	  }
-	  return shared;
-	};
-	View.fetchDialogTemplate = function () {
-	  return __webpack_require__(57);
-	};
-	module.exports = View;
-
-
-/***/ },
-/* 59 */
-/***/ function(module, exports) {
-
-	/**
-	 * Created by AaronYuan on 3/12/16.
-	 */
-	
-	/**
-	 * 使用
-	 *
-	 * showError(msg);
-	 * showTip(msg);
-	 * showOK(msg);
-	 * showLoading(msg);
-	 *
-	 *
-	 * .show(msgHtml, type, timeout, opts){}
-	 *      msgHtml: 内容
-	 *      type: 图标类型   1   -   提示
-	 *                      2   -   成功
-	 *                      3   -   失败
-	 *                      4   -   载入中
-	 *      timeout: 毫秒数,自动关闭
-	 *      opts: 配置,默认null就好
-	 *
-	 *
-	 * .hide()
-	 */
-	
-	//require('/style/msgbox.css');
-	var ZENG = {};
-	
-	ZENG.dom = {
-	    getById: function (id) {
-	        return document.getElementById(id);
-	    }, get: function (e) {
-	        return (typeof (e) == "string") ? document.getElementById(e) : e;
-	    }, createElementIn: function (tagName, elem, insertFirst, attrs) {
-	        var _e = (elem = ZENG.dom.get(elem) || document.body).ownerDocument.createElement(tagName || "div"), k;
-	        if (typeof (attrs) == 'object') {
-	            for (k in attrs) {
-	                if (k == "class") {
-	                    _e.className = attrs[k];
-	                } else if (k == "style") {
-	                    _e.style.cssText = attrs[k];
-	                } else {
-	                    _e[k] = attrs[k];
-	                }
-	            }
-	        }
-	        insertFirst ? elem.insertBefore(_e, elem.firstChild) : elem.appendChild(_e);
-	        return _e;
-	    }, getStyle: function (el, property) {
-	        el = ZENG.dom.get(el);
-	        if (!el || el.nodeType == 9) {
-	            return null;
-	        }
-	        var w3cMode = document.defaultView && document.defaultView.getComputedStyle, computed = !w3cMode ? null : document.defaultView.getComputedStyle(el, ''), value = "";
-	        switch (property) {
-	            case "float":
-	                property = w3cMode ? "cssFloat" : "styleFloat";
-	                break;
-	            case "opacity":
-	                if (!w3cMode) {
-	                    var val = 100;
-	                    try {
-	                        val = el.filters['DXImageTransform.Microsoft.Alpha'].opacity;
-	                    } catch (e) {
-	                        try {
-	                            val = el.filters('alpha').opacity;
-	                        } catch (e) {
-	                        }
-	                    }
-	                    return val / 100;
-	                } else {
-	                    return parseFloat((computed || el.style)[property]);
-	                }
-	                break;
-	            case "backgroundPositionX":
-	                if (w3cMode) {
-	                    property = "backgroundPosition";
-	                    return ((computed || el.style)[property]).split(" ")[0];
-	                }
-	                break;
-	            case "backgroundPositionY":
-	                if (w3cMode) {
-	                    property = "backgroundPosition";
-	                    return ((computed || el.style)[property]).split(" ")[1];
-	                }
-	                break;
-	        }
-	        if (w3cMode) {
-	            return (computed || el.style)[property];
-	        } else {
-	            return (el.currentStyle[property] || el.style[property]);
-	        }
-	    }, setStyle: function (el, properties, value) {
-	        if (!(el = ZENG.dom.get(el)) || el.nodeType != 1) {
-	            return false;
-	        }
-	        var tmp, bRtn = true, w3cMode = (tmp = document.defaultView) && tmp.getComputedStyle, rexclude = /z-?index|font-?weight|opacity|zoom|line-?height/i;
-	        if (typeof (properties) == 'string') {
-	            tmp = properties;
-	            properties = {};
-	            properties[tmp] = value;
-	        }
-	        for (var prop in properties) {
-	            value = properties[prop];
-	            if (prop == 'float') {
-	                prop = w3cMode ? "cssFloat" : "styleFloat";
-	            } else if (prop == 'opacity') {
-	                if (!w3cMode) {
-	                    prop = 'filter';
-	                    value = value >= 1 ? '' : ('alpha(opacity=' + Math.round(value * 100) + ')');
-	                }
-	            } else if (prop == 'backgroundPositionX' || prop == 'backgroundPositionY') {
-	                tmp = prop.slice(-1) == 'X' ? 'Y' : 'X';
-	                if (w3cMode) {
-	                    var v = ZENG.dom.getStyle(el, "backgroundPosition" + tmp);
-	                    prop = 'backgroundPosition';
-	                    typeof (value) == 'number' && (value = value + 'px');
-	                    value = tmp == 'Y' ? (value + " " + (v || "top")) : ((v || 'left') + " " + value);
-	                }
-	            }
-	            if (typeof el.style[prop] != "undefined") {
-	                el.style[prop] = value + (typeof value === "number" && !rexclude.test(prop) ? 'px' : '');
-	                bRtn = bRtn && true;
-	            } else {
-	                bRtn = bRtn && false;
-	            }
-	        }
-	        return bRtn;
-	    }, getScrollTop: function (doc) {
-	        var _doc = doc || document;
-	        return Math.max(_doc.documentElement.scrollTop, _doc.body.scrollTop);
-	    }, getClientHeight: function (doc) {
-	        var _doc = doc || document;
-	        return _doc.compatMode == "CSS1Compat" ? _doc.documentElement.clientHeight : _doc.body.clientHeight;
-	    }
-	};
-	
-	ZENG.string = {
-	    RegExps: {
-	        trim: /^\s+|\s+$/g,
-	        ltrim: /^\s+/,
-	        rtrim: /\s+$/,
-	        nl2br: /\n/g,
-	        s2nb: /[\x20]{2}/g,
-	        URIencode: /[\x09\x0A\x0D\x20\x21-\x29\x2B\x2C\x2F\x3A-\x3F\x5B-\x5E\x60\x7B-\x7E]/g,
-	        escHTML: {re_amp: /&/g, re_lt: /</g, re_gt: />/g, re_apos: /\x27/g, re_quot: /\x22/g},
-	        escString: {bsls: /\\/g, sls: /\//g, nl: /\n/g, rt: /\r/g, tab: /\t/g},
-	        restXHTML: {re_amp: /&amp;/g, re_lt: /&lt;/g, re_gt: /&gt;/g, re_apos: /&(?:apos|#0?39);/g, re_quot: /&quot;/g},
-	        write: /\{(\d{1,2})(?:\:([xodQqb]))?\}/g,
-	        isURL: /^(?:ht|f)tp(?:s)?\:\/\/(?:[\w\-\.]+)\.\w+/i,
-	        cut: /[\x00-\xFF]/,
-	        getRealLen: {r0: /[^\x00-\xFF]/g, r1: /[\x00-\xFF]/g},
-	        format: /\{([\d\w\.]+)\}/g
-	    }, commonReplace: function (s, p, r) {
-	        return s.replace(p, r);
-	    }, format: function (str) {
-	        var args = Array.prototype.slice.call(arguments), v;
-	        str = String(args.shift());
-	        if (args.length == 1 && typeof (args[0]) == 'object') {
-	            args = args[0];
-	        }
-	        ZENG.string.RegExps.format.lastIndex = 0;
-	        return str.replace(ZENG.string.RegExps.format, function (m, n) {
-	            v = ZENG.object.route(args, n);
-	            return v === undefined ? m : v;
-	        });
-	    }
-	};
-	
-	
-	ZENG.object = {
-	    routeRE: /([\d\w_]+)/g,
-	    route: function (obj, path) {
-	        obj = obj || {};
-	        path = String(path);
-	        var r = ZENG.object.routeRE, m;
-	        r.lastIndex = 0;
-	        while ((m = r.exec(path)) !== null) {
-	            obj = obj[m[0]];
-	            if (obj === undefined || obj === null) {
-	                break;
-	            }
-	        }
-	        return obj;
-	    }
-	};
-	
-	
-	var ua = ZENG.userAgent = {}, agent = navigator.userAgent;
-	ua.ie = 9 - ((agent.indexOf('Trident/5.0') > -1) ? 0 : 1) - (window.XDomainRequest ? 0 : 1) - (window.XMLHttpRequest ? 0 : 1);
-	
-	
-	if (typeof (ZENG.msgbox) == 'undefined') {
-	    ZENG.msgbox = {};
-	}
-	ZENG.msgbox._timer = null;
-	ZENG.msgbox.loadingAnimationPath = ZENG.msgbox.loadingAnimationPath || ("loading.gif");
-	ZENG.msgbox.show = function (msgHtml, type, timeout, opts) {
-	    if (typeof (opts) == 'number') {
-	        opts = {topPosition: opts};
-	    }
-	    opts = opts || {};
-	    var _s = ZENG.msgbox,
-	        template = '<span class="zeng_msgbox_layer" style="display:none;z-index:10000;" id="mode_tips_v2"><span class="gtl_ico_{type}"></span>{loadIcon}{msgHtml}<span class="gtl_end"></span></span>', loading = '<span class="gtl_ico_loading"></span>', typeClass = [0, 0, 0, 0, "succ", "fail", "clear"], mBox, tips;
-	    _s._loadCss && _s._loadCss(opts.cssPath);
-	    mBox = ZENG.dom.get("q_Msgbox") || ZENG.dom.createElementIn("div", document.body, false, {className: "zeng_msgbox_layer_wrap"});
-	    mBox.id = "q_Msgbox";
-	    mBox.style.display = "";
-	    mBox.innerHTML = ZENG.string.format(template, {
-	        type: typeClass[type] || "hits",
-	        msgHtml: msgHtml || "",
-	        loadIcon: type == 6 ? loading : ""
-	    });
-	    _s._setPosition(mBox, timeout, opts.topPosition);
-	};
-	ZENG.msgbox._setPosition = function (tips, timeout, topPosition) {
-	    timeout = timeout || 5000;
-	    var _s = ZENG.msgbox, bt = ZENG.dom.getScrollTop(), ch = ZENG.dom.getClientHeight(), t = Math.floor(ch / 2) - 40;
-	    ZENG.dom.setStyle(tips, "top", ((document.compatMode == "BackCompat" || ZENG.userAgent.ie < 7) ? bt : 0) + ((typeof (topPosition) == "number") ? topPosition : t) + "px");
-	    clearTimeout(_s._timer);
-	    tips.firstChild.style.display = "";
-	    timeout && (_s._timer = setTimeout(_s.hide, timeout));
-	};
-	ZENG.msgbox.hide = function (timeout) {
-	    var _s = ZENG.msgbox;
-	    if (timeout) {
-	        clearTimeout(_s._timer);
-	        _s._timer = setTimeout(_s._hide, timeout);
-	    } else {
-	        _s._hide();
-	    }
-	};
-	ZENG.msgbox._hide = function () {
-	    var _mBox = ZENG.dom.get("q_Msgbox"), _s = ZENG.msgbox;
-	    clearTimeout(_s._timer);
-	    if (_mBox) {
-	        var _tips = _mBox.firstChild;
-	        ZENG.dom.setStyle(_mBox, "display", "none");
-	    }
-	};
-	
-	module.exports = {
-	    showError: function(msgHtml){
-	        ZENG.msgbox.show(msgHtml, 5, 1000);
-	    },
-	    showTip: function(msgHtml){
-	        ZENG.msgbox.show(msgHtml, 1, 1000);
-	    },
-	    showOK: function(msgHtml){
-	        ZENG.msgbox.show(msgHtml, 4, 1000);
-	    },
-	    showLoading: function(msgHtml){
-	        ZENG.msgbox.show(msgHtml, 6, 1000);
-	    },
-	    show: function(msgHtml, type, timeout, opts){
-	        ZENG.msgbox.show(msgHtml, type, timeout, opts);
-	    },
-	    hide: function(timeout){
-	        ZENG.msgbox.hide(timeout);
-	    }
-	};
-	
-
-
-/***/ },
-/* 60 */
-/***/ function(module, exports) {
-
-	module.exports = "<div id=\"txtRoomName\" class=\"room-name fl\">房间加载中...</div>\n<div class=\"room-title-right fr\">\n    <span class=\"online\"> <span id=\"onlineTxt\">在线人数</span>:<span class=\"red count font-yahei\" id=\"txtOnline\">0</span></span>\n    <span class=\"popularity\">人气:<span class=\"green count font-yahei\" id=\"txtPopularity\">0</span></span>\n</div>\n<!--上传图片弹出层-->\n<div style=\"display: none;\" class=\"shadow_screen\">\n    <div class=\"shadow\"></div>\n    <div class=\"edit_Bg_form\">\n        <h2 class=\"edit_title\">背景图设置<span class=\"upload-status\">正在上传</span><span class=\"upload-status\">上传完成!</span><span\n                class=\"close\">X</span></h2>\n        <div class=\"formCon clearfix\">\n            <div class=\"imgBox fl\">\n                <img src=\"\" alt=\"\" style=\"display: none;\">\n            </div>\n            <div class=\"formBox fl\">\n                <form action=\"\">\n                    <div class=\"pseudo-uploadBtn\">\n                        上传图片\n                        <input type=\"file\" name=\"\" id=\"file\">\n                    </div>\n                    <p>支持5M以内的gif、jpg、jpge、png图片上传</p>\n                    <div class=\"submit\">保存</div>\n                </form>\n            </div>\n        </div>\n    </div>\n</div>\n"
-
-/***/ },
-/* 61 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	
-	/**
-	 * @time {时间}
-	 * @author {编写者}
-	 * @info {实现的功能}
-	 */
-	
-	var Backbone = window.Backbone;
-	var base = __webpack_require__(20);
-	var BaseView = base.View; // View的基类
-	var _ = __webpack_require__(19);
-	
-	var View = BaseView.extend({
-	  el: '#currentAnchorInfo', // 设置View对象作用于的根元素，比如id
-	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(62);
-	  },
-	  events: { // 监听事件
-	
-	  },
-	  // 当模板挂载到元素之前
-	  beforeMount: function () {
-	    this.infoTpl = __webpack_require__(63);
-	  },
-	  // 当模板挂载到元素之后
-	  afterMount: function () {
-	    var el = this.$el;
-	    this.roomInfoWrap = el.find('#roomInfoWrap');
-	    this.imgRoomPic = el.find('#imgRoomPic');
-	  },
-	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	  ready: function () {
-	    this.defineEventInterface();
-	  },
-	  defineEventInterface: function () {
-	    var self = this;
-	    var tpl;
-	    var html;
-	    Backbone.on('event:roomInfoReady', function (data) {
-	      if (data) {
-	        tpl = _.template(self.infoTpl);
-	        html = tpl(data);
-	        self.roomInfoWrap.append(html);
-	        self.txtOnline = $('#txtOnline');
-	        if (data.creator.smallAvatar) {
-	          self.imgRoomPic.attr('src', data.creator.smallAvatar);
-	        }
-	      }
-	    });
-	    Backbone.on('event:updateRoomInfo', function (data) {
-	      if (data) {
-	        self.txtOnline.text(data.currentOnline);
-	      }
-	    });
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
 /* 62 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"user-info-wrap clearfix\">\n    <img id=\"imgRoomPic\" class=\"Left avator boderRadAll_35\"\n         src=\"http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg\"\n         alt=\"\">\n    <div class=\"info Left \" id=\"roomInfoWrap\">\n    </div>\n</div>\n"
-
-/***/ },
-/* 63 */
-/***/ function(module, exports) {
-
-	module.exports = "<span class=\"name\"><%=creator.nickName%></span>\n<span class=\"icon-gender\"></span>\n<div class=\"tags\">\n    <span class=\"first\">标签</span>:\n            <span id=\"tagsWrap\">\n    <%\n    var allTags = creator.tags || [];\n    for(var i = 0,j = allTags.length; i < j; i++){\n    %>\n    <span><%=allTags[i] %></span>\n    <%\n    }\n    if(allTags.length ==0){\n    %>\n    <i>暂无</i>\n    <% }%>\n            </span>\n</div>\n"
-
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	/**
-	 * @time 2016-3-11
-	 * @author YuanXuJia
-	 * @info 聊天控制
-	 */
-	
-	var _ = __webpack_require__(19);
-	var Backbone = window.Backbone;
-	
-	var base = __webpack_require__(20);
-	var BaseView = base.View; // View的基类
-	var imServer = __webpack_require__(34);
-	var uiConfirm = __webpack_require__(47);
-	var BusinessDate = __webpack_require__(65);
-	var FlashApi = __webpack_require__(66);
-	
-	var RoomDetailModel = __webpack_require__(50);
-	var GiftModel = __webpack_require__(52);
-	var msgBox = __webpack_require__(59);
-	var UserModel = __webpack_require__(37);
-	var user = UserModel.sharedInstanceUserModel();
-	
-	// 清屏,锁屏
-	var RoomControlView = __webpack_require__(67);
-	
-	var View = BaseView.extend({
-	  el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
-	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(75);
-	  },
-	  events: { // 监听事件
-	    'click #msgList': 'messageClickHandler'
-	  },
-	  // 当模板挂载到元素之前
-	  beforeMount: function () {
-	    // 禁言用户列表
-	    this.forbidUsers = [];
-	
-	    this.giftModel = GiftModel.sharedInstanceModel();
-	    this.giftParams = {
-	      deviceinfo: '{"aid": "30001001"}',
-	      access_token: user.getWebToken(),
-	      offset: 0,
-	      size: 90000,
-	      type: 0
-	    };
-	
-	    this.roomDetail = RoomDetailModel.sharedInstanceModel();
-	    this.roomInfo = this.roomDetail.get('data') || {};
-	
-	    this.initGiftList();
-	  },
-	  // 当模板挂载到元素之后
-	  afterMount: function () {
-	    var el = this.$el;
-	    this.msgList = el.find('#msgList');
-	    this.chatHistory = el.find('#chatHistory');
-	    this.defineEventInterface();
-	    this.imgClear = el.find('#imgClear');
-	    this.imgUnLock = el.find('#imgUnLock');
-	
-	    this.imgClear.attr('src', '/images/clear.png');
-	    this.imgUnLock.attr('src', '/images/clock.png');
-	  },
-	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	  ready: function (ops) {
-	    this.options = _.extend({}, ops);
-	    var self = this;
-	    Backbone.on('event:roomInfoReady', function (data) {
-	      if (data) {
-	        self.roomInfo = data;
-	      }
-	    });
-	    this.roomInfoReady();
-	    this.FlashApi = FlashApi.sharedInstanceFlashApi({
-	      el: 'broadCastFlash'
-	    });
-	    this.roomCtrlView = new RoomControlView(_.extend({
-	      roomInfo: this.roomInfo,
-	      FlashApi: this.FlashApi,
-	      msgList: this.msgList
-	    }, this.options));
-	  },
-	  // 单击某用户发送的消息
-	  messageClickHandler: function (e) {
-	    var control;
-	    var li;
-	    control = $(e.target).parent();
-	    if (control.hasClass('controls_forbid_reject')) {
-	      this.msgControlHandler(e);
-	    } else {
-	      li = $(e.target).parents('li');
-	      // 确认是文本消息
-	      if (~~li.attr('data-msgType') === 0) {
-	        this.showMsgControlMenu(li);
-	      }
-	    }
-	  },
-	  // 显示,隐藏禁言/踢出按钮
-	  showMsgControlMenu: function (target) {
-	    var control = target.find('.controls_forbid_reject');
-	    var index = $('#msgList').find('li').index(target);
-	    if (target.length <= 0) return;
-	
-	    $('.controls_forbid_reject').not(control).hide();
-	    if (index === 0) {
-	      control.css('margin-top', control.find('a').height());
-	    }
-	    if (this.options.assistant) {
-	      control.find('.ctrl').hide();
-	    }
-	    control.toggle();
-	  },
-	  // 禁言,或者踢出
-	  msgControlHandler: function (e) {
-	    var target = $(e.target);
-	    var li;
-	    var userInfo = {};
-	
-	    li = target.parents('li');
-	    userInfo = {
-	      name: li.attr('data-name'),
-	      id: li.attr('data-id')
-	    };
-	
-	    var text = target.text();
-	
-	    if (text === '禁言') {
-	      this.disableSendMsgConfirm(userInfo);
-	    } else if (text === '踢出') {
-	      this.removeUserFromRoom(userInfo);
-	    } else if (text === '场控') {
-	      Backbone.trigger('event:addUserToManager', target.attr('data-uid'));
-	    }
-	  },
-	  /**
-	   * 禁止用户发言确认提示框
-	   */
-	  disableSendMsgConfirm: function (userInfo) {
-	    var self = this;
-	    uiConfirm.show({
-	      content: '您确定要禁止用户:<b>' + userInfo.name + '</b>发言吗?',
-	      okFn: function () {
-	        self.disableSendMsgHandler(userInfo);
-	      }
-	    });
-	  },
-	  disableSendMsgHandler: function (userInfo) {
-	    var self = this;
-	    var users = [];
-	    users.push(userInfo.id);
-	    imServer.sendMessage({
-	      groupId: self.roomInfo.imGroupid,
-	      msg: {
-	        roomId: self.roomInfo.id,
-	        msgType: 5,
-	        userId: userInfo.id
-	      }
-	    }, function () {
-	      msgBox.showOK('已将用户:<b>' + userInfo.name + ' 禁言10分钟.');
-	      self.FlashApi.onReady(function () {
-	        this.notifying({
-	          roomId: self.roomInfo.id,
-	          userId: userInfo.id,
-	          nickName: userInfo.name,
-	          msgType: 5
-	        });
-	      });
-	    }, function () {
-	      msgBox.showError('禁言失败,请稍后重试!');
-	    });
-	  },
-	  hideUserControl: function () {
-	    $('.controls_forbid_reject').hide();
-	  },
-	  /**
-	   * 将用户从房间中移除
-	   */
-	  removeUserFromRoom: function (data) {
-	    var self = this;
-	
-	    function okCallback() {
-	      var options = {
-	        GroupId: self.roomInfo.imGroupid,
-	        Notification: JSON.stringify({
-	          forbidUsers: self.forbidUsers
-	        })
-	      };
-	      if (self.forbidUsers.length > 200) {
-	        self.forbidUsers.shift();
-	      }
-	      self.forbidUsers.push(data.id);
-	
-	      imServer.modifyGroupInfo(options, function (result) {
-	        if (result && result.ActionStatus === 'OK') {
-	          msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
-	        } else {
-	          msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
-	        }
-	      });
-	    }
-	
-	    uiConfirm.show({
-	      content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
-	      okFn: function () {
-	        okCallback();
-	      }
-	    });
-	  },
-	  // 腾讯IM消息到达回调
-	  onMsgNotify: function (notifyInfo) {
-	    var self = this;
-	    var msgObj = {};
-	    var elem;
-	    var giftName;
-	
-	    if (notifyInfo && notifyInfo.type === 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
-	      elem = notifyInfo.elems[0];
-	      if (elem.type === 'TIMCustomElem') {
-	        msgObj = elem.content.data;
-	      } else {
-	        msgObj = elem.content.text + '';
-	        // msgObj = msgObj.replace(/&quot;/g, '\'');
-	        msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
-	      }
-	      try {
-	        // eval('msgObj = ' + msgObj);
-	        msgObj = JSON.parse(msgObj);
-	      } catch (e) {
-	        console.log(e);
-	      }
-	      if (!_.isObject(msgObj)) {
-	        return;
-	      }
-	      msgObj.fromAccount = notifyInfo.fromAccount;
-	
-	      switch (msgObj.msgType) {
-	        case 0: // 文本消息
-	          self.addMessage(msgObj);
-	          break;
-	        case 1: // 发送礼物
-	          giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
-	          msgObj.content = '<b>' + msgObj.nickName + '</b>发来' + giftName + '!';
-	          msgObj.nickName = '消息';
-	          msgObj.smallAvatar = '';
-	          self.addMessage(msgObj);
-	          break;
-	        case 2: // 公告
-	          break;
-	        case 3: // 点赞
-	          msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
-	          msgObj.nickName = '消息';
-	          msgObj.smallAvatar = '';
-	          self.addMessage(msgObj);
-	          break;
-	        case 4: //  清屏
-	          break;
-	        default:
-	          break;
-	      }
-	    }
-	  },
-	  initGiftList: function () {
-	    this.giftModel.get(this.giftParams, function () {}, function (err) {
-	      console.log(err);
-	    });
-	  },
-	  onGroupInfoChangeNotify: function (notifyInfo) {
-	    console.log(notifyInfo);
-	  },
-	  groupSystemNotifys: function (notifyInfo) {
-	    console.log(notifyInfo);
-	  },
-	  /**
-	   * 获取消息模板
-	   * @returns {*}
-	   */
-	  getMessageTpl: function () {
-	    return __webpack_require__(76);
-	  },
-	  /**
-	   * 添加消息
-	   * @constructor
-	   */
-	  addMessage: function (msg) {
-	    var self = this;
-	    var msgObj = msg;
-	    var tpl;
-	    msgObj = _.extend({
-	      nickName: '',
-	      content: '',
-	      smallAvatar: '',
-	      time: self.getDateStr(new Date()),
-	      userId: ''
-	    }, msgObj);
-	    if (msgObj && msgObj.roomId !== self.roomInfo.id) {
-	      return;
-	    }
-	    msgObj.content = self.filterEmoji(msgObj.content);
-	    if (msgObj && msgObj.content) {
-	      tpl = _.template(this.getMessageTpl());
-	      this.msgList.append(tpl(msgObj));
-	      this.chatHistory.scrollTop(this.msgList.height());
-	      this.FlashApi.onReady(function () {
-	        this.notifying(msgObj);
-	      });
-	    }
-	    self.autoDeleteMsgList();
-	  },
-	  /**
-	   * 过滤表情
-	   * @param  {[type]} content [description]
-	   * @return {[type]}         [description]
-	   */
-	  filterEmoji: function (content) {
-	    var reg = /[\u4e00-\u9fa5\w\d@\.\-。_!^^+#【】！~“：《》？<>]/g;
-	    var result;
-	    if (content) {
-	      result = content.match(reg) || [];
-	      if (result.length > 0) {
-	        return result.join('') || '';
-	      }
-	      return '';
-	    }
-	    return content;
-	  },
-	  // 当消息条数超过1000自动删除前面的,仅留下500条
-	  autoDeleteMsgList: function () {
-	    var total = this.msgList.children().length;
-	    var index = 0;
-	    if (total > 1000) {
-	      index = total - 500;
-	    }
-	    this.msgList.children(':lt(' + index + ')').remove();
-	  },
-	  /**
-	   * 定义对外公布的事件
-	   */
-	  defineEventInterface: function () {
-	    var self = this;
-	
-	    Backbone.on('event:onMsgNotify', function (notifyInfo) {
-	      if (_.isArray(notifyInfo)) {
-	        _.each(notifyInfo, function (item) {
-	          if (item.hasOwnProperty('msg')) {
-	            if (item.msg.isSend === false) {
-	              self.onMsgNotify(item.msg);
-	            }
-	          } else if (item.hasOwnProperty('isSend')) {
-	            if (item.isSend === false) {
-	              self.onMsgNotify(item);
-	            }
-	          }
-	        });
-	      } else if (_.isObject(notifyInfo)) {
-	        if (notifyInfo.isSend === false) {
-	          self.onMsgNotify(notifyInfo);
-	        }
-	      }
-	    });
-	    Backbone.on('event:onGroupInfoChangeNotify', function (notifyInfo) {
-	      self.onGroupInfoChangeNotify(notifyInfo);
-	    });
-	    Backbone.on('event:groupSystemNotifys', function (notifyInfo) {
-	      self.groupSystemNotifys(notifyInfo);
-	    });
-	  },
-	  /**
-	   *
-	   */
-	  roomInfoReady: function () {
-	    this.getGroupInfo();
-	  },
-	  /**
-	   * 从服务器端拉去消息
-	   */
-	  getMessageFromServer: function () {},
-	  /**
-	   * 获取群组公告以及介绍
-	   */
-	  getGroupInfo: function () {
-	    var self = this;
-	    var intro;
-	
-	    imServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
-	      if (result && result.ActionStatus === 'OK') {
-	        if (result.GroupInfo && result.GroupInfo[0] && result.GroupInfo[0].Introduction) {
-	          intro = JSON.parse(result.GroupInfo[0].Introduction);
-	          if (intro && intro.blockState === true) {
-	            self.btnLock.children('span').text('解屏');
-	          }
-	        }
-	      }
-	    }, function (err) {
-	      msgBox.showError(err.msg || '获取群组消息失败!');
-	    });
-	  },
-	  // 转换时间格式
-	  getDateStr: function (dateInt) {
-	    var date = new Date(dateInt);
-	    return BusinessDate.format(date, 'hh:mm:ss');
-	  },
-	  // 检查当前直播状态
-	  checkLiveRoomReady: function () {
-	    switch (this.roomInfo.status) {
-	      case 0:
-	        msgBox.showTip('该直播尚未发布!');
-	        return false;
-	      case 1:
-	      case 2:
-	        if (!this.roomInfo || !this.roomInfo.imGroupid) {
-	          msgBox.showTip('请先开始直播!');
-	          return false;
-	        }
-	        return true;
-	      case 3:
-	        msgBox.showTip('该直播已经结束!');
-	        return false;
-	      default:
-	        return false;
-	    }
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 65 */
-/***/ function(module, exports) {
-
-	
-	var BusinessDate = function (long) {
-	  this.temp = new Date();
-	  this.setCurNewDate(long);
-	};
-	/**
-	 * [changeYear 改变临时年份]
-	 * @param  {[type]} value [description]
-	 * @return {[type]}       [description]
-	 */
-	BusinessDate.prototype.changeYear = function (value) {
-	  this.temp.setFullYear(value);
-	};
-	/**
-	 * [getCountDays 根据月份获取当前月的总天数]
-	 * @param  {[type]} value [description]
-	 * @return {[type]}       [description]
-	 */
-	BusinessDate.prototype.getCountDays = function (value) {
-	  this.temp.setMonth(value);
-	  this.temp.setDate(0);
-	  return this.temp.getDate();
-	};
-	/**
-	 * [$get 获取当前的年月日时分]
-	 * @param  {[type]} key [description]
-	 * @return {[type]}     [description]
-	 */
-	BusinessDate.prototype.$get = function (key) {
-	  return this.attrs[key];
-	};
-	/**
-	 * [ceilYear 向下获取年份]
-	 * @param  {[type]} value [description]
-	 * @return {[type]}       [description]
-	 */
-	BusinessDate.prototype.ceilYear = function (value) {
-	  var val = ~~value;
-	  var i = 0;
-	  var year = this.$get('year');
-	  var result = [];
-	  for (; i <= val; i++) {
-	    result.push(year);
-	    year = year + 1;
-	  }
-	  return result;
-	};
-	BusinessDate.prototype._downDisplacement = function (key) {
-	  var start = this.$get(key);
-	  var result = [];
-	  var end;
-	  switch (key) {
-	    case 'month':
-	      end = 12;
-	      break;
-	    case 'day':
-	      end = this.getCountDays(this.$get('month'));
-	      break;
-	    case 'hours':
-	      end = 23;
-	      break;
-	    default:
-	      end = 59;
-	      break;
-	  }
-	  for (; start <= end; start++) {
-	    result.push(start);
-	  }
-	  return result;
-	};
-	/**
-	 * [downMonth 向下获取月份]
-	 * @return {[type]} [description]
-	 */
-	BusinessDate.prototype.downMonth = function () {
-	  return this._downDisplacement('month');
-	};
-	/**
-	 * [downDay 向下获取天数]
-	 * @return {[type]} [description]
-	 */
-	BusinessDate.prototype.downDay = function () {
-	  return this._downDisplacement('day');
-	};
-	/**
-	 * [downHours 向下获取小时]
-	 * @return {[type]} [description]
-	 */
-	BusinessDate.prototype.downHours = function () {
-	  return this._downDisplacement('hours');
-	};
-	/**
-	 * [downMinutes 向下获取分钟]
-	 * @return {[type]} [description]
-	 */
-	BusinessDate.prototype.downMinutes = function () {
-	  return this._downDisplacement('minutes');
-	};
-	/**
-	 * [down 向下获取函数式]
-	 * @param  {[type]} value [description]
-	 * @return {[type]}       [description]
-	 */
-	BusinessDate.prototype.down = function (value) {
-	  return this._downDisplacement(value);
-	};
-	/**
-	 * [getTime 根据一个对象拼装一个时间对象获取时间毫秒]
-	 * @param  {[type]} obj [description]
-	 * @return {[type]}     [description]
-	 */
-	BusinessDate.prototype.getTime = function (obj) {
-	  var val = '';
-	  var month = obj.month < 10 ? '0' + obj.month : obj.month;
-	  var day = obj.day < 10 ? '0' + obj.day : obj.day;
-	  var hours = obj.hours < 10 ? '0' + obj.hours : obj.hours;
-	  var minutes = obj.minutes < 10 ? '0' + obj.minutes : obj.minutes;
-	  val += obj.year + '-' + month + '-' + day + ' ';
-	  val += hours + ':' + minutes + ':00';
-	  return new Date(val.replace(/-/g, '/')).getTime();
-	};
-	/**
-	 * [setCurNewDate 设置一个当前新的时间对象]
-	 */
-	BusinessDate.prototype.setCurNewDate = function (long) {
-	  this.date = null;
-	  this.date = long ? new Date(long) : new Date();
-	  this._setAttrs();
-	};
-	BusinessDate.prototype._setAttrs = function () {
-	  this.attrs = null;
-	  this.attrs = {
-	    year: this.date.getFullYear(),
-	    month: this.date.getMonth() + 1,
-	    day: this.date.getDate(),
-	    hours: this.date.getHours(),
-	    minutes: this.date.getMinutes()
-	  };
-	};
-	/**
-	 * [difference 根据一个毫秒差返回一个时分秒对象]
-	 * @param  {[type]} duration [description]
-	 * @return {[type]}          [description]
-	 */
-	BusinessDate.difference = function (duration) {
-	  var result = {};
-	  result.day = parseInt(duration / (24 * 3600 * 1000), 10);
-	  var leave1 = duration % (24 * 3600 * 1000);
-	  var hour = Math.floor(leave1 / (3600 * 1000));
-	  result.hours = hour < 10 ? '0' + hour : hour;
-	  var leave2 = leave1 % (3600 * 1000);
-	  var minutes = Math.floor(leave2 / (60 * 1000));
-	  result.minutes = minutes < 10 ? '0' + minutes : minutes;
-	  var leave3 = leave2 % (60 * 1000);
-	  var seconds = Math.floor(leave3 / 1000);
-	  result.seconds = seconds < 10 ? '0' + seconds : seconds;
-	  return result;
-	};
-	var shared = null;
-	BusinessDate.sharedInstanceBusinessDate = function () {
-	  if (!shared) {
-	    shared = new BusinessDate();
-	  }
-	  return shared;
-	};
-	BusinessDate.format = function (date, fmt) { // author: meizz
-	  var o = {
-	    'M+': date.getMonth() + 1,                 // 月份
-	    'd+': date.getDate(),                    // 日
-	    'h+': date.getHours(),                   // 小时
-	    'm+': date.getMinutes(),                 // 分
-	    's+': date.getSeconds(),                 // 秒
-	    'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
-	    S: date.getMilliseconds()             // 毫秒
-	  };
-	  var format = fmt;
-	  var k;
-	  var temp;
-	  if (/(y+)/.test(format)) {
-	    format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
-	  }
-	  for (k in o) {
-	    if (new RegExp('(' + k + ')').test(format)) {
-	      temp = (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length));
-	      format = format.replace(RegExp.$1, temp);
-	    }
-	  }
-	  return format;
-	};
-	
-	module.exports = BusinessDate;
-
-
-/***/ },
-/* 66 */
-/***/ function(module, exports) {
-
-	var flashTemp =
-	  '<object width="{width}" height="{height}"  align="middle"'
-	  + 'id="{id}" type="application/x-shockwave-flash" '
-	  + 'classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">'
-	  + '<param value="{src}" name="movie">'
-	  + '<param value="{always}" name="allowscriptaccess">'
-	  + '<param value="{fullscreen}" name="allowfullscreen">'
-	  + '<param value="{quality}" name="quality">'
-	  + '<param value="{flashvars}" name="flashvars">'
-	  + '<param value="{wmode}" name="wmode" />'
-	  + '<embed width="{width}" height="{height}"  name="{id}"'
-	  + 'type="application/x-shockwave-flash" src="{src}" allowscriptaccess="{always}"'
-	  + 'allowfullscreen="{fullscreen}" quality="{quality}"  wmode="{wmode}" flashvars="{flashvars}" />'
-	  + '</object>';
-	var win = window;
-	var origin = win.location.origin;
-	var uid = 999;
-	win.YYTPCFlashReadyState = false;
-	var getSwfDOM = function (id) {
-	  var swf;
-	  var embed;
-	  var el = document.getElementById(id) || null;
-	  if (el && el.nodeName.toUpperCase() === 'OBJECT') {
-	    if (typeof el.SetVariable !== 'undefined') {
-	      swf = el;
-	    } else {
-	      embed = el.getElementsByTagName('embed')[0];
-	      if (embed) {
-	        swf = embed;
-	      }
-	    }
-	  }
-	  return swf;
-	};
-	var render = function (tpl, data) {
-	  if (data) {
-	    return tpl.replace(/\{(.*?)\}/ig, function () {
-	      return data[arguments[1]] || '';
-	    });
-	  }
-	  return tpl;
-	};
-	var FlashApi = function (options) {
-	  this.$el = typeof options.el === 'string' ? document.getElementById(options.el) : options.el;
-	  this._options = options;
-	  this._props = options.props || {};
-	  this.$attrs = {
-	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=201606023.1', //  引入swf文件
-	    width: this._props.width || 895,
-	    height: this._props.height || 502,
-	    wmode: this._props.wmode || 'transparent', // 控制显示模型
-	    flashvar: this._props.flashvar || '', //  初始化参数
-	    always: this._props.always || 'always', //  控制是否交互
-	    fullscreen: this._props.fullscreen || true, //  控制是否全屏
-	    quality: this._props.quality || 'high'
-	  };
-	  this._html = render(flashTemp, this.$attrs);
-	  this._methods = options.methods || {};
-	  this._ready = false;
-	  this._init();
-	};
-	
-	FlashApi.prototype._init = function () {
-	  this.$el.innerHTML = this._html;
-	  this.$swf = getSwfDOM(this.$attrs.id);
-	};
-	
-	FlashApi.prototype.onReady = function (callback) {
-	  var self = this;
-	  if (win.YYTPCFlashReadyState || this._ready) {
-	    callback.call(this);
-	  } else {
-	    this.$timer = setInterval(function () {
-	      if (win.YYTPCFlashReadyState) {
-	        self._ready = true;
-	        win.YYTPCFlashReadyState = false;
-	        clearInterval(self.$timer);
-	        self.$timer = null;
-	        callback.call(self);
-	      }
-	    }, 0);
-	  }
-	};
-	
-	FlashApi.prototype.init = function (data) {
-	  this.$swf.initData(data);
-	};
-	
-	FlashApi.prototype.isReady = function () {
-	  return this._ready;
-	};
-	
-	FlashApi.prototype.addUrl = function (url, name) {
-	  this.$swf.setvedioUrl(url, name);
-	};
-	
-	FlashApi.prototype.width = function (value) {
-	  var val = value;
-	  if (typeof val === 'string') {
-	    val = ~~val;
-	  }
-	  this.$swf.setPlayerWidth(val);
-	};
-	
-	FlashApi.prototype.height = function (value) {
-	  var val = value;
-	  if (typeof val === 'string') {
-	    val = ~~val;
-	  }
-	  this.$swf.setPlayerHeight(val);
-	};
-	
-	FlashApi.prototype.notifying = function (obj) {
-	  this.$swf.setOneMessageInchat(JSON.stringify(obj));
-	};
-	
-	FlashApi.prototype.clear = function () {
-	  this.$swf.clearAllMessage();
-	};
-	
-	var shared = null;
-	FlashApi.sharedInstanceFlashApi = function (options) {
-	  if (!shared) {
-	    shared = new FlashApi(options);
-	  }
-	  return shared;
-	};
-	
-	win.YYTPCFlashOnReady = function () {
-	  //  flash init success
-	  win.YYTPCFlashReadyState = true;
-	};
-	
-	module.exports = FlashApi;
-
-
-/***/ },
-/* 67 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * 房间控制
-	 * 清屏, 锁屏,场控管理
-	 */
-	'use strict';
-	
-	var Backbone = window.Backbone;
-	var base = __webpack_require__(20);
-	var BaseView = base.View;
-	
-	var FieldControlView = __webpack_require__(68);
-	
-	var imServer = __webpack_require__(34);
-	var uiConfirm = __webpack_require__(47);
-	var msgBox = __webpack_require__(59);
-	var uiDialog = __webpack_require__(38);
-	
-	
-	var View = BaseView.extend({
-	  el: '.room-control',
-	  rawLoader: function () {
-	    return __webpack_require__(73);
-	  },
-	  events: {
-	    'click #btn-clear': 'clearHandler',
-	    'click #btn-lock': 'lockClickHandler',
-	    'click #btnFieldControl': 'fieldContrlClickHandler'
-	  },
-	  context: function (args) {
-	    console.log(args);
-	  },
-	  beforeMount: function () {
-	    //  初始化一些自定义属性
-	  },
-	  afterMount: function () {
-	    //  获取findDOMNode DOM Node
-	    var el = this.$el;
-	    this.btnLock = el.find('#btn-lock');
-	    this.btnFieldControl = el.find('#btnFieldControl');
-	  },
-	  ready: function (ops) {
-	    //  初始化
-	    this.roomInfo = ops.roomInfo || {};
-	    this.FlashApi = ops.FlashApi || {};
-	    this.msgList = ops.msgList || {};
-	    this.assistant = ops.assistant || false;
-	    if (ops.hideCtrl) {
-	      this.btnFieldControl.hide();
-	    }
-	    this.defineEventInterface();
-	    this.fieldControlView = new FieldControlView({
-	      roomInfo: this.roomInfo
-	    });
-	  },
-	  defineEventInterface: function () {
-	    var self = this;
-	    Backbone.on('event:showFieldControllDialog', function () {
-	      self.fieldContrlClickHandler();
-	    });
-	  },
-	  beforeDestroy: function () {
-	    //  进入销毁之前,将引用关系设置为null
-	  },
-	  destroyed: function () {
-	    //  销毁之后
-	  },
-	  // 检查当前直播状态
-	  checkLiveRoomReady: function () {
-	    switch (this.roomInfo.status) {
-	      case 0:
-	        msgBox.showTip('该直播尚未发布!');
-	        return false;
-	      case 1:
-	      case 2:
-	        if (!this.roomInfo || !this.roomInfo.imGroupid) {
-	          msgBox.showTip('请先开始直播!');
-	          return false;
-	        }
-	        return true;
-	      case 3:
-	        msgBox.showTip('该直播已经结束!');
-	        return false;
-	      default:
-	        return false;
-	    }
-	  },
-	  // 锁屏
-	  clearHandler: function () {
-	    var self = this;
-	    var flag = self.checkLiveRoomReady();
-	    if (!flag) {
-	      return;
-	    }
-	
-	    uiConfirm.show({
-	      content: '您确定要清屏吗?',
-	      okFn: function () {
-	        var msg = {
-	          roomId: self.roomInfo.id,
-	          nickName: self.assistant ? '场控' : '主播',
-	          smallAvatar: '',
-	          msgType: 4,
-	          content: (self.assistant ? '场控' : '主播') + '已清屏'
-	        };
-	        self.FlashApi.onReady(function () {
-	          this.notifying(msg);
-	        });
-	        imServer.clearScreen({
-	          groupId: self.roomInfo.imGroupid,
-	          msg: msg
-	        });
-	      }
-	    });
-	  },
-	  // 锁屏
-	  lockClickHandler: function () {
-	    var flag = this.checkLiveRoomReady();
-	    var target = this.btnLock.children('span');
-	    var self = this;
-	    var txt = target.text() === '锁屏' ? '锁定屏幕' : '解开屏幕';
-	    if (!flag) {
-	      return;
-	    }
-	    uiConfirm.show({
-	      content: '您确定要' + txt + '吗?',
-	      okFn: function () {
-	        self.lockIMHandler(target.text() === '锁屏');
-	      }
-	    });
-	  },
-	  lockIMHandler: function (isLock) {
-	    var self = this;
-	    var options = {
-	      GroupId: this.roomInfo.imGroupid
-	    };
-	    var txt = isLock === true ? '锁屏' : '解屏';
-	
-	    if (isLock === true) {
-	      options.Introduction = JSON.stringify({
-	        blockState: !!isLock,
-	        alert: '主播已锁屏'
-	      });
-	    } else {
-	      options.Introduction = JSON.stringify({
-	        blockState: false,
-	        alert: '主播解除锁屏'
-	      });
-	    }
-	
-	    imServer.modifyGroupInfo(options, function (result) {
-	      if (result && result.ActionStatus === 'OK') {
-	        self.btnLock.children('span').text(isLock === true ? '解屏' : '锁屏');
-	        msgBox.showOK(txt + '成功!');
-	      } else {
-	        msgBox.showError(txt + '操作失败,请稍后重试');
-	      }
-	    }, function () {
-	      msgBox.showError(txt + '操作失败,请稍后重试');
-	    });
-	  },
-	  // 清空消息
-	  clearMessageList: function () {
-	    if (this.msgList) {
-	      this.msgList.children().remove();
-	    }
-	  },
-	  // 场控管理
-	  fieldContrlClickHandler: function () {
-	    var tpl = __webpack_require__(74);
-	    if (!this.fieldControlDialog) {
-	      this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
-	        closeClass: 'editor_bg_close_x', // 'icons am-yyt-close close-white',
-	        width: 560,
-	        height: 335,
-	        isRemoveAfterHide: false
-	      });
-	    }
-	    this.fieldControlDialog.show();
-	    this.fieldControlView.renderPage();
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 68 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * 场控管理, 添加，删除
-	 */
-	'use strict';
-	
-	var _ = __webpack_require__(19);
-	var Backbone = window.Backbone;
-	var base = __webpack_require__(20);
-	var BaseView = base.View;
-	
-	var UserModel = __webpack_require__(37);
-	var user = UserModel.sharedInstanceUserModel();
-	var RoomManagerListModel = __webpack_require__(69);
-	var RoomManagerAddModel = __webpack_require__(70);
-	var RoomManagerRemoveModel = __webpack_require__(71);
-	
-	var msgBox = __webpack_require__(59);
-	var uiConfirm = __webpack_require__(47);
-	
-	var View = BaseView.extend({
-	  el: '#field-control',
-	  clientRender: false,
-	  events: {
-	    'click .btn-link': 'removeClickHandler',
-	    'click #btnAdd': 'addClickHandler'
-	  },
-	  rawLoader: function () {
-	    return '';
-	  },
-	  context: function (args) {
-	    console.log(args);
-	  },
-	  beforeMount: function () {
-	    //  初始化一些自定义属性
-	    this.queryParams = {
-	      deviceinfo: '{"aid": "30001001"}',
-	      access_token: user.getWebToken()
-	    };
-	
-	    this.roomManagerListParams = _.extend({}, this.queryParams);
-	
-	    this.roomManListModel = RoomManagerListModel.sharedInstanceModel();
-	    this.roomManAddModel = RoomManagerAddModel.sharedInstanceModel();
-	    this.roomManRemoveModel = RoomManagerRemoveModel.sharedInstanceModel();
-	  },
-	  afterMount: function () {
-	    //  获取findDOMNode DOM Node
-	  },
-	  findElements: function () {
-	    this.userListDom = this.$el.find('.user-list');
-	    this.itemTpl = __webpack_require__(72);
-	    this.userIdDom = this.$el.find('#txtUserID');
-	  },
-	  ready: function (ops) {
-	    //  初始化
-	    this.roomInfo = ops.roomInfo || {};
-	
-	    this.defineEventInterface();
-	  },
-	  defineEventInterface: function () {
-	    var self = this;
-	    // 添加用户为场控
-	    Backbone.on('event:addUserToManager', function (userId) {
-	      // self.addRoomManager(userId);
-	      self.checkUserIsManager(userId);
-	    });
-	  },
-	  beforeDestroy: function () {
-	    //  进入销毁之前,将引用关系设置为null
-	  },
-	  destroyed: function () {
-	    //  销毁之后
-	  },
-	  renderPage: function () {
-	    // 'click .btn-link': 'removeClickHandler',
-	    // 'click #btnAdd': 'addClickHandler'
-	    if (this.$el.length < 1) {
-	      this.$el = $(this.$el.selector);
-	      this.$el.find('.user-list').on('click', this.removeClickHandler.bind(this));
-	      this.$el.find('#btnAdd').on('click', this.addClickHandler.bind(this));
-	      this.renderRoomMangerList();
-	      this.findElements();
-	    }
-	  },
-	  // 删除场控
-	  removeClickHandler: function (e) {
-	    var target = $(e.target);
-	    var userId = target.attr('data-id');
-	    var self = this;
-	    if (!userId) {
-	      return;
-	    }
-	    var msg = '<div style="text-align:center;color:#a1a1a1;" >' +
-	      target.attr('data-name') + '(' + userId + ')</div>';
-	    uiConfirm.show({
-	      content: '您确定要删除该场控吗?' + msg,
-	      okFn: function () {
-	        self.removeRoomManger(userId);
-	      }
-	    });
-	  },
-	  // 删除场控
-	  removeRoomManger: function (id) {
-	    var promise = this.roomManRemoveModel.executeJSONP(_.extend({
-	      userId: id,
-	      roomId: this.roomInfo.id
-	    }, this.queryParams));
-	    promise.done(function (res) {
-	      if (res && res.data.success) {
-	        msgBox.showOK('成功移除该场控');
-	        $('[dom-id="' + id + '"]').remove();
-	      } else {
-	        msgBox.showError('移除场控失败');
-	      }
-	    });
-	  },
-	  // 添加场控
-	  addClickHandler: function () {
-	    var userId = $.trim(this.userIdDom.val());
-	    if (!this.verifyUserID(userId)) {
-	      msgBox.showTip('请输入正确的用户编号');
-	      return null;
-	    }
-	    // this.addRoomManager(userId);
-	    this.checkUserIsManager(userId);
-	    return true;
-	  },
-	  verifyUserID: function (id) {
-	    return /^\d+$/.test(id);
-	  },
-	  checkUserIsManager: function (uid) {
-	    var self = this;
-	    var promise = this.getManagerList();
-	    promise.done(function (res) {
-	      var current = _.find(res.data, function (item) {
-	        return item.user.uid === ~~uid;
-	      });
-	      if (!current) {
-	        self.addRoomManager(uid);
-	      } else {
-	        msgBox.showTip('该用户已经是场控了');
-	      }
-	    });
-	  },
-	  addRoomManager: function (id) {
-	    var self = this;
-	    var promise = self.roomManAddModel.executeJSONP(_.extend({}, this.queryParams, {
-	      userId: id,
-	      roomId: this.roomInfo.id || 0
-	    }));
-	    promise.done(function (res) {
-	      if (res && res.code === '0') {
-	        msgBox.showOK('场控添加成功');
-	        self.renderRoomMangerList();
-	        self.userIdDom.val('');
-	      } else {
-	        msgBox.showError('场控添加失败');
-	      }
-	    });
-	  },
-	  getManagerList: function () {
-	    this.roomManagerListParams.roomId = this.roomInfo.id;
-	    return this.roomManListModel.executeJSONP(this.roomManagerListParams);
-	  },
-	  // 渲染场控列表
-	  renderRoomMangerList: function () {
-	    var self = this;
-	    // this.roomManagerListParams.roomId = this.roomInfo.id;
-	    // var promise = this.roomManListModel.executeJSONP(this.roomManagerListParams);
-	    var promise = this.getManagerList();
-	    promise.done(function (res) {
-	      if (res && res.code === '0') {
-	        self.renderRoomManItem(res);
-	      }
-	    });
-	  },
-	  renderRoomManItem: function (res) {
-	    var result = _.filter(res.data, function (item) {
-	      return item.user && item.user.uid !== user.get('userId');
-	    });
-	    var html = this.compileHTML(this.itemTpl, {
-	      data: result
-	    });
-	    this.userListDom.html(html);
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 69 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * 场控管理列表
-	 */
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/manager_list.json',
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 70 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * 添加场控
-	 */
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/manager_create.json',
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 71 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * 删除场控
-	 */
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/manager_delete.json',
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 72 */
-/***/ function(module, exports) {
-
-	module.exports = " {{each data as item}}\n {{if item.user}}\n<div class=\"am-g\" dom-id=\"{{item.user.uid}}\">\n  <div class=\"am-u-sm-3 am-vertical-align\"><img src=\"{{item.user.largeAvatar}}\" class=\"am-vertical-align-middle am-circle avatar\"><span class=\"id am-vertical-align-middle am-margin-left-sm\">{{item.user.uid}}</span></div>\n  <div class=\"am-u-sm-6 name\">{{item.user.nickName}}</div>\n  <div class=\"am-u-sm-3\"><a data-name=\"{{item.user.nickName}}\" data-id=\"{{item.user.uid}}\" class=\"am-btn btn-link\">删除</a></div>\n</div>\n{{/if}}\n{{/each}}\n"
-
-/***/ },
-/* 73 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"am-vertical-align room-manager-block\">\n    <a id=\"btn-clear\" class=\"am-btn am-btn-purple am-vertical-align-middle boderRadAll_5\">\n        <i class=\"clear\"></i><span>清屏</span></a>\n    <a id=\"btn-lock\" class=\"am-btn am-btn-purple am-vertical-align-middle boderRadAll_5\">\n        <i class=\"lock\"></i><span>锁屏</span></a>\n    <a id=\"btnFieldControl\" class=\"am-btn am-btn-purple am-vertical-align-middle boderRadAll_5\">\n        <span class=\"ctrl first\">场控</span>\n        <span class=\"ctrl\">管理</span>\n    </a>\n</div>\n"
-
-/***/ },
-/* 74 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"field-control-wrap\" id=\"field-control\">\n\n  <div class=\"popup-wrap\">\n    <div class=\"popup-header am-cf boderRadTop_5\"><span class=\"am-fl\">场控管理</span>\n      <!-- <a class=\"am-btn am-btn-close am-fr icons close-white\"></a> -->\n    </div>\n    <div class=\"popup-content\">\n      <div class=\"detail\">\n        <div class=\"am-g first\">\n          <div class=\"am-u-sm-3\">用户ID</div>\n          <div class=\"am-u-sm-6\">用户名</div>\n          <div class=\"am-u-sm-3\">操作</div>\n        </div>\n        <div class=\"user-list\">\n          <!--<div class=\"am-g\">-->\n          <!--<div class=\"am-u-sm-3 am-vertical-align\"><img-->\n          <!--src=\"http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg\"-->\n          <!--class=\"am-vertical-align-middle am-circle avatar\"><span-->\n          <!--class=\"id am-vertical-align-middle am-margin-left-sm\">用户ID22</span></div>-->\n          <!--<div class=\"am-u-sm-6 name\">用户名sdfasfasfas</div>-->\n          <!--<div class=\"am-u-sm-3\"><a class=\"am-btn btn-link\">删除</a></div>-->\n          <!--</div>-->\n        </div>\n      </div>\n      <div class=\"footer am-padding-bottom\">\n        <div class=\"form-input\">\n          <input id=\"txtUserID\" type=\"number\" min=\"1\" class=\"input-user-id boderRadAll_5\">\n          <button id=\"btnAdd\" class=\" am-btn am-btn-red boderRadAll_5 am-margin-left-xs\">添加场控</button>\n          <p class=\"tip\">输入用户音悦台ID,或者从聊天列表中选择用户添加场控权限</p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
-
-/***/ },
-/* 75 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"chatCon\" id=\"chatHistory\">\n    <!--聊天记录-->\n    <ul id=\"msgList\">\n        <!-- <li class=\"clearfix \" data-msgtype=\"0\" data-name=\"袁家小黑球\" data-id=\"44648642$0\">\n            <img onerror=\"this.src='../img/visitor_avator.jpg'\" src=\"http://tp1.sinaimg.cn/1973769700/50/5678264169/1\"\n                 alt=\"\" class=\"fl visitor_avator\">\n            <p class=\"visitor_chat fl\">\n                <span class=\"visitorName\">袁家小黑球:</span>\n                消息内容\n                <span class=\"time fr\">11:58:11</span>\n            </p>\n            <div class=\"controls_forbid_reject\">\n                <a href=\"javascript:;\" class=\"forbid\">禁言</a>\n                <a href=\"javascript:;\" class=\"reject\">踢出</a>\n                <a href=\"javascript:;\" class=\"ctrl\">场控</a>\n            </div>\n        </li> -->\n    </ul>\n</div>\n\n<div id=\"sendMessageWrap\" class=\"anchor-ctrl pAll10 room-control\">\n    <!--控制按钮-->\n</div>\n"
-
-/***/ },
-/* 76 */
-/***/ function(module, exports) {
-
-	module.exports = "<li class=\"clearfix <%=msgType==0?'':'system-info'%>\" data-msgType=\"<%=msgType%>\" data-name=\"<%=nickName%>\" data-id=\"<%=fromAccount%>\">\n  <%if(msgType == 0){%>\n  <img onerror=\"this.src='../img/visitor_avator.jpg'\" src=\"<%=smallAvatar%>\" alt=\"\" class=\"fl visitor_avator\">\n  <%}%>\n  <p class=\"visitor_chat fl\">\n    <%if(msgType == 0){%>\n    <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else if(msgType == 4){%>\n        <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else{%>\n        <span class=\"visitorName\">消息:</span>\n    <% }%>\n    <%=content%>\n    <span class=\"time fr\"><%=time%></span>\n  </p>\n  <div class=\"controls_forbid_reject\">\n    <a href=\"javascript:;\" class=\"forbid am-btn-red\">禁言</a>\n    <a href=\"javascript:;\" class=\"reject am-btn-red\">踢出</a>\n    <%if(userId) {%>\n    <a href=\"javascript:;\" data-uid='<%=userId%>' class=\"ctrl am-btn-red\">场控</a>\n    <%}%>\n  </div>\n</li>\n"
-
-/***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	
-	/**
-	 * @time 2016-3-9
-	 * @author YuanXuJia
-	 * @info 公告模块
-	 */
-	
-	'use strict';
-	var base = __webpack_require__(20);
-	var BaseView = base.View; // View的基类
-	var Backbone = window.Backbone;
-	
-	var NoticeModel = __webpack_require__(78);
-	var NoticeGetModel = __webpack_require__(79);
-	var imServer = __webpack_require__(34);
-	var UserModel = __webpack_require__(37);
-	var user = UserModel.sharedInstanceUserModel();
-	
-	var msgBox = __webpack_require__(59);
-	
-	var View = BaseView.extend({
-	  el: '#noticeWraper', // 设置View对象作用于的根元素，比如id
-	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(80);
-	  },
-	  events: { // 监听事件
-	    'click #btnEditNotice': 'editClickHandler',
-	    'click .closeNoticePanel': 'panelDisplay',
-	    'click #btnSubmitNotice': 'submitClickHandler',
-	    'keyup #txtNotice': 'noticeChanged'
-	  },
-	  // 当模板挂载到元素之前
-	  beforeMount: function () {
-	    this.noticeModel = new NoticeModel();
-	    this.noticeGetModel = new NoticeGetModel();
-	    this.noticeInfo = {
-	      content: ''
-	    };
-	
-	    this.noticeInfoParams = {
-	      deviceinfo: '{"aid": "30001001"}',
-	      access_token: user.getWebToken(),
-	      roomId: '',
-	      content: ''
-	    };
-	
-	    this.noticeGetParams = {
-	      deviceinfo: '{"aid":"30001001"}',
-	      roomId: '',
-	      access_token: user.getWebToken()
-	    };
-	  },
-	  // 当模板挂载到元素之后
-	  afterMount: function () {
-	    // 修改公告弹出框
-	    this.editNoticPanel = $('#editNoticPanel');
-	    this.noticeWrap = $('#noticeWrap');
-	    // 公告内容
-	    this.txtNotice = $('#txtNotice');
-	    this.imgRoomPic = $('#imgRoomPic');
-	    this.errNoticeTip = $('#errNoticeTip');
-	
-	    this.tipTextarea = this.$el.find('.tipTextarea');
-	  },
-	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	  ready: function () {
-	    this.defineEventInterface();
-	  },
-	  /**
-	   * 编辑按钮点击
-	   */
-	  editClickHandler: function () {
-	    this.noticeChanged();
-	    this.panelDisplay(true);
-	  },
-	  /**
-	   * 编辑公告悬浮框控制
-	   * @param isShow
-	   */
-	  panelDisplay: function (isShow) {
-	    this.errNoticeTip.text('');
-	    if (isShow === true) {
-	      this.txtNotice.val(this.noticeInfo.content);
-	      this.editNoticPanel.show();
-	    } else {
-	      this.editNoticPanel.hide();
-	    }
-	  },
-	  /**
-	   * 提交公告
-	   */
-	  submitClickHandler: function () {
-	    var content = this.txtNotice.val().trim();
-	    var self = this;
-	    var promise;
-	    if (!content || content.length > 50 || content.length <= 0) {
-	      this.errNoticeTip.text('公告文字请在50字以内');
-	      return null;
-	    }
-	
-	    this.noticeInfoParams.roomId = this.roomInfo.id;
-	    this.noticeInfoParams.content = content;
-	
-	    promise = this.noticeModel.executeJSONP(this.noticeInfoParams);
-	    promise.done(function (res) {
-	      if (res && res.code === '0') {
-	        Backbone.trigger('event:noticeChanged', content);
-	        self.noticeInfo.content = content;
-	        self.noticeWrap.text(content);
-	        self.panelDisplay();
-	        msgBox.showOK('公告发布成功');
-	        self.sendNotifyToIM(content);
-	      }
-	    });
-	    promise.fail(function () {
-	      msgBox.showError('数据保存失败,请稍后重试');
-	    });
-	    return null;
-	  },
-	  sendNotifyToIM: function (content) {
-	    if (!this.roomInfo.imGroupid) {
-	      return;
-	    }
-	    imServer.sendMessage({
-	      groupId: this.roomInfo.imGroupid,
-	      msg: {
-	        roomId: this.roomInfo.id,
-	        smallAvatar: '',
-	        msgType: 2,
-	        content: content
-	      }
-	    }, function () {}, function () {});
-	  },
-	  /**
-	   * 定义事件
-	   */
-	  defineEventInterface: function () {
-	    var self = this;
-	    Backbone.on('event:roomInfoReady', function (data) {
-	      if (data) {
-	        self.roomInfo = data;
-	      }
-	      self.getNoticeInfo();
-	      //  if (data.imageUrl) {
-	      //      self.imgRoomPic.attr('src', data.imageUrl);
-	      //  }
-	    });
-	  },
-	  /**
-	   * 获取公告信息
-	   */
-	  getNoticeInfo: function () {
-	    var self = this;
-	    var notice = null;
-	    var promise;
-	
-	    this.noticeGetParams.roomId = this.roomInfo.id;
-	
-	    promise = this.noticeGetModel.executeJSONP(this.noticeGetParams);
-	    promise.done(function (res) {
-	      if (res && res.data) {
-	        if (res.data.placards) {
-	          notice = res.data.placards[0];
-	        }
-	        if (notice) {
-	          self.noticeInfo = notice;
-	          self.noticeWrap.text(notice.content || '暂无公告');
-	          self.txtNotice.val(notice.content);
-	        } else {
-	          self.noticeWrap.text('暂无公告');
-	        }
-	      }
-	    });
-	    promise.fail(function (err) {
-	      msgBox.showError(err.msg || '获取公告失败');
-	    });
-	  },
-	  noticeChanged: function () {
-	    this.tipTextarea.find('.red').text(50 - this.txtNotice.val().length);
-	    // if (this.txtNotice.val().length < 50) {
-	    //   this.tipTextarea.text('您还可以输入' + (50 - this.txtNotice.val().length) + '个字');
-	    // } else {
-	    //   this.tipTextarea.text('您的输入超出了' + (this.txtNotice.val().length - 50) + '个字');
-	    // }
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 78 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/placard_create.json', // 填写请求地址
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/placard_get.json', // 填写请求地址
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 80 */
-/***/ function(module, exports) {
-
-	module.exports = "<!--<h2 class=\"clearfix annoucement\">-->\n<!--<span class=\"fl .annoucement_title\">公告</span>-->\n<!--<span id=\"btnEditNotice\" class=\"fr annoucement_editr\">编辑</span>-->\n<!--</h2>-->\n<!--<p id=\"noticeWrap\"></p>-->\n<!--编辑公告弹出框-->\n<div id=\"editNoticPanel\" style=\"display: none;\" class=\"shadow_screen\">\n    <div class=\"shadow closeNoticePanel\"></div>\n    <div class=\"edit_annmoucement_con\" style=\"width: 450px;\">\n        <h2 class=\"edit_title has-title\">文字输入<span class=\"close closeNoticePanel icons am-yyt-close close-white\"></span></h2>\n        <div class=\"editCon\">\n            <span class=\"title-tip\">公告内容:</span>\n            <textarea class=\"txt-notice boderRadAll_5\" style=\"width: 375px;\" id=\"txtNotice\" placeholder=\"(公告文字请在50字以内)\"></textarea>\n            <div id=\"errNoticeTip\" class=\"errTip\"></div>\n            <div class=\"tipTextarea\" style=\"\">你还可以输入<span class=\"red\">50</span>个字</div>\n            <p class=\"btn-wrap\" style=\"\">\n                <a id=\"btnSubmitNotice\" href=\"####\" class=\"submit boderRadAll_3\">确定</a>\n                <a href=\"####\" class=\"cancel closeNoticePanel boderRadAll_3\">取消</a>\n            </p>\n        </div>\n    </div>\n</div>\n\n<header class=\"boderRadTop_5 am-vertical-align\">\n    <i class=\"icon-voice am-vertical-align-middle\"></i>\n    <span class=\"title am-vertical-align-middle\">直播公告</span>\n    <a id=\"btnEditNotice\" href=\"javascript:;\"\n       class=\"edit am-vertical-align-middle\">编辑</a></header>\n<section class=\"content am-vertical-align\">\n    <p id=\"noticeWrap\" class=\"am-vertical-align-middle detail\">暂无公告.</p>\n</section>\n"
-
-/***/ },
-/* 81 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
-	 */
-	
-	
-	/**
-	 * @time 2016-3-9
-	 * @author  YuanXuJia
-	 * @info 直播按钮控制
-	 */
-	
-	'use strict';
-	var Backbone = window.Backbone;
-	var _ = __webpack_require__(19);
-	var base = __webpack_require__(20);
-	var BaseView = base.View; // View的基类
-	var imServer = __webpack_require__(34);
-	var uiConfirm = __webpack_require__(47);
-	var msgBox = __webpack_require__(59);
-	var StartLiveModel = __webpack_require__(82);
-	var EndLiveModel = __webpack_require__(83);
-	var FlashApi = __webpack_require__(66);
-	var UserModel = __webpack_require__(37);
-	var user = UserModel.sharedInstanceUserModel();
-	var BusinessDate = __webpack_require__(65);
-	
-	var View = BaseView.extend({
-	  el: '#liveShowBtnWraper', // 设置View对象作用于的根元素，比如id
-	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(84);
-	  },
-	  events: { // 监听事件
-	    'click .endLive': 'endLiveClick',
-	    'click .startLive': 'startLiveClick'
-	  },
-	  // 当模板挂载到元素之前
-	  beforeMount: function () {
-	    this.startLiveModel = new StartLiveModel();
-	    this.endLiveModel = new EndLiveModel();
-	
-	    this.startLiveParams = {
-	      deviceinfo: '{"aid": "30001001"}',
-	      access_token: user.getWebToken(),
-	      roomId: '',
-	      imGroupId: ''
-	    };
-	
-	    this.endLiveParams = {
-	      deviceinfo: '{"aid": "30001001"}',
-	      access_token: user.getWebToken(),
-	      roomId: ''
-	    };
-	  },
-	  // 当模板挂载到元素之后
-	  afterMount: function () {
-	    this.btnEndLive = $('.endLive');
-	    this.btnStartLive = $('.startLive');
-	    this.defineEventInterface();
-	  },
-	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
-	  ready: function (ops) {
-	    this.options = _.extend({}, ops);
-	    this.FlashApi = FlashApi.sharedInstanceFlashApi({
-	      el: 'broadCastFlash'
-	    });
-	  },
-	  /**
-	   * 判断是否超过预播时间
-	   * @param time
-	   * @returns {number} 1: 超过1小时以上;  0:没有超时;  -1: 太早了
-	   */
-	  isTooLate: function (time) {
-	    var currentTime = new Date();
-	    var timeSpan = time - currentTime.getTime();
-	    var result = BusinessDate.difference(Math.abs(timeSpan));
-	    if (timeSpan < 0 && (result.hours >= 1 || result.day >= 1)) {
-	      return 1;
-	    } else if (timeSpan > 300000) {
-	      return -1;
-	    }
-	    return 0;
-	  },
-	  /**
-	   * 开启直播
-	   */
-	  startLiveClick: function (e) {
-	    var current = $(e.target);
-	    var self = this;
-	    var result = self.isTooLate(self.roomInfo.liveTime);
-	    var status = ~~self.roomInfo.status;
-	
-	    if (status === 0) {
-	      msgBox.showTip('该直播尚未发布,无法开启直播!');
-	      return null;
-	    } else if (status === 1) {
-	      if (result === 1) {
-	        msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
-	        return null;
-	      }
-	    }
-	    if (current.hasClass('m_disabled')) {
-	      return null;
-	    }
-	
-	    current.addClass('m_disabled');
-	    this.btnEndLive.removeClass('m_disabled');
-	
-	    if (!this.roomInfo) {
-	      msgBox.showError('没有获取到房间信息');
-	      return '';
-	    }
-	    if (!this.roomInfo.imGroupid) {
-	      imServer.createIMChatRoom(function (res) {
-	        self.roomInfo.imGroupid = res.GroupId;
-	        self.startLive();
-	      }, function () {
-	        msgBox.showError('创建房间失败,请稍后重试');
-	      });
-	    } else {
-	      self.startLive();
-	    }
-	    return null;
-	  },
-	  /**
-	   * 开启直播
-	   */
-	  startLive: function () {
-	    var self = this;
-	    var msg;
-	    var promise;
-	
-	    self.startLiveParams.roomId = self.roomInfo.id;
-	    self.startLiveParams.imGroupId = self.roomInfo.imGroupid;
-	
-	    promise = self.startLiveModel.executeJSONP(this.startLiveParams);
-	    promise.done(function (result) {
-	      if (result && ~~result.code === 0) {
-	        msg = '您已成功开启直播，请复制下面的信息：</br>' +
-	          '视频连接：' + result.data.livePushStreamUrl +
-	          '</br>视频流：' + result.data.streamName;
-	        uiConfirm.show({
-	          title: '开启直播成功',
-	          content: msg,
-	          cancelBtn: false,
-	          okFn: function () {
-	            window.location.reload();
-	          },
-	          cancelFn: function () {
-	            window.location.reload();
-	          }
-	        });
-	        self.startFlash();
-	        Backbone.trigger('event:LiveShowStarted');
-	      } else {
-	        self.btnStartLive.removeClass('m_disabled');
-	        msgBox.showError(result.msg || '开启直播失败,请稍后重试');
-	      }
-	    });
-	    promise.fail(function (err) {
-	      msgBox.showError(err.msg || '开启直播失败,请稍后重试');
-	    });
-	  },
-	
-	  startFlash: function () {
-	    var self = this;
-	    self.FlashApi.onReady(function () {
-	      //  this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
-	      this.init(self.roomInfo);
-	    });
-	  },
-	  /**
-	   * 结束直播
-	   */
-	  endLiveClick: function () {
-	    var self = this;
-	    if (this.btnEndLive.hasClass('m_disabled')) {
-	      msgBox.showTip('直播尚未开始，不能结束直播.');
-	      return null;
-	    }
-	    uiConfirm.show({
-	      title: '消息',
-	      content: '您确定要结束直播吗',
-	      okFn: function () {
-	        self.endLive();
-	        window.location.href = '/anchor-setting.html?view=history';
-	      },
-	      cancelFn: function () {}
-	    });
-	    return null;
-	  },
-	  /**
-	   * 点击结束直播
-	   */
-	  endLive: function () {
-	    var self = this;
-	    var promise;
-	
-	    self.endLiveParams.roomId = self.roomInfo.id;
-	    promise = self.endLiveModel.executeJSONP(self.endLiveParams);
-	    promise.done(function () {
-	      self.btnEndLive.addClass('m_disabled');
-	      self.isLiveShowing = false;
-	      msgBox.showOK('结束直播操作成功');
-	      Backbone.trigger('event:liveShowEnded');
-	    });
-	    promise.fail(function (err) {
-	      msgBox.showError(err.msg || '操作失败,稍后重试');
-	    });
-	  },
-	
-	  roomInfoReady: function (data) {
-	    if (data) {
-	      this.roomInfo = data;
-	      this.changeButtonStatus(this.roomInfo.status);
-	    }
-	  },
-	  defineEventInterface: function () {
-	    var self = this;
-	    // 成功获取房间信息
-	    Backbone.on('event:roomInfoReady', function (data) {
-	      self.roomInfoReady(data);
-	    });
-	  },
-	  changeButtonStatus: function (status) {
-	    var result = this.isTooLate(this.roomInfo.liveTime);
-	    if (result === 1) {
-	      this.btnStartLive.addClass('m_disabled');
-	      Backbone.trigger('event:stopLoopRoomInfo');
-	    } else if (result === 0) {
-	      this.btnStartLive.removeClass('m_disabled');
-	    }
-	
-	    switch (status) {
-	      case 0:
-	        this.btnStartLive.addClass('m_disabled');
-	        this.btnEndLive.addClass('m_disabled');
-	        break;
-	      case 1:
-	        this.btnEndLive.addClass('m_disabled');
-	        break;
-	      case 2:
-	        this.btnStartLive.addClass('m_disabled').text('直播中');
-	        this.btnEndLive.removeClass('m_disabled');
-	        this.startFlash();
-	        break;
-	      case 3:
-	        this.btnStartLive.addClass('m_disabled');
-	        this.btnEndLive.addClass('m_disabled');
-	        break;
-	      default:
-	        break;
-	    }
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 82 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/start.json', // 填写请求地址
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/close.json', // 填写请求地址
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 84 */
-/***/ function(module, exports) {
-
-	module.exports = "<div id=\"liveShowBtnWraper\" class=\"anchor_control am-cf\">\n    <!-- <div class=\"luck-draw am-fl am-margin-right\"><a class=\"btn\"></a>\n        <div class=\"tip am-circle\"></div>\n    </div> -->\n    <!-- <button class=\"am-btn am-btn-purple am-fl boderRadAll_5 am-margin-left\">发起抽奖</button>\n    <button class=\"am-btn am-btn-purple am-fl boderRadAll_5\">抽奖记录</button> -->\n    <button class=\"endLive am-btn am-btn-red am-fr boderRadAll_5 am-margin-right-lg\">结束直播</button>\n    <button class=\"startLive am-btn am-btn-purple am-fr boderRadAll_5 am-margin-right-sm\">开启直播</button>\n</div>\n"
-
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var BaseView = base.View;
-	var _ = __webpack_require__(19);
-	
-	var View = BaseView.extend({
-	  el: '',
-	  rawLoader: function () {
-	    return '';
-	  },
-	  context: function (args) {
-	    console.log(args);
-	  },
-	  beforeMount: function () {
-	    //  初始化一些自定义属性
-	  },
-	  afterMount: function () {
-	    //  获取findDOMNode DOM Node
-	    this.chatHistory = $('#chatHistory');
-	    this.liveShowBtnWraper = $('#liveShowBtnWraper');
-	    this.btnFieldControl = $('#btnFieldControl');
-	    this.btnEditBgTheme = $('.edit_bg_btn');
-	    this.btnEditNotice = $('#btnEditNotice');
-	  },
-	  ready: function (ops) {
-	    //  初始化
-	    this.options = _.extend({}, ops);
-	    this.renderPage();
-	  },
-	  beforeDestroy: function () {
-	    //  进入销毁之前,将引用关系设置为null
-	  },
-	  destroyed: function () {
-	    //  销毁之后
-	  },
-	  renderPage: function () {
-	    if (this.options.assistant) {
-	      // 控制聊天列表高度
-	      this.chatHistory.height(389);
-	      // 隐藏直播控制模块
-	      this.liveShowBtnWraper.hide();
-	      // 隐藏场控控制按钮
-	      this.btnFieldControl.hide();
-	      // 隐藏编辑主题按钮
-	      this.btnEditBgTheme.hide();
-	      // 隐藏编辑公告按钮
-	      this.btnEditNotice.hide();
-	    }
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var base = __webpack_require__(20);
-	var LoginUserView = __webpack_require__(87);
-	var BaseView = base.View;
-	
-	var View = BaseView.extend({
-	  el: '#topBar',
-	  context: function (args) {
-	    console.log(args);
-	  },
-	  beforeMount: function () {
-	    //  初始化一些自定义属性
-	    this.loginUser = new LoginUserView();
-	  },
-	  afterMount: function () {
-	    //  获取findDOMNode DOM Node
-	  },
-	  ready: function () {
-	    //  初始化
-	    var _this = this;
-	    this.loginUser.on('topbar-logined', function () {
-	      _this.trigger('logined');
-	    });
-	  },
-	  beforeDestroy: function () {
-	    //  进入销毁之前,将引用关系设置为null
-	  },
-	  destroyed: function () {
-	    //  销毁之后
-	  },
-	  showLoginDialog: function () {
-	    this.loginUser.showDialog();
-	  },
-	  hideLoginDialog: function () {
-	    this.loginUser.hideDialog();
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 87 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Backbone = window.Backbone;
-	var base = __webpack_require__(20);
-	var BaseView = base.View;
-	var storage = base.storage;
-	var UserModel = __webpack_require__(37);
-	var user = UserModel.sharedInstanceUserModel();
-	var loginBox = __webpack_require__(42);
-	var sginHTML = __webpack_require__(88);
-	var loginedTemp = __webpack_require__(89);
-	var win = window;
-	var location = win.location;
-	var IMModel = __webpack_require__(35);
-	var imModel = IMModel.sharedInstanceIMModel();
-	var config = __webpack_require__(36);
-	var View = BaseView.extend({
-	  el: '#loginUser',
-	  events: {
-	    'click #login': 'loginHandler',
-	    'click .show-drop-menu': 'showDropMenu',
-	    'click #logout': 'logoutHandler',
-	    'mouseover .hoverMenu': 'nameHover',
-	    'mouseout .hoverMenu': 'nameOut'
-	  },
-	  context: function (args) {
-	    console.log(args);
-	  },
-	  beforeMount: function () {
-	    //  初始化一些自定义属性
-	    this._dialog = null;
-	  },
-	  afterMount: function () {
-	    //  获取findDOMNode DOM Node
-	    this.loginBox = loginBox();
-	    this._dialog = this.loginBox.dialog;
-	    this.userDromMenu = this.findDOMNode('.pcNav');
-	  },
-	  ready: function () {
-	    //  初始化
-	    if (user.isLogined()) {
-	      //  已经登录
-	      this.fetchUserInfo();
-	    } else {
-	      //  未登录
-	      this.$el.html(sginHTML);
-	    }
-	    this.hideDropMenu();
-	    this.defineEventInterface();
-	  },
-	  beforeDestroy: function () {
-	    //  进入销毁之前,将引用关系设置为null
-	  },
-	  destroyed: function () {
-	    //  销毁之后
-	  },
-	  /**
-	   * [loginHandler 处理登录按钮]
-	   * @param  {[type]} e [description]
-	   * @return {[type]}   [description]
-	   */
-	  loginHandler: function (e) {
-	    var _this = this;
-	    var status = this._dialog.status();
-	    e.preventDefault();
-	    if (status === 'hide') {
-	      this._dialog.trigger('show');
-	      this._dialog.once('hide', function () {
-	        if (user.isLogined()) {
-	          storage.remove('imSig');
-	          _this.fetchUserInfo();
-	          _this.trigger('topbar-logined');
-	        }
-	      });
-	    } else {
-	      this._dialog.trigger('hide');
-	    }
-	  },
-	  /**
-	   * [logoutHandler 退出]
-	   * @param  {[type]} e [description]
-	   * @return {[type]}   [description]
-	   */
-	  logoutHandler: function () {
-	    storage.remove('imSig');
-	    storage.set('signout', 1);
-	    location.href = config.prefix + '/login.html';
-	  },
-	  fetchUserInfo: function () {
-	    var _this = this;
-	    var fetchImUserSigPromise = imModel.fetchIMUserSig();
-	    fetchImUserSigPromise.done(function (userImInfo) {
-	      var data;
-	      if (userImInfo.roleType === 2) {
-	        //  游客，未登录
-	        _this.$el.html(sginHTML);
-	      } else {
-	        data = {
-	          userName: userImInfo.nickName,
-	          bigheadImg: userImInfo.largeAvatar
-	        };
-	        _this.render(data);
-	      }
-	    });
-	  },
-	  render: function (data) {
-	    var loginedHTML = this.compileHTML(loginedTemp, data);
-	    this.$el.html(loginedHTML);
-	    this.showDropMenuEle = $('.loginMsg .pcNav');
-	  },
-	  /**
-	   * 显示下拉菜单
-	   */
-	  showDropMenu: function (e) {
-	    e.preventDefault();
-	    this.showDropMenuEle.toggle();
-	    return false;
-	  },
-	  /**
-	   * 隐藏下拉菜单
-	   */
-	  hideDropMenu: function () {
-	    var _this = this;
-	    $(document).on('click', function () {
-	      if (_this.showDropMenuEle) {
-	        _this.showDropMenuEle.hide();
-	      }
-	    });
-	  },
-	  showDialog: function () {
-	    var _this = this;
-	    this._dialog.trigger('show');
-	    this._dialog.once('hide', function () {
-	      if (user.isLogined()) {
-	        _this.trigger('topbar-logined');
-	      }
-	    });
-	  },
-	  hideDialog: function () {
-	    this._dialog.trigger('hide');
-	  },
-	  /**
-	   * 定义对外公布的事件
-	   */
-	  defineEventInterface: function () {
-	    var self = this;
-	    Backbone.on('event:userProfileChanged', function (users) {
-	      var data = {
-	        userName: users.nickName,
-	        bigheadImg: users.headImg
-	      };
-	      self.render(data);
-	    });
-	  },
-	  nameHover: function () {
-	    this.showDropMenuEle.show();
-	  },
-	  nameOut: function () {
-	    this.showDropMenuEle.hide();
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-/* 88 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"PcMsg fl\">\n    <a class=\"user-login\" href=\"#\" id=\"login\">登陆</a>\n</div>"
-
-/***/ },
-/* 89 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"avator fl\">\n    <img class=\"am-circle\" style=\"width: 40px; height: 40px;\" src=\"{{bigheadImg}}\" alt=\"用户头像\">\n</div>\n<div class=\"loginMsg fl hoverMenu\">\n    <a class=\"user-name show-drop-menu\" href=\"#\">{{userName}}<span></span></a>\n    <ul class=\"pcNav hoverMenu\">\n        <li><a href=\"anchor-setting.html\">个人中心</a></li>\n        <li><span class=\"header-logout\" id=\"logout\">退出</span></li>\n    </ul>\n</div>\n"
-
-/***/ },
-/* 90 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/user/info.json', // 填写请求地址
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6824,13 +3816,13 @@ webpackJsonp([3],[
 	 */
 	'use strict';
 	
-	var AnchorUserInfoModel = __webpack_require__(107);
-	var base = __webpack_require__(20);
+	var AnchorUserInfoModel = __webpack_require__(63);
+	var base = __webpack_require__(28);
 	var Storage = base.storage;
-	var UserModel = __webpack_require__(37);
+	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	var instance = null;
-	var _ = __webpack_require__(19);
+	var _ = __webpack_require__(27);
 	
 	function UserInfoView() {
 	}
@@ -6998,24 +3990,39 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */
+/* 63 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/user/info.json', // 填写请求地址
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7023,24 +4030,24 @@ webpackJsonp([3],[
 	 */
 	'use strict';
 	
-	var _ = __webpack_require__(19);
-	var base = __webpack_require__(20);
+	var _ = __webpack_require__(27);
+	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	
-	var ListModel = __webpack_require__(173);
-	var LikeModel = __webpack_require__(174);
-	var CreateModel = __webpack_require__(175);
-	var UserModel = __webpack_require__(37);
+	var ListModel = __webpack_require__(65);
+	var LikeModel = __webpack_require__(66);
+	var CreateModel = __webpack_require__(67);
+	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
-	var LoopModel = __webpack_require__(176);
+	var LoopModel = __webpack_require__(68);
 	
-	var msgBox = __webpack_require__(59);
-	var BusinessDate = __webpack_require__(65);
+	var msgBox = __webpack_require__(69);
+	var BusinessDate = __webpack_require__(70);
 	
 	var View = BaseView.extend({
 	  el: '',
 	  rawLoader: function () {
-	    return __webpack_require__(177);
+	    return __webpack_require__(71);
 	  },
 	  events: {
 	    'click #btnShowCreate': 'showCreateClicked',
@@ -7418,7 +4425,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 173 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7426,8 +4433,8 @@ webpackJsonp([3],[
 	 */
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7453,7 +4460,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 174 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7461,8 +4468,8 @@ webpackJsonp([3],[
 	 */
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7488,7 +4495,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 175 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7496,8 +4503,8 @@ webpackJsonp([3],[
 	 */
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7523,7 +4530,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 176 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7531,8 +4538,8 @@ webpackJsonp([3],[
 	 */
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7558,10 +4565,2998 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 177 */
+/* 69 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by AaronYuan on 3/12/16.
+	 */
+	
+	/**
+	 * 使用
+	 *
+	 * showError(msg);
+	 * showTip(msg);
+	 * showOK(msg);
+	 * showLoading(msg);
+	 *
+	 *
+	 * .show(msgHtml, type, timeout, opts){}
+	 *      msgHtml: 内容
+	 *      type: 图标类型   1   -   提示
+	 *                      2   -   成功
+	 *                      3   -   失败
+	 *                      4   -   载入中
+	 *      timeout: 毫秒数,自动关闭
+	 *      opts: 配置,默认null就好
+	 *
+	 *
+	 * .hide()
+	 */
+	
+	//require('/style/msgbox.css');
+	var ZENG = {};
+	
+	ZENG.dom = {
+	    getById: function (id) {
+	        return document.getElementById(id);
+	    }, get: function (e) {
+	        return (typeof (e) == "string") ? document.getElementById(e) : e;
+	    }, createElementIn: function (tagName, elem, insertFirst, attrs) {
+	        var _e = (elem = ZENG.dom.get(elem) || document.body).ownerDocument.createElement(tagName || "div"), k;
+	        if (typeof (attrs) == 'object') {
+	            for (k in attrs) {
+	                if (k == "class") {
+	                    _e.className = attrs[k];
+	                } else if (k == "style") {
+	                    _e.style.cssText = attrs[k];
+	                } else {
+	                    _e[k] = attrs[k];
+	                }
+	            }
+	        }
+	        insertFirst ? elem.insertBefore(_e, elem.firstChild) : elem.appendChild(_e);
+	        return _e;
+	    }, getStyle: function (el, property) {
+	        el = ZENG.dom.get(el);
+	        if (!el || el.nodeType == 9) {
+	            return null;
+	        }
+	        var w3cMode = document.defaultView && document.defaultView.getComputedStyle, computed = !w3cMode ? null : document.defaultView.getComputedStyle(el, ''), value = "";
+	        switch (property) {
+	            case "float":
+	                property = w3cMode ? "cssFloat" : "styleFloat";
+	                break;
+	            case "opacity":
+	                if (!w3cMode) {
+	                    var val = 100;
+	                    try {
+	                        val = el.filters['DXImageTransform.Microsoft.Alpha'].opacity;
+	                    } catch (e) {
+	                        try {
+	                            val = el.filters('alpha').opacity;
+	                        } catch (e) {
+	                        }
+	                    }
+	                    return val / 100;
+	                } else {
+	                    return parseFloat((computed || el.style)[property]);
+	                }
+	                break;
+	            case "backgroundPositionX":
+	                if (w3cMode) {
+	                    property = "backgroundPosition";
+	                    return ((computed || el.style)[property]).split(" ")[0];
+	                }
+	                break;
+	            case "backgroundPositionY":
+	                if (w3cMode) {
+	                    property = "backgroundPosition";
+	                    return ((computed || el.style)[property]).split(" ")[1];
+	                }
+	                break;
+	        }
+	        if (w3cMode) {
+	            return (computed || el.style)[property];
+	        } else {
+	            return (el.currentStyle[property] || el.style[property]);
+	        }
+	    }, setStyle: function (el, properties, value) {
+	        if (!(el = ZENG.dom.get(el)) || el.nodeType != 1) {
+	            return false;
+	        }
+	        var tmp, bRtn = true, w3cMode = (tmp = document.defaultView) && tmp.getComputedStyle, rexclude = /z-?index|font-?weight|opacity|zoom|line-?height/i;
+	        if (typeof (properties) == 'string') {
+	            tmp = properties;
+	            properties = {};
+	            properties[tmp] = value;
+	        }
+	        for (var prop in properties) {
+	            value = properties[prop];
+	            if (prop == 'float') {
+	                prop = w3cMode ? "cssFloat" : "styleFloat";
+	            } else if (prop == 'opacity') {
+	                if (!w3cMode) {
+	                    prop = 'filter';
+	                    value = value >= 1 ? '' : ('alpha(opacity=' + Math.round(value * 100) + ')');
+	                }
+	            } else if (prop == 'backgroundPositionX' || prop == 'backgroundPositionY') {
+	                tmp = prop.slice(-1) == 'X' ? 'Y' : 'X';
+	                if (w3cMode) {
+	                    var v = ZENG.dom.getStyle(el, "backgroundPosition" + tmp);
+	                    prop = 'backgroundPosition';
+	                    typeof (value) == 'number' && (value = value + 'px');
+	                    value = tmp == 'Y' ? (value + " " + (v || "top")) : ((v || 'left') + " " + value);
+	                }
+	            }
+	            if (typeof el.style[prop] != "undefined") {
+	                el.style[prop] = value + (typeof value === "number" && !rexclude.test(prop) ? 'px' : '');
+	                bRtn = bRtn && true;
+	            } else {
+	                bRtn = bRtn && false;
+	            }
+	        }
+	        return bRtn;
+	    }, getScrollTop: function (doc) {
+	        var _doc = doc || document;
+	        return Math.max(_doc.documentElement.scrollTop, _doc.body.scrollTop);
+	    }, getClientHeight: function (doc) {
+	        var _doc = doc || document;
+	        return _doc.compatMode == "CSS1Compat" ? _doc.documentElement.clientHeight : _doc.body.clientHeight;
+	    }
+	};
+	
+	ZENG.string = {
+	    RegExps: {
+	        trim: /^\s+|\s+$/g,
+	        ltrim: /^\s+/,
+	        rtrim: /\s+$/,
+	        nl2br: /\n/g,
+	        s2nb: /[\x20]{2}/g,
+	        URIencode: /[\x09\x0A\x0D\x20\x21-\x29\x2B\x2C\x2F\x3A-\x3F\x5B-\x5E\x60\x7B-\x7E]/g,
+	        escHTML: {re_amp: /&/g, re_lt: /</g, re_gt: />/g, re_apos: /\x27/g, re_quot: /\x22/g},
+	        escString: {bsls: /\\/g, sls: /\//g, nl: /\n/g, rt: /\r/g, tab: /\t/g},
+	        restXHTML: {re_amp: /&amp;/g, re_lt: /&lt;/g, re_gt: /&gt;/g, re_apos: /&(?:apos|#0?39);/g, re_quot: /&quot;/g},
+	        write: /\{(\d{1,2})(?:\:([xodQqb]))?\}/g,
+	        isURL: /^(?:ht|f)tp(?:s)?\:\/\/(?:[\w\-\.]+)\.\w+/i,
+	        cut: /[\x00-\xFF]/,
+	        getRealLen: {r0: /[^\x00-\xFF]/g, r1: /[\x00-\xFF]/g},
+	        format: /\{([\d\w\.]+)\}/g
+	    }, commonReplace: function (s, p, r) {
+	        return s.replace(p, r);
+	    }, format: function (str) {
+	        var args = Array.prototype.slice.call(arguments), v;
+	        str = String(args.shift());
+	        if (args.length == 1 && typeof (args[0]) == 'object') {
+	            args = args[0];
+	        }
+	        ZENG.string.RegExps.format.lastIndex = 0;
+	        return str.replace(ZENG.string.RegExps.format, function (m, n) {
+	            v = ZENG.object.route(args, n);
+	            return v === undefined ? m : v;
+	        });
+	    }
+	};
+	
+	
+	ZENG.object = {
+	    routeRE: /([\d\w_]+)/g,
+	    route: function (obj, path) {
+	        obj = obj || {};
+	        path = String(path);
+	        var r = ZENG.object.routeRE, m;
+	        r.lastIndex = 0;
+	        while ((m = r.exec(path)) !== null) {
+	            obj = obj[m[0]];
+	            if (obj === undefined || obj === null) {
+	                break;
+	            }
+	        }
+	        return obj;
+	    }
+	};
+	
+	
+	var ua = ZENG.userAgent = {}, agent = navigator.userAgent;
+	ua.ie = 9 - ((agent.indexOf('Trident/5.0') > -1) ? 0 : 1) - (window.XDomainRequest ? 0 : 1) - (window.XMLHttpRequest ? 0 : 1);
+	
+	
+	if (typeof (ZENG.msgbox) == 'undefined') {
+	    ZENG.msgbox = {};
+	}
+	ZENG.msgbox._timer = null;
+	ZENG.msgbox.loadingAnimationPath = ZENG.msgbox.loadingAnimationPath || ("loading.gif");
+	ZENG.msgbox.show = function (msgHtml, type, timeout, opts) {
+	    if (typeof (opts) == 'number') {
+	        opts = {topPosition: opts};
+	    }
+	    opts = opts || {};
+	    var _s = ZENG.msgbox,
+	        template = '<span class="zeng_msgbox_layer" style="display:none;z-index:10000;" id="mode_tips_v2"><span class="gtl_ico_{type}"></span>{loadIcon}{msgHtml}<span class="gtl_end"></span></span>', loading = '<span class="gtl_ico_loading"></span>', typeClass = [0, 0, 0, 0, "succ", "fail", "clear"], mBox, tips;
+	    _s._loadCss && _s._loadCss(opts.cssPath);
+	    mBox = ZENG.dom.get("q_Msgbox") || ZENG.dom.createElementIn("div", document.body, false, {className: "zeng_msgbox_layer_wrap"});
+	    mBox.id = "q_Msgbox";
+	    mBox.style.display = "";
+	    mBox.innerHTML = ZENG.string.format(template, {
+	        type: typeClass[type] || "hits",
+	        msgHtml: msgHtml || "",
+	        loadIcon: type == 6 ? loading : ""
+	    });
+	    _s._setPosition(mBox, timeout, opts.topPosition);
+	};
+	ZENG.msgbox._setPosition = function (tips, timeout, topPosition) {
+	    timeout = timeout || 5000;
+	    var _s = ZENG.msgbox, bt = ZENG.dom.getScrollTop(), ch = ZENG.dom.getClientHeight(), t = Math.floor(ch / 2) - 40;
+	    ZENG.dom.setStyle(tips, "top", ((document.compatMode == "BackCompat" || ZENG.userAgent.ie < 7) ? bt : 0) + ((typeof (topPosition) == "number") ? topPosition : t) + "px");
+	    clearTimeout(_s._timer);
+	    tips.firstChild.style.display = "";
+	    timeout && (_s._timer = setTimeout(_s.hide, timeout));
+	};
+	ZENG.msgbox.hide = function (timeout) {
+	    var _s = ZENG.msgbox;
+	    if (timeout) {
+	        clearTimeout(_s._timer);
+	        _s._timer = setTimeout(_s._hide, timeout);
+	    } else {
+	        _s._hide();
+	    }
+	};
+	ZENG.msgbox._hide = function () {
+	    var _mBox = ZENG.dom.get("q_Msgbox"), _s = ZENG.msgbox;
+	    clearTimeout(_s._timer);
+	    if (_mBox) {
+	        var _tips = _mBox.firstChild;
+	        ZENG.dom.setStyle(_mBox, "display", "none");
+	    }
+	};
+	
+	module.exports = {
+	    showError: function(msgHtml){
+	        ZENG.msgbox.show(msgHtml, 5, 1000);
+	    },
+	    showTip: function(msgHtml){
+	        ZENG.msgbox.show(msgHtml, 1, 1000);
+	    },
+	    showOK: function(msgHtml){
+	        ZENG.msgbox.show(msgHtml, 4, 1000);
+	    },
+	    showLoading: function(msgHtml){
+	        ZENG.msgbox.show(msgHtml, 6, 1000);
+	    },
+	    show: function(msgHtml, type, timeout, opts){
+	        ZENG.msgbox.show(msgHtml, type, timeout, opts);
+	    },
+	    hide: function(timeout){
+	        ZENG.msgbox.hide(timeout);
+	    }
+	};
+	
+
+
+/***/ },
+/* 70 */
+/***/ function(module, exports) {
+
+	
+	var BusinessDate = function (long) {
+	  this.temp = new Date();
+	  this.setCurNewDate(long);
+	};
+	/**
+	 * [changeYear 改变临时年份]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	BusinessDate.prototype.changeYear = function (value) {
+	  this.temp.setFullYear(value);
+	};
+	/**
+	 * [getCountDays 根据月份获取当前月的总天数]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	BusinessDate.prototype.getCountDays = function (value) {
+	  this.temp.setMonth(value);
+	  this.temp.setDate(0);
+	  return this.temp.getDate();
+	};
+	/**
+	 * [$get 获取当前的年月日时分]
+	 * @param  {[type]} key [description]
+	 * @return {[type]}     [description]
+	 */
+	BusinessDate.prototype.$get = function (key) {
+	  return this.attrs[key];
+	};
+	/**
+	 * [ceilYear 向下获取年份]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	BusinessDate.prototype.ceilYear = function (value) {
+	  var val = ~~value;
+	  var i = 0;
+	  var year = this.$get('year');
+	  var result = [];
+	  for (; i <= val; i++) {
+	    result.push(year);
+	    year = year + 1;
+	  }
+	  return result;
+	};
+	BusinessDate.prototype._downDisplacement = function (key) {
+	  var start = this.$get(key);
+	  var result = [];
+	  var end;
+	  switch (key) {
+	    case 'month':
+	      end = 12;
+	      break;
+	    case 'day':
+	      end = this.getCountDays(this.$get('month'));
+	      break;
+	    case 'hours':
+	      end = 23;
+	      break;
+	    default:
+	      end = 59;
+	      break;
+	  }
+	  for (; start <= end; start++) {
+	    result.push(start);
+	  }
+	  return result;
+	};
+	/**
+	 * [downMonth 向下获取月份]
+	 * @return {[type]} [description]
+	 */
+	BusinessDate.prototype.downMonth = function () {
+	  return this._downDisplacement('month');
+	};
+	/**
+	 * [downDay 向下获取天数]
+	 * @return {[type]} [description]
+	 */
+	BusinessDate.prototype.downDay = function () {
+	  return this._downDisplacement('day');
+	};
+	/**
+	 * [downHours 向下获取小时]
+	 * @return {[type]} [description]
+	 */
+	BusinessDate.prototype.downHours = function () {
+	  return this._downDisplacement('hours');
+	};
+	/**
+	 * [downMinutes 向下获取分钟]
+	 * @return {[type]} [description]
+	 */
+	BusinessDate.prototype.downMinutes = function () {
+	  return this._downDisplacement('minutes');
+	};
+	/**
+	 * [down 向下获取函数式]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	BusinessDate.prototype.down = function (value) {
+	  return this._downDisplacement(value);
+	};
+	/**
+	 * [getTime 根据一个对象拼装一个时间对象获取时间毫秒]
+	 * @param  {[type]} obj [description]
+	 * @return {[type]}     [description]
+	 */
+	BusinessDate.prototype.getTime = function (obj) {
+	  var val = '';
+	  var month = obj.month < 10 ? '0' + obj.month : obj.month;
+	  var day = obj.day < 10 ? '0' + obj.day : obj.day;
+	  var hours = obj.hours < 10 ? '0' + obj.hours : obj.hours;
+	  var minutes = obj.minutes < 10 ? '0' + obj.minutes : obj.minutes;
+	  val += obj.year + '-' + month + '-' + day + ' ';
+	  val += hours + ':' + minutes + ':00';
+	  return new Date(val.replace(/-/g, '/')).getTime();
+	};
+	/**
+	 * [setCurNewDate 设置一个当前新的时间对象]
+	 */
+	BusinessDate.prototype.setCurNewDate = function (long) {
+	  this.date = null;
+	  this.date = long ? new Date(long) : new Date();
+	  this._setAttrs();
+	};
+	BusinessDate.prototype._setAttrs = function () {
+	  this.attrs = null;
+	  this.attrs = {
+	    year: this.date.getFullYear(),
+	    month: this.date.getMonth() + 1,
+	    day: this.date.getDate(),
+	    hours: this.date.getHours(),
+	    minutes: this.date.getMinutes()
+	  };
+	};
+	/**
+	 * [difference 根据一个毫秒差返回一个时分秒对象]
+	 * @param  {[type]} duration [description]
+	 * @return {[type]}          [description]
+	 */
+	BusinessDate.difference = function (duration) {
+	  var result = {};
+	  result.day = parseInt(duration / (24 * 3600 * 1000), 10);
+	  var leave1 = duration % (24 * 3600 * 1000);
+	  var hour = Math.floor(leave1 / (3600 * 1000));
+	  result.hours = hour < 10 ? '0' + hour : hour;
+	  var leave2 = leave1 % (3600 * 1000);
+	  var minutes = Math.floor(leave2 / (60 * 1000));
+	  result.minutes = minutes < 10 ? '0' + minutes : minutes;
+	  var leave3 = leave2 % (60 * 1000);
+	  var seconds = Math.floor(leave3 / 1000);
+	  result.seconds = seconds < 10 ? '0' + seconds : seconds;
+	  return result;
+	};
+	var shared = null;
+	BusinessDate.sharedInstanceBusinessDate = function () {
+	  if (!shared) {
+	    shared = new BusinessDate();
+	  }
+	  return shared;
+	};
+	BusinessDate.format = function (date, fmt) { // author: meizz
+	  var o = {
+	    'M+': date.getMonth() + 1,                 // 月份
+	    'd+': date.getDate(),                    // 日
+	    'h+': date.getHours(),                   // 小时
+	    'm+': date.getMinutes(),                 // 分
+	    's+': date.getSeconds(),                 // 秒
+	    'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
+	    S: date.getMilliseconds()             // 毫秒
+	  };
+	  var format = fmt;
+	  var k;
+	  var temp;
+	  if (/(y+)/.test(format)) {
+	    format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+	  }
+	  for (k in o) {
+	    if (new RegExp('(' + k + ')').test(format)) {
+	      temp = (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length));
+	      format = format.replace(RegExp.$1, temp);
+	    }
+	  }
+	  return format;
+	};
+	
+	module.exports = BusinessDate;
+
+
+/***/ },
+/* 71 */
 /***/ function(module, exports) {
 
 	module.exports = "<!--<div class=\"msg-board-wrap  active-create\">-->\n<div class=\"msg-board-wrap\">\n  <div class=\"header am-cf\">\n    <span class=\"title\">告白墙</span>\n    <a id=\"btnShowCreate\" class=\"show-when-list am-btn am-btn-purple am-fr am-round\">我要告白</a>\n    <div class=\"tabs am-fr show-when-list tab-menu\">\n      <a data-tab=\"newList\" href=\"javascript:;\" class=\"active\"><span id=\"unReadCnt\" class=\"boderRadAll_5 am-round \">99</span>最新告白</a>\n      <a data-tab=\"hotList\" href=\"javascript:;\">精彩告白</a>\n    </div>\n    <!-- 返回按钮-->\n    <a id=\"btnBacktoList\" href=\"javascript:;\" class=\"am-fr show-when-create btn-back-wrap am-margin-top\">\n      <i class=\"back\"></i> 返回告白墙\n    </a>\n  </div>\n  <!-- 告白模板 -->\n  <script type=\"text/html\" id=\"itemTpl\">\n    <div class=\"item\">\n      <p class=\"detail am-text-break\" style=\"color:{{fontColor}}\">\n        {{content}}\n      </p>\n      <div class=\"sender\">\n        <div class=\"am-g\">\n          <div class=\"am-u-sm-2\">\n            {{if anonymous}}\n            <span class=\"anonymous\"></span>\n            {{else}}\n            <img src=\"{{user.largeAvatar}}\" class=\"avatar am-circle\">\n            {{/if}}\n          </div>\n          <div class=\"am-u-sm-10 info\">\n            <p class=\"name\">{{anonymous ?'匿名粉丝': user.nickName}}</p>\n            <p class=\"send-time\">发布于<span class=\"am-margin-left-sm\">{{time}}</span></p>\n            <a class=\"btn-like am-btn am-round am-vertical-align {{liked?'active':''}}\" data-likeid=\"{{id}}\" data-liked=\"{{liked+''}}\">\n              <i class=\"icon-heart am-vertical-align-middle\"></i>\n              <span class=\"am-vertical-align-middle\">{{likeCount}}</span>\n            </a>\n          </div>\n        </div>\n      </div>\n    </div>\n  </script>\n\n  <div class=\"content am-g show-when-list wall-list\">\n    <!--列表-->\n    <div class=\"tab newList\">\n      <div class=\"am-u-sm-4 column-0\">\n        <!--第一列-->\n        <!--<div class=\"item\"><p class=\"detail am-text-break\">-->\n        <!--sfaslfjasdkfjasl;fjal;sjdf;啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊啊发案发后啊aklsjdfkl;asjfl;adsj;lfsldkfkl;sjfkl</p>-->\n        <!--<div class=\"sender\">-->\n        <!--<div class=\"am-g\">-->\n        <!--<div class=\"am-u-sm-2\"><img-->\n        <!--src=\"http://img1.c.yinyuetai.com/user/avatar/160502/10392675/-M-fa3f63fbbca174fa3457f1bc313236b3_20x20.jpg\"-->\n        <!--class=\"avatar am-circle\"></div>-->\n        <!--<div class=\"am-u-sm-10 info\"><p class=\"name\">asfsadfasf</p>-->\n        <!--<p class=\"send-time\">发布于<span class=\"am-margin-left-sm\">2016-10-23 34:34:00</span></p><a-->\n        <!--class=\"btn-like am-btn am-round am-vertical-align\"><i-->\n        <!--class=\"icon-heart am-vertical-align-middle\"></i><span-->\n        <!--class=\"am-vertical-align-middle\">32433</span></a></div>-->\n        <!--</div>-->\n        <!--</div>-->\n        <!--</div>-->\n      </div>\n      <div class=\"am-u-sm-4 column-1\">\n        <!--第二列-->\n      </div>\n      <div class=\"am-u-sm-4 column-2\">\n        <!--第三列-->\n      </div>\n\n    </div>\n\n    <!--精彩告白-->\n    <div class=\"tab hotList Hidden\">\n      <div class=\"am-u-sm-4 column-0\">\n        <!--第一列-->\n      </div>\n      <div class=\"am-u-sm-4 column-1\">\n        <!--第二列-->\n      </div>\n      <div class=\"am-u-sm-4 column-2\">\n        <!--第三列-->\n      </div>\n    </div>\n\n  </div>\n\n  <!--创建-->\n  <div class=\"content show-when-create create-wrap am-margin-top-lg Hidden\">\n    <div class=\"top am-margin-left am-padding-horizontal\">\n      爱,就要大声告白!\n    </div>\n    <div class=\"am-g am-padding-horizontal\">\n      <div class=\"am-u-sm-8\">\n        <textarea class=\"input-text boderRadAll_5\" placeholder=\"请输入告白\" name=\"\" id=\"txtMsg\" cols=\"30\" rows=\"10\"></textarea>\n        <div class=\"options-wrap am-vertical-align am-margin-top\">\n          <div class=\"color-wrap am-vertical-align-middle\">\n            文字颜色:\n            <!--<span class=\"color-title\">文字颜色</span>-->\n            <div class=\"colors\">\n              <a class=\"black am-circle active\" href=\"javascript:;\"></a>\n              <a class=\"red am-circle\" href=\"javascript:;\"></a>\n              <a class=\"yellow am-circle\" href=\"javascript:;\"></a>\n              <a class=\"green am-circle\" href=\"javascript:;\"></a>\n              <a class=\"blue am-circle\" href=\"javascript:;\"></a>\n              <a class=\"purple am-circle\" href=\"javascript:;\"></a>\n            </div>\n          </div>\n          <div class=\"am-checkbox-inline am-vertical-align-middle am-margin-left\">\n            <label>\n              <input id=\"cbAnonymous\" type=\"checkbox\"> 匿名告白\n            </label>\n          </div>\n          <div class=\"tip am-vertical-align-middle\">您还可以输入<span id=\"txtLength\" class=\"red\">200</span>字</div>\n        </div>\n        <div class=\"am-cf\">\n          <button id=\"btnSendText\" class=\"am-btn am-btn-red am-fr boderRadAll_3 am-margin-top-xl\">发布告白</button>\n        </div>\n        <div class=\"am-cf\">\n          <span class=\"am-fr send-tip\">发布公告需要消耗5积分,您当前共有<span id=\"userScore\" class=\"red\">0</span>积分</span>\n        </div>\n      </div>\n      <div class=\"input-tip am-u-sm-4\">至少用20字来表达你的爱!输入文字不能超过200.\n        <p>表白中请勿发布广告,严禁发布违法内容.</p>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ },
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+	 */
+	
+	
+	/**
+	 * @time 2016-03-09
+	 * @author YuanXuJia
+	 * @info 更换主题背景
+	 */
+	var Backbone = window.Backbone;
+	var base = __webpack_require__(28);
+	var BaseView = base.View; // View的基类
+	var EditBgModel = __webpack_require__(73);
+	var UploadFileDialog = __webpack_require__(74);
+	var msgBox = __webpack_require__(69);
+	var UserModel = __webpack_require__(45);
+	var user = UserModel.sharedInstanceUserModel();
+	
+	var View = BaseView.extend({
+	  el: '#edit_background', // 设置View对象作用于的根元素，比如id
+	  rawLoader: function () { // 可用此方法返回字符串模版
+	    return __webpack_require__(77);
+	  },
+	  events: { // 监听事件
+	    'click .edit_bg_btn': 'showFileUploadDialog'
+	  },
+	  // 当模板挂载到元素之前
+	  beforeMount: function () {
+	    this.editBgModel = new EditBgModel();
+	    this.uploadFile = new UploadFileDialog(this.getFileUploadOptions());
+	
+	    // 数据参数
+	    this.bgModelParams = {
+	      access_token: user.getWebToken(),
+	      deviceinfo: '{"aid": "30001001"}',
+	      roomId: '',
+	      imageUrl: ''
+	    };
+	  },
+	  // 当模板挂载到元素之后
+	  afterMount: function () {
+	    // 修改背景按钮
+	    this.changeBgBtn = $('.edit_bg_btn');
+	    this.txtPopularity = $('#txtPopularity');
+	    this.txtRoomName = $('#txtRoomName');
+	
+	    this.anchorContainerBg = $('#anchorContainerBg');
+	    this.anchorThemeBgDOM = $('#anchorThemeBg');
+	  },
+	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
+	  ready: function () {
+	    this.defineEventInterface();
+	
+	    // 修改背景图片按钮
+	    $('.edit_bg_btn').on('click', this.showFileUploadDialog.bind(this));
+	  },
+	  /**
+	   * 定义事件
+	   */
+	  defineEventInterface: function () {
+	    var self = this;
+	    Backbone.on('event:roomInfoReady', function (data) {
+	      if (data) {
+	        self.roomInfo = data;
+	        self.txtRoomName.text(data.roomName || '');
+	        self.txtPopularity.text(data.realPopularity || 0);
+	        if (self.roomInfo.imageUrl) {
+	          self.setBgStyle(self.roomInfo.imageUrl);
+	        }
+	      }
+	    });
+	    Backbone.on('event:updateRoomInfo', function (data) {
+	      if (data) {
+	        // self.roomInfo = data;
+	        self.txtPopularity.text(data.popularity || 0);
+	      }
+	    });
+	  },
+	  getFileUploadOptions: function () {
+	    var self = this;
+	    return {
+	      width: 580,
+	      height: 341,
+	      isRemoveAfterHide: false,
+	      isAutoShow: false,
+	      mainClass: 'shadow_screen_x',
+	      closeClass: 'editor_bg_close_x',
+	      closeText: 'X',
+	      title: '上传主题背景图片',
+	      ctrlData: {
+	        cmd: [{
+	          point: '+1+1',
+	          srcImg: 'img',
+	          op: 'crop',
+	          size: '1200x270'
+	        }, {
+	          saveOriginal: 1,
+	          op: 'save',
+	          plan: 'avatar',
+	          belongId: '20634338',
+	          srcImg: 'img'
+	        }],
+	        redirect: 'http://' + window.location.host + '/cross-url/upload.html'
+	      },
+	      uploadFileSuccess: function (response) {
+	        var result = self.uploadFile.parseErrorMsg(response);
+	        if (result === true) {
+	          self.currentBgImg = response.images[0].path;
+	        } else {
+	          msgBox.showTip(result);
+	        }
+	      },
+	      saveFile: function () {
+	        self.setBackgroundImg();
+	      }
+	    };
+	  },
+	  showFileUploadDialog: function () {
+	    var attrs = null;
+	    if (this.roomInfo.imageUrl) {
+	      attrs = {
+	        inputText: '编辑图片',
+	        breviaryUrl: this.roomInfo.imageUrl
+	      };
+	    }
+	    this.currentBgImg = '';
+	    this.uploadFile.show(attrs);
+	  },
+	  setBackgroundImg: function () {
+	    var self = this;
+	    var promise;
+	    if (!self.currentBgImg) {
+	      msgBox.showTip('请耐心等待图片上传完成!');
+	      return;
+	    }
+	
+	    self.bgModelParams.roomId = this.roomInfo.id;
+	    self.bgModelParams.imageUrl = this.currentBgImg;
+	
+	    promise = self.editBgModel.executeJSONP(self.bgModelParams);
+	    promise.done(function (res) {
+	      if (res && res.code === '0') {
+	        self.setBgStyle(self.currentBgImg);
+	        self.uploadFile.hide();
+	        msgBox.showOK('背景图片设置成功');
+	      } else {
+	        msgBox.showError(res.msg || '背景图片设置失败,稍后重试');
+	      }
+	    });
+	    promise.fail(function () {
+	      msgBox.showError('背景图片设置失败,稍后重试');
+	    });
+	  },
+	  setBgStyle: function (url) {
+	    if (url) {
+	      this.anchorThemeBgDOM.css('background', 'url(' + url + ')');
+	    }
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/bg_set.json',
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 74 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 clientRender:{bool} //默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+	 */
+	
+	
+	/**
+	 * @time {时间}
+	 * @author {编写者}
+	 * @info {实现的功能}
+	 */
+	
+	'use strict';
+	var shared = null;
+	var dialogTemp = __webpack_require__(75);
+	var Dialog = __webpack_require__(46);
+	var Helper = __webpack_require__(76);
+	
+	var UploadFileDialog = function (options) {
+	  var self = this;
+	  this.options = options;
+	  this.dialog = Dialog.classInstanceDialog(dialogTemp, options);
+	  this.helper = new Helper({
+	    ctrlData: this.options.ctrlData,
+	    id: '#' + this.dialog.id
+	  });
+	  this.helper.on('uploadFileSuccess', function (response) {
+	    if (typeof self.options.uploadFileSuccess === 'function') {
+	      self.options.uploadFileSuccess(response);
+	    }
+	  });
+	  this.helper.on('saveFile', function () {
+	    if (typeof self.options.saveFile === 'function') {
+	      self.options.saveFile();
+	    }
+	  });
+	};
+	UploadFileDialog.prototype.show = function (obj) {
+	  if (this.helper && obj) {
+	    this.helper.trigger('successBreviary', obj);
+	  }
+	  this.dialog.show();
+	};
+	UploadFileDialog.prototype.hide = function () {
+	  this.dialog.hide();
+	};
+	UploadFileDialog.prototype.emptyValue = function () {
+	  if (this.helper) {
+	    this.helper.emptyValue();
+	  }
+	};
+	
+	UploadFileDialog.prototype.parseErrorMsg = function (res) {
+	  var code;
+	  if (res && res.state === 'SUCCESS') {
+	    return true;
+	  }
+	  code = res.errCode * 1 || 0;
+	  switch (code) {
+	    case 29:
+	      return '上传的文件太大了,请重新上传';
+	    case 31:
+	      return '请上传JPGE,JPG,PNG,GIF等格式的图片文件';
+	    default:
+	      return '文件上传失败,请重新上传';
+	  }
+	};
+	
+	
+	UploadFileDialog.sharedInstanceUploadFileDialog = function (options) {
+	  if (!shared) {
+	    shared = new UploadFileDialog(options);
+	  }
+	  return shared;
+	};
+	module.exports = UploadFileDialog;
+
+
+/***/ },
+/* 75 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"shadow\"></div>\n<div class=\"edit_Bg_form_x\">\n\t<div class=\"edit_title\">\n\t\t<span class=\"upload-title\">背景图设置</span>\n\t\t<span class=\"upload-status upload-image-state\"></span>\n\t</div>\n\t<div class=\"formCon clearfix\">\n\t\t<div class=\"imgBox fl\">\n\t\t\t<img src=\"\" alt=\"\" width=\"100%\" height=\"100%\"  style=\"display: none;\" class=\"imgboxFile\">\n\t\t</div>\n\t\t<div class=\"formBox fl\">\n\t\t\t<div class=\"pseudo-uploadBtn am-btn-red boderRadAll_3\">\n\t\t\t\t<span class=\"input-text\">选择图片</span>\n\t\t\t\t<form class=\"upload-form\">\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<p>支持5M以内的gif、jpg、jpge、png图片上传</p>\n\t\t\t<div class=\"submit am-btn-red boderRadAll_3\">保存</div>\n\t\t</div>\n\t</div>\n</div>\n"
+
+/***/ },
+/* 76 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+	 */
+	
+	
+	/**
+	 * @time {时间}
+	 * @author {编写者}
+	 * @info {实现的功能}
+	 */
+	
+	'use strict';
+	var base = __webpack_require__(28);
+	var Auxiliary = __webpack_require__(41);
+	var BaseView = base.View;
+	var UploadFile = Auxiliary.UploadFile;
+	
+	var uploadIng = '正在上传';
+	var uploadDone = '上传完成!';
+	var msgBox = __webpack_require__(69);
+	var loc = window.location;
+	var View = BaseView.extend({
+	  events: { // 监听事件
+	    'click .submit': 'saveHandler',
+	    'change .upload-file': 'changeFile'
+	  },
+	  // 当模板挂载到元素之前
+	  beforeMount: function () {
+	
+	  },
+	  // 当模板挂载到元素之后
+	  afterMount: function () {
+	
+	  },
+	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
+	  ready: function (options) {
+	    this.$el = $(options.id);
+	    this._ICEinitEvent();
+	    this.formDOM = this.findDOMNode('.upload-form');
+	    this.imgSrcDOM = this.findDOMNode('.imgboxFile');
+	    this.imageStateDOM = this.findDOMNode('.upload-image-state');
+	    this.inputTextDOM = this.findDOMNode('.input-text');
+	    var self = this;
+	    var temp = {
+	      gcmd: [
+	        {
+	          gsaveOriginal: 1, op: 'save', plan: 'avatar', belongId: '20634338', srcImg: 'img'
+	        }
+	      ],
+	      gredirect: loc.origin + '/web/upload.html'
+	    };
+	    var ctrlData = options.ctrlData || temp;
+	    var uploadParams = {
+	      el: this.formDOM,
+	      url: 'http://image.yinyuetai.com/edit',
+	      data: ctrlData,
+	      filename: 'img',
+	      className: 'file'
+	    };
+	    this.upload = new UploadFile(uploadParams);
+	    this.upload.done(function (response) {
+	      self.imageStateDOM.html(uploadDone);
+	      self.previewImage(response);
+	      self.trigger('uploadFileSuccess', response);
+	    });
+	    this.upload.fail(function () {
+	      msgBox.showError('上传失败');
+	    });
+	    this.on('successBreviary', function (obj) {
+	      this.successBreviary(obj);
+	    });
+	  },
+	  successBreviary: function (obj) {
+	    this.emptyValue();
+	    if (obj.breviaryUrl) {
+	      this.imgSrcDOM.attr('src', obj.breviaryUrl);
+	      this.imgSrcDOM.show();
+	    }
+	    if (obj.inputText) {
+	      this.inputTextDOM.text(obj.inputText);
+	    }
+	  },
+	  saveHandler: function () {
+	    this.trigger('saveFile');
+	  },
+	  changeFile: function () {
+	    this.imageStateDOM.html(uploadIng);
+	    this.upload.submit();
+	  },
+	  previewImage: function (response) {
+	    var images = response.images;
+	    var imagePath;
+	    if (images && images.length > 0) {
+	      imagePath = images[0].path;
+	      this.imgSrcDOM.attr('src', imagePath);
+	      this.imgSrcDOM.show();
+	    }
+	  },
+	  emptyValue: function () {
+	    this.imageStateDOM.html('');
+	    this.imgSrcDOM.hide();
+	    this.inputTextDOM.text('上传图片');
+	  }
+	});
+	
+	var shared = null;
+	View.sharedInstanceUploadFileDialog = function (options) {
+	  if (!shared) {
+	    shared = new View(options);
+	  }
+	  return shared;
+	};
+	View.fetchDialogTemplate = function () {
+	  return __webpack_require__(75);
+	};
+	module.exports = View;
+
+
+/***/ },
+/* 77 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"txtRoomName\" class=\"room-name fl\">房间加载中...</div>\n<div class=\"room-title-right fr\">\n    <span class=\"online\"> <span id=\"onlineTxt\">在线人数</span>:<span class=\"red count font-yahei\" id=\"txtOnline\">0</span></span>\n    <span class=\"popularity\">人气:<span class=\"green count font-yahei\" id=\"txtPopularity\">0</span></span>\n</div>\n<!--上传图片弹出层-->\n<div style=\"display: none;\" class=\"shadow_screen\">\n    <div class=\"shadow\"></div>\n    <div class=\"edit_Bg_form\">\n        <h2 class=\"edit_title\">背景图设置<span class=\"upload-status\">正在上传</span><span class=\"upload-status\">上传完成!</span><span\n                class=\"close\">X</span></h2>\n        <div class=\"formCon clearfix\">\n            <div class=\"imgBox fl\">\n                <img src=\"\" alt=\"\" style=\"display: none;\">\n            </div>\n            <div class=\"formBox fl\">\n                <form action=\"\">\n                    <div class=\"pseudo-uploadBtn\">\n                        上传图片\n                        <input type=\"file\" name=\"\" id=\"file\">\n                    </div>\n                    <p>支持5M以内的gif、jpg、jpge、png图片上传</p>\n                    <div class=\"submit\">保存</div>\n                </form>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 78 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+	 */
+	
+	
+	/**
+	 * @time {时间}
+	 * @author {编写者}
+	 * @info {实现的功能}
+	 */
+	
+	var Backbone = window.Backbone;
+	var base = __webpack_require__(28);
+	var BaseView = base.View; // View的基类
+	var _ = __webpack_require__(27);
+	
+	var View = BaseView.extend({
+	  el: '#currentAnchorInfo', // 设置View对象作用于的根元素，比如id
+	  rawLoader: function () { // 可用此方法返回字符串模版
+	    return __webpack_require__(79);
+	  },
+	  events: { // 监听事件
+	
+	  },
+	  // 当模板挂载到元素之前
+	  beforeMount: function () {
+	    this.infoTpl = __webpack_require__(80);
+	  },
+	  // 当模板挂载到元素之后
+	  afterMount: function () {
+	    var el = this.$el;
+	    this.roomInfoWrap = el.find('#roomInfoWrap');
+	    this.imgRoomPic = el.find('#imgRoomPic');
+	  },
+	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
+	  ready: function () {
+	    this.defineEventInterface();
+	  },
+	  defineEventInterface: function () {
+	    var self = this;
+	    var tpl;
+	    var html;
+	    Backbone.on('event:roomInfoReady', function (data) {
+	      if (data) {
+	        tpl = _.template(self.infoTpl);
+	        html = tpl(data);
+	        self.roomInfoWrap.append(html);
+	        self.txtOnline = $('#txtOnline');
+	        if (data.creator.smallAvatar) {
+	          self.imgRoomPic.attr('src', data.creator.smallAvatar);
+	        }
+	      }
+	    });
+	    Backbone.on('event:updateRoomInfo', function (data) {
+	      if (data) {
+	        self.txtOnline.text(data.currentOnline);
+	      }
+	    });
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 79 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"user-info-wrap clearfix\">\n    <img id=\"imgRoomPic\" class=\"Left avator boderRadAll_35\"\n         src=\"http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg\"\n         alt=\"\">\n    <div class=\"info Left \" id=\"roomInfoWrap\">\n    </div>\n</div>\n"
+
+/***/ },
+/* 80 */
+/***/ function(module, exports) {
+
+	module.exports = "<span class=\"name\"><%=creator.nickName%></span>\n<span class=\"icon-gender\"></span>\n<div class=\"tags\">\n    <span class=\"first\">标签</span>:\n            <span id=\"tagsWrap\">\n    <%\n    var allTags = creator.tags || [];\n    for(var i = 0,j = allTags.length; i < j; i++){\n    %>\n    <span><%=allTags[i] %></span>\n    <%\n    }\n    if(allTags.length ==0){\n    %>\n    <i>暂无</i>\n    <% }%>\n            </span>\n</div>\n"
+
+/***/ },
+/* 81 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+	 */
+	
+	/**
+	 * @time 2016-3-11
+	 * @author YuanXuJia
+	 * @info 聊天控制
+	 */
+	
+	var _ = __webpack_require__(27);
+	var Backbone = window.Backbone;
+	
+	var base = __webpack_require__(28);
+	var BaseView = base.View; // View的基类
+	var imServer = __webpack_require__(42);
+	var uiConfirm = __webpack_require__(55);
+	var BusinessDate = __webpack_require__(70);
+	var FlashApi = __webpack_require__(82);
+	
+	var RoomDetailModel = __webpack_require__(58);
+	var GiftModel = __webpack_require__(60);
+	var msgBox = __webpack_require__(69);
+	var UserModel = __webpack_require__(45);
+	var user = UserModel.sharedInstanceUserModel();
+	
+	// 清屏,锁屏
+	var RoomControlView = __webpack_require__(83);
+	
+	var View = BaseView.extend({
+	  el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
+	  rawLoader: function () { // 可用此方法返回字符串模版
+	    return __webpack_require__(91);
+	  },
+	  events: { // 监听事件
+	    'click #msgList': 'messageClickHandler'
+	  },
+	  // 当模板挂载到元素之前
+	  beforeMount: function () {
+	    // 禁言用户列表
+	    this.forbidUsers = [];
+	
+	    this.giftModel = GiftModel.sharedInstanceModel();
+	    this.giftParams = {
+	      deviceinfo: '{"aid": "30001001"}',
+	      access_token: user.getWebToken(),
+	      offset: 0,
+	      size: 90000,
+	      type: 0
+	    };
+	
+	    this.roomDetail = RoomDetailModel.sharedInstanceModel();
+	    this.roomInfo = this.roomDetail.get('data') || {};
+	
+	    this.initGiftList();
+	  },
+	  // 当模板挂载到元素之后
+	  afterMount: function () {
+	    var el = this.$el;
+	    this.msgList = el.find('#msgList');
+	    this.chatHistory = el.find('#chatHistory');
+	    this.defineEventInterface();
+	    this.imgClear = el.find('#imgClear');
+	    this.imgUnLock = el.find('#imgUnLock');
+	
+	    this.imgClear.attr('src', '/images/clear.png');
+	    this.imgUnLock.attr('src', '/images/clock.png');
+	  },
+	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
+	  ready: function (ops) {
+	    this.options = _.extend({}, ops);
+	    var self = this;
+	    Backbone.on('event:roomInfoReady', function (data) {
+	      if (data) {
+	        self.roomInfo = data;
+	        self.roomInfoReady();
+	      }
+	    });
+	    this.FlashApi = FlashApi.sharedInstanceFlashApi({
+	      el: 'broadCastFlash'
+	    });
+	    this.roomCtrlView = new RoomControlView(_.extend({
+	      roomInfo: this.roomInfo,
+	      FlashApi: this.FlashApi,
+	      msgList: this.msgList
+	    }, this.options));
+	  },
+	  // 单击某用户发送的消息
+	  messageClickHandler: function (e) {
+	    var control;
+	    var li;
+	    control = $(e.target).parent();
+	    if (control.hasClass('controls_forbid_reject')) {
+	      this.msgControlHandler(e);
+	    } else {
+	      li = $(e.target).parents('li');
+	      // 确认是文本消息
+	      if (~~li.attr('data-msgType') === 0) {
+	        this.showMsgControlMenu(li);
+	      }
+	    }
+	  },
+	  // 显示,隐藏禁言/踢出按钮
+	  showMsgControlMenu: function (target) {
+	    var control = target.find('.controls_forbid_reject');
+	    var index = $('#msgList').find('li').index(target);
+	    if (target.length <= 0) return;
+	
+	    $('.controls_forbid_reject').not(control).hide();
+	    if (index === 0) {
+	      control.css('margin-top', control.find('a').height());
+	    }
+	    if (this.options.assistant) {
+	      control.find('.ctrl').hide();
+	    }
+	    control.toggle();
+	  },
+	  // 禁言,或者踢出
+	  msgControlHandler: function (e) {
+	    var target = $(e.target);
+	    var li;
+	    var userInfo = {};
+	
+	    li = target.parents('li');
+	    userInfo = {
+	      name: li.attr('data-name'),
+	      id: li.attr('data-id')
+	    };
+	
+	    var text = target.text();
+	
+	    if (text === '禁言') {
+	      this.disableSendMsgConfirm(userInfo);
+	    } else if (text === '踢出') {
+	      this.removeUserFromRoom(userInfo);
+	    } else if (text === '场控') {
+	      Backbone.trigger('event:addUserToManager', {
+	        userId: target.attr('data-uid'),
+	        userName: target.attr('data-name')
+	      });
+	    }
+	  },
+	  /**
+	   * 禁止用户发言确认提示框
+	   */
+	  disableSendMsgConfirm: function (userInfo) {
+	    var self = this;
+	    uiConfirm.show({
+	      content: '您确定要禁止用户:<b>' + userInfo.name + '</b>发言吗?',
+	      okFn: function () {
+	        self.disableSendMsgHandler(userInfo);
+	      }
+	    });
+	  },
+	  disableSendMsgHandler: function (userInfo) {
+	    var self = this;
+	    var users = [];
+	    users.push(userInfo.id);
+	    imServer.sendMessage({
+	      groupId: self.roomInfo.imGroupid,
+	      msg: {
+	        roomId: self.roomInfo.id,
+	        msgType: 5,
+	        userId: userInfo.id
+	      }
+	    }, function () {
+	      msgBox.showOK('已将用户:<b>' + userInfo.name + ' 禁言10分钟.');
+	      self.FlashApi.onReady(function () {
+	        this.notifying({
+	          roomId: self.roomInfo.id,
+	          userId: userInfo.id,
+	          nickName: userInfo.name,
+	          msgType: 5
+	        });
+	      });
+	    }, function () {
+	      msgBox.showError('禁言失败,请稍后重试!');
+	    });
+	  },
+	  hideUserControl: function () {
+	    $('.controls_forbid_reject').hide();
+	  },
+	  /**
+	   * 将用户从房间中移除
+	   */
+	  removeUserFromRoom: function (data) {
+	    var self = this;
+	
+	    function okCallback() {
+	      var options = {
+	        GroupId: self.roomInfo.imGroupid,
+	        Notification: JSON.stringify({
+	          forbidUsers: self.forbidUsers
+	        })
+	      };
+	      if (self.forbidUsers.length > 200) {
+	        self.forbidUsers.shift();
+	      }
+	      self.forbidUsers.push(data.id);
+	
+	      imServer.modifyGroupInfo(options, function (result) {
+	        if (result && result.ActionStatus === 'OK') {
+	          msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
+	        } else {
+	          msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
+	        }
+	      });
+	    }
+	
+	    uiConfirm.show({
+	      content: '您确定要将用户:<b>' + data.name + '</b>踢出房间吗?',
+	      okFn: function () {
+	        okCallback();
+	      }
+	    });
+	  },
+	  // 腾讯IM消息到达回调
+	  onMsgNotify: function (notifyInfo) {
+	    var self = this;
+	    var msgObj = {};
+	    var elem;
+	    var giftName;
+	
+	    if (notifyInfo && notifyInfo.type === 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
+	      elem = notifyInfo.elems[0];
+	      if (elem.type === 'TIMCustomElem') {
+	        msgObj = elem.content.data;
+	      } else {
+	        msgObj = elem.content.text + '';
+	        // msgObj = msgObj.replace(/&quot;/g, '\'');
+	        msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
+	      }
+	      try {
+	        // eval('msgObj = ' + msgObj);
+	        msgObj = JSON.parse(msgObj);
+	      } catch (e) {
+	        console.log(e);
+	      }
+	      if (!_.isObject(msgObj)) {
+	        return;
+	      }
+	      msgObj.fromAccount = notifyInfo.fromAccount;
+	
+	      switch (msgObj.msgType) {
+	        case 0: // 文本消息
+	          self.addMessage(msgObj);
+	          break;
+	        case 1: // 发送礼物
+	          giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
+	          msgObj.content = '<b>' + msgObj.nickName + '</b>发来' + giftName + '!';
+	          msgObj.nickName = '消息';
+	          msgObj.smallAvatar = '';
+	          self.addMessage(msgObj);
+	          break;
+	        case 2: // 公告
+	          break;
+	        case 3: // 点赞
+	          msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
+	          msgObj.nickName = '消息';
+	          msgObj.smallAvatar = '';
+	          self.addMessage(msgObj);
+	          break;
+	        case 4: //  清屏
+	          break;
+	        default:
+	          break;
+	      }
+	    }
+	  },
+	  initGiftList: function () {
+	    this.giftModel.get(this.giftParams, function () {}, function (err) {
+	      console.log(err);
+	    });
+	  },
+	  onGroupInfoChangeNotify: function (notifyInfo) {
+	    console.log(notifyInfo);
+	  },
+	  groupSystemNotifys: function (notifyInfo) {
+	    console.log(notifyInfo);
+	  },
+	  /**
+	   * 获取消息模板
+	   * @returns {*}
+	   */
+	  getMessageTpl: function () {
+	    return __webpack_require__(92);
+	  },
+	  /**
+	   * 添加消息
+	   * @constructor
+	   */
+	  addMessage: function (msg) {
+	    var self = this;
+	    var msgObj = msg;
+	    var tpl;
+	    msgObj = _.extend({
+	      nickName: '',
+	      content: '',
+	      smallAvatar: '',
+	      time: self.getDateStr(new Date()),
+	      userId: ''
+	    }, msgObj);
+	    if (msgObj && msgObj.roomId !== self.roomInfo.id) {
+	      return;
+	    }
+	    msgObj.content = self.filterEmoji(msgObj.content);
+	    if (msgObj && msgObj.content) {
+	      tpl = _.template(this.getMessageTpl());
+	      this.msgList.append(tpl(msgObj));
+	      this.chatHistory.scrollTop(this.msgList.height());
+	      this.FlashApi.onReady(function () {
+	        this.notifying(msgObj);
+	      });
+	    }
+	    self.autoDeleteMsgList();
+	  },
+	  /**
+	   * 过滤表情
+	   * @param  {[type]} content [description]
+	   * @return {[type]}         [description]
+	   */
+	  filterEmoji: function (content) {
+	    var reg = /[\u4e00-\u9fa5\w\d@\.\-。_!^^+#【】！~“：《》？<>]/g;
+	    var result;
+	    if (content) {
+	      result = content.match(reg) || [];
+	      if (result.length > 0) {
+	        return result.join('') || '';
+	      }
+	      return '';
+	    }
+	    return content;
+	  },
+	  // 当消息条数超过1000自动删除前面的,仅留下500条
+	  autoDeleteMsgList: function () {
+	    var total = this.msgList.children().length;
+	    var index = 0;
+	    if (total > 1000) {
+	      index = total - 500;
+	    }
+	    this.msgList.children(':lt(' + index + ')').remove();
+	  },
+	  /**
+	   * 定义对外公布的事件
+	   */
+	  defineEventInterface: function () {
+	    var self = this;
+	
+	    Backbone.on('event:onMsgNotify', function (notifyInfo) {
+	      if (_.isArray(notifyInfo)) {
+	        _.each(notifyInfo, function (item) {
+	          if (item.hasOwnProperty('msg')) {
+	            if (item.msg.isSend === false) {
+	              self.onMsgNotify(item.msg);
+	            }
+	          } else if (item.hasOwnProperty('isSend')) {
+	            if (item.isSend === false) {
+	              self.onMsgNotify(item);
+	            }
+	          }
+	        });
+	      } else if (_.isObject(notifyInfo)) {
+	        if (notifyInfo.isSend === false) {
+	          self.onMsgNotify(notifyInfo);
+	        }
+	      }
+	    });
+	    Backbone.on('event:onGroupInfoChangeNotify', function (notifyInfo) {
+	      self.onGroupInfoChangeNotify(notifyInfo);
+	    });
+	    Backbone.on('event:groupSystemNotifys', function (notifyInfo) {
+	      self.groupSystemNotifys(notifyInfo);
+	    });
+	  },
+	  /**
+	   *
+	   */
+	  roomInfoReady: function () {
+	    this.getGroupInfo();
+	  },
+	  /**
+	   * 从服务器端拉去消息
+	   */
+	  getMessageFromServer: function () {},
+	  /**
+	   * 获取群组公告以及介绍
+	   */
+	  getGroupInfo: function () {
+	    var self = this;
+	    var intro;
+	    imServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
+	      if (result && result.ActionStatus === 'OK') {
+	        if (result.GroupInfo && result.GroupInfo[0] && result.GroupInfo[0].Introduction) {
+	          intro = JSON.parse(result.GroupInfo[0].Introduction);
+	          if (intro && intro.blockState === true) {
+	            $('#btn-lock').children('span').text('解屏');
+	          }
+	        }
+	      }
+	    }, function (err) {
+	      msgBox.showError(err.msg || '获取群组消息失败!');
+	    });
+	  },
+	  // 转换时间格式
+	  getDateStr: function (dateInt) {
+	    var date = new Date(dateInt);
+	    return BusinessDate.format(date, 'hh:mm:ss');
+	  },
+	  // 检查当前直播状态
+	  checkLiveRoomReady: function () {
+	    switch (this.roomInfo.status) {
+	      case 0:
+	        msgBox.showTip('该直播尚未发布!');
+	        return false;
+	      case 1:
+	      case 2:
+	        if (!this.roomInfo || !this.roomInfo.imGroupid) {
+	          msgBox.showTip('请先开始直播!');
+	          return false;
+	        }
+	        return true;
+	      case 3:
+	        msgBox.showTip('该直播已经结束!');
+	        return false;
+	      default:
+	        return false;
+	    }
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 82 */
+/***/ function(module, exports) {
+
+	var flashTemp =
+	  '<object width="{width}" height="{height}"  align="middle"' +
+	  'id="{id}" type="application/x-shockwave-flash" ' +
+	  'classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">' +
+	  '<param value="{src}" name="movie">' +
+	  '<param value="{always}" name="allowscriptaccess">' +
+	  '<param value="{fullscreen}" name="allowfullscreen">' +
+	  '<param value="{quality}" name="quality">' +
+	  '<param value="{flashvars}" name="flashvars">' +
+	  '<param value="{wmode}" name="wmode" />' +
+	  '<embed width="{width}" height="{height}"  name="{id}"' +
+	  'type="application/x-shockwave-flash" src="{src}" allowscriptaccess="{always}"' +
+	  'allowfullscreen="{fullscreen}" quality="{quality}"  wmode="{wmode}" flashvars="{flashvars}" />' +
+	  '</object>';
+	var win = window;
+	var origin = win.location.origin;
+	var uid = 999;
+	win.YYTPCFlashReadyState = false;
+	var getSwfDOM = function (id) {
+	  var swf;
+	  var embed;
+	  var el = document.getElementById(id) || null;
+	  if (el && el.nodeName.toUpperCase() === 'OBJECT') {
+	    if (typeof el.SetVariable !== 'undefined') {
+	      swf = el;
+	    } else {
+	      embed = el.getElementsByTagName('embed')[0];
+	      if (embed) {
+	        swf = embed;
+	      }
+	    }
+	  }
+	  return swf;
+	};
+	var render = function (tpl, data) {
+	  if (data) {
+	    return tpl.replace(/\{(.*?)\}/ig, function () {
+	      return data[arguments[1]] || '';
+	    });
+	  }
+	  return tpl;
+	};
+	var FlashApi = function (options) {
+	  this.$el = typeof options.el === 'string' ? document.getElementById(options.el) : options.el;
+	  this._options = options;
+	  this._props = options.props || {};
+	  this.$attrs = {
+	    id: 'YYTFlash' + (uid++), //  配置id
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=201606029.1', //  引入swf文件
+	    width: this._props.width || 895,
+	    height: this._props.height || 502,
+	    wmode: this._props.wmode || 'transparent', // 控制显示模型
+	    flashvar: this._props.flashvar || '', //  初始化参数
+	    always: this._props.always || 'always', //  控制是否交互
+	    fullscreen: this._props.fullscreen || true, //  控制是否全屏
+	    quality: this._props.quality || 'high'
+	  };
+	  this._html = render(flashTemp, this.$attrs);
+	  this._methods = options.methods || {};
+	  this._ready = false;
+	  this._init();
+	};
+	
+	FlashApi.prototype._init = function () {
+	  this.$el.innerHTML = this._html;
+	  this.$swf = getSwfDOM(this.$attrs.id);
+	};
+	
+	FlashApi.prototype.onReady = function (callback) {
+	  var self = this;
+	  if (win.YYTPCFlashReadyState || this._ready) {
+	    callback.call(this);
+	  } else {
+	    this.$timer = setInterval(function () {
+	      if (win.YYTPCFlashReadyState) {
+	        self._ready = true;
+	        win.YYTPCFlashReadyState = false;
+	        clearInterval(self.$timer);
+	        self.$timer = null;
+	        callback.call(self);
+	      }
+	    }, 0);
+	  }
+	};
+	
+	FlashApi.prototype.init = function (data) {
+	  this.$swf.initData(data);
+	};
+	
+	FlashApi.prototype.isReady = function () {
+	  return this._ready;
+	};
+	
+	FlashApi.prototype.addUrl = function (url, name) {
+	  this.$swf.setvedioUrl(url, name);
+	};
+	
+	FlashApi.prototype.width = function (value) {
+	  var val = value;
+	  if (typeof val === 'string') {
+	    val = ~~val;
+	  }
+	  this.$swf.setPlayerWidth(val);
+	};
+	
+	FlashApi.prototype.height = function (value) {
+	  var val = value;
+	  if (typeof val === 'string') {
+	    val = ~~val;
+	  }
+	  this.$swf.setPlayerHeight(val);
+	};
+	
+	FlashApi.prototype.notifying = function (obj) {
+	  this.$swf.setOneMessageInchat(JSON.stringify(obj));
+	};
+	
+	FlashApi.prototype.clear = function () {
+	  this.$swf.clearAllMessage();
+	};
+	
+	var shared = null;
+	FlashApi.sharedInstanceFlashApi = function (options) {
+	  if (!shared) {
+	    shared = new FlashApi(options);
+	  }
+	  return shared;
+	};
+	
+	win.YYTPCFlashOnReady = function () {
+	  //  flash init success
+	  win.YYTPCFlashReadyState = true;
+	};
+	
+	module.exports = FlashApi;
+
+
+/***/ },
+/* 83 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * 房间控制
+	 * 清屏, 锁屏,场控管理
+	 */
+	'use strict';
+	
+	var Backbone = window.Backbone;
+	var base = __webpack_require__(28);
+	var BaseView = base.View;
+	
+	var FieldControlView = __webpack_require__(84);
+	
+	var imServer = __webpack_require__(42);
+	var uiConfirm = __webpack_require__(55);
+	var msgBox = __webpack_require__(69);
+	var uiDialog = __webpack_require__(46);
+	
+	
+	var View = BaseView.extend({
+	  el: '.room-control',
+	  rawLoader: function () {
+	    return __webpack_require__(89);
+	  },
+	  events: {
+	    'click #btn-clear': 'clearHandler',
+	    'click #btn-lock': 'lockClickHandler',
+	    'click #btnFieldControl': 'fieldContrlClickHandler'
+	  },
+	  context: function (args) {
+	    console.log(args);
+	  },
+	  beforeMount: function () {
+	    //  初始化一些自定义属性
+	  },
+	  afterMount: function () {
+	    //  获取findDOMNode DOM Node
+	    var el = this.$el;
+	    this.btnLock = el.find('#btn-lock');
+	    this.btnFieldControl = el.find('#btnFieldControl');
+	  },
+	  ready: function (ops) {
+	    //  初始化
+	    this.roomInfo = ops.roomInfo || {};
+	    this.FlashApi = ops.FlashApi || {};
+	    this.msgList = ops.msgList || {};
+	    this.assistant = ops.assistant || false;
+	    if (ops.hideCtrl) {
+	      this.btnFieldControl.hide();
+	    }
+	    this.defineEventInterface();
+	    this.fieldControlView = new FieldControlView({
+	      roomInfo: this.roomInfo
+	    });
+	  },
+	  defineEventInterface: function () {
+	    var self = this;
+	    Backbone.on('event:showFieldControllDialog', function () {
+	      self.fieldContrlClickHandler();
+	    });
+	  },
+	  beforeDestroy: function () {
+	    //  进入销毁之前,将引用关系设置为null
+	  },
+	  destroyed: function () {
+	    //  销毁之后
+	  },
+	  // 检查当前直播状态
+	  checkLiveRoomReady: function () {
+	    switch (this.roomInfo.status) {
+	      case 0:
+	        msgBox.showTip('该直播尚未发布!');
+	        return false;
+	      case 1:
+	      case 2:
+	        if (!this.roomInfo || !this.roomInfo.imGroupid) {
+	          msgBox.showTip('请先开始直播!');
+	          return false;
+	        }
+	        return true;
+	      case 3:
+	        msgBox.showTip('该直播已经结束!');
+	        return false;
+	      default:
+	        return false;
+	    }
+	  },
+	  // 锁屏
+	  clearHandler: function () {
+	    var self = this;
+	    var flag = self.checkLiveRoomReady();
+	    if (!flag) {
+	      return;
+	    }
+	
+	    uiConfirm.show({
+	      content: '您确定要清屏吗?',
+	      okFn: function () {
+	        var msg = {
+	          roomId: self.roomInfo.id,
+	          nickName: self.assistant ? '场控' : '主播',
+	          smallAvatar: '',
+	          msgType: 4,
+	          content: (self.assistant ? '场控' : '主播') + '已清屏'
+	        };
+	        self.FlashApi.onReady(function () {
+	          this.notifying(msg);
+	        });
+	        imServer.clearScreen({
+	          groupId: self.roomInfo.imGroupid,
+	          msg: msg
+	        });
+	      }
+	    });
+	  },
+	  // 锁屏
+	  lockClickHandler: function () {
+	    var flag = this.checkLiveRoomReady();
+	    var target = this.btnLock.children('span');
+	    var self = this;
+	    var txt = target.text() === '锁屏' ? '锁定屏幕' : '解开屏幕';
+	    if (!flag) {
+	      return;
+	    }
+	    uiConfirm.show({
+	      content: '您确定要' + txt + '吗?',
+	      okFn: function () {
+	        self.lockIMHandler(target.text() === '锁屏');
+	      }
+	    });
+	  },
+	  lockIMHandler: function (isLock) {
+	    var self = this;
+	    var options = {
+	      GroupId: this.roomInfo.imGroupid
+	    };
+	    var txt = isLock === true ? '锁屏' : '解屏';
+	
+	    if (isLock === true) {
+	      options.Introduction = JSON.stringify({
+	        blockState: !!isLock,
+	        alert: '主播已锁屏'
+	      });
+	    } else {
+	      options.Introduction = JSON.stringify({
+	        blockState: false,
+	        alert: '主播解除锁屏'
+	      });
+	    }
+	
+	    imServer.modifyGroupInfo(options, function (result) {
+	      if (result && result.ActionStatus === 'OK') {
+	        self.btnLock.children('span').text(isLock === true ? '解屏' : '锁屏');
+	        msgBox.showOK(txt + '成功!');
+	      } else {
+	        msgBox.showError(txt + '操作失败,请稍后重试');
+	      }
+	    }, function () {
+	      msgBox.showError(txt + '操作失败,请稍后重试');
+	    });
+	  },
+	  // 清空消息
+	  clearMessageList: function () {
+	    if (this.msgList) {
+	      this.msgList.children().remove();
+	    }
+	  },
+	  // 场控管理
+	  fieldContrlClickHandler: function () {
+	    var tpl = __webpack_require__(90);
+	    if (!this.fieldControlDialog) {
+	      this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
+	        closeClass: 'editor_bg_close_x', // 'icons am-yyt-close close-white',
+	        width: 560,
+	        height: 335,
+	        isRemoveAfterHide: false
+	      });
+	    }
+	    this.fieldControlDialog.show();
+	    this.fieldControlView.renderPage();
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 84 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * 场控管理, 添加，删除
+	 */
+	'use strict';
+	
+	var _ = __webpack_require__(27);
+	var $ = __webpack_require__(1);
+	var Backbone = window.Backbone;
+	var base = __webpack_require__(28);
+	var BaseView = base.View;
+	
+	var UserModel = __webpack_require__(45);
+	var user = UserModel.sharedInstanceUserModel();
+	var RoomManagerListModel = __webpack_require__(85);
+	var RoomManagerAddModel = __webpack_require__(86);
+	var RoomManagerRemoveModel = __webpack_require__(87);
+	
+	var msgBox = __webpack_require__(69);
+	var uiConfirm = __webpack_require__(55);
+	
+	var imServer = __webpack_require__(42);
+	
+	var View = BaseView.extend({
+	  el: '#field-control',
+	  clientRender: false,
+	  events: {
+	    'click .btn-link': 'removeClickHandler',
+	    'click #btnAdd': 'addClickHandler'
+	  },
+	  rawLoader: function () {
+	    return '';
+	  },
+	  context: function (args) {
+	    console.log(args);
+	  },
+	  beforeMount: function () {
+	    //  初始化一些自定义属性
+	    this.queryParams = {
+	      deviceinfo: '{"aid": "30001001"}',
+	      access_token: user.getWebToken()
+	    };
+	
+	    this.roomManagerListParams = _.extend({}, this.queryParams);
+	
+	    this.roomManListModel = RoomManagerListModel.sharedInstanceModel();
+	    this.roomManAddModel = RoomManagerAddModel.sharedInstanceModel();
+	    this.roomManRemoveModel = RoomManagerRemoveModel.sharedInstanceModel();
+	  },
+	  afterMount: function () {
+	    //  获取findDOMNode DOM Node
+	  },
+	  findElements: function () {
+	    this.userListDom = this.$el.find('.user-list');
+	    this.itemTpl = __webpack_require__(88);
+	    this.userIdDom = this.$el.find('#txtUserID');
+	  },
+	  ready: function (ops) {
+	    //  初始化
+	    this.roomInfo = ops.roomInfo || {};
+	
+	    this.defineEventInterface();
+	  },
+	  defineEventInterface: function () {
+	    var self = this;
+	    // 添加用户为场控
+	    Backbone.on('event:addUserToManager', function (userInfo) {
+	      // self.addRoomManager(userId);
+	      self.checkUserIsManager(userInfo.userId, userInfo.userName);
+	    });
+	  },
+	  beforeDestroy: function () {
+	    //  进入销毁之前,将引用关系设置为null
+	  },
+	  destroyed: function () {
+	    //  销毁之后
+	  },
+	  renderPage: function () {
+	    // 'click .btn-link': 'removeClickHandler',
+	    // 'click #btnAdd': 'addClickHandler'
+	    if (this.$el.length < 1) {
+	      this.$el = $(this.$el.selector);
+	      this.$el.find('.user-list').on('click', this.removeClickHandler.bind(this));
+	      this.$el.find('#btnAdd').on('click', this.addClickHandler.bind(this));
+	      this.renderRoomMangerList();
+	      this.findElements();
+	    }
+	  },
+	  // 删除场控
+	  removeClickHandler: function (e) {
+	    var target = $(e.target);
+	    var userId = target.attr('data-id');
+	    var self = this;
+	    if (!userId) {
+	      return;
+	    }
+	    var msg = '<div style="text-align:center;color:#a1a1a1;" >' +
+	      target.attr('data-name') + '(' + userId + ')</div>';
+	    uiConfirm.show({
+	      content: '您确定要删除该场控吗?' + msg,
+	      okFn: function () {
+	        self.removeRoomManger(userId);
+	      }
+	    });
+	  },
+	  // 删除场控
+	  removeRoomManger: function (id) {
+	    var promise = this.roomManRemoveModel.executeJSONP(_.extend({
+	      userId: id,
+	      roomId: this.roomInfo.id
+	    }, this.queryParams));
+	    this.setMember(id, 'Member').done(function () {
+	      promise.done(function (res) {
+	        if (res && res.data.success) {
+	          msgBox.showOK('成功移除该场控');
+	          $('[dom-id="' + id + '"]').remove();
+	        } else {
+	          msgBox.showError('移除场控失败');
+	        }
+	      });
+	    }).fail(function () {
+	      msgBox.showError('移除场控失败');
+	    });
+	  },
+	  // 添加场控
+	  addClickHandler: function () {
+	    var userId = $.trim(this.userIdDom.val());
+	    if (!this.verifyUserID(userId)) {
+	      msgBox.showTip('请输入正确的用户编号');
+	      return null;
+	    }
+	    // this.addRoomManager(userId);
+	    this.checkUserIsManager(userId);
+	    return true;
+	  },
+	  setMember: function (userId, type) {
+	    var defer = $.Deferred();
+	    imServer.modifyGroupMember({
+	      GroupId: this.roomInfo.imGroupid,
+	      Role: type || 'Admin',
+	      Member_Account: userId + '$0'
+	    }).done(function (res) {
+	      if (res.ActionStatus === 'OK') {
+	        defer.resolve();
+	      } else {
+	        defer.reject();
+	      }
+	    });
+	    return defer.promise();
+	  },
+	  verifyUserID: function (id) {
+	    return /^\d+$/.test(id);
+	  },
+	  checkUserIsManager: function (uid, uName) {
+	    var self = this;
+	    var promise = this.getManagerList();
+	    promise.done(function (res) {
+	      var current = _.find(res.data, function (item) {
+	        return item.user.uid === ~~uid;
+	      });
+	
+	      var msg = '<div style="text-align:center;color:#a1a1a1;" >' +
+	        uName + '(' + uid + ')</div>';
+	      if (!current) {
+	        uiConfirm.show({
+	          content: '您确定将该用户设为场控吗?' + (uName ? msg : ''),
+	          okFn: function () {
+	            self.addRoomManager(uid);
+	          }
+	        });
+	      } else {
+	        // msgBox.showTip('该用户已经是场控了');
+	        uiConfirm.show({
+	          content: '您确定要删除该场控吗?' + msg,
+	          okFn: function () {
+	            self.removeRoomManger(uid);
+	          }
+	        });
+	      }
+	    });
+	  },
+	  addRoomManager: function (id) {
+	    var self = this;
+	    var promise = self.roomManAddModel.executeJSONP(_.extend({}, this.queryParams, {
+	      userId: id,
+	      roomId: this.roomInfo.id || 0
+	    }));
+	    this.setMember(id, 'Admin').done(function () {
+	      promise.done(function (res) {
+	        if (res && res.code === '0') {
+	          msgBox.showOK('场控添加成功');
+	          self.renderRoomMangerList();
+	          self.userIdDom.val('');
+	        } else {
+	          msgBox.showError('场控添加失败');
+	        }
+	      });
+	    }).fail(function () {
+	      msgBox.showError('场控添加失败');
+	    });
+	  },
+	  beforeAdd: function () {},
+	  getManagerList: function () {
+	    this.roomManagerListParams.roomId = this.roomInfo.id;
+	    return this.roomManListModel.executeJSONP(this.roomManagerListParams);
+	  },
+	  // 渲染场控列表
+	  renderRoomMangerList: function () {
+	    var self = this;
+	    // this.roomManagerListParams.roomId = this.roomInfo.id;
+	    // var promise = this.roomManListModel.executeJSONP(this.roomManagerListParams);
+	    var promise = this.getManagerList();
+	    promise.done(function (res) {
+	      if (res && res.code === '0') {
+	        self.renderRoomManItem(res);
+	      }
+	    });
+	  },
+	  renderRoomManItem: function (res) {
+	    var result = _.filter(res.data, function (item) {
+	      return item.user && item.user.uid !== user.get('userId');
+	    });
+	    var html = this.compileHTML(this.itemTpl, {
+	      data: result
+	    });
+	    this.userListDom.html(html);
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 85 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * 场控管理列表
+	 */
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/manager_list.json',
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * 添加场控
+	 */
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/manager_create.json',
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * 删除场控
+	 */
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/manager_delete.json',
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 88 */
+/***/ function(module, exports) {
+
+	module.exports = " {{each data as item}}\n {{if item.user}}\n<div class=\"am-g\" dom-id=\"{{item.user.uid}}\">\n  <div class=\"am-u-sm-3 am-vertical-align\"><img src=\"{{item.user.largeAvatar}}\" class=\"am-vertical-align-middle am-circle avatar\"><span class=\"id am-vertical-align-middle am-margin-left-sm\">{{item.user.uid}}</span></div>\n  <div class=\"am-u-sm-6 name\">{{item.user.nickName}}</div>\n  <div class=\"am-u-sm-3\"><a data-name=\"{{item.user.nickName}}\" data-id=\"{{item.user.uid}}\" class=\"am-btn btn-link\">删除</a></div>\n</div>\n{{/if}}\n{{/each}}\n"
+
+/***/ },
+/* 89 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"am-vertical-align room-manager-block\">\n    <a id=\"btn-clear\" class=\"am-btn am-btn-purple am-vertical-align-middle boderRadAll_5\">\n        <i class=\"clear\"></i><span>清屏</span></a>\n    <a id=\"btn-lock\" class=\"am-btn am-btn-purple am-vertical-align-middle boderRadAll_5\">\n        <i class=\"lock\"></i><span>锁屏</span></a>\n    <a id=\"btnFieldControl\" class=\"am-btn am-btn-purple am-vertical-align-middle boderRadAll_5\">\n        <span class=\"ctrl first\">场控</span>\n        <span class=\"ctrl\">管理</span>\n    </a>\n</div>\n"
+
+/***/ },
+/* 90 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"field-control-wrap\" id=\"field-control\">\n\n  <div class=\"popup-wrap\">\n    <div class=\"popup-header am-cf boderRadTop_5\"><span class=\"am-fl\">场控管理</span>\n      <!-- <a class=\"am-btn am-btn-close am-fr icons close-white\"></a> -->\n    </div>\n    <div class=\"popup-content\">\n      <div class=\"detail\">\n        <div class=\"am-g first\">\n          <div class=\"am-u-sm-3\">用户ID</div>\n          <div class=\"am-u-sm-6\">用户名</div>\n          <div class=\"am-u-sm-3\">操作</div>\n        </div>\n        <div class=\"user-list\">\n          <!--<div class=\"am-g\">-->\n          <!--<div class=\"am-u-sm-3 am-vertical-align\"><img-->\n          <!--src=\"http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg\"-->\n          <!--class=\"am-vertical-align-middle am-circle avatar\"><span-->\n          <!--class=\"id am-vertical-align-middle am-margin-left-sm\">用户ID22</span></div>-->\n          <!--<div class=\"am-u-sm-6 name\">用户名sdfasfasfas</div>-->\n          <!--<div class=\"am-u-sm-3\"><a class=\"am-btn btn-link\">删除</a></div>-->\n          <!--</div>-->\n        </div>\n      </div>\n      <div class=\"footer am-padding-bottom\">\n        <div class=\"form-input\">\n          <input id=\"txtUserID\" type=\"number\" min=\"1\" class=\"input-user-id boderRadAll_5\">\n          <button id=\"btnAdd\" class=\" am-btn am-btn-red boderRadAll_5 am-margin-left-xs\">添加场控</button>\n          <p class=\"tip\">输入用户音悦台ID,或者从聊天列表中选择用户添加场控权限</p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ },
+/* 91 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"chatCon\" id=\"chatHistory\">\n    <!--聊天记录-->\n    <ul id=\"msgList\">\n        <!-- <li class=\"clearfix \" data-msgtype=\"0\" data-name=\"袁家小黑球\" data-id=\"44648642$0\">\n            <img onerror=\"this.src='../img/visitor_avator.jpg'\" src=\"http://tp1.sinaimg.cn/1973769700/50/5678264169/1\"\n                 alt=\"\" class=\"fl visitor_avator\">\n            <p class=\"visitor_chat fl\">\n                <span class=\"visitorName\">袁家小黑球:</span>\n                消息内容\n                <span class=\"time fr\">11:58:11</span>\n            </p>\n            <div class=\"controls_forbid_reject\">\n                <a href=\"javascript:;\" class=\"forbid\">禁言</a>\n                <a href=\"javascript:;\" class=\"reject\">踢出</a>\n                <a href=\"javascript:;\" class=\"ctrl\">场控</a>\n            </div>\n        </li> -->\n    </ul>\n</div>\n\n<div id=\"sendMessageWrap\" class=\"anchor-ctrl pAll10 room-control\">\n    <!--控制按钮-->\n</div>\n"
+
+/***/ },
+/* 92 */
+/***/ function(module, exports) {
+
+	module.exports = "<li class=\"clearfix <%=msgType==0?'':'system-info'%>\" data-msgType=\"<%=msgType%>\" data-name=\"<%=nickName%>\" data-id=\"<%=fromAccount%>\">\n  <%if(msgType == 0){%>\n  <img onerror=\"this.src='../img/visitor_avator.jpg'\" src=\"<%=smallAvatar%>\" alt=\"\" class=\"fl visitor_avator\">\n  <%}%>\n  <p class=\"visitor_chat fl\">\n    <%if(msgType == 0){%>\n    <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else if(msgType == 4){%>\n        <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else{%>\n        <span class=\"visitorName\">消息:</span>\n    <% }%>\n    <%=content%>\n    <span class=\"time fr\"><%=time%></span>\n  </p>\n  <div class=\"controls_forbid_reject\">\n    <a href=\"javascript:;\" class=\"forbid am-btn-red\">禁言</a>\n    <a href=\"javascript:;\" class=\"reject am-btn-red\">踢出</a>\n    <%if(userId) {%>\n    <a href=\"javascript:;\" data-name=\"<%=nickName%>\" data-uid='<%=userId%>' class=\"ctrl am-btn-red\">场控</a>\n    <%}%>\n  </div>\n</li>\n"
+
+/***/ },
+/* 93 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+	 */
+	
+	
+	/**
+	 * @time 2016-3-9
+	 * @author YuanXuJia
+	 * @info 公告模块
+	 */
+	
+	'use strict';
+	var base = __webpack_require__(28);
+	var BaseView = base.View; // View的基类
+	var Backbone = window.Backbone;
+	
+	var NoticeModel = __webpack_require__(94);
+	var NoticeGetModel = __webpack_require__(95);
+	var imServer = __webpack_require__(42);
+	var UserModel = __webpack_require__(45);
+	var user = UserModel.sharedInstanceUserModel();
+	
+	var msgBox = __webpack_require__(69);
+	
+	var View = BaseView.extend({
+	  el: '#noticeWraper', // 设置View对象作用于的根元素，比如id
+	  rawLoader: function () { // 可用此方法返回字符串模版
+	    return __webpack_require__(96);
+	  },
+	  events: { // 监听事件
+	    'click #btnEditNotice': 'editClickHandler',
+	    'click .closeNoticePanel': 'panelDisplay',
+	    'click #btnSubmitNotice': 'submitClickHandler',
+	    'keyup #txtNotice': 'noticeChanged'
+	  },
+	  // 当模板挂载到元素之前
+	  beforeMount: function () {
+	    this.noticeModel = new NoticeModel();
+	    this.noticeGetModel = new NoticeGetModel();
+	    this.noticeInfo = {
+	      content: ''
+	    };
+	
+	    this.noticeInfoParams = {
+	      deviceinfo: '{"aid": "30001001"}',
+	      access_token: user.getWebToken(),
+	      roomId: '',
+	      content: ''
+	    };
+	
+	    this.noticeGetParams = {
+	      deviceinfo: '{"aid":"30001001"}',
+	      roomId: '',
+	      access_token: user.getWebToken()
+	    };
+	  },
+	  // 当模板挂载到元素之后
+	  afterMount: function () {
+	    // 修改公告弹出框
+	    this.editNoticPanel = $('#editNoticPanel');
+	    this.noticeWrap = $('#noticeWrap');
+	    // 公告内容
+	    this.txtNotice = $('#txtNotice');
+	    this.imgRoomPic = $('#imgRoomPic');
+	    this.errNoticeTip = $('#errNoticeTip');
+	
+	    this.tipTextarea = this.$el.find('.tipTextarea');
+	  },
+	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
+	  ready: function () {
+	    this.defineEventInterface();
+	  },
+	  /**
+	   * 编辑按钮点击
+	   */
+	  editClickHandler: function () {
+	    this.noticeChanged();
+	    this.panelDisplay(true);
+	  },
+	  /**
+	   * 编辑公告悬浮框控制
+	   * @param isShow
+	   */
+	  panelDisplay: function (isShow) {
+	    this.errNoticeTip.text('');
+	    if (isShow === true) {
+	      this.txtNotice.val(this.noticeInfo.content);
+	      this.editNoticPanel.show();
+	    } else {
+	      this.editNoticPanel.hide();
+	    }
+	  },
+	  /**
+	   * 提交公告
+	   */
+	  submitClickHandler: function () {
+	    var content = this.txtNotice.val().trim();
+	    var self = this;
+	    var promise;
+	    if (!content || content.length > 50 || content.length <= 0) {
+	      this.errNoticeTip.text('公告文字请在50字以内');
+	      return null;
+	    }
+	
+	    this.noticeInfoParams.roomId = this.roomInfo.id;
+	    this.noticeInfoParams.content = content;
+	
+	    promise = this.noticeModel.executeJSONP(this.noticeInfoParams);
+	    promise.done(function (res) {
+	      if (res && res.code === '0') {
+	        Backbone.trigger('event:noticeChanged', content);
+	        self.noticeInfo.content = content;
+	        self.noticeWrap.text(content);
+	        self.panelDisplay();
+	        msgBox.showOK('公告发布成功');
+	        self.sendNotifyToIM(content);
+	      }
+	    });
+	    promise.fail(function () {
+	      msgBox.showError('数据保存失败,请稍后重试');
+	    });
+	    return null;
+	  },
+	  sendNotifyToIM: function (content) {
+	    if (!this.roomInfo.imGroupid) {
+	      return;
+	    }
+	    imServer.sendMessage({
+	      groupId: this.roomInfo.imGroupid,
+	      msg: {
+	        roomId: this.roomInfo.id,
+	        smallAvatar: '',
+	        msgType: 2,
+	        content: content
+	      }
+	    }, function () {}, function () {});
+	  },
+	  /**
+	   * 定义事件
+	   */
+	  defineEventInterface: function () {
+	    var self = this;
+	    Backbone.on('event:roomInfoReady', function (data) {
+	      if (data) {
+	        self.roomInfo = data;
+	      }
+	      self.getNoticeInfo();
+	      //  if (data.imageUrl) {
+	      //      self.imgRoomPic.attr('src', data.imageUrl);
+	      //  }
+	    });
+	  },
+	  /**
+	   * 获取公告信息
+	   */
+	  getNoticeInfo: function () {
+	    var self = this;
+	    var notice = null;
+	    var promise;
+	
+	    this.noticeGetParams.roomId = this.roomInfo.id;
+	
+	    promise = this.noticeGetModel.executeJSONP(this.noticeGetParams);
+	    promise.done(function (res) {
+	      if (res && res.data) {
+	        if (res.data.placards) {
+	          notice = res.data.placards[0];
+	        }
+	        if (notice) {
+	          self.noticeInfo = notice;
+	          self.noticeWrap.text(notice.content || '暂无公告');
+	          self.txtNotice.val(notice.content);
+	        } else {
+	          self.noticeWrap.text('暂无公告');
+	        }
+	      }
+	    });
+	    promise.fail(function (err) {
+	      msgBox.showError(err.msg || '获取公告失败');
+	    });
+	  },
+	  noticeChanged: function () {
+	    this.tipTextarea.find('.red').text(50 - this.txtNotice.val().length);
+	    // if (this.txtNotice.val().length < 50) {
+	    //   this.tipTextarea.text('您还可以输入' + (50 - this.txtNotice.val().length) + '个字');
+	    // } else {
+	    //   this.tipTextarea.text('您的输入超出了' + (this.txtNotice.val().length - 50) + '个字');
+	    // }
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/placard_create.json', // 填写请求地址
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/placard_get.json', // 填写请求地址
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 96 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--<h2 class=\"clearfix annoucement\">-->\n<!--<span class=\"fl .annoucement_title\">公告</span>-->\n<!--<span id=\"btnEditNotice\" class=\"fr annoucement_editr\">编辑</span>-->\n<!--</h2>-->\n<!--<p id=\"noticeWrap\"></p>-->\n<!--编辑公告弹出框-->\n<div id=\"editNoticPanel\" style=\"display: none;\" class=\"shadow_screen\">\n    <div class=\"shadow closeNoticePanel\"></div>\n    <div class=\"edit_annmoucement_con\" style=\"width: 450px;\">\n        <h2 class=\"edit_title has-title\">文字输入<span class=\"close closeNoticePanel icons am-yyt-close close-white\"></span></h2>\n        <div class=\"editCon\">\n            <span class=\"title-tip\">公告内容:</span>\n            <textarea class=\"txt-notice boderRadAll_5\" style=\"width: 375px;\" id=\"txtNotice\" placeholder=\"(公告文字请在50字以内)\"></textarea>\n            <div id=\"errNoticeTip\" class=\"errTip\"></div>\n            <div class=\"tipTextarea\" style=\"\">你还可以输入<span class=\"red\">50</span>个字</div>\n            <p class=\"btn-wrap\" style=\"\">\n                <a id=\"btnSubmitNotice\" href=\"####\" class=\"submit boderRadAll_3\">确定</a>\n                <a href=\"####\" class=\"cancel closeNoticePanel boderRadAll_3\">取消</a>\n            </p>\n        </div>\n    </div>\n</div>\n\n<header class=\"boderRadTop_5 am-vertical-align\">\n    <i class=\"icon-voice am-vertical-align-middle\"></i>\n    <span class=\"title am-vertical-align-middle\">直播公告</span>\n    <a id=\"btnEditNotice\" href=\"javascript:;\"\n       class=\"edit am-vertical-align-middle\">编辑</a></header>\n<section class=\"content am-vertical-align\">\n    <p id=\"noticeWrap\" class=\"am-vertical-align-middle detail\">暂无公告.</p>\n</section>\n"
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 clientRender:{bool} // 默认设置为false，如果为true，内部将不会调用rawLoader方法或者根据templateUrl请求模版
+	 */
+	
+	
+	/**
+	 * @time 2016-3-9
+	 * @author  YuanXuJia
+	 * @info 直播按钮控制
+	 */
+	
+	'use strict';
+	var Backbone = window.Backbone;
+	var _ = __webpack_require__(27);
+	var base = __webpack_require__(28);
+	var BaseView = base.View; // View的基类
+	var imServer = __webpack_require__(42);
+	var uiConfirm = __webpack_require__(55);
+	var msgBox = __webpack_require__(69);
+	var StartLiveModel = __webpack_require__(98);
+	var EndLiveModel = __webpack_require__(99);
+	var FlashApi = __webpack_require__(82);
+	var UserModel = __webpack_require__(45);
+	var user = UserModel.sharedInstanceUserModel();
+	var BusinessDate = __webpack_require__(70);
+	
+	var View = BaseView.extend({
+	  el: '#liveShowBtnWraper', // 设置View对象作用于的根元素，比如id
+	  rawLoader: function () { // 可用此方法返回字符串模版
+	    return __webpack_require__(100);
+	  },
+	  events: { // 监听事件
+	    'click .endLive': 'endLiveClick',
+	    'click .startLive': 'startLiveClick'
+	  },
+	  // 当模板挂载到元素之前
+	  beforeMount: function () {
+	    this.startLiveModel = new StartLiveModel();
+	    this.endLiveModel = new EndLiveModel();
+	
+	    this.startLiveParams = {
+	      deviceinfo: '{"aid": "30001001"}',
+	      access_token: user.getWebToken(),
+	      roomId: '',
+	      imGroupId: ''
+	    };
+	
+	    this.endLiveParams = {
+	      deviceinfo: '{"aid": "30001001"}',
+	      access_token: user.getWebToken(),
+	      roomId: ''
+	    };
+	  },
+	  // 当模板挂载到元素之后
+	  afterMount: function () {
+	    this.btnEndLive = $('.endLive');
+	    this.btnStartLive = $('.startLive');
+	    this.defineEventInterface();
+	  },
+	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
+	  ready: function (ops) {
+	    this.options = _.extend({}, ops);
+	    this.FlashApi = FlashApi.sharedInstanceFlashApi({
+	      el: 'broadCastFlash'
+	    });
+	  },
+	  /**
+	   * 判断是否超过预播时间
+	   * @param time
+	   * @returns {number} 1: 超过1小时以上;  0:没有超时;  -1: 太早了
+	   */
+	  isTooLate: function (time) {
+	    var currentTime = new Date();
+	    var timeSpan = time - currentTime.getTime();
+	    var result = BusinessDate.difference(Math.abs(timeSpan));
+	    if (timeSpan < 0 && (result.hours >= 1 || result.day >= 1)) {
+	      return 1;
+	    } else if (timeSpan > 300000) {
+	      return -1;
+	    }
+	    return 0;
+	  },
+	  /**
+	   * 开启直播
+	   */
+	  startLiveClick: function (e) {
+	    var current = $(e.target);
+	    var self = this;
+	    var result = self.isTooLate(self.roomInfo.liveTime);
+	    var status = ~~self.roomInfo.status;
+	
+	    if (status === 0) {
+	      msgBox.showTip('该直播尚未发布,无法开启直播!');
+	      return null;
+	    } else if (status === 1) {
+	      if (result === 1) {
+	        msgBox.showTip('您已经迟到超过一小时，无法再进行本场直播了');
+	        return null;
+	      }
+	    }
+	    if (current.hasClass('m_disabled')) {
+	      return null;
+	    }
+	
+	    current.addClass('m_disabled');
+	    this.btnEndLive.removeClass('m_disabled');
+	
+	    if (!this.roomInfo) {
+	      msgBox.showError('没有获取到房间信息');
+	      return '';
+	    }
+	    if (!this.roomInfo.imGroupid) {
+	      imServer.createIMChatRoom(function (res) {
+	        self.roomInfo.imGroupid = res.GroupId;
+	        self.startLive();
+	      }, function () {
+	        msgBox.showError('创建房间失败,请稍后重试');
+	      });
+	    } else {
+	      self.startLive();
+	    }
+	    return null;
+	  },
+	  /**
+	   * 开启直播
+	   */
+	  startLive: function () {
+	    var self = this;
+	    var msg;
+	    var promise;
+	
+	    self.startLiveParams.roomId = self.roomInfo.id;
+	    self.startLiveParams.imGroupId = self.roomInfo.imGroupid;
+	
+	    promise = self.startLiveModel.executeJSONP(this.startLiveParams);
+	    promise.done(function (result) {
+	      if (result && ~~result.code === 0) {
+	        msg = '您已成功开启直播，请复制下面的信息：</br>' +
+	          '视频连接：' + result.data.livePushStreamUrl +
+	          '</br>视频流：' + result.data.streamName;
+	        uiConfirm.show({
+	          title: '开启直播成功',
+	          content: msg,
+	          cancelBtn: false,
+	          okFn: function () {
+	            window.location.reload();
+	          },
+	          cancelFn: function () {
+	            window.location.reload();
+	          }
+	        });
+	        self.startFlash();
+	        Backbone.trigger('event:LiveShowStarted');
+	      } else {
+	        self.btnStartLive.removeClass('m_disabled');
+	        msgBox.showError(result.msg || '开启直播失败,请稍后重试');
+	      }
+	    });
+	    promise.fail(function (err) {
+	      msgBox.showError(err.msg || '开启直播失败,请稍后重试');
+	    });
+	  },
+	
+	  startFlash: function () {
+	    var self = this;
+	    self.FlashApi.onReady(function () {
+	      //  this.addUrl(self.roomInfo.url, self.roomInfo.streamName);
+	      this.init(self.roomInfo);
+	    });
+	  },
+	  /**
+	   * 结束直播
+	   */
+	  endLiveClick: function () {
+	    var self = this;
+	    if (this.btnEndLive.hasClass('m_disabled')) {
+	      msgBox.showTip('直播尚未开始，不能结束直播.');
+	      return null;
+	    }
+	    uiConfirm.show({
+	      title: '消息',
+	      content: '您确定要结束直播吗',
+	      okFn: function () {
+	        self.endLive();
+	        window.location.href = '/anchor-setting.html?view=history';
+	      },
+	      cancelFn: function () {}
+	    });
+	    return null;
+	  },
+	  /**
+	   * 点击结束直播
+	   */
+	  endLive: function () {
+	    var self = this;
+	    var promise;
+	
+	    self.endLiveParams.roomId = self.roomInfo.id;
+	    promise = self.endLiveModel.executeJSONP(self.endLiveParams);
+	    promise.done(function () {
+	      self.btnEndLive.addClass('m_disabled');
+	      self.isLiveShowing = false;
+	      msgBox.showOK('结束直播操作成功');
+	      Backbone.trigger('event:liveShowEnded');
+	    });
+	    promise.fail(function (err) {
+	      msgBox.showError(err.msg || '操作失败,稍后重试');
+	    });
+	  },
+	
+	  roomInfoReady: function (data) {
+	    if (data) {
+	      this.roomInfo = data;
+	      this.changeButtonStatus(this.roomInfo.status);
+	    }
+	  },
+	  defineEventInterface: function () {
+	    var self = this;
+	    // 成功获取房间信息
+	    Backbone.on('event:roomInfoReady', function (data) {
+	      self.roomInfoReady(data);
+	    });
+	  },
+	  changeButtonStatus: function (status) {
+	    var result = this.isTooLate(this.roomInfo.liveTime);
+	    if (result === 1) {
+	      this.btnStartLive.addClass('m_disabled');
+	      Backbone.trigger('event:stopLoopRoomInfo');
+	    } else if (result === 0) {
+	      this.btnStartLive.removeClass('m_disabled');
+	    }
+	
+	    switch (status) {
+	      case 0:
+	        this.btnStartLive.addClass('m_disabled');
+	        this.btnEndLive.addClass('m_disabled');
+	        break;
+	      case 1:
+	        this.btnEndLive.addClass('m_disabled');
+	        break;
+	      case 2:
+	        this.btnStartLive.addClass('m_disabled').text('直播中');
+	        this.btnEndLive.removeClass('m_disabled');
+	        this.startFlash();
+	        break;
+	      case 3:
+	        this.btnStartLive.addClass('m_disabled');
+	        this.btnEndLive.addClass('m_disabled');
+	        break;
+	      default:
+	        break;
+	    }
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/start.json', // 填写请求地址
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 99 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/room/close.json', // 填写请求地址
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 100 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"liveShowBtnWraper\" class=\"anchor_control am-cf\">\n    <!-- <div class=\"luck-draw am-fl am-margin-right\"><a class=\"btn\"></a>\n        <div class=\"tip am-circle\"></div>\n    </div> -->\n    <!-- <button class=\"am-btn am-btn-purple am-fl boderRadAll_5 am-margin-left\">发起抽奖</button>\n    <button class=\"am-btn am-btn-purple am-fl boderRadAll_5\">抽奖记录</button> -->\n    <button class=\"endLive am-btn am-btn-red am-fr boderRadAll_5 am-margin-right-lg\">结束直播</button>\n    <button class=\"startLive am-btn am-btn-purple am-fr boderRadAll_5 am-margin-right-sm\">开启直播</button>\n</div>\n"
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var BaseView = base.View;
+	var _ = __webpack_require__(27);
+	
+	var View = BaseView.extend({
+	  el: '',
+	  rawLoader: function () {
+	    return '';
+	  },
+	  context: function (args) {
+	    console.log(args);
+	  },
+	  beforeMount: function () {
+	    //  初始化一些自定义属性
+	  },
+	  afterMount: function () {
+	    //  获取findDOMNode DOM Node
+	    this.chatHistory = $('#chatHistory');
+	    this.liveShowBtnWraper = $('#liveShowBtnWraper');
+	    this.btnFieldControl = $('#btnFieldControl');
+	    this.btnEditBgTheme = $('.edit_bg_btn');
+	    this.btnEditNotice = $('#btnEditNotice');
+	  },
+	  ready: function (ops) {
+	    //  初始化
+	    this.options = _.extend({}, ops);
+	    this.renderPage();
+	  },
+	  beforeDestroy: function () {
+	    //  进入销毁之前,将引用关系设置为null
+	  },
+	  destroyed: function () {
+	    //  销毁之后
+	  },
+	  renderPage: function () {
+	    if (this.options.assistant) {
+	      // 控制聊天列表高度
+	      this.chatHistory.height(389);
+	      // 隐藏直播控制模块
+	      this.liveShowBtnWraper.hide();
+	      // 隐藏场控控制按钮
+	      this.btnFieldControl.hide();
+	      // 隐藏编辑主题按钮
+	      this.btnEditBgTheme.hide();
+	      // 隐藏编辑公告按钮
+	      this.btnEditNotice.hide();
+	    }
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var base = __webpack_require__(28);
+	var LoginUserView = __webpack_require__(103);
+	var BaseView = base.View;
+	
+	var View = BaseView.extend({
+	  el: '#topBar',
+	  context: function (args) {
+	    console.log(args);
+	  },
+	  beforeMount: function () {
+	    //  初始化一些自定义属性
+	    this.loginUser = new LoginUserView();
+	  },
+	  afterMount: function () {
+	    //  获取findDOMNode DOM Node
+	  },
+	  ready: function () {
+	    //  初始化
+	    var _this = this;
+	    this.loginUser.on('topbar-logined', function () {
+	      _this.trigger('logined');
+	    });
+	  },
+	  beforeDestroy: function () {
+	    //  进入销毁之前,将引用关系设置为null
+	  },
+	  destroyed: function () {
+	    //  销毁之后
+	  },
+	  showLoginDialog: function () {
+	    this.loginUser.showDialog();
+	  },
+	  hideLoginDialog: function () {
+	    this.loginUser.hideDialog();
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Backbone = window.Backbone;
+	var base = __webpack_require__(28);
+	var BaseView = base.View;
+	var storage = base.storage;
+	var UserModel = __webpack_require__(45);
+	var user = UserModel.sharedInstanceUserModel();
+	var loginBox = __webpack_require__(50);
+	var sginHTML = __webpack_require__(104);
+	var loginedTemp = __webpack_require__(105);
+	var win = window;
+	var location = win.location;
+	var IMModel = __webpack_require__(43);
+	var imModel = IMModel.sharedInstanceIMModel();
+	var config = __webpack_require__(44);
+	var View = BaseView.extend({
+	  el: '#loginUser',
+	  events: {
+	    'click #login': 'loginHandler',
+	    'click .show-drop-menu': 'showDropMenu',
+	    'click #logout': 'logoutHandler',
+	    'mouseover .hoverMenu': 'nameHover',
+	    'mouseout .hoverMenu': 'nameOut'
+	  },
+	  context: function (args) {
+	    console.log(args);
+	  },
+	  beforeMount: function () {
+	    //  初始化一些自定义属性
+	    this._dialog = null;
+	  },
+	  afterMount: function () {
+	    //  获取findDOMNode DOM Node
+	    this.loginBox = loginBox();
+	    this._dialog = this.loginBox.dialog;
+	    this.userDromMenu = this.findDOMNode('.pcNav');
+	  },
+	  ready: function () {
+	    //  初始化
+	    if (user.isLogined()) {
+	      //  已经登录
+	      this.fetchUserInfo();
+	    } else {
+	      //  未登录
+	      this.$el.html(sginHTML);
+	    }
+	    this.hideDropMenu();
+	    this.defineEventInterface();
+	  },
+	  beforeDestroy: function () {
+	    //  进入销毁之前,将引用关系设置为null
+	  },
+	  destroyed: function () {
+	    //  销毁之后
+	  },
+	  /**
+	   * [loginHandler 处理登录按钮]
+	   * @param  {[type]} e [description]
+	   * @return {[type]}   [description]
+	   */
+	  loginHandler: function (e) {
+	    var _this = this;
+	    var status = this._dialog.status();
+	    e.preventDefault();
+	    if (status === 'hide') {
+	      this._dialog.trigger('show');
+	      this._dialog.once('hide', function () {
+	        if (user.isLogined()) {
+	          storage.remove('imSig');
+	          _this.fetchUserInfo();
+	          _this.trigger('topbar-logined');
+	        }
+	      });
+	    } else {
+	      this._dialog.trigger('hide');
+	    }
+	  },
+	  /**
+	   * [logoutHandler 退出]
+	   * @param  {[type]} e [description]
+	   * @return {[type]}   [description]
+	   */
+	  logoutHandler: function () {
+	    storage.remove('imSig');
+	    storage.set('signout', 1);
+	    location.href = config.prefix + '/login.html';
+	  },
+	  fetchUserInfo: function () {
+	    var _this = this;
+	    var fetchImUserSigPromise = imModel.fetchIMUserSig();
+	    fetchImUserSigPromise.done(function (userImInfo) {
+	      var data;
+	      if (userImInfo.roleType === 2) {
+	        //  游客，未登录
+	        _this.$el.html(sginHTML);
+	      } else {
+	        data = {
+	          userName: userImInfo.nickName,
+	          bigheadImg: userImInfo.largeAvatar
+	        };
+	        _this.render(data);
+	      }
+	    });
+	  },
+	  render: function (data) {
+	    var loginedHTML = this.compileHTML(loginedTemp, data);
+	    this.$el.html(loginedHTML);
+	    this.showDropMenuEle = $('.loginMsg .pcNav');
+	  },
+	  /**
+	   * 显示下拉菜单
+	   */
+	  showDropMenu: function (e) {
+	    e.preventDefault();
+	    this.showDropMenuEle.toggle();
+	    return false;
+	  },
+	  /**
+	   * 隐藏下拉菜单
+	   */
+	  hideDropMenu: function () {
+	    var _this = this;
+	    $(document).on('click', function () {
+	      if (_this.showDropMenuEle) {
+	        _this.showDropMenuEle.hide();
+	      }
+	    });
+	  },
+	  showDialog: function () {
+	    var _this = this;
+	    this._dialog.trigger('show');
+	    this._dialog.once('hide', function () {
+	      if (user.isLogined()) {
+	        _this.trigger('topbar-logined');
+	      }
+	    });
+	  },
+	  hideDialog: function () {
+	    this._dialog.trigger('hide');
+	  },
+	  /**
+	   * 定义对外公布的事件
+	   */
+	  defineEventInterface: function () {
+	    var self = this;
+	    Backbone.on('event:userProfileChanged', function (users) {
+	      var data = {
+	        userName: users.nickName,
+	        bigheadImg: users.headImg
+	      };
+	      self.render(data);
+	    });
+	  },
+	  nameHover: function () {
+	    this.showDropMenuEle.show();
+	  },
+	  nameOut: function () {
+	    this.showDropMenuEle.hide();
+	  }
+	});
+	
+	module.exports = View;
+
+
+/***/ },
+/* 104 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"PcMsg fl\">\n    <a class=\"user-login\" href=\"#\" id=\"login\">登陆</a>\n</div>"
+
+/***/ },
+/* 105 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"avator fl\">\n    <img class=\"am-circle\" style=\"width: 40px; height: 40px;\" src=\"{{bigheadImg}}\" alt=\"用户头像\">\n</div>\n<div class=\"loginMsg fl hoverMenu\">\n    <a class=\"user-name show-drop-menu\" href=\"#\">{{userName}}<span></span></a>\n    <ul class=\"pcNav hoverMenu\">\n        <li><a href=\"anchor-setting.html\">个人中心</a></li>\n        <li><span class=\"header-logout\" id=\"logout\">退出</span></li>\n    </ul>\n</div>\n"
+
+/***/ },
+/* 106 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 ]);

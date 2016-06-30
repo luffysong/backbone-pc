@@ -12,34 +12,34 @@ webpackJsonp([10],{
 	
 	$(function () {
 	  'use strict';
-	  var TopBarView = __webpack_require__(86);
+	  var TopBarView = __webpack_require__(102);
 	  var a = new TopBarView();
-	  var MainView = __webpack_require__(232);
+	  var MainView = __webpack_require__(240);
 	  var b = new MainView();
 	
 	  console.log(a, b);
 	
-	  __webpack_require__(233);
+	  __webpack_require__(241);
 	});
 
 
 /***/ },
 
-/***/ 19:
+/***/ 27:
 /***/ function(module, exports) {
 
 	module.exports = window._;
 
 /***/ },
 
-/***/ 20:
+/***/ 28:
 /***/ function(module, exports, __webpack_require__) {
 
-	var BaseView = __webpack_require__(21);
-	var BaseModel = __webpack_require__(29);
-	var BaseRouter = __webpack_require__(31);
-	var ManagedObject = __webpack_require__(32);
-	var storage = __webpack_require__(30);
+	var BaseView = __webpack_require__(29);
+	var BaseModel = __webpack_require__(37);
+	var BaseRouter = __webpack_require__(39);
+	var ManagedObject = __webpack_require__(40);
+	var storage = __webpack_require__(38);
 	module.exports = {
 	    'View':BaseView,
 	    'Model':BaseModel,
@@ -51,7 +51,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 21:
+/***/ 29:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -66,11 +66,11 @@ webpackJsonp([10],{
 	
 	'use strict';
 	
-	var Backbone = __webpack_require__(22);
-	var tplEng = __webpack_require__(23);
-	var warn = __webpack_require__(24);
-	var Tools = __webpack_require__(27);
-	var error = __webpack_require__(28);
+	var Backbone = __webpack_require__(30);
+	var tplEng = __webpack_require__(31);
+	var warn = __webpack_require__(32);
+	var Tools = __webpack_require__(35);
+	var error = __webpack_require__(36);
 	var uid = 999;
 	var createID = function(){
 		return 'view_'+(uid++)+'_'+(new Date().getTime())+Math.floor(Math.random(100)*100);
@@ -242,14 +242,14 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 22:
+/***/ 30:
 /***/ function(module, exports) {
 
 	module.exports = window.Backbone;
 
 /***/ },
 
-/***/ 23:
+/***/ 31:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!art-template - Template Engine | http://aui.github.com/artTemplate/*/
@@ -257,7 +257,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 24:
+/***/ 32:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -268,7 +268,7 @@ webpackJsonp([10],{
 	
 	'use strict';
 	
-	var log = __webpack_require__(25);
+	var log = __webpack_require__(33);
 	
 	var warn = function(msg,e){
 		log.warn(msg,e);
@@ -278,7 +278,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 25:
+/***/ 33:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -328,11 +328,11 @@ webpackJsonp([10],{
 	}
 	module.exports = log;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
 
-/***/ 26:
+/***/ 34:
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -430,7 +430,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 27:
+/***/ 35:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -554,7 +554,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 28:
+/***/ 36:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -565,7 +565,7 @@ webpackJsonp([10],{
 	
 	'use strict';
 	
-	var log = __webpack_require__(25);
+	var log = __webpack_require__(33);
 	
 	var error = function(msg,e){
 		log.error(msg,e);
@@ -575,7 +575,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 29:
+/***/ 37:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -595,10 +595,10 @@ webpackJsonp([10],{
 	
 	
 	'use strict';
-	var Backbone = __webpack_require__(22)
-	var storage = __webpack_require__(30);
-	var Tools = __webpack_require__(27);
-	var warn = __webpack_require__(24);
+	var Backbone = __webpack_require__(30)
+	var storage = __webpack_require__(38);
+	var Tools = __webpack_require__(35);
+	var warn = __webpack_require__(32);
 	var uid = 1314;
 	var expiration = storage.expiration;
 	var BaseModel = Backbone.Model.extend({
@@ -846,7 +846,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 30:
+/***/ 38:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -1117,7 +1117,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 31:
+/***/ 39:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1128,8 +1128,8 @@ webpackJsonp([10],{
 	
 	'use strict'
 	
-	var Backbone = __webpack_require__(22);
-	var warn = __webpack_require__(24);
+	var Backbone = __webpack_require__(30);
+	var warn = __webpack_require__(32);
 	var stack = [];
 	var routerHash = {};
 	var curr = null;
@@ -1228,7 +1228,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 32:
+/***/ 40:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1236,7 +1236,7 @@ webpackJsonp([10],{
 	 * @author icepy
 	 * @info 实体管理类
 	 */
-	var Tools = __webpack_require__(27);
+	var Tools = __webpack_require__(35);
 	var baseModelSort = [];
 	
 	var ManagedObject = function(options){
@@ -1440,7 +1440,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 33:
+/***/ 41:
 /***/ function(module, exports, __webpack_require__) {
 
 	!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.Auxiliary=t():e.Auxiliary=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return e[r].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){var r=n(1),o=n(2),i=n(3),a=n(4),s=n(5),c=n(7);e.exports={url:r,sheet:o,isNativeFunction:i,cookie:a,AjaxForm:s,UploadFile:c}},function(e,t){"use strict";var n=[];window.location;e.exports={parse:function(e){var t=document.createElement("a");t.href=e;for(var n,r={port:t.port,protocol:t.protocol.replace(":",""),hash:t.hash.replace("#",""),host:t.host,href:t.href,hostname:t.hostname,pathname:t.pathname,search:t.search,query:{}},o=r.search.replace(/^\?/,"").split("&"),i=o.length,a=0;i>a;a++)o[a]&&(n=o[a].split("="),r.query[n[0]]=n[1]);return t=null,r},format:function(e,t){var r=0,o=t.query,i=t.hash;if(n.length=0,n.push(e.lastIndexOf("?")>-1?e:e+"?"),o)for(var a in o){var s=o[a];r?n.push("&"+a+"="+s):(r++,n.push(a+"="+s))}return i&&n.push(i.indexOf("#")>-1?i:"#"+i),n.join("")},resolve:function(e,t){return/^(.\/)/.test(t)&&(t=t.replace(/^(.\/)/,"/")),/^(..\/)/.test(t)&&(e=e.substr(0,e.lastIndexOf("/")),t=t.replace(/^(..\/)/,"/")),e+t},extname:function(e){var t=e.split(".");return t[t.length-1]||""},parseSearch:function(e){for(var t,n,r={},o=e.replace(/^\?/,"").split("&"),i=o.length,a=0;i>a;a++)o[a]&&(n=o[a].split("="),t=n[1],(/^\[/.test(t)&&/\]$/.test(t)||/^{/.test(t)||/\}$/.test(t))&&(t=JSON.parse(t)),r[n[0]]=t);return r}}},function(e,t){"use strict";function n(){var e=document.createElement("style");return e.appendChild(document.createTextNode("")),document.head.appendChild(e),e.sheet}e.exports=n()},function(e,t){"use strict";function n(e){var t=typeof e;return"function"===t?a.test(o.call(e)):e&&"object"===t&&i.test(r.call(e))||!1}e.exports=n;var r=Object.prototype.toString,o=Function.prototype.toString,i=/^\[object .+?Constructor\]$/,a=RegExp("^"+String(r).replace(/[.*+?^${}()|[\]\/\\]/g,"\\$&").replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$")},function(e,t){"use strict";function n(){for(var e=0,t={};e<arguments.length;e++){var n=arguments[e];for(var r in n)t[r]=n[r]}return t}function r(e){function t(r,o,i){var a;if(arguments.length>1){if(i=n({path:"/"},t.defaults,i),"number"==typeof i.expires){var s=new Date;s.setMilliseconds(s.getMilliseconds()+864e5*i.expires),i.expires=s}try{a=JSON.stringify(o),/^[\{\[]/.test(a)&&(o=a)}catch(c){}return o=e.write?e.write(o,r):encodeURIComponent(String(o)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),r=encodeURIComponent(String(r)),r=r.replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent),r=r.replace(/[\(\)]/g,escape),document.cookie=[r,"=",o,i.expires&&"; expires="+i.expires.toUTCString(),i.path&&"; path="+i.path,i.domain&&"; domain="+i.domain,i.secure?"; secure":""].join("")}r||(a={});for(var p=document.cookie?document.cookie.split("; "):[],l=/(%[0-9A-Z]{2})+/g,u=0;u<p.length;u++){var f=p[u].split("="),h=f[0].replace(l,decodeURIComponent),d=f.slice(1).join("=");'"'===d.charAt(0)&&(d=d.slice(1,-1));try{if(d=e.read?e.read(d,h):e(d,h)||d.replace(l,decodeURIComponent),this.json)try{d=JSON.parse(d)}catch(c){}if(r===h){a=d;break}r||(a[h]=d)}catch(c){}}return a}return t.get=t.set=t,t.getJSON=function(){return t.apply({json:!0},[].slice.call(arguments))},t.defaults={},t.remove=function(e,r){t(e,"",n(r,{expires:-1}))},t.withConverter=r,t}e.exports=r(function(){})},function(e,t,n){"use strict";var r=(n(1),n(6)),o=function(e){e=e||{},this.$el="string"==typeof e.el?$(e.el):e.el,this.uid=r("AjaxForm-"),this.loadState=!1,this._init()};o.prototype._init=function(){var e=$.Deferred();$.extend(this,e.promise()),this._createIframe(),this._addEvent(e)},o.prototype._createIframe=function(){var e='<iframe id="'+this.uid+'" name="'+this.uid+'"  style="display: none;" src="about:blank"></iframe>';this.$el.attr("target",this.uid),this.$el.append(e),this._iframe=$("#"+this.uid),$("<input />").attr({type:"hidden",name:"cross_post",value:"1"}).appendTo(this.$el)},o.prototype._addEvent=function(e){var t=this;this._iframe.on("load",function(){if(t.loadState){var n=this.contentWindow,r=n.location;if("about:blank"===r.href)e.reject(n);else try{var o=this._iframe[0].contentWindow.document.body;innerText=o.innerText,innerText||(innerText=o.innerHTML),innerText&&e.resolve($.parseJSON(innerText))}catch(i){e.resolve(n)}t.loadState=!1}})},o.prototype.encrypto=function(e){var t=this;$.each(e,function(e,n){var r=t.$el.find("[name="+e+"]");0===r.length?$("<input />").attr({type:"hidden",name:e,value:n}).appendTo(t.$el):r.val(n)})};var i=null;o.sharedInstanceAjaxForm=function(e,t){return i||(t=t||{},t.el=e,i=new o(t)),i},o.classInstanceAjaxForm=function(e,t){return t=t||{},t.el=e,new o(t)},e.exports=o},function(e,t){function n(e){var t=++r+"";return e?e+t:t}e.exports=n;var r=0},function(e,t,n){"use strict";var r=n(1),o=n(5),i=n(6),a=function(e){if(this.$el="string"==typeof e.el?$(e.el):e.el,this.uid=i("UploadFile-"),this.options=e,this._data=e.data||{},this._filename=e.filename||"image",this._url=e.url,!this._url)return void console.warn("配置上传URL");this._init();var t=$.Deferred();$.extend(this,t.promise()),this.ajaxForm=o.classInstanceAjaxForm(this.$el,{type:"img"}),this.ajaxForm.done(function(e){var n=e.location,o=decodeURIComponent(n.search),i=r.parseSearch(o);t.resolve(i)}),this.ajaxForm.fail(function(){t.reject(this)})};a.prototype._init=function(){this._createElement()},a.prototype._createElement=function(){var e="";for(var t in this._data){var n=this._data[t],r=Object.prototype.toString.call(n);"[object Object]"!==r&&"[object Array]"!==r||(n=JSON.stringify(n)),e+='<input type="hidden" name="'+t+"\" value='"+n+"'/>"}e+='<input type="file" class="opacity0 upload-file '+this.options.className+'" name="'+this._filename+'"  />',this.$el.attr("method","POST"),this.$el.attr("action",this._url),this.$el.attr("enctype","multipart/form-data"),this.$el.append(e)},a.prototype.parseErrorMsg=function(e){if(e&&"SUCCESS"==e.state)return!0;var t=1*e.errCode||0;switch(t){case 29:return"上传的文件太大了,请重新上传";case 31:return"请上传JPGE,JPG,PNG,GIF等格式的图片文件"}return"文件上传失败,请重新上传"},a.prototype.submit=function(){this.ajaxForm.loadState=!0,"function"==typeof this._before&&this._before(),this.$el.submit()};var s=null;a.sharedInstanceUploadFile=function(e){return s||(s=new a(e)),s},a.classInstanceUploadFile=function(e){return new a(e)},e.exports=a}])});
@@ -1448,7 +1448,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 35:
+/***/ 43:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1460,12 +1460,12 @@ webpackJsonp([10],{
 	'use strict';
 	
 	var $ = __webpack_require__(1);
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var storage = base.storage;
-	var UserModel = __webpack_require__(37);
+	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	
 	var Model = BaseModel.extend({
@@ -1570,7 +1570,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 36:
+/***/ 44:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var config = {
@@ -1612,26 +1612,26 @@ webpackJsonp([10],{
 	}
 	module.exports = config;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
 
-/***/ 37:
+/***/ 45:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Created by YYT on 2016/4/20.
 	 */
-	var base = __webpack_require__(20);
-	var Auxiliary = __webpack_require__(33);
-	var _ = __webpack_require__(19);
+	var base = __webpack_require__(28);
+	var Auxiliary = __webpack_require__(41);
+	var _ = __webpack_require__(27);
 	var BaseModel = base.Model;
-	var Dialog = __webpack_require__(38);
-	var loginBox = __webpack_require__(42);
+	var Dialog = __webpack_require__(46);
+	var loginBox = __webpack_require__(50);
 	var cookie = Auxiliary.cookie;
-	var Config = __webpack_require__(36);
+	var Config = __webpack_require__(44);
 	var domains = Config.domains;
-	var checkEmailTemplate = __webpack_require__(46);
+	var checkEmailTemplate = __webpack_require__(54);
 	var checkEmailHTML = checkEmailTemplate.replace('{homeSite}', domains.homeSite);
 	var loginbox = loginBox().dialog;
 	
@@ -1909,7 +1909,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 38:
+/***/ 46:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1924,12 +1924,12 @@ webpackJsonp([10],{
 	 */
 	
 	'use strict';
-	var base = __webpack_require__(20);
+	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
-	var Mask = __webpack_require__(39);
+	var Mask = __webpack_require__(47);
 	var mask;
 	var uid = 999;
-	var _ = __webpack_require__(19);
+	var _ = __webpack_require__(27);
 	
 	var View = BaseView.extend({
 	  clientRender: false,
@@ -1970,8 +1970,8 @@ webpackJsonp([10],{
 	  },
 	  // 当模板挂载到元素之后
 	  afterMount: function () {
-	    this.closeTemp = __webpack_require__(40);
-	    this.titleTemp = __webpack_require__(41);
+	    this.closeTemp = __webpack_require__(48);
+	    this.titleTemp = __webpack_require__(49);
 	  },
 	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	  ready: function () {
@@ -2116,7 +2116,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 39:
+/***/ 47:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -2132,7 +2132,7 @@ webpackJsonp([10],{
 	
 	'use strict';
 	
-	var base = __webpack_require__(20);
+	var base = __webpack_require__(28);
 	var BaseView = base.View; //  View的基类
 	var doc = $(document);
 	var isIE6 = navigator.userAgent.indexOf('MSIE 6.0') !== -1;
@@ -2187,21 +2187,21 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 40:
+/***/ 48:
 /***/ function(module, exports) {
 
 	module.exports = "<!-- <a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}}\">{{if closeText}}{{closeText}}{{/if}}</a> -->\n<a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}} icons am-yyt-close close-white\"></a>\n"
 
 /***/ },
 
-/***/ 41:
+/***/ 49:
 /***/ function(module, exports) {
 
 	module.exports = "<h3 class=\"dialog_title J_title\">{{title}}</h3>\n"
 
 /***/ },
 
-/***/ 42:
+/***/ 50:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2212,15 +2212,15 @@ webpackJsonp([10],{
 	
 	'use strict';
 	
-	var Auxiliary = __webpack_require__(33);
+	var Auxiliary = __webpack_require__(41);
 	// Diglog类
-	var Dialog = __webpack_require__(38);
+	var Dialog = __webpack_require__(46);
 	var AjaxForm = Auxiliary.AjaxForm;
 	var url = Auxiliary.url;
-	var pwdencrypt = __webpack_require__(43);
-	var loginBoxTemp = __webpack_require__(44);
-	var tplEng = __webpack_require__(23);
-	var secret = __webpack_require__(45);
+	var pwdencrypt = __webpack_require__(51);
+	var loginBoxTemp = __webpack_require__(52);
+	var tplEng = __webpack_require__(31);
+	var secret = __webpack_require__(53);
 	// 邮件
 	var EMAIL_PATTERN =
 	  /^([a-zA-Z0-9_\.\-\+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -2277,7 +2277,7 @@ webpackJsonp([10],{
 	}
 	// 初始化登录表单
 	function _initForm() {
-	  var UserModel = __webpack_require__(37);
+	  var UserModel = __webpack_require__(45);
 	  errorinfo = loginBoxForm.find('.errorinfo');
 	  email = loginBoxForm.find('[name=email]');
 	  password = loginBoxForm.find('.pwd');
@@ -2440,7 +2440,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 43:
+/***/ 51:
 /***/ function(module, exports) {
 
 	function yytcrypt(o) {
@@ -2651,14 +2651,14 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 44:
+/***/ 52:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"loginbox\">\n    <div class=\"external\">\n        <p class=\"title\">使用合作账号登录<span>(推荐)</span></p>\n        <ul>\n            <li>\n                <a href=\"{{url}}/api/login/sina-auth\" target=\"_blank\" class=\"weibo\" hidefocus>微博帐号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/qq-auth\" target=\"_blank\" class=\"qq\" hidefocus>QQ帐号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/renren-auth\" target=\"_blank\" class=\"renren\" hidefocus>人人账号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/baidu-auth\" target=\"_blank\" class=\"baidu\" hidefocus>百度帐号</a>\n            </li>\n        </ul>\n        <div class=\"loginbox-placehold\"></div>\n        <p class=\"text\">快捷登录，无需注册</p>\n        <p class=\"text\">与你的朋友分享你的爱！</p>\n    </div>\n    <div class=\"site\">\n        <p class=\"title\">音悦Tai账号登录</p>\n        <form id=\"loginBoxForm\" action=\"https://login.yinyuetai.com/login-ajax\" method=\"post\">\n            <p class=\"errorinfo\">错误信息提示</p>\n            <div class=\"email focuss\">\n                <input type=\"text\" name=\"email\" placeholder=\"您的邮箱地址或绑定手机\"/>\n            </div>\n            <div class=\"password\">\n                <input type=\"password\" class=\"pwd\" placeholder=\"请输入密码\"/>\n            </div>\n            <div id=\"captcha\"></div>\n            <div>\n                <p class=\"autologin\"><input type=\"checkbox\" id=\"autocheckbox\" name=\"autologin\" checked hidefocus/><label for=\"autocheckbox\">下次自动登录</label></p>\n                <a class=\"forgot\" href=\"{{url}}/forgot-password\" target=\"_blank\" hidefocus>忘记密码</a>\n            </div>\n            <div>\n                <input class=\"submit\" type=\"submit\" hidefocus/>\n                <p class=\"reg\">还没有音悦Tai账号？<a href=\"{{url}}/register\" target=\"_blank\" hidefocus>立即注册！</a></p>\n            </div>\n        </form>\n    </div>\n</div>"
 
 /***/ },
 
-/***/ 45:
+/***/ 53:
 /***/ function(module, exports, __webpack_require__) {
 
 	function hex_y(a) {
@@ -2828,7 +2828,7 @@ webpackJsonp([10],{
 	}
 	
 	var chrsz = 8;
-	var Auxiliary = __webpack_require__(33);
+	var Auxiliary = __webpack_require__(41);
 	var cookie =  Auxiliary.cookie;
 	
 	module.exports = function(p0) {
@@ -2855,14 +2855,14 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 46:
+/***/ 54:
 /***/ function(module, exports) {
 
 	module.exports = "<div style=\"padding: 20px 30px;\">\n  <p>您好像还没有进行邮箱验证。</p>\n  <p>为不影响部分功能的使用，请先进行\n    <a href=\"{homeSite}/settings/bind\" target=\"_blank\" class=\"special f14\">邮箱验证</a>\n  </p>\n</div>\n"
 
 /***/ },
 
-/***/ 65:
+/***/ 70:
 /***/ function(module, exports) {
 
 	
@@ -3060,11 +3060,11 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 86:
+/***/ 102:
 /***/ function(module, exports, __webpack_require__) {
 
-	var base = __webpack_require__(20);
-	var LoginUserView = __webpack_require__(87);
+	var base = __webpack_require__(28);
+	var LoginUserView = __webpack_require__(103);
 	var BaseView = base.View;
 	
 	var View = BaseView.extend({
@@ -3105,25 +3105,25 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 87:
+/***/ 103:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Backbone = window.Backbone;
-	var base = __webpack_require__(20);
+	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	var storage = base.storage;
-	var UserModel = __webpack_require__(37);
+	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
-	var loginBox = __webpack_require__(42);
-	var sginHTML = __webpack_require__(88);
-	var loginedTemp = __webpack_require__(89);
+	var loginBox = __webpack_require__(50);
+	var sginHTML = __webpack_require__(104);
+	var loginedTemp = __webpack_require__(105);
 	var win = window;
 	var location = win.location;
-	var IMModel = __webpack_require__(35);
+	var IMModel = __webpack_require__(43);
 	var imModel = IMModel.sharedInstanceIMModel();
-	var config = __webpack_require__(36);
+	var config = __webpack_require__(44);
 	var View = BaseView.extend({
 	  el: '#loginUser',
 	  events: {
@@ -3275,27 +3275,27 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 88:
+/***/ 104:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"PcMsg fl\">\n    <a class=\"user-login\" href=\"#\" id=\"login\">登陆</a>\n</div>"
 
 /***/ },
 
-/***/ 89:
+/***/ 105:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"avator fl\">\n    <img class=\"am-circle\" style=\"width: 40px; height: 40px;\" src=\"{{bigheadImg}}\" alt=\"用户头像\">\n</div>\n<div class=\"loginMsg fl hoverMenu\">\n    <a class=\"user-name show-drop-menu\" href=\"#\">{{userName}}<span></span></a>\n    <ul class=\"pcNav hoverMenu\">\n        <li><a href=\"anchor-setting.html\">个人中心</a></li>\n        <li><span class=\"header-logout\" id=\"logout\">退出</span></li>\n    </ul>\n</div>\n"
 
 /***/ },
 
-/***/ 151:
+/***/ 171:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var base = __webpack_require__(20);
-	var Config = __webpack_require__(36);
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -3322,7 +3322,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 232:
+/***/ 240:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3330,13 +3330,13 @@ webpackJsonp([10],{
 	 */
 	
 	// var Backbone = window.Backbone;
-	var _ = __webpack_require__(19);
-	var base = __webpack_require__(20);
+	var _ = __webpack_require__(27);
+	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
 	
-	var PlaybackModel = __webpack_require__(151);
-	var UserModel = __webpack_require__(37);
-	var DateTime = __webpack_require__(65);
+	var PlaybackModel = __webpack_require__(171);
+	var UserModel = __webpack_require__(45);
+	var DateTime = __webpack_require__(70);
 	var user = UserModel.sharedInstanceUserModel();
 	
 	var View = BaseView.extend({
@@ -3475,7 +3475,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 233:
+/***/ 241:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
