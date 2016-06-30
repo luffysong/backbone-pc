@@ -9,6 +9,7 @@ var imModel = IMModel.sharedInstanceIMModel();
 var store = base.storage;
 var webim = window.webim;
 var _ = require('underscore');
+var $ = require('jquery');
 
 var imServer = {
   setting: {
@@ -302,5 +303,27 @@ imServer.modifyGroupInfo = function (options, okFn, errFn) {
   );
 };
 
+/**
+ * 修改组内成员角色
+ */
+imServer.modifyGroupMember = function (ops) {
+  var defer = $.Deferred();
+  console.log(ops);
+  var options = _.extend({
+    GroupId: '',
+    Member_Account: '',
+    Role: ''
+  }, ops);
+  webim.modifyGroupMember(
+    options,
+    function (resp) {
+      defer.resolve(resp);
+    },
+    function (err) {
+      defer.reject(err);
+    }
+  );
+  return defer.promise();
+};
 
 module.exports = imServer;

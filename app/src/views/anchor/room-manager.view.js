@@ -4,6 +4,7 @@
 'use strict';
 
 var _ = require('underscore');
+var $ = require('jquery');
 var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
@@ -16,6 +17,8 @@ var RoomManagerRemoveModel = require('../../models/anchor/room-manager-delete.mo
 
 var msgBox = require('ui.msgBox');
 var uiConfirm = require('ui.confirm');
+
+var imServer = require('imServer');
 
 var View = BaseView.extend({
   el: '#field-control',
@@ -105,13 +108,17 @@ var View = BaseView.extend({
       userId: id,
       roomId: this.roomInfo.id
     }, this.queryParams));
-    promise.done(function (res) {
-      if (res && res.data.success) {
-        msgBox.showOK('成功移除该场控');
-        $('[dom-id="' + id + '"]').remove();
-      } else {
-        msgBox.showError('移除场控失败');
-      }
+    this.setMember(id, 'Member').done(function () {
+      promise.done(function (res) {
+        if (res && res.data.success) {
+          msgBox.showOK('成功移除该场控');
+          $('[dom-id="' + id + '"]').remove();
+        } else {
+          msgBox.showError('移除场控失败');
+        }
+      });
+    }).fail(function () {
+      msgBox.showError('移除场控失败');
     });
   },
   // 添加场控
@@ -124,6 +131,21 @@ var View = BaseView.extend({
     // this.addRoomManager(userId);
     this.checkUserIsManager(userId);
     return true;
+  },
+  setMember: function (userId, type) {
+    var defer = $.Deferred();
+    imServer.modifyGroupMember({
+      GroupId: this.roomInfo.imGroupid,
+      Role: type || 'Admin',
+      Member_Account: userId + '$0'
+    }).done(function (res) {
+      if (res.ActionStatus === 'OK') {
+        defer.resolve();
+      } else {
+        defer.reject();
+      }
+    });
+    return defer.promise();
   },
   verifyUserID: function (id) {
     return /^\d+$/.test(id);
@@ -140,7 +162,7 @@ var View = BaseView.extend({
         uName + '(' + uid + ')</div>';
       if (!current) {
         uiConfirm.show({
-          content: '您确定将该用户设为场控吗?' + msg,
+          content: '您确定将该用户设为场控吗?' + (uName ? msg : ''),
           okFn: function () {
             self.addRoomManager(uid);
           }
@@ -162,14 +184,18 @@ var View = BaseView.extend({
       userId: id,
       roomId: this.roomInfo.id || 0
     }));
-    promise.done(function (res) {
-      if (res && res.code === '0') {
-        msgBox.showOK('场控添加成功');
-        self.renderRoomMangerList();
-        self.userIdDom.val('');
-      } else {
-        msgBox.showError('场控添加失败');
-      }
+    this.setMember(id, 'Admin').done(function () {
+      promise.done(function (res) {
+        if (res && res.code === '0') {
+          msgBox.showOK('场控添加成功');
+          self.renderRoomMangerList();
+          self.userIdDom.val('');
+        } else {
+          msgBox.showError('场控添加失败');
+        }
+      });
+    }).fail(function () {
+      msgBox.showError('场控添加失败');
     });
   },
   beforeAdd: function () {},

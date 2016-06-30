@@ -73,9 +73,9 @@ var View = BaseView.extend({
     Backbone.on('event:roomInfoReady', function (data) {
       if (data) {
         self.roomInfo = data;
+        self.roomInfoReady();
       }
     });
-    this.roomInfoReady();
     this.FlashApi = FlashApi.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
@@ -388,13 +388,12 @@ var View = BaseView.extend({
   getGroupInfo: function () {
     var self = this;
     var intro;
-
     imServer.getGroupInfo(self.roomInfo.imGroupid, function (result) {
       if (result && result.ActionStatus === 'OK') {
         if (result.GroupInfo && result.GroupInfo[0] && result.GroupInfo[0].Introduction) {
           intro = JSON.parse(result.GroupInfo[0].Introduction);
           if (intro && intro.blockState === true) {
-            self.btnLock.children('span').text('解屏');
+            $('#btn-lock').children('span').text('解屏');
           }
         }
       }
