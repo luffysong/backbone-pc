@@ -141,9 +141,9 @@ var View = BaseView.extend({
       }
     });
 
-    Backbone.on('event:IMGroupInfoReady', function (info) {
-      self.currentGroupInfo = info;
-    });
+    // Backbone.on('event:IMGroupInfoReady', function (info) {
+    //   self.currentGroupInfo = info;
+    // });
 
     Backbone.on('event:liveShowEnded', function (data) {
       uiConfirm.show({
@@ -353,11 +353,13 @@ var View = BaseView.extend({
     return DateTime.format(date, 'hh:mm:ss');
   },
   checkUserCanJoinRoom: function () {
-    var info;
+    var self = this;
     YYTIMServer.getGroupInfo(this.roomInfo.imGroupid, function (res) {
-      if (res && ~~res.ErrorCode === 0 || res.GroupInfo[0]) {
-        info = res.GroupInfo[0];
-        console.log(info);
+      if (res && ~~res.ErrorCode === 0 || res.GroupInfo.length > 0) {
+        self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
+          return item.GroupId === self.roomInfo.imGroupid;
+        });
+        Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
       }
     }, function () {});
   },

@@ -105,6 +105,13 @@ var View = BaseView.extend({
         Backbone.trigger('event:updateRoomInfo', data);
       });
     });
+    Backbone.on('event:IMGroupInfoReady', function (info) {
+      if (info) {
+        self.currentGroupInfo = info || {};
+        self.checkUserIsKickout(self.currentGroupInfo.Notification);
+        self.checkUserIsDisabled(self.currentGroupInfo.Introduction);
+      }
+    });
   },
   fetchUserIMSig: function (groupId) {
     var self = this;
@@ -238,7 +245,7 @@ var View = BaseView.extend({
   },
   initRoom: function () {
     var self = this;
-    var errFn = function () {
+    this.errFn = function () {
       uiConfirm.show({
         title: '提示',
         content: '获取房间数据失败!',
@@ -250,38 +257,42 @@ var View = BaseView.extend({
         }
       });
     };
-
+    // 获取房间数据
     this.getRoomInfo(function (response) {
-      var data = response.data || {};
-      if (response && response.code === '0') {
-        self.videoUrl = {
-          streamName: data.streamName,
-          url: data.url
-        };
-        self.roomInfo = data;
-        // 告白墙
-        self.adWallView = new AdvertisingWallView({
-          el: '#advertisingWall',
-          roomId: data.id,
-          userInfo: self.userInfo,
-          type: 1 // 直播
-        });
-        Backbone.trigger('event:roomInfoReady', self.roomInfo);
-        self.setRoomBgImg();
-        self.flashAPI.onReady(function () {
-          this.init(_.extend({
-            isLive: true
-          }, self.roomInfo));
-        });
-        self.checkRoomStatus(data.status);
-      } else {
-        errFn();
-      }
-    }, errFn);
+      self.handelRoomInfo(response);
+    }, this.errFn);
+  },
+  // 处理房间信息
+  handelRoomInfo: function (response) {
+    var self = this;
+    var data = response.data || {};
+    if (response && response.code === '0') {
+      self.videoUrl = {
+        streamName: data.streamName,
+        url: data.url
+      };
+      self.roomInfo = data;
+      // 告白墙
+      self.adWallView = new AdvertisingWallView({
+        el: '#advertisingWall',
+        roomId: data.id,
+        userInfo: self.userInfo,
+        type: 1 // 直播
+      });
+      Backbone.trigger('event:roomInfoReady', self.roomInfo);
+      self.setRoomBgImg();
+      self.flashAPI.onReady(function () {
+        this.init(_.extend({
+          isLive: true
+        }, self.roomInfo));
+      });
+      self.checkRoomStatus(data.status);
+    } else {
+      self.errFn();
+    }
   },
   getGroupInfo: function (imGroupId) {
     var self = this;
-    // var callback = function () {};
     YYTIMServer.getGroupInfo(imGroupId, function (res) {
       if (res && ~~res.ErrorCode === 0) {
         self.currentGroupInfo = _.find(res.GroupInfo, function (item) {
@@ -315,6 +326,7 @@ var View = BaseView.extend({
       self.initRoom();
     });
   },
+  // 获取直播房间信息
   getRoomInfo: function (okFn, errFn) {
     var self = this;
     var promise;
@@ -340,7 +352,7 @@ var View = BaseView.extend({
         $('.living-block').hide();
         break;
       case 2:
-        this.getGroupInfo(this.roomInfo.imGroupid);
+        // this.getGroupInfo(this.roomInfo.imGroupid);
         this.joinRoom();
         this.fetchUserIMSig(this.roomInfo.imGroupid);
         break;
