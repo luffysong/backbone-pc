@@ -203,7 +203,7 @@ var View = BaseView.extend({
 
     // 频道接收消息
     if (isChannel) {
-      if (~~this.options.channelId !== ~~this.roomInfo.channelId) {
+      if (~~msg.channelId !== ~~this.roomInfo.channelId) {
         return;
       }
     } else {
