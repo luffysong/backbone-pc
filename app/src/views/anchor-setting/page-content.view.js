@@ -169,9 +169,9 @@ var View = BaseView.extend({
         }
       ];
     }
-    this.menuList.list.push({
-      name: '退出', pannel: 'signout'
-    });
+    // this.menuList.list.push({
+    //   name: '退出', pannel: 'signout'
+    // });
     if (this.menuTpl) {
       var html = this.compileHTML(this.menuTpl, this.menuList);
       this.menuWrap.html(html);
