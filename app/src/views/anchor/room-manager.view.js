@@ -60,9 +60,9 @@ var View = BaseView.extend({
   defineEventInterface: function () {
     var self = this;
     // 添加用户为场控
-    Backbone.on('event:addUserToManager', function (userId) {
+    Backbone.on('event:addUserToManager', function (userInfo) {
       // self.addRoomManager(userId);
-      self.checkUserIsManager(userId);
+      self.checkUserIsManager(userInfo.userId, userInfo.userName);
     });
   },
   beforeDestroy: function () {
@@ -128,17 +128,31 @@ var View = BaseView.extend({
   verifyUserID: function (id) {
     return /^\d+$/.test(id);
   },
-  checkUserIsManager: function (uid) {
+  checkUserIsManager: function (uid, uName) {
     var self = this;
     var promise = this.getManagerList();
     promise.done(function (res) {
       var current = _.find(res.data, function (item) {
         return item.user.uid === ~~uid;
       });
+
+      var msg = '<div style="text-align:center;color:#a1a1a1;" >' +
+        uName + '(' + uid + ')</div>';
       if (!current) {
-        self.addRoomManager(uid);
+        uiConfirm.show({
+          content: '您确定将该用户设为场控吗?' + msg,
+          okFn: function () {
+            self.addRoomManager(uid);
+          }
+        });
       } else {
-        msgBox.showTip('该用户已经是场控了');
+        // msgBox.showTip('该用户已经是场控了');
+        uiConfirm.show({
+          content: '您确定要删除该场控吗?' + msg,
+          okFn: function () {
+            self.removeRoomManger(uid);
+          }
+        });
       }
     });
   },
@@ -158,6 +172,7 @@ var View = BaseView.extend({
       }
     });
   },
+  beforeAdd: function () {},
   getManagerList: function () {
     this.roomManagerListParams.roomId = this.roomInfo.id;
     return this.roomManListModel.executeJSONP(this.roomManagerListParams);

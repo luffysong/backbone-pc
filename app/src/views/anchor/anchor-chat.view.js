@@ -134,7 +134,10 @@ var View = BaseView.extend({
     } else if (text === '踢出') {
       this.removeUserFromRoom(userInfo);
     } else if (text === '场控') {
-      Backbone.trigger('event:addUserToManager', target.attr('data-uid'));
+      Backbone.trigger('event:addUserToManager', {
+        userId: target.attr('data-uid'),
+        userName: target.attr('data-name')
+      });
     }
   },
   /**
