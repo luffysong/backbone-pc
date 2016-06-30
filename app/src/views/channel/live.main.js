@@ -29,7 +29,7 @@ var LiveVideoListModel = require('../../models/channel/live-play.model');
 
 var AnchorCardView = require('../live-room/anchor-card.view');
 
-// var FlashAPI = require('FlashApi');
+var FlashAPI = require('FlashApi');
 var store = base.storage;
 var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
@@ -88,11 +88,12 @@ var View = BaseView.extend({
     }
     this.defineEventInterface();
 
-    if ($('#broadCastFlash').length > 0) {
-      // this.flashAPI = FlashAPI.sharedInstanceFlashApi({
-      //   el: 'broadCastFlash'
-      // });
-    }
+    // if ($('#broadCastFlash').length > 0) {
+    // this.flashAPI = new FlashAPI({
+    this.flashAPI = FlashAPI.sharedInstanceFlashApi({
+      el: 'broadCastFlash'
+    });
+    // }
 
     this.renderPage();
     this.getUserInfo();
@@ -271,7 +272,6 @@ var View = BaseView.extend({
             title: data.channelName || ''
           }
         });
-        // self.setRoomBgImg();
         // self.flashAPI.onReady(function () {
         //   this.init(self.roomInfo);
         // });
@@ -477,18 +477,26 @@ var View = BaseView.extend({
   },
   // 获取房间视频信息，以及节目单
   getLiveViedoList: function () {
-    // var self = this;
+    var self = this;
     var promise = this.liveVideoListModel.executeJSONP(_.extend({
       channelId: this.channelId,
       videoSize: 10
     }, this.queryParams));
     promise.done(function (res) {
+      // self.flashAPI = FlashAPI.sharedInstanceFlashApi({
+      //   el: 'broadCastFlash'
+      // });
       if (res && ~~res.code === 0) {
         // 视频数据
         if (res.data.channelShow) {
-          // self.flashAPI.onReady(function () {
-          // this.init(self.roomInfo);
-          // });
+          var videoData = {
+            videoType: 'FANPA_CHANNEL',
+            status: 'LIVE',
+            url: res.data.channelShow.liveStream
+          };
+          self.flashAPI.onReady(function () {
+            this.init(videoData);
+          });
         }
         // 节目单
         if (res.data && res.data.videos) {

@@ -1,17 +1,17 @@
 var flashTemp =
-  '<object width="{width}" height="{height}"  align="middle"'
-  + 'id="{id}" type="application/x-shockwave-flash" '
-  + 'classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">'
-  + '<param value="{src}" name="movie">'
-  + '<param value="{always}" name="allowscriptaccess">'
-  + '<param value="{fullscreen}" name="allowfullscreen">'
-  + '<param value="{quality}" name="quality">'
-  + '<param value="{flashvars}" name="flashvars">'
-  + '<param value="{wmode}" name="wmode" />'
-  + '<embed width="{width}" height="{height}"  name="{id}"'
-  + 'type="application/x-shockwave-flash" src="{src}" allowscriptaccess="{always}"'
-  + 'allowfullscreen="{fullscreen}" quality="{quality}"  wmode="{wmode}" flashvars="{flashvars}" />'
-  + '</object>';
+  '<object width="{width}" height="{height}"  align="middle"' +
+  'id="{id}" type="application/x-shockwave-flash" ' +
+  'classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">' +
+  '<param value="{src}" name="movie">' +
+  '<param value="{always}" name="allowscriptaccess">' +
+  '<param value="{fullscreen}" name="allowfullscreen">' +
+  '<param value="{quality}" name="quality">' +
+  '<param value="{flashvars}" name="flashvars">' +
+  '<param value="{wmode}" name="wmode" />' +
+  '<embed width="{width}" height="{height}"  name="{id}"' +
+  'type="application/x-shockwave-flash" src="{src}" allowscriptaccess="{always}"' +
+  'allowfullscreen="{fullscreen}" quality="{quality}"  wmode="{wmode}" flashvars="{flashvars}" />' +
+  '</object>';
 var win = window;
 var origin = win.location.origin;
 var uid = 999;
@@ -46,7 +46,7 @@ var FlashApi = function (options) {
   this._props = options.props || {};
   this.$attrs = {
     id: 'YYTFlash' + (uid++), //  配置id
-    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=201606023.1', //  引入swf文件
+    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=201606029.1', //  引入swf文件
     width: this._props.width || 895,
     height: this._props.height || 502,
     wmode: this._props.wmode || 'transparent', // 控制显示模型
