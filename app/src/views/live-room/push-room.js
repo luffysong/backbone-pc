@@ -75,7 +75,7 @@ View.prototype = $.extend({
           self.options.okFn(res);
         }
       } else {
-        msgBox.showTip(res.data.message || '操作失败请您稍后重试');
+        msgBox.showTip(res.data.message || res.msg || '操作失败请您稍后重试');
         if (self.options.errFn) {
           self.options.errFn();
         }

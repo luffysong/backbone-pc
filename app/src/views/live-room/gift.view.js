@@ -255,7 +255,7 @@ var View = BaseView.extend({
         Backbone.trigger('event:pleaseUpdateRoomInfo');
         self.getUserInfo();
       } else {
-        msgBox.showTip(res.data.message || '操作失败请您稍后重试');
+        msgBox.showTip(res.data.message || res.msg || '操作失败请您稍后重试');
       }
     });
   },
@@ -277,7 +277,7 @@ var View = BaseView.extend({
         Backbone.trigger('event:pleaseUpdateRoomInfo');
         self.getUserInfo();
       } else {
-        msgBox.showTip(res.data.message || '操作失败请您稍后重试');
+        msgBox.showTip(res.data.message || res.msg || '操作失败请您稍后重试');
       }
     });
     promise.fail(function () {
