@@ -897,6 +897,8 @@ img {
   &:hover {
     color: #fff;
     background-color: #839ae9;
+    outline: inherit!important;
+    outline-offset: inherit;
   }
 }
 .am-btn-red {
