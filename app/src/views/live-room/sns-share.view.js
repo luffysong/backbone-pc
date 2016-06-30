@@ -36,10 +36,13 @@ $.extend(View.prototype, {
         left: offset.left - dom.width() + 61
       });
 
-      this._bindCopy('#shareCopy');
+      self._bindCopy('#shareCopy');
 
       dom.find('a').on('click', function () {
         if ($(this).attr('data-tag') === 'copy') {
+          if (!self.clipBoardStatus) {
+            msgBox.showTip('复制失败，请尝试分享吧');
+          }
           return false;
         }
         self.shareWidnow($(this).attr('href'));
@@ -124,6 +127,7 @@ $.extend(View.prototype, {
   // 设置复制按钮
   _bindCopy: function (id) {
     var target = $(id);
+    var self = this;
     this.clipBoard = new ZeroClipboard(target);
     var text = this.options.title + ',快来围观吧!' + 'http://' + window.location.host + this.options.url;
     target.attr({
@@ -131,11 +135,13 @@ $.extend(View.prototype, {
     });
     this.clipBoard.on('ready', function () {
       this.on('aftercopy', function () {
+        self.clipBoardStatus = true;
         msgBox.showOK('房间地址复制成功！');
       });
     });
     this.clipBoard.on('error', function () {
-      msgBox.showTip('复制失败，请尝试分享吧');
+      self.clipBoardStatus = false;
+      // msgBox.showTip('复制失败，请尝试分享吧');
     });
   }
 });
