@@ -15,7 +15,6 @@ var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 var _ = require('underscore');
 var Auxiliary = require('auxiliary-additions');
-
 var URL = Auxiliary.url;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();

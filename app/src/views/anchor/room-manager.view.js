@@ -65,7 +65,7 @@ var View = BaseView.extend({
     // 添加用户为场控
     Backbone.on('event:addUserToManager', function (userInfo) {
       // self.addRoomManager(userId);
-      self.checkUserIsManager(userInfo.userId, userInfo.userName);
+      self.userVerify(userInfo.userId, userInfo.userName);
     });
   },
   beforeDestroy: function () {
@@ -129,7 +129,7 @@ var View = BaseView.extend({
       return null;
     }
     // this.addRoomManager(userId);
-    this.checkUserIsManager(userId, null, true);
+    this.userVerify(userId, null, true);
     return true;
   },
   setMember: function (userId, type) {
@@ -167,7 +167,25 @@ var View = BaseView.extend({
   verifyUserID: function (id) {
     return /^\d+$/.test(id);
   },
-  checkUserIsManager: function (uid, uName, justAdd) {
+  checkUserIsManager: function (uid) {
+    var defer = $.Deferred();
+    var promise = this.getManagerList();
+    promise.done(function (res) {
+      var current = _.find(res.data, function (item) {
+        return item.user.uid === ~~uid;
+      });
+      if (current) {
+        defer.resolve(true);
+      } else {
+        defer.reject(false);
+      }
+    });
+    promise.fail(function () {
+      defer.reject(false);
+    });
+    return defer.promise();
+  },
+  userVerify: function (uid, uName, justAdd) {
     var self = this;
     var promise = this.getManagerList();
     promise.done(function (res) {
