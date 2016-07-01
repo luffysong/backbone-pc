@@ -129,28 +129,45 @@ var View = BaseView.extend({
       return null;
     }
     // this.addRoomManager(userId);
-    this.checkUserIsManager(userId);
+    this.checkUserIsManager(userId, null, true);
     return true;
   },
   setMember: function (userId, type) {
     var defer = $.Deferred();
-    imServer.modifyGroupMember({
+    var params = {
       GroupId: this.roomInfo.imGroupid,
       Role: type || 'Admin',
       Member_Account: userId + '$0'
-    }).done(function (res) {
+    };
+    console.log(params);
+    imServer.modifyGroupMember(params).done(function (res) {
       if (res.ActionStatus === 'OK') {
         defer.resolve();
       } else {
         defer.reject();
       }
+    }).fail(function (err) {
+      var msg = '';
+      if (err.ActionStatus === 'FAIL') {
+        switch (err.ErrorCode) {
+          case 10004:
+            msg = '该用户还没有进入房间，不是组员，不能设为场控';
+            break;
+          default:
+            break;
+        }
+        if (msg.length > 0) {
+          msgBox.showError(msg + '222');
+        }
+      }
+      defer.reject(msg);
     });
     return defer.promise();
   },
   verifyUserID: function (id) {
     return /^\d+$/.test(id);
   },
-  checkUserIsManager: function (uid, uName) {
+  checkUserIsManager: function (uid, uName, justAdd) {
     var self = this;
     var promise = this.getManagerList();
     promise.done(function (res) {
@@ -168,23 +185,26 @@ var View = BaseView.extend({
           }
         });
       } else {
-        // msgBox.showTip('该用户已经是场控了');
-        uiConfirm.show({
-          content: '您确定要删除该场控吗?' + msg,
-          okFn: function () {
-            self.removeRoomManger(uid);
-          }
-        });
+        if (justAdd) {
+          msgBox.showTip('该用户已经是场控了');
+        } else {
+          uiConfirm.show({
+            content: '您确定要删除该场控吗?' + msg,
+            okFn: function () {
+              self.removeRoomManger(uid);
+            }
+          });
+        }
       }
     });
   },
   addRoomManager: function (id) {
     var self = this;
-    var promise = self.roomManAddModel.executeJSONP(_.extend({}, this.queryParams, {
-      userId: id,
-      roomId: this.roomInfo.id || 0
-    }));
     this.setMember(id, 'Admin').done(function () {
+      var promise = self.roomManAddModel.executeJSONP(_.extend({}, self.queryParams, {
+        userId: id,
+        roomId: self.roomInfo.id || 0
+      }));
       promise.done(function (res) {
         if (res && res.code === '0') {
           msgBox.showOK('场控添加成功');
@@ -194,8 +214,8 @@ var View = BaseView.extend({
           msgBox.showError('场控添加失败');
         }
       });
-    }).fail(function () {
-      msgBox.showError('场控添加失败');
+    }).fail(function (err) {
+      msgBox.showError(err || '场控添加失败');
     });
   },
   beforeAdd: function () {},
