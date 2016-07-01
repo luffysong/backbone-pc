@@ -100,8 +100,7 @@ var View = BaseView.extend({
   setOptions: function (ops) {
     this.options = _.extend(this.options, ops);
   },
-  defineEventInterface: function () {
-  },
+  defineEventInterface: function () {},
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
   },
@@ -144,7 +143,7 @@ var View = BaseView.extend({
           hasNext: res.data.hasNext || false
         };
       }
-      if (ops.tag === 'first' && _.isArray(res.data.list) && res.data.list.length <= 0) {
+      if (ops && ops.tag === 'first' && _.isArray(res.data.list) && res.data.list.length <= 0) {
         self.newestListDOM.eq(0).append('<div class="first">快来成为第一个告白的幸运儿</div>');
       }
     });
@@ -183,22 +182,26 @@ var View = BaseView.extend({
   createItemHtml: function (data) {
     var html = '';
     var self = this;
-    var result = [[], [], []];
+    var result = [
+      [],
+      [],
+      []
+    ];
     _.each(data, function (item, index) {
       var curItem = item;
       curItem.time = BusinessDate.format(new Date(item.createTime), 'yyyy-MM-dd hh:mm:ss');
       html = self.compileHTML(self.itemTpl, curItem);
       var res = index % 3;
       switch (res) {
-        default:
-        case 0:
-          result[0].push(html);
-          break;
         case 1:
           result[1].push(html);
           break;
         case 2:
           result[2].push(html);
+          break;
+        case 0:
+        default:
+          result[0].push(html);
           break;
       }
     });
@@ -288,6 +291,7 @@ var View = BaseView.extend({
           self.setUserInfo();
           self.newestListDOM.children().remove();
           self.renderNewestList();
+          self.renderHotList();
         } else {
           msgBox.showError(res.msg || '发布告白失败,请稍后重试');
         }
