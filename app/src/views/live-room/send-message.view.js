@@ -112,6 +112,7 @@ var View = BaseView.extend({
     }
     this.sendMessageToChat(msg);
     this.elements.txtMessage.val('');
+    this.elements.limitTip.text(20);
     setTimeout(function () {
       self.canSendNow = true;
     }, self.speekPeriod);

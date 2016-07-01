@@ -51,28 +51,37 @@ div.index-wrap.am-container
                                 span='顶上去'
                     footer.viedo-bg
                 | {{/each}}
-    //官方
+    //官方频道
     section.official-wrap
         header.section-header.am-cf
             h2.am-fl='官方频道'
             a(href='/channellist.html').am-fr='查看全部>>'
             span.tip='OFFICIAL CHANNEL'
         div#officialList.viedo-content.am-g.am-cf
-            script#officialAsideTpl(type='text/html')
-                div.am-u-sm-3
-                    | {{each data as item}}
-                    div.item
-                        a.top-link(href="/channellive.html?channelId={{item.channelId}}")
-                            img(src='{{item.posterPic}}')
-                            div.link-hover.gradient
-                            span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                        div.anchor-info.am-cf
-                            div.am-fl
-                                div.title.am-text-truncate='{{item.desc}}'
-                                img.am-circle.avatar(src='{{item.creator.largeAvatar}}')
-                                span.name='{{item.creator.nickName}}'
-                        footer.viedo-bg
-                    | {{/each}}
+            //- script#officialAsideTpl(type='text/html')
+            //-     div.am-u-sm-3
+            //-         | {{each data as item}}
+            //-         div.item
+            //-             | {{if item.channelId === 0}}
+            //-             a.top-link(href="javascript:;")
+            //-                 span.preview
+            //-             div.anchor-info.am-cf
+            //-                 div.am-fl
+            //-                     div.title.am-text-truncate='{{item.desc}}'
+            //-                     span.name='{{item.creator.nickName}}'
+            //-             | {{else}}
+            //-             a.top-link(href="/channellive.html?channelId={{item.channelId}}")
+            //-                 img(src='{{item.posterPic}}')
+            //-                 div.link-hover.gradient
+            //-                 span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
+            //-             div.anchor-info.am-cf
+            //-                 div.am-fl
+            //-                     div.title.am-text-truncate='{{item.desc}}'
+            //-                     img.am-circle.avatar(src='{{item.creator.largeAvatar}}')
+            //-                     span.name='{{item.creator.nickName}}'
+            //-             | {{/if}}
+            //-             footer.viedo-bg
+            //-         | {{/each}}
             script#officialCenterTpl(type='text/html')
                 div.am-u-sm-3.center-wrap
                     div.item

@@ -324,6 +324,13 @@
       .item {
         .top-link {
           height: 160px;
+          .preview{
+            display: inline-block;
+            width: 288px;
+            height: 162px;
+            background: url('../images/index/space.png') no-repeat;
+            background-size: 100%;
+          }
         }
         .title {
           width: 285px;
