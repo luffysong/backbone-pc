@@ -124,7 +124,7 @@ var View = BaseView.extend({
     });
 
     Backbone.on('event:visitorInteractive', function (data) {
-      if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
+      if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id) && data.msgType === 0) {
         msgBox.showTip('您已经被主播禁言十分钟.');
       } else {
         self.beforeSendMsg(data, function (msgObj) {
