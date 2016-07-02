@@ -435,6 +435,10 @@ var View = BaseView.extend({
   },
   getRoomLoopInfo: function (okFn, errFn) {
     console.log(okFn, errFn);
+    this.getRoomInfo(okFn);
+    // if (okFn) {
+    //   okFn();
+    // }
     // var self = this;
     // var promise;
     // self.roomDetailParams.channelId = self.channelId;

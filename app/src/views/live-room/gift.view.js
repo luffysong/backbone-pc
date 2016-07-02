@@ -88,6 +88,7 @@ var View = BaseView.extend({
       if (data) {
         self.roomInfo = data;
         self.elements.txtLikeCount.text(data.assemble || 0);
+        self.elements.txtLikeCount.text(data.likeCount || 0);
       }
     });
 
@@ -234,7 +235,7 @@ var View = BaseView.extend({
   beforePushPopularity: function (type) {
     var channelType = 2;
     if (this.options.type === 'channel') {
-      channelType = type === 2 ? 3 : channelType;
+      channelType = type === 2 ? 3 : 2;
       this.pushChannelPopularity(channelType);
     } else {
       this.pushPopularity(type);
