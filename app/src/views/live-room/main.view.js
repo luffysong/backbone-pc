@@ -351,7 +351,6 @@ var View = BaseView.extend({
         $('.living-block').hide();
         break;
       case 2:
-        // this.getGroupInfo(this.roomInfo.imGroupid);
         this.joinRoom();
         this.fetchUserIMSig(this.roomInfo.imGroupid);
         break;

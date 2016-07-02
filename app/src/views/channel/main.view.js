@@ -7,6 +7,9 @@ var base = require('base-extend-backbone');
 var BaseView = base.View;
 var _ = require('underscore');
 
+var Auxiliary = require('auxiliary-additions');
+var URL = Auxiliary.url;
+
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var LivePreviewModel = require('../../models/index/live-pre.model');
@@ -30,6 +33,9 @@ var View = BaseView.extend({
   },
   beforeMount: function () {
     //  初始化一些自定义属性
+    var url = URL.parse(location.href);
+    this.listType = url.query.list || '';
+
     this.queryParams = {
       deviceinfo: '{"aid":"30001001"}',
       access_token: user.getWebToken()
@@ -89,6 +95,11 @@ var View = BaseView.extend({
     $('.viedo-content').on('click', function (e) {
       self.pushRoomHandler(e);
     });
+    if (this.listType === 'yyt') {
+      this.channelChanged({
+        target: 'a[data-tag="1"]'
+      });
+    }
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
