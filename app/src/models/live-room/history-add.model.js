@@ -1,0 +1,43 @@
+/**
+ * 添加观看记录
+ */
+'use strict';
+
+var $ = require('jquery');
+var _ = require('underscore');
+var base = require('base-extend-backbone');
+var Config = require('config');
+var BaseModel = base.Model;
+var env = Config.env[Config.scheme];
+
+var Model = BaseModel.extend({
+  url: '{{url_prefix}}/history/room/upload.json',
+  beforeEmit: function beforeEmit() {
+    // 给请求地址替换一下环境变量
+    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+    }
+  },
+  addToHistory: function (args) {
+    var ops = _.extend({}, args);
+    var defer = $.Deferred();
+    var prom = this.executeJSONP(ops);
+    prom.done(function (res) {
+      defer.resolve(res);
+    });
+    prom.fail(function () {
+      defer.reject();
+    });
+    return defer.promise();
+  }
+});
+
+var shared = null;
+Model.sharedInstanceModel = function sharedInstanceModel() {
+  if (!shared) {
+    shared = new Model();
+  }
+  return shared;
+};
+
+module.exports = Model;

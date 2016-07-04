@@ -25,7 +25,9 @@ var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('imServer');
 var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
 var UserInfo = require('./user.js');
-var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model.js');
+var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model');
+var HistoryAddModel = require('../../models/live-room/history-add.model');
+
 var FlashAPI = require('FlashApi');
 var store = base.storage;
 var uiConfirm = require('ui.confirm');
@@ -54,6 +56,7 @@ var View = BaseView.extend({
 
     this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
     this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
+    this.historyAdd = HistoryAddModel.sharedInstanceModel();
 
     this.queryParams = {
       deviceinfo: '{"aid": "30001001"}',
@@ -459,8 +462,13 @@ var View = BaseView.extend({
     if (this.roomInfo) {
       this.inAndRoomParams.roomId = this.roomInfo.id;
     }
+    // 告诉服务器加入了IM房间
     promise = this.inAndOutRoom.executeJSONP(this.inAndRoomParams);
     promise.done(function () {});
+    // 加入历史记录
+    this.historyAdd.addToHistory(_.extend({
+      roomIds: this.roomInfo.id
+    }, this.queryParams));
   },
   setRoomBgImg: function () {
     if (this.roomInfo && this.roomInfo.imageUrl) {
