@@ -3996,6 +3996,9 @@ webpackJsonp([4],[
 	var BaseView = base.View;
 	var _ = __webpack_require__(27);
 	
+	var Auxiliary = __webpack_require__(41);
+	var URL = Auxiliary.url;
+	
 	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	var LivePreviewModel = __webpack_require__(170);
@@ -4019,6 +4022,9 @@ webpackJsonp([4],[
 	  },
 	  beforeMount: function () {
 	    //  初始化一些自定义属性
+	    var url = URL.parse(location.href);
+	    this.listType = url.query.list || '';
+	
 	    this.queryParams = {
 	      deviceinfo: '{"aid":"30001001"}',
 	      access_token: user.getWebToken()
@@ -4078,6 +4084,11 @@ webpackJsonp([4],[
 	    $('.viedo-content').on('click', function (e) {
 	      self.pushRoomHandler(e);
 	    });
+	    if (this.listType === 'yyt') {
+	      this.channelChanged({
+	        target: 'a[data-tag="1"]'
+	      });
+	    }
 	  },
 	  beforeDestroy: function () {
 	    //  进入销毁之前,将引用关系设置为null

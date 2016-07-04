@@ -5678,6 +5678,10 @@ webpackJsonp([5],[
 	  },
 	  getRoomLoopInfo: function (okFn, errFn) {
 	    console.log(okFn, errFn);
+	    this.getRoomInfo(okFn);
+	    // if (okFn) {
+	    //   okFn();
+	    // }
 	    // var self = this;
 	    // var promise;
 	    // self.roomDetailParams.channelId = self.channelId;
@@ -6503,7 +6507,7 @@ webpackJsonp([5],[
 	    });
 	
 	    Backbone.on('event:visitorInteractive', function (data) {
-	      if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id)) {
+	      if (UserInfo.isDisbaleTalk(user.get('userId'), self.roomInfo.id) && data.msgType === 0) {
 	        msgBox.showTip('您已经被主播禁言十分钟.');
 	      } else {
 	        self.beforeSendMsg(data, function (msgObj) {
@@ -6626,7 +6630,7 @@ webpackJsonp([5],[
 	          nickName: '主播',
 	          smallAvatar: '',
 	          msgType: 4,
-	          content: '主播已清屏'
+	          content: msgObj.content
 	        };
 	        self.flashAPI.onReady(function () {
 	          this.notifying(tempInfo);
@@ -6982,7 +6986,12 @@ webpackJsonp([5],[
 	  },
 	  sendMsgClick: function () {
 	    var self = this;
-	    if (this.elements.txtMessage.val() < 1) {
+	    var len = $.trim(this.elements.txtMessage.val()).length;
+	    if (len < 1) {
+	      return '';
+	    }
+	    if (len > 20) {
+	      msgBox.showTip('发言文字已经超过20个字!');
 	      return '';
 	    }
 	    if (!this.canSendNow) {
@@ -7044,7 +7053,7 @@ webpackJsonp([5],[
 /* 197 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"chooseColorPanel\" class=\"choose-color Hidden\">\n    <div class=\"title\">选择颜色</div>\n    <div class=\"color-list\" id=\"colorList\">\n        <span data-color=\"#f9517d\" class=\"red boderRadAll_20\"></span>\n        <span data-color=\"#ead97a\" class=\"yellow boderRadAll_20\"></span>\n        <span data-color=\"#53e2c2\" class=\"green boderRadAll_20\"></span>\n        <span data-color=\"#569ef8\" class=\"blue boderRadAll_20\"></span>\n        <span data-color=\"#cf57cf\" class=\"purple boderRadAll_20\"></span>\n        <span data-color=\"#ffffff\" class=\"white boderRadAll_20\"></span>\n    </div>\n</div>\n<div class=\"msg-text\">\n    <textarea id=\"txtMessage\" maxlength=\"20\" class=\"pAll5 msg Left\" cols=\"30\" rows=\"5\" placeholder=\"请输入消息\"></textarea>\n    <button id=\"btnSendMsg\" class=\"send Left am-btn-purple\">发送</button>\n    <div class=\"Clear\"></div>\n</div>\n<div class=\"msg-footer mTop5\">\n    <!--<button>face</button>-->\n    <button id=\"btnChooseColor\" class=\"size Hand\"><i></i></button>\n    <div class=\"tip Right gary1 am-text-xs\">您还可以输入<span id=\"limitTip\" class=\"number\">20</span>字</div>\n    <div class=\"Clear\"></div>\n</div>\n"
+	module.exports = "<div id=\"chooseColorPanel\" class=\"choose-color Hidden\">\n    <div class=\"title\">选择颜色</div>\n    <div class=\"color-list\" id=\"colorList\">\n        <span data-color=\"#f9517d\" class=\"red boderRadAll_20\"></span>\n        <span data-color=\"#ead97a\" class=\"yellow boderRadAll_20\"></span>\n        <span data-color=\"#53e2c2\" class=\"green boderRadAll_20\"></span>\n        <span data-color=\"#569ef8\" class=\"blue boderRadAll_20\"></span>\n        <span data-color=\"#cf57cf\" class=\"purple boderRadAll_20\"></span>\n        <span data-color=\"#ffffff\" class=\"white boderRadAll_20\"></span>\n    </div>\n</div>\n<div class=\"msg-text\">\n    <textarea id=\"txtMessage\" class=\"pAll5 msg Left\" cols=\"30\" rows=\"5\" placeholder=\"请输入消息\"></textarea>\n    <button id=\"btnSendMsg\" class=\"send Left am-btn-purple\">发送</button>\n    <div class=\"Clear\"></div>\n</div>\n<div class=\"msg-footer mTop5\">\n    <!--<button>face</button>-->\n    <button id=\"btnChooseColor\" class=\"size Hand\"><i></i></button>\n    <div class=\"tip Right gary1 am-text-xs\">您还可以输入<span id=\"limitTip\" class=\"number\">20</span>字</div>\n    <div class=\"Clear\"></div>\n</div>\n"
 
 /***/ },
 /* 198 */
@@ -7140,6 +7149,7 @@ webpackJsonp([5],[
 	      if (data) {
 	        self.roomInfo = data;
 	        self.elements.txtLikeCount.text(data.assemble || 0);
+	        self.elements.txtLikeCount.text(data.likeCount || 0);
 	      }
 	    });
 	
@@ -7286,7 +7296,7 @@ webpackJsonp([5],[
 	  beforePushPopularity: function (type) {
 	    var channelType = 2;
 	    if (this.options.type === 'channel') {
-	      channelType = type === 2 ? 3 : channelType;
+	      channelType = type === 2 ? 3 : 2;
 	      this.pushChannelPopularity(channelType);
 	    } else {
 	      this.pushPopularity(type);

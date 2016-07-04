@@ -2262,7 +2262,7 @@ button, input, select, textarea {
       font-weight: normal;
       margin-left: 38px; }
   .edit_Bg_form_x .formCon {
-    padding: 52px 0 50px 47px;
+    padding: 52px 0 62px 47px;
     background-color: #fff; }
   .edit_Bg_form_x .imgBox {
     width: 212px;
@@ -2319,7 +2319,7 @@ button, input, select, textarea {
   font-weight: lighter;
   cursor: pointer;
   position: absolute;
-  top: 7px;
+  top: 0;
   right: 8px;
   color: #fff;
   z-index: 3; }
