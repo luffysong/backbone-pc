@@ -247,7 +247,7 @@ var View = BaseView.extend({
           nickName: '主播',
           smallAvatar: '',
           msgType: 4,
-          content: '主播已清屏'
+          content: msgObj.content
         };
         self.flashAPI.onReady(function () {
           this.notifying(tempInfo);

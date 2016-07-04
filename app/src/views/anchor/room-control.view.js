@@ -100,7 +100,8 @@ var View = BaseView.extend({
           nickName: self.assistant ? '场控' : '主播',
           smallAvatar: '',
           msgType: 4,
-          content: (self.assistant ? '场控' : '主播') + '已清屏'
+          content: '进行了清屏操作'
+          // content: (self.assistant ? '场控' : '主播') + '已清屏'
         };
         self.FlashApi.onReady(function () {
           this.notifying(msg);
@@ -146,6 +147,22 @@ var View = BaseView.extend({
         alert: '主播解除锁屏'
       });
     }
+
+    var msg = {
+      roomId: self.roomInfo.id,
+      nickName: self.assistant ? '场控' : '主播',
+      smallAvatar: '',
+      msgType: 5,
+      content: (self.assistant ? '场控' : '主播') + '已' + txt,
+      isLock: isLock
+    };
+    // self.FlashApi.onReady(function () {
+    //   this.notifying(msg);
+    // });
+    imServer.sendMessage({
+      groupId: self.roomInfo.imGroupid,
+      msg: msg
+    });
 
     imServer.modifyGroupInfo(options, function (result) {
       if (result && result.ActionStatus === 'OK') {
