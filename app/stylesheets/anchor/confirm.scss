@@ -1,0 +1,136 @@
+@charset "UTF-8"; //弹出框
+.shadow_screen {
+  z-index: 1000;
+}
+.edit_annmoucement_con {
+  .green {
+    color: #27d5bf;
+  }
+  width: 580px;
+  min-height: 160px;
+  //height: 200px;
+  overflow: hidden;
+  max-height: 300px;
+  //border: 3px solid #252929;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -290px;
+  margin-top: -170px;
+  background: #f5f4f4;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  .title {
+    display: none;
+  }
+  .edit_title {
+    height: 40px;
+    // background: #f5f4f4;
+    width: 100%;
+    color: #8a8a8a;
+    font-size: 14px;
+    line-height: 40px;
+    text-indent: 15px;
+    overflow: hidden;
+    .upload-status {
+      color: #ccc;
+      font-weight: normal;
+      margin-left: 38px;
+    }
+    &.has-title {
+      background-color: $main-bg-purple;
+      color: #fff;
+    }
+  }
+  .close {
+    float: right;
+    font-size: 24px;
+    padding-right: 7px;
+    font-family: 'arial';
+    font-weight: lighter;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 5px;
+    height: 24px;
+  }
+  .close:hover {
+    color: #39c4b2;
+  }
+  .editCon {
+    //width: 473px;
+    margin: 0 auto;
+    //padding-top: 35px;
+    //height: 144px;
+    width: 400px;
+    padding-top: inherit;
+    padding-bottom: 16px;
+    //position: relative;
+    .title-tip,
+    h3 {
+      color: #7a7a7a;
+      font-size: 14px;
+      margin-bottom: 10px;
+      margin-top: 24px;
+      display: inline-block;
+    }
+    textarea {
+      width: 451px;
+      height: 76px;
+      resize: none;
+      overflow: hidden;
+      font-size: 12px;
+      line-height: 20px;
+      padding: 5px 10px;
+      text-align: left;
+      background: #f5f5f5;
+      font-family: '微软雅黑';
+      font-weight: lighter;
+      // letter-spacing: 2px;
+      //margin-bottom: 40px;
+    }
+    p {
+      text-align: center;
+    }
+    .btn-wrap {
+      margin-top: 25px;
+      height: 36px;
+      margin-bottom: 10px;
+      a {
+        width: 84px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        display: inline-block;
+        background: #e2e2e2;
+        font-size: 14px;
+        color: #fff;
+      }
+      //a:hover, .active {
+      //  background: #27d5bf !important;
+      //  color: #fff;
+      //}
+      .submit {
+        background-color: $main-bg-red;
+        margin-right: 50px;
+      }
+      .cancel {
+        background-color: #bab9b9;
+      }
+    }
+    .content {
+      min-height: 55px;
+      word-wrap: break-word;
+      word-break: break-all;
+      text-align: center;
+    }
+    .btn-wrap {
+      //height: 90%;
+      display: block;
+      //position: absolute;
+      //bottom: 8px;
+      //left: 0;
+      width: 100%;
+    }
+  }
+}

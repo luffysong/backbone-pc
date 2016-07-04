@@ -1,0 +1,96 @@
+// 个人中心
+
+
+body{
+  background-color: #fff;
+}
+
+.anchor-setting-header-wrap {
+  background: url(../images/anchor/anchor_setting_bg_02.png) no-repeat;
+  height: 393px;
+  -webkit-background-size: 100% 393px;
+  background-size: 100% 393px;
+  color: $main-name-color;
+  .header {
+    height: 393px;
+    margin: 0 auto;
+    position: relative;
+    .white {
+      color: #fff;
+    }
+    .anchor-info-wrap {
+      .center {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .avatar-wrap {
+        font-size: 12px;
+        margin-top: 60px;
+        border: 2px solid #fff;
+        width: 100px;
+        height: 100px;
+        .avatar {
+          width: 96px;
+          height: 96px;
+        }
+      }
+      .basic-wrap {
+        font-size: 12px;
+        .white {
+          margin: 0 3px;
+        }
+        .big {
+          font-size: 16px;
+        }
+      }
+      .tags-wrap {
+        font-size: 12px;
+        .list {
+          display: inline-block;
+          span {
+            margin: 0 4px;
+          }
+        }
+      }
+    }
+
+    .nav-wrap {
+      position: absolute;
+      bottom: 1px;
+      left: 0;
+      ul {
+        border: none;
+      }
+
+      li {
+        width: 165px;
+        cursor: pointer;
+        text-align: center;
+        &.am-active {
+          a {
+            color: #515151;
+            background-color: #fff;
+          }
+        }
+        a {
+          background-color: #eee;
+          color: $main-font-light-color;
+          border: none;
+          height: 50px;
+          line-height: 40px;
+          font-size: 16px;
+          // font-weight: 600;
+        }
+      }
+
+    }
+  }
+}
+
+.anchor-setting-body {
+
+  .tab-content {
+
+  }
+}

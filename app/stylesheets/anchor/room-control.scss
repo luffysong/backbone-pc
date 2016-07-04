@@ -1,0 +1,98 @@
+// 4. 发送消息
+.room-manager-block {
+  //background-color: #fff;
+  text-align: center;
+  position: relative;
+  //border-top: 1px solid #efefef;
+  .am-btn {
+    width: 62px;
+    height: 60px;
+    margin: 0 8px;
+    span {
+      font-size: 14px;
+      &.ctrl {
+        display: block;
+      }
+      &.first {
+        margin-top: 5px;
+      }
+    }
+    i {
+      margin: 0 auto;
+      background-size: 100%;
+      -webkit-background-size: 100%;
+      display: block;
+      width: 22px;
+      height: 22px;
+      &.clear {
+        background-image: url(../images/clear.png);
+        background-repeat: no-repeat;
+      }
+      &.lock {
+        background-image: url(../images/clock.png);
+        background-repeat: no-repeat;
+      }
+
+    }
+  }
+}
+
+// 场控
+.field-control-wrap {
+  width: 560px;
+  margin: -1px;
+  .detail {
+    color: $main-font-light-color;
+    padding: 20px 10px 10px;
+    height: 195px;
+    overflow-y: auto;
+    .am-g {
+      margin: 8px 0;
+      div {
+        text-align: center;
+      }
+      .avatar {
+        width: 28px;
+        height: 28px;
+      }
+      .id {
+        font-size: 12px;
+        display: inline-block;
+        width: 65px;
+        overflow: hidden;
+      }
+      .id,
+      .name {
+        color: #5c5c5c;
+      }
+      .btn-link {
+        padding: 4px 8px;
+        font-size: 12px;
+        border: 1px solid $main-line-color;
+        color: $main-font-light-color2;
+      }
+    }
+  }
+  .footer {
+    .form-input {
+      width: 320px;
+      margin: 10px auto;
+      .input-user-id {
+        border: 1px solid #c8c8c8;
+        height: 38px;
+        padding: 0 10px;
+        background-color: #f5f4f4;
+        width: 220px;
+      }
+    }
+    .am-btn {
+      font-size: 14px;
+      height: 38px;
+    }
+    .tip {
+      font-size: 12px;
+      margin-top: 5px;
+      color: $main-font-light-color;
+    }
+  }
+}

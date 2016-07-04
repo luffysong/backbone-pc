@@ -1,12 +1,10 @@
 {
   "ecmaVersion": 5,
   "libs": [
-    "jquery"
+    "jquery",
+    "underscore"
   ],
   "loadEagerly": [
-    "src/**/*.js",
-    "link/YYT_PC_Modules/**/*.js",
-    "link/YYT_PC_Component/**/*.js",
-    ""
+    "app/src/module/**/*.*"
   ]
 }

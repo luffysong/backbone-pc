@@ -1,0 +1,27 @@
+
+// 弹出层
+.popup-wrap{
+  //min-width: 200px;
+  //max-width: 300px;
+  //min-height: 100px;
+  .popup-header{
+    background-color: $main-bg-purple;
+    color: #fff;
+    height: 44px;
+    span{
+      margin-top: 10px;
+      margin-left: 10px;
+      color: #fff;
+      font-weight:600;
+    }
+    a{
+      background-position: center;
+      margin-top: 10px;
+    }
+  }
+
+  .popup-content{
+    background-color: #fff;
+  }
+
+}

@@ -1,0 +1,101 @@
+//
+   Created by AaronYuan on 6/6/16.
+
+div.anchor-setting-header-wrap.has-top-bar#profileBg
+    div.header.am-container
+        div.anchor-info-wrap.userInfoWrap
+          //- 用户信息
+        div.nav-wrap
+            script#menuTpl(type="text/template")
+                | {{each list as value}}
+                li(data-panel="{{value.pannel}}",class="{{value.active?'am-active': ''}}")
+                    a {{value.name}}
+                | {{/each}}
+            ul.am-nav.am-nav-tabs#tab-menu-ctrl
+              //- 菜单
+
+
+div.anchor-setting-body#settingContent
+    div.am-container
+        //div.tab-content.my-live-show-wrap
+            div.top-header.am-margin-top-xl.am-margin-bottom
+                div.live-status-wrap.boderRadAll_5
+                    a(href='javascript:;').right-border.active 未开播
+                    a(href='javascript:;') 历史直播
+            div.list-wrap
+                div.unClosed-list-wrap
+                    div.item.am-g.am-g-collapse.am-margin-top.am-margin-bottom.am-padding-bottom
+                        div.am-u-sm-3.img.am-margin-right
+                            //img(src='http://img3.c.yinyuetai.com/user/avatar/160516/20634338/-M-9e1acc1a265ea969e45e4cb4735ad6b9_386x217.jpg')
+                        div.am-u-sm-9
+                            div.room-title
+                                | 签签收会签收会签收会签收会收会
+                            div.time
+                                span.tip.am-margin-right-sm 直播时间
+                                span.value.date 2016-05-12 12:34
+                            div.viedo
+                                span.tip.am-margin-right-sm 视频连接
+                                span.value http://www.baidu.com
+                                a.copy(href='javascript:;').am-margin-left-xl 复制
+                            div.btn-wrap
+                                button.am-btn.am-btn-red.boderRadAll_3 查看
+                                button.am-btn.am-btn-red.boderRadAll_3.disabled 发布
+                                button.am-btn.am-btn-red.boderRadAll_3 删除
+                    - for(var i=3; i>0;i--)
+                        div.item.am-g.am-g-collapse.am-margin-top.am-margin-bottom.am-padding-bottom
+                            div.am-u-sm-3.img.am-margin-right
+                                img(src='http://img3.c.yinyuetai.com/user/avatar/160516/20634338/-M-9e1acc1a265ea969e45e4cb4735ad6b9_386x217.jpg')
+                            div.am-u-sm-9
+                                div.room-title
+                                    | 签签收会签收会签收会签收会收会
+                                div.time
+                                    span.tip.am-margin-right-sm 直播时间
+                                    span.value.date 2016-05-12 12:34
+                                div.viedo
+                                    span.tip.am-margin-right-sm 视频连接
+                                    span.value http://www.baidu.com
+                                    a.copy.am-margin-left-xl(href='javascript:;') 复制
+                                div.btn-wrap
+                                    button.am-btn.am-btn-red.boderRadAll_3 查看
+                                    button.am-btn.am-btn-red.boderRadAll_3.disabled 发布
+                                    button.am-btn.am-btn-red.boderRadAll_3 删除
+
+                div.closed-list-wrap
+                    - for(var i=3; i>0;i--)
+                        div.item.am-g.am-g-collapse.am-margin-top.am-margin-bottom.am-padding-bottom
+                            div.am-u-sm-3.img.am-margin-right
+                                img(src='http://img3.c.yinyuetai.com/user/avatar/160516/20634338/-M-9e1acc1a265ea969e45e4cb4735ad6b9_386x217.jpg')
+                            div.am-u-sm-9
+                                div.room-title
+                                    | 历历史直播历史直播历史直播历史直播史直播
+                                div.time
+                                    span.tip.am-margin-right-sm 时长
+                                    span.value.date 12:34:34
+                                div.number
+                                    div.num
+                                        i.icons.view
+                                        span 23423
+                                    div.num
+                                        i.icons.chat
+                                        span 23423
+                                    div.num
+                                        i.icons.like
+                                        span 23423
+
+                                //div.viedo
+                                    span.tip.am-margin-right-sm 视频连接
+                                    span.value http://www.baidu.com
+                                    a.copy.am-margin-left-xl(href='javascript:;') 复制
+                                div.info
+                                    span.tip.am-margin-right-sm 人气:
+                                    span.value 234234
+
+                                //div.btn-wrap
+                                //    button.am-btn.am-btn-red.boderRadAll_3 查看
+                                //    button.am-btn.am-btn-red.boderRadAll_3.disabled 发布
+                                //    button.am-btn.am-btn-red.boderRadAll_3 删除
+            div.page-wrap
+                | 分页
+
+        div.tab-content
+        div.tab-content

@@ -1,0 +1,39 @@
+//
+   Created by AaronYuan on 5/4/16.
+
+.am-container
+    #playbackListWrap.common_con.live-room-wrap.play-back-list
+        .top-header.mLeft10
+            h3.green.Left &#x7CBE;&#x5F69;&#x56DE;&#x653E;
+            .btn-left-wrap.Right
+                button.active.Hand.new.btnDataOrder(data-tag='TIME')
+                    i
+                    | 最新
+                button.Hand.hot.btnDataOrder(data-tag='POPULARITY')
+                    i
+                    | 人气
+            .Clear
+        .recent-list-wrap
+            #playbackList.list
+                //
+        script#itemTpl(type='text/x-template').
+            {{each data as item}}
+            <div class="item Left mLeft10 mRight10">
+            <a class="img-wrap" href="playback.html?roomId={{item.roomId}}">
+            <div class="hover-wrap Hand">
+            <div class="top">人气: <span class="green">{{item.popularity}}</span></div>
+            <div class="bottom">
+            <span class="icons chat">{{item.bulletCurtain}}</span>
+            <span class="icons like">{{item.assemble}}</span>
+            </div>
+            <span class="played-icon"></span>
+            </div>
+            <img src="{{item.posterPic}}" onerror="this.src='/img/bg-demo.jpg'" data-src="/img/user_47.jpg" alt="">
+            </a>
+            <div class="name  mBottom15">{{item.roomName}}</div>
+            </div>
+            {{/each}}
+        //
+        .page-block
+            #pageWrap.page-wrap
+// 内容区域$

@@ -1,0 +1,18 @@
+<span class="name"><%=creator.nickName%></span>
+<span class="icon-gender"></span>
+<div class="tags">
+    <span class="first">标签</span>:
+            <span id="tagsWrap">
+    <%
+    var allTags = creator.tags || [];
+    for(var i = 0,j = allTags.length; i < j; i++){
+    %>
+    <span><%=allTags[i] %></span>
+    <%
+    }
+    if(allTags.length ==0){
+    %>
+    <i>暂无</i>
+    <% }%>
+            </span>
+</div>

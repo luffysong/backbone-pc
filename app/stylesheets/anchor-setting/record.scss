@@ -1,0 +1,125 @@
+$gray-color: #e1e1e1;
+$black-color: #4d4d4d;
+$black2-color: #666666;
+
+.record-wrap {
+  font-family: '\5FAE\8F6F\96C5\9ED1';
+  //padding-left: 16px;
+  //margin-top: 60px;
+  .item {
+    position: relative;
+    border-left: 1px solid $gray-color;
+    padding-top: 20px;
+    .line {
+      position: absolute;
+      top: 50px;
+      left: -8px;
+      color: $black2-color;
+      .point {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border: 3px solid #fff;
+        background-color: $gray-color;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        vertical-align: middle;
+      }
+    }
+    .content {
+      margin-left: 110px;
+      border-bottom: 1px solid $gray-color;
+      padding-bottom: 20px;
+      .img-wrap {
+        position: relative;
+        width: 215px;
+        height: 120px;
+        overflow: hidden;
+        display: inline-block;
+        img{
+          width: 100%;
+        }
+        &:hover .play {
+          display: inline-block;
+        }
+        .play {
+          display: none;
+          position: absolute;
+          width: 52px;
+          height: 52px;
+          top: 50%;
+          left: 50%;
+          margin-top: -26px;
+          margin-left: -26px;
+          background: url(../images/index/index-icepy-5.png) no-repeat;
+        }
+      }
+      .info-wrap {
+        margin-left: 16px;
+        .item-title {
+          margin-top: 5px;
+          color: $black-color;
+          font-size: 16px;
+          font-weight: 600;
+        }
+        .time {
+          margin: 10px 0;
+          color: #999999;
+          span {
+            color: $black-color;
+          }
+        }
+        .anchor {
+          padding-top: 8px;
+          line-height: 35px;
+          img {
+            width: 36px;
+            height: 36px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+          }
+          .name {
+            color: #01ceb5;
+            margin-left: 5px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    .icon-list {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      background-color: #f8f8f8;
+      height: 40px;
+      text-align: center;
+      padding: 0 10px;
+      span {
+        background-repeat: no-repeat;
+        display: inline-block;
+        padding-left: 30px;
+        background-position: 0 5px;
+        margin: 10px 5px 0;
+        vertical-align: middle;
+      }
+      .view {
+        background-image: url(../images/record-icons_1.png);
+      }
+      .chat {
+        background-image: url(../images/record-icons_2.png);
+      }
+      .like {
+        background-image: url(../images/record-icons_3.png);
+      }
+      .hot {
+        background-image: url(../images/record-icons_4.png);
+        background-position: 0 0;
+      }
+    }
+  }
+}

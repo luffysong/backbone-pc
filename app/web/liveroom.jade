@@ -1,0 +1,18 @@
+//
+   Created by AaronYuan on 4/20/16.
+- var complie = htmlWebpackPlugin.options.complieConfig
+- var src = complie.cdn || '/link/'
+doctype html
+html(lang="en")
+    head
+        include common/head
+        include common/style
+    body
+        include common/topbar
+        include live-room/main
+        include common/footer
+        include common/lib
+        script(type="text/javascript",src=src+'jcarousel/dist/jquery.jcarousel.min.js')
+        script(type="text/javascript",src=src+'webim/json2.js')
+        script(type="text/javascript",src=src+'webim/webim.js')
+        script(type="text/javascript",src=src+'zeroclipboard/dist/ZeroClipboard.min.js')

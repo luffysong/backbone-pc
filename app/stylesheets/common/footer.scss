@@ -1,0 +1,58 @@
+$a-hover : #690;
+.bottom{
+  height: 200px;
+  background: #fff;
+  text-align: center;
+  border-top: 1px solid #e6e6e6;
+  .link {
+    padding-top: 87px;
+    width: 946px;
+    margin:0 auto;
+    padding-bottom: 23px;
+    a{
+      color: $main-name-color;
+      font-size: 13px;
+      display: inline-block;
+      padding:0 13px;
+      border-right: 1px dashed #a3a3a3;
+    }
+    a.last{
+      border-right: 0 none;
+    }
+  }
+  .copyright{
+    text-align: center;
+    width: 1000px;
+    margin:0 auto;
+    line-height: 24px;
+    color:#757575;
+    font-size: 12px;
+    position: relative;
+    padding-right: 20px;
+    a{
+      color:#757575;
+      font-size: 12px;
+    }
+    img{
+      position: absolute;
+    }
+  }
+  a:hover{
+    color:$a-hover;
+  }
+  .biaoshi{
+    margin-top: -25px;
+    background: url(../images/biaoshi.gif) no-repeat;
+    display: inline-block;
+    width: 40px;
+    height: 48px;
+    float: right;
+  }
+  .ghs{
+    margin-right:5px;
+    display: inline-block;
+    background: url(../images/ghs.png) no-repeat;
+    width: 20px;
+    height: 20px;
+  }
+}

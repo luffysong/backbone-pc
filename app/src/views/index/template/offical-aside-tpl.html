@@ -1,0 +1,31 @@
+<div class="am-u-sm-3">
+  {{each data as item}}
+  <div class="item">
+    {{if item.channelId > 0}}
+    <a href="/channellive.html?channelId={{item.channelId}}" class="top-link">
+      <img src="{{item.posterPic}}">
+      <div class="link-hover gradient"></div>
+      <span class="am-btn am-btn-red boderRadAll_3">进入TA的直播间</span>
+    </a>
+    <div class="anchor-info am-cf">
+      <div class="am-fl">
+        <div class="title am-text-truncate">{{item.desc}}</div>
+        <img src="{{item.creator.largeAvatar}}" class="am-circle avatar">
+        <span class="name">{{item.creator.nickName}}</span>
+      </div>
+    </div>
+    {{else}}
+    <a href="javascript:;" class="top-link">
+      <span class="preview"></span>
+    </a>
+    <div class="anchor-info am-cf">
+      <div class="am-fl">
+        <div class="title am-text-truncate">{{item.desc}}</div>
+        <span class="name"></span>
+      </div>
+    </div>
+    {{/if}}
+    <footer class="viedo-bg"></footer>
+  </div>
+  {{/each}}
+</div>

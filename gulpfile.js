@@ -1,125 +1,41 @@
-var fs = require('fs');
-var path = require('path');
-var crypto = require('crypto');
-var buffer = require('buffer');
 var gulp = require('gulp');
-var clean = require('gulp-clean');
-var gulpif = require('gulp-if');
-var autoprefixer = require('gulp-autoprefixer');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var concat = require('gulp-concat');
-var size = require('gulp-size');
-var minifycss = require('gulp-minify-css');
-var revReplace = require('gulp-rev-replace');
-var useref = require('gulp-useref');
-var rev = require('gulp-rev');
-var filter = require('gulp-filter');
-var pkg = require('./package.json');
-var header = require('gulp-header');
-// 配置本地服务器
 var browser = require('browser-sync');
 var browserSync = browser.create();
-var webConfig = require('./src/lib/config.demo.js');
+var rimraf = require('rimraf');
 
 
-//releaseHandler();
-var PORT = 4000;
-var loadMap = [
-  'modules/*.*',
-  './src/**/*.*',
-  './*.html',
-  './web/*.html',
-  './link/**/*.*'
-];
-
-gulp.task('server', [], function () {
-  // content
-  browserSync.init(loadMap,{
-    server: './',
-    port: PORT
+gulp.task('server', ['build'], function () {
+  browserSync.init({
+    server: './app/www/',
+    port: 4000
   });
-  gulp.watch(loadMap, function (file) {
-    browserSync.reload();
-  });
+  //gulp.watch('./app/**/*.*', function (file) {
+  //  console.log(file.path);
+  //  browserSync.reload();
+  //});
+  //gulp.watch('./app/link/**/*.*', function () {
+    gulp.start('build', function () {
+      browserSync.reload();
+    });
+  //});
 });
 
-
-// 清理dist目录
 gulp.task('clean', function () {
-  // content
-  return gulp.src(['./dist'], {read: false}).pipe(clean());
+  rimraf.sync('./dist');
 });
 
-gulp.task('build:rename',['build:clean'],function(){
-    return gulp.src('./dist/temp/*.html')
-        .pipe(gulp.dest('./dist/web'));
+var gutil = require('gulp-util');
+gulp.task('build', ['clean'], function () {
+  return gulp.src([
+               'app/flash/*.*',
+               'app/link/*.*',
+               'app/link/**/*.*',
+               'app/extend/**/*.*'
+             ], {base: 'app/'})
+             .pipe(gulp.dest('app/www/'));
 });
 
-gulp.task('build:clean',['build:retemp'],function(){
-    return gulp.src('./dist/web/*.html',{read:false})
-        .pipe(clean());
-})
-
-gulp.task('build:retemp', ['build'], function () {
-  return gulp.src('./dist/web/*-*.html')
-    .pipe(rename(function(path){
-        var basename = path.basename.split('-');
-        if (basename.length > 1) {
-            basename.pop();
-            path.dirname = '/temp'
-            path.basename = basename.join('-');
-            path.extname = '.html';
-        }
-    }))
-    .pipe(gulp.dest('./dist'))
-});
-
-//进入build
-gulp.task('build', ['build:move'], function () {
-  var cssFilter = filter('./dist/style/*.css', {
-    restore: true
-  });
-  var jsFilter = filter('./dist/js/*.js', {
-    restore: true
-  });
-  var date = new Date();
-  var times = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '   ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-  var banner = [
-    '/**',
-    ' * @project <%= pkg.name %>',
-    ' * @description <%=pkg.description%>',
-    ' * @version v<%= pkg.version %>',
-    ' * @time ' + times,
-    ' * @author <%= pkg.author %>',
-    ' * @copy <%= pkg.homepage %>',
-    ' */',
-    ''
-  ].join('\n');
-
-
-    function htmlMaped (filename) {
-      return filename.replace(/[-][\w]{10}.html/g, '.html');
-    }
-
-  return gulp.src('./dist/web/*.html')
-    .pipe(useref({
-        noAssets:false
-    }))
-    .pipe(cssFilter)
-    .pipe(cssFilter.restore)
-    .pipe(jsFilter)
-    .pipe(jsFilter.restore)
-    .pipe(rev())
-    .pipe(revReplace({
-        modifyReved: htmlMaped,
-        modifyUnreved: htmlMaped
-    }))
-    .pipe(useref())
-    .pipe(gulpif('*.js', header(banner, {pkg: pkg})))
-    .pipe(gulp.dest('./dist/web/'))
-});
-
+<<<<<<< HEAD
 gulp.task('build:move', ['clean'], function () {
   // content
   var dontMovePath = '!./';
@@ -158,22 +74,21 @@ gulp.task('build:move', ['clean'], function () {
     })))
     .pipe(gulpif('*.css', minifycss()))
     .pipe(gulp.dest('./dist/'));
+=======
+gulp.task('copy-to-dist', ['build'], function () {
+  return gulp.src('app/www/**/*.*')
+             .pipe(gulp.dest('./dist'));
+>>>>>>> be37aadcc36595a728669c4805f64583e20c1c3e
 });
 
-//读取./src/config.demo.js ,修正config.js
-gulp.task('rebuild:config', function(){
-    if(process.env.NODE_ENV == 'release'){
-        webConfig.scheme = 'release';
-    }else{
-        webConfig.scheme = 'alpha';
+gulp.task('webpack', function (callback) {
+  var webpack = require('webpack');
+  var productConfig = require('./bin/webpack.product.config.js');
+  webpack(productConfig, function (err, stats) {
+    if (err) {
+      throw new gutil.PluginError('webpack', err);
     }
-    var txt = 'var config = ' + JSON.stringify(webConfig) + '; module.exports = config;';
-    fs.writeFile('./src/lib/config.js',txt, function(err){
-        gulp.start(['build:rename']);
-    });
-
-
+    gutil.log('[webpack]', stats.toString());
+    callback();
+  });
 });
-
-
-

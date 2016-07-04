@@ -1,0 +1,9 @@
+ {{each data as item}}
+ {{if item.user}}
+<div class="am-g" dom-id="{{item.user.uid}}">
+  <div class="am-u-sm-3 am-vertical-align"><img src="{{item.user.largeAvatar}}" class="am-vertical-align-middle am-circle avatar"><span class="id am-vertical-align-middle am-margin-left-sm">{{item.user.uid}}</span></div>
+  <div class="am-u-sm-6 name">{{item.user.nickName}}</div>
+  <div class="am-u-sm-3"><a data-name="{{item.user.nickName}}" data-id="{{item.user.uid}}" class="am-btn btn-link">删除</a></div>
+</div>
+{{/if}}
+{{/each}}

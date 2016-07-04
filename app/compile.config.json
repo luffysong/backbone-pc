@@ -1,0 +1,38 @@
+{
+  "random": true,
+  "script": [
+    "jquery/dist/jquery.min.js",
+    "underscore/underscore-min.js",
+    "backbone/backbone-min.js",
+    "amazeui/dist/js/amazeui.min.js"
+  ],
+  "style": [
+    "amazeui/dist/css/amazeui.min.css"
+  ],
+  "footerLinks": [
+    {
+      "href": "http://www.yinyuetai.com/article/3",
+      "value": "关于音悦台"
+    },
+    {
+      "href": "http://www.yinyuetai.com/joinus",
+      "value": "人才招聘"
+    },
+    {
+      "href": "http://www.yinyuetai.com/article/1",
+      "value": "联系我们"
+    },
+    {
+      "href": "http://www.yinyuetai.com/links",
+      "value": "友情链接"
+    },
+    {
+      "href": "http://www.yinyuetai.com/article/4",
+      "value": "版本声明"
+    },
+    {
+      "href": "http://www.yinyuetai.com/service/problem#tabid=24&index=90",
+      "value": "客服中心"
+    }
+  ]
+}

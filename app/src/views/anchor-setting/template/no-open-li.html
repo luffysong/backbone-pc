@@ -1,0 +1,69 @@
+<!--<div class="uploadAd fl uploadImage"data-posterPic="{{if item.posterPic}}1{{/if}}"  data-liveTime="{{item.liveTime}}">-->
+  <!--<img src="{{item.posterPic}}" alt="" class="cover-image">-->
+<!--</div>-->
+<!--<dl class="preLiveMsg fl">-->
+  <!--<dt>{{item.roomName}}</dt>-->
+  <!--<dd>直播时间：<span>{{item.liveVideoTime}}</span></dd>-->
+  <!--<dd>-->
+    <!--<h4 class="tit">视频连接：</h4>-->
+    <!--<div>-->
+      <!--<span>{{item.livePushStreamUrl}}</span>-->
+      <!--<a href="" class="copy copy-video-url" data-value="{{item.livePushStreamUrl}}">复制</a>-->
+    <!--</div>-->
+  <!--</dd>-->
+  <!--<dd>-->
+    <!--<h4 class="tit">视频流：</h4>-->
+    <!--<div>-->
+      <!--<span>{{item.streamName}}</span>-->
+      <!--<a href="" class="copy copy-video-name" data-value="{{item.streamName}}">复制</a>-->
+    <!--</div>-->
+  <!--</dd>-->
+  <!--<dd class="ctl">-->
+    <!--<a href="{{item.lookUrl}}">查看</a>-->
+    <!--{{if item.status === 1}}-->
+    	<!--<span class="disable" data-state="2">已发布</span>-->
+    <!--{{else }}-->
+    	<!--{{if item.status === 0}}-->
+    		<!--<span  data-state="2">发布</span>-->
+      <!--{{/if}}-->
+    <!--{{/if}}-->
+    <!--{{if item.status === 0}}-->
+        <!--<span data-state="3">删除</span>-->
+    <!--{{/if}}-->
+  <!--</dd>-->
+<!--</dl>-->
+<div class="item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom"
+     data-key="{{item.liCacheKey}}" data-img="{{item.posterPic}}" data-liveTime="{{item.liveTime}}">
+  <div class="am-u-sm-3 img am-margin-right">
+    {{if item.posterPic}}
+    <img src="{{item.posterPic}}" alt="" class="uploadImage cover-image">
+    {{/if}}
+  </div>
+  <div class="am-u-sm-9">
+    <div class="room-title">{{item.roomName}}</div>
+    <div class="time"><span class="tip am-margin-right-sm">直播时间</span><span
+            class="value date">{{item.liveVideoTime}}</span>
+    </div>
+    <div class="viedo">
+      <span class="tip am-margin-right-sm">视频连接</span>
+      <span class="value">{{item.livePushStreamUrl}}</span>
+      <a href="javascript:;" class="copy am-margin-left-xl copy-video-url" data-value="{{item.livePushStreamUrl}}">复制</a>
+    </div>
+    <div class="viedo">
+      <span class="tip am-margin-right-sm">视频流</span>
+      <span class="value">{{item.streamName}}</span>
+      <a href="javascript:;" class="copy am-margin-left-xl copy-video-name" data-value="{{item.streamName}}">复制</a>
+    </div>
+    <div class="btn-wrap">
+      <a href="{{item.lookUrl}}" class="am-btn am-btn-red boderRadAll_3">查看</a>
+      {{if item.status === 1}}
+      <button class="am-btn am-btn-red boderRadAll_3 disabled">已发布</button>
+      {{else if item.status == 2}}
+      <button class="am-btn am-btn-red boderRadAll_3 disabled">直播中</button>
+      {{else if item.status == 0}}
+      <button data-state="2" class="am-btn am-btn-red boderRadAll_3">发布</button>
+      <button data-state="3" class="am-btn am-btn-red boderRadAll_3">删除</button>
+      {{/if}}
+    </div>
+  </div>
+</div>

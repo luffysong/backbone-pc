@@ -1,0 +1,125 @@
+//我的直播
+
+.two-tab {
+  border: 1px solid $main-line-color;
+  display: inline-block;
+  overflow: hidden;
+  a {
+    display: inline-block;
+    text-align: center;
+    width: 125px;
+    height: 48px;
+    line-height: 48px;
+    color: $main-font-light-color;
+    &:hover, &.active {
+      border-bottom: 3px solid $main-bg-purple;
+      color: $main-bg-purple;
+    }
+    &.right-border {
+      border-right: 1px dashed $main-line-color;
+    }
+  }
+}
+
+.my-live-show-wrap {
+  .top-header {
+    .live-status-wrap {
+      border: 1px solid $main-line-color;
+      display: inline-block;
+      overflow: hidden;
+      a {
+        display: inline-block;
+        text-align: center;
+        width: 125px;
+        height: 48px;
+        line-height: 48px;
+        color: $main-font-light-color;
+        &:hover, &.active {
+          border-bottom: 3px solid $main-bg-purple;
+          color: $main-bg-purple;
+        }
+        &.right-border {
+          border-right: 1px dashed $main-line-color;
+        }
+      }
+    }
+  }
+
+  .list-wrap {
+    .item {
+      border-bottom: 1px dashed $main-line-color;
+      .img {
+        width: 212px;
+        height: 119px;
+        cursor: pointer;
+        overflow: hidden;
+        background: url(../images/anchor/upload_tip_05.png) no-repeat;
+        img {
+          width: 100%;
+          min-height: 100%;
+        }
+        &:hover {
+          background: url(../images/anchor/upload_tip_03.jpg) no-repeat;
+        }
+      }
+      .tip {
+        color: $main-font-light-color;
+      }
+      .value{
+        word-wrap: break-word;
+        word-break: break-all;
+        color: #666;
+      }
+      .time, .viedo, .info {
+        font-size: 12px;
+        margin: 3px 0;
+      }
+    }
+    // 未开始的直播
+    .unClosed-list-wrap {
+      .item {
+        .copy {
+          color: #7ed4eb;
+          &:hover {
+            color: #27d3ff;
+            text-decoration: underline;
+          }
+        }
+        .btn-wrap {
+          .am-btn {
+            font-size: 12px;
+            margin-right: 32px;
+            min-width: 62px;
+            height: 26px;
+          }
+        }
+
+      }
+    }
+
+    // 历史直播
+    .closed-list-wrap {
+      .number {
+        .num {
+          font-size: 12px;
+          margin-right: 10px;
+          .icons {
+            width: 20px;
+            height: 20px;
+            background-position-y: 1px;
+          }
+          display: inline-block;
+        }
+      }
+      .item {
+        .time, .viedo, .info {
+          margin: 10px 0;
+        }
+
+      }
+
+    }
+
+  }
+
+}

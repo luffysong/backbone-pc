@@ -1,0 +1,468 @@
+@import "../common/popup";
+@import "notice";
+@import "room-control";
+.anchor-container {
+  background: url('../images/anchor-bg.jpg');
+  min-height: 927px;
+  width: 100%;
+  background-size: 100% auto;
+  background: $main-bg-anchor-color;
+  padding-top: 10px;
+  .header-bg {
+    position: relative;
+    margin: 0 auto 10px;
+    width: 1200px;
+    overflow: hidden;
+    height: 270px;
+    background: url("../images/anchor_bg_013.jpg");
+    img {
+      min-height: 270px;
+      width: 100%;
+    }
+    .edit_bg_btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+      padding-top: 4px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 3px 15px;
+      &:hover {
+        background-color: $main-bg-red;
+      }
+    }
+  }
+  // 1.房间头部信息
+  .room-header {
+    padding-top: 0 !important;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    .room-name {
+      font-size: 20px;
+      color: black;
+    }
+    .room-title-right {
+      //width: 330px;
+      span {
+        color: #999999;
+      }
+      .count {
+        font-size: 20px;
+      }
+      .red {
+        color: #ff6f6e!important;
+      }
+      .green {
+        color: #ff6f6e!important;
+      }
+      .online {
+        margin-right: 20px;
+      }
+    }
+  }
+  // 2.用户信息模块
+  .user-info-block {
+    background-color: #fff;
+    height: 65px;
+    padding-left: 18px;
+    .user-info-wrap {
+      .avator {
+        width: 55px;
+        height: 55px;
+      }
+      .btn-share {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        background-image: url("../images/liveroom/liveroom-icons-bg_07.png");
+        margin-top: 12px;
+        margin-right: 22px;
+      }
+      .info {
+        margin-left: 12px;
+        padding-top: 5px;
+        .sub-info {
+          display: inline-block;
+        }
+        .name {
+          color: #666;
+          font-size: 14px!important;
+        }
+        .btn {
+          margin-top: -3px;
+          height: 25px;
+          min-width: 50px;
+          width: inherit;
+          padding: 0 4px;
+          font-size: 12px;
+        }
+        .tags {
+          font-size: 12px;
+          margin-top: 5px;
+          .first{
+            color: #ccc;
+          }
+          .item,span {
+            color: #999999;
+            margin: 0 2px;
+          }
+        }
+      }
+    }
+    .room-notice {
+      background-color: #333333;
+      padding: 5px;
+      height: 50px;
+      color: #fff;
+      .notice {
+        font-size: 12px;
+        line-height: 14px;
+        height: 44px;
+        overflow: hidden;
+      }
+      .trumpet {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url("../images/live-bg-012.png");
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  // 3. 公告
+  .room-notice-wrap {
+    background-color: $main-bg-light-purple;
+    header {
+      position: relative;
+      background-color: $main-bg-purple;
+      height: 35px;
+      padding-left: 10px;
+      .title {
+        color: #fff;
+        margin-left: 8px;
+      }
+      .icon-voice {
+        display: inline-block;
+        background-image: url("../images/liveroom/liveroom-icons-bg_03.png");
+        width: 21px;
+        height: 18px;
+      }
+      .edit {
+        position: absolute;
+        display: block;
+        top: 8px;
+        right: 16px;
+        color: #bfcefd;
+        font-size: 12px;
+        &:hover{
+          color: #fff;
+        }
+      }
+    }
+    .content {
+      height: 95px;
+      width: 300px;
+      .detail {
+        font-size: 12px;
+        margin: 0 16px;
+      }
+    }
+  }
+  .anchor-ctrl {
+    height: 90px;
+    text-align: center;
+    // margin-bottom: 100px;
+    border-top: 1px solid #efefef;
+    background-color: #fff;
+  }
+}
+.edit_Bg {
+  height: 65px;
+  padding: 20px 20px 0 18px;
+  background: #48443d;
+  color: #fff;
+  .title {
+    width: 500px;
+    margin-right: 260px;
+    font-size: 20px;
+  }
+  .popularity {
+    font-size: 14px;
+    span {
+      color: #0fbaa5;
+      font-size: 18px;
+      // font-weight: bold;
+      // font-family: '微软雅黑';
+    }
+  }
+}
+#set_Anchor_info {
+  width: 895px;
+  .BroadcastRoom {
+    height: 503px;
+    background: #222;
+    position: relative;
+  }
+  .bulletScreen {
+    position: absolute;
+    left: 13px;
+    bottom: 0;
+    max-width: 340px;
+    padding-bottom: 96px;
+    .tm {
+      font-family: '微软雅黑';
+      display: inline-block;
+      padding: 0 45px 0 6px;
+      line-height: 26px;
+      max-width: 295px;
+      color: #fff;
+      word-break: break-word;
+      margin: 0;
+      font-size: 16px;
+      margin-top: 6px;
+      position: relative;
+      z-index: 2;
+    }
+    span {
+      position: relative;
+      z-index: 2;
+    }
+    .shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      opacity: 0.5;
+      filter: alpha(opacity=50);
+      z-index: 1;
+      border-radius: 10px;
+    }
+    .tm.color1 {
+      color: #53e2c2;
+    }
+    .tm.color2 {
+      color: #ead97a;
+    }
+  }
+  .BR_Msg {
+    padding: 30px 72px 0 32px;
+    background: #fff;
+    .hostMsg {
+      width: 370px;
+    }
+    .anchor_avator {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #f90;
+      margin: 10px 13px 0 0;
+    }
+  }
+  .anchorMsg {
+    margin: 0;
+    padding-top: 13px;
+    text-align: left;
+    dt {
+      color: #01ceb5;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    dd {
+      margin-bottom: 10px;
+      color: #999;
+    }
+    span {
+      color: #333;
+      font-size: 16px;
+      font-family: 'arail';
+      margin-left: 5px;
+    }
+    i {
+      color: #01ceb5;
+      margin-right: 15px;
+      font-style: normal;
+    }
+  }
+  .annoucementCon {
+    width: 420px;
+    p {
+      font-size: 12px;
+      color: #888;
+      line-height: 22px;
+      height: 79px;
+    }
+  }
+  .annoucement {
+    margin-bottom: 5px;
+    .annoucement_title {
+      font-size: 14px;
+      color: #333;
+      padding-top: 10px;
+    }
+    .annoucement_editr {
+      width: 73px;
+      height: 33px;
+      line-height: 33px;
+      background: #01ceb5;
+      font-size: 14px;
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+    .annoucement_editr:hover {
+      background: #5fe0cf;
+    }
+  }
+  .anchor_control {
+    background: #fff;
+    height: 90px;
+    // 5. 抽奖
+    .luck-draw {
+      width: 62px;
+      height: 62px;
+      position: relative;
+      display: inline-block;
+      margin-left: 32px;
+      margin-top: 8px;
+      .btn {
+        display: inline-block;
+        margin-top: 5px;
+        background: #000;
+        background: url("../images/liveroom/liveroom-icons-bg_11.png") no-repeat;
+        width: 62px;
+        height: 62px;
+      }
+      .tip {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        width: 10px;
+        height: 10px;
+        border: 1px solid #fff;
+        background-color: #fe4646;
+      }
+    }
+    .am-btn {
+      margin-top: 25px;
+      height: 45px;
+      font-size: 14px;
+      margin-left: 5px;
+    }
+  }
+}
+#anchorCtrlChat {
+  width: 300px;
+  .controls {
+    padding: 15px 0 14px 19px;
+    background: #e2dfdf;
+    div {
+      width: 120px;
+      height: 46px;
+      line-height: 46px;
+      background: #01ceb5;
+      margin-right: 15px;
+      color: #fff;
+      position: relative;
+      padding-left: 65px;
+      cursor: pointer;
+    }
+    div:hover {
+      background: #5fe0cf;
+    }
+    img {
+      position: absolute;
+      left: 19px;
+      top: 7px;
+    }
+    img.lock {
+      top: 9px;
+    }
+  }
+  .chatCon {
+    background: #fff;
+    height: 476px;
+    overflow: auto;
+    .system-info {
+      p {
+        width: 265px !important;
+      }
+    }
+    li {
+      padding: 6px 0 6px 10px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      cursor: pointer;
+    }
+    li:hover {
+      background: $main-bg-purple;
+      //#01ceb5
+      .visitorName {
+        color: #ffffff;
+      }
+      p {
+        color: #bfcefd;
+      }
+      .time{
+        color: #4459a0;
+      }
+    }
+    p {
+      width: 235px;
+      display: inline-block;
+      line-height: 20px;
+      padding-top: 6px;
+      padding-left: 5px;
+      color: #666;
+    }
+    .visitorName {
+      color: #ff6f6e;
+      margin-right: 7px;
+    }
+    .time {
+      color: #ccc;
+    }
+    .controls_forbid_reject {
+      display: none;
+      position: absolute;
+      right: 18px;
+      top: -30px;
+      a {
+        width: 70px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        display: inline-block;
+      }
+    }
+    .forbid {}
+    .reject {}
+  }
+  .visitor_avator {
+    width: 35px;
+    height: 35px;
+  }
+}
+.errTip {
+  color: #FF005B;
+}
+.pseudo-uploadBtn .file {
+  position: absolute;
+  width: 100%;
+  height: 45px;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.edit_Bg_form_x {
+  margin-top: -171px !important;
+}
+.ico_close {
+  top: 10px!important;
+}

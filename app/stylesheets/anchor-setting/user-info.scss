@@ -1,0 +1,145 @@
+// 个人信息
+.set_Con{
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+}
+
+.modifyPwd, .personInfo {
+  padding: 0 0 0 23px;
+  font-size: 14px;
+  input {
+    width: 350px;
+    height: 45px;
+    border: 1px solid #dadada;
+    text-indent: 1em;
+    background-color: #eee;
+    font-size: 14px;
+  }
+  input:focus {
+    border-color: $main-bg-purple;
+    background-color: #fff;
+    outline: inherit;
+  }
+  input:hover {
+    border-color: $main-bg-purple;
+  }
+  li {
+    overflow: hidden;
+    display: block;
+    //clear: both;
+    margin: 10px 0;
+    padding: 10px 0;
+  }
+  .am-btn {
+    width: 360px;
+    height: 54px;
+    //line-height: 54px;
+    text-align: center;
+    font-size: 16px;
+    //background: #27d5bf;
+    //color: #fff;
+    //margin: 110px 0 0 230px;
+  }
+
+}
+
+.personInfo {
+  .uploadAvator {
+    padding-bottom: 32px;
+    margin-bottom: 16px;
+    .avatorNow {
+      min-width: 40px;
+      min-height: 40px;
+      max-width: 180px;
+      max-height: 180px;
+      //width: 180px;
+      //height: 180px;
+    }
+  }
+  .PiTitle {
+    width: 60px;
+    line-height: 34px;
+    i {
+      color: red;
+      margin-right: 9px;
+    }
+  }
+  .uploadform {
+    padding-top: 4px;
+    width: 316px;
+    text-align: center;
+    position: relative;
+    div {
+      width: 120px;
+      height: 38px;
+      line-height: 38px;
+      text-align: center;
+      font-size: 14px;
+      margin: 0 auto;
+      color: #fff;
+      margin-bottom: 14px;
+      cursor: pointer;
+    }
+    .file {
+      width: 120px;
+      height: 38px;
+      background: blue;
+      opacity: 0;
+      position: absolute;
+      top: 4px;
+      left: 97px;
+      cursor: pointer;
+    }
+    p {
+      color: #bcbbbb;
+    }
+  }
+  .Inp_Pc_name {
+    padding-bottom: 27px;
+    .tips {
+      color: #f91772;
+      // display: none;
+    }
+    img {
+      margin: 10px 3px 0 15px;
+    }
+    .name-err-tip {
+      display: inline-block;
+      background-image: url(../images/1.jpg);
+      vertical-align: middle;
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .tags {
+    //input {
+    //  width: 278px;
+    //  height: 32px;
+    //  border: 1px solid #dadada;
+    //  text-indent: 1em;
+    //  margin-bottom: 15px;
+    //  line-height: 32px;
+    //}
+    //input:hover {
+    //  border-color: #27d5bf;
+    //}
+  }
+  //.save:hover {
+  //  background: #5bdfcd;
+  //}
+}
+
+// 修改密码
+.modifyPwd {
+  .PiTitle {
+    width: 80px;
+    margin-right: 20px;
+    text-align: right;
+    height: 34px;
+    line-height: 34px;
+    color: #7a7a7a;
+    i {
+      color: red;
+    }
+  }
+}

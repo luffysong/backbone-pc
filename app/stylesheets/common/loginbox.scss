@@ -1,0 +1,406 @@
+a, blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, html, img, input, label, legend, li, object, ol, p, pre, td, textarea, th, ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+form {
+  display: block;
+  margin-top: 0em;
+}
+
+
+.loginbox {
+  overflow: hidden;
+}
+
+.loginbox #captcha {
+  margin-bottom: 18px;
+}
+
+.loginbox .external {
+  float: left;
+  width: 284px;
+  height: 275px;
+  margin: 34px 0 0 46px;
+  border-right: 1px solid #ccc;
+  _display: inline;
+}
+
+.loginbox .title {
+  color: #333;
+  font: 14px/27px 'simsun';
+  font-weight: bold;
+}
+
+.loginbox .external .title {
+  margin-bottom: 28px;
+}
+
+.loginbox .site .title {
+  margin-bottom: 2px;
+}
+
+.loginbox .title span {
+  font: 12px/28px 'simsun';
+  color: #ef3e00;
+}
+
+.loginbox .external ul {
+  width: 244px;
+  height: 76px;
+  margin-bottom: 21px;
+}
+
+.loginbox .external li {
+  float: left;
+  margin: 0 15px 14px 0;
+}
+
+.loginbox .external li a {
+  display: block;
+  width: 107px;
+  height: 31px;
+  overflow: hidden;
+  text-indent: -999em;
+  background: url('../images/loginBox/loginBox.png') no-repeat;
+}
+
+.loginbox .external .weibo {
+  background-position: 0 0;
+}
+
+.loginbox .weibo:hover {
+  background-position: 0 -31px;
+}
+
+.loginbox .weibo:active {
+  background-position: 0 -62px;
+}
+
+.loginbox .external .qq {
+  background-position: -108px 0;
+}
+
+.loginbox .qq:hover {
+  background-position: -108px -31px;
+}
+
+.loginbox .qq:active {
+  background-position: -108px -62px;
+}
+
+.loginbox .external .renren {
+  background-position: -216px 0;
+}
+
+.loginbox .renren:hover {
+  background-position: -216px -31px;
+}
+
+.loginbox .renren:active {
+  background-position: -216px -62px;
+}
+
+.loginbox .external .baidu {
+  background-position: -324px 0;
+}
+
+.loginbox .baidu:hover {
+  background-position: -324px -31px;
+}
+
+.loginbox .baidu:active {
+  background-position: -324px -62px;
+}
+
+.loginbox .external .text {
+  color: #999;
+  font: 14px/18px 'simsun';
+}
+
+.loginbox .site {
+  float: left;
+  width: 270px;
+  margin: 34px 0 0 35px;
+  _display: inline;
+}
+
+.loginbox form {
+  margin-left: 10px;
+}
+
+.loginbox .errorinfo {
+  width: 259px;
+  height: 22px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 5px;
+  line-height: 21px;
+  visibility: hidden;
+  background: url('../images/loginBox/loginBox.png') no-repeat 0 -286px;
+}
+
+.loginbox .show {
+  visibility: visible;
+}
+
+.loginbox .email {
+  //width: 215px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 3px 0 42px;
+  margin-bottom: 17px;
+  background: url('../images/loginBox/loginBox.png') no-repeat 0 -93px;
+}
+
+.loginbox .email.emailfocus {
+  background-position: 0 -125px;
+}
+
+.loginbox .email.emailerror {
+  background-position: 0 -157px;
+}
+
+.loginbox .email input {
+  width: 213px;
+  *margin-left: -10px;
+  *margin-top: 8px;
+}
+
+.loginbox .password {
+  //width: 215px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 3px 0 42px;
+  margin-bottom: 18px;
+  background: url('../images/loginBox/loginBox.png') no-repeat 0 -189px;
+}
+
+.loginbox .password.focus {
+  background-position: 0 -221px;
+}
+
+.loginbox .password.error {
+  background-position: 0 -253px;
+}
+
+.loginbox .password input {
+  //width: 213px;
+  *margin-left: -10px;
+  *margin-top: 8px;
+}
+
+.loginbox .autologin {
+  float: left;
+  color: #999;
+  margin-bottom: 14px;
+  *margin-bottom: -2px;
+}
+
+.loginbox .autologin input {
+  margin: 2px 6px 0 4px;
+  vertical-align: top;
+  *margin-top: -1px;
+  cursor: pointer;
+}
+
+.loginbox .autologin label {
+  cursor: pointer;
+}
+
+.loginbox .forgot {
+  float: right;
+  margin-right: 3px;
+  color: #690;
+  _display: inline;
+}
+
+.loginbox .submit:hover {
+  background-position: -261px -126px;
+}
+
+.loginbox .submit {
+  float: left;
+  width: 87px;
+  height: 33px;
+  clear: left;
+  cursor: pointer;
+  text-indent: -999em;
+  background: url('../images/loginBox/loginBox.png') no-repeat -261px -93px;
+}
+
+.loginbox .submit:active {
+  background-position: -261px -159px;
+}
+
+.loginbox .reg {
+  float: right;
+  line-height: 31px;
+  margin-right: -8px;
+  color: #666;
+}
+
+.loginbox .reg a {
+  color: #690;
+}
+
+//
+
+
+.dialog {
+  position: fixed;
+  display: none;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+  border-radius: 3px;
+  background-color: #fff;
+  _position: absolute;
+  -moz-box-shadow: 0 0 15px #000;
+  -webkit-box-shadow: 0 0 15px #000;
+  box-shadow: 0 0 15px #000;
+  border: 1px solid #ececec;
+}
+.dialog .dialog_title {
+  height: 30px;
+  line-height: 30px;
+  text-indent: 15px;
+  color: #666;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #eee;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  position: relative;
+}
+.dialog .ico_close {
+  top: 2px;
+}
+.auth_dialog_loading {
+  padding: 50px;
+  text-align: center;
+}
+.auth_dialog_tip {
+  color: #9cf;
+  font-size: 12px;
+  font-family: "\5b8b\4f53";
+  padding: 7px 0 0 41px;
+  margin-bottom: 9px;
+}
+.auth_dialog_component {
+  margin-top: 5px;
+}
+.auth_dialog_component .auth_dialog_head .auth_dialog_title {
+  line-height: 26px;
+}
+.auth_dialog_grid_input .auth_dialog_backspace {
+  background:  #CCC url("/v2/images/modules/auth-dialog/auth_dialog_backspace.png") no-repeat 0 0;
+  border-right: 0 none;
+  cursor: pointer;
+  width: 40px;
+}
+.auth_dialog_grid_head {
+  padding-left: 20px;
+}
+.auth_dialog_component .auth_dialog_title {
+  font-size: 12px;
+  font-family: "\5b8b\4f53";
+  padding-right: 10px;
+  line-height: 33px;
+}
+.auth_dialog_component .auth_dialog_input_wrap {
+  display: inline-block;
+  position: relative;
+}
+.auth_dialog_grid_head div {
+  float: left;
+}
+.auth_dialog_component .auth_dialog_grid_content {
+  padding: 10px 0 20px 20px;
+}
+.auth_dialog_component .auth_dialog_grid_content a:hover {
+  color: #333;
+  text-decoration: underline;
+}
+.auth_dialog_component .auth_dialog_grid_input {
+  border: 1px solid #CCCCCC;
+}
+.auth_dialog_grid_input div {
+  border-right: 1px solid #DDDDDD;
+  height: 40px;
+  width: 54px;
+  background: #fff;
+}
+.auth_dialog_img {
+  background-position: 0 0;
+  display: inline-block;
+  height: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
+  width: 145px;
+}
+.auth_dialog_help {
+  margin: 9px 20px 0 0;
+  text-align: center;
+}
+.auth_dialog_buttons {
+  margin: 12px 0 0 45px;
+  width: 190px;
+}
+.auth_dialog_buttons a {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: -moz-linear-gradient(center top, #FFFFFF, #FAFAFA) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border-color: #fff #fff #fff;
+  border-image: none;
+  border-style: solid;
+  border-width: 1px;
+  display: block;
+  float: left;
+  height: 40px;
+  margin: 0 1px 1px 0;
+  outline: 0 none;
+  width: 54px;
+}
+.auth_dialog_buttons div {
+  cursor: pointer;
+  height: 40px;
+  width: 54px;
+}
+
+.ico_close:hover {
+  background-position: 0 -640px;
+}
+.ico20_comma_l, .ico20_comma_r, .ico20_decline, .ico20_exchange, .ico20_rise, .ico20_v_unfold, .ico_close {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: -9999em;
+  background: url(../images/base/icon/ico20_1113.png) no-repeat;
+  z-index: 10;
+}
+.g_select_l, .g_select_r, .ico_close, .select_area_down {
+  position: absolute;
+}
+
+*, :after, :before {
+  box-sizing: border-box;
+}
+.ico_close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  height: 18px;
+  background-position: 0 -620px;
+}
+
+button, input, select, textarea {
+  outline: 0;
+}
+.loginbox .email, .loginbox .password {
+  height: 32px;
+  line-height: 32px;
+  padding: 0 3px 0 42px;
+}

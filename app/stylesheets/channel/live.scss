@@ -1,0 +1,83 @@
+// 频道直播页面
+
+.channel-live {
+  //.live-room-wrap {
+  #anchorCtrlChat {
+    .chatCon {
+      height: 560px;
+    }
+  }
+  //}
+
+  .aside-right {
+    background-color: #fff;
+    height: 698px;
+    overflow: hidden;
+    .tab-header {
+      a {
+        width: 50%;
+        height: 36px;
+        display: inline-block;
+        text-align: center;
+        background-color: #f0f0f0;
+        line-height: 31px;
+        border-top: 5px solid #f0f0f0;
+        color: $main-font-light-color;
+        &.active {
+          border-top: 5px solid $main-bg-purple;
+          background-color: #fff;
+          color: $main-bg-purple;
+        }
+      }
+    }
+
+    .tab-content-video-list {
+      height: 662px;
+      overflow-y: auto;
+      .item {
+        border-bottom: 1px solid $main-line-color;
+        padding: 10px 0;
+        .time {
+          text-align: center;
+          color: $main-font-light-color;
+        }
+        .detail {
+          position: relative;
+          width: 180px;
+          word-break: break-all;
+          white-space: normal;
+          font-size: 12px;
+
+          .icon-play {
+            position: absolute;
+            top: 50%;
+            right: -26px;
+            margin-top: -8px;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url(../images/liveroom/channel_playing_03.png) no-repeat;
+          }
+        }
+        &.active {
+          background-color: $main-bg-purple;
+          .time {
+            color: #bfcefd;
+          }
+          .detail {
+            color: #fff;
+          }
+          .icon-play {
+            display: inline-block;
+          }
+        }
+      }
+
+    }
+
+    .tab-content-chat {
+
+    }
+  }
+
+}

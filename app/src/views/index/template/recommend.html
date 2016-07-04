@@ -1,0 +1,32 @@
+<!-- <div class="top-content">
+  <h1 class="top-title">直播频道</h1>
+  <div class="top-flash-content" id="topFlash">
+    {{if data.status === 1}}
+      <img src="{{data.posterPic}}" width="100%" height="100%"/>
+    {{/if}}
+  </div>
+  <div class="top-go-home">
+    <div class="go-home-title">{{data.roomName}}</div>
+    {{if data.status !== 1}}
+      <div class="go-livehome" data-id="{{data.id}}" data-status="{{data.status}}">进入房间</div>
+    {{/if}}
+  </div>
+</div> -->
+<div class="am-container has-top-bar">
+  <section class="living">
+    <header class="am-vertical-align"><span class="am-vertical-align-middle am-serif">直播频道</span></header>
+    <div class="am-cf">
+      <div class="live-viedo am-fl">
+        <div id="topFlash" class="viedo-wrap"></div>
+        <footer class="am-fl"><span id="viedoName" class="title">EXO2222</span>
+          <button id="btnGoLiveRoom" data-id="0" data-status="1" class="gotoLiveHome am-fr am-btn am-radius am-btn-red">进入直播间</button>
+        </footer>
+      </div>
+      <aside class="viedo-list am-fr">
+        <ul id="livingList">
+          <!-- 视频列表-->
+        </ul>
+      </aside>
+    </div>
+  </section>
+</div>

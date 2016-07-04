@@ -1,0 +1,20 @@
+# /node_modules and /bower_components ignored by default
+
+node_modules/**
+app/link/**
+bower_components/**
+app/extend/**
+
+# Ignore files compiled from TypeScript and CoffeeScript
+**/*.{ts,coffee}.js
+
+# Ignore built files except build/index.js
+.idea/**
+app/www/**
+app/images/**
+bin/**
+test/
+app/src/module/crypto/
+app/src/module/msgBox/
+tools.js
+gulpfile.js
