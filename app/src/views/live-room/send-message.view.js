@@ -87,7 +87,12 @@ var View = BaseView.extend({
   },
   sendMsgClick: function () {
     var self = this;
-    if (this.elements.txtMessage.val() < 1) {
+    var len = $.trim(this.elements.txtMessage.val()).length;
+    if (len < 1) {
+      return '';
+    }
+    if (len > 20) {
+      msgBox.showTip('发言文字已经超过20个字!');
       return '';
     }
     if (!this.canSendNow) {
