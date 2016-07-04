@@ -262,6 +262,9 @@ var View = BaseView.extend({
           break;
         case 4: //  清屏
           self.addMessage(msgObj);
+          self.FlashApi.onReady(function () {
+            this.notifying(msgObj);
+          });
           break;
           // 解锁屏幕
         case 5:
