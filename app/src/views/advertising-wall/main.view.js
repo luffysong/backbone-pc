@@ -83,7 +83,6 @@ var View = BaseView.extend({
       totalMarks: 0,
       userInfo: {}
     }, ops);
-    console.log('32333333333', this.options);
     this.defineEventInterface();
     this.lastTime = new Date();
     // 隐藏未读小红点
