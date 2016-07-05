@@ -244,7 +244,7 @@ var View = BaseView.extend({
     if (target) {
       var txt = target.text();
       // 积分
-      target.text(~~txt + 10);
+      target.text(~~txt + 20);
     }
   }
 });

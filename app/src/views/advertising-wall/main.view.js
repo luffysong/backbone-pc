@@ -45,7 +45,7 @@ var View = BaseView.extend({
     };
 
     // 循环接口时间
-    this.loopTime = 60 * 1000;
+    this.loopTime = 15 * 1000;
 
     this.listParams = _.extend({}, this.queryParams);
 
@@ -83,6 +83,7 @@ var View = BaseView.extend({
       totalMarks: 0,
       userInfo: {}
     }, ops);
+    console.log('32333333333', this.options);
     this.defineEventInterface();
     this.lastTime = new Date();
     // 隐藏未读小红点
@@ -364,7 +365,8 @@ var View = BaseView.extend({
   loopGetUnreadCount: function () {
     var self = this;
     var promise = this.loopModel.executeJSONP(_.extend({
-      roomId: self.options.roomId,
+      subType: this.options.type,
+      subId: self.options.roomId,
       lastTime: self.lastTime.getTime()
     }, this.queryParams));
     promise.done(function (res) {
