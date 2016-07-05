@@ -139,7 +139,7 @@ var View = BaseView.extend({
       self.appendToNewestList(res.data.list || []);
       if (res && res.code === '0') {
         self.pageParams.newList = {
-          nextCursor: res.data.nextCursor || null,
+          cursor: res.data.nextCursor || null,
           hasNext: res.data.hasNext || false
         };
       }

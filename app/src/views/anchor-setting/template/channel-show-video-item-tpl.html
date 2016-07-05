@@ -1,0 +1,13 @@
+{{each data as item}}
+<tr>
+  <td>{{item.videoId}}</td>
+  <td>{{item.videoName}}</td>
+  <!-- <td>2012-10-01</td> -->
+</tr>
+{{/each}}
+
+{{if data.length <= 0}}
+<tr>
+  <td colspan="3">暂无数据</td>
+</tr>
+{{/if}}

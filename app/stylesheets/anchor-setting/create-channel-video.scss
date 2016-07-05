@@ -11,9 +11,22 @@
   .table-wrap {
     max-height: 400px;
     overflow-y: scroll;
+    tr{
+      cursor: pointer;
+    }
+  }
+
+  .tip{
+    font-size: 12px;
+    color: $main-bg-red;
   }
 
 }
 .create-channel-play-form {
+  font-size: 14px;
   width: 400px;
+  .add-tip{
+    font-size: 12px;
+    color: $main-bg-red;
+  }
 }
