@@ -8,7 +8,6 @@ $main-bg-red: #ff6666;
 $main-hover-red: #fe7373;
 $main-font-light-color: #999;
 $main-font-light-color2: #5c5c5c;
-
 $main-line-color: #d9d9d9;
 $main-text-color: #C5C5C5;
 $main-name-color: #666;
@@ -16,7 +15,6 @@ $main-title-color: #7a7a7a;
 $main-top-bar-bg-color: #4b46a0;
 $index-title-color: #333;
 $main-top-bar-height: 50px;
-
 body {
   font-size: 14px;
   background: $main-bg-theme-color;
@@ -837,37 +835,37 @@ img {
   //    background-image: url(../images/base/icon/pupup_close_03.png);
   //  }
   //}
-  &.am-yyt-close{
+  &.am-yyt-close {
     width: 24px;
     height: 24px;
-    padding-left: 0!important;
+    padding-left: 0 !important;
   }
   &.close-gray {
     background-image: url("../images/base/icon/pupup_close_07.png");
   }
   &.close-white {
-    background-image: url(../images/icons/icons_close_white.png);
+    background-image: url("../images/icons/icons_close_white.png");
   }
   &.close-red {
-    background-image: url(../images/icons/icons_close_red.png);
+    background-image: url("../images/icons/icons_close_red.png");
   }
   &.close-blue {
-    background-image: url(../images/icons/icons_close_blue.png);
+    background-image: url("../images/icons/icons_close_blue.png");
   }
   &.close-black {
-    background-image: url(../images/icons/icons_close_black.png);
+    background-image: url("../images/icons/icons_close_black.png");
   }
-  &.paging-left{
-    background-image: url(../images/icons/paging_left.png);
+  &.paging-left {
+    background-image: url("../images/icons/paging_left.png");
   }
-  &.paging-left:hover{
-    background-image: url(../images/icons/paging_left_hover.png);
+  &.paging-left:hover {
+    background-image: url("../images/icons/paging_left_hover.png");
   }
-  &.paging-right{
-    background-image: url(../images/icons/paging_right.png);
+  &.paging-right {
+    background-image: url("../images/icons/paging_right.png");
   }
-  &.paging-right:hover{
-    background-image: url(../images/icons/paging_right_hover.png);
+  &.paging-right:hover {
+    background-image: url("../images/icons/paging_right_hover.png");
   }
 }
 .disabled {
@@ -888,17 +886,24 @@ img {
   padding-left: 16px;
   margin-top: 60px;
 }
+.am-btn {
+  &:active,
+  &:focus,
+  &:hover {
+    outline: inherit!important;
+    outline-offset: inherit;
+  }
+}
 //紫色按钮
 .am-btn-purple {
   background-color: $main-bg-purple;
   color: #fff;
   border-color: $main-bg-purple;
+  &:active,
   &:focus,
   &:hover {
     color: #fff;
     background-color: #839ae9;
-    outline: inherit!important;
-    outline-offset: inherit;
   }
 }
 .am-btn-red {
@@ -910,12 +915,8 @@ img {
   &:hover {
     color: #fff;
     background-color: #fd7b7b;
-    outline: inherit!important;
-    outline-offset: inherit;
   }
 }
-
-
 $rgba-color-black: rgba(0, 0, 0, 0.6);
 $rgba-color-white: rgba(255, 255, 255, 0);
 :root .gradient-up {
@@ -926,7 +927,7 @@ $rgba-color-white: rgba(255, 255, 255, 0);
 }
 .gradient {
   background: rgba(0, 0, 0, .5);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr= '#66000000', EndColorStr='#66000000');
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=  '#66000000', EndColorStr='#66000000');
 }
 .gradient-up {
   background: $rgba-color-black;
@@ -936,7 +937,7 @@ $rgba-color-white: rgba(255, 255, 255, 0);
   background: -o-linear-gradient(bottom, $rgba-color-black 0%, $rgba-color-black 100%);
   background: -ms-linear-gradient(bottom, $rgba-color-black 0%, $rgba-color-white 100%);
   background: linear-gradient(to top, $rgba-color-black 0%, $rgba-color-white 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr= '#000000', endColorstr='#ffffff', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=  '#000000', endColorstr='#ffffff', GradientType=0);
 }
 .box-shadow-bottom {
   box-shadow: rgba(0, 0, 0, 0.6) 0 0 107px 12px inset;

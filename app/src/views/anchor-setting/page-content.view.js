@@ -6,6 +6,8 @@ var storage = base.storage;
 var CreateLiveView = require('./create-live-video.view');
 var NoOpenListView = require('./no-open-list.view');
 var HistoryListView = require('./history-list.view');
+var ChannelVideoMainView = require('./channel-video-main.view');
+
 var UIconfirm = require('ui.confirm');
 var Auxiliary = require('auxiliary-additions');
 var URL = Auxiliary.url;
@@ -54,6 +56,7 @@ var View = BaseView.extend({
       this.noopenListView = new NoOpenListView();
       this.historyListView = new HistoryListView();
       this.createLiveView = new CreateLiveView();
+      this.channelVideoMainView = new ChannelVideoMainView();
     }
     this.followingView = new FollowingView();
     this.recordListView = new RecordLiveView();
@@ -158,6 +161,9 @@ var View = BaseView.extend({
       ];
       this.menuList.list.push({
         name: '个人设置', pannel: 'tabSetting'
+      });
+      this.menuList.list.push({
+        name: '频道节目单', pannel: 'tabChannel'
       });
     } else {
       this.menuList.list = [
