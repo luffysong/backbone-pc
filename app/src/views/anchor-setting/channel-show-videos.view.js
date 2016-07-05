@@ -150,7 +150,12 @@ var View = BaseView.extend({
     console.log(action);
     var self = this;
     if (action === 'publish') {
-      console.log(23);
+      uiConfirm.show({
+        content: '您确定要发布:<b>' + data.name + '</b>吗?',
+        okFn: function () {
+          self.publishShow(data);
+        }
+      });
     } else if (action === 'delete') {
       uiConfirm.show({
         content: '您确定要删除:<b>' + data.name + '</b>吗?',
@@ -178,17 +183,35 @@ var View = BaseView.extend({
       if (res && res.code === '0') {
         msgBox.showOK('成功删除该节目单');
         self.$el.find('tr[data-showid="' + data.id + '"]').remove();
-        // if( $('tr[class="am-active"]'))
-        self.renderVideoList({
-          id: 0
-        });
+        if (~~$('tr[class="am-active"]').data('showid') === ~~data.id) {
+          self.renderVideoList({
+            id: 0
+          });
+        }
       } else {
         msgBox.showError(res.msg || '删除节目单失败，稍后重试');
       }
     });
   },
   // 发布节目单
-  publishShow: function () {}
+  publishShow: function (showInfo) {
+    console.log(showInfo);
+    var params = _.extend({
+      channelId: this.channelInfo.channelId,
+      showId: showInfo.id
+    }, this.queryParams);
+    this.publishShowModel.executeJSONP(params).done(function (res) {
+      if (res && res.code === '0') {
+        msgBox.showOK('成功发布该节目单');
+        $('tr[data-showid="' + showInfo.id + '"]')
+          .children(':eq(2)').html('<span>已发布</span>');
+      } else {
+        msgBox.showError(res.msg || '发布节目单失败，稍后重试');
+      }
+    }).fail(function () {
+      msgBox.showError('发布节目单失败，稍后重试');
+    });
+  }
 });
 
 module.exports = View;

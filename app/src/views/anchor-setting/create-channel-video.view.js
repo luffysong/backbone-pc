@@ -86,6 +86,10 @@ var View = BaseView.extend({
       msgBox.showTip('请先选择一个频道!!!');
       return;
     }
+    if (this.isSaving) {
+      return;
+    }
+    this.isSaving = true;
     this.createModel.executeJSONP(_
         .extend({
           channelId: this.channelInfo.channelId
@@ -96,8 +100,10 @@ var View = BaseView.extend({
           msgBox.showOK('节目单添加成功');
           Backbone.trigger('event:ChannelShowAdded');
           self.resetForm();
+          self.isSaving = false;
         } else {
           msgBox.showError(res.msg || '节目单创建失败，请稍后重试!');
+          self.isSaving = false;
         }
       });
   },
