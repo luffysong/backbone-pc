@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 var storage = base.storage;
@@ -48,7 +49,8 @@ var View = BaseView.extend({
     this.menuWrap = $('#tab-menu-ctrl');
     this.menuTpl = $('#menuTpl').text();
   },
-  ready: function () {
+  ready: function (ops) {
+    this.options = _.extend({}, ops);
     this.menuWrap.on('click', this.menuChanged.bind(this));
     this.initMenu();
     //  初始化
@@ -145,35 +147,40 @@ var View = BaseView.extend({
    */
   initMenu: function () {
     if (imModel.isAnchor()) {
-      this.menuList.list = [
-        {
-          name: '我的直播', pannel: 'tab-my-live', active: true
-        },
-        {
-          name: '创建直播', pannel: 'createLiveVideo'
-        },
-        {
-          name: '观看记录', pannel: 'recordList', active: true
-        },
-        {
-          name: '我的关注', pannel: 'followingList'
-        }
-      ];
+      this.menuList.list = [{
+        name: '我的直播',
+        pannel: 'tab-my-live',
+        active: true
+      }, {
+        name: '创建直播',
+        pannel: 'createLiveVideo'
+      }, {
+        name: '观看记录',
+        pannel: 'recordList',
+        active: true
+      }, {
+        name: '我的关注',
+        pannel: 'followingList'
+      }];
       this.menuList.list.push({
-        name: '个人设置', pannel: 'tabSetting'
+        name: '个人设置',
+        pannel: 'tabSetting'
       });
-      this.menuList.list.push({
-        name: '频道节目单', pannel: 'tabChannel'
-      });
+      if (this.options.parent.anchorSig.anchor.roleType === 2) {
+        this.menuList.list.push({
+          name: '频道节目单',
+          pannel: 'tabChannel'
+        });
+      }
     } else {
-      this.menuList.list = [
-        {
-          name: '观看记录', pannel: 'recordList', active: true
-        },
-        {
-          name: '我的关注', pannel: 'followingList'
-        }
-      ];
+      this.menuList.list = [{
+        name: '观看记录',
+        pannel: 'recordList',
+        active: true
+      }, {
+        name: '我的关注',
+        pannel: 'followingList'
+      }];
     }
     // this.menuList.list.push({
     //   name: '退出', pannel: 'signout'

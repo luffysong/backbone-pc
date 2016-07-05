@@ -93,15 +93,13 @@ var View = BaseView.extend({
       closeText: 'X',
       title: '背景设置',
       ctrlData: {
-        cmd: [
-          {
-            saveOriginal: 1,
-            op: 'save',
-            plan: 'avatar',
-            belongId: '20634338',
-            srcImg: 'img'
-          }
-        ],
+        cmd: [{
+          saveOriginal: 1,
+          op: 'save',
+          plan: 'avatar',
+          belongId: '20634338',
+          srcImg: 'img'
+        }],
         redirect: 'http://' + window.location.host + '/cross-url/upload.html'
       },
       uploadFileSuccess: function (response) {
@@ -145,8 +143,6 @@ var View = BaseView.extend({
     var promise = imModel.fetchIMUserSig();
     promise.done(function (sig) {
       if (!sig.anchor) {
-        //  console.log('跳转走人');
-        // storage.remove('imSig');
         //  跳转走人
         self.initRender();
       } else {
