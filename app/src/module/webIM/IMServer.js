@@ -25,10 +25,11 @@ var imServer = {
  * 初始化
  * @param options
  */
-imServer.init = function (options) {
+imServer.init = function (listeners) {
   var self = this;
-  var defer = imModel.fetchIMUserSig();
-  defer.then(function (imSig) {
+  var defer = $.Deferred();
+  var promise = imModel.fetchIMUserSig();
+  promise.then(function (imSig) {
     var loginInfo = {
       sdkAppID: imSig.imAppid, // 用户所属应用id
       appIDAt3rd: imSig.imAppid, // 用户所属应用id
@@ -37,13 +38,23 @@ imServer.init = function (options) {
       userSig: imSig.userSig // 当前用户身份凭证
     };
     self.im = imSig;
-    if (imSig && options) {
+    if (imSig && listeners) {
       // 腾讯IM初始化
-      webim.init(loginInfo, options, null);
+      // webim.init(loginInfo, listeners, null);
+      webim.login(loginInfo, listeners, null, function () {
+        defer.resolve();
+      }, function (err) {
+        console.log(err);
+        defer.reject();
+      });
+    } else {
+      defer.reject();
     }
   }, function (err) {
     console.log(err);
+    defer.reject();
   });
+  return defer.promise();
 };
 
 /**

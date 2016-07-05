@@ -94,7 +94,7 @@ var View = BaseView.extend({
     }
 
     // 注册IM事件处理
-    imServer.init({
+    return imServer.init({
       onConnNotify: function (notifyInfo) {
         Backbone.trigger('event:onConnNotify', notifyInfo);
       },
@@ -120,22 +120,26 @@ var View = BaseView.extend({
       }
     });
   },
+  goLogin: function () {
+    store.remove('imSig');
+    store.set('signout', 1);
+    window.location.href = '/login.html';
+  },
   /**
    * 校验用户
    */
   userVerify: function () {
     var self = this;
 
+
     if (user.isLogined()) {
-      self.initWebIM();
-
-      // self.initGiftList();
-
-      self.initRoom();
+      self.initWebIM().then(function () {
+        self.initRoom();
+      }, function () {
+        self.goLogin();
+      });
     } else {
-      store.remove('imSig');
-      store.set('signout', 1);
-      window.location.href = '/login.html';
+      self.goLogin();
     }
   },
   checkRoomAccess: function () {

@@ -48,6 +48,8 @@ var View = BaseView.extend({
     if (!url.query.roomId && !url.query.channelId) {
       window.history.go(-1);
     }
+
+
     this.roomId = url.query.roomId || 1;
 
     this.roomInfoPeriod = 5 * 1000;
@@ -91,8 +93,12 @@ var View = BaseView.extend({
       el: 'broadCastFlash'
     });
     // this.initRoom();
-    this.renderPage();
-    this.getUserInfo();
+    this.initWebIM().then(function () {
+      this.renderPage();
+      this.getUserInfo();
+    }.bind(this), function () {
+      console.log(222);
+    });
   },
   defineEventInterface: function () {
     var self = this;
@@ -140,7 +146,7 @@ var View = BaseView.extend({
   userJoinGroup: function (sig, groupId) {
     var self = this;
     self.userIMSig = sig;
-    self.initWebIM();
+    // self.initWebIM();
 
     YYTIMServer.applyJoinGroup(groupId, function () {
       // TODO
@@ -219,7 +225,7 @@ var View = BaseView.extend({
     }
 
     // 注册IM事件处理
-    YYTIMServer.init({
+    return YYTIMServer.init({
       onConnNotify: function (notifyInfo) {
         Backbone.trigger('event:onConnNotify', notifyInfo);
       },

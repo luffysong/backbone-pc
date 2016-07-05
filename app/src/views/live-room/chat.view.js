@@ -13,6 +13,7 @@
 
 var Backbone = window.Backbone;
 var _ = require('underscore');
+var webim = window.webim;
 var base = require('base-extend-backbone');
 var BaseView = base.View; // View的基类
 
@@ -168,13 +169,13 @@ var View = BaseView.extend({
     // if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
     if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
       var elem = notifyInfo.elems[0];
-      if (elem.type === 'TIMCustomElem') {
-        msgObj = elem.content.data;
+      if (elem.getType() === webim.MSG_ELEMENT_TYPE.CUSTOM) {
+        // if (elem.type === 'TIMCustomElem') {
+        msgObj = elem.getContent().data;
       } else if (elem.type === 'TIMGroupTipElem') {
         msgObj = elem.content.groupInfoList[0];
       } else {
         msgObj = elem.content.text + '';
-        // msgObj = msgObj.replace(/&quot;/g, '\'');
         msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
       }
       try {
