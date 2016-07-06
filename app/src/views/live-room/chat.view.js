@@ -262,9 +262,11 @@ var View = BaseView.extend({
         break;
       case 6:
         this.lockOrUnlock(true);
+        callback(msgObj);
         break;
       case 7:
         this.lockOrUnlock(false);
+        callback(msgObj);
         break;
       default:
         break;
