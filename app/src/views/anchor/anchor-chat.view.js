@@ -275,6 +275,7 @@ var View = BaseView.extend({
         self.addMessage(msgObj);
         break;
       case 2: // 公告
+        $('#noticeWrap').text(msgObj.content || '暂无公告');
         break;
       case 3: // 点赞
         msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
@@ -288,8 +289,13 @@ var View = BaseView.extend({
           this.notifying(msgObj);
         });
         break;
-        // 解锁屏幕
+        // 禁言
       case 5:
+        self.addMessage(msgObj);
+        break;
+      case 6:
+      case 7:
+        $('#btn-lock').find('span').text(msgObj.msgType === 6 ? '解屏' : '锁屏');
         self.addMessage(msgObj);
         break;
       default:

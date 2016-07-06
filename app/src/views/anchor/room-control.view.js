@@ -101,7 +101,6 @@ var View = BaseView.extend({
           smallAvatar: '',
           msgType: 4,
           content: '进行了清屏操作'
-            // content: (self.assistant ? '场控' : '主播') + '已清屏'
         };
         self.FlashApi.onReady(function () {
           this.notifying(msg);

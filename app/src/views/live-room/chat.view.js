@@ -166,18 +166,15 @@ var View = BaseView.extend({
   onMsgNotify: function (notifyInfo) {
     var self = this;
     var msgObj = {};
-    // var notifyInfo = notifyInfo;
-    console.log(notifyInfo, notifyInfo.getElems());
 
     var elems = notifyInfo.getElems(); // 获取消息包含的元素数组
     for (var i = 0, j = elems.length; i < j; i++) {
-      // if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
       var elem = notifyInfo.elems[0];
       var type = elem.getType(); // 获取元素类型
       if (type === webim.MSG_ELEMENT_TYPE.CUSTOM) {
         msgObj = elem.getContent().data;
       } else if (type === 'TIMGroupTipElem') {
-        msgObj = elem.content.groupInfoList[0];
+        msgObj = elem.content.data;
       } else {
         msgObj = elem.content.text + '';
         msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
@@ -263,6 +260,12 @@ var View = BaseView.extend({
       case 5: //  禁言
         Backbone.trigger('event:forbidUserSendMsg', msgObj);
         break;
+      case 6:
+        this.lockOrUnlock(true);
+        break;
+      case 7:
+        this.lockOrUnlock(false);
+        break;
       default:
         break;
     }
@@ -283,6 +286,12 @@ var View = BaseView.extend({
       notify.isEvent = true;
       Backbone.trigger('event:UserKickOut', notify);
     }
+  },
+  lockOrUnlock: function (isLock) {
+    UserInfo.setLockScreen(this.roomInfo.id, isLock);
+    var msg = '主播进行了' + (isLock ? '锁屏' : '解屏') + '操作';
+    msgBox.showTip(msg);
+    Backbone.trigger('event:LockScreen', isLock);
   },
   groupSystemNotifys: function () {},
   /**
