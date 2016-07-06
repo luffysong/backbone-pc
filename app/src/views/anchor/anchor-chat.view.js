@@ -217,65 +217,83 @@ var View = BaseView.extend({
   },
   // 腾讯IM消息到达回调
   onMsgNotify: function (notifyInfo) {
-    var self = this;
-    var msgObj = {};
+    var elems;
     var elem;
-    var giftName;
-
-    if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
-      elem = notifyInfo.elems[0];
-      // if (elem.type === 'TIMCustomElem') {
-      if (elem.getType() === webim.MSG_ELEMENT_TYPE.CUSTOM) {
-        // msgObj = elem.content.data;
-        msgObj = elem.getContent().data;
-      } else {
-        msgObj = elem.content.text + '';
-        // msgObj = msgObj.replace(/&quot;/g, '\'');
-        msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
-      }
-      try {
-        // eval('msgObj = ' + msgObj);
-        msgObj = JSON.parse(msgObj);
-      } catch (e) {
-        console.log(e);
-      }
-      if (!_.isObject(msgObj)) {
-        return;
-      }
-      msgObj.fromAccount = notifyInfo.fromAccount;
-
-      switch (msgObj.msgType) {
-        case 0: // 文本消息
-          self.addMessage(msgObj);
+    var type;
+    var content;
+    elems = notifyInfo.getElems(); // 获取消息包含的元素数组
+    for (var i = 0, j = elems.length; i < j; i++) {
+      elem = elems[i];
+      type = elem.getType(); // 获取元素类型
+      content = elem.getContent(); // 获取元素对象
+      switch (type) {
+        case webim.MSG_ELEMENT_TYPE.TEXT:
           break;
-        case 1: // 发送礼物
-          giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
-          msgObj.content = '<b>' + msgObj.nickName + '</b>发来' + giftName + '!';
-          msgObj.nickName = '消息';
-          msgObj.smallAvatar = '';
-          self.addMessage(msgObj);
+        case webim.MSG_ELEMENT_TYPE.FACE:
           break;
-        case 2: // 公告
+        case webim.MSG_ELEMENT_TYPE.IMAGE:
           break;
-        case 3: // 点赞
-          msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
-          msgObj.nickName = '消息';
-          msgObj.smallAvatar = '';
-          self.addMessage(msgObj);
+        case webim.MSG_ELEMENT_TYPE.SOUND:
           break;
-        case 4: //  清屏
-          self.addMessage(msgObj);
-          self.FlashApi.onReady(function () {
-            this.notifying(msgObj);
-          });
+        case webim.MSG_ELEMENT_TYPE.FILE:
           break;
-          // 解锁屏幕
-        case 5:
-          self.addMessage(msgObj);
+        case webim.MSG_ELEMENT_TYPE.CUSTOM:
+          this.parseMsgToChatList(content, notifyInfo);
+          break;
+        case webim.MSG_ELEMENT_TYPE.GROUP_TIP:
           break;
         default:
+          webim.Log.error('未知消息元素类型: elemType=' + type);
           break;
       }
+    }
+  },
+  parseMsgToChatList: function (content, msg) {
+    var msgObj;
+    var giftName;
+    var self = this;
+    try {
+      msgObj = JSON.parse(content.data);
+    } catch (e) {
+      console.log(e);
+    }
+    if (!_.isObject(msgObj)) {
+      return;
+    }
+    msgObj.fromAccount = msg.fromAccount;
+    var date = new Date(webim.Tool.formatTimeStamp(msg.getTime()));
+    msgObj.time = BusinessDate.format(date, 'hh:mm:ss');
+    switch (msgObj.msgType) {
+      case 0: // 文本消息
+        self.addMessage(msgObj);
+        break;
+      case 1: // 发送礼物
+        giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
+        msgObj.content = '<b>' + msgObj.nickName + '</b>发来' + giftName + '!';
+        msgObj.nickName = '消息';
+        msgObj.smallAvatar = '';
+        self.addMessage(msgObj);
+        break;
+      case 2: // 公告
+        break;
+      case 3: // 点赞
+        msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
+        msgObj.nickName = '消息';
+        msgObj.smallAvatar = '';
+        self.addMessage(msgObj);
+        break;
+      case 4: //  清屏
+        self.addMessage(msgObj);
+        self.FlashApi.onReady(function () {
+          this.notifying(msgObj);
+        });
+        break;
+        // 解锁屏幕
+      case 5:
+        self.addMessage(msgObj);
+        break;
+      default:
+        break;
     }
   },
   initGiftList: function () {
@@ -308,8 +326,10 @@ var View = BaseView.extend({
       nickName: '',
       content: '',
       smallAvatar: '',
-      time: self.getDateStr(new Date()),
       userId: ''
+    }, {
+      time: BusinessDate.format(new Date, 'hh:mm:ss'),
+      fromAccount: ''
     }, msgObj);
     if (msgObj && msgObj.roomId !== self.roomInfo.id) {
       return;
@@ -360,14 +380,8 @@ var View = BaseView.extend({
     Backbone.on('event:onMsgNotify', function (notifyInfo) {
       if (_.isArray(notifyInfo)) {
         _.each(notifyInfo, function (item) {
-          if (item.hasOwnProperty('msg')) {
-            if (item.msg.isSend === false) {
-              self.onMsgNotify(item.msg);
-            }
-          } else if (item.hasOwnProperty('isSend')) {
-            if (item.isSend === false) {
-              self.onMsgNotify(item);
-            }
+          if (!item.getIsSend()) {
+            self.onMsgNotify(item);
           }
         });
       } else if (_.isObject(notifyInfo)) {
@@ -381,6 +395,14 @@ var View = BaseView.extend({
     });
     Backbone.on('event:groupSystemNotifys', function (notifyInfo) {
       self.groupSystemNotifys(notifyInfo);
+    });
+
+    Backbone.on('event:clearAllScreen', function (msg) {
+      self.addMessage(msg);
+    });
+
+    Backbone.on('event:LockOrUnLock', function (msg) {
+      self.addMessage(msg);
     });
   },
   /**

@@ -31,6 +31,7 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 // 清屏,锁屏
 var RoomManagerView = require('./room-manager.view');
+var BusinessDate = require('BusinessDate');
 
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
@@ -86,7 +87,7 @@ var View = BaseView.extend({
         _.each(notifyInfo, function (item) {
           if (item.hasOwnProperty('msg')) {
             if (item.msg.isSend === false) {
-              self.onMsgNotify(item.msg);
+              self.onMsgNotify(item);
             }
           } else if (item.hasOwnProperty('isSend')) {
             if (item.isSend === false) {
@@ -165,14 +166,17 @@ var View = BaseView.extend({
   onMsgNotify: function (notifyInfo) {
     var self = this;
     var msgObj = {};
+    // var notifyInfo = notifyInfo;
+    console.log(notifyInfo, notifyInfo.getElems());
 
-    // if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
-    if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
+    var elems = notifyInfo.getElems(); // 获取消息包含的元素数组
+    for (var i = 0, j = elems.length; i < j; i++) {
+      // if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
       var elem = notifyInfo.elems[0];
-      if (elem.getType() === webim.MSG_ELEMENT_TYPE.CUSTOM) {
-        // if (elem.type === 'TIMCustomElem') {
+      var type = elem.getType(); // 获取元素类型
+      if (type === webim.MSG_ELEMENT_TYPE.CUSTOM) {
         msgObj = elem.getContent().data;
-      } else if (elem.type === 'TIMGroupTipElem') {
+      } else if (type === 'TIMGroupTipElem') {
         msgObj = elem.content.groupInfoList[0];
       } else {
         msgObj = elem.content.text + '';
@@ -187,6 +191,8 @@ var View = BaseView.extend({
       }
       if (_.isObject(msgObj)) {
         msgObj.fromAccount = notifyInfo.fromAccount;
+        var date = new Date(webim.Tool.formatTimeStamp(notifyInfo.getTime()));
+        msgObj.time = BusinessDate.format(date, 'hh:mm:ss');
 
         self.beforeSendMsg(msgObj, function (msg) {
           self.addMessage(msg);
@@ -299,7 +305,6 @@ var View = BaseView.extend({
   addMessage: function (msg) {
     var self = this;
     var msgObj;
-    // var roomId = this.roomInfo.id;
     msgObj = _.extend({
       nickName: '匿名',
       content: '',
@@ -309,9 +314,6 @@ var View = BaseView.extend({
       userId: ''
     }, msg);
 
-    // if (msgObj && msgObj.roomId !== roomId) {
-    //   return;
-    // }
     msgObj.content = self.filterEmoji(msgObj.content);
     if (msgObj && msgObj.content) {
       var tpl = _.template(this.getMessageTpl());
