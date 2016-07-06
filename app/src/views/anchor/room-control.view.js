@@ -166,7 +166,7 @@ var View = BaseView.extend({
         msgBox.showOK(txt + '成功!');
 
         Backbone.trigger('event:LockOrUnLock', msg);
-        imServer.sendMessage({
+        imServer.sendMsg({
           groupId: self.roomInfo.imGroupid,
           msg: msg
         });

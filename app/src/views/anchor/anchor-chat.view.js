@@ -213,7 +213,7 @@ var View = BaseView.extend({
           imServer.sendMessage({
             groupId: self.roomInfo.imGroupid,
             msg: msg
-          })
+          });
         } else {
           msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
         }
@@ -242,6 +242,7 @@ var View = BaseView.extend({
       content = elem.getContent(); // 获取元素对象
       switch (type) {
         case webim.MSG_ELEMENT_TYPE.TEXT:
+          this.parseMsgToChatList(content.text.replace(/&quot;/g, '"'), notifyInfo);
           break;
         case webim.MSG_ELEMENT_TYPE.FACE:
           break;
@@ -252,7 +253,7 @@ var View = BaseView.extend({
         case webim.MSG_ELEMENT_TYPE.FILE:
           break;
         case webim.MSG_ELEMENT_TYPE.CUSTOM:
-          this.parseMsgToChatList(content, notifyInfo);
+          this.parseMsgToChatList(content.data, notifyInfo);
           break;
         case webim.MSG_ELEMENT_TYPE.GROUP_TIP:
           break;
@@ -267,7 +268,7 @@ var View = BaseView.extend({
     var giftName;
     var self = this;
     try {
-      msgObj = JSON.parse(content.data);
+      msgObj = JSON.parse(content);
     } catch (e) {
       console.log(e);
     }

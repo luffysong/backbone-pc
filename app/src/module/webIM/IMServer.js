@@ -76,7 +76,6 @@ imServer.sendMessage = function (attrs, okFn, errFn) {
     msg = new webim.Msg.Elem('TIMCustomElem', {
       data: JSON.stringify(attrs.msg)
     });
-    // sendMsg.addText(msg);
     sendMsg.elems.push(msg);
     sendMsg.fromAccount = this.im.imIdentifier;
     webim.sendMsg(sendMsg, function (resp) {
@@ -89,6 +88,41 @@ imServer.sendMessage = function (attrs, okFn, errFn) {
       }
     });
   }
+};
+
+/**
+ * 1.4 版本发送消息
+ *  attrs.subType
+ *  attrs.msg.fromAccount
+ */
+imServer.sendMsg = function (attrs) {
+  console.log(attrs);
+  var defer = $.Deferred();
+  var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
+  var random = Math.round(Math.random() * 4294967296); // 消息随机数，用于去重
+
+  if (!currentSession) {
+    currentSession = new webim.Session(
+      webim.SESSION_TYPE.GROUP, attrs.groupId, attrs.groupId, '', random);
+  }
+  var seq = -1; // 消息序列，-1表示sdk自动生成，用于去重
+  var msgTime = Math.round(new Date().getTime() / 1000); // 消息时间戳
+  var subType = attrs.subType || webim.GROUP_MSG_SUB_TYPE.REDPACKET;
+  var msg = new webim.Msg(
+    currentSession,
+    true, seq, random, msgTime, attrs.msg.fromAccount, subType, '');
+  var textObj = new webim.Msg.Elem('TIMCustomElem', {
+    data: JSON.stringify(attrs.msg)
+  });
+  msg.fromAccount = this.im.imIdentifier;
+  msg.elems.push(textObj);
+  webim.sendMsg(msg, function (resp) {
+    defer.resolve(resp);
+  }, function (err) {
+    defer.reject(err);
+  });
+
+  return defer.promise();
 };
 
 
