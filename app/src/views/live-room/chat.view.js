@@ -268,6 +268,10 @@ var View = BaseView.extend({
         this.lockOrUnlock(false);
         callback(msgObj);
         break;
+      case 8:
+        self.checkUserCanJoinRoom();
+        callback(msgObj);
+        break;
       default:
         break;
     }

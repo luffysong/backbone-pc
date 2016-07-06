@@ -186,6 +186,14 @@ var View = BaseView.extend({
    */
   removeUserFromRoom: function (data) {
     var self = this;
+    var msg = {
+      roomId: self.roomInfo.id,
+      nickName: self.options.assistant ? '场控' : '主播',
+      smallAvatar: '',
+      msgType: 8, // 踢人
+      content: (self.options.assistant ? '场控' : '主播') + '将用户' + data.name + '踢出房间'
+    };
+
 
     function okCallback() {
       var options = {
@@ -202,9 +210,15 @@ var View = BaseView.extend({
       imServer.modifyGroupInfo(options, function (result) {
         if (result && result.ActionStatus === 'OK') {
           msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
+          imServer.sendMessage({
+            groupId: self.roomInfo.imGroupid,
+            msg: msg
+          })
         } else {
           msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
         }
+      }, function () {
+        msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
       });
     }
 
