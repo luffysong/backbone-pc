@@ -188,7 +188,7 @@ var View = BaseView.extend({
       }
       if (_.isObject(msgObj)) {
         msgObj.fromAccount = notifyInfo.fromAccount;
-        var date = new Date(webim.Tool.formatTimeStamp(notifyInfo.getTime()));
+        var date = new Date(notifyInfo.getTime() * 1000);
         msgObj.time = BusinessDate.format(date, 'hh:mm:ss');
 
         self.beforeSendMsg(msgObj, function (msg) {
@@ -304,7 +304,10 @@ var View = BaseView.extend({
     return require('../anchor/template/chat-message-tpl.html');
   },
   sendMsgToGroup: function (msgObj) {
-    this.addMessage(msgObj);
+    var res = _.extend(msgObj, {
+      time: BusinessDate.format(new Date(), 'hh:mm:ss')
+    });
+    this.addMessage(res);
 
     YYTIMServer.sendMessage({
       groupId: this.roomInfo.imGroupid,
@@ -320,7 +323,7 @@ var View = BaseView.extend({
       nickName: '匿名',
       content: '',
       smallAvatar: '',
-      time: self.getDateStr(new Date()),
+      // time: self.getDateStr(new Date()),
       fromAccount: '',
       userId: ''
     }, msg);

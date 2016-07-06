@@ -261,7 +261,7 @@ var View = BaseView.extend({
       return;
     }
     msgObj.fromAccount = msg.fromAccount;
-    var date = new Date(webim.Tool.formatTimeStamp(msg.getTime()));
+    var date = new Date(msg.getTime() * 1000);
     msgObj.time = BusinessDate.format(date, 'hh:mm:ss');
     switch (msgObj.msgType) {
       case 0: // 文本消息

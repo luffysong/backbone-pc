@@ -108,7 +108,8 @@ var View = BaseView.extend({
         fontColor: this.elements.btnChooseColor.attr('data-color') || '#999999'
       },
       smallAvatar: user.get('bigheadImg'),
-      roomId: this.roomInfo.id
+      roomId: this.roomInfo.id,
+      time: ''
     };
     // 处理频道发言
     if (this.options.type === 'channel') {
