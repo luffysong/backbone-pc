@@ -31,6 +31,7 @@ var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 // 清屏,锁屏
 var RoomManagerView = require('./room-manager.view');
+var BusinessDate = require('BusinessDate');
 
 var View = BaseView.extend({
   el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
@@ -86,7 +87,7 @@ var View = BaseView.extend({
         _.each(notifyInfo, function (item) {
           if (item.hasOwnProperty('msg')) {
             if (item.msg.isSend === false) {
-              self.onMsgNotify(item.msg);
+              self.onMsgNotify(item);
             }
           } else if (item.hasOwnProperty('isSend')) {
             if (item.isSend === false) {
@@ -166,14 +167,14 @@ var View = BaseView.extend({
     var self = this;
     var msgObj = {};
 
-    // if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
-    if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
+    var elems = notifyInfo.getElems(); // 获取消息包含的元素数组
+    for (var i = 0, j = elems.length; i < j; i++) {
       var elem = notifyInfo.elems[0];
-      if (elem.getType() === webim.MSG_ELEMENT_TYPE.CUSTOM) {
-        // if (elem.type === 'TIMCustomElem') {
+      var type = elem.getType(); // 获取元素类型
+      if (type === webim.MSG_ELEMENT_TYPE.CUSTOM) {
         msgObj = elem.getContent().data;
-      } else if (elem.type === 'TIMGroupTipElem') {
-        msgObj = elem.content.groupInfoList[0];
+      } else if (type === 'TIMGroupTipElem') {
+        msgObj = elem.content.data;
       } else {
         msgObj = elem.content.text + '';
         msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
@@ -187,6 +188,8 @@ var View = BaseView.extend({
       }
       if (_.isObject(msgObj)) {
         msgObj.fromAccount = notifyInfo.fromAccount;
+        var date = new Date(notifyInfo.getTime() * 1000);
+        msgObj.time = BusinessDate.format(date, 'hh:mm:ss');
 
         self.beforeSendMsg(msgObj, function (msg) {
           self.addMessage(msg);
@@ -257,6 +260,18 @@ var View = BaseView.extend({
       case 5: //  禁言
         Backbone.trigger('event:forbidUserSendMsg', msgObj);
         break;
+      case 6:
+        this.lockOrUnlock(true);
+        callback(msgObj);
+        break;
+      case 7:
+        this.lockOrUnlock(false);
+        callback(msgObj);
+        break;
+      case 8:
+        self.checkUserCanJoinRoom();
+        callback(msgObj);
+        break;
       default:
         break;
     }
@@ -278,6 +293,12 @@ var View = BaseView.extend({
       Backbone.trigger('event:UserKickOut', notify);
     }
   },
+  lockOrUnlock: function (isLock) {
+    UserInfo.setLockScreen(this.roomInfo.id, isLock);
+    var msg = '主播进行了' + (isLock ? '锁屏' : '解屏') + '操作';
+    msgBox.showTip(msg);
+    Backbone.trigger('event:LockScreen', isLock);
+  },
   groupSystemNotifys: function () {},
   /**
    * 获取消息模板
@@ -287,7 +308,10 @@ var View = BaseView.extend({
     return require('../anchor/template/chat-message-tpl.html');
   },
   sendMsgToGroup: function (msgObj) {
-    this.addMessage(msgObj);
+    var res = _.extend(msgObj, {
+      time: BusinessDate.format(new Date(), 'hh:mm:ss')
+    });
+    this.addMessage(res);
 
     YYTIMServer.sendMessage({
       groupId: this.roomInfo.imGroupid,
@@ -299,19 +323,15 @@ var View = BaseView.extend({
   addMessage: function (msg) {
     var self = this;
     var msgObj;
-    // var roomId = this.roomInfo.id;
     msgObj = _.extend({
       nickName: '匿名',
       content: '',
       smallAvatar: '',
-      time: self.getDateStr(new Date()),
+      // time: self.getDateStr(new Date()),
       fromAccount: '',
       userId: ''
     }, msg);
 
-    // if (msgObj && msgObj.roomId !== roomId) {
-    //   return;
-    // }
     msgObj.content = self.filterEmoji(msgObj.content);
     if (msgObj && msgObj.content) {
       var tpl = _.template(this.getMessageTpl());

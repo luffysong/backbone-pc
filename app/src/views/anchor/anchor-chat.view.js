@@ -186,6 +186,14 @@ var View = BaseView.extend({
    */
   removeUserFromRoom: function (data) {
     var self = this;
+    var msg = {
+      roomId: self.roomInfo.id,
+      nickName: self.options.assistant ? '场控' : '主播',
+      smallAvatar: '',
+      msgType: 8, // 踢人
+      content: (self.options.assistant ? '场控' : '主播') + '将用户' + data.name + '踢出房间'
+    };
+
 
     function okCallback() {
       var options = {
@@ -202,9 +210,15 @@ var View = BaseView.extend({
       imServer.modifyGroupInfo(options, function (result) {
         if (result && result.ActionStatus === 'OK') {
           msgBox.showOK('成功将用户:<b>' + data.name + '</b>踢出房间');
+          imServer.sendMessage({
+            groupId: self.roomInfo.imGroupid,
+            msg: msg
+          });
         } else {
           msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
         }
+      }, function () {
+        msgBox.showError('将用户:<b>' + data.name + '</b>踢出房间失败,请稍后再试');
       });
     }
 
@@ -217,65 +231,90 @@ var View = BaseView.extend({
   },
   // 腾讯IM消息到达回调
   onMsgNotify: function (notifyInfo) {
-    var self = this;
-    var msgObj = {};
+    var elems;
     var elem;
-    var giftName;
-
-    if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
-      elem = notifyInfo.elems[0];
-      // if (elem.type === 'TIMCustomElem') {
-      if (elem.getType() === webim.MSG_ELEMENT_TYPE.CUSTOM) {
-        // msgObj = elem.content.data;
-        msgObj = elem.getContent().data;
-      } else {
-        msgObj = elem.content.text + '';
-        // msgObj = msgObj.replace(/&quot;/g, '\'');
-        msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
-      }
-      try {
-        // eval('msgObj = ' + msgObj);
-        msgObj = JSON.parse(msgObj);
-      } catch (e) {
-        console.log(e);
-      }
-      if (!_.isObject(msgObj)) {
-        return;
-      }
-      msgObj.fromAccount = notifyInfo.fromAccount;
-
-      switch (msgObj.msgType) {
-        case 0: // 文本消息
-          self.addMessage(msgObj);
+    var type;
+    var content;
+    elems = notifyInfo.getElems(); // 获取消息包含的元素数组
+    for (var i = 0, j = elems.length; i < j; i++) {
+      elem = elems[i];
+      type = elem.getType(); // 获取元素类型
+      content = elem.getContent(); // 获取元素对象
+      switch (type) {
+        case webim.MSG_ELEMENT_TYPE.TEXT:
+          this.parseMsgToChatList(content.text.replace(/&quot;/g, '"'), notifyInfo);
           break;
-        case 1: // 发送礼物
-          giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
-          msgObj.content = '<b>' + msgObj.nickName + '</b>发来' + giftName + '!';
-          msgObj.nickName = '消息';
-          msgObj.smallAvatar = '';
-          self.addMessage(msgObj);
+        case webim.MSG_ELEMENT_TYPE.FACE:
           break;
-        case 2: // 公告
+        case webim.MSG_ELEMENT_TYPE.IMAGE:
           break;
-        case 3: // 点赞
-          msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
-          msgObj.nickName = '消息';
-          msgObj.smallAvatar = '';
-          self.addMessage(msgObj);
+        case webim.MSG_ELEMENT_TYPE.SOUND:
           break;
-        case 4: //  清屏
-          self.addMessage(msgObj);
-          self.FlashApi.onReady(function () {
-            this.notifying(msgObj);
-          });
+        case webim.MSG_ELEMENT_TYPE.FILE:
           break;
-          // 解锁屏幕
-        case 5:
-          self.addMessage(msgObj);
+        case webim.MSG_ELEMENT_TYPE.CUSTOM:
+          this.parseMsgToChatList(content.data, notifyInfo);
+          break;
+        case webim.MSG_ELEMENT_TYPE.GROUP_TIP:
           break;
         default:
+          webim.Log.error('未知消息元素类型: elemType=' + type);
           break;
       }
+    }
+  },
+  parseMsgToChatList: function (content, msg) {
+    var msgObj;
+    var giftName;
+    var self = this;
+    try {
+      msgObj = JSON.parse(content);
+    } catch (e) {
+      console.log(e);
+    }
+    if (!_.isObject(msgObj)) {
+      return;
+    }
+    msgObj.fromAccount = msg.fromAccount;
+    var date = new Date(msg.getTime() * 1000);
+    msgObj.time = BusinessDate.format(date, 'hh:mm:ss');
+    switch (msgObj.msgType) {
+      case 0: // 文本消息
+        self.addMessage(msgObj);
+        break;
+      case 1: // 发送礼物
+        giftName = self.giftModel.findGift(msgObj.giftId).name || '礼物';
+        msgObj.content = '<b>' + msgObj.nickName + '</b>发来' + giftName + '!';
+        msgObj.nickName = '消息';
+        msgObj.smallAvatar = '';
+        self.addMessage(msgObj);
+        break;
+      case 2: // 公告
+        $('#noticeWrap').text(msgObj.content || '暂无公告');
+        break;
+      case 3: // 点赞
+        msgObj.content = '<b>' + msgObj.nickName + '</b>点赞一次!';
+        msgObj.nickName = '消息';
+        msgObj.smallAvatar = '';
+        self.addMessage(msgObj);
+        break;
+      case 4: //  清屏
+        self.addMessage(msgObj);
+        self.FlashApi.onReady(function () {
+          this.notifying(msgObj);
+        });
+        break;
+        // 禁言
+      case 5:
+        self.addMessage(msgObj);
+        break;
+      case 6:
+      case 7:
+        $('#btn-lock').find('span').text(msgObj.msgType === 6 ? '解屏' : '锁屏');
+        self.addMessage(msgObj);
+        break;
+      default:
+        break;
     }
   },
   initGiftList: function () {
@@ -308,8 +347,10 @@ var View = BaseView.extend({
       nickName: '',
       content: '',
       smallAvatar: '',
-      time: self.getDateStr(new Date()),
       userId: ''
+    }, {
+      time: BusinessDate.format(new Date, 'hh:mm:ss'),
+      fromAccount: ''
     }, msgObj);
     if (msgObj && msgObj.roomId !== self.roomInfo.id) {
       return;
@@ -360,14 +401,8 @@ var View = BaseView.extend({
     Backbone.on('event:onMsgNotify', function (notifyInfo) {
       if (_.isArray(notifyInfo)) {
         _.each(notifyInfo, function (item) {
-          if (item.hasOwnProperty('msg')) {
-            if (item.msg.isSend === false) {
-              self.onMsgNotify(item.msg);
-            }
-          } else if (item.hasOwnProperty('isSend')) {
-            if (item.isSend === false) {
-              self.onMsgNotify(item);
-            }
+          if (!item.getIsSend()) {
+            self.onMsgNotify(item);
           }
         });
       } else if (_.isObject(notifyInfo)) {
@@ -381,6 +416,14 @@ var View = BaseView.extend({
     });
     Backbone.on('event:groupSystemNotifys', function (notifyInfo) {
       self.groupSystemNotifys(notifyInfo);
+    });
+
+    Backbone.on('event:clearAllScreen', function (msg) {
+      self.addMessage(msg);
+    });
+
+    Backbone.on('event:LockOrUnLock', function (msg) {
+      self.addMessage(msg);
     });
   },
   /**

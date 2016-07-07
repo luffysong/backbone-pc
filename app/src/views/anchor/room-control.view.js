@@ -84,7 +84,7 @@ var View = BaseView.extend({
         return false;
     }
   },
-  // 锁屏
+  // 清除屏幕
   clearHandler: function () {
     var self = this;
     var flag = self.checkLiveRoomReady();
@@ -101,11 +101,11 @@ var View = BaseView.extend({
           smallAvatar: '',
           msgType: 4,
           content: '进行了清屏操作'
-          // content: (self.assistant ? '场控' : '主播') + '已清屏'
         };
         self.FlashApi.onReady(function () {
           this.notifying(msg);
         });
+        Backbone.trigger('event:clearAllScreen', msg);
         imServer.clearScreen({
           groupId: self.roomInfo.imGroupid,
           msg: msg
@@ -152,22 +152,24 @@ var View = BaseView.extend({
       roomId: self.roomInfo.id,
       nickName: self.assistant ? '场控' : '主播',
       smallAvatar: '',
-      msgType: 5,
+      msgType: isLock ? 6 : 7,
       content: (self.assistant ? '场控' : '主播') + '已' + txt,
       isLock: isLock
     };
     // self.FlashApi.onReady(function () {
     //   this.notifying(msg);
     // });
-    imServer.sendMessage({
-      groupId: self.roomInfo.imGroupid,
-      msg: msg
-    });
 
     imServer.modifyGroupInfo(options, function (result) {
       if (result && result.ActionStatus === 'OK') {
         self.btnLock.children('span').text(isLock === true ? '解屏' : '锁屏');
         msgBox.showOK(txt + '成功!');
+
+        Backbone.trigger('event:LockOrUnLock', msg);
+        imServer.sendMsg({
+          groupId: self.roomInfo.imGroupid,
+          msg: msg
+        });
       } else {
         msgBox.showError(txt + '操作失败,请稍后重试');
       }
