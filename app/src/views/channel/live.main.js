@@ -95,9 +95,13 @@ var View = BaseView.extend({
     });
     // }
 
-    this.renderPage();
-    this.getUserInfo();
-    this.getLiveViedoList();
+    this.initWebIM().then(function () {
+      this.renderPage();
+      this.getUserInfo();
+      this.getLiveViedoList();
+    }.bind(this), function () {
+      this.goBack();
+    }.bind(this));
   },
   defineEventInterface: function () {
     var self = this;
@@ -138,7 +142,7 @@ var View = BaseView.extend({
   userJoinGroup: function (sig, groupId) {
     var self = this;
     self.userIMSig = sig;
-    self.initWebIM();
+    // self.initWebIM();
 
     YYTIMServer.applyJoinGroup(groupId, function () {
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
@@ -216,7 +220,7 @@ var View = BaseView.extend({
     }
 
     // 注册IM事件处理
-    YYTIMServer.init({
+    return YYTIMServer.init({
       onConnNotify: function (notifyInfo) {
         Backbone.trigger('event:onConnNotify', notifyInfo);
       },
