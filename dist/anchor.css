@@ -2342,7 +2342,6 @@ button, input, select, textarea {
     .msg-board-wrap .header .am-btn {
       margin-top: 10px; }
     .msg-board-wrap .header .tabs {
-      width: 200px;
       height: 56px;
       line-height: 53px; }
       .msg-board-wrap .header .tabs a {
