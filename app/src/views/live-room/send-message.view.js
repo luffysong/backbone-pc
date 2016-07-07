@@ -131,10 +131,7 @@ var View = BaseView.extend({
         return;
       }
     }
-    Backbone.trigger('event:visitorSendMessage', _.extend(msg, {
-      channelId: this.options.channelId,
-      roomId: -1
-    }));
+    Backbone.trigger('event:visitorSendMessage', msg);
   },
   textMsgChanged: function (e) {
     if (e && e.keyCode === 13) {

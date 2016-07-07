@@ -49,7 +49,10 @@ var View = BaseView.extend({
 
     this.listParams = _.extend({}, this.queryParams);
 
-    this.pageParams = {};
+    this.pageParams = {
+      newList: {},
+      hotList: {}
+    };
 
     this.listModel = new ListModel();
     this.likeModel = new LikeModel();
@@ -385,7 +388,7 @@ var View = BaseView.extend({
     });
   },
   tabScrollDown: function (e) {
-    var tag = $('.tab-menu .active').attr('data-tab');
+    var tag = $('.tab-menu .active').attr('data-tab') || 'newList';
     var target = $(e.target);
     var maxHeight = $('.' + tag).find('.am-u-sm-4').height() - 404;
     var top = target.scrollTop();
