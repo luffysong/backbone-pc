@@ -3749,7 +3749,10 @@ webpackJsonp([5],[
 	
 	    this.listParams = _.extend({}, this.queryParams);
 	
-	    this.pageParams = {};
+	    this.pageParams = {
+	      newList: {},
+	      hotList: {}
+	    };
 	
 	    this.listModel = new ListModel();
 	    this.likeModel = new LikeModel();
@@ -4085,7 +4088,7 @@ webpackJsonp([5],[
 	    });
 	  },
 	  tabScrollDown: function (e) {
-	    var tag = $('.tab-menu .active').attr('data-tab');
+	    var tag = $('.tab-menu .active').attr('data-tab') || 'newList';
 	    var target = $(e.target);
 	    var maxHeight = $('.' + tag).find('.am-u-sm-4').height() - 404;
 	    var top = target.scrollTop();
@@ -4777,7 +4780,7 @@ webpackJsonp([5],[
 	  this._props = options.props || {};
 	  this.$attrs = {
 	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160706.3', //  引入swf文件
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160707.3', //  引入swf文件
 	    width: this._props.width || 895,
 	    height: this._props.height || 502,
 	    wmode: this._props.wmode || 'transparent', // 控制显示模型
@@ -7115,10 +7118,7 @@ webpackJsonp([5],[
 	        return;
 	      }
 	    }
-	    Backbone.trigger('event:visitorSendMessage', _.extend(msg, {
-	      channelId: this.options.channelId,
-	      roomId: -1
-	    }));
+	    Backbone.trigger('event:visitorSendMessage', msg);
 	  },
 	  textMsgChanged: function (e) {
 	    if (e && e.keyCode === 13) {
