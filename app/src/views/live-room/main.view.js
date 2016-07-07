@@ -98,7 +98,8 @@ var View = BaseView.extend({
       this.getUserInfo();
     }.bind(this), function () {
       console.log('webim 初始化失败');
-    });
+      this.goBack();
+    }.bind(this));
   },
   defineEventInterface: function () {
     var self = this;

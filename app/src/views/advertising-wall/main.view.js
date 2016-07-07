@@ -92,7 +92,7 @@ var View = BaseView.extend({
       tag: 'first'
     });
     this.loopGetUnreadCount();
-    this.renderHotList();
+    // this.renderHotList();
     this.setUserInfo();
 
     $('.msg-board-wrap .wall-list').on('scroll', this.tabScrollDown.bind(this));

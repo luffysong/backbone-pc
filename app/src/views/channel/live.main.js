@@ -94,7 +94,6 @@ var View = BaseView.extend({
       el: 'broadCastFlash'
     });
     // }
-
     this.initWebIM().then(function () {
       this.renderPage();
       this.getUserInfo();
