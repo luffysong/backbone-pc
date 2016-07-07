@@ -17,7 +17,7 @@ var Auxiliary = require('auxiliary-additions');
 var URL = Auxiliary.url;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var RoomLongPollingModel = require('../../models/anchor/room-longPolling.model');
+var RoomLongPollingModel = require('../../models/channel/loogpolling.model');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('imServer');
@@ -107,10 +107,13 @@ var View = BaseView.extend({
     // });
 
     Backbone.on('event:pleaseUpdateRoomInfo', function () {
-      self.getRoomLoopInfo(function (res) {
-        var data = res.data;
-        Backbone.trigger('event:updateRoomInfo', data);
+      self.getRoomInfo(function (res) {
+        Backbone.trigger('event:updateRoomInfo', res.data);
       });
+      // self.getRoomLoopInfo(function (res) {
+      //   var data = res.data;
+      //   Backbone.trigger('event:updateRoomInfo', data);
+      // });
     });
   },
   fetchUserIMSig: function (groupId) {
@@ -142,9 +145,9 @@ var View = BaseView.extend({
 
     YYTIMServer.applyJoinGroup(groupId, function () {
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
-      if (self.roomInfo.status === 2) {
-        self.loopRoomInfo();
-      }
+      // if (self.roomInfo.status === 2) {
+      //   self.loopRoomInfo();
+      // }
     }, function (res) {
       self.imErrorHandler(res);
     });
@@ -161,9 +164,9 @@ var View = BaseView.extend({
     };
     if (res.ErrorCode === 10013) {
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
-      if (self.roomInfo.status === 2) {
-        self.loopRoomInfo();
-      }
+      // if (self.roomInfo.status === 2) {
+      //   self.loopRoomInfo();
+      // }
     } else if (res.ErrorCode === 70001) {
       uiConfirm.show({
         title: '登陆已过期',
@@ -281,6 +284,7 @@ var View = BaseView.extend({
           userInfo: self.userInfo,
           type: 2
         });
+        self.loopRoomInfo();
 
         self.joinRoom();
         // TODO
@@ -418,41 +422,31 @@ var View = BaseView.extend({
     }
   },
   loopRoomInfo: function (time) {
-    console.log(time);
-    // var self = this;
-    // self.roomInfoTimeId = setTimeout(function () {
-    //   self.roomDetailParams.channelId = self.channelId;
-    //   self.getRoomLoopInfo(function (res) {
-    //     var data = res.data;
-    //     Backbone.trigger('event:updateRoomInfo', data);
-    //     if (data.roomStatus === 3) {
-    //       Backbone.trigger('event:liveShowEnded', data);
-    //     } else if (data.roomStatus === 2) {
-    //       self.loopRoomInfo();
-    //     }
-    //   });
-    // }, !!time ? time : self.roomInfoPeriod);
+    var self = this;
+    self.roomInfoTimeId = setTimeout(function () {
+      self.getRoomLoopInfo().then(function (data) {
+        Backbone.trigger('event:updateRoomInfo', data);
+        self.loopRoomInfo();
+      });
+    }, !!time ? time : self.roomInfoPeriod);
   },
-  getRoomLoopInfo: function (okFn, errFn) {
-    console.log(errFn);
-    this.getRoomInfo(okFn);
-    // if (okFn) {
-    //   okFn();
-    // }
-    // var self = this;
-    // var promise;
-    // self.roomDetailParams.channelId = self.channelId;
-    // promise = this.roomLongPolling.executeJSONP(self.roomDetailParams);
-    // promise.done(function (response) {
-    //   if (okFn) {
-    //     okFn(response);
-    //   }
-    // });
-    // promise.fail(function (err) {
-    //   if (errFn) {
-    //     errFn(err);
-    //   }
-    // });
+  getRoomLoopInfo: function () {
+    var self = this;
+    var defer = $.Deferred();
+    var promise = this.roomLongPolling.executeJSONP(_.extend({}, self.queryParams, {
+      channelId: this.roomInfo.channelId
+    }));
+    promise.done(function (response) {
+      if (~~response.code === 0) {
+        defer.resolve(response.data);
+      } else {
+        defer.reject();
+      }
+    });
+    promise.fail(function () {
+      defer.reject();
+    });
+    return defer.promise();
   },
   // 告诉服务器加入该房间
   joinRoom: function () {
