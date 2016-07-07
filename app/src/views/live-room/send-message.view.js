@@ -62,11 +62,10 @@ var View = BaseView.extend({
       }
     });
     Backbone.on('event:visitorSendGift', function (data) {
-      var id = self.options.type === 'channel' ? self.roomInfo.channelId : self.roomInfo.id;
       self.sendMessageToChat(_.extend({
         nickName: user.get('userName'),
         smallAvatar: user.get('bigheadImg'),
-        roomId: id
+        roomId: self.roomInfo.id
       }, data));
     });
   },
@@ -132,7 +131,10 @@ var View = BaseView.extend({
         return;
       }
     }
-    Backbone.trigger('event:visitorSendMessage', msg);
+    Backbone.trigger('event:visitorSendMessage', _.extend(msg, {
+      channelId: this.options.channelId,
+      roomId: -1
+    }));
   },
   textMsgChanged: function (e) {
     if (e && e.keyCode === 13) {

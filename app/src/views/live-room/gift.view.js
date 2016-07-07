@@ -166,7 +166,6 @@ var View = BaseView.extend({
     if (!this.roomStatusCheck()) {
       return;
     }
-
     if (e.target.nodeName !== 'LI') {
       target = $(e.target).parent();
     } else {
@@ -191,6 +190,7 @@ var View = BaseView.extend({
       }
     }
     if (this.notSend) {
+      msgBox.showTip('操作过于频繁');
       return null;
     }
     this.notSend = true;
