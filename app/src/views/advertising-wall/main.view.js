@@ -370,7 +370,8 @@ var View = BaseView.extend({
     }, this.queryParams));
     promise.done(function (res) {
       if (res && res.code === '0' && res.data.newMsgCount > 0) {
-        self.elements.unReadCnt.text(res.data.newMsgCount).show();
+        // self.elements.unReadCnt.text(res.data.newMsgCount).show();
+        self.renderNewestList();
       }
       setTimeout(function () {
         self.loopGetUnreadCount();

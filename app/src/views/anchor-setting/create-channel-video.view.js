@@ -36,10 +36,12 @@ var View = BaseView.extend({
     //  获取findDOMNode DOM Node
     this.elements.showName = this.$el.find('#channelShowName');
     this.elements.videoIds = this.$el.find('#channelVideoList');
+    this.elements.startTime = this.$el.find('#channelSHowStartTime');
   },
   ready: function () {
     //  初始化
     this.defineEventInterface();
+    this.initPicker();
   },
   defineEventInterface: function () {
     var self = this;
@@ -62,6 +64,7 @@ var View = BaseView.extend({
     var name = $.trim(this.elements.showName.val());
     var idTxt = $.trim(this.elements.videoIds.val());
     var ids = idTxt.split(/[\s,，]/g);
+    var startTime = new Date(this.elements.startTime.val());
     ids = _.filter(ids, function (item) {
       return item.length > 0 && (!isNaN(item));
     });
@@ -73,10 +76,14 @@ var View = BaseView.extend({
       msgBox.showTip('请输入有效的视屏编号!');
       return false;
     }
+    if (~~startTime.getDay() <= 0) {
+      msgBox.showTip('请选择开始时间!');
+      return false;
+    }
     this.formData = {
       showName: name,
       mvIds: '[' + ids.join(',') + ']',
-      beginTime: new Date()
+      beginTime: startTime.getTime()
     };
     return true;
   },
@@ -95,7 +102,6 @@ var View = BaseView.extend({
           channelId: this.channelInfo.channelId
         }, this.formData, this.queryParams))
       .done(function (res) {
-        console.log(res);
         if (res && res.code === '0') {
           msgBox.showOK('节目单添加成功');
           Backbone.trigger('event:ChannelShowAdded');
@@ -110,6 +116,16 @@ var View = BaseView.extend({
   resetForm: function () {
     this.elements.showName.val('');
     this.elements.videoIds.val('');
+    this.elements.startTime.val('');
+  },
+  initPicker: function () {
+    $('.form-datetime').datetimepicker({
+      language: 'zh-CN',
+      format: 'yyyy-mm-dd hh:ii',
+      autoclose: true,
+      startDate: new Date()
+    });
+    // $dpInput.datetimepicker('update', new Date());
   }
 });
 

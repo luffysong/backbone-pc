@@ -23,7 +23,7 @@ var imModel = IMModel.sharedInstanceIMModel();
 var YYTIMServer = require('imServer');
 var AnchorUserInfoModel = require('../../models/anchor/anchor-info.model');
 var UserInfo = require('../live-room/user.js');
-var InAndOurRoomModel = require('../../models/live-room/inAndOut-room.model');
+var InAndOurRoomModel = require('../../models/channel/enter-out.model');
 var ChannelDetailModel = require('../../models/channel/detail.model');
 var LiveVideoListModel = require('../../models/channel/live-play.model');
 
@@ -88,12 +88,10 @@ var View = BaseView.extend({
     }
     this.defineEventInterface();
 
-    // if ($('#broadCastFlash').length > 0) {
-    // this.flashAPI = new FlashAPI({
     this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
-    // }
+    // 初始化im
     this.initWebIM().then(function () {
       this.renderPage();
       this.getUserInfo();
@@ -104,12 +102,11 @@ var View = BaseView.extend({
   },
   defineEventInterface: function () {
     var self = this;
-    Backbone.on('event:UserKickOut', function (notifyInfo) {
-      self.checkUserIsKickout(notifyInfo);
-    });
+    // Backbone.on('event:UserKickOut', function (notifyInfo) {
+    //   self.checkUserIsKickout(notifyInfo);
+    // });
 
     Backbone.on('event:pleaseUpdateRoomInfo', function () {
-      // self.roomDetailParams.channelId = self.channelId;
       self.getRoomLoopInfo(function (res) {
         var data = res.data;
         Backbone.trigger('event:updateRoomInfo', data);
@@ -304,8 +301,8 @@ var View = BaseView.extend({
         });
 
         Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
-        self.checkUserIsKickout(self.currentGroupInfo.Notification);
-        self.checkUserIsDisabled(self.currentGroupInfo.Introduction);
+        // self.checkUserIsKickout(self.currentGroupInfo.Notification);
+        // self.checkUserIsDisabled(self.currentGroupInfo.Introduction);
       }
     }, function () {
       uiConfirm.show({
@@ -437,7 +434,7 @@ var View = BaseView.extend({
     // }, !!time ? time : self.roomInfoPeriod);
   },
   getRoomLoopInfo: function (okFn, errFn) {
-    console.log(okFn, errFn);
+    console.log(errFn);
     this.getRoomInfo(okFn);
     // if (okFn) {
     //   okFn();
@@ -461,9 +458,8 @@ var View = BaseView.extend({
   joinRoom: function () {
     var promise;
     this.inAndRoomParams.type = 1;
-
     if (this.roomInfo) {
-      this.inAndRoomParams.channelId = this.roomInfo.id;
+      this.inAndRoomParams.channelId = this.roomInfo.channelId;
     }
     promise = this.inAndOutRoom.executeJSONP(this.inAndRoomParams);
     promise.done(function () {});

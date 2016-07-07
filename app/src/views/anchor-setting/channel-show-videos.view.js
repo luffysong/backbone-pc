@@ -147,7 +147,6 @@ var View = BaseView.extend({
     return true;
   },
   showItemButtonClicked: function (action, data) {
-    console.log(action);
     var self = this;
     if (action === 'publish') {
       uiConfirm.show({
@@ -195,7 +194,6 @@ var View = BaseView.extend({
   },
   // 发布节目单
   publishShow: function (showInfo) {
-    console.log(showInfo);
     var params = _.extend({
       channelId: this.channelInfo.channelId,
       showId: showInfo.id
