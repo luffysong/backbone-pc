@@ -18,7 +18,7 @@ var DeleteShowModel = require('../../models/channel/delete-channel-show.model');
 
 var msgBox = require('ui.msgBox');
 var uiConfirm = require('ui.confirm');
-// var BusinessDate = require('BusinessDate');
+var BusinessDate = require('BusinessDate');
 
 var View = BaseView.extend({
   el: '#channelShowVideosBlock',
@@ -119,6 +119,11 @@ var View = BaseView.extend({
     }.bind(this));
   },
   createShowListDom: function (data) {
+    _.map(data, function (item) {
+      var time = new Date(item.beginTime);
+      var temp = item;
+      temp.beginTimeTxt = BusinessDate.format(time, 'yyyy-MM-dd hh:mm:ss');
+    });
     var html = this.compileHTML(this.showItemTpl, {
       data: data || []
     });
@@ -202,7 +207,7 @@ var View = BaseView.extend({
       if (res && res.code === '0') {
         msgBox.showOK('成功发布该节目单');
         $('tr[data-showid="' + showInfo.id + '"]')
-          .children(':eq(2)').html('<span>已发布</span>');
+          .children(':eq(3)').html('<span>已发布</span>');
       } else {
         msgBox.showError(res.msg || '发布节目单失败，稍后重试');
       }

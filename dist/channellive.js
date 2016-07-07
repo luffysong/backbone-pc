@@ -19,7 +19,7 @@ webpackJsonp([5],[
 	  a = new MainView();
 	
 	  console.log(a);
-	  __webpack_require__(216);
+	  __webpack_require__(217);
 	});
 
 
@@ -3356,38 +3356,7 @@ webpackJsonp([5],[
 /***/ },
 /* 57 */,
 /* 58 */,
-/* 59 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/longpolling.json', // 填写请求地址
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
+/* 59 */,
 /* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4780,7 +4749,7 @@ webpackJsonp([5],[
 	  this._props = options.props || {};
 	  this.$attrs = {
 	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160707.3', //  引入swf文件
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160707.9', //  引入swf文件
 	    width: this._props.width || 895,
 	    height: this._props.height || 502,
 	    wmode: this._props.wmode || 'transparent', // 控制显示模型
@@ -5324,17 +5293,17 @@ webpackJsonp([5],[
 	var URL = Auxiliary.url;
 	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
-	var RoomLongPollingModel = __webpack_require__(59);
+	var RoomLongPollingModel = __webpack_require__(197);
 	var IMModel = __webpack_require__(43);
 	var imModel = IMModel.sharedInstanceIMModel();
 	var YYTIMServer = __webpack_require__(42);
 	var AnchorUserInfoModel = __webpack_require__(63);
 	var UserInfo = __webpack_require__(62);
-	var InAndOurRoomModel = __webpack_require__(197);
-	var ChannelDetailModel = __webpack_require__(198);
-	var LiveVideoListModel = __webpack_require__(199);
+	var InAndOurRoomModel = __webpack_require__(198);
+	var ChannelDetailModel = __webpack_require__(199);
+	var LiveVideoListModel = __webpack_require__(200);
 	
-	var AnchorCardView = __webpack_require__(200);
+	var AnchorCardView = __webpack_require__(201);
 	
 	var FlashAPI = __webpack_require__(82);
 	var store = base.storage;
@@ -5402,7 +5371,7 @@ webpackJsonp([5],[
 	    this.initWebIM().then(function () {
 	      this.renderPage();
 	      this.getUserInfo();
-	      this.getLiveViedoList();
+	      // this.getLiveViedoList();
 	    }.bind(this), function () {
 	      this.goBack();
 	    }.bind(this));
@@ -5414,10 +5383,13 @@ webpackJsonp([5],[
 	    // });
 	
 	    Backbone.on('event:pleaseUpdateRoomInfo', function () {
-	      self.getRoomLoopInfo(function (res) {
-	        var data = res.data;
-	        Backbone.trigger('event:updateRoomInfo', data);
+	      self.getRoomInfo(function (res) {
+	        Backbone.trigger('event:updateRoomInfo', res.data);
 	      });
+	      // self.getRoomLoopInfo(function (res) {
+	      //   var data = res.data;
+	      //   Backbone.trigger('event:updateRoomInfo', data);
+	      // });
 	    });
 	  },
 	  fetchUserIMSig: function (groupId) {
@@ -5445,13 +5417,12 @@ webpackJsonp([5],[
 	  userJoinGroup: function (sig, groupId) {
 	    var self = this;
 	    self.userIMSig = sig;
-	    // self.initWebIM();
 	
 	    YYTIMServer.applyJoinGroup(groupId, function () {
 	      Backbone.trigger('event:roomInfoReady', self.roomInfo);
-	      if (self.roomInfo.status === 2) {
-	        self.loopRoomInfo();
-	      }
+	      // if (self.roomInfo.status === 2) {
+	      //   self.loopRoomInfo();
+	      // }
 	    }, function (res) {
 	      self.imErrorHandler(res);
 	    });
@@ -5468,9 +5439,9 @@ webpackJsonp([5],[
 	    };
 	    if (res.ErrorCode === 10013) {
 	      Backbone.trigger('event:roomInfoReady', self.roomInfo);
-	      if (self.roomInfo.status === 2) {
-	        self.loopRoomInfo();
-	      }
+	      // if (self.roomInfo.status === 2) {
+	      //   self.loopRoomInfo();
+	      // }
 	    } else if (res.ErrorCode === 70001) {
 	      uiConfirm.show({
 	        title: '登陆已过期',
@@ -5495,11 +5466,11 @@ webpackJsonp([5],[
 	    }
 	  },
 	  renderPage: function () {
-	    var RoomTitle = __webpack_require__(205);
-	    var ChatView = __webpack_require__(207);
-	    var SendMessageView = __webpack_require__(210);
-	    var GiftView = __webpack_require__(212);
-	    var LiveVideoListView = __webpack_require__(214);
+	    var RoomTitle = __webpack_require__(206);
+	    var ChatView = __webpack_require__(208);
+	    var SendMessageView = __webpack_require__(211);
+	    var GiftView = __webpack_require__(213);
+	    var LiveVideoListView = __webpack_require__(215);
 	    var type = {
 	      type: 'channel',
 	      channelId: this.channelId
@@ -5579,19 +5550,17 @@ webpackJsonp([5],[
 	            title: data.channelName || ''
 	          }
 	        });
-	        // self.flashAPI.onReady(function () {
-	        //   this.init(self.roomInfo);
-	        // });
 	        self.adWallView = new AdvertisingWallView({
 	          el: '#advertisingWall',
 	          roomId: data.channelId,
 	          userInfo: self.userInfo,
 	          type: 2
 	        });
+	        self.loopRoomInfo();
 	
 	        self.joinRoom();
-	        // TODO
-	        self.fetchUserIMSig(data.imGroupid || '@TGS#3GTTRWAEA');
+	        // self.fetchUserIMSig(data.imGroupid);
+	        self.getLiveViedoList();
 	        // TODO
 	        // self.checkRoomStatus(data.status);
 	      } else {
@@ -5725,41 +5694,31 @@ webpackJsonp([5],[
 	    }
 	  },
 	  loopRoomInfo: function (time) {
-	    console.log(time);
-	    // var self = this;
-	    // self.roomInfoTimeId = setTimeout(function () {
-	    //   self.roomDetailParams.channelId = self.channelId;
-	    //   self.getRoomLoopInfo(function (res) {
-	    //     var data = res.data;
-	    //     Backbone.trigger('event:updateRoomInfo', data);
-	    //     if (data.roomStatus === 3) {
-	    //       Backbone.trigger('event:liveShowEnded', data);
-	    //     } else if (data.roomStatus === 2) {
-	    //       self.loopRoomInfo();
-	    //     }
-	    //   });
-	    // }, !!time ? time : self.roomInfoPeriod);
+	    var self = this;
+	    self.roomInfoTimeId = setTimeout(function () {
+	      self.getRoomLoopInfo().then(function (data) {
+	        Backbone.trigger('event:updateRoomInfo', data);
+	        self.loopRoomInfo();
+	      });
+	    }, !!time ? time : self.roomInfoPeriod);
 	  },
-	  getRoomLoopInfo: function (okFn, errFn) {
-	    console.log(errFn);
-	    this.getRoomInfo(okFn);
-	    // if (okFn) {
-	    //   okFn();
-	    // }
-	    // var self = this;
-	    // var promise;
-	    // self.roomDetailParams.channelId = self.channelId;
-	    // promise = this.roomLongPolling.executeJSONP(self.roomDetailParams);
-	    // promise.done(function (response) {
-	    //   if (okFn) {
-	    //     okFn(response);
-	    //   }
-	    // });
-	    // promise.fail(function (err) {
-	    //   if (errFn) {
-	    //     errFn(err);
-	    //   }
-	    // });
+	  getRoomLoopInfo: function () {
+	    var self = this;
+	    var defer = $.Deferred();
+	    var promise = this.roomLongPolling.executeJSONP(_.extend({}, self.queryParams, {
+	      channelId: this.roomInfo.channelId
+	    }));
+	    promise.done(function (response) {
+	      if (~~response.code === 0) {
+	        defer.resolve(response.data);
+	      } else {
+	        defer.reject();
+	      }
+	    });
+	    promise.fail(function () {
+	      defer.reject();
+	    });
+	    return defer.promise();
 	  },
 	  // 告诉服务器加入该房间
 	  joinRoom: function () {
@@ -5793,12 +5752,13 @@ webpackJsonp([5],[
 	      videoSize: 10
 	    }, this.queryParams));
 	    promise.done(function (res) {
-	      // self.flashAPI = FlashAPI.sharedInstanceFlashApi({
-	      //   el: 'broadCastFlash'
-	      // });
 	      if (res && ~~res.code === 0) {
 	        // 视频数据
 	        if (res.data.channelShow) {
+	          var imGroupid = res.data.channelShow.imGroupid;
+	          self.roomInfo.imGroupid = imGroupid;
+	          self.fetchUserIMSig(imGroupid);
+	
 	          var videoData = {
 	            videoType: 'FANPA_CHANNEL',
 	            status: 'LIVE',
@@ -5807,11 +5767,35 @@ webpackJsonp([5],[
 	          self.flashAPI.onReady(function () {
 	            this.init(videoData);
 	          });
+	        } else {
+	          uiConfirm.show({
+	            title: '进入房间失败',
+	            content: '获取节目单失败，无法进入房间22',
+	            cancelBtn: false,
+	            okFn: function () {
+	              self.goBack();
+	            },
+	            cancelFn: function () {
+	              self.goBack();
+	            }
+	          });
 	        }
 	        // 节目单
 	        if (res.data && res.data.videos) {
 	          Backbone.trigger('event:ChannelLiveVideoListReady', res.data.videos || []);
 	        }
+	      } else {
+	        uiConfirm.show({
+	          title: '进入房间失败',
+	          content: '获取节目单失败，无法进入房间11',
+	          cancelBtn: false,
+	          okFn: function () {
+	            self.goBack();
+	          },
+	          cancelFn: function () {
+	            self.goBack();
+	          }
+	        });
 	      }
 	    });
 	  }
@@ -5822,6 +5806,41 @@ webpackJsonp([5],[
 
 /***/ },
 /* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * 频道直播轮训接口
+	 */
+	'use strict';
+	
+	var base = __webpack_require__(28);
+	var Config = __webpack_require__(44);
+	var BaseModel = base.Model;
+	var env = Config.env[Config.scheme];
+	
+	var Model = BaseModel.extend({
+	  url: '{{url_prefix}}/channel/stat_polling.json',
+	  beforeEmit: function beforeEmit() {
+	    // 给请求地址替换一下环境变量
+	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
+	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
+	    }
+	  }
+	});
+	
+	var shared = null;
+	Model.sharedInstanceModel = function sharedInstanceModel() {
+	  if (!shared) {
+	    shared = new Model();
+	  }
+	  return shared;
+	};
+	
+	module.exports = Model;
+
+
+/***/ },
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5856,7 +5875,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5891,7 +5910,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5939,7 +5958,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -5958,7 +5977,7 @@ webpackJsonp([5],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
 	var NoticeGetModel = __webpack_require__(95);
-	var FollowModel = __webpack_require__(201);
+	var FollowModel = __webpack_require__(202);
 	var UnFollowModel = __webpack_require__(172);
 	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
@@ -5967,12 +5986,12 @@ webpackJsonp([5],[
 	var msgBox = __webpack_require__(69);
 	var IMModel = __webpack_require__(43);
 	var imModel = IMModel.sharedInstanceIMModel();
-	var SNSShareView = __webpack_require__(202);
+	var SNSShareView = __webpack_require__(203);
 	
 	var View = BaseView.extend({
 	  el: '.userInfoWrap', // 设置View对象作用于的根元素，比如id
 	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(204);
+	    return __webpack_require__(205);
 	  },
 	  events: { // 监听事件
 	    'click .btnFollow': 'followClickHandler',
@@ -6148,7 +6167,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6180,7 +6199,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6193,7 +6212,7 @@ webpackJsonp([5],[
 	var ZeroClipboard = window.ZeroClipboard;
 	
 	var uiConfirm = __webpack_require__(55);
-	var shareTpl = __webpack_require__(203);
+	var shareTpl = __webpack_require__(204);
 	var msgBox = __webpack_require__(69);
 	
 	var View = function (ops) {
@@ -6335,19 +6354,19 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"sns-share-wrap\">\n  <div class=\"sns-block am-round\">\n    <div class=\"arrow\"></div>\n    <div class=\"list\">\n      <a href=\"http://v.yinyuetai.com/share/weixin?title=<%=title%>&amp;url=<%=url%>\" title=\"分享到微信\"></a>\n      <a style=\"display:none\" href=\"javascript:;\"></a>\n      <a href=\"http://connect.qq.com/widget/shareqq/index.html?url=<%=url%>&amp;showcount=1&amp;desc=<%=title%>&amp;title=<%=title%>&amp;site=饭趴&amp;pics=<%=img%>?t=20160405161857&amp;style=201&amp;width=39&amp;height=39\" title=\"分享到QQ\"></a>\n      <a  href=\"http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=<%=url%>&amp;desc=<%=title%>\" title=\"分享到QQ空间\"></a>\n      <a href=\"http://v.t.sina.com.cn/share/share.php?appkey=2817290261&amp;url=<%=url%>&amp;title=<%=title%>&amp;content=gb2312&amp;pic=<%=img%>?t=20160405161857&amp;ralateUid=1698229264\" title=\"分享到新浪微博\"></a>\n      <a data-tag='copy' id=\"shareCopy\" href=\"javascript:;\"></a>\n    </div>\n  </div>\n</div>\n"
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"user-info-wrap clearfix\">\n    <img id=\"anchorAvatar\" class=\"Left avator boderRadAll_35\"\n         src=\"http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg\"\n         alt=\"\">\n    <div class=\"info Left \">\n        <span id=\"anchorName\" class=\"name am-margin-right-sm\"></span>\n        <!--<span class=\"icon-gender\"></span>-->\n        <button class=\"btn am-btn am-btn-purple boderRadAll_5 btnFollow\" id=\"btnFollow\">关注</button>\n        <div class=\"tags\">\n            <span class=\"first\">标签:</span>\n            <span id=\"tagsWrap\">\n            </span>\n        </div>\n    </div>\n    <div class=\"Right\">\n        <div class=\"like\">\n            <button id=\"btnLike\" class=\"btn-like am-btn-red am-circle\"><i></i></button>\n            <span id=\"txtLikeCount\" class=\"number\">1</span></div>\n        <a id=\"btnShare\" href=\"javascript:;\" class=\"btn-share\"></a>\n    </div>\n</div>\n<script type=\"text/template\" id=\"tagTpl\">\n    <%\n    tags = tags || [];\n    for(var i=0,l=tags.length; i < l; i++) {\n    %>\n    <span class=\"item\"><%=tags[i]%></span>\n    <%\n    }\n    %>\n</script>\n"
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -6370,7 +6389,7 @@ webpackJsonp([5],[
 	var View = BaseView.extend({
 	  el: '.edit_background', // 设置View对象作用于的根元素，比如id
 	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(206);
+	    return __webpack_require__(207);
 	  },
 	  events: { // 监听事件
 	  },
@@ -6438,13 +6457,13 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"room-name fl\"></div>\n<div class=\"room-title-right fr\">\n  <span class=\"online\"> <span id=\"onlineTxt\">在线人数</span>:<span class=\"red count\" id=\"onlineCount\">0</span></span>\n  <span class=\"popularity\">人气:<span class=\"green count popularityCount\" id=\"popularityCount\">0</span></span>\n  <!--<button class=\"btn Hand btn-support boderRadAll_3\"><i></i> 顶一下</button>-->\n</div>\n"
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -6479,13 +6498,13 @@ webpackJsonp([5],[
 	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	// 清屏,锁屏
-	var RoomManagerView = __webpack_require__(208);
+	var RoomManagerView = __webpack_require__(209);
 	var BusinessDate = __webpack_require__(70);
 	
 	var View = BaseView.extend({
 	  el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
 	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(209);
+	    return __webpack_require__(210);
 	  },
 	  events: { // 监听事件
 	    // 'click #msgList': 'msgListClicked'
@@ -6857,7 +6876,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6976,13 +6995,13 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"chatCon\" id=\"chatHistory\">\n    <!--聊天记录-->\n    <ul id=\"msgList\">\n\n    </ul>\n</div>\n"
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -7009,7 +7028,7 @@ webpackJsonp([5],[
 	var View = BaseView.extend({
 	  el: '#sendMessageWrap', // 设置View对象作用于的根元素，比如id
 	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(211);
+	    return __webpack_require__(212);
 	  },
 	  events: { // 监听事件
 	    'click #btnChooseColor': 'showColorPanel',
@@ -7138,13 +7157,13 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"chooseColorPanel\" class=\"choose-color Hidden\">\n    <div class=\"title\">选择颜色</div>\n    <div class=\"color-list\" id=\"colorList\">\n        <span data-color=\"#f9517d\" class=\"red boderRadAll_20\"></span>\n        <span data-color=\"#ead97a\" class=\"yellow boderRadAll_20\"></span>\n        <span data-color=\"#53e2c2\" class=\"green boderRadAll_20\"></span>\n        <span data-color=\"#569ef8\" class=\"blue boderRadAll_20\"></span>\n        <span data-color=\"#cf57cf\" class=\"purple boderRadAll_20\"></span>\n        <span data-color=\"#ffffff\" class=\"white boderRadAll_20\"></span>\n    </div>\n</div>\n<div class=\"msg-text\">\n    <textarea id=\"txtMessage\" class=\"pAll5 msg Left\" cols=\"30\" rows=\"5\" placeholder=\"请输入消息\"></textarea>\n    <button id=\"btnSendMsg\" class=\"send Left am-btn-purple\">发送</button>\n    <div class=\"Clear\"></div>\n</div>\n<div class=\"msg-footer mTop5\">\n    <!--<button>face</button>-->\n    <button id=\"btnChooseColor\" class=\"size Hand\"><i></i></button>\n    <div class=\"tip Right gary1 am-text-xs\">您还可以输入<span id=\"limitTip\" class=\"number\">20</span>字</div>\n    <div class=\"Clear\"></div>\n</div>\n"
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -7170,7 +7189,7 @@ webpackJsonp([5],[
 	var uiConfirm = __webpack_require__(55);
 	var GiftModel = __webpack_require__(60);
 	var PopularityModel = __webpack_require__(188);
-	var ChannelPopularityModel = __webpack_require__(213);
+	var ChannelPopularityModel = __webpack_require__(214);
 	
 	
 	var msgBox = __webpack_require__(69);
@@ -7532,7 +7551,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7567,7 +7586,7 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7590,7 +7609,7 @@ webpackJsonp([5],[
 	  },
 	  beforeMount: function () {
 	    //  初始化一些自定义属性
-	    this.itemTpl = __webpack_require__(215);
+	    this.itemTpl = __webpack_require__(216);
 	  },
 	  afterMount: function () {
 	    //  获取findDOMNode DOM Node
@@ -7623,13 +7642,13 @@ webpackJsonp([5],[
 
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports) {
 
 	module.exports = "<!-- <div class=\"am-g am-g-collapse item active\"> -->\n{{each data as item }}\n<div class=\"am-g am-g-collapse item\">\n  <div class=\"am-u-sm-3 time\">{{item.playTime}}</div>\n  <div class=\"am-u-sm-9 detail\">{{item.videoName}}<span class=\"icon-play\"></span></div>\n</div>\n{{/each}}\n"
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
