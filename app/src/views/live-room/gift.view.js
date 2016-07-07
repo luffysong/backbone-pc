@@ -195,11 +195,16 @@ var View = BaseView.extend({
     }
     this.notSend = true;
 
-    Backbone.trigger('event:visitorSendGift', {
+    var msg = {
       msgType: 1,
       giftId: data.giftId,
       giftNum: 1
-    });
+    };
+    if (this.options.type === 'channel') {
+      msg.channelId = this.options.channelId;
+      msg.roomId = -1;
+    }
+    Backbone.trigger('event:visitorSendGift', msg);
 
     setTimeout(function () {
       self.notSend = false;
