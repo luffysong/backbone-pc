@@ -5770,7 +5770,7 @@ webpackJsonp([5],[
 	        } else {
 	          uiConfirm.show({
 	            title: '进入房间失败',
-	            content: '获取节目单失败，无法进入房间22',
+	            content: '获取节目单失败，无法进入房间',
 	            cancelBtn: false,
 	            okFn: function () {
 	              self.goBack();
@@ -5787,7 +5787,7 @@ webpackJsonp([5],[
 	      } else {
 	        uiConfirm.show({
 	          title: '进入房间失败',
-	          content: '获取节目单失败，无法进入房间11',
+	          content: '获取节目单失败，无法进入房间',
 	          cancelBtn: false,
 	          okFn: function () {
 	            self.goBack();
