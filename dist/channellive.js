@@ -1539,7 +1539,6 @@ webpackJsonp([5],[
 	    msg = new webim.Msg.Elem('TIMCustomElem', {
 	      data: JSON.stringify(attrs.msg)
 	    });
-	    // sendMsg.addText(msg);
 	    sendMsg.elems.push(msg);
 	    sendMsg.fromAccount = this.im.imIdentifier;
 	    webim.sendMsg(sendMsg, function (resp) {
@@ -1552,6 +1551,41 @@ webpackJsonp([5],[
 	      }
 	    });
 	  }
+	};
+	
+	/**
+	 * 1.4 版本发送消息
+	 *  attrs.subType
+	 *  attrs.msg.fromAccount
+	 */
+	imServer.sendMsg = function (attrs) {
+	  console.log(attrs);
+	  var defer = $.Deferred();
+	  var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
+	  var random = Math.round(Math.random() * 4294967296); // 消息随机数，用于去重
+	
+	  if (!currentSession) {
+	    currentSession = new webim.Session(
+	      webim.SESSION_TYPE.GROUP, attrs.groupId, attrs.groupId, '', random);
+	  }
+	  var seq = -1; // 消息序列，-1表示sdk自动生成，用于去重
+	  var msgTime = Math.round(new Date().getTime() / 1000); // 消息时间戳
+	  var subType = attrs.subType || webim.GROUP_MSG_SUB_TYPE.REDPACKET;
+	  var msg = new webim.Msg(
+	    currentSession,
+	    true, seq, random, msgTime, attrs.msg.fromAccount, subType, '');
+	  var textObj = new webim.Msg.Elem('TIMCustomElem', {
+	    data: JSON.stringify(attrs.msg)
+	  });
+	  msg.fromAccount = this.im.imIdentifier;
+	  msg.elems.push(textObj);
+	  webim.sendMsg(msg, function (resp) {
+	    defer.resolve(resp);
+	  }, function (err) {
+	    defer.reject(err);
+	  });
+	
+	  return defer.promise();
 	};
 	
 	
@@ -4742,7 +4776,7 @@ webpackJsonp([5],[
 	  this._props = options.props || {};
 	  this.$attrs = {
 	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160706.1', //  引入swf文件
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160706.3', //  引入swf文件
 	    width: this._props.width || 895,
 	    height: this._props.height || 502,
 	    wmode: this._props.wmode || 'transparent', // 控制显示模型
@@ -6440,6 +6474,7 @@ webpackJsonp([5],[
 	var user = UserModel.sharedInstanceUserModel();
 	// 清屏,锁屏
 	var RoomManagerView = __webpack_require__(208);
+	var BusinessDate = __webpack_require__(70);
 	
 	var View = BaseView.extend({
 	  el: '#anchorCtrlChat', // 设置View对象作用于的根元素，比如id
@@ -6495,7 +6530,7 @@ webpackJsonp([5],[
 	        _.each(notifyInfo, function (item) {
 	          if (item.hasOwnProperty('msg')) {
 	            if (item.msg.isSend === false) {
-	              self.onMsgNotify(item.msg);
+	              self.onMsgNotify(item);
 	            }
 	          } else if (item.hasOwnProperty('isSend')) {
 	            if (item.isSend === false) {
@@ -6575,14 +6610,14 @@ webpackJsonp([5],[
 	    var self = this;
 	    var msgObj = {};
 	
-	    // if (notifyInfo && notifyInfo.type == 0 && notifyInfo.elems && notifyInfo.elems.length > 0) {
-	    if (notifyInfo && notifyInfo.elems && notifyInfo.elems.length > 0) {
+	    var elems = notifyInfo.getElems(); // 获取消息包含的元素数组
+	    for (var i = 0, j = elems.length; i < j; i++) {
 	      var elem = notifyInfo.elems[0];
-	      if (elem.getType() === webim.MSG_ELEMENT_TYPE.CUSTOM) {
-	        // if (elem.type === 'TIMCustomElem') {
+	      var type = elem.getType(); // 获取元素类型
+	      if (type === webim.MSG_ELEMENT_TYPE.CUSTOM) {
 	        msgObj = elem.getContent().data;
-	      } else if (elem.type === 'TIMGroupTipElem') {
-	        msgObj = elem.content.groupInfoList[0];
+	      } else if (type === 'TIMGroupTipElem') {
+	        msgObj = elem.content.data;
 	      } else {
 	        msgObj = elem.content.text + '';
 	        msgObj = msgObj.replace(/[']/g, '').replace(/&quot;/g, '\'');
@@ -6596,6 +6631,8 @@ webpackJsonp([5],[
 	      }
 	      if (_.isObject(msgObj)) {
 	        msgObj.fromAccount = notifyInfo.fromAccount;
+	        var date = new Date(notifyInfo.getTime() * 1000);
+	        msgObj.time = BusinessDate.format(date, 'hh:mm:ss');
 	
 	        self.beforeSendMsg(msgObj, function (msg) {
 	          self.addMessage(msg);
@@ -6666,6 +6703,18 @@ webpackJsonp([5],[
 	      case 5: //  禁言
 	        Backbone.trigger('event:forbidUserSendMsg', msgObj);
 	        break;
+	      case 6:
+	        this.lockOrUnlock(true);
+	        callback(msgObj);
+	        break;
+	      case 7:
+	        this.lockOrUnlock(false);
+	        callback(msgObj);
+	        break;
+	      case 8:
+	        self.checkUserCanJoinRoom();
+	        callback(msgObj);
+	        break;
 	      default:
 	        break;
 	    }
@@ -6687,6 +6736,12 @@ webpackJsonp([5],[
 	      Backbone.trigger('event:UserKickOut', notify);
 	    }
 	  },
+	  lockOrUnlock: function (isLock) {
+	    UserInfo.setLockScreen(this.roomInfo.id, isLock);
+	    var msg = '主播进行了' + (isLock ? '锁屏' : '解屏') + '操作';
+	    msgBox.showTip(msg);
+	    Backbone.trigger('event:LockScreen', isLock);
+	  },
 	  groupSystemNotifys: function () {},
 	  /**
 	   * 获取消息模板
@@ -6696,7 +6751,10 @@ webpackJsonp([5],[
 	    return __webpack_require__(92);
 	  },
 	  sendMsgToGroup: function (msgObj) {
-	    this.addMessage(msgObj);
+	    var res = _.extend(msgObj, {
+	      time: BusinessDate.format(new Date(), 'hh:mm:ss')
+	    });
+	    this.addMessage(res);
 	
 	    YYTIMServer.sendMessage({
 	      groupId: this.roomInfo.imGroupid,
@@ -6708,19 +6766,15 @@ webpackJsonp([5],[
 	  addMessage: function (msg) {
 	    var self = this;
 	    var msgObj;
-	    // var roomId = this.roomInfo.id;
 	    msgObj = _.extend({
 	      nickName: '匿名',
 	      content: '',
 	      smallAvatar: '',
-	      time: self.getDateStr(new Date()),
+	      // time: self.getDateStr(new Date()),
 	      fromAccount: '',
 	      userId: ''
 	    }, msg);
 	
-	    // if (msgObj && msgObj.roomId !== roomId) {
-	    //   return;
-	    // }
 	    msgObj.content = self.filterEmoji(msgObj.content);
 	    if (msgObj && msgObj.content) {
 	      var tpl = _.template(this.getMessageTpl());
@@ -7034,7 +7088,8 @@ webpackJsonp([5],[
 	        fontColor: this.elements.btnChooseColor.attr('data-color') || '#999999'
 	      },
 	      smallAvatar: user.get('bigheadImg'),
-	      roomId: this.roomInfo.id
+	      roomId: this.roomInfo.id,
+	      time: ''
 	    };
 	    // 处理频道发言
 	    if (this.options.type === 'channel') {
