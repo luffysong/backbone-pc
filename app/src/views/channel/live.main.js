@@ -95,7 +95,7 @@ var View = BaseView.extend({
     this.initWebIM().then(function () {
       this.renderPage();
       this.getUserInfo();
-      this.getLiveViedoList();
+      // this.getLiveViedoList();
     }.bind(this), function () {
       this.goBack();
     }.bind(this));
@@ -141,7 +141,6 @@ var View = BaseView.extend({
   userJoinGroup: function (sig, groupId) {
     var self = this;
     self.userIMSig = sig;
-    // self.initWebIM();
 
     YYTIMServer.applyJoinGroup(groupId, function () {
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
@@ -275,9 +274,6 @@ var View = BaseView.extend({
             title: data.channelName || ''
           }
         });
-        // self.flashAPI.onReady(function () {
-        //   this.init(self.roomInfo);
-        // });
         self.adWallView = new AdvertisingWallView({
           el: '#advertisingWall',
           roomId: data.channelId,
@@ -287,8 +283,8 @@ var View = BaseView.extend({
         self.loopRoomInfo();
 
         self.joinRoom();
-        // TODO
-        self.fetchUserIMSig(data.imGroupid || '@TGS#3GTTRWAEA');
+        // self.fetchUserIMSig(data.imGroupid);
+        self.getLiveViedoList();
         // TODO
         // self.checkRoomStatus(data.status);
       } else {
@@ -480,12 +476,13 @@ var View = BaseView.extend({
       videoSize: 10
     }, this.queryParams));
     promise.done(function (res) {
-      // self.flashAPI = FlashAPI.sharedInstanceFlashApi({
-      //   el: 'broadCastFlash'
-      // });
       if (res && ~~res.code === 0) {
         // 视频数据
         if (res.data.channelShow) {
+          var imGroupid = res.data.channelShow.imGroupid;
+          self.roomInfo.imGroupid = imGroupid;
+          self.fetchUserIMSig(imGroupid);
+
           var videoData = {
             videoType: 'FANPA_CHANNEL',
             status: 'LIVE',
@@ -494,11 +491,35 @@ var View = BaseView.extend({
           self.flashAPI.onReady(function () {
             this.init(videoData);
           });
+        } else {
+          uiConfirm.show({
+            title: '进入房间失败',
+            content: '获取节目单失败，无法进入房间22',
+            cancelBtn: false,
+            okFn: function () {
+              self.goBack();
+            },
+            cancelFn: function () {
+              self.goBack();
+            }
+          });
         }
         // 节目单
         if (res.data && res.data.videos) {
           Backbone.trigger('event:ChannelLiveVideoListReady', res.data.videos || []);
         }
+      } else {
+        uiConfirm.show({
+          title: '进入房间失败',
+          content: '获取节目单失败，无法进入房间11',
+          cancelBtn: false,
+          okFn: function () {
+            self.goBack();
+          },
+          cancelFn: function () {
+            self.goBack();
+          }
+        });
       }
     });
   }
