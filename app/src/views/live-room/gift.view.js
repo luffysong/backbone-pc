@@ -297,17 +297,22 @@ var View = BaseView.extend({
       return;
     }
     if (this.isClicked) {
+      msgBox.showOK('操作过于频繁');
       return;
     }
     this.isClicked = true;
-    // 互动
-    Backbone.trigger('event:visitorInteractive', {
+    var msg = {
       nickName: user.get('userName'),
       smallAvatar: user.get('bigheadImg'),
       roomId: self.roomInfo.id || '',
       msgType: 3
-    });
-    // self.pushPopularity(1);
+    };
+    if (this.options.type === 'channel') {
+      msg.channelId = this.roomInfo.channelId;
+      msg.roomId = -1;
+    }
+    // 互动
+    Backbone.trigger('event:visitorInteractive', msg);
     self.beforePushPopularity(1);
     setTimeout(function () {
       self.isClicked = false;

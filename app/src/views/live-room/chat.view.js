@@ -134,6 +134,7 @@ var View = BaseView.extend({
         });
       }
     });
+
     Backbone.on('event:forbidUserSendMsg', function (data) {
       self.forbidUserSendMsgHandler(data);
     });
