@@ -50,7 +50,7 @@ var View = BaseView.extend({
     }
     this.channelId = url.query.channelId || 1;
 
-    this.roomInfoPeriod = 5 * 1000;
+    this.roomInfoPeriod = 20 * 1000;
 
     this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
     this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
@@ -95,25 +95,22 @@ var View = BaseView.extend({
     this.initWebIM().then(function () {
       this.renderPage();
       this.getUserInfo();
-      // this.getLiveViedoList();
     }.bind(this), function () {
       this.goBack();
     }.bind(this));
   },
   defineEventInterface: function () {
     var self = this;
-    // Backbone.on('event:UserKickOut', function (notifyInfo) {
-    //   self.checkUserIsKickout(notifyInfo);
-    // });
 
     Backbone.on('event:pleaseUpdateRoomInfo', function () {
       self.getRoomInfo(function (res) {
         Backbone.trigger('event:updateRoomInfo', res.data);
       });
-      // self.getRoomLoopInfo(function (res) {
-      //   var data = res.data;
-      //   Backbone.trigger('event:updateRoomInfo', data);
-      // });
+    });
+    Backbone.on('event:updateRoomInfo', function (data) {
+      if (data && data.liveStatus !== self.currentChannelShowStatus[self.currentChannelShowId]) {
+        window.location.reload();
+      }
     });
   },
   fetchUserIMSig: function (groupId) {
@@ -144,9 +141,6 @@ var View = BaseView.extend({
 
     YYTIMServer.applyJoinGroup(groupId, function () {
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
-      // if (self.roomInfo.status === 2) {
-      //   self.loopRoomInfo();
-      // }
     }, function (res) {
       self.imErrorHandler(res);
     });
@@ -301,7 +295,6 @@ var View = BaseView.extend({
         });
 
         Backbone.trigger('event:IMGroupInfoReady', self.currentGroupInfo);
-        // self.checkUserIsKickout(self.currentGroupInfo.Notification);
         // self.checkUserIsDisabled(self.currentGroupInfo.Introduction);
       }
     }, function () {
@@ -400,16 +393,6 @@ var View = BaseView.extend({
       }
     }
   },
-  /**
-   * 检查用户是否已经被禁言
-   */
-  checkUserIsDisabled: function (notifyInfo) {
-    var self = this;
-    var notify = self.parseNotifyInfo(notifyInfo);
-    if (notify) {
-      UserInfo.setLockScreen(this.roomInfo.id, notify.blockState);
-    }
-  },
   goBack: function (url) {
     if (url) {
       window.location.href = url;
@@ -434,7 +417,9 @@ var View = BaseView.extend({
     }));
     promise.done(function (response) {
       if (~~response.code === 0) {
-        defer.resolve(response.data);
+        defer.resolve(_.extend({
+          now: response.now
+        }, response.data));
       } else {
         defer.reject();
       }
@@ -473,20 +458,24 @@ var View = BaseView.extend({
     var self = this;
     var promise = this.liveVideoListModel.executeJSONP(_.extend({
       channelId: this.channelId,
-      videoSize: 10
+      videoSize: 1000
     }, this.queryParams));
     promise.done(function (res) {
       if (res && ~~res.code === 0) {
         // 视频数据
-        if (res.data.channelShow) {
-          var imGroupid = res.data.channelShow.imGroupid;
+        var show = res.data.channelShow;
+        if (show) {
+          var imGroupid = show.imGroupid;
           self.roomInfo.imGroupid = imGroupid;
           self.fetchUserIMSig(imGroupid);
+          self.currentChannelShowStatus = self.currentChannelShowStatus || {};
+          self.currentChannelShowStatus[show.id] = show.status;
+          self.currentChannelShowId = show.id;
 
           var videoData = {
             videoType: 'FANPA_CHANNEL',
             status: 'LIVE',
-            url: res.data.channelShow.liveStream
+            url: show.liveStream
           };
           self.flashAPI.onReady(function () {
             this.init(videoData);
@@ -494,7 +483,7 @@ var View = BaseView.extend({
         } else {
           uiConfirm.show({
             title: '进入房间失败',
-            content: '暂无节目可以观看，去其他房间看看吧',
+            content: '该频道还没有节目，更多精彩，敬请期待',
             cancelBtn: false,
             okFn: function () {
               self.goBack();
