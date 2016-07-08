@@ -13,6 +13,7 @@
 
 var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
+var store = base.storage;
 var BaseView = base.View; // View的基类
 var Auxiliary = require('auxiliary-additions');
 
@@ -69,6 +70,12 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
+    if (!user.isLogined()) {
+      store.remove('imSig');
+      store.set('signout', 1);
+      msgBox.showTip('请登录后观看直播!');
+      window.location.href = '/login.html';
+    }
     this.defineEventInterface();
     this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
@@ -142,12 +149,6 @@ var View = BaseView.extend({
       self.initRoom();
       Backbone.trigger('event:currentUserInfoReady', userInfo);
     });
-    // this.anchorInfoModel.executeJSONP(this.anchorInfoParams, function (res) {
-    //     if(res){
-    //         Backbone.trigger('event:currentUserInfoReady', res.data);
-    //     }
-    // }, function () {
-    // });
   },
   getRoomInfo: function (okFn, errFn) {
     var self = this;
