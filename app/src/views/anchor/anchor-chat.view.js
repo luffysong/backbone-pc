@@ -239,6 +239,7 @@ var View = BaseView.extend({
     for (var i = 0, j = elems.length; i < j; i++) {
       elem = elems[i];
       type = elem.getType(); // 获取元素类型
+      console.log('type ===========', type);
       content = elem.getContent(); // 获取元素对象
       switch (type) {
         case webim.MSG_ELEMENT_TYPE.TEXT:

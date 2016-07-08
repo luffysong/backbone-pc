@@ -99,9 +99,11 @@ var View = BaseView.extend({
         Backbone.trigger('event:onConnNotify', notifyInfo);
       },
       onMsgNotify: function (notifyInfo) {
+        console.log('1111111111', notifyInfo);
         Backbone.trigger('event:onMsgNotify', notifyInfo);
       },
       onGroupInfoChangeNotify: function (notifyInfo) {
+        console.log('3333333333333', notifyInfo);
         Backbone.trigger('event:onGroupInfoChangeNotify', notifyInfo);
       },
       groupSystemNotifys: {
