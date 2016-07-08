@@ -494,7 +494,7 @@ var View = BaseView.extend({
         } else {
           uiConfirm.show({
             title: '进入房间失败',
-            content: '获取节目单失败，无法进入房间',
+            content: '暂无节目可以观看，去其他房间看看吧',
             cancelBtn: false,
             okFn: function () {
               self.goBack();
@@ -511,7 +511,7 @@ var View = BaseView.extend({
       } else {
         uiConfirm.show({
           title: '进入房间失败',
-          content: '获取节目单失败，无法进入房间',
+          content: '获取节目单失败，小编努力安排中...',
           cancelBtn: false,
           okFn: function () {
             self.goBack();
