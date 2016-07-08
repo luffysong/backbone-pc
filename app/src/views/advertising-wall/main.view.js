@@ -50,7 +50,9 @@ var View = BaseView.extend({
     this.listParams = _.extend({}, this.queryParams);
 
     this.pageParams = {
-      newList: {},
+      newList: {
+        hasNext: true
+      },
       hotList: {}
     };
 
@@ -138,6 +140,9 @@ var View = BaseView.extend({
   renderNewestList: function (ops) {
     var self = this;
     var promise = this.getData(ops);
+    if (!self.pageParams.newList.hasNext) {
+      return;
+    }
     promise.done(function (res) {
       self.appendToNewestList(res.data.list || []);
       if (res && res.code === '0') {
@@ -293,6 +298,7 @@ var View = BaseView.extend({
           self.options.userInfo.totalMarks -= self.perItemFee;
           self.setUserInfo();
           self.newestListDOM.children().remove();
+          self.pageParams.hotList.hasNext = true;
           self.renderNewestList();
           self.renderHotList();
         } else {
@@ -361,6 +367,7 @@ var View = BaseView.extend({
     this.lastTime = new Date();
     this.elements.unReadCnt.text(0).hide();
     $('.newList .am-u-sm-4').children().remove();
+    this.pageParams.newList.hasNext = true;
     this.renderNewestList();
     this.changeTab(0);
   },
