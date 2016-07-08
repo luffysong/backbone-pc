@@ -51,6 +51,11 @@ var View = BaseView.extend({
     this.fieldControlView = new FieldControlView({
       roomInfo: this.roomInfo
     });
+    var status = ~~this.roomInfo.status;
+    if (status !== 2) {
+      // msgBox.showTip('直播尚未开始，暂时无法使用场控功能');
+      this.btnFieldControl.addClass('m_disabled');
+    }
   },
   defineEventInterface: function () {
     var self = this;
@@ -185,6 +190,12 @@ var View = BaseView.extend({
   },
   // 场控管理
   fieldContrlClickHandler: function () {
+    var status = ~~this.roomInfo.status;
+    if (status !== 2) {
+      msgBox.showTip('直播尚未开始，暂时无法使用场控功能');
+      return;
+    }
+    this.btnFieldControl.removeClass('m_disabled');
     var tpl = require('./template/field-control.html');
     if (!this.fieldControlDialog) {
       this.fieldControlDialog = uiDialog.classInstanceDialog(tpl, {
