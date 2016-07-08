@@ -60,7 +60,6 @@ var View = BaseView.extend({
     var el = this.$el;
     this.msgList = el.find('#msgList');
     this.chatHistory = el.find('#chatHistory');
-    this.defineEventInterface();
     this.imgClear = el.find('#imgClear');
     this.imgUnLock = el.find('#imgUnLock');
 
@@ -69,6 +68,7 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function (ops) {
+    this.defineEventInterface();
     this.options = _.extend({}, ops);
     var self = this;
     Backbone.on('event:roomInfoReady', function (data) {
@@ -162,7 +162,9 @@ var View = BaseView.extend({
       msg: {
         roomId: self.roomInfo.id,
         msgType: 5,
-        userId: userInfo.id
+        userId: userInfo.id,
+        nickName: self.options.assistant ? '场控' : '主播',
+        content: (self.options.assistant ? '场控' : '主播') + '将用户' + userInfo.name + '禁言'
       }
     }, function () {
       msgBox.showOK('已将用户:<b>' + userInfo.name + ' 禁言10分钟.');
@@ -239,7 +241,6 @@ var View = BaseView.extend({
     for (var i = 0, j = elems.length; i < j; i++) {
       elem = elems[i];
       type = elem.getType(); // 获取元素类型
-      console.log('type ===========', type);
       content = elem.getContent(); // 获取元素对象
       switch (type) {
         case webim.MSG_ELEMENT_TYPE.TEXT:
@@ -312,6 +313,9 @@ var View = BaseView.extend({
       case 6:
       case 7:
         $('#btn-lock').find('span').text(msgObj.msgType === 6 ? '解屏' : '锁屏');
+        self.addMessage(msgObj);
+        break;
+      case 8:
         self.addMessage(msgObj);
         break;
       default:
