@@ -664,6 +664,9 @@ body {
   }
   .like {
     display: inline-block!important;
+    button {
+      cursor: default;
+    }
   }
 }
 .play-back-main {
