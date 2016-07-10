@@ -52,6 +52,7 @@ var View = BaseView.extend({
   ready: function () {
     //  初始化
     var self = this;
+    storage.remove('imSig');
 
     this.defineEventInterface();
 

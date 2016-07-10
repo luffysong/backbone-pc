@@ -80,9 +80,9 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
+    store.remove('imSig');
     // 直播页面
     if (!user.isLogined()) {
-      store.remove('imSig');
       store.set('signout', 1);
       msgBox.showTip('请登录后观看直播!');
       window.location.href = '/login.html';
