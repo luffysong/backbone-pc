@@ -387,6 +387,12 @@ var View = BaseView.extend({
     var self = this;
     var notify = self.parseNotifyInfo(notifyInfo);
     var msg = '您已经被主播踢出房间,肿么又回来了';
+    if (this.iskickoutShow) {
+      this.iskickoutShow = false;
+      return;
+    }
+    this.iskickoutShow = true;
+
     if (notify && notifyInfo.isEvent) {
       msg = '您已经被主播踢出房间!';
     }
@@ -402,9 +408,11 @@ var View = BaseView.extend({
           content: msg,
           cancelBtn: false,
           okFn: function () {
+            self.iskickoutShow = false;
             self.goBack();
           },
           cancelFn: function () {
+            self.iskickoutShow = false;
             self.goBack();
           }
         });

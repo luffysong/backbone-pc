@@ -198,16 +198,16 @@ var View = BaseView.extend({
 
 
     function okCallback() {
+      if (self.forbidUsers.length > 200) {
+        self.forbidUsers.shift();
+      }
+      self.forbidUsers.push(data.id);
       var options = {
         GroupId: self.roomInfo.imGroupid,
         Notification: JSON.stringify({
           forbidUsers: self.forbidUsers
         })
       };
-      if (self.forbidUsers.length > 200) {
-        self.forbidUsers.shift();
-      }
-      self.forbidUsers.push(data.id);
 
       imServer.modifyGroupInfo(options, function (result) {
         if (result && result.ActionStatus === 'OK') {
