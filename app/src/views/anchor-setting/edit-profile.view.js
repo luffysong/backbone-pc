@@ -1,3 +1,6 @@
+/**
+ * 个人资料
+ */
 'use strict';
 
 var Backbone = window.Backbone;
@@ -208,6 +211,7 @@ var View = BaseView.extend({
           //  更新缓存
           imModel.updateIMUserSig();
           self.fetchIMUserInfo();
+          self.btnSave.addClass('m_disabled');
           Backbone.trigger('event:userProfileChanged', {
             nickName: $.trim(self.txtName.val()),
             headImg: self.txtImg.val(),
