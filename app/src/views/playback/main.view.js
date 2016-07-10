@@ -85,8 +85,7 @@ var View = BaseView.extend({
     // this.initRoom();
     this.renderPage();
   },
-  defineEventInterface: function () {
-  },
+  defineEventInterface: function () {},
   renderPage: function () {
     var RoomTitle = require('../live-room/room-title.view');
     var AnchorCardView = require('../live-room/anchor-card.view');
@@ -95,7 +94,11 @@ var View = BaseView.extend({
 
     var a = new RoomTitle();
 
-    a = new AnchorCardView();
+    a = new AnchorCardView({
+      share: {
+        url: '/playback.html?roomId=' + this.roomId
+      }
+    });
 
     a = new PlayedListView();
 
