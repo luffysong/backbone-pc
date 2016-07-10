@@ -1,3 +1,6 @@
+/**
+ * 创建直播
+ */
 'use strict';
 
 var base = require('base-extend-backbone');
@@ -86,7 +89,8 @@ var View = BaseView.extend({
   initRender: function () {
     var data = this.dateDataStructure();
     var dateHTML = this.compileHTML(this.liveTimeTemp, {
-      items: data, timeImage: timeImage
+      items: data,
+      timeImage: timeImage
     });
     this.liveTime.html(dateHTML);
     this.liveTimeUl = this.liveTime.find('.select>ul');
@@ -205,10 +209,13 @@ var View = BaseView.extend({
           });
           curSpan.text(defaD);
           curUl.html(html);
+          this.createDate.day = 1;
           break;
         case 'hours':
           curUl.html(this.hours);
           curSpan.text(defaHM);
+          this.createDate.hours = 0;
+          this.createDate.minutes = 0;
           break;
         default:
           curUl.html(this.minutes);
