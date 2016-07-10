@@ -108,8 +108,9 @@ var View = BaseView.extend({
       });
     });
     Backbone.on('event:updateRoomInfo', function (data) {
+      console.log(self.currentChannelShowStatus);
       if (data && data.liveStatus !== self.currentChannelShowStatus[self.currentChannelShowId]) {
-        window.location.reload();
+        // window.location.reload();
       }
     });
   },
