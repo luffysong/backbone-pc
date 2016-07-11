@@ -288,6 +288,7 @@ var View = BaseView.extend({
         userInfo: self.userInfo,
         type: 1 // 直播
       });
+      self.roomInfo.now = response.now;
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
       self.setRoomBgImg();
       self.flashAPI.onReady(function () {
