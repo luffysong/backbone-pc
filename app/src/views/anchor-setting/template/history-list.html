@@ -9,8 +9,10 @@
     <div class="time">
       <span class="tip am-margin-right-sm">直播时间:</span>
       <span class="value date am-margin-right">{{item.startTimeTxt}}</span>
+      {{ if item.diff != '00:00:00'}}
       <span class="tip am-margin-right-sm">时长:</span>
       <span class="value date">{{item.diff}}</span>
+      {{/if}}
     </div>
     <div class="number">
       <div class="num"><i class="icons view"></i><span class="value">{{item.seen}}</span></div>
