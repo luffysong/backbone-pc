@@ -298,9 +298,9 @@ var View = BaseView.extend({
           self.options.userInfo.totalMarks -= self.perItemFee;
           self.setUserInfo();
           self.newestListDOM.children().remove();
-          self.pageParams.hotList.hasNext = true;
+          self.pageParams.newList.hasNext = true;
           self.renderNewestList();
-          self.renderHotList();
+          // self.renderHotList();
         } else {
           msgBox.showError(res.msg || '发布告白失败,请稍后重试');
         }
