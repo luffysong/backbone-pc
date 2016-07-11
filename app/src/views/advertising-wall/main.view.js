@@ -381,6 +381,7 @@ var View = BaseView.extend({
       if (res && res.code === '0' && res.data.newMsgCount > 0) {
         // self.elements.unReadCnt.text(res.data.newMsgCount).show();
         self.pageParams.newList.hasNext = true;
+
         self.newestListDOM.children().remove();
         self.renderNewestList();
       }
