@@ -223,7 +223,6 @@ var View = BaseView.extend({
           break;
       }
     }
-    console.log('clicked', this.createDate);
   },
   eachMost: function (start, end) {
     var result = [];
@@ -269,7 +268,6 @@ var View = BaseView.extend({
   },
   createVideoHandler: function () {
     var self = this;
-    console.log('this.createDate:', this.createDate);
     if (this.createClick && this.createLock) {
       clearInterval(lighten);
       var date = new Date();
