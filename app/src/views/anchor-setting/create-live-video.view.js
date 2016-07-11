@@ -215,14 +215,15 @@ var View = BaseView.extend({
           curUl.html(this.hours);
           curSpan.text(defaHM);
           this.createDate.hours = 0;
-          this.createDate.minutes = 0;
           break;
         default:
+          this.createDate.minutes = 0;
           curUl.html(this.minutes);
           curSpan.text(defaHM);
           break;
       }
     }
+    console.log('clicked', this.createDate);
   },
   eachMost: function (start, end) {
     var result = [];
@@ -268,6 +269,7 @@ var View = BaseView.extend({
   },
   createVideoHandler: function () {
     var self = this;
+    console.log('this.createDate:', this.createDate);
     if (this.createClick && this.createLock) {
       clearInterval(lighten);
       var date = new Date();
