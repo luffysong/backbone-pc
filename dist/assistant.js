@@ -5776,8 +5776,12 @@ webpackJsonp([3],[
 	        this.notifying({
 	          roomId: self.roomInfo.id,
 	          userId: userInfo.id,
-	          nickName: userInfo.name,
-	          msgType: 5
+	          nickName: '消息',
+	          msgType: 0,
+	          style: {
+	            fontColor: '#999999'
+	          },
+	          content: (self.options.assistant ? '场控' : '主播') + '将用户' + userInfo.name + '禁言'
 	        });
 	      });
 	    }, function () {
@@ -5969,6 +5973,12 @@ webpackJsonp([3],[
 	      tpl = _.template(this.getMessageTpl());
 	      this.msgList.append(tpl(msgObj));
 	      this.chatHistory.scrollTop(this.msgList.height());
+	      if (msg.msgType === 5) {
+	        msgObj.msgType = 0;
+	        msgObj.style = {
+	          fontColor: '#999999'
+	        };
+	      }
 	      this.FlashApi.onReady(function () {
 	        this.notifying(msgObj);
 	      });
@@ -6860,7 +6870,7 @@ webpackJsonp([3],[
 /* 92 */
 /***/ function(module, exports) {
 
-	module.exports = "<li class=\"clearfix <%=msgType==0?'':'system-info'%>\" data-msgType=\"<%=msgType%>\" data-name=\"<%=nickName%>\" data-id=\"<%=fromAccount%>\">\n  <%if(msgType == 0){%>\n  <img onerror=\"this.src='../img/visitor_avator.jpg'\" src=\"<%=smallAvatar%>\" alt=\"\" class=\"fl visitor_avator\">\n  <%}%>\n  <p class=\"visitor_chat fl\">\n    <%if(msgType == 0){%>\n    <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else if(msgType == 4){%>\n        <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else{%>\n        <span class=\"visitorName\">消息:</span>\n    <% }%>\n    <%=content%>\n    <span class=\"time fr\"><%=time%></span>\n  </p>\n  <div class=\"controls_forbid_reject\">\n    <a href=\"javascript:;\" class=\"forbid am-btn-red\">禁言</a>\n    <a href=\"javascript:;\" class=\"reject am-btn-red\">踢出</a>\n    <%if(userId) {%>\n    <a href=\"javascript:;\" data-name=\"<%=nickName%>\" data-uid='<%=userId%>' class=\"ctrl am-btn-red\">场控</a>\n    <%}%>\n  </div>\n</li>\n"
+	module.exports = "<li class=\"clearfix <%=msgType==0?'':'system-info'%>\" data-msgType=\"<%=msgType%>\" data-name=\"<%=nickName%>\" data-id=\"<%=fromAccount%>\">\n  <%if(msgType == 0){%>\n  <img src=\"<%=smallAvatar%>\" alt=\"\" class=\"fl visitor_avator\">\n  <%}%>\n  <p class=\"visitor_chat fl\">\n    <%if(msgType == 0){%>\n    <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else if(msgType == 4){%>\n        <span class=\"visitorName\"><%=nickName%>:</span>\n    <%} else{%>\n        <span class=\"visitorName\">消息:</span>\n    <% }%>\n    <%=content%>\n    <span class=\"time fr\"><%=time%></span>\n  </p>\n  <div class=\"controls_forbid_reject\">\n    <a href=\"javascript:;\" class=\"forbid am-btn-red\">禁言</a>\n    <a href=\"javascript:;\" class=\"reject am-btn-red\">踢出</a>\n    <%if(userId) {%>\n    <a href=\"javascript:;\" data-name=\"<%=nickName%>\" data-uid='<%=userId%>' class=\"ctrl am-btn-red\">场控</a>\n    <%}%>\n  </div>\n</li>\n"
 
 /***/ },
 /* 93 */

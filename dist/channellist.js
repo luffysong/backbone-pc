@@ -3909,6 +3909,8 @@ webpackJsonp([4],{
 	
 	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
+	var UserInfoModel = __webpack_require__(63);
+	
 	var LivePreviewModel = __webpack_require__(184);
 	var PlaybackModel = __webpack_require__(185);
 	var ChannelModel = __webpack_require__(186);
@@ -3959,9 +3961,16 @@ webpackJsonp([4],{
 	    this.livePreViewModel = new LivePreviewModel();
 	    this.playbackModel = new PlaybackModel();
 	    this.channelModel = new ChannelModel();
+	    this.userInfo = new UserInfoModel();
 	
 	    // 当前频道
 	    this.channelType = 0;
+	
+	    this.hasData = {
+	      0: true,
+	      1: true,
+	      2: true
+	    };
 	
 	    this.pushRoom = new PushRoom({});
 	  },
@@ -3992,6 +4001,8 @@ webpackJsonp([4],{
 	    $('.viedo-content').on('click', function (e) {
 	      self.pushRoomHandler(e);
 	    });
+	    this.renderOfficeVideoList();
+	    // this.channelType = 0;
 	    if (this.listType === 'yyt') {
 	      this.channelChanged({
 	        target: 'a[data-tag="1"]'
@@ -4017,6 +4028,19 @@ webpackJsonp([4],{
 	      }
 	    });
 	  },
+	  renderOfficeVideoList: function () {
+	    var self = this;
+	    self.channelParams.type = 'YYT';
+	    self.channelParams.offset = 0;
+	    var promise = self.channelModel.executeJSONP(self.channelParams);
+	    var type = 1;
+	    promise.done(function (res) {
+	      self.renderViedoList(res, 1);
+	      if (!self.totalCount[type]) {
+	        self.totalCount[type] = res.data.totalCount;
+	      }
+	    });
+	  },
 	  // 获取分页列表
 	  getPageList: function (pageIndex) {
 	    var self = this;
@@ -4026,7 +4050,6 @@ webpackJsonp([4],{
 	      this.currentPage[this.channelType] = page;
 	    }
 	    switch (this.channelType) {
-	      default: break;
 	      case 0:
 	        this.playbackParameter.offset = (page - 1) * this.playbackPageSize;
 	        promise = self.playbackModel.executeJSONP(this.playbackParameter);
@@ -4034,6 +4057,9 @@ webpackJsonp([4],{
 	          self.renderList(res);
 	          if (!self.totalCount[self.channelType]) {
 	            self.totalCount[self.channelType] = res.data.totalCount;
+	          }
+	          if (res.data.length <= 0) {
+	            self.hasData[self.channelType] = false;
 	          }
 	        });
 	        break;
@@ -4047,7 +4073,12 @@ webpackJsonp([4],{
 	          if (!self.totalCount[self.channelType]) {
 	            self.totalCount[self.channelType] = res.data.totalCount;
 	          }
+	          if (res.data.length <= 0) {
+	            self.hasData[self.channelType] = false;
+	          }
 	        });
+	        break;
+	      default:
 	        break;
 	    }
 	  },
@@ -4058,9 +4089,9 @@ webpackJsonp([4],{
 	    this.playbackList.append(html);
 	  },
 	  // 渲染官方 or 站子
-	  renderViedoList: function (data) {
+	  renderViedoList: function (data, type) {
 	    var html = this.compileHTML(this.viedoItemTpl, data);
-	    $('#channelSection-' + this.channelType).append(html);
+	    $('#channelSection-' + (type || this.channelType)).append(html);
 	  },
 	  // 格式化时间
 	  formatData: function (data) {
@@ -4089,7 +4120,7 @@ webpackJsonp([4],{
 	      2: -520
 	    };
 	    // 距离底部还有多远时,加载下一页面
-	    if (diff > temp[this.channelType]) {
+	    if (diff > temp[this.channelType] && this.hasData[this.channelType]) {
 	      this.currentPage[this.channelType] = this.currentPage[this.channelType] || 1;
 	      this.currentPage[this.channelType]++;
 	      this.getPageList(this.currentPage[this.channelType]);
@@ -4099,13 +4130,13 @@ webpackJsonp([4],{
 	  channelChanged: function (e) {
 	    var target = $(e.target);
 	    if (target.attr('data-tag') !== undefined) {
-	      this.clearSection();
+	      // this.clearSection();
 	      this.channelType = ~~target.attr('data-tag');
 	      target.parent().children().removeClass('active');
 	      target.addClass('active');
 	      this.allContainerDOM.hide();
 	      $('.section-' + this.channelType).show();
-	      this.getPageList(this.currentPage[this.channelType]);
+	      // this.getPageList(this.currentPage[this.channelType]);
 	    }
 	  },
 	  // 切换频道是清空dom
@@ -4126,15 +4157,29 @@ webpackJsonp([4],{
 	    }
 	    var roomId = target.attr('data-roomId');
 	    if (roomId) {
-	      this.pushRoom.setOptions({
-	        roomId: roomId,
-	        okFn: function () {
-	          msgBox.showOK('感谢您的支持');
-	          self.updateNumber(target.parents('.item'));
-	        }
+	      self.getUserInfo().done(function (total) {
+	        self.pushRoom.setOptions({
+	          roomId: roomId,
+	          totalMarks: total,
+	          okFn: function () {
+	            msgBox.showOK('感谢您的支持');
+	            self.updateNumber(target.parents('.item'));
+	          }
+	        });
+	        self.pushRoom.topClick();
 	      });
-	      this.pushRoom.topClick();
 	    }
+	  },
+	  getUserInfo: function () {
+	    var defer = $.Deferred();
+	    this.userInfo.executeJSONP(this.queryParams).done(function (res) {
+	      if (~~res.code === 0) {
+	        defer.resolve(res.data.totalMarks);
+	      } else {
+	        defer.reject();
+	      }
+	    });
+	    return defer.promise();
 	  },
 	  updateNumber: function (el) {
 	    var target = el.find('.white');
