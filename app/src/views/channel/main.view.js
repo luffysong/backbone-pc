@@ -12,6 +12,8 @@ var URL = Auxiliary.url;
 
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var UserInfoModel = require('../../models/anchor/anchor-info.model');
+
 var LivePreviewModel = require('../../models/index/live-pre.model');
 var PlaybackModel = require('../../models/index/playback.model');
 var ChannelModel = require('../../models/index/channel.model');
@@ -62,6 +64,7 @@ var View = BaseView.extend({
     this.livePreViewModel = new LivePreviewModel();
     this.playbackModel = new PlaybackModel();
     this.channelModel = new ChannelModel();
+    this.userInfo = new UserInfoModel();
 
     // 当前频道
     this.channelType = 0;
@@ -257,15 +260,29 @@ var View = BaseView.extend({
     }
     var roomId = target.attr('data-roomId');
     if (roomId) {
-      this.pushRoom.setOptions({
-        roomId: roomId,
-        okFn: function () {
-          msgBox.showOK('感谢您的支持');
-          self.updateNumber(target.parents('.item'));
-        }
+      self.getUserInfo().done(function (total) {
+        self.pushRoom.setOptions({
+          roomId: roomId,
+          totalMarks: total,
+          okFn: function () {
+            msgBox.showOK('感谢您的支持');
+            self.updateNumber(target.parents('.item'));
+          }
+        });
+        self.pushRoom.topClick();
       });
-      this.pushRoom.topClick();
     }
+  },
+  getUserInfo: function () {
+    var defer = $.Deferred();
+    this.userInfo.executeJSONP(this.queryParams).done(function (res) {
+      if (~~res.code === 0) {
+        defer.resolve(res.data.totalMarks);
+      } else {
+        defer.reject();
+      }
+    });
+    return defer.promise();
   },
   updateNumber: function (el) {
     var target = el.find('.white');
