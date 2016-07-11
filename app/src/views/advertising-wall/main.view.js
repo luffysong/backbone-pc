@@ -45,7 +45,7 @@ var View = BaseView.extend({
     };
 
     // 循环接口时间
-    this.loopTime = 10 * 1000;
+    this.loopTime = 60 * 1000;
 
     this.listParams = _.extend({}, this.queryParams);
 
