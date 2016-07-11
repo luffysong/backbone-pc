@@ -66,6 +66,12 @@ var View = BaseView.extend({
     // 当前频道
     this.channelType = 0;
 
+    this.hasData = {
+      0: true,
+      1: true,
+      2: true
+    };
+
     this.pushRoom = new PushRoom({});
   },
   afterMount: function () {
@@ -95,6 +101,8 @@ var View = BaseView.extend({
     $('.viedo-content').on('click', function (e) {
       self.pushRoomHandler(e);
     });
+    this.renderOfficeVideoList();
+    // this.channelType = 0;
     if (this.listType === 'yyt') {
       this.channelChanged({
         target: 'a[data-tag="1"]'
@@ -120,6 +128,19 @@ var View = BaseView.extend({
       }
     });
   },
+  renderOfficeVideoList: function () {
+    var self = this;
+    self.channelParams.type = 'YYT';
+    self.channelParams.offset = 0;
+    var promise = self.channelModel.executeJSONP(self.channelParams);
+    var type = 1;
+    promise.done(function (res) {
+      self.renderViedoList(res, 1);
+      if (!self.totalCount[type]) {
+        self.totalCount[type] = res.data.totalCount;
+      }
+    });
+  },
   // 获取分页列表
   getPageList: function (pageIndex) {
     var self = this;
@@ -129,7 +150,6 @@ var View = BaseView.extend({
       this.currentPage[this.channelType] = page;
     }
     switch (this.channelType) {
-      default: break;
       case 0:
         this.playbackParameter.offset = (page - 1) * this.playbackPageSize;
         promise = self.playbackModel.executeJSONP(this.playbackParameter);
@@ -137,6 +157,9 @@ var View = BaseView.extend({
           self.renderList(res);
           if (!self.totalCount[self.channelType]) {
             self.totalCount[self.channelType] = res.data.totalCount;
+          }
+          if (res.data.length <= 0) {
+            self.hasData[self.channelType] = false;
           }
         });
         break;
@@ -150,7 +173,12 @@ var View = BaseView.extend({
           if (!self.totalCount[self.channelType]) {
             self.totalCount[self.channelType] = res.data.totalCount;
           }
+          if (res.data.length <= 0) {
+            self.hasData[self.channelType] = false;
+          }
         });
+        break;
+      default:
         break;
     }
   },
@@ -161,9 +189,9 @@ var View = BaseView.extend({
     this.playbackList.append(html);
   },
   // 渲染官方 or 站子
-  renderViedoList: function (data) {
+  renderViedoList: function (data, type) {
     var html = this.compileHTML(this.viedoItemTpl, data);
-    $('#channelSection-' + this.channelType).append(html);
+    $('#channelSection-' + (type || this.channelType)).append(html);
   },
   // 格式化时间
   formatData: function (data) {
@@ -192,7 +220,7 @@ var View = BaseView.extend({
       2: -520
     };
     // 距离底部还有多远时,加载下一页面
-    if (diff > temp[this.channelType]) {
+    if (diff > temp[this.channelType] && this.hasData[this.channelType]) {
       this.currentPage[this.channelType] = this.currentPage[this.channelType] || 1;
       this.currentPage[this.channelType]++;
       this.getPageList(this.currentPage[this.channelType]);
@@ -202,13 +230,13 @@ var View = BaseView.extend({
   channelChanged: function (e) {
     var target = $(e.target);
     if (target.attr('data-tag') !== undefined) {
-      this.clearSection();
+      // this.clearSection();
       this.channelType = ~~target.attr('data-tag');
       target.parent().children().removeClass('active');
       target.addClass('active');
       this.allContainerDOM.hide();
       $('.section-' + this.channelType).show();
-      this.getPageList(this.currentPage[this.channelType]);
+      // this.getPageList(this.currentPage[this.channelType]);
     }
   },
   // 切换频道是清空dom
