@@ -254,7 +254,9 @@ var View = BaseView.extend({
     if (el.hasClass('uploadImageWrap')) {
       el.append('<img class="uploadImage cover-image">');
     }
-    var attrs = null;
+    var attrs = {
+      breviaryUrl: el.parent().data('img')
+    };
     var posterpic = el.attr('data-posterpic');
     if (this.upload) {
       this.currentLiveItem = $(el.parents('.item'));
