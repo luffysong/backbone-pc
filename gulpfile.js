@@ -30,7 +30,8 @@ gulp.task('build', ['clean'], function () {
       'app/flash/*.*',
       'app/link/*.*',
       'app/link/**/*.*',
-      'app/extend/**/*.*'
+      'app/extend/**/*.*',
+      'app/cross-url/**/*.*'
     ], {
       base: 'app/'
     })
