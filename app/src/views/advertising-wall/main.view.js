@@ -45,7 +45,7 @@ var View = BaseView.extend({
     };
 
     // 循环接口时间
-    this.loopTime = 60 * 1000;
+    this.loopTime = 10 * 1000;
 
     this.listParams = _.extend({}, this.queryParams);
 
@@ -367,7 +367,6 @@ var View = BaseView.extend({
     this.lastTime = new Date();
     this.elements.unReadCnt.text(0).hide();
     $('.newList .am-u-sm-4').children().remove();
-    this.pageParams.newList.hasNext = true;
     this.renderNewestList();
     this.changeTab(0);
   },
@@ -381,6 +380,9 @@ var View = BaseView.extend({
     promise.done(function (res) {
       if (res && res.code === '0' && res.data.newMsgCount > 0) {
         // self.elements.unReadCnt.text(res.data.newMsgCount).show();
+        self.pageParams.newList.hasNext = true;
+
+        self.newestListDOM.children().remove();
         self.renderNewestList();
       }
       setTimeout(function () {
