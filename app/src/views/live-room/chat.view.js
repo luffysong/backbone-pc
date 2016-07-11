@@ -397,6 +397,7 @@ var View = BaseView.extend({
     var imIdentifier = imModel.get('data').imIdentifier || '';
     if (notifyInfo.userId === imIdentifier) {
       msgBox.showTip('您已被主播禁言10分钟!');
+
       Backbone.trigger('event:currentUserDisableTalk', true);
       var cur = new Date();
       UserInfo.setDisableTalk(user.get('userId'), this.roomInfo.id, cur.getTime() + 10 * 60 * 1000);

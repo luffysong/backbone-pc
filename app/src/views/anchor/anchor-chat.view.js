@@ -172,8 +172,12 @@ var View = BaseView.extend({
         this.notifying({
           roomId: self.roomInfo.id,
           userId: userInfo.id,
-          nickName: userInfo.name,
-          msgType: 5
+          nickName: '消息',
+          msgType: 0,
+          style: {
+            fontColor: '#999999'
+          },
+          content: (self.options.assistant ? '场控' : '主播') + '将用户' + userInfo.name + '禁言'
         });
       });
     }, function () {
@@ -365,6 +369,12 @@ var View = BaseView.extend({
       tpl = _.template(this.getMessageTpl());
       this.msgList.append(tpl(msgObj));
       this.chatHistory.scrollTop(this.msgList.height());
+      if (msg.msgType === 5) {
+        msgObj.msgType = 0;
+        msgObj.style = {
+          fontColor: '#999999'
+        };
+      }
       this.FlashApi.onReady(function () {
         this.notifying(msgObj);
       });
