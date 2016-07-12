@@ -255,9 +255,13 @@ var View = BaseView.extend({
       el.append('<img class="uploadImage cover-image">');
     }
     var attrs = {
-      breviaryUrl: el.parent().data('img')
+      breviaryUrl: el.attr('src')
     };
+    if (!attrs.breviaryUrl) {
+      return;
+    }
     var posterpic = el.attr('data-posterpic');
+    // this.upload = new UploadFileDialog(this.fileOptions);
     if (this.upload) {
       this.currentLiveItem = $(el.parents('.item'));
       this.singleLiDOM = this.currentLiveItem;
