@@ -4764,7 +4764,7 @@ webpackJsonp([5],[
 	  this._props = options.props || {};
 	  this.$attrs = {
 	    id: 'YYTFlash' + (uid++), //  配置id
-	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160711.3', //  引入swf文件
+	    src: this._props.src || origin + '/flash/RTMPInplayer.swf?t=20160712.1', //  引入swf文件
 	    width: this._props.width || 895,
 	    height: this._props.height || 502,
 	    wmode: this._props.wmode || 'transparent', // 控制显示模型
@@ -5367,6 +5367,7 @@ webpackJsonp([5],[
 	  // 当模板挂载到元素之后
 	  afterMount: function () {
 	    this.roomBg = $('#anchorContainerBg');
+	    this.currentChannelShowStatus = {};
 	  },
 	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	  ready: function () {
@@ -5399,9 +5400,9 @@ webpackJsonp([5],[
 	      });
 	    });
 	    Backbone.on('event:updateRoomInfo', function (data) {
-	      console.log(self.currentChannelShowStatus);
-	      if (data && data.liveStatus !== self.currentChannelShowStatus[self.currentChannelShowId]) {
-	        // window.location.reload();
+	      var id = self.currentChannelShowStatus[self.currentChannelShowId];
+	      if (data && self.currentChannelShowId && data.liveStatus !== id) {
+	        window.location.reload();
 	      }
 	    });
 	  },
@@ -5694,11 +5695,11 @@ webpackJsonp([5],[
 	  },
 	  loopRoomInfo: function (time) {
 	    var self = this;
+	    self.getRoomLoopInfo().then(function (data) {
+	      Backbone.trigger('event:updateRoomInfo', data);
+	    });
 	    self.roomInfoTimeId = setTimeout(function () {
-	      self.getRoomLoopInfo().then(function (data) {
-	        Backbone.trigger('event:updateRoomInfo', data);
-	        self.loopRoomInfo();
-	      });
+	      self.loopRoomInfo();
 	    }, !!time ? time : self.roomInfoPeriod);
 	  },
 	  getRoomLoopInfo: function () {
@@ -7664,7 +7665,9 @@ webpackJsonp([5],[
 	    this.allItems = this.$el.children('div');
 	  },
 	  selectedItem: function (now) {
-	    this.allItems.removeClass('active');
+	    if (this.allItems) {
+	      this.allItems.removeClass('active');
+	    }
 	    _.map(this.allItems, function (item) {
 	      var el = $(item);
 	      var start = el.data('start');
