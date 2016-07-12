@@ -262,7 +262,7 @@ var View = BaseView.extend({
       this.currentLiveItem = $(el.parents('.item'));
       this.singleLiDOM = this.currentLiveItem;
       this.saveCoverParameter.roomId = this.singleLiDOM.data('id');
-      // this.upload.emptyValue();
+      this.upload.emptyValue();
       if (posterpic) {
         var img = el.find('.cover-image');
 
