@@ -5392,7 +5392,7 @@ webpackJsonp([2],[
 	  el: '#noOpenContent',
 	  events: {
 	    'click button': 'checkLiveVideoHandler',
-	    'click .uploadImage': 'editCoverImageHandler',
+	    'click .uploadImageWrap': 'editCoverImageHandler',
 	    'click .copy-video-url': 'copyUrlHandler',
 	    'click .copy-video-name': 'copyNameHandler'
 	  },
@@ -5625,9 +5625,14 @@ webpackJsonp([2],[
 	      el.append('<img class="uploadImage cover-image">');
 	    }
 	    var attrs = {
-	      breviaryUrl: el.parent().data('img')
+	      breviaryUrl: el.find('img').attr('src')
 	    };
+	    // if (!attrs.breviaryUrl) {
+	    //   return;
+	    // }
+	    console.log(attrs);
 	    var posterpic = el.attr('data-posterpic');
+	    // this.upload = new UploadFileDialog(this.fileOptions);
 	    if (this.upload) {
 	      this.currentLiveItem = $(el.parents('.item'));
 	      this.singleLiDOM = this.currentLiveItem;
@@ -5963,7 +5968,7 @@ webpackJsonp([2],[
 /* 145 */
 /***/ function(module, exports) {
 
-	module.exports = "{{each items as item}}\n<div class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\" data-id=\"{{item.id}}\"\n     data-key=\"{{item.liCacheKey}}\" data-img=\"{{item.posterPic}}\" data-liveTime=\"{{item.liveTime}}\">\n    <div class=\"am-u-sm-3 img am-margin-right uploadImage uploadImageWrap\">\n        {{if item.posterPic}}\n        <img src=\"{{item.posterPic}}\" alt=\"\" class=\"uploadImage cover-image\">\n        {{/if}}\n    </div>\n    <div class=\"am-u-sm-9\">\n        <div class=\"room-title\">{{item.roomName}}</div>\n        <div class=\"time\"><span class=\"tip am-margin-right-sm\">直播时间</span><span\n                class=\"value date\">{{item.liveVideoTime}}</span>\n        </div>\n        <div class=\"viedo\">\n            <span class=\"tip am-margin-right-sm\">视频连接</span>\n            <span class=\"value\">{{item.livePushStreamUrl}}</span>\n            <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>\n        </div>\n        <div class=\"viedo\">\n            <span class=\"tip am-margin-right-sm\">视频流</span>\n            <span class=\"value\">{{item.streamName}}</span>\n            <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>\n        </div>\n        <div class=\"btn-wrap\">\n            <a href=\"{{item.lookUrl}}\" class=\"am-btn am-btn-red boderRadAll_3\">查看</a>\n            {{if item.status === 1}}\n            <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">已发布</button>\n            {{else if item.status == 2}}\n            <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">直播中</button>\n            {{else if item.status == 0}}\n                {{if item.posterPic.length > 0}}\n                <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3\">发布</button>\n                {{else}}\n                <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3 disabled\">发布</button>\n                {{/if}}\n            <button data-state=\"3\" class=\"am-btn am-btn-red boderRadAll_3\">删除</button>\n            {{/if}}\n        </div>\n    </div>\n</div>\n{{/each}}\n"
+	module.exports = "{{each items as item}}\n<div class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\" data-id=\"{{item.id}}\" data-key=\"{{item.liCacheKey}}\" data-img=\"{{item.posterPic}}\" data-liveTime=\"{{item.liveTime}}\">\n\n  {{if item.posterPic}}\n  <div class=\"am-u-sm-3 img am-margin-right has-img unClosed-list-wrap uploadImageWrap\">\n    <img src=\"{{item.posterPic}}\" alt=\"\" class=\"cover-image\">\n  </div>\n  {{else}}\n  <div class=\"am-u-sm-3 img am-margin-right unClosed-list-wrap uploadImageWrap\">\n  </div>\n  {{/if}}\n  <div class=\"am-u-sm-9\">\n    <div class=\"room-title\">{{item.roomName}}</div>\n    <div class=\"time\"><span class=\"tip am-margin-right-sm\">直播时间</span><span class=\"value date\">{{item.liveVideoTime}}</span>\n    </div>\n    <div class=\"viedo\">\n      <span class=\"tip am-margin-right-sm\">视频连接</span>\n      <span class=\"value\">{{item.livePushStreamUrl}}</span>\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>\n    </div>\n    <div class=\"viedo\">\n      <span class=\"tip am-margin-right-sm\">视频流</span>\n      <span class=\"value\">{{item.streamName}}</span>\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>\n    </div>\n    <div class=\"btn-wrap\">\n      <a href=\"{{item.lookUrl}}\" class=\"am-btn am-btn-red boderRadAll_3\">查看</a> {{if item.status === 1}}\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">已发布</button>\n      {{else if item.status == 2}}\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">直播中</button>\n      {{else if item.status == 0}} {{if item.posterPic.length > 0}}\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3\">发布</button>\n      {{else}}\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3 disabled\">发布</button>\n      {{/if}}\n      <button data-state=\"3\" class=\"am-btn am-btn-red boderRadAll_3\">删除</button>\n      {{/if}}\n    </div>\n  </div>\n</div>\n{{/each}}\n"
 
 /***/ },
 /* 146 */
@@ -6192,7 +6197,7 @@ webpackJsonp([2],[
 /* 152 */
 /***/ function(module, exports) {
 
-	module.exports = "{{each items as item}}\n\n<div data-id=\"{{item.roomId}}\" class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\">\n  <div class=\"am-u-sm-3 img am-margin-right\">\n    <img src=\"{{item.posterPic}}\">\n  </div>\n  <div class=\"am-u-sm-9\">\n    <div class=\"room-title\">{{item.roomName}}</div>\n    <div class=\"time\">\n      <span class=\"tip am-margin-right-sm\">直播时间:</span>\n      <span class=\"value date am-margin-right\">{{item.startTimeTxt}}</span>\n      {{ if item.diff != '00:00:00'}}\n      <span class=\"tip am-margin-right-sm\">时长:</span>\n      <span class=\"value date\">{{item.diff}}</span>\n      {{/if}}\n    </div>\n    <div class=\"number\">\n      <div class=\"num\"><i class=\"icons view\"></i><span class=\"value\">{{item.seen}}</span></div>\n      <div class=\"num\"><i class=\"icons chat\"></i><span class=\"value\">{{item.bulletCurtain}}</span></div>\n      <div class=\"num\"><i class=\"icons like\"></i><span class=\"value\">{{item.assemble}}</span></div>\n    </div>\n    <div class=\"info am-vertical-align\">\n      <span class=\"tip am-margin-right-sm am-vertical-align-middle am-text-xs\">人气:</span>\n      <span class=\"value am-text-sm am-vertical-align-middle\">{{item.popularity}}</span>\n    </div>\n  </div>\n</div>\n\n{{/each}}\n"
+	module.exports = "{{each items as item}}\n\n<div data-id=\"{{item.roomId}}\" class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\">\n  <div class=\"am-u-sm-3 img am-margin-right\">\n    <img src=\"{{item.posterPic}}\">\n  </div>\n  <div class=\"am-u-sm-9\">\n    <div class=\"room-title\">{{item.roomName}}</div>\n    <div class=\"time\">\n      <span class=\"tip am-margin-right-sm\">直播时间:</span>\n      <span class=\"value date am-margin-right\">{{item.startTimeTxt}}</span>\n      {{ if item.duration > 0}}\n      <span class=\"tip am-margin-right-sm\">时长:</span>\n      <span class=\"value date\">{{item.diff}}</span>\n      {{/if}}\n    </div>\n    <div class=\"number\">\n      <div class=\"num\"><i class=\"icons view\"></i><span class=\"value\">{{item.seen}}</span></div>\n      <div class=\"num\"><i class=\"icons chat\"></i><span class=\"value\">{{item.bulletCurtain}}</span></div>\n      <div class=\"num\"><i class=\"icons like\"></i><span class=\"value\">{{item.assemble}}</span></div>\n    </div>\n    <div class=\"info am-vertical-align\">\n      <span class=\"tip am-margin-right-sm am-vertical-align-middle am-text-xs\">人气:</span>\n      <span class=\"value am-text-sm am-vertical-align-middle\">{{item.popularity}}</span>\n    </div>\n  </div>\n</div>\n\n{{/each}}\n"
 
 /***/ },
 /* 153 */

@@ -1273,10 +1273,10 @@ img {
         font-size: 14px;
         color: #fff; }
       .edit_annmoucement_con .editCon .btn-wrap .submit {
-        background-color: #ff6666;
-        margin-right: 50px; }
+        background-color: #ff6666; }
       .edit_annmoucement_con .editCon .btn-wrap .cancel {
-        background-color: #bab9b9; }
+        background-color: #bab9b9;
+        margin-left: 50px; }
     .edit_annmoucement_con .editCon .content {
       min-height: 55px;
       word-wrap: break-word;
@@ -1892,7 +1892,7 @@ img {
     height: 48px;
     line-height: 48px;
     color: #999; }
-    .two-tab a:hover, .two-tab a.active {
+    .two-tab a.active, .two-tab a:hover {
       border-bottom: 3px solid #798fd8;
       color: #798fd8; }
     .two-tab a.right-border {
@@ -1909,7 +1909,7 @@ img {
     height: 48px;
     line-height: 48px;
     color: #999; }
-    .my-live-show-wrap .top-header .live-status-wrap a:hover, .my-live-show-wrap .top-header .live-status-wrap a.active {
+    .my-live-show-wrap .top-header .live-status-wrap a.active, .my-live-show-wrap .top-header .live-status-wrap a:hover {
       border-bottom: 3px solid #798fd8;
       color: #798fd8; }
     .my-live-show-wrap .top-header .live-status-wrap a.right-border {
@@ -1934,7 +1934,9 @@ img {
     word-wrap: break-word;
     word-break: break-all;
     color: #666; }
-  .my-live-show-wrap .list-wrap .item .time, .my-live-show-wrap .list-wrap .item .viedo, .my-live-show-wrap .list-wrap .item .info {
+  .my-live-show-wrap .list-wrap .item .info,
+  .my-live-show-wrap .list-wrap .item .time,
+  .my-live-show-wrap .list-wrap .item .viedo {
     font-size: 12px;
     margin: 3px 0; }
 
@@ -1943,6 +1945,9 @@ img {
   .my-live-show-wrap .list-wrap .unClosed-list-wrap .item .copy:hover {
     color: #27d3ff;
     text-decoration: underline; }
+
+.my-live-show-wrap .list-wrap .unClosed-list-wrap .item .img.has-img {
+  background: none !important; }
 
 .my-live-show-wrap .list-wrap .unClosed-list-wrap .item .btn-wrap .am-btn {
   font-size: 12px;
@@ -1959,7 +1964,9 @@ img {
     height: 20px;
     background-position-y: 1px; }
 
-.my-live-show-wrap .list-wrap .closed-list-wrap .item .time, .my-live-show-wrap .list-wrap .closed-list-wrap .item .viedo, .my-live-show-wrap .list-wrap .closed-list-wrap .item .info {
+.my-live-show-wrap .list-wrap .closed-list-wrap .item .info,
+.my-live-show-wrap .list-wrap .closed-list-wrap .item .time,
+.my-live-show-wrap .list-wrap .closed-list-wrap .item .viedo {
   margin: 10px 0; }
 
 body {

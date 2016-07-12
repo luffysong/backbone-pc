@@ -5399,7 +5399,7 @@ webpackJsonp([5],[
 	        Backbone.trigger('event:updateRoomInfo', res.data);
 	      });
 	    });
-	    Backbone.on('event:updateRoomInfo', function (data) {
+	    Backbone.on('event:RoomLoopInfo', function (data) {
 	      var id = self.currentChannelShowStatus[self.currentChannelShowId];
 	      if (data && self.currentChannelShowId && data.liveStatus !== id) {
 	        window.location.reload();
@@ -5696,7 +5696,7 @@ webpackJsonp([5],[
 	  loopRoomInfo: function (time) {
 	    var self = this;
 	    self.getRoomLoopInfo().then(function (data) {
-	      Backbone.trigger('event:updateRoomInfo', data);
+	      Backbone.trigger('event:RoomLoopInfo', data);
 	    });
 	    self.roomInfoTimeId = setTimeout(function () {
 	      self.loopRoomInfo();
@@ -7645,7 +7645,7 @@ webpackJsonp([5],[
 	      self.renderList(data);
 	    });
 	    // 轮训
-	    Backbone.on('event:updateRoomInfo', function (data) {
+	    Backbone.on('event:RoomLoopInfo', function (data) {
 	      if (data.now) {
 	        self.selectedItem(data.now);
 	      }

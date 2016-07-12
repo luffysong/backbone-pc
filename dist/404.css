@@ -1393,10 +1393,10 @@ button, input, select, textarea {
         font-size: 14px;
         color: #fff; }
       .edit_annmoucement_con .editCon .btn-wrap .submit {
-        background-color: #ff6666;
-        margin-right: 50px; }
+        background-color: #ff6666; }
       .edit_annmoucement_con .editCon .btn-wrap .cancel {
-        background-color: #bab9b9; }
+        background-color: #bab9b9;
+        margin-left: 50px; }
     .edit_annmoucement_con .editCon .content {
       min-height: 55px;
       word-wrap: break-word;
