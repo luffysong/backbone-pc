@@ -6115,6 +6115,19 @@ webpackJsonp([7],[
 	        });
 	        break;
 	      case 5: //  禁言
+	        var imIdentifier = imModel.get('data').imIdentifier || '';
+	        var temp = msgObj;
+	        if (msgObj.userId === imIdentifier) {
+	          temp.style = {
+	            fontColor: '#999999'
+	          };
+	          this.flashAPI.onReady(function () {
+	            temp.msgType = 0;
+	            this.notifying(temp);
+	          });
+	          temp.msgType = 3;
+	          callback(temp);
+	        }
 	        Backbone.trigger('event:forbidUserSendMsg', msgObj);
 	        break;
 	      case 6:
