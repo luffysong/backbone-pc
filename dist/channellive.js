@@ -5697,6 +5697,7 @@ webpackJsonp([5],[
 	    var self = this;
 	    self.getRoomLoopInfo().then(function (data) {
 	      Backbone.trigger('event:RoomLoopInfo', data);
+	      Backbone.trigger('event:updateRoomInfo', data);
 	    });
 	    self.roomInfoTimeId = setTimeout(function () {
 	      self.loopRoomInfo();
