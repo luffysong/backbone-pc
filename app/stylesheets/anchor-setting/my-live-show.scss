@@ -1,5 +1,4 @@
 //我的直播
-
 .two-tab {
   border: 1px solid $main-line-color;
   display: inline-block;
@@ -11,7 +10,8 @@
     height: 48px;
     line-height: 48px;
     color: $main-font-light-color;
-    &:hover, &.active {
+    &.active,
+    &:hover {
       border-bottom: 3px solid $main-bg-purple;
       color: $main-bg-purple;
     }
@@ -20,7 +20,6 @@
     }
   }
 }
-
 .my-live-show-wrap {
   .top-header {
     .live-status-wrap {
@@ -34,7 +33,8 @@
         height: 48px;
         line-height: 48px;
         color: $main-font-light-color;
-        &:hover, &.active {
+        &.active,
+        &:hover {
           border-bottom: 3px solid $main-bg-purple;
           color: $main-bg-purple;
         }
@@ -44,7 +44,6 @@
       }
     }
   }
-
   .list-wrap {
     .item {
       border-bottom: 1px dashed $main-line-color;
@@ -53,24 +52,26 @@
         height: 119px;
         cursor: pointer;
         overflow: hidden;
-        background: url(../images/anchor/upload_tip_05.png) no-repeat;
+        background: url("../images/anchor/upload_tip_05.png") no-repeat;
         img {
           width: 100%;
           min-height: 100%;
         }
         &:hover {
-          background: url(../images/anchor/upload_tip_03.jpg) no-repeat;
+          background: url("../images/anchor/upload_tip_03.jpg") no-repeat;
         }
       }
       .tip {
         color: $main-font-light-color;
       }
-      .value{
+      .value {
         word-wrap: break-word;
         word-break: break-all;
         color: #666;
       }
-      .time, .viedo, .info {
+      .info,
+      .time,
+      .viedo {
         font-size: 12px;
         margin: 3px 0;
       }
@@ -85,6 +86,11 @@
             text-decoration: underline;
           }
         }
+        .img {
+          &.has-img {
+            background: none!important;
+          }
+        }
         .btn-wrap {
           .am-btn {
             font-size: 12px;
@@ -93,10 +99,8 @@
             height: 26px;
           }
         }
-
       }
     }
-
     // 历史直播
     .closed-list-wrap {
       .number {
@@ -112,14 +116,12 @@
         }
       }
       .item {
-        .time, .viedo, .info {
+        .info,
+        .time,
+        .viedo {
           margin: 10px 0;
         }
-
       }
-
     }
-
   }
-
 }

@@ -22,7 +22,7 @@ var View = BaseView.extend({
   el: '#noOpenContent',
   events: {
     'click button': 'checkLiveVideoHandler',
-    'click .uploadImage': 'editCoverImageHandler',
+    'click .uploadImageWrap': 'editCoverImageHandler',
     'click .copy-video-url': 'copyUrlHandler',
     'click .copy-video-name': 'copyNameHandler'
   },
@@ -255,11 +255,12 @@ var View = BaseView.extend({
       el.append('<img class="uploadImage cover-image">');
     }
     var attrs = {
-      breviaryUrl: el.attr('src')
+      breviaryUrl: el.find('img').attr('src')
     };
-    if (!attrs.breviaryUrl) {
-      return;
-    }
+    // if (!attrs.breviaryUrl) {
+    //   return;
+    // }
+    console.log(attrs);
     var posterpic = el.attr('data-posterpic');
     // this.upload = new UploadFileDialog(this.fileOptions);
     if (this.upload) {
