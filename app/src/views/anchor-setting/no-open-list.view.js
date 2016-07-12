@@ -74,7 +74,7 @@ var View = BaseView.extend({
   ready: function () {
     //  初始化
     var self = this;
-    var fileOptions = {
+    this.fileOptions = {
       width: 580,
       height: 341,
       isRemoveAfterHide: false,
@@ -107,7 +107,7 @@ var View = BaseView.extend({
         }
       }
     };
-    this.upload = new UploadFileDialog(fileOptions);
+    this.upload = new UploadFileDialog(this.fileOptions);
     this.getPageList(1);
   },
   beforeDestroy: function () {
@@ -262,7 +262,7 @@ var View = BaseView.extend({
       this.currentLiveItem = $(el.parents('.item'));
       this.singleLiDOM = this.currentLiveItem;
       this.saveCoverParameter.roomId = this.singleLiDOM.data('id');
-      this.upload.emptyValue();
+      // this.upload.emptyValue();
       if (posterpic) {
         var img = el.find('.cover-image');
 
