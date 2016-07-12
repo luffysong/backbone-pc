@@ -54,7 +54,9 @@ var View = BaseView.extend({
     this.allItems = this.$el.children('div');
   },
   selectedItem: function (now) {
-    this.allItems.removeClass('active');
+    if (this.allItems) {
+      this.allItems.removeClass('active');
+    }
     _.map(this.allItems, function (item) {
       var el = $(item);
       var start = el.data('start');

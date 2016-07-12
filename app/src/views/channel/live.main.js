@@ -76,6 +76,7 @@ var View = BaseView.extend({
   // 当模板挂载到元素之后
   afterMount: function () {
     this.roomBg = $('#anchorContainerBg');
+    this.currentChannelShowStatus = {};
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
@@ -108,9 +109,9 @@ var View = BaseView.extend({
       });
     });
     Backbone.on('event:updateRoomInfo', function (data) {
-      console.log(self.currentChannelShowStatus);
-      if (data && data.liveStatus !== self.currentChannelShowStatus[self.currentChannelShowId]) {
-        // window.location.reload();
+      var id = self.currentChannelShowStatus[self.currentChannelShowId];
+      if (data && self.currentChannelShowId && data.liveStatus !== id) {
+        window.location.reload();
       }
     });
   },
@@ -403,11 +404,11 @@ var View = BaseView.extend({
   },
   loopRoomInfo: function (time) {
     var self = this;
+    self.getRoomLoopInfo().then(function (data) {
+      Backbone.trigger('event:updateRoomInfo', data);
+    });
     self.roomInfoTimeId = setTimeout(function () {
-      self.getRoomLoopInfo().then(function (data) {
-        Backbone.trigger('event:updateRoomInfo', data);
-        self.loopRoomInfo();
-      });
+      self.loopRoomInfo();
     }, !!time ? time : self.roomInfoPeriod);
   },
   getRoomLoopInfo: function () {
