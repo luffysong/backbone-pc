@@ -34,7 +34,7 @@ var View = BaseView.extend({
       self.renderList(data);
     });
     // 轮训
-    Backbone.on('event:updateRoomInfo', function (data) {
+    Backbone.on('event:RoomLoopInfo', function (data) {
       if (data.now) {
         self.selectedItem(data.now);
       }
