@@ -4219,6 +4219,7 @@ webpackJsonp([1],[
 	      return;
 	    }
 	    promise.done(function (res) {
+	      self.isScrolling = false;
 	      self.appendToNewestList(res.data.list || []);
 	      if (res && res.code === '0') {
 	        self.pageParams.newList = {
@@ -4247,6 +4248,7 @@ webpackJsonp([1],[
 	
 	    var promise = this.getData(op);
 	    promise.done(function (res) {
+	      self.isScrolling = false;
 	      if (res && res.code === '0') {
 	        self.pageParams.hotList = {
 	          nextCursor: res.data.nextCursor || null,
@@ -4476,12 +4478,16 @@ webpackJsonp([1],[
 	    var target = $(e.target);
 	    var maxHeight = $('.' + tag).find('.am-u-sm-4').height() - 404;
 	    var top = target.scrollTop();
+	    if (this.isScrolling) {
+	      return;
+	    }
+	    this.isScrolling = true;
 	    var diff = maxHeight - top;
 	    if (diff < 30 && this.pageParams[tag].hasNext) {
 	      if (tag === 'newList') {
 	        this.renderNewestList(this.pageParams[tag]);
 	      } else {
-	        this.renderHotList(this.pageParams[tag]);
+	        // this.renderHotList(this.pageParams[tag]);
 	      }
 	    }
 	  }

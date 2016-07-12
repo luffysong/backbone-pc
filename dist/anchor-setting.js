@@ -5444,7 +5444,7 @@ webpackJsonp([2],[
 	  ready: function () {
 	    //  初始化
 	    var self = this;
-	    var fileOptions = {
+	    this.fileOptions = {
 	      width: 580,
 	      height: 341,
 	      isRemoveAfterHide: false,
@@ -5477,7 +5477,7 @@ webpackJsonp([2],[
 	        }
 	      }
 	    };
-	    this.upload = new UploadFileDialog(fileOptions);
+	    this.upload = new UploadFileDialog(this.fileOptions);
 	    this.getPageList(1);
 	  },
 	  beforeDestroy: function () {
