@@ -387,7 +387,7 @@ var View = BaseView.extend({
   checkUserIsKickout: function (notifyInfo) {
     var self = this;
     var notify = self.parseNotifyInfo(notifyInfo);
-    var msg = '您已经被主播踢出房间,肿么又回来了';
+    var msg = '您已经被主播踢出房间!';
     if (this.iskickoutShow) {
       this.iskickoutShow = false;
       return;
