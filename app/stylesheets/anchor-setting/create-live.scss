@@ -1,32 +1,37 @@
-// 创建直播
+/* 创建直播*/
 .creatLive {
   padding: 35px 0 0 41px;
-  //width: 790px;
+  /*width: 790px;*/
   margin-bottom: 100px;
   input {
     width: 350px;
     height: 45px;
     line-height: 32px;
     text-indent: 1em;
-    border: 1px solid #dadada;
     background-color: #eeeeee;
     font-size: 14px;
+    border: none;
+    border-width: 0;
+    color: #7a7a7a;
   }
   input:hover {
     border-color: $main-bg-purple;
   }
+  .tip {
+    font-size: 12px;
+    color: #999!important;
+  }
   input:focus {
+    border: 1px solid #dadada;
     background-color: #fff;
     border-color: $main-bg-purple;
     outline: inherit;
   }
-
-  li{
+  li {
     font-size: 14px;
   }
-
-
-  .Inp_name, .Inp_artist {
+  .Inp_artist,
+  .Inp_name {
     height: 45px;
     line-height: 45px;
     margin-bottom: 18px;
@@ -57,6 +62,10 @@
     }
   }
   .Inp_time {
+    em {
+      font-style: inherit;
+      color: #7a7a7a;
+    }
     .tit {
       float: left;
       margin-right: 4px;
@@ -77,13 +86,12 @@
     height: 45px;
     line-height: 40px;
     margin-bottom: 20px;
-    padding: 5px;
-    padding-left: 0;
-    //border: 1px solid #dadada;
+    padding: 5px 5px 5px 0;
+    /*border: 1px solid #dadada;*/
     position: relative;
     background-color: #eee;
     border: 1px solid #eee;
-    &.active{
+    &.active {
       background-color: #fff;
       border: 1px solid $main-bg-purple;
     }
@@ -92,12 +100,13 @@
       width: 60px;
       text-align: center;
     }
-    .arrowDownOuter{
+    .arrowDownOuter {
       width: 8px;
-      margin-bottom: -6px;
-      border-width: 8px 6px;
+      margin-bottom: -4px;
+      border-width: 7px 5px;
+      border-color: #989898 transparent transparent transparent;
     }
-    .split{
+    .split {
       display: inline-block;
       border-left: 1px dashed #cfcfcf;
       width: 10px;
@@ -118,8 +127,8 @@
       overflow: auto;
     }
     li {
-      height: 32px;
-      line-height: 32px;
+      height: 44px;
+      line-height: 44px;
       width: 100%;
       text-align: center;
       background: #f6f4f4;
@@ -134,14 +143,14 @@
   .submit {
     width: 361px;
     height: 54px;
-    //line-height: 54px;
-    //margin: 0 auto;
-    //text-align: center;
-    //font-size: 16px;
-    //color: #fff;
-    //background: #27d5bf;
+    /*line-height: 54px;*/
+    /*margin: 0 auto;*/
+    /*text-align: center;*/
+    /*font-size: 16px;*/
+    /*color: #fff;*/
+    /*background: #27d5bf;*/
   }
   .submit:hover {
-    //background: #5bdfcd;
+    /*background: #5bdfcd;*/
   }
 }

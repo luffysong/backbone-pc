@@ -4,7 +4,8 @@ $black2-color: #666666;
   .item {
     display: inline-block;
     padding: 10px;
-    width: 280px;
+    width: 390px;
+    margin-bottom: 10px;
     .avatar {
       display: inline-block;
       width: 120px;
@@ -24,8 +25,8 @@ $black2-color: #666666;
     }
     .info-wrap {
       .name {
-        color: #01ceb5;
-        width: 108px;
+        color: #666666;
+        width: 239px;
         height: 21px;
         overflow: hidden;
       }
@@ -35,7 +36,7 @@ $black2-color: #666666;
         font-size: 12px;
         .total {
           margin: 0 3px;
-          color: $black-color;
+          color: #666666;
         }
       }
       .am-btn {

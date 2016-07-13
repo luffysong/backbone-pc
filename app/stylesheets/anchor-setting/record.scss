@@ -1,5 +1,5 @@
 $gray-color: #e1e1e1;
-$black-color: #4d4d4d;
+$black-color: #333333;
 $black2-color: #666666;
 
 .record-wrap {
@@ -29,7 +29,7 @@ $black2-color: #666666;
     }
     .content {
       margin-left: 110px;
-      border-bottom: 1px solid $gray-color;
+      border-bottom: 1px dashed $gray-color;
       padding-bottom: 20px;
       .img-wrap {
         position: relative;
@@ -60,7 +60,7 @@ $black2-color: #666666;
         .item-title {
           margin-top: 5px;
           color: $black-color;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 600;
         }
         .time {
@@ -70,20 +70,24 @@ $black2-color: #666666;
             color: $black-color;
           }
         }
+        .time-val{
+          color: #666666!important;
+        }
         .anchor {
           padding-top: 8px;
           line-height: 35px;
           img {
-            width: 36px;
-            height: 36px;
+            width: 28px;
+            height: 28px;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius: 20px;
+            margin-top: 5px;
           }
           .name {
-            color: #01ceb5;
+            color: #666666;
             margin-left: 5px;
-            font-size: 14px;
+            font-size: 12px;
           }
         }
       }
@@ -91,12 +95,12 @@ $black2-color: #666666;
     .icon-list {
       position: absolute;
       bottom: 10px;
-      right: 20px;
+      right: 0;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
       border-radius: 3px;
       background-color: #f8f8f8;
-      height: 40px;
+      height: 34px;
       text-align: center;
       padding: 0 10px;
       span {
@@ -104,8 +108,9 @@ $black2-color: #666666;
         display: inline-block;
         padding-left: 30px;
         background-position: 0 5px;
-        margin: 10px 5px 0;
+        margin: 8px 5px 0;
         vertical-align: middle;
+        color: #666666;
       }
       .view {
         background-image: url(../images/record-icons_1.png);
