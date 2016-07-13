@@ -65,7 +65,6 @@ gulp.task('rebuild:config', function () {
   } else {
     webConfig.scheme = 'alpha';
   }
-  console.log(webConfig);
   var txt = 'var config = ' + JSON.stringify(webConfig) + '; module.exports = config;';
   fs.writeFile('./app/src/module/config.js', txt, function (err) {
     // gulp.start(['copy-to-dist']);
