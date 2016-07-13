@@ -5752,7 +5752,10 @@ webpackJsonp([5],[
 	        }
 	        // 节目单
 	        if (res.data && res.data.videos) {
-	          Backbone.trigger('event:ChannelLiveVideoListReady', res.data.videos || []);
+	          Backbone.trigger('event:ChannelLiveVideoListReady', {
+	            list: res.data.videos || [],
+	            now: res.now
+	          });
 	        }
 	      } else {
 	        uiConfirm.show({
@@ -7606,7 +7609,10 @@ webpackJsonp([5],[
 	  defineEventInterface: function () {
 	    var self = this;
 	    Backbone.on('event:ChannelLiveVideoListReady', function (data) {
-	      self.renderList(data);
+	      self.renderList(data.list);
+	      if (data.now) {
+	        self.selectedItem(data.now);
+	      }
 	    });
 	    // 轮训
 	    Backbone.on('event:RoomLoopInfo', function (data) {
