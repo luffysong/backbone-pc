@@ -155,6 +155,7 @@ var View = BaseView.extend({
   setBgStyle: function (url) {
     if (url) {
       this.anchorThemeBgDOM.css('background', 'url(' + url + ')');
+      $('.edit_bg_btn').hide();
     }
   }
 });
