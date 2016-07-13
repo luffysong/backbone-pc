@@ -159,7 +159,8 @@ var View = BaseView.extend({
       smallAvatar: '',
       msgType: isLock ? 6 : 7,
       content: (self.assistant ? '场控' : '主播') + '已' + txt,
-      isLock: isLock
+      isLock: isLock,
+      blockState: isLock
     };
     // self.FlashApi.onReady(function () {
     //   this.notifying(msg);
