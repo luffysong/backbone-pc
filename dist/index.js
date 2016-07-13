@@ -4453,9 +4453,11 @@ webpackJsonp([6],{
 	  showConfirm: function () {
 	    var self = this;
 	    var content =
-	      '<div>使用20积分支持一下MC,当前共有' + (this.totalMarks || 0) + '积分</div> ' +
+	      '<div>使用<span style="color:#ff6f6e;">20</span>积分支持一下MC,当前共有<span style="color:#ff6f6e;">' +
+	      (this.totalMarks || 0) + '</span>积分</div> ' +
 	      '<div style="text-align:right;">' +
-	      '<label><input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
+	      '<label style="ont-weight: inherit;">' +
+	      '<input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';
 	    confirm.show({
 	      title: '顶上去',
 	      content: content,

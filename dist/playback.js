@@ -5630,7 +5630,7 @@ webpackJsonp([9],[
 	      self.beforePushPopularity(2);
 	      return;
 	    }
-	    var content = '<div>使用 <span class="green">20</span>积分支持一下MC,当前共有<span class="green">' +
+	    var content = '<div>使用<span class="red">20</span>积分支持一下MC,当前共有<span class="red">' +
 	      (this.currentUserInfo.totalMarks || 0) + '</span>积分</div></br>' +
 	      '<div style="text-align:right; color:#999;"> <label>' +
 	      '<input value="1" id="popupCheckBox" type="checkbox">&nbsp;别再烦我</label></div>';

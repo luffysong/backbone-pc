@@ -5232,6 +5232,7 @@ webpackJsonp([1],[
 	  setBgStyle: function (url) {
 	    if (url) {
 	      this.anchorThemeBgDOM.css('background', 'url(' + url + ')');
+	      $('.edit_bg_btn').hide();
 	    }
 	  }
 	});
@@ -5356,7 +5357,7 @@ webpackJsonp([1],[
 /* 75 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"shadow\"></div>\n<div class=\"edit_Bg_form_x\">\n\t<div class=\"edit_title\">\n\t\t<span class=\"upload-title\">背景图设置</span>\n\t\t<span class=\"upload-status upload-image-state\"></span>\n\t</div>\n\t<div class=\"formCon clearfix\">\n\t\t<div class=\"imgBox fl\">\n\t\t\t<img src=\"\" alt=\"\" width=\"100%\" height=\"100%\"  style=\"display: none;\" class=\"imgboxFile\">\n\t\t</div>\n\t\t<div class=\"formBox fl\">\n\t\t\t<div class=\"pseudo-uploadBtn am-btn-red boderRadAll_3\">\n\t\t\t\t<span class=\"input-text\">选择图片</span>\n\t\t\t\t<form class=\"upload-form\">\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<p>支持5M以内的gif、jpg、jpge、png图片上传</p>\n\t\t\t<div class=\"submit am-btn-red boderRadAll_3\">保存</div>\n\t\t</div>\n\t</div>\n</div>\n"
+	module.exports = "<div class=\"shadow\"></div>\n<div class=\"edit_Bg_form_x\">\n\t<div class=\"edit_title\">\n\t\t<span class=\"upload-title\">背景图设置</span>\n\t\t<span class=\"upload-status upload-image-state\"></span>\n\t</div>\n\t<div class=\"formCon clearfix\">\n\t\t<div class=\"imgBox fl\">\n\t\t\t<img src=\"\" alt=\"\" width=\"100%\" height=\"100%\"  style=\"display: none;\" class=\"imgboxFile\">\n\t\t</div>\n\t\t<div class=\"formBox fl\">\n\t\t\t<div class=\"pseudo-uploadBtn am-btn-red boderRadAll_3\">\n\t\t\t\t<span class=\"input-text\">选择图片</span>\n\t\t\t\t<form class=\"upload-form\">\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<p>\n\t\t\t\t支持5M以内的gif、jpg、jpge、png图片上传<br>\n\t\t\t\t<b style=\"color:#ff6666;\">因内容审核，上传后不可修改!<b>\n\t\t\t</p>\n\t\t\t<div class=\"submit am-btn-red boderRadAll_3\">保存</div>\n\t\t</div>\n\t</div>\n</div>\n"
 
 /***/ },
 /* 76 */
@@ -5886,12 +5887,12 @@ webpackJsonp([1],[
 	      case 5:
 	        self.addMessage(msgObj);
 	        break;
-	      case 6:
-	      case 7:
-	        $('#btn-lock').find('span').text(msgObj.msgType === 6 ? '解屏' : '锁屏');
+	      case 8:
+	      case 9:
+	        $('#btn-lock').find('span').text(msgObj.msgType === 8 ? '解屏' : '锁屏');
 	        self.addMessage(msgObj);
 	        break;
-	      case 8:
+	      case 10:
 	        self.addMessage(msgObj);
 	        break;
 	      default:
@@ -6376,7 +6377,7 @@ webpackJsonp([1],[
 	      roomId: self.roomInfo.id,
 	      nickName: self.assistant ? '场控' : '主播',
 	      smallAvatar: '',
-	      msgType: isLock ? 6 : 7,
+	      msgType: isLock ? 8 : 9,
 	      content: (self.assistant ? '场控' : '主播') + '已' + txt,
 	      isLock: isLock,
 	      blockState: isLock
