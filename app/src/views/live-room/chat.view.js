@@ -274,15 +274,15 @@ var View = BaseView.extend({
         }
         Backbone.trigger('event:forbidUserSendMsg', msgObj);
         break;
-      case 6:
+      case 8:
         this.lockOrUnlock(true);
         callback(msgObj);
         break;
-      case 7:
+      case 9:
         this.lockOrUnlock(false);
         callback(msgObj);
         break;
-      case 8:
+      case 10:
         self.checkUserCanJoinRoom();
         callback(msgObj);
         break;

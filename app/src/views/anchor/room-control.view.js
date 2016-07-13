@@ -157,7 +157,7 @@ var View = BaseView.extend({
       roomId: self.roomInfo.id,
       nickName: self.assistant ? '场控' : '主播',
       smallAvatar: '',
-      msgType: isLock ? 6 : 7,
+      msgType: isLock ? 8 : 9,
       content: (self.assistant ? '场控' : '主播') + '已' + txt,
       isLock: isLock
     };
