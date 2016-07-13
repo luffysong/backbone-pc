@@ -498,7 +498,10 @@ var View = BaseView.extend({
         }
         // 节目单
         if (res.data && res.data.videos) {
-          Backbone.trigger('event:ChannelLiveVideoListReady', res.data.videos || []);
+          Backbone.trigger('event:ChannelLiveVideoListReady', {
+            list: res.data.videos || [],
+            now: res.now
+          });
         }
       } else {
         uiConfirm.show({

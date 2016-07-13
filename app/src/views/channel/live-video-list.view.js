@@ -31,7 +31,10 @@ var View = BaseView.extend({
   defineEventInterface: function () {
     var self = this;
     Backbone.on('event:ChannelLiveVideoListReady', function (data) {
-      self.renderList(data);
+      self.renderList(data.list);
+      if (data.now) {
+        self.selectedItem(data.now);
+      }
     });
     // 轮训
     Backbone.on('event:RoomLoopInfo', function (data) {
