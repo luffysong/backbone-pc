@@ -65,9 +65,9 @@ for (var chunkname in pages) {
 //        warnings: false
 //    }
 //}));
-if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = 'product';
-}
+// if (!process.env.NODE_ENV) {
+//   process.env.NODE_ENV = 'product';
+// }
 console.log('////////////////////////////////', process.env.NODE_ENV);
 //  注入环境变量
 plugins.push(new webpack.DefinePlugin({

@@ -1,7 +1,9 @@
+var fs = require('fs');
 var gulp = require('gulp');
 var browser = require('browser-sync');
 var browserSync = browser.create();
 var rimraf = require('rimraf');
+var webConfig = require('./app/src/module/config.default.js');
 
 
 gulp.task('server', ['build'], function () {
@@ -53,4 +55,20 @@ gulp.task('webpack', function (callback) {
     gutil.log('[webpack]', stats.toString());
     callback();
   });
+});
+
+
+//读取./src/config.demo.js ,修正config.js
+gulp.task('rebuild:config', function () {
+  if (process.env.NODE_ENV == 'product') {
+    webConfig.scheme = 'release';
+  } else {
+    webConfig.scheme = 'alpha';
+  }
+  console.log(webConfig);
+  var txt = 'var config = ' + JSON.stringify(webConfig) + '; module.exports = config;';
+  fs.writeFile('./app/src/module/config.js', txt, function (err) {
+    // gulp.start(['copy-to-dist']);
+  });
+
 });

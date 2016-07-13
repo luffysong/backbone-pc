@@ -18,3 +18,4 @@ app/src/module/crypto/
 app/src/module/msgBox/
 tools.js
 gulpfile.js
+app/src/module/config.js
