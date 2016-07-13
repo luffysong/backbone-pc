@@ -84,6 +84,9 @@ body {
   .gary2 {
     color: #999999 !important;
   }
+  .red{
+    color:#ff6f6e;
+  }
   .green {
     color: $main-bg-green-color;
   }
@@ -659,8 +662,9 @@ body {
 }
 //回放页面
 .palyback-wrap {
-  .common_con .content {
+  .common_con>.content {
     background-color: #fff;
+    padding-bottom: 30px;
   }
   .like {
     display: inline-block!important;

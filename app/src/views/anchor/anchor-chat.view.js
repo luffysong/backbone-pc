@@ -314,12 +314,12 @@ var View = BaseView.extend({
       case 5:
         self.addMessage(msgObj);
         break;
-      case 6:
-      case 7:
-        $('#btn-lock').find('span').text(msgObj.msgType === 6 ? '解屏' : '锁屏');
+      case 8:
+      case 9:
+        $('#btn-lock').find('span').text(msgObj.msgType === 8 ? '解屏' : '锁屏');
         self.addMessage(msgObj);
         break;
-      case 8:
+      case 10:
         self.addMessage(msgObj);
         break;
       default:

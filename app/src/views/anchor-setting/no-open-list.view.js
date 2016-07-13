@@ -257,10 +257,10 @@ var View = BaseView.extend({
     var attrs = {
       breviaryUrl: el.find('img').attr('src')
     };
-    // if (!attrs.breviaryUrl) {
-    //   return;
-    // }
-    console.log(attrs);
+    if (attrs.breviaryUrl) {
+      msgBox.showTip('因内容审核，上传后不可修改!');
+      return;
+    }
     var posterpic = el.attr('data-posterpic');
     // this.upload = new UploadFileDialog(this.fileOptions);
     if (this.upload) {

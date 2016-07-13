@@ -478,7 +478,9 @@ var View = BaseView.extend({
           var videoData = {
             videoType: 'FANPA_CHANNEL',
             status: 'LIVE',
-            url: show.liveStream
+            url: show.liveStream,
+            videoStatus: show.status,
+            beginTime: show.beginTime
           };
           self.flashAPI.onReady(function () {
             this.init(videoData);

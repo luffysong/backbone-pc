@@ -10,13 +10,15 @@
   input {
     width: 350px;
     height: 45px;
-    border: 1px solid #dadada;
+    // border: 1px solid #dadada;
     text-indent: 1em;
     background-color: #eee;
     font-size: 14px;
+    border: none;
+    color: #7a7a7a;
   }
   input:focus {
-    border-color: $main-bg-purple;
+    border: 1px solid $main-bg-purple;
     background-color: #fff;
     outline: inherit;
   }
@@ -132,7 +134,7 @@
 // 修改密码
 .modifyPwd {
   .PiTitle {
-    width: 80px;
+    width: 95px;
     margin-right: 20px;
     text-align: right;
     height: 34px;
