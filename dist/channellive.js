@@ -3970,7 +3970,9 @@ webpackJsonp([5],[
 	          self.setUserInfo();
 	          self.newestListDOM.children().remove();
 	          self.pageParams.newList.hasNext = true;
-	          self.renderNewestList();
+	          self.renderNewestList({
+	            cursor: null
+	          });
 	          // self.renderHotList();
 	        } else {
 	          msgBox.showError(res.msg || '发布告白失败,请稍后重试');
