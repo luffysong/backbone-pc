@@ -112,6 +112,7 @@ var View = BaseView.extend({
           height: 550
         }
       });
+      // 处理视频流
       videoInfo = _.extend({}, videoInfo, this.getStreamInfo(video));
 
       if (this.FlashApi) {
