@@ -110,6 +110,9 @@ var View = BaseView.extend({
     });
     Backbone.on('event:RoomLoopInfo', function (data) {
       var id = self.currentChannelShowStatus[self.currentChannelShowId];
+      if (~~data.liveStatus === 2) {
+        $('.channelLiveTip').text('');
+      }
       if (data && self.currentChannelShowId && data.liveStatus !== id) {
         window.location.reload();
       }
@@ -482,6 +485,7 @@ var View = BaseView.extend({
             videoStatus: show.status,
             beginTime: show.beginTime
           };
+          self.setChannelStatusTip(show.status, show.beginTime);
           self.flashAPI.onReady(function () {
             this.init(videoData);
           });
@@ -519,6 +523,18 @@ var View = BaseView.extend({
         });
       }
     });
+  },
+  setChannelStatusTip: function (status, time) {
+    if (~~status === 2) {
+      $('.channelLiveTip').text('');
+    } else {
+      if (time) {
+        var date = new Date(time);
+        $('.channelLiveTip').text('本房间将在' + date.getMonth() +
+          '月' + date.getDate() + '日' + date.getHours() + ':' +
+          date.getMinutes() + '开始直播');
+      }
+    }
   }
 });
 
