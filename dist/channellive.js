@@ -5784,7 +5784,7 @@ webpackJsonp([5],[
 	    } else {
 	      if (time) {
 	        var date = new Date(time);
-	        $('.channelLiveTip').text('本房间将在' + date.getMonth() +
+	        $('.channelLiveTip').text('本房间将在' + (date.getMonth() + 1) +
 	          '月' + date.getDate() + '日' + date.getHours() + ':' +
 	          date.getMinutes() + '开始直播');
 	      }
