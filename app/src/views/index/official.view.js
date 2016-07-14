@@ -74,6 +74,7 @@ var View = BaseView.extend({
     promise.done(function (res) {
       if (res && res.data && res.msg === 'SUCCESS') {
         len = 5 - ~~res.data.length;
+        self.hideOfficialBlock(len);
         list = res.data;
         while (len-- > 0) {
           list.push(_.extend({}, self.emptyItem));
@@ -86,6 +87,11 @@ var View = BaseView.extend({
         self.bindAside(list.slice(3));
       }
     });
+  },
+  hideOfficialBlock: function (len) {
+    if (len < 5) {
+      $('.official-wrap').hide();
+    }
   },
   bindAside: function (arr) {
     var html = this.compileHTML(this.asideTpl, {

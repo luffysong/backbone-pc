@@ -103,7 +103,7 @@ var View = BaseView.extend({
   // 设置flash
   setFlash: function (video) {
     var videoInfo = video;
-    if (~~video.status === 2) {
+    if (video.status === 'LIVE') {
       // this.FlashApi = FlashApi.sharedInstanceFlashApi({
       this.FlashApi = new FlashApi({
         el: 'topFlash',
@@ -112,6 +112,9 @@ var View = BaseView.extend({
           height: 550
         }
       });
+      // 处理视频流
+      videoInfo = _.extend({}, videoInfo, this.getStreamInfo(video));
+
       if (this.FlashApi) {
         this.FlashApi.onReady(function () {
           videoInfo.isIndex = true;
@@ -122,16 +125,28 @@ var View = BaseView.extend({
       $('#topFlash').css('background-image', 'url(' + video.posterPic + ')');
     }
   },
+  getStreamInfo: function (videoInfo) {
+    var result = {};
+    if (videoInfo.url.indexOf('tmp://') > 0) {
+      result.streamName = videoInfo.url.substr(videoInfo.url.lastIndexOf('/') + 1);
+    }
+    return result;
+  },
   // 进入直播间
   gotoLiveHome: function (e) {
     var el = $(e.currentTarget);
     var id = el.attr('data-id');
-    var status = el.attr('data-type');
+    var type = el.attr('data-type');
+    var status = el.attr('data-status');
+
     var url = '';
-    switch (status) {
+    switch (type) {
       case 'FANPA_ROOM':
         //  处理直播,注意大小写
         url = '/liveroom.html?roomId=';
+        if (status === 'VOD') {
+          url = '/playback.html?roomId=';
+        }
         break;
       case 'FANPA_CHANNEL':
         // 处理频道
@@ -167,7 +182,8 @@ var View = BaseView.extend({
       // this.elements.btnGoLiveRoom.attr('data-id', video.videoId);
       this.elements.btnGoLiveRoom.attr({
         'data-id': video.videoId,
-        'data-type': video.videoType
+        'data-type': video.videoType,
+        'data-status': video.status
       });
       this.elements.flashWrap.css({
         'background-image': 'url(' + video.posterPic + ')',
