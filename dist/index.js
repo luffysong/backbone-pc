@@ -3853,39 +3853,6 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 185:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
-	var BaseModel = base.Model;
-	var env = Config.env[Config.scheme];
-	
-	var Model = BaseModel.extend({
-	  url: '{{url_prefix}}/room/playback_list.json',
-	  beforeEmit: function beforeEmit() {
-	    // 给请求地址替换一下环境变量
-	    if (/^\{{0,2}(url_prefix)\}{0,2}/.test(this.url)) {
-	      this.url = this.url.replace('{{url_prefix}}', env.url_prefix);
-	    }
-	  }
-	});
-	
-	var shared = null;
-	Model.sharedInstanceModel = function sharedInstanceModel() {
-	  if (!shared) {
-	    shared = new Model();
-	  }
-	  return shared;
-	};
-	
-	module.exports = Model;
-
-
-/***/ },
-
 /***/ 186:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3931,7 +3898,7 @@ webpackJsonp([6],{
 	var BaseView = base.View;
 	var RecommendView = __webpack_require__(233);
 	var TopBarView = __webpack_require__(102);
-	var PlaybackView = __webpack_require__(237);
+	// var PlaybackView = require('./playback.view');
 	
 	var WonderfulView = __webpack_require__(240);
 	var OfficialView = __webpack_require__(242);
@@ -3956,7 +3923,7 @@ webpackJsonp([6],{
 	    // 顶部推荐
 	    this.recommendview = new RecommendView();
 	    // 回放
-	    this.playback = new PlaybackView();
+	    // this.playback = new PlaybackView();
 	    // 精彩饭趴
 	    this.wonderfulView = new WonderfulView({
 	      topbar: this.topbar
@@ -4214,109 +4181,6 @@ webpackJsonp([6],{
 /***/ function(module, exports) {
 
 	module.exports = "{{ each data as item $index}}\n<li>\n  <a href=\"javascript:;\" data-videoid=\"{{item.videoId}}\" data-type={{item.videoType}} class=\"item\">\n    <div class=\"img-wrap\">\n    <img src=\"{{item.posterPic}}\">\n    </div>\n    <div class=\"link-hover gradient-up am-vertical-align\">\n      <span class=\"am-text-truncate am-vertical-align-bottom\">{{item.videoName}}</span>\n    </div>\n  </a>\n</li>\n{{/each}}\n"
-
-/***/ },
-
-/***/ 237:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var base = __webpack_require__(28);
-	var BaseView = base.View;
-	var playbackTemp = __webpack_require__(238);
-	var PlaybackModel = __webpack_require__(185);
-	var msgBox = __webpack_require__(69);
-	var UserModel = __webpack_require__(45);
-	var user = UserModel.sharedInstanceUserModel();
-	var space = __webpack_require__(239);
-	
-	var View = BaseView.extend({
-	  el: '#playbackVideo',
-	  context: function (args) {
-	    console.log(args);
-	  },
-	  beforeMount: function () {
-	    //  初始化一些自定义属性
-	    this.playbackParameter = {
-	      deviceinfo: '{"aid":"30001001"}',
-	      offset: 0,
-	      size: 6
-	    };
-	    var token = user.getToken();
-	    if (token) {
-	      this.playbackParameter.access_token = 'web-' + token;
-	    }
-	  },
-	  afterMount: function () {
-	    //  获取findDOMNode DOM Node
-	  },
-	  ready: function () {
-	    //  初始化
-	    var _this = this;
-	    this.playbackModel = new PlaybackModel();
-	    this.parentNode = this.$el.parent();
-	    var promise = this.playbackModel.executeJSONP(this.playbackParameter);
-	    promise.done(function (response) {
-	      var code = ~~response.code;
-	      if (code) {
-	        msgBox.showError(response.msg);
-	      } else {
-	        _this.playbackRender(response.data);
-	      }
-	    });
-	    promise.fail(function () {
-	      msgBox.showError('请求错误');
-	    });
-	  },
-	  beforeDestroy: function () {
-	    //  进入销毁之前,将引用关系设置为null
-	  },
-	  destroyed: function () {
-	    //  销毁之后
-	  },
-	  playbackRender: function (items) {
-	    var le = items.length;
-	    var u = 6;
-	    if (le <= 3) {
-	      u = 3;
-	    } else {
-	      if (le < 6) {
-	        u = 6;
-	      }
-	    }
-	    while (le < u) {
-	      le++;
-	      items.push({
-	        completion: 1,
-	        imageUrl: space
-	      });
-	    }
-	    var html = this.compileHTML(playbackTemp, { items: items });
-	    var points = 6 / u;
-	    this.parentNode.css({
-	      height: 590 / points
-	    });
-	    this.$el.html(html);
-	  }
-	});
-	
-	module.exports = View;
-
-
-/***/ },
-
-/***/ 238:
-/***/ function(module, exports) {
-
-	module.exports = "{{each items as item i}}\n\t<li>\n\t\t<div class=\"box-content box-live-direct-video\">\n\t\t\t{{if item.status === 3}}\n\t\t\t\t<a href=\"playback.html?roomId={{item.roomId}}\">\n\t\t\t\t\t<div class=\"box-top\">\n\t\t\t\t\t\t<img class=\"box-top-img\" src=\"{{item.posterPic}}\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"box-cover-hover\">\n\t\t\t\t\t\t<div class=\"box-popularity boderRadAll_3\">\n\t\t\t\t\t\t\t人气：<span>{{item.realPopularity}}</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"box-click\"></div>\n\t\t\t\t\t\t<div class=\"box-praise-push boderRadAll_3\">\n\t\t\t\t\t\t\t<div class=\"praise\">\n\t\t\t\t\t\t\t\t<span class=\"praise-img\"></span>\n\t\t\t\t\t\t\t\t<span class=\"praise-text\">{{item.bulletCurtain}}</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"push\">\n\t\t\t\t\t\t\t\t<span class=\"push-img\"></span>\n\t\t\t\t\t\t\t\t<span class=\"push-text\">{{item.assemble}}</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</a>\n\t\t\t{{/if}}\n\n\t\t\t{{if item.completion === 1}}\n\t\t\t\t<div class=\"box-trailer\">\n\t\t\t\t\t<div class=\"box-top\">\n\t\t\t\t\t\t\t<img class=\"box-top-img\" src=\"{{item.imageUrl}}\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t{{/if}}\n\t\t\t<div class=\"box-bottom\">\n\t\t\t\t\t<div class=\"box-title\">{{item.roomName}}</div>\n\t\t\t</div>\n\t\t</div>\n\t</li>\n{{/each}}\n"
-
-/***/ },
-
-/***/ 239:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "images/space.png";
 
 /***/ },
 

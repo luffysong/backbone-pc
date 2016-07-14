@@ -3984,8 +3984,12 @@ webpackJsonp([4],{
 	
 	    promise.done(function (res) {
 	      if (res && res.data && res.msg === 'SUCCESS') {
-	        html = self.compileHTML(self.livePreViewItemTpl, res);
-	        self.livepreViewList.html(html);
+	        if (res.data.length <= 0) {
+	          $('#liveHotSection').hide();
+	        } else {
+	          html = self.compileHTML(self.livePreViewItemTpl, res);
+	          self.livepreViewList.html(html);
+	        }
 	      }
 	    });
 	  },
