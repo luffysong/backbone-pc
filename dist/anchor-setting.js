@@ -5582,15 +5582,15 @@ webpackJsonp([2],[
 	  //  点击编辑封面
 	  editCoverImageHandler: function (e) {
 	    var el = $(e.currentTarget);
-	    if (el.hasClass('uploadImageWrap')) {
-	      el.append('<img class="uploadImage cover-image">');
-	    }
 	    var attrs = {
 	      breviaryUrl: el.find('img').attr('src')
 	    };
 	    if (attrs.breviaryUrl) {
 	      msgBox.showTip('因内容审核，上传后不可修改!');
 	      return;
+	    }
+	    if (el.hasClass('uploadImageWrap') && el.find('img').length === 0) {
+	      el.append('<img class="uploadImage cover-image">');
 	    }
 	    var posterpic = el.attr('data-posterpic');
 	    // this.upload = new UploadFileDialog(this.fileOptions);
