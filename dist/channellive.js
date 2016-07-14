@@ -5364,6 +5364,9 @@ webpackJsonp([5],[
 	    });
 	    Backbone.on('event:RoomLoopInfo', function (data) {
 	      var id = self.currentChannelShowStatus[self.currentChannelShowId];
+	      if (~~data.liveStatus === 2) {
+	        $('.channelLiveTip').text('');
+	      }
 	      if (data && self.currentChannelShowId && data.liveStatus !== id) {
 	        window.location.reload();
 	      }
@@ -5736,6 +5739,7 @@ webpackJsonp([5],[
 	            videoStatus: show.status,
 	            beginTime: show.beginTime
 	          };
+	          self.setChannelStatusTip(show.status, show.beginTime);
 	          self.flashAPI.onReady(function () {
 	            this.init(videoData);
 	          });
@@ -5773,6 +5777,18 @@ webpackJsonp([5],[
 	        });
 	      }
 	    });
+	  },
+	  setChannelStatusTip: function (status, time) {
+	    if (~~status === 2) {
+	      $('.channelLiveTip').text('');
+	    } else {
+	      if (time) {
+	        var date = new Date(time);
+	        $('.channelLiveTip').text('本房间将在' + date.getMonth() +
+	          '月' + date.getDate() + '日' + date.getHours() + ':' +
+	          date.getMinutes() + '开始直播');
+	      }
+	    }
 	  }
 	});
 	
@@ -6338,7 +6354,7 @@ webpackJsonp([5],[
 /* 205 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"user-info-wrap clearfix\">\n    <img id=\"anchorAvatar\" class=\"Left avator boderRadAll_35\"\n         src=\"http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg\"\n         alt=\"\">\n    <div class=\"info Left \">\n        <span id=\"anchorName\" class=\"name am-margin-right-sm\"></span>\n        <!--<span class=\"icon-gender\"></span>-->\n        <button class=\"btn am-btn am-btn-purple boderRadAll_5 btnFollow\" id=\"btnFollow\">关注</button>\n        <div class=\"tags\">\n            <span class=\"first\">标签:</span>\n            <span id=\"tagsWrap\">\n            </span>\n        </div>\n    </div>\n    <div class=\"Right\">\n        <div class=\"like\">\n            <button id=\"btnLike\" class=\"btn-like am-btn-red am-circle\"><i></i></button>\n            <span id=\"txtLikeCount\" class=\"number\">1</span></div>\n        <a id=\"btnShare\" href=\"javascript:;\" class=\"btn-share\"></a>\n    </div>\n</div>\n<script type=\"text/template\" id=\"tagTpl\">\n    <%\n    tags = tags || [];\n    for(var i=0,l=tags.length; i < l; i++) {\n    %>\n    <span class=\"item\"><%=tags[i]%></span>\n    <%\n    }\n    %>\n</script>\n"
+	module.exports = "<div class=\"user-info-wrap clearfix\">\n    <img id=\"anchorAvatar\" class=\"Left avator boderRadAll_35\"\n         src=\"http://img1.yytcdn.com/user/avatar/160322/703-1458640483613/-M-216abfaf3d4ae2ee4d194029b70cdc9d_100x100.jpg\"\n         alt=\"\">\n    <div class=\"info Left \">\n        <span id=\"anchorName\" class=\"name am-margin-right-sm\"></span>\n        <!--<span class=\"icon-gender\"></span>-->\n        <button class=\"btn am-btn am-btn-purple boderRadAll_5 btnFollow\" id=\"btnFollow\">关注</button>\n        <span class=\"channelLiveTip am-margin-left\"></span>\n        <div class=\"tags\">\n            <span class=\"first\">标签:</span>\n            <span id=\"tagsWrap\">\n            </span>\n        </div>\n    </div>\n    <div class=\"Right\">\n        <div class=\"like\">\n            <button id=\"btnLike\" class=\"btn-like am-btn-red am-circle\"><i></i></button>\n            <span id=\"txtLikeCount\" class=\"number\">1</span></div>\n        <a id=\"btnShare\" href=\"javascript:;\" class=\"btn-share\"></a>\n    </div>\n</div>\n<script type=\"text/template\" id=\"tagTpl\">\n    <%\n    tags = tags || [];\n    for(var i=0,l=tags.length; i < l; i++) {\n    %>\n    <span class=\"item\"><%=tags[i]%></span>\n    <%\n    }\n    %>\n</script>\n"
 
 /***/ },
 /* 206 */
