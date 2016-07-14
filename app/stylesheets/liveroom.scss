@@ -338,7 +338,7 @@ body {
     height: 90px;
     background-color: #fff;
     padding-top: 10px;
-    margin-top: 6px;
+    // margin-top: 6px;
     .lucky-draw {
       position: relative;
       display: inline-block;
@@ -429,6 +429,7 @@ body {
     }
     $jcarousel-height: 75px;
     .jcarousel-wrapper {
+      margin-top: 5px;
       display: inline-block;
       //border: 1px solid #ccc;
       //margin: 10px 30px;
