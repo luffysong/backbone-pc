@@ -103,21 +103,23 @@ var View = BaseView.extend({
   // 设置flash
   setFlash: function (video) {
     var videoInfo = video;
-    // if (!this.FlashApi) {
-    // this.FlashApi = FlashApi.sharedInstanceFlashApi({
-    this.FlashApi = new FlashApi({
-      el: 'topFlash',
-      props: {
-        width: 980,
-        height: 550
-      }
-    });
-    // }
-    if (this.FlashApi) {
-      this.FlashApi.onReady(function () {
-        videoInfo.isIndex = true;
-        this.init(videoInfo);
+    if (~~video.status === 2) {
+      // this.FlashApi = FlashApi.sharedInstanceFlashApi({
+      this.FlashApi = new FlashApi({
+        el: 'topFlash',
+        props: {
+          width: 980,
+          height: 550
+        }
       });
+      if (this.FlashApi) {
+        this.FlashApi.onReady(function () {
+          videoInfo.isIndex = true;
+          this.init(videoInfo);
+        });
+      }
+    } else {
+      $('#topFlash').css('background-image', 'url(' + video.posterPic + ')');
     }
   },
   // 进入直播间
