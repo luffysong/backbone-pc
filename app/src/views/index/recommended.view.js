@@ -112,6 +112,7 @@ var View = BaseView.extend({
           height: 550
         }
       });
+      videoInfo = _.extend({}, videoInfo, this.getStreamInfo(video));
 
       if (this.FlashApi) {
         this.FlashApi.onReady(function () {
@@ -122,6 +123,13 @@ var View = BaseView.extend({
     } else {
       $('#topFlash').css('background-image', 'url(' + video.posterPic + ')');
     }
+  },
+  getStreamInfo: function (videoInfo) {
+    var result = {};
+    if (videoInfo.url.indexOf('tmp://') > 0) {
+      result.streamName = videoInfo.url.substr(videoInfo.url.lastIndexOf('/') + 1);
+    }
+    return result;
   },
   // 进入直播间
   gotoLiveHome: function (e) {
