@@ -4,7 +4,7 @@ var base = require('base-extend-backbone');
 var BaseView = base.View;
 var RecommendView = require('./recommended.view');
 var TopBarView = require('TopBarView');
-var PlaybackView = require('./playback.view');
+// var PlaybackView = require('./playback.view');
 
 var WonderfulView = require('./wonderful.view');
 var OfficialView = require('./official.view');
@@ -29,7 +29,7 @@ var View = BaseView.extend({
     // 顶部推荐
     this.recommendview = new RecommendView();
     // 回放
-    this.playback = new PlaybackView();
+    // this.playback = new PlaybackView();
     // 精彩饭趴
     this.wonderfulView = new WonderfulView({
       topbar: this.topbar
