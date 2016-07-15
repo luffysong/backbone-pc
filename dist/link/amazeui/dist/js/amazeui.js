@@ -1,4 +1,4 @@
-/*! Amaze UI v2.6.1 | by Amaze UI Team | (c) 2016 AllMobilize, Inc. | Licensed under MIT | 2016-04-06T09:34:39+0800 */ 
+/*! Amaze UI v2.7.1 | by Amaze UI Team | (c) 2016 AllMobilize, Inc. | Licensed under MIT | 2016-07-11T11:22:42+0800 */ 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("jquery"));
@@ -125,8 +125,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	/* jshint -W040 */
-
 	var $ = __webpack_require__(1);
 
 	if (typeof $ === 'undefined') {
@@ -140,7 +138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var doc = window.document;
 	var $html = $('html');
 
-	UI.VERSION = '2.6.1';
+	UI.VERSION = '2.7.1';
 
 	UI.support = {};
 
@@ -185,16 +183,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return animationEnd && {end: animationEnd};
 	})();
 
-	/* jshint -W069 */
+	/* eslint-disable dot-notation */
 	UI.support.touch = (
 	('ontouchstart' in window &&
 	navigator.userAgent.toLowerCase().match(/mobile|tablet/)) ||
 	(window.DocumentTouch && document instanceof window.DocumentTouch) ||
 	(window.navigator['msPointerEnabled'] &&
-	window.navigator['msMaxTouchPoints'] > 0) || //IE 10
+	window.navigator['msMaxTouchPoints'] > 0) || // IE 10
 	(window.navigator['pointerEnabled'] &&
-	window.navigator['maxTouchPoints'] > 0) || //IE >=11
+	window.navigator['maxTouchPoints'] > 0) || // IE >=11
 	false);
+	/* eslint-enable dot-notation */
 
 	// https://developer.mozilla.org/zh-CN/docs/DOM/MutationObserver
 	UI.support.mutationobserver = (window.MutationObserver ||
@@ -208,13 +207,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Debounce function
+	 *
 	 * @param {function} func  Function to be debounced
 	 * @param {number} wait Function execution threshold in milliseconds
 	 * @param {bool} immediate  Whether the function should be called at
 	 *                          the beginning of the delay instead of the
 	 *                          end. Default is false.
-	 * @desc Executes a function when it stops being invoked for n seconds
-	 * @via  _.debounce() http://underscorejs.org
+	 * @description Executes a function when it stops being invoked for n seconds
+	 * @see  _.debounce() http://underscorejs.org
 	 */
 	UI.utils.debounce = function(func, wait, immediate) {
 	  var timeout;
@@ -261,7 +261,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  left - options.leftOffset <= windowLeft + $win.width());
 	};
 
-	/* jshint -W054 */
 	UI.utils.parseOptions = UI.utils.options = function(string) {
 	  if ($.isPlainObject(string)) {
 	    return string;
@@ -281,8 +280,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return options;
 	};
-
-	/* jshint +W054 */
 
 	UI.utils.generateGUID = function(namespace) {
 	  var uid = namespace + '-' || 'am-';
@@ -399,12 +396,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	$.fn.redraw = function() {
 	  return this.each(function() {
-	    /* jshint unused:false */
+	    /* eslint-disable */
 	    var redraw = this.offsetHeight;
+	    /* eslint-enable */
 	  });
 	};
-
-	/* jshint unused:true */
 
 	$.fn.transitionEnd = function(callback) {
 	  var endEvent = UI.support.transition.end;
@@ -546,10 +542,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	/**
-	 * https://github.com/cho45/micro-template.js
+	 * @see https://github.com/cho45/micro-template.js
 	 * (c) cho45 http://cho45.github.com/mit-license
 	 */
-	/* jshint -W109 */
 	UI.template = function(id, data) {
 	  var me = UI.template;
 
@@ -560,6 +555,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        me.get(id) : (name = 'template(string)', id); // no warnings
 
 	      var line = 1;
+	      /* eslint-disable max-len, quotes */
 	      var body = ('try { ' + (me.variable ?
 	      'var ' + me.variable + ' = this.stash;' : 'with (this.stash) { ') +
 	      "this.ret += '" +
@@ -578,7 +574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      "' + ' line ' + this.line + ')'; } " +
 	      "//@ sourceURL=" + name + "\n" // source map
 	      ).replace(/this\.ret \+= '';/g, '');
-	      /* jshint -W054 */
+	      /* eslint-enable max-len, quotes */
 	      var func = new Function(body);
 	      var map = {
 	        '&': '&amp;',
@@ -606,8 +602,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return data ? me.cache[id](data) : me.cache[id];
 	};
-	/* jshint +W109 */
-	/* jshint +W054 */
 
 	UI.template.cache = {};
 
@@ -652,10 +646,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    try {
 	      var observer = new Observer(UI.utils.debounce(
 	        function(mutations, instance) {
-	        callback.call(element, mutations, instance);
-	        // trigger this event manually if MutationObserver not supported
-	        $element.trigger('changed.dom.amui');
-	      }, 50));
+	          callback.call(element, mutations, instance);
+	          // trigger this event manually if MutationObserver not supported
+	          $element.trigger('changed.dom.amui');
+	        }, 50));
 
 	      observer.observe(element, options);
 
@@ -667,7 +661,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	$.fn.DOMObserve = function(options, callback) {
 	  return this.each(function() {
+	    /* eslint-disable new-cap */
 	    UI.DOMObserve(this, options, callback);
+	    /* eslint-enable new-cap */
 	  });
 	};
 
@@ -689,7 +685,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	$(function() {
-	  var $body = $('body');
+	  var $body = $(document.body);
 
 	  UI.DOMReady = true;
 
@@ -699,7 +695,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 
 	  // watches DOM
+	  /* eslint-disable new-cap */
 	  UI.DOMObserve('[data-am-observe]');
+	  /* eslint-enable */
 
 	  $html.removeClass('no-js').addClass('js');
 
@@ -738,10 +736,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*! Hammer.JS - v2.0.6 - 2015-12-23
+	/*! Hammer.JS - v2.0.8 - 2016-04-22
 	 * http://hammerjs.github.io/
 	 *
-	 * Copyright (c) 2015 Jorik Tangelder;
+	 * Copyright (c) 2016 Jorik Tangelder;
 	 * Licensed under the MIT license */
 
 	'use strict';
@@ -873,7 +871,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * means that properties in dest will be overwritten by the ones in src.
 	 * @param {Object} dest
 	 * @param {Object} src
-	 * @param {Boolean=false} [merge]
+	 * @param {Boolean} [merge=false]
 	 * @returns {Object} dest
 	 */
 	var extend = deprecate(function extend(dest, src, merge) {
@@ -1534,7 +1532,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.evEl = MOUSE_ELEMENT_EVENTS;
 	  this.evWin = MOUSE_WINDOW_EVENTS;
 
-	  this.allow = true; // used by Input.TouchMouse to disable mouse events
 	  this.pressed = false; // mousedown state
 
 	  Input.apply(this, arguments);
@@ -1557,8 +1554,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      eventType = INPUT_END;
 	    }
 
-	    // mouse must be down, and mouse events are allowed (see the TouchMouse input)
-	    if (!this.pressed || !this.allow) {
+	    // mouse must be down
+	    if (!this.pressed) {
 	      return;
 	    }
 
@@ -1841,12 +1838,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @constructor
 	 * @extends Input
 	 */
+
+	var DEDUP_TIMEOUT = 2500;
+	var DEDUP_DISTANCE = 25;
+
 	function TouchMouseInput() {
 	  Input.apply(this, arguments);
 
 	  var handler = bindFn(this.handler, this);
 	  this.touch = new TouchInput(this.manager, handler);
 	  this.mouse = new MouseInput(this.manager, handler);
+
+	  this.primaryTouch = null;
+	  this.lastTouches = [];
 	}
 
 	inherit(TouchMouseInput, Input, {
@@ -1860,17 +1864,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var isTouch = (inputData.pointerType == INPUT_TYPE_TOUCH),
 	      isMouse = (inputData.pointerType == INPUT_TYPE_MOUSE);
 
-	    // when we're in a touch event, so  block all upcoming mouse events
-	    // most mobile browser also emit mouseevents, right after touchstart
-	    if (isTouch) {
-	      this.mouse.allow = false;
-	    } else if (isMouse && !this.mouse.allow) {
+	    if (isMouse && inputData.sourceCapabilities && inputData.sourceCapabilities.firesTouchEvents) {
 	      return;
 	    }
 
-	    // reset the allowMouse when we're done
-	    if (inputEvent & (INPUT_END | INPUT_CANCEL)) {
-	      this.mouse.allow = true;
+	    // when we're in a touch event, record touches to  de-dupe synthetic mouse event
+	    if (isTouch) {
+	      recordTouches.call(this, inputEvent, inputData);
+	    } else if (isMouse && isSyntheticEvent.call(this, inputData)) {
+	      return;
 	    }
 
 	    this.callback(manager, inputEvent, inputData);
@@ -1885,6 +1887,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
+	function recordTouches(eventType, eventData) {
+	  if (eventType & INPUT_START) {
+	    this.primaryTouch = eventData.changedPointers[0].identifier;
+	    setLastTouch.call(this, eventData);
+	  } else if (eventType & (INPUT_END | INPUT_CANCEL)) {
+	    setLastTouch.call(this, eventData);
+	  }
+	}
+
+	function setLastTouch(eventData) {
+	  var touch = eventData.changedPointers[0];
+
+	  if (touch.identifier === this.primaryTouch) {
+	    var lastTouch = {x: touch.clientX, y: touch.clientY};
+	    this.lastTouches.push(lastTouch);
+	    var lts = this.lastTouches;
+	    var removeLastTouch = function() {
+	      var i = lts.indexOf(lastTouch);
+	      if (i > -1) {
+	        lts.splice(i, 1);
+	      }
+	    };
+	    setTimeout(removeLastTouch, DEDUP_TIMEOUT);
+	  }
+	}
+
+	function isSyntheticEvent(eventData) {
+	  var x = eventData.srcEvent.clientX, y = eventData.srcEvent.clientY;
+	  for (var i = 0; i < this.lastTouches.length; i++) {
+	    var t = this.lastTouches[i];
+	    var dx = Math.abs(x - t.x), dy = Math.abs(y - t.y);
+	    if (dx <= DEDUP_DISTANCE && dy <= DEDUP_DISTANCE) {
+	      return true;
+	    }
+	  }
+	  return false;
+	}
+
 	var PREFIXED_TOUCH_ACTION = prefixed(TEST_ELEMENT.style, 'touchAction');
 	var NATIVE_TOUCH_ACTION = PREFIXED_TOUCH_ACTION !== undefined;
 
@@ -1895,6 +1935,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var TOUCH_ACTION_NONE = 'none';
 	var TOUCH_ACTION_PAN_X = 'pan-x';
 	var TOUCH_ACTION_PAN_Y = 'pan-y';
+	var TOUCH_ACTION_MAP = getTouchActionProps();
 
 	/**
 	 * Touch Action
@@ -1919,7 +1960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      value = this.compute();
 	    }
 
-	    if (NATIVE_TOUCH_ACTION && this.manager.element.style) {
+	    if (NATIVE_TOUCH_ACTION && this.manager.element.style && TOUCH_ACTION_MAP[value]) {
 	      this.manager.element.style[PREFIXED_TOUCH_ACTION] = value;
 	    }
 	    this.actions = value.toLowerCase().trim();
@@ -1951,11 +1992,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {Object} input
 	   */
 	  preventDefaults: function(input) {
-	    // not needed with native support for the touchAction property
-	    if (NATIVE_TOUCH_ACTION) {
-	      return;
-	    }
-
 	    var srcEvent = input.srcEvent;
 	    var direction = input.offsetDirection;
 
@@ -1966,9 +2002,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    var actions = this.actions;
-	    var hasNone = inStr(actions, TOUCH_ACTION_NONE);
-	    var hasPanY = inStr(actions, TOUCH_ACTION_PAN_Y);
-	    var hasPanX = inStr(actions, TOUCH_ACTION_PAN_X);
+	    var hasNone = inStr(actions, TOUCH_ACTION_NONE) && !TOUCH_ACTION_MAP[TOUCH_ACTION_NONE];
+	    var hasPanY = inStr(actions, TOUCH_ACTION_PAN_Y) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_Y];
+	    var hasPanX = inStr(actions, TOUCH_ACTION_PAN_X) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_X];
 
 	    if (hasNone) {
 	      //do not prevent defaults if this is a tap gesture
@@ -2037,6 +2073,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  return TOUCH_ACTION_AUTO;
+	}
+
+	function getTouchActionProps() {
+	  if (!NATIVE_TOUCH_ACTION) {
+	    return false;
+	  }
+	  var touchMap = {};
+	  var cssSupports = window.CSS && window.CSS.supports;
+	  ['auto', 'manipulation', 'pan-y', 'pan-x', 'pan-x pan-y', 'none'].forEach(function(val) {
+
+	    // If css.supports is not supported but there is native touch-action assume it supports
+	    // all values. This is the case for IE 10 and 11.
+	    touchMap[val] = cssSupports ? window.CSS.supports('touch-action', val) : true;
+	  });
+	  return touchMap;
 	}
 
 	/**
@@ -2835,7 +2886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @const {string}
 	 */
-	Hammer.VERSION = '2.0.6';
+	Hammer.VERSION = '2.0.7';
 
 	/**
 	 * default settings
@@ -2966,6 +3017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.handlers = {};
 	  this.session = {};
 	  this.recognizers = [];
+	  this.oldCssProps = {};
 
 	  this.element = element;
 	  this.input = createInputInstance(this);
@@ -3144,6 +3196,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @returns {EventEmitter} this
 	   */
 	  on: function(events, handler) {
+	    if (events === undefined) {
+	      return;
+	    }
+	    if (handler === undefined) {
+	      return;
+	    }
+
 	    var handlers = this.handlers;
 	    each(splitStr(events), function(event) {
 	      handlers[event] = handlers[event] || [];
@@ -3159,6 +3218,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @returns {EventEmitter} this
 	   */
 	  off: function(events, handler) {
+	    if (events === undefined) {
+	      return;
+	    }
+
 	    var handlers = this.handlers;
 	    each(splitStr(events), function(event) {
 	      if (!handler) {
@@ -3223,9 +3286,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (!element.style) {
 	    return;
 	  }
+	  var prop;
 	  each(manager.options.cssProps, function(value, name) {
-	    element.style[prefixed(element.style, name)] = add ? value : '';
+	    prop = prefixed(element.style, name);
+	    if (add) {
+	      manager.oldCssProps[prop] = element.style[prop];
+	      element.style[prop] = value;
+	    } else {
+	      element.style[prop] = manager.oldCssProps[prop] || '';
+	    }
 	  });
+	  if (!add) {
+	    manager.oldCssProps = {};
+	  }
 	}
 
 	/**
@@ -3337,7 +3410,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var UI = __webpack_require__(2);
 
-	/* jshint -W101, -W106 */
 	/**
 	 * Add to Homescreen v3.2.2
 	 * (c) 2015 Matteo Spinelli
@@ -4066,6 +4138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Button.DEFAULTS = {
 	  loadingText: 'loading...',
 	  disabledClassName: 'am-disabled',
+	  activeClassName: 'am-active',
 	  spinner: undefined
 	};
 
@@ -4114,27 +4187,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var changed = true;
 	  var $element = this.$element;
 	  var $parent = this.$element.parent('[class*="am-btn-group"]');
+	  var activeClassName = Button.DEFAULTS.activeClassName;
 
 	  if ($parent.length) {
 	    var $input = this.$element.find('input');
 
 	    if ($input.prop('type') == 'radio') {
-	      if ($input.prop('checked') && $element.hasClass('am-active')) {
+	      if ($input.prop('checked') && $element.hasClass(activeClassName)) {
 	        changed = false;
 	      } else {
-	        $parent.find('.am-active').removeClass('am-active');
+	        $parent.find('.' + activeClassName).removeClass(activeClassName);
 	      }
 	    }
 
 	    if (changed) {
 	      $input.prop('checked',
-	        !$element.hasClass('am-active')).trigger('change');
+	        !$element.hasClass(activeClassName)).trigger('change');
 	    }
 	  }
 
 	  if (changed) {
-	    $element.toggleClass('am-active');
-	    if (!$element.hasClass('am-active')) {
+	    $element.toggleClass(activeClassName);
+	    if (!$element.hasClass(activeClassName)) {
 	      $element.blur();
 	    }
 	  }
@@ -4165,6 +4239,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	UI.ready(function(context) {
 	  $('[data-am-loading]', context).button();
+
+	  // resolves #866
+	  $('[data-am-button]', context).find('input:checked').each(function() {
+	    $(this).parent('label').addClass(Button.DEFAULTS.activeClassName);
+	  });
 	});
 
 	module.exports = UI.button = Button;
@@ -5237,7 +5316,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  $toggle.trigger('focus');
 
-	  this.checkDimensions();
+	  this.checkDimensions(e);
 
 	  var complete = $.proxy(function() {
 	    $element.trigger('opened.dropdown.amui');
@@ -5301,12 +5380,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.$toggle.prop('disabled', true);
 	},
 
-	Dropdown.prototype.checkDimensions = function() {
+	Dropdown.prototype.checkDimensions = function(e) {
 	  if (!this.$dropdown.length) {
 	    return;
 	  }
 
 	  var $dropdown = this.$dropdown;
+	  
+	  // @see #873
+	  if (e && e.offset) {
+	    $dropdown.offset(e.offset);
+	  }
+
 	  var offset = $dropdown.offset();
 	  var width = $dropdown.outerWidth();
 	  var boundaryWidth = this.$boundary.width();
@@ -5402,7 +5487,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// TODO: start after x ms when pause on actions
 
 	/*
-	 * jQuery FlexSlider v2.6.0
+	 * jQuery FlexSlider v2.6.1
 	 * Copyright 2012 WooThemes
 	 * Contributing Author: Tyler Smith
 	 */
@@ -5635,7 +5720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (undefined === slide.attr('data-thumb-alt')) {
 	              slide.attr('data-thumb-alt', '');
 	            }
-	            altText = ( '' !== slide.attr('data-thumb-alt') ) ? altText = ' alt="' + slide.attr('data-thumb-alt') + '"' : '';
+	            var altText = ('' !== slide.attr('data-thumb-alt')) ? altText = ' alt="' + slide.attr('data-thumb-alt') + '"' : '';
 	            item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"' + altText + '/>' : '<a href="#">' + j + '</a>';
 	            if ('thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions) {
 	              var captn = slide.attr('data-thumbcaption');
@@ -6009,7 +6094,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    smoothHeight: function(dur) {
 	      if (!vertical || fade) {
 	        var $obj = (fade) ? slider : slider.viewport;
-	        (dur) ? $obj.animate({"height": slider.slides.eq(slider.animatingTo).height()}, dur) : $obj.height(slider.slides.eq(slider.animatingTo).height());
+	        (dur) ? $obj.animate({"height": slider.slides.eq(slider.animatingTo).innerHeight()}, dur) : $obj.innerHeight(slider.slides.eq(slider.animatingTo).innerHeight());
 	      }
 	    },
 	    sync: function(action) {
@@ -6622,7 +6707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var selector = (options.selector) ? options.selector : '.am-slides > li';
 	      var $slides = $this.find(selector);
 
-	      if (($slides.length === 1 && options.allowOneSlide === true) || $slides.length === 0) {
+	      if (( $slides.length === 1 && options.allowOneSlide === false) || $slides.length === 0) {
 	        $slides.fadeIn(400);
 	        if (options.start) {options.start($this);}
 	      } else if ($this.data('flexslider') === undefined) {
@@ -6873,22 +6958,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var UI = __webpack_require__(2);
 
-	/* jshint unused: false */
-	/* jshint -W101, -W116, -W109 */
-
-	/*! iScroll v5.1.3
-	 * (c) 2008-2014 Matteo Spinelli
+	/*! iScroll v5.2.0
+	 * (c) 2008-2016 Matteo Spinelli
 	 * http://cubiq.org/license
 	 */
 
-	var rAF = window.requestAnimationFrame ||
-	  window.webkitRequestAnimationFrame ||
-	  window.mozRequestAnimationFrame ||
-	  window.oRequestAnimationFrame ||
-	  window.msRequestAnimationFrame ||
-	  function(callback) {
-	    window.setTimeout(callback, 1000 / 60);
-	  };
+	var rAF = UI.utils.rAF;
 
 	var utils = (function() {
 	  var me = {};
@@ -6915,8 +6990,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  me.getTime = Date.now || function getTime() {
-	    return new Date().getTime();
-	  };
+	      return new Date().getTime();
+	    };
 
 	  me.extend = function(target, obj) {
 	    for (var i in obj) {
@@ -6934,7 +7009,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  me.prefixPointerEvent = function(pointerEvent) {
 	    return window.MSPointerEvent ?
-	    'MSPointer' + pointerEvent.charAt(9).toUpperCase() + pointerEvent.substr(10) :
+	    'MSPointer' + pointerEvent.charAt(7)
+	      .toUpperCase() + pointerEvent.substr(8) :
 	      pointerEvent;
 	  };
 
@@ -6971,12 +7047,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hasTransform: _transform !== false,
 	    hasPerspective: _prefixStyle('perspective') in _elementStyle,
 	    hasTouch: 'ontouchstart' in window,
-	    hasPointer: window.PointerEvent || window.MSPointerEvent, // IE10 is prefixed
+	    hasPointer: !!(window.PointerEvent || window.MSPointerEvent), // IE10 is prefixed
 	    hasTransition: _prefixStyle('transition') in _elementStyle
 	  });
 
-	  // This should find all Android browsers lower than build 535.19 (both stock browser and webview)
-	  me.isBadAndroid = /Android /.test(window.navigator.appVersion) && !(/Chrome\/\d/.test(window.navigator.appVersion));
+	  /*
+	   This should find all Android browsers lower than build 535.19 (both stock browser and webview)
+	   - galaxy S2 is ok
+	   - 2.3.6 : `AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1`
+	   - 4.0.4 : `AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30`
+	   - galaxy S3 is badAndroid (stock brower, webview)
+	   `AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30`
+	   - galaxy S4 is badAndroid (stock brower, webview)
+	   `AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30`
+	   - galaxy S5 is OK
+	   `AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36 (Chrome/)`
+	   - galaxy S6 is OK
+	   `AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36 (Chrome/)`
+	   */
+	  me.isBadAndroid = (function() {
+	    var appVersion = window.navigator.appVersion;
+	    // Android browser is not a chrome browser.
+	    if (/Android/.test(appVersion) && !(/Chrome\/\d/.test(appVersion))) {
+	      var safariVersion = appVersion.match(/Safari\/(\d+.\d)/);
+	      if (safariVersion && typeof safariVersion === "object" && safariVersion.length >= 2) {
+	        return parseFloat(safariVersion[1]) < 535.19;
+	      } else {
+	        return true;
+	      }
+	    } else {
+	      return false;
+	    }
+	  })();
 
 	  me.extend(me.style = {}, {
 	    transform: _transform,
@@ -7120,12 +7222,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      ev;
 
 	    if (!(/(SELECT|INPUT|TEXTAREA)/i).test(target.tagName)) {
-	      ev = document.createEvent('MouseEvents');
-	      ev.initMouseEvent('click', true, true, e.view, 1,
-	        target.screenX, target.screenY, target.clientX, target.clientY,
-	        e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,
-	        0, null);
-
+	      // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/initMouseEvent
+	      // initMouseEvent is deprecated.
+	      ev = document.createEvent(window.MouseEvent ? 'MouseEvents' : 'Event');
+	      ev.initEvent('click', true, true);
+	      ev.view = e.view || window;
+	      ev.detail = 1;
+	      ev.screenX = target.screenX || 0;
+	      ev.screenY = target.screenY || 0;
+	      ev.clientX = target.clientX || 0;
+	      ev.clientY = target.clientY || 0;
+	      ev.ctrlKey = !!e.ctrlKey;
+	      ev.altKey = !!e.altKey;
+	      ev.shiftKey = !!e.shiftKey;
+	      ev.metaKey = !!e.metaKey;
+	      ev.button = 0;
+	      ev.relatedTarget = null;
 	      ev._constructed = true;
 	      target.dispatchEvent(ev);
 	    }
@@ -7133,7 +7245,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return me;
 	})();
-
 	function IScroll(el, options) {
 	  this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
 	  this.scroller = this.wrapper.children[0];
@@ -7141,8 +7252,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  this.options = {
 
-	    // INSERT POINT: OPTIONS
-
+	// INSERT POINT: OPTIONS
+	    disablePointer: !utils.hasPointer,
+	    disableTouch: utils.hasPointer || !utils.hasTouch,
+	    disableMouse: utils.hasPointer || utils.hasTouch,
 	    startX: 0,
 	    startY: 0,
 	    scrollY: true,
@@ -7158,7 +7271,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    HWCompositing: true,
 	    useTransition: true,
-	    useTransform: true
+	    useTransform: true,
+	    bindToWrapper: typeof window.onmousedown === "undefined"
 	  };
 
 	  for (var i in options) {
@@ -7190,7 +7304,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.options.tap = 'tap';
 	  }
 
-	  // INSERT POINT: NORMALIZATION
+	  // https://github.com/cubiq/iscroll/issues/1029
+	  if (!this.options.useTransition && !this.options.useTransform) {
+	    if (!(/relative|absolute/i).test(this.scrollerStyle.position)) {
+	      this.scrollerStyle.position = "relative";
+	    }
+	  }
+
+	// INSERT POINT: NORMALIZATION
 
 	  // Some defaults
 	  this.x = 0;
@@ -7199,7 +7320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.directionY = 0;
 	  this._events = {};
 
-	  // INSERT POINT: DEFAULTS
+	// INSERT POINT: DEFAULTS
 
 	  this._init();
 	  this.refresh();
@@ -7209,18 +7330,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	IScroll.prototype = {
-	  version: '5.1.3',
+	  version: '5.2.0',
 
 	  _init: function() {
 	    this._initEvents();
 
-	    // INSERT POINT: _init
+	// INSERT POINT: _init
 
 	  },
 
 	  destroy: function() {
 	    this._initEvents(true);
-
+	    clearTimeout(this.resizeTimeout);
+	    this.resizeTimeout = null;
 	    this._execEvent('destroy');
 	  },
 
@@ -7239,7 +7361,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _start: function(e) {
 	    // React to left mouse button only
 	    if (utils.eventType[e.type] != 1) {
-	      if (e.button !== 0) {
+	      // for button property
+	      // http://unixpapa.com/js/mouse.html
+	      var button;
+	      if (!e.which) {
+	        /* IE case */
+	        button = (e.button < 2) ? 0 :
+	          ((e.button == 4) ? 1 : 2);
+	      } else {
+	        /* All others */
+	        button = e.button;
+	      }
+	      if (button !== 0) {
 	        return;
 	      }
 	    }
@@ -7263,11 +7396,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.directionY = 0;
 	    this.directionLocked = 0;
 
-	    this._transitionTime();
-
 	    this.startTime = utils.getTime();
 
 	    if (this.options.useTransition && this.isInTransition) {
+	      this._transitionTime();
 	      this.isInTransition = false;
 	      pos = this.getComputedPosition();
 	      this._translate(Math.round(pos.x), Math.round(pos.y));
@@ -7450,7 +7582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.isInTransition = 1;
 	    }
 
-	    // INSERT POINT: _end
+	// INSERT POINT: _end
 
 	    if (newX != this.x || newY != this.y) {
 	      // change easing function when scroller goes out of the boundaries
@@ -7549,7 +7681,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.resetPosition();
 
-	    // INSERT POINT: _refresh
+	// INSERT POINT: _refresh
 
 	  },
 
@@ -7602,10 +7734,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    easing = easing || utils.ease.circular;
 
 	    this.isInTransition = this.options.useTransition && time > 0;
-
-	    if (!time || (this.options.useTransition && easing.style)) {
-	      this._transitionTimingFunction(easing.style);
-	      this._transitionTime(time);
+	    var transitionType = this.options.useTransition && easing.style;
+	    if (!time || transitionType) {
+	      if (transitionType) {
+	        this._transitionTimingFunction(easing.style);
+	        this._transitionTime(time);
+	      }
 	      this._translate(x, y);
 	    } else {
 	      this._animate(x, y, time, easing.fn);
@@ -7644,22 +7778,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  _transitionTime: function(time) {
+	    if (!this.options.useTransition) {
+	      return;
+	    }
 	    time = time || 0;
-
-	    this.scrollerStyle[utils.style.transitionDuration] = time + 'ms';
-
-	    if (!time && utils.isBadAndroid) {
-	      this.scrollerStyle[utils.style.transitionDuration] = '0.001s';
+	    var durationProp = utils.style.transitionDuration;
+	    if (!durationProp) {
+	      return;
 	    }
 
-	    // INSERT POINT: _transitionTime
+	    this.scrollerStyle[durationProp] = time + 'ms';
+
+	    if (!time && utils.isBadAndroid) {
+	      this.scrollerStyle[durationProp] = '0.0001ms';
+	      // remove 0.0001ms
+	      var self = this;
+	      rAF(function() {
+	        if (self.scrollerStyle[durationProp] === '0.0001ms') {
+	          self.scrollerStyle[durationProp] = '0s';
+	        }
+	      });
+	    }
+
+	// INSERT POINT: _transitionTime
 
 	  },
 
 	  _transitionTimingFunction: function(easing) {
 	    this.scrollerStyle[utils.style.transitionTimingFunction] = easing;
 
-	    // INSERT POINT: _transitionTimingFunction
+	// INSERT POINT: _transitionTimingFunction
 
 	  },
 
@@ -7682,7 +7830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.x = x;
 	    this.y = y;
 
-	    // INSERT POINT: _translate
+	// INSERT POINT: _translate
 
 	  },
 
@@ -7739,7 +7887,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return {x: x, y: y};
 	  },
-
 	  _animate: function(destX, destY, duration, easingFn) {
 	    var that = this,
 	      startX = this.x,
@@ -7820,7 +7967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._key(e);
 	        break;
 	      case 'click':
-	        if (!e._constructed) {
+	        if (this.enabled && !e._constructed) {
 	          e.preventDefault();
 	          e.stopPropagation();
 	        }
@@ -7857,7 +8004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Modal = function(element, options) {
 	  this.options = $.extend({}, Modal.DEFAULTS, options || {});
 	  this.$element = $(element);
-	  this.$dialog =   this.$element.find('.am-modal-dialog');
+	  this.$dialog = this.$element.find('.am-modal-dialog');
 
 	  if (!this.$element.attr('id')) {
 	    this.$element.attr('id', UI.utils.generateGUID('am-modal'));
@@ -7869,8 +8016,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.isLoading = this.$element.hasClass('am-modal-loading');
 	  this.active = this.transitioning = this.relatedTarget = null;
 	  this.dimmer = this.options.dimmer ? dimmer : {
-	    open: function() {},
-	    close: function() {}
+	    open: function() {
+	    },
+	    close: function() {
+	    }
 	  };
 
 	  this.events();
@@ -7944,7 +8093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // apply Modal width/height if set
 	  if (!isPopup && !this.isActions) {
 	    if (width) {
-	      style.width =  parseInt(width, 10) + 'px';
+	      style.width = parseInt(width, 10) + 'px';
 	    }
 
 	    if (height) {
@@ -7961,9 +8110,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.transitioning = 1;
 
 	  var complete = function() {
-	    $element.trigger(
-	      $.Event('opened.modal.amui', {relatedTarget: relatedTarget})
-	    );
+	    $element.trigger($.Event('opened.modal.amui', {
+	      relatedTarget: relatedTarget
+	    }));
 	    this.transitioning = 0;
 
 	    // Prompt auto focus
@@ -7998,8 +8147,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.dimmer.close($element, true);
 	  }
 
-	  this.$element.trigger($.Event('close.modal.amui',
-	    {relatedTarget: relatedTarget}));
+	  this.$element.trigger($.Event('close.modal.amui', {
+	    relatedTarget: relatedTarget
+	  }));
 
 	  this.transitioning = 1;
 
@@ -8013,8 +8163,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.active = false;
 	  };
 
-	  $element.removeClass(options.className.active).
-	    addClass(options.className.out);
+	  $element.removeClass(options.className.active)
+	    .addClass(options.className.out);
 
 	  if (!supportTransition) {
 	    return complete.call(this);
@@ -8025,9 +8175,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	Modal.prototype.events = function() {
-	  var options = this.options;
 	  var _this = this;
+	  var options = this.options;
 	  var $element = this.$element;
+	  var $dimmer = this.dimmer.$element;
 	  var $ipt = $element.find('.am-modal-prompt-input');
 	  var $confirm = $element.find('[data-am-modal-confirm]');
 	  var $cancel = $element.find('[data-am-modal-cancel]');
@@ -8044,22 +8195,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // close via Esc key
 	  if (this.options.cancelable) {
 	    $element.on('keyup.modal.amui', function(e) {
-	        if (_this.active && e.which === 27) {
-	          $element.trigger('cancel.modal.amui');
-	          _this.close();
-	        }
-	      });
+	      if (_this.active && e.which === 27) {
+	        $element.trigger('cancel.modal.amui');
+	        _this.close();
+	      }
+	    });
 	  }
 
 	  // Close Modal when dimmer clicked
 	  if (this.options.dimmer && this.options.closeViaDimmer && !this.isLoading) {
-	    this.dimmer.$element.on('click.dimmer.modal.amui', function(e) {
+	    $dimmer.on('click.dimmer.modal.amui', function() {
 	      _this.close();
 	    });
 	  }
 
 	  // Close Modal when button clicked
-	  $element.on('click.close.modal.amui', '[data-am-modal-close], .am-modal-btn', function(e) {
+	  $element.on(
+	    'click.close.modal.amui',
+	    '[data-am-modal-close], .am-modal-btn',
+	    function(e) {
 	      e.preventDefault();
 	      var $this = $(this);
 
@@ -8070,6 +8224,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        _this.close();
 	      }
+	    }
+	  )
+	    // trigger dimmer click event if non-dialog area clicked
+	    // fixes #882 caused by https://github.com/amazeui/amazeui/commit/b6be7719681193f1c4cb04af89cb9fd9f4422163
+	    .on('click', function(e) {
+	      e.stopPropagation();
+	      $(e.target).is($element) && $dimmer.trigger('click.dimmer.modal.amui');
 	    });
 
 	  $confirm.on('click.confirm.modal.amui',
@@ -8080,10 +8241,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	  $cancel.on('click.cancel.modal.amui', function() {
-	      $element.trigger($.Event('cancel.modal.amui', {
-	        trigger: this
-	      }));
-	    });
+	    $element.trigger($.Event('cancel.modal.amui', {
+	      trigger: this
+	    }));
+	  });
 
 	  $element.on('confirm.modal.amui', function(e) {
 	    e.data = getData();
@@ -8119,7 +8280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var $this = $(this);
 	  var options = UI.utils.parseOptions($this.attr('data-am-modal'));
 	  var $target = $(options.target ||
-	  (this.href && this.href.replace(/.*(?=#[^\s]+$)/, '')));
+	    (this.href && this.href.replace(/.*(?=#[^\s]+$)/, '')));
 	  var option = $target.data('amui.modal') ? 'toggle' : options;
 
 	  Plugin.call($target, option, this);
@@ -8336,6 +8497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var $ = __webpack_require__(1);
 	var UI = __webpack_require__(2);
+	var requestAnimationFrame = UI.utils.rAF;
 
 	/**
 	 * @via https://github.com/manuelstofer/pinchzoom/blob/master/src/pinchzoom.js
@@ -8343,6 +8505,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	var definePinchZoom = function($) {
+
 	  /**
 	   * Pinch zoom using jQuery
 	   * @version 0.0.2
@@ -8380,11 +8543,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      tapZoomFactor: 2,
 	      zoomOutFactor: 1.3,
 	      animationDuration: 300,
-	      animationInterval: 5,
-	      maxZoom: 5,
+	      maxZoom: 4,
 	      minZoom: 0.5,
 	      lockDragAxis: false,
-	      use2d: false,
+	      use2d: true,
 	      zoomStartEventName: 'pz_zoomstart',
 	      zoomEndEventName: 'pz_zoomend',
 	      dragStartEventName: 'pz_dragstart',
@@ -8481,7 +8643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        center = this.getCurrentZoomCenter();
 	      }
 
-	      this.animate(this.options.animationDuration, this.options.animationInterval, updateProgress, this.swing);
+	      this.animate(this.options.animationDuration, updateProgress, this.swing);
 	      this.el.trigger(this.options.doubleTapEventName);
 	    },
 
@@ -8640,7 +8802,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.animate(
 	        this.options.animationDuration,
-	        this.options.animationInterval,
 	        updateProgress,
 	        this.swing
 	      );
@@ -8660,7 +8821,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.animate(
 	        this.options.animationDuration,
-	        this.options.animationInterval,
 	        updateProgress,
 	        this.swing
 	      );
@@ -8670,9 +8830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Updates the aspect ratio
 	     */
 	    updateAspectRatio: function() {
-	      // this.setContainerY(this.getContainerX() / this.getAspectRatio());
-	      // @modified
-	      this.setContainerY()
+	      this.setContainerY(this.getContainerX() / this.getAspectRatio());
 	    },
 
 	    /**
@@ -8753,12 +8911,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Animation loop
 	     * does not support simultaneous animations
 	     * @param duration
-	     * @param interval
 	     * @param framefn
 	     * @param timefn
 	     * @param callback
 	     */
-	    animate: function(duration, interval, framefn, timefn, callback) {
+	    animate: function(duration, framefn, timefn, callback) {
 	      var startTime = new Date().getTime(),
 	        renderFrame = (function() {
 	          if (!this.inAnimation) {
@@ -8780,11 +8937,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            framefn(progress);
 	            this.update();
-	            setTimeout(renderFrame, interval);
+	            requestAnimationFrame(renderFrame);
 	          }
 	        }).bind(this);
 	      this.inAnimation = true;
-	      renderFrame();
+	      requestAnimationFrame(renderFrame);
 	    },
 
 	    /**
@@ -8804,22 +8961,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getContainerX: function() {
-	      // return this.container[0].offsetWidth;
-	      // @modified
-	      return window.innerWidth
+	      return this.container[0].offsetWidth;
 	    },
 
 	    getContainerY: function() {
-	      // return this.container[0].offsetHeight;
-	      // @modified
-	      return window.innerHeight
+	      return this.container[0].offsetHeight;
 	    },
 
 	    setContainerY: function(y) {
-	      // return this.container.height(y);
-	      // @modified
-	      var t = window.innerHeight;
-	      return this.el.css({height: t}), this.container.height(t);
+	      return this.container.height(y);
 	    },
 
 	    /**
@@ -9023,7 +9173,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	          target.handleDoubleTap(event);
 	          switch (interaction) {
-	            case "zoom":
+	            case 'zoom':
 	              target.handleZoomEnd(event);
 	              break;
 	            case 'drag':
@@ -10449,7 +10599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	// Init code
 	UI.ready(function(context) {
-	  $('[data-am-scrollspy-nav]', context).scrollspynav();
+	  $('[data-am-scrollspynav]', context).scrollspynav();
 	});
 
 	module.exports = ScrollSpyNav;
@@ -10716,10 +10866,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // set select button styles
 	  this.$selector.css({width: this.options.btnWidth});
 
-	  if (this.$element[0].disabled) {
-	    this.$selector.addClass(options.disabledClass);
-	  }
-
 	  this.$list = this.$selector.find('.am-selected-list');
 	  this.$searchField = this.$selector.find('.am-selected-search input');
 	  this.$hint = this.$selector.find('.am-selected-hint');
@@ -10734,6 +10880,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.$selector.dropdown({
 	    justify: $selectorBtn
 	  });
+
+	  // disable Selected instance if <selected> is disabled
+	  // should call .disable() after Dropdown initialed
+	  if ($element[0].disabled) {
+	    this.disable();
+	  }
 
 	  // set list height
 	  if (options.maxHeight) {
@@ -10855,11 +11007,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return false;
 	    }
 	  } else {
+	    // close dropdown whether item is checked or not
+	    // @see #860
+	    this.dropdown.close();
+
 	    if (isChecked) {
 	      return false;
 	    }
 
-	    this.dropdown.close();
 	    this.$shadowOptions.not($item).removeClass(options.selectedClass);
 	  }
 
@@ -10869,8 +11024,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * syncData
-	 * @desc if `item` set, only sync `item` related option
-	 * @param {Object} item
+	 *
+	 * @description if `item` set, only sync `item` related option
+	 * @param {Object} [item]
 	 */
 	Selected.prototype.syncData = function(item) {
 	  var _this = this;
@@ -10951,7 +11107,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.observer.observe(this.$element[0], {
 	      childList: true,
-	      attributes: true,
 	      subtree: true,
 	      characterData: true
 	    });
@@ -10977,19 +11132,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  $item.trigger('click');
-	},
+	};
 
 	// @since: 2.5
 	Selected.prototype.enable = function() {
 	  this.$element.prop('disable', false);
 	  this.$selector.dropdown('enable');
-	},
+	};
 
 	// @since: 2.5
 	Selected.prototype.disable = function() {
 	  this.$element.prop('disable', true);
 	  this.$selector.dropdown('disable');
-	},
+	};
 
 	Selected.prototype.destroy = function() {
 	  this.$element.removeData('amui.selected').show();
@@ -14566,7 +14721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  submit: null
 	};
 
-	Validator.VERSION = '2.6.1';
+	Validator.VERSION = '2.7.1';
 
 	/* jshint -W101 */
 	Validator.patterns = {
@@ -15142,7 +15297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	/**
-	 * @via https://github.com/sindresorhus/screenfull.js
+	 * @see https://github.com/sindresorhus/screenfull.js
 	 * @license MIT © Sindre Sorhus
 	 */
 
@@ -15370,7 +15525,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * store.js
-	 * @via https://github.com/marcuswestin/store.js
+	 * @see https://github.com/marcuswestin/store.js
 	 * @license https://github.com/marcuswestin/store.js/blob/master/LICENSE
 	 */
 
