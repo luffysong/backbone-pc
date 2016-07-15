@@ -75,7 +75,7 @@ var View = BaseView.extend({
   },
   // 当模板挂载到元素之后
   afterMount: function () {
-    this.roomBg = $('#anchorContainerBg');
+    this.roomBg = $('.header-bg');
     this.currentChannelShowStatus = {};
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
@@ -266,6 +266,7 @@ var View = BaseView.extend({
           url: data.url
         };
         self.roomInfo = data;
+        self.setRoomBgImg();
         self.anchorView = new AnchorCardView({
           share: {
             url: '/channellive.html?channelId=' + self.channelId,
