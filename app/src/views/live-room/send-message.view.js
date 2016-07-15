@@ -108,7 +108,8 @@ var View = BaseView.extend({
       },
       smallAvatar: user.get('bigheadImg'),
       roomId: this.roomInfo.id,
-      time: ''
+      time: '',
+      source: this.options.type === 'channel' ? 2 : 1
     };
     // 处理频道发言
     if (this.options.type === 'channel') {
