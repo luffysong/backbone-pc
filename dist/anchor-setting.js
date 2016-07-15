@@ -6860,7 +6860,7 @@ webpackJsonp([2],[
 /* 164 */
 /***/ function(module, exports) {
 
-	module.exports = "{{each data as item}}\n<tr data-showid=\"{{item.id}}\" data-showname=\"{{item.name}}\">\n  <td>{{item.id}}</td>\n  <td class=\"name\">{{item.name}}</td>\n  <td>{{item.beginTimeTxt}}</td>\n  <td>\n    {{if item.status == 0}}\n    <button data-action='publish' class=\"am-btn am-btn-red am-btn-xs am-round\"><i data-action='publish' class=\"am-icon-check\"></i> 发布</button>\n    <button data-action='delete' class=\"am-btn am-btn-xs am-round\"><i data-action='delete' class=\"am-icon-close\"></i>删除</button>\n    {{else if item.status == 1}}\n    <span>已发布</span>\n    {{else if item.status == 2}}\n    <span>直播中</span>\n    {{else if item.status == 3}}\n    <span>已结束</span>\n    {{/if}}\n  </td>\n</tr>\n{{/each}}\n{{if data.length <= 0}}\n<tr>\n  <td colspan=\"3\">暂无数据</td>\n</tr>\n{{/if}}\n"
+	module.exports = "{{each data as item}}\n<tr data-showid=\"{{item.id}}\" data-showname=\"{{item.name}}\">\n  <td>{{item.id}}</td>\n  <td class=\"name\">{{item.name}}</td>\n  <td>{{item.beginTimeTxt}}</td>\n  <td>\n    {{if item.status == 0}}\n    <button data-action='publish' class=\"am-btn am-btn-red am-btn-xs am-round\"><i data-action='publish' class=\"am-icon-check\"></i> 发布</button>\n    <button data-action='delete' class=\"am-btn am-btn-xs am-round\"><i data-action='delete' class=\"am-icon-close\"></i>删除</button>\n    {{else if item.status == 1}}\n    <span>已发布</span>\n    {{else if item.status == 2}}\n    <span>直播中</span>\n    {{else if item.status == 3}}\n    <span>已结束</span>\n    {{else if item.status == 4}}\n    <span>已过期</span>\n    {{/if}}\n  </td>\n</tr>\n{{/each}}\n{{if data.length <= 0}}\n<tr>\n  <td colspan=\"3\">暂无数据</td>\n</tr>\n{{/if}}\n"
 
 /***/ },
 /* 165 */
