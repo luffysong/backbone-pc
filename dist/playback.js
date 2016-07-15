@@ -12,13 +12,13 @@ webpackJsonp([9],[
 	  'use strict';
 	  var TopbarView = __webpack_require__(102);
 	
-	  var MainView = __webpack_require__(257);
+	  var MainView = __webpack_require__(255);
 	
 	  var a = new TopbarView();
 	  a = new MainView();
 	  console.log(a);
 	
-	  __webpack_require__(255);
+	  __webpack_require__(253);
 	});
 
 
@@ -1582,7 +1582,7 @@ webpackJsonp([9],[
 /* 44 */
 /***/ function(module, exports) {
 
-	var config = {"scheme":"release","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
+	var config = {"scheme":"alpha","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
 
 /***/ },
 /* 45 */
@@ -5866,9 +5866,7 @@ webpackJsonp([9],[
 /* 248 */,
 /* 249 */,
 /* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -5886,7 +5884,7 @@ webpackJsonp([9],[
 	
 	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
-	var PlayedListModel = __webpack_require__(254);
+	var PlayedListModel = __webpack_require__(252);
 	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	var Backbone = window.Backbone;
@@ -5988,7 +5986,7 @@ webpackJsonp([9],[
 
 
 /***/ },
-/* 254 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6020,14 +6018,14 @@ webpackJsonp([9],[
 
 
 /***/ },
-/* 255 */
+/* 253 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 256 */,
-/* 257 */
+/* 254 */,
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -6121,7 +6119,7 @@ webpackJsonp([9],[
 	  renderPage: function () {
 	    var RoomTitle = __webpack_require__(206);
 	    var AnchorCardView = __webpack_require__(201);
-	    var PlayedListView = __webpack_require__(253);
+	    var PlayedListView = __webpack_require__(251);
 	    var GiftView = __webpack_require__(213);
 	
 	    var a = new RoomTitle();

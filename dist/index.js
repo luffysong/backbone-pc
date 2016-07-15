@@ -11,7 +11,7 @@ webpackJsonp([6],{
 	  var MainView = __webpack_require__(232);
 	  var mainView = new MainView();
 	  console.log(mainView);
-	  __webpack_require__(244);
+	  __webpack_require__(241);
 	});
 
 
@@ -1565,7 +1565,7 @@ webpackJsonp([6],{
 /***/ 44:
 /***/ function(module, exports) {
 
-	var config = {"scheme":"release","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
+	var config = {"scheme":"alpha","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
 
 /***/ },
 
@@ -3900,8 +3900,8 @@ webpackJsonp([6],{
 	var TopBarView = __webpack_require__(102);
 	// var PlaybackView = require('./playback.view');
 	
-	var WonderfulView = __webpack_require__(240);
-	var OfficialView = __webpack_require__(242);
+	var WonderfulView = __webpack_require__(237);
+	var OfficialView = __webpack_require__(239);
 	
 	var View = BaseView.extend({
 	  clientRender: false,
@@ -4202,7 +4202,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 240:
+/***/ 237:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4217,7 +4217,7 @@ webpackJsonp([6],{
 	var user = UserModel.sharedInstanceUserModel();
 	var LivePreviewModel = __webpack_require__(184);
 	var UserInfoModel = __webpack_require__(63);
-	var PushLarityModel = __webpack_require__(241);
+	var PushLarityModel = __webpack_require__(238);
 	
 	var confirm = __webpack_require__(55);
 	var msgBox = __webpack_require__(69);
@@ -4387,7 +4387,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 241:
+/***/ 238:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4420,7 +4420,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 242:
+/***/ 239:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4453,7 +4453,7 @@ webpackJsonp([6],{
 	      type: 'YYT'
 	    };
 	
-	    this.asideTpl = __webpack_require__(243);
+	    this.asideTpl = __webpack_require__(240);
 	    // this.$el.find('#officialAsideTpl').html();
 	    this.centerTpl = this.$el.find('#officialCenterTpl').html();
 	
@@ -4535,14 +4535,14 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 243:
+/***/ 240:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"am-u-sm-3\">\n  {{each data as item}}\n  <div class=\"item\">\n    {{if item.channelId > 0}}\n    <a href=\"/channellive.html?channelId={{item.channelId}}\" class=\"top-link\">\n      <img src=\"{{item.posterPic}}\">\n      <div class=\"link-hover gradient\"></div>\n      <span class=\"am-btn am-btn-red boderRadAll_3\">进入TA的直播间</span>\n    </a>\n    <div class=\"anchor-info am-cf\">\n      <div class=\"am-fl\">\n        <div class=\"title am-text-truncate\">{{item.channelName}}</div>\n        <img src=\"{{item.creator.largeAvatar}}\" class=\"am-circle avatar\">\n        <span class=\"name\">{{item.creator.nickName}}</span>\n      </div>\n    </div>\n    {{else}}\n    <a href=\"javascript:;\" class=\"top-link\">\n      <span class=\"preview\"></span>\n    </a>\n    <div class=\"anchor-info am-cf\">\n      <div class=\"am-fl\">\n        <div class=\"title am-text-truncate\">{{item.desc}}</div>\n        <span class=\"name\"></span>\n      </div>\n    </div>\n    {{/if}}\n    <footer class=\"viedo-bg\"></footer>\n  </div>\n  {{/each}}\n</div>\n"
 
 /***/ },
 
-/***/ 244:
+/***/ 241:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

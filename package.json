@@ -7,16 +7,19 @@
     "test": "mocha --colors test/*.spec.js",
     "start": "gulp server",
     "dev": "webpack --watch --colors --config bin/webpack.dev.config.js",
-    "predev": "NODE_ENV=beta gulp rebuild:config",
+    "predev": "gulp rebuild:config",
 
     "build": "gulp copy-to-dist",
     "prebuild": "webpack --colors --config bin/webpack.product.config.js --optimize-minimize",
 
-    "beta": "NODE_ENV=beta npm run build",
-    "prebeta": "NODE_ENV=beta gulp rebuild:config",
+    "beta": "npm run build",
+    "prebeta": "gulp rebuild:config",
 
     "release": "NODE_ENV=product npm run build",
     "prerelease": "NODE_ENV=product gulp rebuild:config",
+
+    "product": "npm run build",
+    "preproduct": "set NODE_ENV=product gulp rebuild:config",
 
     "eslint": "eslint app/src/ app/stylesheets",
     "precommit": "npm run eslint"
