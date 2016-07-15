@@ -4,11 +4,11 @@ webpackJsonp([2],[
 
 	var $ = __webpack_require__(1);
 	$(function () {
-	  var MainView = __webpack_require__(124);
+	  var MainView = __webpack_require__(131);
 	  var mainView = new MainView();
 	  console.log(mainView);
 	  // require('../stylesheets/anchor-setting.scss');
-	  __webpack_require__(177);
+	  __webpack_require__(184);
 	});
 
 
@@ -345,12 +345,40 @@ webpackJsonp([2],[
 	// shim for using process in browser
 	
 	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
 	var queueIndex = -1;
 	
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -366,7 +394,7 @@ webpackJsonp([2],[
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -383,7 +411,7 @@ webpackJsonp([2],[
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -395,7 +423,7 @@ webpackJsonp([2],[
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 	
@@ -1443,12 +1471,566 @@ webpackJsonp([2],[
 /* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.Auxiliary=t():e.Auxiliary=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return e[r].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){var r=n(1),o=n(2),i=n(3),a=n(4),s=n(5),c=n(7);e.exports={url:r,sheet:o,isNativeFunction:i,cookie:a,AjaxForm:s,UploadFile:c}},function(e,t){"use strict";var n=[];window.location;e.exports={parse:function(e){var t=document.createElement("a");t.href=e;for(var n,r={port:t.port,protocol:t.protocol.replace(":",""),hash:t.hash.replace("#",""),host:t.host,href:t.href,hostname:t.hostname,pathname:t.pathname,search:t.search,query:{}},o=r.search.replace(/^\?/,"").split("&"),i=o.length,a=0;i>a;a++)o[a]&&(n=o[a].split("="),r.query[n[0]]=n[1]);return t=null,r},format:function(e,t){var r=0,o=t.query,i=t.hash;if(n.length=0,n.push(e.lastIndexOf("?")>-1?e:e+"?"),o)for(var a in o){var s=o[a];r?n.push("&"+a+"="+s):(r++,n.push(a+"="+s))}return i&&n.push(i.indexOf("#")>-1?i:"#"+i),n.join("")},resolve:function(e,t){return/^(.\/)/.test(t)&&(t=t.replace(/^(.\/)/,"/")),/^(..\/)/.test(t)&&(e=e.substr(0,e.lastIndexOf("/")),t=t.replace(/^(..\/)/,"/")),e+t},extname:function(e){var t=e.split(".");return t[t.length-1]||""},parseSearch:function(e){for(var t,n,r={},o=e.replace(/^\?/,"").split("&"),i=o.length,a=0;i>a;a++)o[a]&&(n=o[a].split("="),t=n[1],(/^\[/.test(t)&&/\]$/.test(t)||/^{/.test(t)||/\}$/.test(t))&&(t=JSON.parse(t)),r[n[0]]=t);return r}}},function(e,t){"use strict";function n(){var e=document.createElement("style");return e.appendChild(document.createTextNode("")),document.head.appendChild(e),e.sheet}e.exports=n()},function(e,t){"use strict";function n(e){var t=typeof e;return"function"===t?a.test(o.call(e)):e&&"object"===t&&i.test(r.call(e))||!1}e.exports=n;var r=Object.prototype.toString,o=Function.prototype.toString,i=/^\[object .+?Constructor\]$/,a=RegExp("^"+String(r).replace(/[.*+?^${}()|[\]\/\\]/g,"\\$&").replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$")},function(e,t){"use strict";function n(){for(var e=0,t={};e<arguments.length;e++){var n=arguments[e];for(var r in n)t[r]=n[r]}return t}function r(e){function t(r,o,i){var a;if(arguments.length>1){if(i=n({path:"/"},t.defaults,i),"number"==typeof i.expires){var s=new Date;s.setMilliseconds(s.getMilliseconds()+864e5*i.expires),i.expires=s}try{a=JSON.stringify(o),/^[\{\[]/.test(a)&&(o=a)}catch(c){}return o=e.write?e.write(o,r):encodeURIComponent(String(o)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),r=encodeURIComponent(String(r)),r=r.replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent),r=r.replace(/[\(\)]/g,escape),document.cookie=[r,"=",o,i.expires&&"; expires="+i.expires.toUTCString(),i.path&&"; path="+i.path,i.domain&&"; domain="+i.domain,i.secure?"; secure":""].join("")}r||(a={});for(var p=document.cookie?document.cookie.split("; "):[],l=/(%[0-9A-Z]{2})+/g,u=0;u<p.length;u++){var f=p[u].split("="),h=f[0].replace(l,decodeURIComponent),d=f.slice(1).join("=");'"'===d.charAt(0)&&(d=d.slice(1,-1));try{if(d=e.read?e.read(d,h):e(d,h)||d.replace(l,decodeURIComponent),this.json)try{d=JSON.parse(d)}catch(c){}if(r===h){a=d;break}r||(a[h]=d)}catch(c){}}return a}return t.get=t.set=t,t.getJSON=function(){return t.apply({json:!0},[].slice.call(arguments))},t.defaults={},t.remove=function(e,r){t(e,"",n(r,{expires:-1}))},t.withConverter=r,t}e.exports=r(function(){})},function(e,t,n){"use strict";var r=(n(1),n(6)),o=function(e){e=e||{},this.$el="string"==typeof e.el?$(e.el):e.el,this.uid=r("AjaxForm-"),this.loadState=!1,this._init()};o.prototype._init=function(){var e=$.Deferred();$.extend(this,e.promise()),this._createIframe(),this._addEvent(e)},o.prototype._createIframe=function(){var e='<iframe id="'+this.uid+'" name="'+this.uid+'"  style="display: none;" src="about:blank"></iframe>';this.$el.attr("target",this.uid),this.$el.append(e),this._iframe=$("#"+this.uid),$("<input />").attr({type:"hidden",name:"cross_post",value:"1"}).appendTo(this.$el)},o.prototype._addEvent=function(e){var t=this;this._iframe.on("load",function(){if(t.loadState){var n=this.contentWindow,r=n.location;if("about:blank"===r.href)e.reject(n);else try{var o=this._iframe[0].contentWindow.document.body;innerText=o.innerText,innerText||(innerText=o.innerHTML),innerText&&e.resolve($.parseJSON(innerText))}catch(i){e.resolve(n)}t.loadState=!1}})},o.prototype.encrypto=function(e){var t=this;$.each(e,function(e,n){var r=t.$el.find("[name="+e+"]");0===r.length?$("<input />").attr({type:"hidden",name:e,value:n}).appendTo(t.$el):r.val(n)})};var i=null;o.sharedInstanceAjaxForm=function(e,t){return i||(t=t||{},t.el=e,i=new o(t)),i},o.classInstanceAjaxForm=function(e,t){return t=t||{},t.el=e,new o(t)},e.exports=o},function(e,t){function n(e){var t=++r+"";return e?e+t:t}e.exports=n;var r=0},function(e,t,n){"use strict";var r=n(1),o=n(5),i=n(6),a=function(e){if(this.$el="string"==typeof e.el?$(e.el):e.el,this.uid=i("UploadFile-"),this.options=e,this._data=e.data||{},this._filename=e.filename||"image",this._url=e.url,!this._url)return void console.warn("配置上传URL");this._init();var t=$.Deferred();$.extend(this,t.promise()),this.ajaxForm=o.classInstanceAjaxForm(this.$el,{type:"img"}),this.ajaxForm.done(function(e){var n=e.location,o=decodeURIComponent(n.search),i=r.parseSearch(o);t.resolve(i)}),this.ajaxForm.fail(function(){t.reject(this)})};a.prototype._init=function(){this._createElement()},a.prototype._createElement=function(){var e="";for(var t in this._data){var n=this._data[t],r=Object.prototype.toString.call(n);"[object Object]"!==r&&"[object Array]"!==r||(n=JSON.stringify(n)),e+='<input type="hidden" name="'+t+"\" value='"+n+"'/>"}e+='<input type="file" class="opacity0 upload-file '+this.options.className+'" name="'+this._filename+'"  />',this.$el.attr("method","POST"),this.$el.attr("action",this._url),this.$el.attr("enctype","multipart/form-data"),this.$el.append(e)},a.prototype.parseErrorMsg=function(e){if(e&&"SUCCESS"==e.state)return!0;var t=1*e.errCode||0;switch(t){case 29:return"上传的文件太大了,请重新上传";case 31:return"请上传JPGE,JPG,PNG,GIF等格式的图片文件"}return"文件上传失败,请重新上传"},a.prototype.submit=function(){this.ajaxForm.loadState=!0,"function"==typeof this._before&&this._before(),this.$el.submit()};var s=null;a.sharedInstanceUploadFile=function(e){return s||(s=new a(e)),s},a.classInstanceUploadFile=function(e){return new a(e)},e.exports=a}])});
-	//# sourceMappingURL=auxiliary.min.js.map
+	var url = __webpack_require__(42);
+	var sheet = __webpack_require__(43);
+	var isNativeFunction = __webpack_require__(44);
+	var cookie = __webpack_require__(45);
+	var AjaxForm = __webpack_require__(46);
+	var UploadFile = __webpack_require__(48);
+	
+	module.exports = {
+	  'url':url,
+	  'sheet':sheet,
+	  'isNativeFunction':isNativeFunction,
+	  'cookie':cookie,
+	  'AjaxForm':AjaxForm,
+	  'UploadFile':UploadFile
+	}
+
 
 /***/ },
-/* 42 */,
+/* 42 */
+/***/ function(module, exports) {
+
+	/**
+	 * @time 2012年10月26日
+	 * @author icepy
+	 * @info 完成处理URL字符串
+	 *
+	 */
+	
+	'use strict';
+	var urlString = [];
+	var location = window.location;
+	
+	module.exports = {
+		/**
+		 * [parse 处理一个字符串URL]
+		 * @param  {[String]} url [传入一个字符串url]
+		 * @return {[Object]}     [返回一个object对象]
+		 */
+		parse: function(url) {
+			var temp = document.createElement('a');
+			temp.href = url;
+			var result = {
+				"port": temp.port,
+				"protocol": temp.protocol.replace(':', ''),
+				"hash": temp.hash.replace('#', ''),
+				"host": temp.host,
+				"href": temp.href,
+				"hostname": temp.hostname,
+				"pathname": temp.pathname,
+				"search": temp.search,
+				"query": {}
+			};
+			var seg = result.search.replace(/^\?/, '').split('&'),
+				leng = seg.length,
+				i = 0,
+				target;
+			for (; i < leng; i++) {
+				if (!seg[i]) continue;
+				target = seg[i].split('=');
+				result.query[target[0]] = target[1];
+			}
+			temp = null;
+			return result;
+		},
+		/**
+		 * [format 拼接一个完整的url字符串]
+		 * @param  {[String]} url [URL]
+		 * @param  {[Object]} obj [需要拼接的query或者hash参数]
+		 * @return {[String]}     [返回一个完整的URL字符串]
+		 */
+		format: function(url, obj) {
+			var i = 0,
+				query = obj.query,
+				hash = obj.hash;
+			urlString.length = 0;
+			urlString.push(url.lastIndexOf('?') > -1 ? url : url + '?');
+			if (query) {
+				for (var key in query) {
+					var val = query[key]
+					if (!i) {
+						i++;
+						urlString.push(key + '=' + val)
+					} else {
+						urlString.push('&' + key + '=' + val);
+					}
+				}
+			};
+			if (hash) {
+				urlString.push(hash.indexOf('#') > -1 ? hash : '#' + hash);
+			};
+			return urlString.join('');
+		},
+		/**
+		 * [resolve 将参数 to 位置的字符解析到一个绝对路径里]
+		 * @param  {[String]} from [源路径]
+		 * @param  {[String]} to   [将被解析到绝对路径的字符串]
+		 * @return {[String]}      [返回一个绝对路径字符串]
+		 */
+		resolve: function(from, to) {
+			/**
+			 *  路径描述 ./当前路径 ../父路径
+			 */
+			if (/^(.\/)/.test(to)) {
+				to = to.replace(/^(.\/)/, '/');
+			};
+	
+			if (/^(..\/)/.test(to)) {
+				from = from.substr(0, from.lastIndexOf('/'));
+				to = to.replace(/^(..\/)/, '/');
+			};
+			return from + to;
+		},
+		/**
+		 * [extname 返回指定文件名的扩展名称]
+		 * @param  {[String]} p [description]
+		 * @return {[String]}   [description]
+		 */
+		extname: function(p) {
+			var _p = p.split('.');
+			return _p[_p.length - 1] || '';
+		},
+		/**
+		 * [parseSearch 将search参数转换为obj]
+		 * @param  {[type]} query [description]
+		 * @return {[type]}       [description]
+		 */
+		parseSearch:function(query){
+			var _query = {};
+			var seg = query.replace(/^\?/, '').split('&'),
+				leng = seg.length,
+				i = 0,
+				value,
+				target;
+			for (; i < leng; i++) {
+				if (!seg[i]) continue;
+				target = seg[i].split('=');
+				value = target[1];
+				if ((/^\[/.test(value) && /\]$/.test(value)) || (/^{/.test(value) || /\}$/.test(value))) {
+					value = JSON.parse(value);
+				};
+				_query[target[0]] = value;
+			}
+			return _query;
+		}
+	}
+
+
+/***/ },
 /* 43 */
+/***/ function(module, exports) {
+
+	/**
+	 * @time 2012年9月26日
+	 * @author icepy
+	 * @info 新建一个style.sheet对象，来标注新的css规则等
+	 */
+	
+	'use strict';
+	
+	module.exports = sheet();
+	
+	function sheet() {
+	  // 使用style.sheet.insertRule()
+	  var style = document.createElement('style');
+	  style.appendChild(document.createTextNode(''));
+	  document.head.appendChild(style);
+	  return style.sheet;
+	};
+
+
+/***/ },
+/* 44 */
+/***/ function(module, exports) {
+
+	/**
+	 * @time 2012年9月27日
+	 * @author icepy
+	 * @info 判断是否是原生函数
+	 */
+	
+	'use strict';
+	
+	module.exports = isNativeFunction;
+	
+	var toString = Object.prototype.toString;
+	var funToString = Function.prototype.toString;
+	var reConstructor= /^\[object .+?Constructor\]$/;
+	var reNative = RegExp('^' +
+	  String(toString)
+	  .replace(/[.*+?^${}()|[\]\/\\]/g, '\\$&')
+	  .replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+	/**
+	 * [判断一个值或者对象是否为原生函数或对象]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	function isNativeFunction(value) {
+	  var type = typeof value;
+	  return type === 'function' ? reNative.test(funToString.call(value)) : (value && type === 'object' && reConstructor.test(toString.call(value))) || false;
+	}
+
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+	/*
+	    引用`https://github.com/js-cookie/js-cookie` 2.1.0
+	 */
+	
+	'use strict';
+	
+	module.exports = init(function () {});
+	
+	function extend () {
+	  var i = 0;
+	  var result = {};
+	  for (; i < arguments.length; i++) {
+	    var attributes = arguments[ i ];
+	    for (var key in attributes) {
+	      result[key] = attributes[key];
+	    }
+	  }
+	  return result;
+	}
+	
+	function init (converter) {
+	  function api (key, value, attributes) {
+	    var result;
+	
+	    // Write
+	
+	    if (arguments.length > 1) {
+	      attributes = extend({
+	        path: '/'
+	      }, api.defaults, attributes);
+	
+	      if (typeof attributes.expires === 'number') {
+	        var expires = new Date();
+	        expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+	        attributes.expires = expires;
+	      }
+	
+	      try {
+	        result = JSON.stringify(value);
+	        if (/^[\{\[]/.test(result)) {
+	          value = result;
+	        }
+	      } catch (e) {}
+	
+	      if (!converter.write) {
+	        value = encodeURIComponent(String(value))
+	          .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+	      } else {
+	        value = converter.write(value, key);
+	      }
+	
+	      key = encodeURIComponent(String(key));
+	      key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+	      key = key.replace(/[\(\)]/g, escape);
+	
+	      return (document.cookie = [
+	        key, '=', value,
+	        attributes.expires && '; expires=' + attributes.expires.toUTCString(), // use expires attribute, max-age is not supported by IE
+	        attributes.path    && '; path=' + attributes.path,
+	        attributes.domain  && '; domain=' + attributes.domain,
+	        attributes.secure ? '; secure' : ''
+	      ].join(''));
+	    }
+	
+	    // Read
+	
+	    if (!key) {
+	      result = {};
+	    }
+	
+	    // To prevent the for loop in the first place assign an empty array
+	    // in case there are no cookies at all. Also prevents odd result when
+	    // calling "get()"
+	    var cookies = document.cookie ? document.cookie.split('; ') : [];
+	    var rdecode = /(%[0-9A-Z]{2})+/g;
+	    var i = 0;
+	
+	    for (; i < cookies.length; i++) {
+	      var parts = cookies[i].split('=');
+	      var name = parts[0].replace(rdecode, decodeURIComponent);
+	      var cookie = parts.slice(1).join('=');
+	
+	      if (cookie.charAt(0) === '"') {
+	        cookie = cookie.slice(1, -1);
+	      }
+	
+	      try {
+	        cookie = converter.read ?
+	          converter.read(cookie, name) : converter(cookie, name) ||
+	          cookie.replace(rdecode, decodeURIComponent);
+	
+	        if (this.json) {
+	          try {
+	            cookie = JSON.parse(cookie);
+	          } catch (e) {}
+	        }
+	
+	        if (key === name) {
+	          result = cookie;
+	          break;
+	        }
+	
+	        if (!key) {
+	          result[name] = cookie;
+	        }
+	      } catch (e) {}
+	    }
+	
+	    return result;
+	  }
+	
+	  api.get = api.set = api;
+	  api.getJSON = function () {
+	    return api.apply({
+	      json: true
+	    }, [].slice.call(arguments));
+	  };
+	  api.defaults = {};
+	
+	  api.remove = function (key, attributes) {
+	    api(key, '', extend(attributes, {
+	      expires: -1
+	    }));
+	  };
+	
+	  api.withConverter = init;
+	
+	  return api;
+	};
+
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @time 2016年3月3日
+	 * @author  icepy
+	 * @info  跨域模拟Ajax的Form表单
+	 */
+	
+	'use strict';
+	
+	var url = __webpack_require__(42);
+	var uniqueId = __webpack_require__(47);
+	
+	var AjaxForm = function(options){
+		options = options || {};
+		this.$el = typeof options.el === 'string' ? $(options.el) : options.el;
+		this.uid = uniqueId('AjaxForm-');
+		this.loadState = false;
+		this._init();
+	};
+	
+	AjaxForm.prototype._init = function(){
+		var defer = $.Deferred();
+		$.extend(this,defer.promise());
+		this._createIframe();
+		this._addEvent(defer);
+	};
+	
+	AjaxForm.prototype._createIframe = function(){
+		var iframeHTML = '<iframe id="'+this.uid+'" name="'+this.uid+'"  style="display: none;" src="about:blank"></iframe>';
+		this.$el.attr('target',this.uid);
+		this.$el.append(iframeHTML);
+		this._iframe = $('#'+this.uid);
+	};
+	
+	AjaxForm.prototype._addEvent = function(promise){
+		var self = this;
+		this._iframe.on('load',function(){
+			if (self.loadState) {
+				var cw = this.contentWindow;
+				var loc = cw.location;
+				if (loc.href === 'about:blank') {
+					promise.reject(cw);
+				}else{
+					try {//如果后台没有作跨域处理，则需手动触发onComplete
+						var body = this._iframe[0].contentWindow.document.body;
+						innerText = body.innerText;
+						if (!innerText) {
+							innerText = body.innerHTML;
+						};
+						if (innerText) {
+							promise.resolve($.parseJSON(innerText));
+						};
+					} catch (e) {
+						promise.resolve(cw);
+					}
+				};
+				self.loadState = false;
+			};
+		});
+	};
+	
+	AjaxForm.prototype.encrypto = function(secret){
+		var self = this;
+		$.each(secret, function(key, value) {
+			var $item = self.$el.find('[name=' + key + ']');
+			if ($item.length === 0) {
+				$('<input />').attr({
+					type : 'hidden',
+					name : key,
+					value : value
+				}).appendTo(self.$el);
+			} else {
+				$item.val(value);
+			}
+		});
+	};
+	
+	var shared = null;
+	AjaxForm.sharedInstanceAjaxForm = function(element,options){
+		if (!shared) {
+			options = options || {};
+			options.el = element;
+			shared = new AjaxForm(options);
+		}
+		return shared;
+	};
+	AjaxForm.classInstanceAjaxForm = function(element,options){
+		options = options || {};
+		options.el = element;
+		return new AjaxForm(options);
+	};
+	
+	module.exports = AjaxForm;
+
+
+/***/ },
+/* 47 */
+/***/ function(module, exports) {
+
+	
+	module.exports = uniqueId;
+	
+	var idCounter = 0;
+	function uniqueId(prefix) {
+	  var id = ++idCounter + '';
+	  return prefix ? prefix + id : id;
+	};
+
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @time 2016年3月3日
+	 * @author  icepy
+	 * @info  跨域上传图片，只支持iframe的方式
+	 */
+	
+	'use strict';
+	
+	var url = __webpack_require__(42);
+	var AjaxForm = __webpack_require__(46);
+	var uniqueId = __webpack_require__(47);
+	
+	var UploadFile = function(options){
+		var self = this;
+		this.$el = typeof options.el === 'string' ? $(options.el) : options.el;
+		this.uid = uniqueId('UploadFile-');
+		this.options = options;
+		this._data = options.data || {};
+		this._filename = options.filename || 'image';
+		this._url = options.url;
+		if (!this._url) {
+			console.warn('配置上传URL');
+			return;
+		};
+		this._init();
+	};
+	
+	UploadFile.prototype._init = function(){
+		this._createElement();
+	};
+	
+	UploadFile.prototype._createElement = function(){
+		var inputs = '';
+		for(var name in this._data){
+			var value = this._data[name];
+			var type = Object.prototype.toString.call(value);
+			if (type === '[object Object]' || type === '[object Array]') {
+				value = JSON.stringify(value);
+			};
+			inputs += '<input type="hidden" name="'+name+'" value=\''+value+'\'/>';
+		};
+		inputs += '<input type="file" class="opacity0 upload-file '+this.options.className+'" name="'+this._filename+'"  />';
+		this.$el.attr('method','POST');
+		this.$el.attr('action',this._url);
+		this.$el.attr('enctype','multipart/form-data');
+		this.$el.append(inputs);
+	};
+	
+	//错误码消息映射
+	UploadFile.prototype.parseErrorMsg = function(res){
+		if(res && res.state == 'SUCCESS'){
+			return true;
+		}
+		var code = res.errCode *1 || 0;
+		switch(code){
+			case 29:
+				return '上传的文件太大了,请重新上传';
+			case 31:
+				return '请上传JPGE,JPG,PNG,GIF等格式的图片文件';
+		}
+		return '文件上传失败,请重新上传';
+	};
+	
+	/**
+	 * [submit 提交文件]
+	 * @return {[type]} [description]
+	 */
+	UploadFile.prototype.submit = function(){
+		this.ajaxForm.loadState = true;
+		if (typeof this._before === 'function' ) {
+			this._before();
+		};
+		var defer = $.Deferred();
+		this.ajaxForm = AjaxForm.classInstanceAjaxForm(this.$el,{
+			type:'img'
+		});
+		this.ajaxForm.done(function(cw){
+			var loc = cw.location;
+			var search = decodeURIComponent(loc.search);
+			var query = url.parseSearch(search);
+			defer.resolve(query);
+		});
+		this.ajaxForm.fail(function(){
+			defer.reject(this);
+		});
+		this.$el.submit();
+		return defer.promise();
+	};
+	
+	var shared = null;
+	UploadFile.sharedInstanceUploadFile = function(options){
+		if (!shared) {
+			shared = new UploadFile(options);
+		}
+		return shared;
+	};
+	UploadFile.classInstanceUploadFile = function(options){
+		return new UploadFile(options);
+	};
+	
+	module.exports = UploadFile;
+
+
+/***/ },
+/* 49 */,
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1461,11 +2043,11 @@ webpackJsonp([2],[
 	
 	var $ = __webpack_require__(1);
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var storage = base.storage;
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
 	
 	var Model = BaseModel.extend({
@@ -1569,13 +2151,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 44 */
+/* 51 */
 /***/ function(module, exports) {
 
-	var config = {"scheme":"release","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
+	var config = {"scheme":"alpha","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
 
 /***/ },
-/* 45 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1585,12 +2167,12 @@ webpackJsonp([2],[
 	var Auxiliary = __webpack_require__(41);
 	var _ = __webpack_require__(27);
 	var BaseModel = base.Model;
-	var Dialog = __webpack_require__(46);
-	var loginBox = __webpack_require__(50);
+	var Dialog = __webpack_require__(53);
+	var loginBox = __webpack_require__(57);
 	var cookie = Auxiliary.cookie;
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var domains = Config.domains;
-	var checkEmailTemplate = __webpack_require__(54);
+	var checkEmailTemplate = __webpack_require__(61);
 	var checkEmailHTML = checkEmailTemplate.replace('{homeSite}', domains.homeSite);
 	var loginbox = loginBox().dialog;
 	
@@ -1867,7 +2449,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 46 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1884,7 +2466,7 @@ webpackJsonp([2],[
 	'use strict';
 	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
-	var Mask = __webpack_require__(47);
+	var Mask = __webpack_require__(54);
 	var mask;
 	var uid = 999;
 	var _ = __webpack_require__(27);
@@ -1928,8 +2510,8 @@ webpackJsonp([2],[
 	  },
 	  // 当模板挂载到元素之后
 	  afterMount: function () {
-	    this.closeTemp = __webpack_require__(48);
-	    this.titleTemp = __webpack_require__(49);
+	    this.closeTemp = __webpack_require__(55);
+	    this.titleTemp = __webpack_require__(56);
 	  },
 	  // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
 	  ready: function () {
@@ -2073,7 +2655,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 47 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -2143,19 +2725,19 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 48 */
+/* 55 */
 /***/ function(module, exports) {
 
-	module.exports = "<!-- <a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}}\">{{if closeText}}{{closeText}}{{/if}}</a> -->\n{{if closeClass === 'editor_bg_close_x'}}\n<a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}} icons am-yyt-close close-white\"></a>\n{{else}}\n<a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}}\"></a>\n{{/if}}\n"
+	module.exports = "<!-- <a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}}\">{{if closeText}}{{closeText}}{{/if}}</a> -->\r\n{{if closeClass === 'editor_bg_close_x'}}\r\n<a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}} icons am-yyt-close close-white\"></a>\r\n{{else}}\r\n<a  href=\"\" id=\"{{id}}\" class=\"{{closeClass}}\"></a>\r\n{{/if}}\r\n"
 
 /***/ },
-/* 49 */
+/* 56 */
 /***/ function(module, exports) {
 
-	module.exports = "<h3 class=\"dialog_title J_title\">{{title}}</h3>\n"
+	module.exports = "<h3 class=\"dialog_title J_title\">{{title}}</h3>\r\n"
 
 /***/ },
-/* 50 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2168,13 +2750,13 @@ webpackJsonp([2],[
 	
 	var Auxiliary = __webpack_require__(41);
 	// Diglog类
-	var Dialog = __webpack_require__(46);
+	var Dialog = __webpack_require__(53);
 	var AjaxForm = Auxiliary.AjaxForm;
 	var url = Auxiliary.url;
-	var pwdencrypt = __webpack_require__(51);
-	var loginBoxTemp = __webpack_require__(52);
+	var pwdencrypt = __webpack_require__(58);
+	var loginBoxTemp = __webpack_require__(59);
 	var tplEng = __webpack_require__(31);
-	var secret = __webpack_require__(53);
+	var secret = __webpack_require__(60);
 	// 邮件
 	var EMAIL_PATTERN =
 	  /^([a-zA-Z0-9_\.\-\+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -2231,7 +2813,7 @@ webpackJsonp([2],[
 	}
 	// 初始化登录表单
 	function _initForm() {
-	  var UserModel = __webpack_require__(45);
+	  var UserModel = __webpack_require__(52);
 	  errorinfo = loginBoxForm.find('.errorinfo');
 	  email = loginBoxForm.find('[name=email]');
 	  password = loginBoxForm.find('.pwd');
@@ -2393,7 +2975,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 51 */
+/* 58 */
 /***/ function(module, exports) {
 
 	function yytcrypt(o) {
@@ -2603,13 +3185,13 @@ webpackJsonp([2],[
 	module.exports = yytcrypt;
 
 /***/ },
-/* 52 */
+/* 59 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"loginbox\">\n    <div class=\"external\">\n        <p class=\"title\">使用合作账号登录<span>(推荐)</span></p>\n        <ul>\n            <li>\n                <a href=\"{{url}}/api/login/sina-auth\" target=\"_blank\" class=\"weibo\" hidefocus>微博帐号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/qq-auth\" target=\"_blank\" class=\"qq\" hidefocus>QQ帐号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/renren-auth\" target=\"_blank\" class=\"renren\" hidefocus>人人账号</a>\n            </li>\n            <li>\n                <a href=\"{{url}}/api/login/baidu-auth\" target=\"_blank\" class=\"baidu\" hidefocus>百度帐号</a>\n            </li>\n        </ul>\n        <div class=\"loginbox-placehold\"></div>\n        <p class=\"text\">快捷登录，无需注册</p>\n        <p class=\"text\">与你的朋友分享你的爱！</p>\n    </div>\n    <div class=\"site\">\n        <p class=\"title\">音悦Tai账号登录</p>\n        <form id=\"loginBoxForm\" action=\"https://login.yinyuetai.com/login-ajax\" method=\"post\">\n            <p class=\"errorinfo\">错误信息提示</p>\n            <div class=\"email focuss\">\n                <input type=\"text\" name=\"email\" placeholder=\"您的邮箱地址或绑定手机\"/>\n            </div>\n            <div class=\"password\">\n                <input type=\"password\" class=\"pwd\" placeholder=\"请输入密码\"/>\n            </div>\n            <div id=\"captcha\"></div>\n            <div>\n                <p class=\"autologin\"><input type=\"checkbox\" id=\"autocheckbox\" name=\"autologin\" checked hidefocus/><label for=\"autocheckbox\">下次自动登录</label></p>\n                <a class=\"forgot\" href=\"{{url}}/forgot-password\" target=\"_blank\" hidefocus>忘记密码</a>\n            </div>\n            <div>\n                <input class=\"submit\" type=\"submit\" hidefocus/>\n                <p class=\"reg\">还没有音悦Tai账号？<a href=\"{{url}}/register\" target=\"_blank\" hidefocus>立即注册！</a></p>\n            </div>\n        </form>\n    </div>\n</div>"
+	module.exports = "<div class=\"loginbox\">\r\n    <div class=\"external\">\r\n        <p class=\"title\">使用合作账号登录<span>(推荐)</span></p>\r\n        <ul>\r\n            <li>\r\n                <a href=\"{{url}}/api/login/sina-auth\" target=\"_blank\" class=\"weibo\" hidefocus>微博帐号</a>\r\n            </li>\r\n            <li>\r\n                <a href=\"{{url}}/api/login/qq-auth\" target=\"_blank\" class=\"qq\" hidefocus>QQ帐号</a>\r\n            </li>\r\n            <li>\r\n                <a href=\"{{url}}/api/login/renren-auth\" target=\"_blank\" class=\"renren\" hidefocus>人人账号</a>\r\n            </li>\r\n            <li>\r\n                <a href=\"{{url}}/api/login/baidu-auth\" target=\"_blank\" class=\"baidu\" hidefocus>百度帐号</a>\r\n            </li>\r\n        </ul>\r\n        <div class=\"loginbox-placehold\"></div>\r\n        <p class=\"text\">快捷登录，无需注册</p>\r\n        <p class=\"text\">与你的朋友分享你的爱！</p>\r\n    </div>\r\n    <div class=\"site\">\r\n        <p class=\"title\">音悦Tai账号登录</p>\r\n        <form id=\"loginBoxForm\" action=\"https://login.yinyuetai.com/login-ajax\" method=\"post\">\r\n            <p class=\"errorinfo\">错误信息提示</p>\r\n            <div class=\"email focuss\">\r\n                <input type=\"text\" name=\"email\" placeholder=\"您的邮箱地址或绑定手机\"/>\r\n            </div>\r\n            <div class=\"password\">\r\n                <input type=\"password\" class=\"pwd\" placeholder=\"请输入密码\"/>\r\n            </div>\r\n            <div id=\"captcha\"></div>\r\n            <div>\r\n                <p class=\"autologin\"><input type=\"checkbox\" id=\"autocheckbox\" name=\"autologin\" checked hidefocus/><label for=\"autocheckbox\">下次自动登录</label></p>\r\n                <a class=\"forgot\" href=\"{{url}}/forgot-password\" target=\"_blank\" hidefocus>忘记密码</a>\r\n            </div>\r\n            <div>\r\n                <input class=\"submit\" type=\"submit\" hidefocus/>\r\n                <p class=\"reg\">还没有音悦Tai账号？<a href=\"{{url}}/register\" target=\"_blank\" hidefocus>立即注册！</a></p>\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
-/* 53 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	function hex_y(a) {
@@ -2805,13 +3387,13 @@ webpackJsonp([2],[
 	};
 
 /***/ },
-/* 54 */
+/* 61 */
 /***/ function(module, exports) {
 
-	module.exports = "<div style=\"padding: 20px 30px;\">\n  <p>您好像还没有进行邮箱验证。</p>\n  <p>为不影响部分功能的使用，请先进行\n    <a href=\"{homeSite}/settings/bind\" target=\"_blank\" class=\"special f14\">邮箱验证</a>\n  </p>\n</div>\n"
+	module.exports = "<div style=\"padding: 20px 30px;\">\r\n  <p>您好像还没有进行邮箱验证。</p>\r\n  <p>为不影响部分功能的使用，请先进行\r\n    <a href=\"{homeSite}/settings/bind\" target=\"_blank\" class=\"special f14\">邮箱验证</a>\r\n  </p>\r\n</div>\r\n"
 
 /***/ },
-/* 55 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2862,7 +3444,7 @@ webpackJsonp([2],[
 	};
 	
 	confirm.getHTML = function () {
-	  return __webpack_require__(56);
+	  return __webpack_require__(63);
 	};
 	
 	confirm.bindEvent = function (html, okFn, cancelFn) {
@@ -2919,13 +3501,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 56 */
+/* 63 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"UIConfigWrap\" class=\"shadow_screen\">\n    <div class=\"shadow\"></div>\n    <div class=\"edit_annmoucement_con\" style=\"margin-bottom: 16px; width: 400px;margin-left:-200px;\">\n        <h2 class=\"edit_title\"><span class=\"title\" id=\"UIConfirmTitle\"><%=title%></span> <span class=\"close icons am-yyt-close close-black UIConfirmClose\"></span></h2>\n        <div class=\"editCon\" style=\"\">\n            <div class=\"content\" style=\"padding:16px; font-size: 14px;\"><%=content%></div>\n            <p class=\"btn-wrap am-margin-top\" >\n                <a style=\"display: <%= okBtn?'inline-block':'none'%>;\" id=\"UIConfirmOk\" href=\"javascript:;\" class=\"boderRadAll_5 submit active am-margin-right\">确定</a>\n                <a style=\"display: <%= cancelBtn?'inline-block':'none'%>;\" href=\"javascript:;\" class=\"boderRadAll_5 cancel UIConfirmClose am-margin-left\">取消</a>\n            </p>\n        </div>\n    </div>\n</div>\n"
+	module.exports = "<div id=\"UIConfigWrap\" class=\"shadow_screen\">\r\n    <div class=\"shadow\"></div>\r\n    <div class=\"edit_annmoucement_con\" style=\"margin-bottom: 16px; width: 400px;margin-left:-200px;\">\r\n        <h2 class=\"edit_title\"><span class=\"title\" id=\"UIConfirmTitle\"><%=title%></span> <span class=\"close icons am-yyt-close close-black UIConfirmClose\"></span></h2>\r\n        <div class=\"editCon\" style=\"\">\r\n            <div class=\"content\" style=\"padding:16px; font-size: 14px;\"><%=content%></div>\r\n            <p class=\"btn-wrap am-margin-top\" >\r\n                <a style=\"display: <%= okBtn?'inline-block':'none'%>;\" id=\"UIConfirmOk\" href=\"javascript:;\" class=\"boderRadAll_5 submit active am-margin-right\">确定</a>\r\n                <a style=\"display: <%= cancelBtn?'inline-block':'none'%>;\" href=\"javascript:;\" class=\"boderRadAll_5 cancel UIConfirmClose am-margin-left\">取消</a>\r\n            </p>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ },
-/* 57 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2936,7 +3518,7 @@ webpackJsonp([2],[
 	
 	'use strict';
 	
-	var IMModel = __webpack_require__(43);
+	var IMModel = __webpack_require__(50);
 	var imModel = IMModel.sharedInstanceIMModel();
 	
 	module.exports = {
@@ -2954,18 +3536,18 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -2991,12 +3573,12 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */
 /***/ function(module, exports) {
 
 	/**
@@ -3265,7 +3847,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 70 */
+/* 77 */
 /***/ function(module, exports) {
 
 	
@@ -3462,10 +4044,10 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -3481,9 +4063,9 @@ webpackJsonp([2],[
 	
 	'use strict';
 	var shared = null;
-	var dialogTemp = __webpack_require__(75);
-	var Dialog = __webpack_require__(46);
-	var Helper = __webpack_require__(76);
+	var dialogTemp = __webpack_require__(82);
+	var Dialog = __webpack_require__(53);
+	var Helper = __webpack_require__(83);
 	
 	var UploadFileDialog = function (options) {
 	  var self = this;
@@ -3546,13 +4128,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 75 */
+/* 82 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"shadow\"></div>\n<div class=\"edit_Bg_form_x\">\n\t<div class=\"edit_title\">\n\t\t<span class=\"upload-title\">背景图设置</span>\n\t\t<span class=\"upload-status upload-image-state\"></span>\n\t</div>\n\t<div class=\"formCon clearfix\">\n\t\t<div class=\"imgBox fl\">\n\t\t\t<img src=\"\" alt=\"\" width=\"100%\" height=\"100%\"  style=\"display: none;\" class=\"imgboxFile\">\n\t\t</div>\n\t\t<div class=\"formBox fl\">\n\t\t\t<div class=\"pseudo-uploadBtn am-btn-red boderRadAll_3\">\n\t\t\t\t<span class=\"input-text\">选择图片</span>\n\t\t\t\t<form class=\"upload-form\">\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<p>\n\t\t\t\t支持5M以内的gif、jpg、jpge、png图片上传<br>\n\t\t\t\t<b style=\"color:#ff6666;\">因内容审核，上传后不可修改!<b>\n\t\t\t</p>\n\t\t\t<div class=\"submit am-btn-red boderRadAll_3\">保存</div>\n\t\t</div>\n\t</div>\n</div>\n"
+	module.exports = "<div class=\"shadow\"></div>\r\n<div class=\"edit_Bg_form_x\">\r\n\t<div class=\"edit_title\">\r\n\t\t<span class=\"upload-title\">背景图设置</span>\r\n\t\t<span class=\"upload-status upload-image-state\"></span>\r\n\t</div>\r\n\t<div class=\"formCon clearfix\">\r\n\t\t<div class=\"imgBox fl\">\r\n\t\t\t<img src=\"\" alt=\"\" width=\"100%\" height=\"100%\"  style=\"display: none;\" class=\"imgboxFile\">\r\n\t\t</div>\r\n\t\t<div class=\"formBox fl\">\r\n\t\t\t<div class=\"pseudo-uploadBtn am-btn-red boderRadAll_3\">\r\n\t\t\t\t<span class=\"input-text\">选择图片</span>\r\n\t\t\t\t<form class=\"upload-form\">\r\n\r\n\t\t\t\t</form>\r\n\t\t\t</div>\r\n\t\t\t<p>\r\n\t\t\t\t支持5M以内的gif、jpg、jpge、png图片上传<br>\r\n\t\t\t\t<b style=\"color:#ff6666;\">因内容审核，上传后不可修改!<b>\r\n\t\t\t</p>\r\n\t\t\t<div class=\"submit am-btn-red boderRadAll_3\">保存</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n"
 
 /***/ },
-/* 76 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -3574,7 +4156,7 @@ webpackJsonp([2],[
 	
 	var uploadIng = '正在上传';
 	var uploadDone = '上传完成!';
-	var msgBox = __webpack_require__(69);
+	var msgBox = __webpack_require__(76);
 	var loc = window.location;
 	var View = BaseView.extend({
 	  events: { // 监听事件
@@ -3668,19 +4250,12 @@ webpackJsonp([2],[
 	  return shared;
 	};
 	View.fetchDialogTemplate = function () {
-	  return __webpack_require__(75);
+	  return __webpack_require__(82);
 	};
 	module.exports = View;
 
 
 /***/ },
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
 /* 84 */,
 /* 85 */,
 /* 86 */,
@@ -3699,11 +4274,18 @@ webpackJsonp([2],[
 /* 99 */,
 /* 100 */,
 /* 101 */,
-/* 102 */
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var base = __webpack_require__(28);
-	var LoginUserView = __webpack_require__(103);
+	var LoginUserView = __webpack_require__(110);
 	var BaseView = base.View;
 	
 	var View = BaseView.extend({
@@ -3743,7 +4325,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 103 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3752,16 +4334,16 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	var storage = base.storage;
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var loginBox = __webpack_require__(50);
-	var sginHTML = __webpack_require__(104);
-	var loginedTemp = __webpack_require__(105);
+	var loginBox = __webpack_require__(57);
+	var sginHTML = __webpack_require__(111);
+	var loginedTemp = __webpack_require__(112);
 	var win = window;
 	var location = win.location;
-	var IMModel = __webpack_require__(43);
+	var IMModel = __webpack_require__(50);
 	var imModel = IMModel.sharedInstanceIMModel();
-	var config = __webpack_require__(44);
+	var config = __webpack_require__(51);
 	var View = BaseView.extend({
 	  el: '#loginUser',
 	  events: {
@@ -3912,25 +4494,18 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 104 */
+/* 111 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"PcMsg fl\">\n    <a class=\"user-login\" href=\"#\" id=\"login\">登陆</a>\n</div>"
+	module.exports = "<div class=\"PcMsg fl\">\r\n    <a class=\"user-login\" href=\"#\" id=\"login\">登陆</a>\r\n</div>"
 
 /***/ },
-/* 105 */
+/* 112 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"avator fl\">\n    <img class=\"am-circle\" style=\"width: 40px; height: 40px;\" src=\"{{bigheadImg}}\" alt=\"用户头像\">\n</div>\n<div class=\"loginMsg fl hoverMenu\">\n    <a class=\"user-name show-drop-menu\" href=\"#\">{{userName}}<span></span></a>\n    <ul class=\"pcNav hoverMenu\">\n        <li><a href=\"anchor-setting.html\">个人中心</a></li>\n        <li><span class=\"header-logout\" id=\"logout\">退出</span></li>\n    </ul>\n</div>\n"
+	module.exports = "<div class=\"avator fl\">\r\n    <img class=\"am-circle\" style=\"width: 40px; height: 40px;\" src=\"{{bigheadImg}}\" alt=\"用户头像\">\r\n</div>\r\n<div class=\"loginMsg fl hoverMenu\">\r\n    <a class=\"user-name show-drop-menu\" href=\"#\">{{userName}}<span></span></a>\r\n    <ul class=\"pcNav hoverMenu\">\r\n        <li><a href=\"anchor-setting.html\">个人中心</a></li>\r\n        <li><span class=\"header-logout\" id=\"logout\">退出</span></li>\r\n    </ul>\r\n</div>\r\n"
 
 /***/ },
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
 /* 113 */,
 /* 114 */,
 /* 115 */,
@@ -3942,7 +4517,14 @@ webpackJsonp([2],[
 /* 121 */,
 /* 122 */,
 /* 123 */,
-/* 124 */
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3951,19 +4533,19 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	var storage = base.storage;
-	var UserModel = __webpack_require__(45);
-	var TopBarView = __webpack_require__(102);
-	var UploadFileDialog = __webpack_require__(74);
+	var UserModel = __webpack_require__(52);
+	var TopBarView = __webpack_require__(109);
+	var UploadFileDialog = __webpack_require__(81);
 	var user = UserModel.sharedInstanceUserModel();
-	var msgBox = __webpack_require__(69);
-	var auth = __webpack_require__(57);
-	var IMModel = __webpack_require__(43);
+	var msgBox = __webpack_require__(76);
+	var auth = __webpack_require__(64);
+	var IMModel = __webpack_require__(50);
 	var imModel = IMModel.sharedInstanceIMModel();
-	var UpdateBgModel = __webpack_require__(125);
-	var ProfileView = __webpack_require__(126);
-	var EditProfileView = __webpack_require__(128);
-	var UpdatePasswordView = __webpack_require__(131);
-	var PageContentView = __webpack_require__(133);
+	var UpdateBgModel = __webpack_require__(132);
+	var ProfileView = __webpack_require__(133);
+	var EditProfileView = __webpack_require__(135);
+	var UpdatePasswordView = __webpack_require__(138);
+	var PageContentView = __webpack_require__(140);
 	
 	var View = BaseView.extend({
 	  el: '#settingContent',
@@ -3971,7 +4553,7 @@ webpackJsonp([2],[
 	    'click #editBgBtn': 'editBgHandler'
 	  },
 	  rawLoader: function () {
-	    return __webpack_require__(176);
+	    return __webpack_require__(183);
 	  },
 	  context: function (args) {
 	    console.log(args);
@@ -4164,13 +4746,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 125 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var Model = BaseModel.extend({
@@ -4195,7 +4777,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 126 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 顶部用户信息
@@ -4205,12 +4787,12 @@ webpackJsonp([2],[
 	var _ = __webpack_require__(27);
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
-	var profileTemp = __webpack_require__(127);
-	var IMModel = __webpack_require__(43);
+	var profileTemp = __webpack_require__(134);
+	var IMModel = __webpack_require__(50);
 	var imModel = IMModel.sharedInstanceIMModel();
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var UserInfoModel = __webpack_require__(63);
+	var UserInfoModel = __webpack_require__(70);
 	
 	var View = BaseView.extend({
 	  el: '.userInfoWrap',
@@ -4300,13 +4882,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 127 */
+/* 134 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"anchor-info-wrap\">\n\t<div class=\"am-circle avatar-wrap center\">\n\t\t<img id=\"headAvatar\" src=\"{{bigheadImg}}\" class=\"avatar am-circle\">\n\t</div>\n\t<div class=\"name-wrap center am-margin-top-sm am-vertical-align\">\n\t\t<span id=\"nickName\" class=\"name white am-vertical-align-middle\">{{nickName}}</span>\n\t\t<!-- <i class=\"icon-gender male am-vertical-align-middle am-margin-left-sm\"></i> -->\n\t</div>\n\t<div class=\"basic-wrap am-margin-top-lg\">\n\t\t<div class=\"center\">\n\t\t\t{{if anchor}}\n\t\t\t<span id='createCount' class=\"create am-margin-right-sm\">主持的直播:<span class=\"white big\">{{anchor.liveCount}}</span>场</span>\n\t\t\t{{/if}}\n\t\t\t<span class=\"watch am-margin-right-sm\">观看直播:<span id=\"txtLive\" class=\"white big\">0</span>次</span>\n\t\t\t<span class=\"score\">积分:<span id=\"txtScore\" class=\"white big\">0</span></span>\n\t\t</div>\n\t</div>\n\t{{if anchor}}\n\t<div class=\"tags-wrap center\">标签:\n\t\t<div class=\"list\" id=\"tagsWrap\">\n\t\t\t{{each anchor.tags as item}}\n\t\t\t<span>{{item}}</span> {{/each}}\n\t\t</div>\n\t</div>\n\t{{/if}}\n</div>\n"
+	module.exports = "<div class=\"anchor-info-wrap\">\r\n\t<div class=\"am-circle avatar-wrap center\">\r\n\t\t<img id=\"headAvatar\" src=\"{{bigheadImg}}\" class=\"avatar am-circle\">\r\n\t</div>\r\n\t<div class=\"name-wrap center am-margin-top-sm am-vertical-align\">\r\n\t\t<span id=\"nickName\" class=\"name white am-vertical-align-middle\">{{nickName}}</span>\r\n\t\t<!-- <i class=\"icon-gender male am-vertical-align-middle am-margin-left-sm\"></i> -->\r\n\t</div>\r\n\t<div class=\"basic-wrap am-margin-top-lg\">\r\n\t\t<div class=\"center\">\r\n\t\t\t{{if anchor}}\r\n\t\t\t<span id='createCount' class=\"create am-margin-right-sm\">主持的直播:<span class=\"white big\">{{anchor.liveCount}}</span>场</span>\r\n\t\t\t{{/if}}\r\n\t\t\t<span class=\"watch am-margin-right-sm\">观看直播:<span id=\"txtLive\" class=\"white big\">0</span>次</span>\r\n\t\t\t<span class=\"score\">积分:<span id=\"txtScore\" class=\"white big\">0</span></span>\r\n\t\t</div>\r\n\t</div>\r\n\t{{if anchor}}\r\n\t<div class=\"tags-wrap center\">标签:\r\n\t\t<div class=\"list\" id=\"tagsWrap\">\r\n\t\t\t{{each anchor.tags as item}}\r\n\t\t\t<span>{{item}}</span> {{/each}}\r\n\t\t</div>\r\n\t</div>\r\n\t{{/if}}\r\n</div>\r\n"
 
 /***/ },
-/* 128 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4318,13 +4900,13 @@ webpackJsonp([2],[
 	var _ = __webpack_require__(27);
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
-	var UserUpdateModel = __webpack_require__(129);
-	var UserModel = __webpack_require__(45);
+	var UserUpdateModel = __webpack_require__(136);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
 	var Auxiliary = __webpack_require__(41);
 	var UploadFile = Auxiliary.UploadFile;
-	var msgBox = __webpack_require__(69);
-	var IMModel = __webpack_require__(43);
+	var msgBox = __webpack_require__(76);
+	var IMModel = __webpack_require__(50);
 	var imModel = IMModel.sharedInstanceIMModel();
 	
 	var View = BaseView.extend({
@@ -4336,7 +4918,7 @@ webpackJsonp([2],[
 	    'click #btnSave': 'saveuserinfo'
 	  },
 	  rawLoader: function () {
-	    return __webpack_require__(130);
+	    return __webpack_require__(137);
 	  },
 	  context: function (args) {
 	    console.log(args);
@@ -4555,13 +5137,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 129 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var Model = BaseModel.extend({
@@ -4586,13 +5168,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 130 */
+/* 137 */
 /***/ function(module, exports) {
 
-	module.exports = "<ul>\n    <li class=\"uploadAvator\">\n        <span class=\"fl PiTitle\"><i>*</i>头像：</span>\n        <div class=\"fl\">\n            <img id=\"imgUserAvatar\" data-src=\"../img/personInfo-uploadBg.png\" src=\"../img/personInfo-uploadBg.png\"\n                 alt=\"\" class=\"fl avatorNow\">\n            <div class=\"uploadform fl\">\n                <div class=\"am-btn-red boderRadAll_3\">\n                    <span id=\"btnUploadAvatar\">上传图片</span>\n                    <form id=\"userAvatarForm\" class=\"upload-form\"></form>\n                </div>\n                <p>支持5M以内的gif、jpg、jpeg、png图片上传</p>\n            </div>\n            <input id=\"txtImg\" type=\"hidden\" value=\"\">\n        </div>\n    </li>\n    <li class=\"Inp_Pc_name\">\n        <span class=\"fl PiTitle\"><i>*</i>昵称：</span>\n        <div class=\"fl\">\n            <input id=\"txtName\" placeholder=\"昵称\" class=\"userInfoChanged\" maxlength=\"30\" type=\"text\">\n            <span style=\"display: none;\" class=\"tips\"><i class=\"name-err-tip\"></i> 你的名字里有敏感词，请重新输入 </span>\n        </div>\n    </li>\n    <li class=\"tags\">\n        <span class=\"fl PiTitle\"><i>*</i>标签：</span>\n        <div class=\"fl\">\n            <input id=\"txtTags\" class=\"userInfoChanged\" type=\"text\" placeholder=\"(多个标签中间请用逗号隔开)\">\n            <div class=\"light-color am-margin-top\">多个标签中间请用逗号隔开,每个标签最多5个字,最多拥有5个标签.</div>\n        </div>\n    </li>\n</ul>\n<div class=\" am-margin-top-xl am-padding-top\">\n    <button id=\"btnSave\" class=\"m_disabled am-center am-btn am-btn-red boderRadAll_3\">保存</button>\n</div>\n"
+	module.exports = "<ul>\r\n    <li class=\"uploadAvator\">\r\n        <span class=\"fl PiTitle\"><i>*</i>头像：</span>\r\n        <div class=\"fl\">\r\n            <img id=\"imgUserAvatar\" data-src=\"../img/personInfo-uploadBg.png\" src=\"../img/personInfo-uploadBg.png\"\r\n                 alt=\"\" class=\"fl avatorNow\">\r\n            <div class=\"uploadform fl\">\r\n                <div class=\"am-btn-red boderRadAll_3\">\r\n                    <span id=\"btnUploadAvatar\">上传图片</span>\r\n                    <form id=\"userAvatarForm\" class=\"upload-form\"></form>\r\n                </div>\r\n                <p>支持5M以内的gif、jpg、jpeg、png图片上传</p>\r\n            </div>\r\n            <input id=\"txtImg\" type=\"hidden\" value=\"\">\r\n        </div>\r\n    </li>\r\n    <li class=\"Inp_Pc_name\">\r\n        <span class=\"fl PiTitle\"><i>*</i>昵称：</span>\r\n        <div class=\"fl\">\r\n            <input id=\"txtName\" placeholder=\"昵称\" class=\"userInfoChanged\" maxlength=\"30\" type=\"text\">\r\n            <span style=\"display: none;\" class=\"tips\"><i class=\"name-err-tip\"></i> 你的名字里有敏感词，请重新输入 </span>\r\n        </div>\r\n    </li>\r\n    <li class=\"tags\">\r\n        <span class=\"fl PiTitle\"><i>*</i>标签：</span>\r\n        <div class=\"fl\">\r\n            <input id=\"txtTags\" class=\"userInfoChanged\" type=\"text\" placeholder=\"(多个标签中间请用逗号隔开)\">\r\n            <div class=\"light-color am-margin-top\">多个标签中间请用逗号隔开,每个标签最多5个字,最多拥有5个标签.</div>\r\n        </div>\r\n    </li>\r\n</ul>\r\n<div class=\" am-margin-top-xl am-padding-top\">\r\n    <button id=\"btnSave\" class=\"m_disabled am-center am-btn am-btn-red boderRadAll_3\">保存</button>\r\n</div>\r\n"
 
 /***/ },
-/* 131 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4600,7 +5182,7 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	var Auxiliary = __webpack_require__(41);
-	var msgBox = __webpack_require__(69);
+	var msgBox = __webpack_require__(76);
 	var AjaxForm = Auxiliary.AjaxForm;
 	var url = Auxiliary.url;
 	var View = BaseView.extend({
@@ -4611,7 +5193,7 @@ webpackJsonp([2],[
 	    'keyup #txtNewPwd': 'checkNewPwd'
 	  },
 	  rawLoader: function () {
-	    return __webpack_require__(132);
+	    return __webpack_require__(139);
 	  },
 	  context: function (args) {
 	    console.log(args);
@@ -4723,13 +5305,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 132 */
+/* 139 */
 /***/ function(module, exports) {
 
-	module.exports = "<form id=\"formPwd\" action=\"http://i.yinyuetai.com/i/profile/update-password\" method=\"post\">\n    <ul>\n        <li class=\"Inp_Pc_name\">\n            <span class=\"fl PiTitle\"><i class=\"am-margin-right-sm\">*</i>旧密码：</span>\n            <div class=\"fl\">\n                <input id=\"txtOldPwd\" name=\"oldPassword\" placeholder=\"请输入旧密码\" type=\"password\">\n            </div>\n        </li>\n        <li class=\"Inp_Pc_name\">\n            <span class=\"fl PiTitle\"><i class=\"am-margin-right-sm\">*</i>新密码：</span>\n            <div class=\"fl\">\n                <input id=\"txtNewPwd\" name=\"newPassword\" placeholder=\"请输入新密码\" type=\"password\"><span id=\"tipPwdErr\" style=\"display: none;color:red; padding-left: 5px;\">新密码不能跟旧密码一致</span>\n            </div>\n        </li>\n        <li class=\"Inp_Pc_name\">\n            <span class=\"fl PiTitle\"><i class=\"am-margin-right-sm\">*</i>确认新密码：</span>\n            <div class=\"fl\">\n                <input id=\"txtConfirmPwd\" name=\"newPasswordRepeat\" placeholder=\"请再次输入新密码\" type=\"password\">\n            </div>\n        </li>\n    </ul>\n</form>\n<div class=\"am-margin-top-xl am-padding-top\">\n    <button id=\"btnPwdSave\" class=\"am-center am-btn am-btn-red boderRadAll_3\">保存</button>\n</div>\n"
+	module.exports = "<form id=\"formPwd\" action=\"http://i.yinyuetai.com/i/profile/update-password\" method=\"post\">\r\n    <ul>\r\n        <li class=\"Inp_Pc_name\">\r\n            <span class=\"fl PiTitle\"><i class=\"am-margin-right-sm\">*</i>旧密码：</span>\r\n            <div class=\"fl\">\r\n                <input id=\"txtOldPwd\" name=\"oldPassword\" placeholder=\"请输入旧密码\" type=\"password\">\r\n            </div>\r\n        </li>\r\n        <li class=\"Inp_Pc_name\">\r\n            <span class=\"fl PiTitle\"><i class=\"am-margin-right-sm\">*</i>新密码：</span>\r\n            <div class=\"fl\">\r\n                <input id=\"txtNewPwd\" name=\"newPassword\" placeholder=\"请输入新密码\" type=\"password\"><span id=\"tipPwdErr\" style=\"display: none;color:red; padding-left: 5px;\">新密码不能跟旧密码一致</span>\r\n            </div>\r\n        </li>\r\n        <li class=\"Inp_Pc_name\">\r\n            <span class=\"fl PiTitle\"><i class=\"am-margin-right-sm\">*</i>确认新密码：</span>\r\n            <div class=\"fl\">\r\n                <input id=\"txtConfirmPwd\" name=\"newPasswordRepeat\" placeholder=\"请再次输入新密码\" type=\"password\">\r\n            </div>\r\n        </li>\r\n    </ul>\r\n</form>\r\n<div class=\"am-margin-top-xl am-padding-top\">\r\n    <button id=\"btnPwdSave\" class=\"am-center am-btn am-btn-red boderRadAll_3\">保存</button>\r\n</div>\r\n"
 
 /***/ },
-/* 133 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4738,18 +5320,18 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	var storage = base.storage;
-	var CreateLiveView = __webpack_require__(134);
-	var NoOpenListView = __webpack_require__(139);
-	var HistoryListView = __webpack_require__(147);
-	var ChannelVideoMainView = __webpack_require__(153);
+	var CreateLiveView = __webpack_require__(141);
+	var NoOpenListView = __webpack_require__(146);
+	var HistoryListView = __webpack_require__(154);
+	var ChannelVideoMainView = __webpack_require__(160);
 	
-	var UIconfirm = __webpack_require__(55);
+	var UIconfirm = __webpack_require__(62);
 	var Auxiliary = __webpack_require__(41);
 	var URL = Auxiliary.url;
-	var IMModel = __webpack_require__(43);
+	var IMModel = __webpack_require__(50);
 	var imModel = IMModel.sharedInstanceIMModel();
-	var RecordLiveView = __webpack_require__(167);
-	var FollowingView = __webpack_require__(170);
+	var RecordLiveView = __webpack_require__(174);
+	var FollowingView = __webpack_require__(177);
 	
 	var View = BaseView.extend({
 	  el: '#pageContent',
@@ -4759,7 +5341,7 @@ webpackJsonp([2],[
 	    'click #profileSate>a': 'profileStateChanged'
 	  },
 	  rawLoader: function () {
-	    return __webpack_require__(175);
+	    return __webpack_require__(182);
 	  },
 	  context: function (args) {
 	    console.log(args);
@@ -4931,7 +5513,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 134 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4941,14 +5523,14 @@ webpackJsonp([2],[
 	
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
-	var BusinessDate = __webpack_require__(70);
-	var UserModel = __webpack_require__(45);
+	var BusinessDate = __webpack_require__(77);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var CreateLiveModel = __webpack_require__(135);
-	var ArtistCompleteModel = __webpack_require__(136);
+	var CreateLiveModel = __webpack_require__(142);
+	var ArtistCompleteModel = __webpack_require__(143);
 	var lighten;
-	var msgBox = __webpack_require__(69);
-	var timeImage = __webpack_require__(137);
+	var msgBox = __webpack_require__(76);
+	var timeImage = __webpack_require__(144);
 	
 	var View = BaseView.extend({
 	  el: '#createLiveVideo',
@@ -4962,7 +5544,7 @@ webpackJsonp([2],[
 	    'change #inputActorName': ''
 	  },
 	  rawLoader: function () {
-	    return __webpack_require__(138);
+	    return __webpack_require__(145);
 	  },
 	  context: function (args) {
 	    console.log(args);
@@ -5243,13 +5825,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 135 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	/*
@@ -5282,13 +5864,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 136 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	// deviceinfo={{deviceinfo}}&keyword={{keyword}}&offset=100
@@ -5314,19 +5896,19 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 137 */
+/* 144 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/7gAOQWRvYmUAZMAAAAAB/9sAhAACAgICAgICAgICAwICAgMEAwICAwQFBAQEBAQFBgUFBQUFBQYGBwcIBwcGCQkKCgkJDAwMDAwMDAwMDAwMDAwMAQMDAwUEBQkGBgkNCwkLDQ8ODg4ODw8MDAwMDA8PDAwMDAwMDwwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAWABYDAREAAhEBAxEB/8QAWQABAQEBAAAAAAAAAAAAAAAAAAEICQEBAAAAAAAAAAAAAAAAAAAAABAAAgEEAgMBAAAAAAAAAAAAAQIRAAMEBgUHIUESYREBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A6+UCgUFVirKwiVIIkSPH4aDPeB0vseH2hd2m52zt+VoFoJm8fot3m+ReM4uSbF6618l8S3AZVJ+mn4clVJuhoSfM+5mglAoFB//Z"
 
 /***/ },
-/* 138 */
+/* 145 */
 /***/ function(module, exports) {
 
-	module.exports = "<ul>\n\t<li class=\"Inp_name\">\n\t\t<span class=\"am-margin-right-sm\">*</span>直播名称：\n\t\t<input type=\"text\" maxlength=\"15\" placeholder=\"输入直播名\" id=\"liveVideoName\"><span class=\"tip\" style=\"margin-left: 16px;\">限15个字以内</span>\n\t</li>\n\t<li class=\"Inp_artist\">\n\t\t<span class=\"am-margin-right-sm\">*</span>选择艺人：\n\t\t<input type=\"text\" placeholder=\"输入文字\" id=\"inputActorName\">\n\t\t<ul id=\"selectorActor\">\n\t\t\t <script type=\"text/html\" id=\"selectorActorTemp\">\n\t\t\t\t{{each items as item}}\n\t\t\t\t      <li data-id=\"{{item[0]}}\">{{item[1]}}</li>\n\t\t\t\t{{/each}}\n\t\t\t </script>\n\t\t</ul>\n\t</li>\n\t<li class=\"Inp_time\">\n\t\t<div class=\"tit\"><span class=\"redX am-margin-right-sm\">*</span>直播时间：</div>\n\t\t<div id=\"liveTime\">\n\t\t\t<script type=\"text/html\" id=\"liveTimeTemp\">\n\t\t\t\t{{each items as item i}}\n\t\t\t\t\t<div class=\"select\" style=\"{{item.style}}\" data-index=\"{{i}}\">\n\t\t\t\t\t\t<span class=\"date\">{{item.cur}}</span>\n\t\t\t\t\t\t<!--<img src=\"{{timeImage}}\" alt=\"\" >-->\n\t\t\t\t\t\t<span class=\"split\"></span>\n\t\t\t\t\t\t<span class=\"arrowDownOuter\"></span>\n\t\t\t\t\t\t<ul class=\"selectDate\" data-index=\"{{i}}\" data-tag=\"{{item.tag}}\">\n\t\t\t\t\t\t\t{{each item.cells as cell}}\n\t\t\t\t\t\t\t\t<li>{{cell}}</li>\n\t\t\t\t\t\t\t{{/each}}\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t\t<em>{{item.name}}</em>\n\t\t\t\t\t<!--{{if item.division}}-->\n\t\t\t\t\t\t<!--<br/>-->\n\t\t\t\t\t<!--{{/if}}-->\n\t\t\t\t{{/each}}\n\t\t\t</script>\n\t\t\t<script type=\"text/html\" id=\"cellsTemp\">\n\t\t\t\t{{each cells as cell}}\n\t\t\t\t\t<li>{{cell}}</li>\n\t\t\t\t{{/each}}\n\t\t\t</script>\n\t\t</div>\n\n\t</li>\n\t<!--<div class=\"submit m_disabled\" id=\"createVideo\">创建</div>-->\n</ul>\n<div class=\"button-wrap\">\n\t<button class=\"submit am-btn am-btn-red am-center boderRadAll_3 m_disabled\" id=\"createVideo\">创建</button>\n</div>\n"
+	module.exports = "<ul>\r\n\t<li class=\"Inp_name\">\r\n\t\t<span class=\"am-margin-right-sm\">*</span>直播名称：\r\n\t\t<input type=\"text\" maxlength=\"15\" placeholder=\"输入直播名\" id=\"liveVideoName\"><span class=\"tip\" style=\"margin-left: 16px;\">限15个字以内</span>\r\n\t</li>\r\n\t<li class=\"Inp_artist\">\r\n\t\t<span class=\"am-margin-right-sm\">*</span>选择艺人：\r\n\t\t<input type=\"text\" placeholder=\"输入文字\" id=\"inputActorName\">\r\n\t\t<ul id=\"selectorActor\">\r\n\t\t\t <script type=\"text/html\" id=\"selectorActorTemp\">\r\n\t\t\t\t{{each items as item}}\r\n\t\t\t\t      <li data-id=\"{{item[0]}}\">{{item[1]}}</li>\r\n\t\t\t\t{{/each}}\r\n\t\t\t </script>\r\n\t\t</ul>\r\n\t</li>\r\n\t<li class=\"Inp_time\">\r\n\t\t<div class=\"tit\"><span class=\"redX am-margin-right-sm\">*</span>直播时间：</div>\r\n\t\t<div id=\"liveTime\">\r\n\t\t\t<script type=\"text/html\" id=\"liveTimeTemp\">\r\n\t\t\t\t{{each items as item i}}\r\n\t\t\t\t\t<div class=\"select\" style=\"{{item.style}}\" data-index=\"{{i}}\">\r\n\t\t\t\t\t\t<span class=\"date\">{{item.cur}}</span>\r\n\t\t\t\t\t\t<!--<img src=\"{{timeImage}}\" alt=\"\" >-->\r\n\t\t\t\t\t\t<span class=\"split\"></span>\r\n\t\t\t\t\t\t<span class=\"arrowDownOuter\"></span>\r\n\t\t\t\t\t\t<ul class=\"selectDate\" data-index=\"{{i}}\" data-tag=\"{{item.tag}}\">\r\n\t\t\t\t\t\t\t{{each item.cells as cell}}\r\n\t\t\t\t\t\t\t\t<li>{{cell}}</li>\r\n\t\t\t\t\t\t\t{{/each}}\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<em>{{item.name}}</em>\r\n\t\t\t\t\t<!--{{if item.division}}-->\r\n\t\t\t\t\t\t<!--<br/>-->\r\n\t\t\t\t\t<!--{{/if}}-->\r\n\t\t\t\t{{/each}}\r\n\t\t\t</script>\r\n\t\t\t<script type=\"text/html\" id=\"cellsTemp\">\r\n\t\t\t\t{{each cells as cell}}\r\n\t\t\t\t\t<li>{{cell}}</li>\r\n\t\t\t\t{{/each}}\r\n\t\t\t</script>\r\n\t\t</div>\r\n\r\n\t</li>\r\n\t<!--<div class=\"submit m_disabled\" id=\"createVideo\">创建</div>-->\r\n</ul>\r\n<div class=\"button-wrap\">\r\n\t<button class=\"submit am-btn am-btn-red am-center boderRadAll_3 m_disabled\" id=\"createVideo\">创建</button>\r\n</div>\r\n"
 
 /***/ },
-/* 139 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5334,20 +5916,20 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	
-	var NoOpenListModel = __webpack_require__(140);
-	var ReleaseModel = __webpack_require__(141);
-	var RemoveModel = __webpack_require__(142);
-	var SaveCoverImageModel = __webpack_require__(143);
+	var NoOpenListModel = __webpack_require__(147);
+	var ReleaseModel = __webpack_require__(148);
+	var RemoveModel = __webpack_require__(149);
+	var SaveCoverImageModel = __webpack_require__(150);
 	// var NoOpenPageBoxView = require('./page-box.view');
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
 	
-	var msgBox = __webpack_require__(69);
-	var confirm = __webpack_require__(55);
-	var UploadFileDialog = __webpack_require__(74);
-	var BusinessDate = __webpack_require__(70);
+	var msgBox = __webpack_require__(76);
+	var confirm = __webpack_require__(62);
+	var UploadFileDialog = __webpack_require__(81);
+	var BusinessDate = __webpack_require__(77);
 	var businessDate = new BusinessDate();
-	var Pagenation = __webpack_require__(144);
+	var Pagenation = __webpack_require__(151);
 	
 	var View = BaseView.extend({
 	  el: '#noOpenContent',
@@ -5362,8 +5944,8 @@ webpackJsonp([2],[
 	  },
 	  beforeMount: function () {
 	    //  初始化一些自定义属性
-	    this.listTemp = __webpack_require__(145);
-	    this.liTemp = __webpack_require__(146);
+	    this.listTemp = __webpack_require__(152);
+	    this.liTemp = __webpack_require__(153);
 	    this.noOpenParameter = {
 	      deviceinfo: '{"aid":"30001001"}',
 	      order: 'time',
@@ -5696,16 +6278,16 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 140 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
-	var BusinessDate = __webpack_require__(70);
+	var BusinessDate = __webpack_require__(77);
 	var businessDate = new BusinessDate();
 	// var posterPicImage = require('../../../images/aP-list-ad.jpg');
 	var Model = BaseModel.extend({
@@ -5758,13 +6340,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 141 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var Model = BaseModel.extend({
@@ -5789,13 +6371,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 142 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var Model = BaseModel.extend({
@@ -5820,13 +6402,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 143 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	var Model = BaseModel.extend({
@@ -5851,7 +6433,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 144 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5926,19 +6508,19 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 145 */
+/* 152 */
 /***/ function(module, exports) {
 
-	module.exports = "{{each items as item}}\n<div class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\" data-id=\"{{item.id}}\" data-key=\"{{item.liCacheKey}}\" data-img=\"{{item.posterPic}}\" data-liveTime=\"{{item.liveTime}}\">\n\n  {{if item.posterPic}}\n  <div class=\"am-u-sm-3 img am-margin-right has-img unClosed-list-wrap uploadImageWrap\">\n    <img src=\"{{item.posterPic}}\" alt=\"\" class=\"cover-image\">\n  </div>\n  {{else}}\n  <div class=\"am-u-sm-3 img am-margin-right unClosed-list-wrap uploadImageWrap\">\n  </div>\n  {{/if}}\n  <div class=\"am-u-sm-9\">\n    <div class=\"room-title\">{{item.roomName}}</div>\n    <div class=\"time\"><span class=\"tip am-margin-right-sm\">直播时间</span><span class=\"value date\">{{item.liveVideoTime}}</span>\n    </div>\n    <div class=\"viedo\">\n      <span class=\"tip am-margin-right-sm\">视频连接</span>\n      <span class=\"value\">{{item.livePushStreamUrl}}</span>\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>\n    </div>\n    <div class=\"viedo\">\n      <span class=\"tip am-margin-right-sm\">视频流</span>\n      <span class=\"value\">{{item.streamName}}</span>\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>\n    </div>\n    <div class=\"btn-wrap\">\n      <a href=\"{{item.lookUrl}}\" class=\"am-btn am-btn-red boderRadAll_3\">查看</a> {{if item.status === 1}}\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">已发布</button>\n      {{else if item.status == 2}}\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">直播中</button>\n      {{else if item.status == 0}} {{if item.posterPic.length > 0}}\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3\">发布</button>\n      {{else}}\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3 disabled\">发布</button>\n      {{/if}}\n      <button data-state=\"3\" class=\"am-btn am-btn-red boderRadAll_3\">删除</button>\n      {{/if}}\n    </div>\n  </div>\n</div>\n{{/each}}\n"
+	module.exports = "{{each items as item}}\r\n<div class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\" data-id=\"{{item.id}}\" data-key=\"{{item.liCacheKey}}\" data-img=\"{{item.posterPic}}\" data-liveTime=\"{{item.liveTime}}\">\r\n\r\n  {{if item.posterPic}}\r\n  <div class=\"am-u-sm-3 img am-margin-right has-img unClosed-list-wrap uploadImageWrap\">\r\n    <img src=\"{{item.posterPic}}\" alt=\"\" class=\"cover-image\">\r\n  </div>\r\n  {{else}}\r\n  <div class=\"am-u-sm-3 img am-margin-right unClosed-list-wrap uploadImageWrap\">\r\n  </div>\r\n  {{/if}}\r\n  <div class=\"am-u-sm-9\">\r\n    <div class=\"room-title\">{{item.roomName}}</div>\r\n    <div class=\"time\"><span class=\"tip am-margin-right-sm\">直播时间</span><span class=\"value date\">{{item.liveVideoTime}}</span>\r\n    </div>\r\n    <div class=\"viedo\">\r\n      <span class=\"tip am-margin-right-sm\">视频连接</span>\r\n      <span class=\"value\">{{item.livePushStreamUrl}}</span>\r\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>\r\n    </div>\r\n    <div class=\"viedo\">\r\n      <span class=\"tip am-margin-right-sm\">视频流</span>\r\n      <span class=\"value\">{{item.streamName}}</span>\r\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>\r\n    </div>\r\n    <div class=\"btn-wrap\">\r\n      <a href=\"{{item.lookUrl}}\" class=\"am-btn am-btn-red boderRadAll_3\">查看</a> {{if item.status === 1}}\r\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">已发布</button>\r\n      {{else if item.status == 2}}\r\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">直播中</button>\r\n      {{else if item.status == 0}} {{if item.posterPic.length > 0}}\r\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3\">发布</button>\r\n      {{else}}\r\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3 disabled\">发布</button>\r\n      {{/if}}\r\n      <button data-state=\"3\" class=\"am-btn am-btn-red boderRadAll_3\">删除</button>\r\n      {{/if}}\r\n    </div>\r\n  </div>\r\n</div>\r\n{{/each}}\r\n"
 
 /***/ },
-/* 146 */
+/* 153 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--<div class=\"uploadAd fl uploadImage\"data-posterPic=\"{{if item.posterPic}}1{{/if}}\"  data-liveTime=\"{{item.liveTime}}\">-->\n  <!--<img src=\"{{item.posterPic}}\" alt=\"\" class=\"cover-image\">-->\n<!--</div>-->\n<!--<dl class=\"preLiveMsg fl\">-->\n  <!--<dt>{{item.roomName}}</dt>-->\n  <!--<dd>直播时间：<span>{{item.liveVideoTime}}</span></dd>-->\n  <!--<dd>-->\n    <!--<h4 class=\"tit\">视频连接：</h4>-->\n    <!--<div>-->\n      <!--<span>{{item.livePushStreamUrl}}</span>-->\n      <!--<a href=\"\" class=\"copy copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>-->\n    <!--</div>-->\n  <!--</dd>-->\n  <!--<dd>-->\n    <!--<h4 class=\"tit\">视频流：</h4>-->\n    <!--<div>-->\n      <!--<span>{{item.streamName}}</span>-->\n      <!--<a href=\"\" class=\"copy copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>-->\n    <!--</div>-->\n  <!--</dd>-->\n  <!--<dd class=\"ctl\">-->\n    <!--<a href=\"{{item.lookUrl}}\">查看</a>-->\n    <!--{{if item.status === 1}}-->\n    \t<!--<span class=\"disable\" data-state=\"2\">已发布</span>-->\n    <!--{{else }}-->\n    \t<!--{{if item.status === 0}}-->\n    \t\t<!--<span  data-state=\"2\">发布</span>-->\n      <!--{{/if}}-->\n    <!--{{/if}}-->\n    <!--{{if item.status === 0}}-->\n        <!--<span data-state=\"3\">删除</span>-->\n    <!--{{/if}}-->\n  <!--</dd>-->\n<!--</dl>-->\n<div class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\"\n     data-key=\"{{item.liCacheKey}}\" data-img=\"{{item.posterPic}}\" data-liveTime=\"{{item.liveTime}}\">\n  <div class=\"am-u-sm-3 img am-margin-right uploadImageWrap\">\n    {{if item.posterPic}}\n    <img src=\"{{item.posterPic}}\" alt=\"\" class=\"uploadImage cover-image\">\n    {{/if}}\n  </div>\n  <div class=\"am-u-sm-9\">\n    <div class=\"room-title\">{{item.roomName}}</div>\n    <div class=\"time\"><span class=\"tip am-margin-right-sm\">直播时间</span><span\n            class=\"value date\">{{item.liveVideoTime}}</span>\n    </div>\n    <div class=\"viedo\">\n      <span class=\"tip am-margin-right-sm\">视频连接</span>\n      <span class=\"value\">{{item.livePushStreamUrl}}</span>\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>\n    </div>\n    <div class=\"viedo\">\n      <span class=\"tip am-margin-right-sm\">视频流</span>\n      <span class=\"value\">{{item.streamName}}</span>\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>\n    </div>\n    <div class=\"btn-wrap\">\n      <a href=\"{{item.lookUrl}}\" class=\"am-btn am-btn-red boderRadAll_3\">查看</a>\n      {{if item.status === 1}}\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">已发布</button>\n      {{else if item.status == 2}}\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">直播中</button>\n      {{else if item.status == 0}}\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3\">发布</button>\n      <button data-state=\"3\" class=\"am-btn am-btn-red boderRadAll_3\">删除</button>\n      {{/if}}\n    </div>\n  </div>\n</div>\n"
+	module.exports = "<!--<div class=\"uploadAd fl uploadImage\"data-posterPic=\"{{if item.posterPic}}1{{/if}}\"  data-liveTime=\"{{item.liveTime}}\">-->\r\n  <!--<img src=\"{{item.posterPic}}\" alt=\"\" class=\"cover-image\">-->\r\n<!--</div>-->\r\n<!--<dl class=\"preLiveMsg fl\">-->\r\n  <!--<dt>{{item.roomName}}</dt>-->\r\n  <!--<dd>直播时间：<span>{{item.liveVideoTime}}</span></dd>-->\r\n  <!--<dd>-->\r\n    <!--<h4 class=\"tit\">视频连接：</h4>-->\r\n    <!--<div>-->\r\n      <!--<span>{{item.livePushStreamUrl}}</span>-->\r\n      <!--<a href=\"\" class=\"copy copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>-->\r\n    <!--</div>-->\r\n  <!--</dd>-->\r\n  <!--<dd>-->\r\n    <!--<h4 class=\"tit\">视频流：</h4>-->\r\n    <!--<div>-->\r\n      <!--<span>{{item.streamName}}</span>-->\r\n      <!--<a href=\"\" class=\"copy copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>-->\r\n    <!--</div>-->\r\n  <!--</dd>-->\r\n  <!--<dd class=\"ctl\">-->\r\n    <!--<a href=\"{{item.lookUrl}}\">查看</a>-->\r\n    <!--{{if item.status === 1}}-->\r\n    \t<!--<span class=\"disable\" data-state=\"2\">已发布</span>-->\r\n    <!--{{else }}-->\r\n    \t<!--{{if item.status === 0}}-->\r\n    \t\t<!--<span  data-state=\"2\">发布</span>-->\r\n      <!--{{/if}}-->\r\n    <!--{{/if}}-->\r\n    <!--{{if item.status === 0}}-->\r\n        <!--<span data-state=\"3\">删除</span>-->\r\n    <!--{{/if}}-->\r\n  <!--</dd>-->\r\n<!--</dl>-->\r\n<div class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\"\r\n     data-key=\"{{item.liCacheKey}}\" data-img=\"{{item.posterPic}}\" data-liveTime=\"{{item.liveTime}}\">\r\n  <div class=\"am-u-sm-3 img am-margin-right uploadImageWrap\">\r\n    {{if item.posterPic}}\r\n    <img src=\"{{item.posterPic}}\" alt=\"\" class=\"uploadImage cover-image\">\r\n    {{/if}}\r\n  </div>\r\n  <div class=\"am-u-sm-9\">\r\n    <div class=\"room-title\">{{item.roomName}}</div>\r\n    <div class=\"time\"><span class=\"tip am-margin-right-sm\">直播时间</span><span\r\n            class=\"value date\">{{item.liveVideoTime}}</span>\r\n    </div>\r\n    <div class=\"viedo\">\r\n      <span class=\"tip am-margin-right-sm\">视频连接</span>\r\n      <span class=\"value\">{{item.livePushStreamUrl}}</span>\r\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-url\" data-value=\"{{item.livePushStreamUrl}}\">复制</a>\r\n    </div>\r\n    <div class=\"viedo\">\r\n      <span class=\"tip am-margin-right-sm\">视频流</span>\r\n      <span class=\"value\">{{item.streamName}}</span>\r\n      <a href=\"javascript:;\" class=\"copy am-margin-left-xl copy-video-name\" data-value=\"{{item.streamName}}\">复制</a>\r\n    </div>\r\n    <div class=\"btn-wrap\">\r\n      <a href=\"{{item.lookUrl}}\" class=\"am-btn am-btn-red boderRadAll_3\">查看</a>\r\n      {{if item.status === 1}}\r\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">已发布</button>\r\n      {{else if item.status == 2}}\r\n      <button class=\"am-btn am-btn-red boderRadAll_3 disabled\">直播中</button>\r\n      {{else if item.status == 0}}\r\n      <button data-state=\"2\" class=\"am-btn am-btn-red boderRadAll_3\">发布</button>\r\n      <button data-state=\"3\" class=\"am-btn am-btn-red boderRadAll_3\">删除</button>\r\n      {{/if}}\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
-/* 147 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5948,14 +6530,14 @@ webpackJsonp([2],[
 	
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
-	var HistoryListModel = __webpack_require__(148);
+	var HistoryListModel = __webpack_require__(155);
 	// var NoOpenPageBoxView = require('./page-box.view');
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var easyImage = __webpack_require__(149);
-	var yunImage = __webpack_require__(150);
-	var loveImage = __webpack_require__(151);
-	var Pagenation = __webpack_require__(144);
+	var easyImage = __webpack_require__(156);
+	var yunImage = __webpack_require__(157);
+	var loveImage = __webpack_require__(158);
+	var Pagenation = __webpack_require__(151);
 	
 	var View = BaseView.extend({
 	  el: '#historyContent',
@@ -5965,7 +6547,7 @@ webpackJsonp([2],[
 	  beforeMount: function () {
 	    //  初始化一些自定义属性
 	    var token = user.getToken();
-	    this.listTemp = __webpack_require__(152);
+	    this.listTemp = __webpack_require__(159);
 	    this.historyParameter = {
 	      deviceinfo: '{"aid":"30001001"}',
 	      order: 'time',
@@ -6069,16 +6651,16 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 148 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
-	var BusinessDate = __webpack_require__(70);
+	var BusinessDate = __webpack_require__(77);
 	var businessDate = new BusinessDate();
 	/*
 	  deviceinfo={{deviceinfo}}
@@ -6137,31 +6719,31 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 149 */
+/* 156 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjE2NzMwMDc4RTRGOTExRTU5NDBGRTZFREJDRURGODZDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjE2NzMwMDc5RTRGOTExRTU5NDBGRTZFREJDRURGODZDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MTY3MzAwNzZFNEY5MTFFNTk0MEZFNkVEQkNFREY4NkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MTY3MzAwNzdFNEY5MTFFNTk0MEZFNkVEQkNFREY4NkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6IZhTIAAABJElEQVR42mzSP0sDQRCH4Us8YqEi+RbRtCZgYyUosYoogUAgdmphITb+qyTYaKtYRwSb2KiXiJXYqLV+DQmciBHFd+F3Miy38MDt7Mywe7thFEWBN8pYxQR+FBvCG87wbJND8z2KU+RwhBevcQlbGGANsQtmtTiOLq5QSykOFKspp6ua/wZtHKCjeQb7eJIV06ij3HbSoI5X9EzSOsYwjRlUMGvWe6qph0queNtdwhx+8YVd7OHe5BziNhukD/fXv838A8Npia7BCba9+AOaZr6Bay9nx9W6BhcoasvJaOlYd3jU1Z6bdZc76WqTd9DADUb0lz+xjLyOEpviRWxiwV5jH/Oo4hJTir+b4pLWqsrt+y8x1k7KupmCbsE+5WP/Kf8JMACpIT+1f6oZ9AAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 150 */
+/* 157 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAANCAYAAACgu+4kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkVCNzg1M0VERTRGODExRTVCNEQxRTQ3MzA5QTVGQTNDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkVCNzg1M0VFRTRGODExRTVCNEQxRTQ3MzA5QTVGQTNDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RUI3ODUzRUJFNEY4MTFFNUI0RDFFNDczMDlBNUZBM0MiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RUI3ODUzRUNFNEY4MTFFNUI0RDFFNDczMDlBNUZBM0MiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6hXiNDAAABEElEQVR42pzSsUtCURTH8eejIUMCIbSlJpdqMQjHpsApktwawqW5oKFAa4mooabISRwiKJDe1Bw0tSS4VH9CQ0GTBVnR98Dvxg2C1AMfHlzu79x7eScWRVHgVRIbmMUQBrT+gVdc4RAvLhB64XXcYRpnKCEnJa3NaM+qC7kTdlBBEb+upGrJERZxgRFsWYM5hSfxEPxfdsCUbnJtT9jDcZdhV/eoWjbUVU6C3usUKWsQw1cfDTr4tAZvmO+jQQFta7AtqR7CaZSxaw0aqOEWE12Es3jUXJy7QVrBmFiNY9ALxbGAOi5xgCV/kPbxjFFtyGh0Q29i3/Xv8/r+TOIw1vCEZTSxiYRYtXHz13u+BRgAuDI2qXfFdIkAAAAASUVORK5CYII="
 
 /***/ },
-/* 151 */
+/* 158 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAANCAYAAACgu+4kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkYzODk0M0VBRTRGODExRTU4RUU2RDkyMzlGRDA5RTc3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkYzODk0M0VCRTRGODExRTU4RUU2RDkyMzlGRDA5RTc3Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjM4OTQzRThFNEY4MTFFNThFRTZEOTIzOUZEMDlFNzciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjM4OTQzRTlFNEY4MTFFNThFRTZEOTIzOUZEMDlFNzciLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4kyn92AAABGElEQVR42pzSv0sCcRjH8e8dDkoN0eYm2NCPMaQpSCGElqAtbW5pLCJcWkpEaKkhCPoHHE6krZamqCBwaHBwSgQ35yCs9wMf6UsYcT3wOu7u+T7P3fdHEEWRU1SwiU8kYImql9vCBwK0xrmEBtxhHsfoYBn7WFV+AWd4wZLG5bFuDerIYRYjFTzgAvd6zrjvsNw1hji1BmWUvGI/1tzksLE7uAq5mCcXPx6digPNP25YzcgaDLD9jwY2hUGo7djDdIziGezixBo0tLLPMRq0cYtmqBcFTGnbkn98+VX3xfEiWrwjixTesPHLnPvoaazzT6LTMV3Bke0vuqjpzw6RxgEu/a7hhC9Z0aLOxrktFG4w97PY4kuAAQCicDS4f8rDTAAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 152 */
+/* 159 */
 /***/ function(module, exports) {
 
-	module.exports = "{{each items as item}}\n\n<div data-id=\"{{item.roomId}}\" class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\">\n  <div class=\"am-u-sm-3 img am-margin-right\">\n    <img src=\"{{item.posterPic}}\">\n  </div>\n  <div class=\"am-u-sm-9\">\n    <div class=\"room-title\">{{item.roomName}}</div>\n    <div class=\"time\">\n      <span class=\"tip am-margin-right-sm\">直播时间:</span>\n      <span class=\"value date am-margin-right\">{{item.startTimeTxt}}</span>\n      {{ if item.duration > 0}}\n      <span class=\"tip am-margin-right-sm\">时长:</span>\n      <span class=\"value date\">{{item.diff}}</span>\n      {{/if}}\n    </div>\n    <div class=\"number\">\n      <div class=\"num\"><i class=\"icons view\"></i><span class=\"value\">{{item.seen}}</span></div>\n      <div class=\"num\"><i class=\"icons chat\"></i><span class=\"value\">{{item.bulletCurtain}}</span></div>\n      <div class=\"num\"><i class=\"icons like\"></i><span class=\"value\">{{item.assemble}}</span></div>\n    </div>\n    <div class=\"info am-vertical-align\">\n      <span class=\"tip am-margin-right-sm am-vertical-align-middle am-text-xs\">人气:</span>\n      <span class=\"value am-text-sm am-vertical-align-middle\">{{item.popularity}}</span>\n    </div>\n  </div>\n</div>\n\n{{/each}}\n"
+	module.exports = "{{each items as item}}\r\n\r\n<div data-id=\"{{item.roomId}}\" class=\"item am-g am-g-collapse am-margin-top am-margin-bottom am-padding-bottom\">\r\n  <div class=\"am-u-sm-3 img am-margin-right\">\r\n    <img src=\"{{item.posterPic}}\">\r\n  </div>\r\n  <div class=\"am-u-sm-9\">\r\n    <div class=\"room-title\">{{item.roomName}}</div>\r\n    <div class=\"time\">\r\n      <span class=\"tip am-margin-right-sm\">直播时间:</span>\r\n      <span class=\"value date am-margin-right\">{{item.startTimeTxt}}</span>\r\n      {{ if item.duration > 0}}\r\n      <span class=\"tip am-margin-right-sm\">时长:</span>\r\n      <span class=\"value date\">{{item.diff}}</span>\r\n      {{/if}}\r\n    </div>\r\n    <div class=\"number\">\r\n      <div class=\"num\"><i class=\"icons view\"></i><span class=\"value\">{{item.seen}}</span></div>\r\n      <div class=\"num\"><i class=\"icons chat\"></i><span class=\"value\">{{item.bulletCurtain}}</span></div>\r\n      <div class=\"num\"><i class=\"icons like\"></i><span class=\"value\">{{item.assemble}}</span></div>\r\n    </div>\r\n    <div class=\"info am-vertical-align\">\r\n      <span class=\"tip am-margin-right-sm am-vertical-align-middle am-text-xs\">人气:</span>\r\n      <span class=\"value am-text-sm am-vertical-align-middle\">{{item.popularity}}</span>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n{{/each}}\r\n"
 
 /***/ },
-/* 153 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6174,18 +6756,18 @@ webpackJsonp([2],[
 	var _ = __webpack_require__(27);
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var ChannelListModel = __webpack_require__(154);
+	var ChannelListModel = __webpack_require__(161);
 	
-	var CreatePlayListView = __webpack_require__(155);
-	var ChannelShowVideosView = __webpack_require__(158);
+	var CreatePlayListView = __webpack_require__(162);
+	var ChannelShowVideosView = __webpack_require__(165);
 	
 	
 	var View = BaseView.extend({
 	  el: '#tabChannel',
 	  rawLoader: function () {
-	    return __webpack_require__(166);
+	    return __webpack_require__(173);
 	  },
 	  events: {
 	    'change #channelSelect': 'selectChanged'
@@ -6271,7 +6853,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 154 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6280,7 +6862,7 @@ webpackJsonp([2],[
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -6306,7 +6888,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 155 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 创建频道节目单
@@ -6317,16 +6899,16 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var CreateShowModel = __webpack_require__(156);
+	var CreateShowModel = __webpack_require__(163);
 	
-	var msgBox = __webpack_require__(69);
+	var msgBox = __webpack_require__(76);
 	
 	var View = BaseView.extend({
 	  el: '#createChannelPlayBlock',
 	  rawLoader: function () {
-	    return __webpack_require__(157);
+	    return __webpack_require__(164);
 	  },
 	  events: {
 	    'click #btnCreateShow': 'createShowClicked'
@@ -6444,7 +7026,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 156 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6453,7 +7035,7 @@ webpackJsonp([2],[
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -6479,13 +7061,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 157 */
+/* 164 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"am-form create-channel-play-form\">\n  <fieldset>\n    <div class=\"am-form-group\">\n      <label for=\"doc-ipt-email-1\">节目单名称</label>\n      <input type=\"text\" id=\"channelShowName\" placeholder=\"输入节目名称\">\n    </div>\n    <div class=\"am-form-group\">\n      <label for=\"doc-ipt-email-1\">开始时间</label>\n      <input type=\"text\" readonly id=\"channelSHowStartTime\" class=\"form-datetime am-form-field\" placeholder=\"请选择时间\">\n    </div>\n    <div class=\"am-form-group\">\n      <label for=\"doc-ta-1\">视频编号</label>\n      <span class=\"add-tip\">视频编号请示使用逗号或者空格分隔开</span>\n      <textarea rows=\"5\" id=\"channelVideoList\" placeholder=\"请使用逗号或者空格作为分隔符\"></textarea>\n    </div>\n\n    <p>\n      <button id='btnCreateShow' class=\"am-btn am-btn-red am-round\">创建</button>\n    </p>\n  </fieldset>\n</div>\n"
+	module.exports = "<div class=\"am-form create-channel-play-form\">\r\n  <fieldset>\r\n    <div class=\"am-form-group\">\r\n      <label for=\"doc-ipt-email-1\">节目单名称</label>\r\n      <input type=\"text\" id=\"channelShowName\" placeholder=\"输入节目名称\">\r\n    </div>\r\n    <div class=\"am-form-group\">\r\n      <label for=\"doc-ipt-email-1\">开始时间</label>\r\n      <input type=\"text\" readonly id=\"channelSHowStartTime\" class=\"form-datetime am-form-field\" placeholder=\"请选择时间\">\r\n    </div>\r\n    <div class=\"am-form-group\">\r\n      <label for=\"doc-ta-1\">视频编号</label>\r\n      <span class=\"add-tip\">视频编号请示使用逗号或者空格分隔开</span>\r\n      <textarea rows=\"5\" id=\"channelVideoList\" placeholder=\"请使用逗号或者空格作为分隔符\"></textarea>\r\n    </div>\r\n\r\n    <p>\r\n      <button id='btnCreateShow' class=\"am-btn am-btn-red am-round\">创建</button>\r\n    </p>\r\n  </fieldset>\r\n</div>\r\n"
 
 /***/ },
-/* 158 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6499,21 +7081,21 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var BaseView = base.View;
 	
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var ShowListModel = __webpack_require__(159);
-	var VideoListModel = __webpack_require__(160);
-	var PublishShowModel = __webpack_require__(161);
-	var DeleteShowModel = __webpack_require__(162);
+	var ShowListModel = __webpack_require__(166);
+	var VideoListModel = __webpack_require__(167);
+	var PublishShowModel = __webpack_require__(168);
+	var DeleteShowModel = __webpack_require__(169);
 	
-	var msgBox = __webpack_require__(69);
-	var uiConfirm = __webpack_require__(55);
-	var BusinessDate = __webpack_require__(70);
+	var msgBox = __webpack_require__(76);
+	var uiConfirm = __webpack_require__(62);
+	var BusinessDate = __webpack_require__(77);
 	
 	var View = BaseView.extend({
 	  el: '#channelShowVideosBlock',
 	  rawLoader: function () {
-	    return __webpack_require__(163);
+	    return __webpack_require__(170);
 	  },
 	  events: {
 	    'click #showListWrap': 'showItemClicked'
@@ -6538,8 +7120,8 @@ webpackJsonp([2],[
 	
 	    this.elements.showList = this.$el.find('#showListWrap');
 	    this.elements.videoList = this.$el.find('#videoListWrap');
-	    this.showItemTpl = __webpack_require__(164);
-	    this.videoItemTpl = __webpack_require__(165);
+	    this.showItemTpl = __webpack_require__(171);
+	    this.videoItemTpl = __webpack_require__(172);
 	  },
 	  ready: function () {
 	    //  初始化
@@ -6711,7 +7293,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 159 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6720,7 +7302,7 @@ webpackJsonp([2],[
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -6746,7 +7328,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 160 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6755,7 +7337,7 @@ webpackJsonp([2],[
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -6781,7 +7363,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 161 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6790,7 +7372,7 @@ webpackJsonp([2],[
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -6816,7 +7398,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 162 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6825,7 +7407,7 @@ webpackJsonp([2],[
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -6851,31 +7433,31 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 163 */
+/* 170 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viedo-name-list am-u-lg-6\">\n  <div class=\"table-header\">\n    节目单列表\n  </div>\n  <div class=\"table-wrap\">\n    <table class=\"am-table am-table-hover am-table-compact\">\n      <thead>\n        <tr>\n          <th>编号</th>\n          <th>名称</th>\n          <th>直播时间</th>\n          <th>状态</th>\n        </tr>\n      </thead>\n      <tbody id=\"showListWrap\">\n        <!-- <tr>\n          <td>Amaze UI</td>\n          <td class=\"name\">://amazeui.</td>\n          <td>\n            <button class=\"am-btn am-btn-red am-btn-xs am-round\"><i class=\"am-icon-check\"></i> 发布</button>\n            <button class=\"am-btn am-btn-xs am-round\"><i class=\"am-icon-close\"></i>删除</button>\n          </td>\n        </tr> -->\n        <tr>\n          <td colspan=\"3\">暂无数据</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"tip\">\n    选中行查看视频列表\n  </div>\n</div>\n\n<div class=\"video-list am-u-lg-6\">\n  <div class=\"table-header\">\n    视频列表\n  </div>\n  <div class=\"table-wrap\">\n    <table class=\"am-table am-table-striped\">\n      <thead>\n        <tr>\n          <th>视频编号</th>\n          <th>视频名称</th>\n          <!-- <th></th> -->\n        </tr>\n      </thead>\n      <tbody id=\"videoListWrap\">\n        <!-- <tr>\n          <td>Amaze UI</td>\n          <td>http://amazeui.org</td>\n          <td>2012-10-01</td>\n        </tr> -->\n        <tr>\n          <td colspan=\"3\">暂无数据</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</div>\n"
+	module.exports = "<div class=\"viedo-name-list am-u-lg-6\">\r\n  <div class=\"table-header\">\r\n    节目单列表\r\n  </div>\r\n  <div class=\"table-wrap\">\r\n    <table class=\"am-table am-table-hover am-table-compact\">\r\n      <thead>\r\n        <tr>\r\n          <th>编号</th>\r\n          <th>名称</th>\r\n          <th>直播时间</th>\r\n          <th>状态</th>\r\n        </tr>\r\n      </thead>\r\n      <tbody id=\"showListWrap\">\r\n        <!-- <tr>\r\n          <td>Amaze UI</td>\r\n          <td class=\"name\">://amazeui.</td>\r\n          <td>\r\n            <button class=\"am-btn am-btn-red am-btn-xs am-round\"><i class=\"am-icon-check\"></i> 发布</button>\r\n            <button class=\"am-btn am-btn-xs am-round\"><i class=\"am-icon-close\"></i>删除</button>\r\n          </td>\r\n        </tr> -->\r\n        <tr>\r\n          <td colspan=\"3\">暂无数据</td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n  <div class=\"tip\">\r\n    选中行查看视频列表\r\n  </div>\r\n</div>\r\n\r\n<div class=\"video-list am-u-lg-6\">\r\n  <div class=\"table-header\">\r\n    视频列表\r\n  </div>\r\n  <div class=\"table-wrap\">\r\n    <table class=\"am-table am-table-striped\">\r\n      <thead>\r\n        <tr>\r\n          <th>视频编号</th>\r\n          <th>视频名称</th>\r\n          <!-- <th></th> -->\r\n        </tr>\r\n      </thead>\r\n      <tbody id=\"videoListWrap\">\r\n        <!-- <tr>\r\n          <td>Amaze UI</td>\r\n          <td>http://amazeui.org</td>\r\n          <td>2012-10-01</td>\r\n        </tr> -->\r\n        <tr>\r\n          <td colspan=\"3\">暂无数据</td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
-/* 164 */
+/* 171 */
 /***/ function(module, exports) {
 
-	module.exports = "{{each data as item}}\n<tr data-showid=\"{{item.id}}\" data-showname=\"{{item.name}}\">\n  <td>{{item.id}}</td>\n  <td class=\"name\">{{item.name}}</td>\n  <td>{{item.beginTimeTxt}}</td>\n  <td>\n    {{if item.status == 0}}\n    <button data-action='publish' class=\"am-btn am-btn-red am-btn-xs am-round\"><i data-action='publish' class=\"am-icon-check\"></i> 发布</button>\n    <button data-action='delete' class=\"am-btn am-btn-xs am-round\"><i data-action='delete' class=\"am-icon-close\"></i>删除</button>\n    {{else if item.status == 1}}\n    <span>已发布</span>\n    {{else if item.status == 2}}\n    <span>直播中</span>\n    {{else if item.status == 3}}\n    <span>已结束</span>\n    {{else if item.status == 4}}\n    <span>已过期</span>\n    {{/if}}\n  </td>\n</tr>\n{{/each}}\n{{if data.length <= 0}}\n<tr>\n  <td colspan=\"3\">暂无数据</td>\n</tr>\n{{/if}}\n"
+	module.exports = "{{each data as item}}\r\n<tr data-showid=\"{{item.id}}\" data-showname=\"{{item.name}}\">\r\n  <td>{{item.id}}</td>\r\n  <td class=\"name\">{{item.name}}</td>\r\n  <td>{{item.beginTimeTxt}}</td>\r\n  <td>\r\n    {{if item.status == 0}}\r\n    <button data-action='publish' class=\"am-btn am-btn-red am-btn-xs am-round\"><i data-action='publish' class=\"am-icon-check\"></i> 发布</button>\r\n    <button data-action='delete' class=\"am-btn am-btn-xs am-round\"><i data-action='delete' class=\"am-icon-close\"></i>删除</button>\r\n    {{else if item.status == 1}}\r\n    <span>已发布</span>\r\n    {{else if item.status == 2}}\r\n    <span>直播中</span>\r\n    {{else if item.status == 3}}\r\n    <span>已结束</span>\r\n    {{else if item.status == 4}}\r\n    <span>已过期</span>\r\n    {{/if}}\r\n  </td>\r\n</tr>\r\n{{/each}}\r\n{{if data.length <= 0}}\r\n<tr>\r\n  <td colspan=\"3\">暂无数据</td>\r\n</tr>\r\n{{/if}}\r\n"
 
 /***/ },
-/* 165 */
+/* 172 */
 /***/ function(module, exports) {
 
-	module.exports = "{{each data as item}}\n<tr>\n  <td>{{item.videoId}}</td>\n  <td>{{item.videoName}}</td>\n  <!-- <td>2012-10-01</td> -->\n</tr>\n{{/each}}\n\n{{if data.length <= 0}}\n<tr>\n  <td colspan=\"3\">暂无数据</td>\n</tr>\n{{/if}}\n"
+	module.exports = "{{each data as item}}\r\n<tr>\r\n  <td>{{item.videoId}}</td>\r\n  <td>{{item.videoName}}</td>\r\n  <!-- <td>2012-10-01</td> -->\r\n</tr>\r\n{{/each}}\r\n\r\n{{if data.length <= 0}}\r\n<tr>\r\n  <td colspan=\"3\">暂无数据</td>\r\n</tr>\r\n{{/if}}\r\n"
 
 /***/ },
-/* 166 */
+/* 173 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"create-channel-video-wrap am-margin-top-xl\">\n  <form class=\"am-form select-form\">\n    <fieldset>\n      <!-- <legend>表单标题</legend> -->\n      <div class=\"am-form-group\">\n        <label for=\"doc-select-1\">我的频道</label>\n        <select class=\"select-channel\" id=\"channelSelect\">\n          <option value=\"0\">请选择频道</option>\n        </select>\n        <span class=\"am-form-caret\"></span>\n      </div>\n    </fieldset>\n  </form>\n\n  <div class=\"am-tabs\" data-am-tabs=\"{noSwipe: 1}\" id=\"doc-tab-demo-1\">\n    <ul class=\"am-tabs-nav am-nav am-nav-tabs\">\n      <li class=\"am-active\"><a href=\"javascript: void(0)\">节目单</a></li>\n      <li><a href=\"javascript: void(0)\">创建节目单</a></li>\n    </ul>\n\n    <div class=\"am-tabs-bd am-margin-bottom\">\n      <div id=\"channelShowVideosBlock\" class=\"am-tab-panel am-active am-g\">\n        <!--  -->\n      </div>\n      <div class=\"am-tab-panel\" id=\"createChannelPlayBlock\">\n        <!--  -->\n      </div>\n    </div>\n  </div>\n\n\n</div>\n"
+	module.exports = "<div class=\"create-channel-video-wrap am-margin-top-xl\">\r\n  <form class=\"am-form select-form\">\r\n    <fieldset>\r\n      <!-- <legend>表单标题</legend> -->\r\n      <div class=\"am-form-group\">\r\n        <label for=\"doc-select-1\">我的频道</label>\r\n        <select class=\"select-channel\" id=\"channelSelect\">\r\n          <option value=\"0\">请选择频道</option>\r\n        </select>\r\n        <span class=\"am-form-caret\"></span>\r\n      </div>\r\n    </fieldset>\r\n  </form>\r\n\r\n  <div class=\"am-tabs\" data-am-tabs=\"{noSwipe: 1}\" id=\"doc-tab-demo-1\">\r\n    <ul class=\"am-tabs-nav am-nav am-nav-tabs\">\r\n      <li class=\"am-active\"><a href=\"javascript: void(0)\">节目单</a></li>\r\n      <li><a href=\"javascript: void(0)\">创建节目单</a></li>\r\n    </ul>\r\n\r\n    <div class=\"am-tabs-bd am-margin-bottom\">\r\n      <div id=\"channelShowVideosBlock\" class=\"am-tab-panel am-active am-g\">\r\n        <!--  -->\r\n      </div>\r\n      <div class=\"am-tab-panel\" id=\"createChannelPlayBlock\">\r\n        <!--  -->\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n</div>\r\n"
 
 /***/ },
-/* 167 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6887,19 +7469,19 @@ webpackJsonp([2],[
 	
 	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
-	var DateTime = __webpack_require__(70);
+	var DateTime = __webpack_require__(77);
 	var _ = __webpack_require__(27);
 	
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var WatchRecordModel = __webpack_require__(168);
+	var WatchRecordModel = __webpack_require__(175);
 	
-	var Pagenation = __webpack_require__(144);
+	var Pagenation = __webpack_require__(151);
 	
 	var View = BaseView.extend({
 	  el: '#recordList', // 设置View对象作用于的根元素，比如id
 	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(169);
+	    return __webpack_require__(176);
 	  },
 	  events: { // 监听事件
 	
@@ -6986,13 +7568,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 168 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7018,13 +7600,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 169 */
+/* 176 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"record-wrap has-top-space\">\n    <div id=\"recordList\">\n        加载中...\n    </div>\n    <!---->\n    <script type=\"text/x-template\" id=\"recordTpl\">\n        <!--<div class=\"item\">-->\n            <!--<div class=\"line\">-->\n                <!--<span class=\"point\"></span>-->\n                <!--<span class=\"date\">item.startTimeTxt</span>-->\n            <!--</div>-->\n            <!--<div class=\"content\">-->\n                <!--<a href=\"###\" class=\"img-wrap Left\">-->\n                    <!--<img src=\"http://img4.yytcdn.com/video/mv/140924/2140901/EDF20148A55BEBE8677061256232492F_640x360.jpg\" onerror=\"\"-->\n                         <!--alt=\"\">-->\n                    <!--<div class=\"play\"></div>-->\n                <!--</a>-->\n                <!--<div class=\"info-wrap Left\">-->\n                    <!--<div class=\"item-title\">item.roomName</div>-->\n                    <!--<div class=\"time\">时长: <span class=\"\">item.durationTxt</span></div>-->\n                    <!--<div class=\"anchor\">-->\n                        <!--<img src=\"http://img4.yytcdn.com/video/mv/140924/2140901/EDF20148A55BEBE8677061256232492F_640x360.jpg\" onerror=\"\" alt=\"\">-->\n                        <!--<a class=\"name\" href=\"##\">item.creator.nickName</a>-->\n                    <!--</div>-->\n                <!--</div>-->\n                <!--<div class=\"Clear\"></div>-->\n            <!--</div>-->\n            <!--<div class=\"icon-list\">-->\n                <!--<span class=\"view\">2334</span>-->\n                <!--<span class=\"chat\">34</span>-->\n                <!--<span class=\"like\">3242</span>-->\n                <!--<span class=\"hot\">34</span>-->\n            <!--</div>-->\n        <!--</div>-->\n        {{each data.rooms as item}}\n        <div class=\"item\">\n            <div class=\"line\">\n                <span class=\"point\"></span>\n                <span class=\"date\">{{item.startTimeTxt}}</span>\n            </div>\n            <div class=\"content\">\n                <a href=\"{{item.status==2?'liveroom':'playback'}}.html?roomId={{item.roomId}}\" class=\"img-wrap Left\">\n                    <img src=\"{{item.posterPic}}\" onerror=\"src='../img/bg-demo.jpg'\"\n                         alt=\"\">\n                    <div class=\"play\"></div>\n                </a>\n                <div class=\"info-wrap Left\">\n                    <div class=\"item-title\">{{item.roomName}}</div>\n                    <div class=\"time\">时长: <span class=\"time-val\">{{item.durationTxt}}</span></div>\n                    <div class=\"anchor\">\n                        <img src=\"{{item.creator.smallAvatar}}\" onerror=\"this.src='../img/bg-demo.jpg'\" alt=\"\">\n                        <a style=\"cursor:default;\" class=\"name\" href=\"javascript:;\">{{item.creator.nickName}}</a>\n                    </div>\n                </div>\n                <div class=\"Clear\"></div>\n            </div>\n            <div class=\"icon-list\">\n                <span class=\"view\">{{item.onlineMax}}</span>\n                <span class=\"chat\">{{item.bulletCurtain}}</span>\n                <span class=\"like\">{{item.assemble}}</span>\n                <span class=\"hot\">{{item.popularity}}</span>\n            </div>\n        </div>\n        {{/each}}\n        {{ if data.rooms.length <= 0}}\n        <div class=\"no-data\">\n            暂无数据\n        </div>\n        {{/if}}\n\n    </script>\n    <!--分页-->\n    <div class=\"page-block\">\n        <div class=\"page-wrap\" id=\"page-wrap\">\n\n        </div>\n    </div>\n</div>\n"
+	module.exports = "<div class=\"record-wrap has-top-space\">\r\n    <div id=\"recordList\">\r\n        加载中...\r\n    </div>\r\n    <!---->\r\n    <script type=\"text/x-template\" id=\"recordTpl\">\r\n        <!--<div class=\"item\">-->\r\n            <!--<div class=\"line\">-->\r\n                <!--<span class=\"point\"></span>-->\r\n                <!--<span class=\"date\">item.startTimeTxt</span>-->\r\n            <!--</div>-->\r\n            <!--<div class=\"content\">-->\r\n                <!--<a href=\"###\" class=\"img-wrap Left\">-->\r\n                    <!--<img src=\"http://img4.yytcdn.com/video/mv/140924/2140901/EDF20148A55BEBE8677061256232492F_640x360.jpg\" onerror=\"\"-->\r\n                         <!--alt=\"\">-->\r\n                    <!--<div class=\"play\"></div>-->\r\n                <!--</a>-->\r\n                <!--<div class=\"info-wrap Left\">-->\r\n                    <!--<div class=\"item-title\">item.roomName</div>-->\r\n                    <!--<div class=\"time\">时长: <span class=\"\">item.durationTxt</span></div>-->\r\n                    <!--<div class=\"anchor\">-->\r\n                        <!--<img src=\"http://img4.yytcdn.com/video/mv/140924/2140901/EDF20148A55BEBE8677061256232492F_640x360.jpg\" onerror=\"\" alt=\"\">-->\r\n                        <!--<a class=\"name\" href=\"##\">item.creator.nickName</a>-->\r\n                    <!--</div>-->\r\n                <!--</div>-->\r\n                <!--<div class=\"Clear\"></div>-->\r\n            <!--</div>-->\r\n            <!--<div class=\"icon-list\">-->\r\n                <!--<span class=\"view\">2334</span>-->\r\n                <!--<span class=\"chat\">34</span>-->\r\n                <!--<span class=\"like\">3242</span>-->\r\n                <!--<span class=\"hot\">34</span>-->\r\n            <!--</div>-->\r\n        <!--</div>-->\r\n        {{each data.rooms as item}}\r\n        <div class=\"item\">\r\n            <div class=\"line\">\r\n                <span class=\"point\"></span>\r\n                <span class=\"date\">{{item.startTimeTxt}}</span>\r\n            </div>\r\n            <div class=\"content\">\r\n                <a href=\"{{item.status==2?'liveroom':'playback'}}.html?roomId={{item.roomId}}\" class=\"img-wrap Left\">\r\n                    <img src=\"{{item.posterPic}}\" onerror=\"src='../img/bg-demo.jpg'\"\r\n                         alt=\"\">\r\n                    <div class=\"play\"></div>\r\n                </a>\r\n                <div class=\"info-wrap Left\">\r\n                    <div class=\"item-title\">{{item.roomName}}</div>\r\n                    <div class=\"time\">时长: <span class=\"time-val\">{{item.durationTxt}}</span></div>\r\n                    <div class=\"anchor\">\r\n                        <img src=\"{{item.creator.smallAvatar}}\" onerror=\"this.src='../img/bg-demo.jpg'\" alt=\"\">\r\n                        <a style=\"cursor:default;\" class=\"name\" href=\"javascript:;\">{{item.creator.nickName}}</a>\r\n                    </div>\r\n                </div>\r\n                <div class=\"Clear\"></div>\r\n            </div>\r\n            <div class=\"icon-list\">\r\n                <span class=\"view\">{{item.onlineMax}}</span>\r\n                <span class=\"chat\">{{item.bulletCurtain}}</span>\r\n                <span class=\"like\">{{item.assemble}}</span>\r\n                <span class=\"hot\">{{item.popularity}}</span>\r\n            </div>\r\n        </div>\r\n        {{/each}}\r\n        {{ if data.rooms.length <= 0}}\r\n        <div class=\"no-data\">\r\n            暂无数据\r\n        </div>\r\n        {{/if}}\r\n\r\n    </script>\r\n    <!--分页-->\r\n    <div class=\"page-block\">\r\n        <div class=\"page-wrap\" id=\"page-wrap\">\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ },
-/* 170 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7038,20 +7620,20 @@ webpackJsonp([2],[
 	var base = __webpack_require__(28);
 	var _ = __webpack_require__(27);
 	var BaseView = base.View; // View的基类
-	var UserModel = __webpack_require__(45);
+	var UserModel = __webpack_require__(52);
 	var user = UserModel.sharedInstanceUserModel();
-	var DateTime = __webpack_require__(70);
+	var DateTime = __webpack_require__(77);
 	
-	var FollowingListModel = __webpack_require__(171);
-	var UnFollowModel = __webpack_require__(172);
-	var AnchorLastestModel = __webpack_require__(173);
-	var msgBox = __webpack_require__(69);
-	var Pagenation = __webpack_require__(144);
+	var FollowingListModel = __webpack_require__(178);
+	var UnFollowModel = __webpack_require__(179);
+	var AnchorLastestModel = __webpack_require__(180);
+	var msgBox = __webpack_require__(76);
+	var Pagenation = __webpack_require__(151);
 	
 	var View = BaseView.extend({
 	  el: '#followingList', // 设置View对象作用于的根元素，比如id
 	  rawLoader: function () { // 可用此方法返回字符串模版
-	    return __webpack_require__(174);
+	    return __webpack_require__(181);
 	  },
 	  events: { // 监听事件
 	    'click #followList': 'cancelClicked'
@@ -7204,13 +7786,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 171 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7236,13 +7818,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 172 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7268,13 +7850,13 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 173 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var base = __webpack_require__(28);
-	var Config = __webpack_require__(44);
+	var Config = __webpack_require__(51);
 	var BaseModel = base.Model;
 	var env = Config.env[Config.scheme];
 	
@@ -7300,25 +7882,25 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 174 */
+/* 181 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"following-wrap has-top-space\">\n    <div id=\"followList\">\n        加载中...\n    </div>\n    <!---->\n    <script type=\"text/x-template\" id=\"followTpl\">\n        {{each data.users as item}}\n        <div class=\"item\">\n            <a class=\"avatar Left\" href=\"###\" data-uid=\"{{item.uid}}\">\n                <img data-uid=\"{{item.uid}}\" src=\"{{item.largeAvatar}}\" alt=\"\"></a>\n            <div class=\"info-wrap Left\">\n                <div class=\"name\">{{item.nickName}}</div>\n                <div class=\"played\">主持的主播:\n                    <sapn class=\"total\">{{item.liveCount}}</sapn>\n                    场\n                </div>\n                <button data-id=\"{{item.uid}}\" class=\"am-btn am-btn-red boderRadAll_3\">取消关注</button>\n            </div>\n            <div class=\"Clear\"></div>\n        </div>\n        {{/each}}\n        {{ if data.users.length<= 0 }}\n        <div class=\"no-data\">\n            暂无数据\n        </div>\n        {{/if}}\n    </script>\n    <!---->\n    <div class=\"page-block\">\n        <div class=\"page-wrap\" id=\"followPageWrap\">\n\n        </div>\n    </div>\n\n</div>"
+	module.exports = "<div class=\"following-wrap has-top-space\">\r\n    <div id=\"followList\">\r\n        加载中...\r\n    </div>\r\n    <!---->\r\n    <script type=\"text/x-template\" id=\"followTpl\">\r\n        {{each data.users as item}}\r\n        <div class=\"item\">\r\n            <a class=\"avatar Left\" href=\"###\" data-uid=\"{{item.uid}}\">\r\n                <img data-uid=\"{{item.uid}}\" src=\"{{item.largeAvatar}}\" alt=\"\"></a>\r\n            <div class=\"info-wrap Left\">\r\n                <div class=\"name\">{{item.nickName}}</div>\r\n                <div class=\"played\">主持的主播:\r\n                    <sapn class=\"total\">{{item.liveCount}}</sapn>\r\n                    场\r\n                </div>\r\n                <button data-id=\"{{item.uid}}\" class=\"am-btn am-btn-red boderRadAll_3\">取消关注</button>\r\n            </div>\r\n            <div class=\"Clear\"></div>\r\n        </div>\r\n        {{/each}}\r\n        {{ if data.users.length<= 0 }}\r\n        <div class=\"no-data\">\r\n            暂无数据\r\n        </div>\r\n        {{/if}}\r\n    </script>\r\n    <!---->\r\n    <div class=\"page-block\">\r\n        <div class=\"page-wrap\" id=\"followPageWrap\">\r\n\r\n        </div>\r\n    </div>\r\n\r\n</div>"
 
 /***/ },
-/* 175 */
+/* 182 */
 /***/ function(module, exports) {
 
-	module.exports = "<!---->\n<div class=\"tab-content my-live-show-wrap\" id=\"tab-my-live\">\n  <div class=\"top-header am-margin-top-xl am-margin-bottom\">\n    <div id=\"liveState\" class=\"live-status-wrap boderRadAll_5\">\n      <a href=\"javascript:;\" data-state=\"0\" class=\"right-border active\">未开播</a>\n      <a style=\"margin-left: -4px;\" href=\"javascript:;\" data-state=\"1\">历史直播</a>\n    </div>\n  </div>\n  <div class=\"list-wrap\">\n    <div id=\"noOpenListLive\" class=\"unClosed-list-wrap\">\n      <div id=\"noOpenContent\">\n      </div>\n      <!-- 分页 -->\n      <div class=\"page-block\">\n        <div class=\"page-wrap\" id=\"noOpenPageBox\">\n\n        </div>\n      </div>\n    </div>\n    <div id=\"historyListLive\" class=\"closed-list-wrap Hidden\">\n      <div id=\"historyContent\">\n        <!-- 历史直播 -->\n      </div>\n      <!-- 分页 -->\n      <div class=\"page-block\">\n        <div class=\"page-wrap\" id=\"historyPageBox\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<!--创建直播-->\n<div id=\"createLiveVideo\" class=\"tab-content Hidden creatLive\"></div>\n<!--观看记录-->\n<div id=\"recordList\" class=\"tab-content Hidden\"></div>\n<!--我的关注-->\n<div id=\"followingList\" class=\"tab-content Hidden\"></div>\n<!---->\n<div id=\"tabSetting\" class=\"tab-content Hidden setting\">\n  <div id=\"profileSate\" class=\"two-tab boderRadAll_5 am-margin-top-xl am-margin-bottom\">\n    <a href=\"javascript:;\" data-state=\"0\" class=\"right-border active\">个人资料</a>\n    <a style=\"margin-left: -4px;\" href=\"javascript:;\" data-state=\"1\">修改密码</a>\n  </div>\n  <!--<ol class=\"setContrl clearfix\" id=\"profileSate\">-->\n  <!--<li class=\"fl on\" data-state=\"0\">个人资料</li>-->\n  <!--<li class=\"fl\" data-state=\"1\">修改密码</li>-->\n  <!--</ol>-->\n  <div class=\"set_Con\">\n    <div class=\"personInfo show\" id=\"editProfile\">\n    </div>\n    <div class=\"modifyPwd Hidden\" id=\"updatePassword\">\n    </div>\n  </div>\n</div>\n<!--  创建节目单 -->\n<div id=\"tabChannel\" class=\"tab-content Hidden\">\n\n</div>\n"
+	module.exports = "<!---->\r\n<div class=\"tab-content my-live-show-wrap\" id=\"tab-my-live\">\r\n  <div class=\"top-header am-margin-top-xl am-margin-bottom\">\r\n    <div id=\"liveState\" class=\"live-status-wrap boderRadAll_5\">\r\n      <a href=\"javascript:;\" data-state=\"0\" class=\"right-border active\">未开播</a>\r\n      <a style=\"margin-left: -4px;\" href=\"javascript:;\" data-state=\"1\">历史直播</a>\r\n    </div>\r\n  </div>\r\n  <div class=\"list-wrap\">\r\n    <div id=\"noOpenListLive\" class=\"unClosed-list-wrap\">\r\n      <div id=\"noOpenContent\">\r\n      </div>\r\n      <!-- 分页 -->\r\n      <div class=\"page-block\">\r\n        <div class=\"page-wrap\" id=\"noOpenPageBox\">\r\n\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div id=\"historyListLive\" class=\"closed-list-wrap Hidden\">\r\n      <div id=\"historyContent\">\r\n        <!-- 历史直播 -->\r\n      </div>\r\n      <!-- 分页 -->\r\n      <div class=\"page-block\">\r\n        <div class=\"page-wrap\" id=\"historyPageBox\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<!--创建直播-->\r\n<div id=\"createLiveVideo\" class=\"tab-content Hidden creatLive\"></div>\r\n<!--观看记录-->\r\n<div id=\"recordList\" class=\"tab-content Hidden\"></div>\r\n<!--我的关注-->\r\n<div id=\"followingList\" class=\"tab-content Hidden\"></div>\r\n<!---->\r\n<div id=\"tabSetting\" class=\"tab-content Hidden setting\">\r\n  <div id=\"profileSate\" class=\"two-tab boderRadAll_5 am-margin-top-xl am-margin-bottom\">\r\n    <a href=\"javascript:;\" data-state=\"0\" class=\"right-border active\">个人资料</a>\r\n    <a style=\"margin-left: -4px;\" href=\"javascript:;\" data-state=\"1\">修改密码</a>\r\n  </div>\r\n  <!--<ol class=\"setContrl clearfix\" id=\"profileSate\">-->\r\n  <!--<li class=\"fl on\" data-state=\"0\">个人资料</li>-->\r\n  <!--<li class=\"fl\" data-state=\"1\">修改密码</li>-->\r\n  <!--</ol>-->\r\n  <div class=\"set_Con\">\r\n    <div class=\"personInfo show\" id=\"editProfile\">\r\n    </div>\r\n    <div class=\"modifyPwd Hidden\" id=\"updatePassword\">\r\n    </div>\r\n  </div>\r\n</div>\r\n<!--  创建节目单 -->\r\n<div id=\"tabChannel\" class=\"tab-content Hidden\">\r\n\r\n</div>\r\n"
 
 /***/ },
-/* 176 */
+/* 183 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"am-container\" id=\"pageContent\">\n</div>"
+	module.exports = "<div class=\"am-container\" id=\"pageContent\">\r\n</div>"
 
 /***/ },
-/* 177 */
+/* 184 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

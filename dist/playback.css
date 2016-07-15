@@ -3030,8 +3030,7 @@ body {
 .live-room-wrap .gift-wrap {
   height: 90px;
   background-color: #fff;
-  padding-top: 10px;
-  margin-top: 6px; }
+  padding-top: 10px; }
   .live-room-wrap .gift-wrap .lucky-draw {
     position: relative;
     display: inline-block;
@@ -3081,6 +3080,7 @@ body {
         height: 20px;
         margin-right: 4px; }
   .live-room-wrap .gift-wrap .jcarousel-wrapper {
+    margin-top: 5px;
     display: inline-block;
     position: relative;
     width: 360px; }
