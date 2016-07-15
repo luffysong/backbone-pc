@@ -11,14 +11,14 @@ webpackJsonp([7],[
 	$(function () {
 	  'use strict';
 	  var TopBarView = __webpack_require__(102);
-	  var MainView = __webpack_require__(247);
+	  var MainView = __webpack_require__(249);
 	
 	  var a = new TopBarView();
 	
 	  a = new MainView();
 	
 	  console.log(a);
-	  __webpack_require__(253);
+	  __webpack_require__(255);
 	});
 
 
@@ -1961,7 +1961,7 @@ webpackJsonp([7],[
 /* 44 */
 /***/ function(module, exports) {
 
-	var config = {"scheme":"alpha","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
+	var config = {"scheme":"release","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
 
 /***/ },
 /* 45 */
@@ -6485,7 +6485,8 @@ webpackJsonp([7],[
 	      },
 	      smallAvatar: user.get('bigheadImg'),
 	      roomId: this.roomInfo.id,
-	      time: ''
+	      time: '',
+	      source: this.options.type === 'channel' ? 2 : 1
 	    };
 	    // 处理频道发言
 	    if (this.options.type === 'channel') {
@@ -6989,7 +6990,9 @@ webpackJsonp([7],[
 /* 244 */,
 /* 245 */,
 /* 246 */,
-/* 247 */
+/* 247 */,
+/* 248 */,
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -7019,8 +7022,8 @@ webpackJsonp([7],[
 	var YYTIMServer = __webpack_require__(42);
 	var AnchorUserInfoModel = __webpack_require__(63);
 	var UserInfo = __webpack_require__(62);
-	var InAndOurRoomModel = __webpack_require__(248);
-	var HistoryAddModel = __webpack_require__(249);
+	var InAndOurRoomModel = __webpack_require__(250);
+	var HistoryAddModel = __webpack_require__(251);
 	
 	var FlashAPI = __webpack_require__(82);
 	var store = base.storage;
@@ -7028,7 +7031,7 @@ webpackJsonp([7],[
 	var msgBox = __webpack_require__(69);
 	
 	var AdvertisingWallView = __webpack_require__(64);
-	var LivePreviewView = __webpack_require__(250);
+	var LivePreviewView = __webpack_require__(252);
 	
 	var View = BaseView.extend({
 	  clientRender: false,
@@ -7195,7 +7198,7 @@ webpackJsonp([7],[
 	    var ChatView = __webpack_require__(208);
 	    var SendMessageView = __webpack_require__(211);
 	    var AnchorCardView = __webpack_require__(201);
-	    var PlayedListView = __webpack_require__(251);
+	    var PlayedListView = __webpack_require__(253);
 	    var GiftView = __webpack_require__(213);
 	
 	
@@ -7500,7 +7503,7 @@ webpackJsonp([7],[
 
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7532,7 +7535,7 @@ webpackJsonp([7],[
 
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7581,7 +7584,7 @@ webpackJsonp([7],[
 
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7664,7 +7667,7 @@ webpackJsonp([7],[
 
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -7682,7 +7685,7 @@ webpackJsonp([7],[
 	
 	var base = __webpack_require__(28);
 	var BaseView = base.View; // View的基类
-	var PlayedListModel = __webpack_require__(252);
+	var PlayedListModel = __webpack_require__(254);
 	var UserModel = __webpack_require__(45);
 	var user = UserModel.sharedInstanceUserModel();
 	var Backbone = window.Backbone;
@@ -7784,7 +7787,7 @@ webpackJsonp([7],[
 
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7816,7 +7819,7 @@ webpackJsonp([7],[
 
 
 /***/ },
-/* 253 */
+/* 255 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

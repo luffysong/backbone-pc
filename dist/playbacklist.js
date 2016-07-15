@@ -14,12 +14,12 @@ webpackJsonp([10],{
 	  'use strict';
 	  var TopBarView = __webpack_require__(102);
 	  var a = new TopBarView();
-	  var MainView = __webpack_require__(256);
+	  var MainView = __webpack_require__(258);
 	  var b = new MainView();
 	
 	  console.log(a, b);
 	
-	  __webpack_require__(257);
+	  __webpack_require__(259);
 	});
 
 
@@ -1573,7 +1573,7 @@ webpackJsonp([10],{
 /***/ 44:
 /***/ function(module, exports) {
 
-	var config = {"scheme":"alpha","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
+	var config = {"scheme":"release","env":{"alpha":{"url_prefix":"http://beta.yinyuetai.com:9019"},"beta":{"url_prefix":"http://beta.yinyuetai.com:9019"},"release":{"url_prefix":"http://lapi.yinyuetai.com"}},"prefix":"","domains":{"urlStatic":"http://s.yytcdn.com","loginSite":"http://login.yinyuetai.com","mainSite":"http://www.yinyuetai.com","mvSite":"http://mv.yinyuetai.com","homeSite":"http://i.yinyuetai.com","vchartSite":"http://vchart.yinyuetai.com","commentSite":"http://comment.yinyuetai.com","playlistSite":"http://pl.yinyuetai.com","searcresiehSite":"http://so.yinyuetai.com","vSite":"http://v.yinyuetai.com","fanSite":"","paySite":"","tradeSite":"","shopSite":"","vipSite":""}}; module.exports = config;
 
 /***/ },
 
@@ -3283,7 +3283,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 256:
+/***/ 258:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3436,7 +3436,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 257:
+/***/ 259:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
