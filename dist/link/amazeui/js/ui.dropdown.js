@@ -71,7 +71,7 @@ Dropdown.prototype.open = function(e) {
 
   $toggle.trigger('focus');
 
-  this.checkDimensions(e);
+  this.checkDimensions();
 
   var complete = $.proxy(function() {
     $element.trigger('opened.dropdown.amui');
@@ -135,18 +135,12 @@ Dropdown.prototype.disable = function() {
   this.$toggle.prop('disabled', true);
 },
 
-Dropdown.prototype.checkDimensions = function(e) {
+Dropdown.prototype.checkDimensions = function() {
   if (!this.$dropdown.length) {
     return;
   }
 
   var $dropdown = this.$dropdown;
-  
-  // @see #873
-  if (e && e.offset) {
-    $dropdown.offset(e.offset);
-  }
-
   var offset = $dropdown.offset();
   var width = $dropdown.outerWidth();
   var boundaryWidth = this.$boundary.width();

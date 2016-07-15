@@ -824,9 +824,7 @@
   &:focus,
   &:active,
   &.@{ns}active,
-  // fixes #872
-  // dropdown nested in component has `.am-active` state should not active
-  .@{ns}dropdown.@{ns}active &.@{ns}dropdown-toggle {
+  .@{ns}active &.@{ns}dropdown-toggle {
     color: @color;
     border-color: darken(@border, 12%);
   }
@@ -838,7 +836,7 @@
 
   &:active,
   &.@{ns}active,
-  .@{ns}dropdown.@{ns}active &.@{ns}dropdown-toggle {
+  .@{ns}active &.@{ns}dropdown-toggle {
     background-image: none;
     background-color: darken(@background, 14%);
   }
@@ -861,8 +859,6 @@
   .@{ns}btn-group-stacked & {
     border-color: darken(@background, 5%);
   }
-
-  // TODO: add `hollow` button style
 }
 
 // Button size

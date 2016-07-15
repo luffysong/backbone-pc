@@ -113,7 +113,7 @@ UI.plugin('scrollspynav', ScrollSpyNav);
 
 // Init code
 UI.ready(function(context) {
-  $('[data-am-scrollspynav]', context).scrollspynav();
+  $('[data-am-scrollspy-nav]', context).scrollspynav();
 });
 
 module.exports = ScrollSpyNav;

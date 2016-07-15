@@ -19,7 +19,6 @@ var Button = function(element, options) {
 Button.DEFAULTS = {
   loadingText: 'loading...',
   disabledClassName: 'am-disabled',
-  activeClassName: 'am-active',
   spinner: undefined
 };
 
@@ -68,28 +67,27 @@ Button.prototype.toggle = function() {
   var changed = true;
   var $element = this.$element;
   var $parent = this.$element.parent('[class*="am-btn-group"]');
-  var activeClassName = Button.DEFAULTS.activeClassName;
 
   if ($parent.length) {
     var $input = this.$element.find('input');
 
     if ($input.prop('type') == 'radio') {
-      if ($input.prop('checked') && $element.hasClass(activeClassName)) {
+      if ($input.prop('checked') && $element.hasClass('am-active')) {
         changed = false;
       } else {
-        $parent.find('.' + activeClassName).removeClass(activeClassName);
+        $parent.find('.am-active').removeClass('am-active');
       }
     }
 
     if (changed) {
       $input.prop('checked',
-        !$element.hasClass(activeClassName)).trigger('change');
+        !$element.hasClass('am-active')).trigger('change');
     }
   }
 
   if (changed) {
-    $element.toggleClass(activeClassName);
-    if (!$element.hasClass(activeClassName)) {
+    $element.toggleClass('am-active');
+    if (!$element.hasClass('am-active')) {
       $element.blur();
     }
   }
@@ -120,11 +118,6 @@ $(document).on('click.button.amui.data-api', '[data-am-button]', function(e) {
 
 UI.ready(function(context) {
   $('[data-am-loading]', context).button();
-
-  // resolves #866
-  $('[data-am-button]', context).find('input:checked').each(function() {
-    $(this).parent('label').addClass(Button.DEFAULTS.activeClassName);
-  });
 });
 
 module.exports = UI.button = Button;

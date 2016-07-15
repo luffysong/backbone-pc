@@ -13,6 +13,7 @@
 
         var self = this,
         Paging = {
+            "isFinished": false,
 
             "setOptions": function(opts) {
 
@@ -100,7 +101,7 @@
 
                     "format"		: "",	// visual format string
 
-                    "lock"              : false, // set to true, if you want to disable the pagination for a while. 
+                    "lock"              : false, // set to true, if you want to disable the pagination for a while.
 
                     "onFormat"		: function (type) {	// callback for every format element
 
@@ -224,7 +225,7 @@
                         $["ajax"]({
                             "url": Paging.opts["refresh"]["url"],
                             "success": function(data) {
-                                
+
                                 if (typeof(data) === "string") {
 
                                     try {
@@ -401,11 +402,11 @@
                 };
 
                 buffer = "";
-                
+
                 function buffer_append(opts, data, type) {
-                    
+
                     type = "" + (opts["onFormat"].call(data, type));
-                    
+
                     if (data["value"])
                         buffer+= type.replace(/<a/i, '<a data-page="' + data["value"] + '"');
                     else
@@ -447,7 +448,7 @@
                             data["value"]      = 1;
                             data["active"]     = tmp && 1 < page;
                             break;
-                            
+
                         case "prev":
                             data["value"]      = Math.max(1, page - 1);
                             data["active"]     = tmp && 1 < page;
@@ -461,7 +462,7 @@
                                 data["active"]     = tmp && page < pages;
                             }
                             break;
-                            
+
                         case "next":
                             if ((data["active"]	   = (number < 0))) {
                                 data["value"]      = 1 + page;
@@ -485,7 +486,7 @@
 
                     buffer_append(opts, data, node.ftype);
                 }
-                
+
                 if (self.length) {
 
                     $("a", self["html"](buffer)).click(function(ev) {
@@ -512,8 +513,11 @@
                         "number"	: number,
                         "lapping"	: lapping,
                         "pages"		: pages,
-                        "slice"		: data["slice"]
+                        "slice"		: data["slice"],
+                        "isFinished": Paging.isFinished
                     }, page);
+
+                    Paging.isFinished =  true;
                 }
                 return Paging;
             }

@@ -2,7 +2,6 @@
 
 var $ = require('jquery');
 var UI = require('./core');
-var requestAnimationFrame = UI.utils.rAF;
 
 /**
  * @via https://github.com/manuelstofer/pinchzoom/blob/master/src/pinchzoom.js
@@ -10,7 +9,6 @@ var requestAnimationFrame = UI.utils.rAF;
  */
 
 var definePinchZoom = function($) {
-
   /**
    * Pinch zoom using jQuery
    * @version 0.0.2
@@ -48,10 +46,11 @@ var definePinchZoom = function($) {
       tapZoomFactor: 2,
       zoomOutFactor: 1.3,
       animationDuration: 300,
-      maxZoom: 4,
+      animationInterval: 5,
+      maxZoom: 5,
       minZoom: 0.5,
       lockDragAxis: false,
-      use2d: true,
+      use2d: false,
       zoomStartEventName: 'pz_zoomstart',
       zoomEndEventName: 'pz_zoomend',
       dragStartEventName: 'pz_dragstart',
@@ -148,7 +147,7 @@ var definePinchZoom = function($) {
         center = this.getCurrentZoomCenter();
       }
 
-      this.animate(this.options.animationDuration, updateProgress, this.swing);
+      this.animate(this.options.animationDuration, this.options.animationInterval, updateProgress, this.swing);
       this.el.trigger(this.options.doubleTapEventName);
     },
 
@@ -307,6 +306,7 @@ var definePinchZoom = function($) {
 
       this.animate(
         this.options.animationDuration,
+        this.options.animationInterval,
         updateProgress,
         this.swing
       );
@@ -326,6 +326,7 @@ var definePinchZoom = function($) {
 
       this.animate(
         this.options.animationDuration,
+        this.options.animationInterval,
         updateProgress,
         this.swing
       );
@@ -335,7 +336,9 @@ var definePinchZoom = function($) {
      * Updates the aspect ratio
      */
     updateAspectRatio: function() {
-      this.setContainerY(this.getContainerX() / this.getAspectRatio());
+      // this.setContainerY(this.getContainerX() / this.getAspectRatio());
+      // @modified
+      this.setContainerY()
     },
 
     /**
@@ -416,11 +419,12 @@ var definePinchZoom = function($) {
      * Animation loop
      * does not support simultaneous animations
      * @param duration
+     * @param interval
      * @param framefn
      * @param timefn
      * @param callback
      */
-    animate: function(duration, framefn, timefn, callback) {
+    animate: function(duration, interval, framefn, timefn, callback) {
       var startTime = new Date().getTime(),
         renderFrame = (function() {
           if (!this.inAnimation) {
@@ -442,11 +446,11 @@ var definePinchZoom = function($) {
             }
             framefn(progress);
             this.update();
-            requestAnimationFrame(renderFrame);
+            setTimeout(renderFrame, interval);
           }
         }).bind(this);
       this.inAnimation = true;
-      requestAnimationFrame(renderFrame);
+      renderFrame();
     },
 
     /**
@@ -466,15 +470,22 @@ var definePinchZoom = function($) {
     },
 
     getContainerX: function() {
-      return this.container[0].offsetWidth;
+      // return this.container[0].offsetWidth;
+      // @modified
+      return window.innerWidth
     },
 
     getContainerY: function() {
-      return this.container[0].offsetHeight;
+      // return this.container[0].offsetHeight;
+      // @modified
+      return window.innerHeight
     },
 
     setContainerY: function(y) {
-      return this.container.height(y);
+      // return this.container.height(y);
+      // @modified
+      var t = window.innerHeight;
+      return this.el.css({height: t}), this.container.height(t);
     },
 
     /**
@@ -678,7 +689,7 @@ var definePinchZoom = function($) {
 
           target.handleDoubleTap(event);
           switch (interaction) {
-            case 'zoom':
+            case "zoom":
               target.handleZoomEnd(event);
               break;
             case 'drag':

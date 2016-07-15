@@ -1,3 +1,6 @@
+/* jshint -W097*/
+/* jshint node:true */
+
 'use strict';
 
 var path = require('path');
@@ -63,9 +66,7 @@ var config = {
       warnings: false
     },
     output: {
-      /* eslint-disable camelcase */
       ascii_only: true
-      /* eslint-enable camelcase */
     }
   }
 };
@@ -119,7 +120,7 @@ var preparingData = function() {
 
   jsEntry += '\'use strict\';\n\n' + 'var $ = require(\'jquery\');\n';
 
-  plugins.forEach(function(plugin) {
+  plugins.forEach(function(plugin, i) {
     var basename = path.basename(plugin, '.js');
 
     if (basename !== 'amazeui' && basename !== 'amazeui.legacy' &&
@@ -140,7 +141,7 @@ var preparingData = function() {
   partials += '  var registerAMUIPartials = function(hbs) {\n';
 
   // get widgets dependencies
-  allWidgets.forEach(function(widget) {
+  allWidgets.forEach(function(widget, i) {
     // read widget package.json
     var pkg = require(path.join(__dirname, WIDGET_DIR, widget, 'package.json'));
     // ./widget/header/src/header
@@ -148,7 +149,7 @@ var preparingData = function() {
 
     widgetsStyle += '\r\n// ' + widget + '\r\n';
     widgetsStyle += '@import ".' + srcPath + '.less";' + '\r\n';
-    pkg.themes.forEach(function(item) {
+    pkg.themes.forEach(function(item, index) {
       if (!item.hidden && item.name && item.name !== 'one') {
         widgetsStyle += '@import ".' + srcPath + '.' + item.name +
           '.less";' + '\r\n';
@@ -243,11 +244,7 @@ gulp.task('build:less', function() {
     .pipe($.size({showFiles: true, title: 'source'}))
     // Disable advanced optimizations - selector & property merging, etc.
     // for Issue #19 https://github.com/allmobilize/amazeui/issues/19
-    .pipe($.cleanCss({
-      advanced: false,
-      // @see https://github.com/jakubpawlowicz/clean-css#how-to-set-a-compatibility-mode
-      compatibility: 'ie8'
-    }))
+    .pipe($.minifyCss({noAdvanced: true}))
     .pipe($.rename({
       suffix: '.min',
       extname: '.css'
@@ -343,14 +340,12 @@ gulp.task('watch', function() {
 // Task: Make archive
 gulp.task('archive', function(cb) {
   runSequence([
-    'archive:copy:css',
-    'archive:copy:fonts',
-    'archive:copy:js'
-  ],
+      'archive:copy:css',
+      'archive:copy:fonts',
+      'archive:copy:js'
+    ],
     'archive:zip',
-    'archive:clean',
-    cb
-  );
+    'archive:clean', cb);
 });
 
 gulp.task('archive:copy:css', function() {
