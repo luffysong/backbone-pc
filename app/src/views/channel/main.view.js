@@ -76,6 +76,8 @@ var View = BaseView.extend({
     };
 
     this.pushRoom = new PushRoom({});
+    //  热门直播的数据状态
+    this.liveHotSectionDataState = false;
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -97,7 +99,6 @@ var View = BaseView.extend({
     this.getPageList();
 
     this.renderLivePreViewList();
-
     $(document).on('scroll', function (e) {
       self.bodyScroll(e);
     });
@@ -123,12 +124,13 @@ var View = BaseView.extend({
     var self = this;
     var html = '';
     var promise = this.livePreViewModel.executeJSONP(this.livePreViewParams);
-
     promise.done(function (res) {
       if (res && res.data && res.msg === 'SUCCESS') {
         if (res.data.length <= 0) {
+          self.liveHotSectionDataState = true;
           $('#liveHotSection').hide();
         } else {
+          self.liveHotSectionDataState = false;
           html = self.compileHTML(self.livePreViewItemTpl, res);
           self.livepreViewList.html(html);
         }
@@ -221,8 +223,10 @@ var View = BaseView.extend({
     var scrollTop = target.scrollTop();
     var wrapHeight = $('.scroll-' + this.channelType).height();
     var diff = scrollTop - wrapHeight;
+    // var clientH = document.body.clientHeight;
+    // console.log(diff, this.channelType, this.hasData[this.channelType], clientH, scrollTop);
     var temp = {
-      0: -165,
+      0: -684,
       1: -520,
       2: -520
     };
@@ -243,6 +247,9 @@ var View = BaseView.extend({
       target.addClass('active');
       this.allContainerDOM.hide();
       $('.section-' + this.channelType).show();
+      if (this.liveHotSectionDataState) {
+        $('#liveHotSection').hide();
+      }
       // this.getPageList(this.currentPage[this.channelType]);
     }
   },
