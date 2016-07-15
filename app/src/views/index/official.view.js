@@ -74,7 +74,7 @@ var View = BaseView.extend({
     promise.done(function (res) {
       if (res && res.data && res.msg === 'SUCCESS') {
         len = 5 - ~~res.data.length;
-        self.hideOfficialBlock(len);
+        self.hideOfficialBlock(~~res.data.length);
         list = res.data;
         while (len-- > 0) {
           list.push(_.extend({}, self.emptyItem));
