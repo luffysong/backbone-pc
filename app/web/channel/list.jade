@@ -44,14 +44,14 @@ section.am-container#liveHotSection.section-0.section
             footer.gradient-up
         div.anchor-info.am-cf
           div.am-fl
-            div.title.am-text-truncate='{{item.roomName}}'
+            div.title_btn.am-text-truncate='{{item.roomName}}'
             img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
             span.name='{{item.creator.nickName}}'
           div.am-fr
-            button.am-btn.am-btn-red.boderRadAll_5(data-roomId='{{item.roomId}}')
+            button.am-btn.am-btn-red.boderRadAll_5.push_btn(data-roomId='{{item.roomId}}')
               i
               span='顶上去'
-        footer.viedo-bg
+        //footer.viedo-bg
       | {{/each}}
 // 精彩回放
 section.am-container.section-0.section
@@ -80,7 +80,7 @@ section.am-container.section-0.section
             div.title.am-text-truncate='{{item.roomName}}'
             img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
             span.name='{{item.creator.nickName}}'
-        footer.viedo-bg
+        //footer.viedo-bg
       | {{/each}}
 //  官方频道
 section.am-container.section-1.section.Hidden
@@ -99,7 +99,7 @@ section.am-container.section-1.section.Hidden
             div.title.am-text-truncate='{{item.channelName}}'
             img.am-circle.avatar(src='{{item.creator.largeAvatar}}')
             span.name='{{item.creator.nickName}}'
-        footer.viedo-bg
+        //footer.viedo-bg
       | {{/each}}
 //  站子频道
 section.am-container.section-2.section.Hidden

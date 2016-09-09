@@ -43,7 +43,7 @@ var View = BaseView.extend({
     this.queryParams = {
       deviceinfo: '{"aid":"30001001"}',
       access_token: user.getWebToken(),
-      size: 4,
+      size: 8,
       order: 'POPULARITY' // TIME
     };
 

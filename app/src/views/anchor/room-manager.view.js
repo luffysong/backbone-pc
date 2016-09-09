@@ -8,12 +8,13 @@ var $ = require('jquery');
 var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
-
+var store = base.storage;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var RoomManagerListModel = require('../../models/anchor/room-manager-list.model.js');
 var RoomManagerAddModel = require('../../models/anchor/room-manager-add.model.js');
 var RoomManagerRemoveModel = require('../../models/anchor/room-manager-delete.model.js');
+var AnchorModel = require('../../models/anchor/anchor-info.model');
 
 var msgBox = require('ui.msgBox');
 var uiConfirm = require('ui.confirm');
@@ -45,6 +46,7 @@ var View = BaseView.extend({
     this.roomManListModel = RoomManagerListModel.sharedInstanceModel();
     this.roomManAddModel = RoomManagerAddModel.sharedInstanceModel();
     this.roomManRemoveModel = RoomManagerRemoveModel.sharedInstanceModel();
+    this.anchorModel = new AnchorModel();
   },
   afterMount: function () {
     //  获取findDOMNode DOM Node
@@ -95,19 +97,23 @@ var View = BaseView.extend({
     }
     var msg = '<div style="text-align:center;color:#a1a1a1;" >' +
       target.attr('data-name') + '(' + userId + ')</div>';
+    var uName = target.attr('data-name');
     uiConfirm.show({
       content: '您确定要删除该场控吗?' + msg,
       okFn: function () {
-        self.removeRoomManger(userId);
+        self.removeRoomManger(userId, uName);
       }
     });
   },
   // 删除场控
-  removeRoomManger: function (id) {
+  removeRoomManger: function (id, uName) {
     var promise = this.roomManRemoveModel.executeJSONP(_.extend({
       userId: id,
       roomId: this.roomInfo.id
     }, this.queryParams));
+    // 修改了用户角色，发消息提示所有人；
+    this.sendMsgAfterEditRole(id, 'Member', uName);
+    //
     this.setMember(id, 'Member').done(function () {
       promise.done(function (res) {
         if (res && res.data.success) {
@@ -140,6 +146,9 @@ var View = BaseView.extend({
       Member_Account: userId + '$0'
     };
     console.log(params);
+    // 修改了用户角色，发消息提示所有人；
+    // this.sendMsgAfterEditRole(userId, type);
+    //
     imServer.modifyGroupMember(params).done(function (res) {
       if (res.ActionStatus === 'OK') {
         defer.resolve();
@@ -194,12 +203,12 @@ var View = BaseView.extend({
       });
 
       var msg = '<div style="text-align:center;color:#a1a1a1;" >' +
-        uName + '(' + uid + ')</div>';
+        uName + '</div>';
       if (!current) {
         uiConfirm.show({
           content: '您确定将该用户设为场控吗?' + (uName ? msg : ''),
           okFn: function () {
-            self.addRoomManager(uid);
+            self.addRoomManager(uid, uName);
           }
         });
       } else {
@@ -209,14 +218,14 @@ var View = BaseView.extend({
           uiConfirm.show({
             content: '您确定要删除该场控吗?' + msg,
             okFn: function () {
-              self.removeRoomManger(uid);
+              self.removeRoomManger(uid, uName);
             }
           });
         }
       }
     });
   },
-  addRoomManager: function (id) {
+  addRoomManager: function (id, uName) {
     var self = this;
     this.setMember(id, 'Admin').done(function () {
       var promise = self.roomManAddModel.executeJSONP(_.extend({}, self.queryParams, {
@@ -226,8 +235,13 @@ var View = BaseView.extend({
       promise.done(function (res) {
         if (res && res.code === '0') {
           msgBox.showOK('场控添加成功');
+          // 修改了用户角色，发消息提示所有人；
+          self.sendMsgAfterEditRole(id, 'Admin', uName);
+          //
+          if (self.userIdDom) {
+            self.userIdDom.val('');
+          }
           self.renderRoomMangerList();
-          self.userIdDom.val('');
         } else {
           msgBox.showError('场控添加失败');
         }
@@ -261,6 +275,32 @@ var View = BaseView.extend({
       data: result
     });
     this.userListDom.html(html);
+  },
+  sendMsgAfterEditRole: function (userId, type, uName) {
+    var flag = (type === 'Admin') ? 'true' : 'false';
+    var imSig = store.get('imSig');
+    var self = this;
+    var queryParams = {
+      deviceinfo: '{"aid": "30001001"}',
+      access_token: user.getWebToken(),
+      userId: userId
+    };
+    console.log(uName);
+    var promise = this.anchorModel.executeJSONP(queryParams);
+    promise.done(function (res) {
+      imServer.sendMessage({
+        groupId: self.roomInfo.imGroupid,
+        msg: {
+          roomId: self.roomInfo.id || 0,
+          msgType: 11,
+          operaUser: imSig.userId,
+          operaUsername: imSig.nickName,
+          toUser: userId,
+          toUsername: res.data.nickName,
+          roomControl: flag
+        }
+      });
+    });
   }
 });
 

@@ -10,8 +10,9 @@ var BaseView = base.View;
 var UserUpdateModel = require('../../models/anchor-setting/user-update.model');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-var Auxiliary = require('auxiliary-additions');
-var UploadFile = Auxiliary.UploadFile;
+//  var Auxiliary = require('auxiliary-additions');
+// var UploadFile = Auxiliary.UploadFile;
+var UploadFile = require('UploadFileJs');
 var msgBox = require('ui.msgBox');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
@@ -149,10 +150,40 @@ var View = BaseView.extend({
       filename: 'img',
       className: 'file'
     };
-    this.upload = UploadFile.classInstanceUploadFile(uploadParams);
+    this.upload = new UploadFile(uploadParams);
     this.upload.done(function (response) {
+      if (response.state === 'SUCCESS') {
+        self.changeUploadBtnStatus();
+        self.fileUploaded(response);
+      } else {
+        self.changeUploadBtnStatus(false);
+        msgBox.showTip('请上传5M以内的JPGE,JPG,PNG,GIF等格式的图片文件');
+      }
+    });
+    this.upload.fail(function () {
       self.changeUploadBtnStatus();
-      self.fileUploaded(response);
+      msgBox.showError('上传失败');
+    });
+  },
+  reInitUploadFile: function () {
+    var self = this;
+    var uploadParams = {
+      el: $('#userAvatarForm'),
+      url: 'http://image.yinyuetai.com/edit',
+      data: {},
+      nofile: true,
+      filename: 'img',
+      className: 'file'
+    };
+    this.upload = new UploadFile(uploadParams);
+    this.upload.done(function (response) {
+      if (response.state === 'SUCCESS') {
+        self.changeUploadBtnStatus();
+        self.fileUploaded(response);
+      } else {
+        self.changeUploadBtnStatus(false);
+        msgBox.showTip('请上传5M以内的JPGE,JPG,PNG,GIF等格式的图片文件');
+      }
     });
     this.upload.fail(function () {
       self.changeUploadBtnStatus();
@@ -170,6 +201,7 @@ var View = BaseView.extend({
   },
   //  表单提交文件
   submitFile: function () {
+    this.reInitUploadFile();
     var btn = this.btnUploadAvatar.parent();
     if (btn.hasClass('m_disabled')) {
       return;

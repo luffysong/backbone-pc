@@ -48,29 +48,20 @@ var View = BaseView.extend({
     if (!url.query.roomId && !url.query.channelId) {
       window.history.go(-1);
     }
-
-
     this.roomId = url.query.roomId || 1;
-
     this.roomInfoPeriod = 5 * 1000;
-
     this.roomDetail = RoomDetailModel.sharedInstanceModel();
-
     this.anchorInfoModel = AnchorUserInfoModel.sharedInstanceModel();
     this.inAndOutRoom = InAndOurRoomModel.sharedInstanceModel();
     this.historyAdd = HistoryAddModel.sharedInstanceModel();
-
     this.queryParams = {
       deviceinfo: '{"aid": "30001001"}',
       access_token: user.getWebToken()
     };
-
     this.roomDetailParams = _.extend({
       roomId: ''
     }, this.queryParams);
-
     this.roomLongPolling = RoomLongPollingModel.sharedInstanceModel();
-
     this.anchorInfoParams = _.extend({}, this.queryParams);
     this.inAndRoomParams = _.extend({}, this.queryParams);
   },
@@ -80,26 +71,34 @@ var View = BaseView.extend({
   },
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
+    var self = this;
+    var f = user.isLogined() ? '用户已登录' : '用户未登录';
+    console.log(f);
     store.remove('imSig');
     // 直播页面
-    if (!user.isLogined()) {
-      store.set('signout', 1);
-      msgBox.showTip('请登录后观看直播!');
-      window.location.href = '/login.html';
-    }
-    this.defineEventInterface();
+    // if (!user.isLogined()) {
+    //   store.set('signout', 1);
+    //   msgBox.showTip('请登录后观看直播!');
+    //   window.location.href = '/login.html';
+    // }
 
+    this.defineEventInterface();
     this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
     // this.initRoom();
-    this.initWebIM().then(function () {
-      this.renderPage();
-      this.getUserInfo();
-    }.bind(this), function () {
-      console.log('webim 初始化失败');
-      this.goBack();
-    }.bind(this));
+    // 用户在登录和未登录的状态下做不同的处理;
+    if (user.isLogined()) {
+      self.initWebimAfterlogin();
+    } else {
+      this.initWebIM().then(function () {
+        self.renderPage();
+        self.initFlash();
+      }, function () {
+        console.log('webim 初始化失败');
+        this.goBack();
+      });
+    }
   },
   defineEventInterface: function () {
     var self = this;
@@ -122,33 +121,81 @@ var View = BaseView.extend({
       }
     });
   },
+  initFlash: function () {
+    var self = this;
+    this.errFn = function () {
+      uiConfirm.show({
+        title: '提示',
+        content: '获取房间数据失败!',
+        okFn: function () {
+          self.goBack();
+        },
+        cancelFn: function () {
+          self.goBack();
+        }
+      });
+    };
+    // 获取房间数据
+    this.getRoomInfo(function (response) {
+      var data = response.data || {};
+      if (response && response.code === '0') {
+        self.videoUrl = {
+          streamName: data.streamName,
+          url: data.url
+        };
+        self.roomInfo = data;
+        self.roomInfo.now = response.now;
+        Backbone.trigger('event:roomInfoReady', self.roomInfo);
+        self.setRoomBgImg();
+        self.flashAPI.onReady(function () {
+          this.init(_.extend({
+            isLive: true
+          }, self.roomInfo));
+        });
+        self.redirectByRoomStatus(data.status, data.id);
+        self.checkRoomStatus(data.status);
+      } else {
+        self.errFn();
+      }
+    }, this.errFn);
+  },
+  initWebimAfterlogin: function () {
+    var self = this;
+    self.initWebIM().then(function () {
+      self.renderPage();
+      self.getUserInfo();
+    }, function () {
+      console.log('webim 初始化失败');
+      self.goBack();
+    });
+  },
   fetchUserIMSig: function (groupId) {
     var self = this;
     var defer = imModel.fetchIMUserSig();
 
     defer.then(function (sig) {
-      if (sig.roleType === 2) {
-        uiConfirm.show({
-          title: '请登录',
-          content: '您现在是游客模式,请先登录参与互动!',
-          cancelBtn: false,
-          cancelFn: function () {
-            window.location.href = '/web/login.html';
-          },
-          okFn: function () {
-            window.location.href = '/web/login.html';
-          }
-        });
-      } else {
-        self.userJoinGroup(sig, groupId);
-      }
+      self.removeUserFromGroup(sig, groupId);
+      // if (sig.roleType === 2) {
+      //   uiConfirm.show({
+      //     title: '请登录',
+      //     content: '您现在是游客模式,请先登录参与互动!',
+      //     cancelBtn: false,
+      //     cancelFn: function () {
+      //       window.location.href = '/web/login.html';
+      //     },
+      //     okFn: function () {
+      //       window.location.href = '/web/login.html';
+      //     }
+      //   });
+      // } else {
+      //   self.userJoinGroup(sig, groupId);
+      // }
     });
   },
   userJoinGroup: function (sig, groupId) {
     var self = this;
     self.userIMSig = sig;
     // self.initWebIM();
-
     YYTIMServer.applyJoinGroup(groupId, function () {
       // TODO
       if (self.roomInfo.status === 2) {
@@ -203,20 +250,12 @@ var View = BaseView.extend({
     var AnchorCardView = require('./anchor-card.view');
     var PlayedListView = require('./played-list.view');
     var GiftView = require('./gift.view');
-
-
     var a = new RoomTitle();
-
     a = new ChatView();
-
     a = new SendMessageView();
-
     a = new AnchorCardView();
-
     a = new PlayedListView();
-
     a = new GiftView();
-
     a = new LivePreviewView();
     console.log(a);
   },
@@ -281,13 +320,17 @@ var View = BaseView.extend({
         url: data.url
       };
       self.roomInfo = data;
+      self.redirectByRoomStatus(data.status, data.id);
       // 告白墙
-      self.adWallView = new AdvertisingWallView({
-        el: '#advertisingWall',
-        roomId: data.id,
-        userInfo: self.userInfo,
-        type: 1 // 直播
-      });
+      if (self.userInfo && data.id) {
+        self.adWallView = new AdvertisingWallView({
+          el: '#advertisingWall',
+          roomId: data.id,
+          userInfo: self.userInfo,
+          type: 1 // 直播
+        });
+      }
+
       self.roomInfo.now = response.now;
       Backbone.trigger('event:roomInfoReady', self.roomInfo);
       self.setRoomBgImg();
@@ -399,7 +442,12 @@ var View = BaseView.extend({
     }
     if (notify) {
       var result = _.find(notify.forbidUsers, function (item) {
-        return ~~item.replace('$0', '') === self.userIMSig.userId;
+        var f;
+        item = item + '';
+        if (item.indexOf('$') > 0) {
+          f = ~~item.replace('$0', '') === self.userIMSig.userId;
+        }
+        return f;
       });
       if (result) {
         UserInfo.setKickout(self.roomId, true);
@@ -499,6 +547,46 @@ var View = BaseView.extend({
     target.addClass('active');
     $('.tab-content').hide();
     $('#' + id).show();
+  },
+  redirectByRoomStatus: function (st, roomId) {
+    if (st === 3) {
+      window.location.href = '/playback.html?roomId=' + roomId;
+    } else if (st === 1) {
+      $('.living-block').hide();
+    }
+  },
+  removeUserFromGroup: function (sig, groupId) {
+    var self = this;
+    var options = {
+      Member_Account: sig.imIdentifier,
+      Limit: '',
+      Offset: 0
+    };
+    // 先将用户将以前的群组删除;
+    if (sig.anchor === null || sig.anchor !== null) {
+      YYTIMServer.getJoinedGroupListHigh(options, function (res) {
+        if (res.GroupIdList.length > 0) {
+          for (var i = 0; i < res.GroupIdList.length; i++) {
+            var gId = res.GroupIdList[i].GroupId;
+            if (gId) {
+              var p = { GroupId: gId };
+              YYTIMServer.quitGroup(p, function (r) {
+                if (r.ErrorCode === 0) {
+                  console.log(r, '退群成功！');
+                }
+              }, function (r) {
+                if (r.ErrorCode === 10009) {
+                  console.log(r, '主播不能退出群组！');
+                }
+              });
+            }
+          }
+        }
+        self.userJoinGroup(sig, groupId);
+      }, function (res) {
+        console.log(res);
+      });
+    }
   }
 });
 

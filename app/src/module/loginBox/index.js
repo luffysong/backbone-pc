@@ -44,7 +44,21 @@ window.gt_custom_ajax = function (result) {
     }
   }
 };
-
+var popup;
+var timer;
+window.logHref = function (u) {
+  popup = window.open(u);
+  window.start();
+};
+window.start = function () {
+  timer = setInterval(window.checkChild, 500);
+};
+window.checkChild = function () {
+  if (popup.closed) {
+    clearInterval(timer);
+    window.location.reload();
+  }
+};
 // 加密字段
 function _setFocusEffect(input) {
   if (input.attr('name') === 'email') {
@@ -162,6 +176,7 @@ function loginSubmit(e) {
         } else {
           user.set(response);
           dialog.trigger('hide');
+          window.location.reload();
         }
       } else {
         errorinfo.text(response.message).css('visibility', 'visible');
@@ -179,6 +194,7 @@ function loginSubmit(e) {
 function compileHTML(tplStr, data) {
   return tplEng.compile(tplStr)(data);
 }
+
 
 function LoginBox() {
   var dialogHTML = compileHTML(loginBoxTemp, {
@@ -218,9 +234,9 @@ function LoginBox() {
           .removeClass('error');
       // 去掉悦单播放页面中下载悦单的active效果
       $('.J_pop_download').removeClass('v_button_curv');
-      setTimeout(function () {
-        refreshGeetest();
-      }, 500);
+      // setTimeout(function () {
+      //   refreshGeetest();
+      // }, 500);
     });
     loginBoxForm.on('submit', loginSubmit);
   }

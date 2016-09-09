@@ -24,7 +24,7 @@ var GiftModel = require('../../models/anchor/gift.model');
 var msgBox = require('ui.msgBox');
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
-
+var UserInfo = require('../live-room/user.js');
 // 清屏,锁屏
 var RoomControlView = require('./room-control.view');
 
@@ -52,7 +52,6 @@ var View = BaseView.extend({
 
     this.roomDetail = RoomDetailModel.sharedInstanceModel();
     this.roomInfo = this.roomDetail.get('data') || {};
-
     this.initGiftList();
   },
   // 当模板挂载到元素之后
@@ -163,6 +162,7 @@ var View = BaseView.extend({
         roomId: self.roomInfo.id,
         msgType: 5,
         userId: userInfo.id,
+        toUsername: userInfo.name,
         nickName: self.options.assistant ? '场控' : '主播',
         content: (self.options.assistant ? '场控' : '主播') + '将用户' + userInfo.name + '禁言'
       }
@@ -196,7 +196,9 @@ var View = BaseView.extend({
       roomId: self.roomInfo.id,
       nickName: self.options.assistant ? '场控' : '主播',
       smallAvatar: '',
-      msgType: 8, // 踢人
+      msgType: 10, // 踢人
+      toUser: data.id,
+      toUsername: data.name,
       content: (self.options.assistant ? '场控' : '主播') + '将用户' + data.name + '踢出房间'
     };
 
@@ -305,6 +307,10 @@ var View = BaseView.extend({
         self.addMessage(msgObj);
         break;
       case 4: //  清屏
+        if (!msgObj.content) {
+          msgObj.content = '管理员进行了清屏操作!';
+          msgObj.nickName = '消息';
+        }
         self.addMessage(msgObj);
         self.FlashApi.onReady(function () {
           this.notifying(msgObj);
@@ -312,15 +318,31 @@ var View = BaseView.extend({
         break;
         // 禁言
       case 5:
+        if (!msgObj.content) {
+          msgObj.content = msgObj.toUsername + '已被禁言十分钟!';
+        }
         self.addMessage(msgObj);
         break;
       case 8:
-      case 9:
+        msgObj.content = '管理员已锁屏';
         $('#btn-lock').find('span').text(msgObj.msgType === 8 ? '解屏' : '锁屏');
+        self.lockOrUnlock(true);
+        self.addMessage(msgObj);
+        break;
+      case 9:
+        $('#btn-lock').find('span').text(msgObj.msgType === 9 ? '锁屏' : '解屏');
+        self.lockOrUnlock(false);
+        msgObj.content = '管理员已解屏';
         self.addMessage(msgObj);
         break;
       case 10:
+        if (!msgObj.content) {
+          msgObj.content = msgObj.toUsername + '已被管理员踢出!';
+        }
         self.addMessage(msgObj);
+        break;
+      case 11:
+        self.handleController(msgObj);
         break;
       default:
         break;
@@ -361,7 +383,7 @@ var View = BaseView.extend({
       time: BusinessDate.format(new Date, 'hh:mm:ss'),
       fromAccount: ''
     }, msgObj);
-    if (msgObj && msgObj.roomId !== self.roomInfo.id) {
+    if (msgObj && parseInt(msgObj.roomId, 0) !== parseInt(self.roomInfo.id, 0)) {
       return;
     }
     msgObj.content = self.filterEmoji(msgObj.content);
@@ -494,6 +516,33 @@ var View = BaseView.extend({
       default:
         return false;
     }
+  },
+  handleController: function (msgObj) {
+    var self = this;
+    var userId = user.get('userId');
+    if (msgObj.toUser && msgObj.roomControl) {
+      if (msgObj.toUser === '' + userId) {
+        if (msgObj.roomControl === 'true') {
+          msgBox.showTipTime('主播将您设置为场控，5秒后将转到场控页面!', 5000);
+        } else if (msgObj.roomControl === 'false') {
+          msgBox.showTipTime('主播已移除您的场控权限，5秒后将返回聊天室页面!', 5000);
+        }
+        setTimeout(function () {
+          if (msgObj.roomControl === 'true') {
+            // window.location.reload();
+            window.location.href = '/assistant.html?roomId=' + self.roomInfo.id;
+          } else if (msgObj.roomControl === 'false') {
+            window.location.href = '/liveroom.html?roomId=' + self.roomInfo.id;
+          }
+        }, 5000);
+      }
+    }
+  },
+  lockOrUnlock: function (isLock) {
+    UserInfo.setLockScreen(this.roomInfo.id, isLock);
+    var msg = '主播进行了' + (isLock ? '锁屏' : '解屏') + '操作';
+    msgBox.showTip(msg);
+    Backbone.trigger('event:LockScreen', isLock);
   }
 });
 

@@ -35,6 +35,7 @@ var View = BaseView.extend({
       if (data.now) {
         self.selectedItem(data.now);
       }
+      self.positionActiveVideo();
     });
     // 轮训
     Backbone.on('event:RoomLoopInfo', function (data) {
@@ -68,6 +69,27 @@ var View = BaseView.extend({
         el.addClass('active');
       }
     });
+  },
+  positionActiveVideo: function () {
+    var k = 1;
+    var m = 1;
+    var h;
+    var ah;
+    var _ih = 0;
+    _.map(this.allItems, function (item) {
+      if ($(item).hasClass('item')) {
+        k = k + 1;
+        m = m + 1;
+        _ih += $(item).height() + 20;
+        if ($(item).hasClass('active')) {
+          ah = $('.active').height();
+          h = _ih + ah;
+        }
+      }
+    });
+    if (h > 662) {
+      $('#videoList').scrollTop(h);
+    }
   }
 });
 

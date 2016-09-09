@@ -24,9 +24,7 @@
         border-top: 5px solid #f0f0f0;
         color: $main-font-light-color;
         &.active {
-          border-top: 5px solid $main-bg-purple;
-          background-color: #fff;
-          color: $main-bg-purple;
+          @include theme-tab-top
         }
       }
     }

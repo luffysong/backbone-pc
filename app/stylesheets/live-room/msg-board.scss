@@ -4,7 +4,7 @@ $wall-bg-color: #f0f0f0;
 
 // 告白墙
 .msg-board-wrap {
-  background-color: $wall-bg-color;
+  /*background-color: $wall-bg-color;*/
   height: 480px;
   margin: 16px 0;
 
@@ -73,6 +73,8 @@ $wall-bg-color: #f0f0f0;
     overflow-y: auto;
     height: 404px;
     padding: 10px 0;
+    background: url(../images/liveroom/bgr_wall.png) no-repeat;
+    background-size: 100% 404px;
     .item {
       padding: 10px;
       background-color: #fff;
@@ -143,6 +145,30 @@ $wall-bg-color: #f0f0f0;
     }
 
   }
+  .wall-listBgr{
+    background-image: url(../images/liveroom/wall_bgr.jpg);
+    background-size:100% 404px;
+    background-color:#FFF;
+    margin-top: 0px;
+  }
+  .gb_btn{
+    background-size:110px 44px;
+    background-color:#FE7373;
+    position:absolute;
+    width: 110px;
+    height: 44px;
+    left: 550px;
+    top: 220px;
+    cursor:pointer;
+    color:white;
+    font-size:16px;
+    line-height: 44px;
+    text-align: center;
+    border-radius: 5px;
+    &:hover{
+      background-color: #FD7B7B;
+    }
+  }
 
   // 创建
   .create-wrap {
@@ -151,7 +177,6 @@ $wall-bg-color: #f0f0f0;
       font-weight: 600;
     }
     .top {
-      color: $main-bg-purple;
       font-size: 20px;
       margin-bottom: 8px;
     }

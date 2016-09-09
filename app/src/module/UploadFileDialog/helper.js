@@ -11,9 +11,11 @@
 
 'use strict';
 var base = require('base-extend-backbone');
-var Auxiliary = require('auxiliary-additions');
+// var Auxiliary = require('auxiliary-additions');
 var BaseView = base.View;
-var UploadFile = Auxiliary.UploadFile;
+//  var UploadFile = Auxiliary.UploadFile;
+var UploadFile = require('UploadFileJs');
+// var UploadFile = require('UploadFile');
 
 var uploadIng = '正在上传';
 var uploadDone = '上传完成!';
@@ -44,7 +46,7 @@ var View = BaseView.extend({
     var temp = {
       gcmd: [
         {
-          gsaveOriginal: 1, op: 'save', plan: 'avatar', belongId: '20634338', srcImg: 'img'
+          gsaveOriginal: 1, op: 'save', plan: 'fanpa', belongId: '20634338', srcImg: 'img'
         }
       ],
       gredirect: loc.origin + '/web/upload.html'
@@ -59,11 +61,50 @@ var View = BaseView.extend({
     };
     this.upload = new UploadFile(uploadParams);
     this.upload.done(function (response) {
-      self.imageStateDOM.html(uploadDone);
-      self.previewImage(response);
-      self.trigger('uploadFileSuccess', response);
+      if (response.state === 'SUCCESS') {
+        self.imageStateDOM.html(uploadDone);
+        self.previewImage(response);
+        self.trigger('uploadFileSuccess', response);
+      } else {
+        self.imageStateDOM.html('');
+        msgBox.showTip('请上传5M以内的JPGE,JPG,PNG,GIF等格式的图片文件');
+      }
     });
     this.upload.fail(function () {
+      self.imageStateDOM.html('');
+      msgBox.showError('上传失败');
+    });
+    this.on('successBreviary', function (obj) {
+      this.successBreviary(obj);
+    });
+  },
+  initUploadFile: function () {
+    this.formDOM = this.findDOMNode('.upload-form');
+    this.imgSrcDOM = this.findDOMNode('.imgboxFile');
+    this.imageStateDOM = this.findDOMNode('.upload-image-state');
+    this.inputTextDOM = this.findDOMNode('.input-text');
+    var self = this;
+    var uploadParams = {
+      el: this.formDOM,
+      url: 'http://image.yinyuetai.com/edit',
+      data: {},
+      filename: 'img',
+      className: 'file',
+      nofile: true
+    };
+    this.upload = new UploadFile(uploadParams);
+    this.upload.done(function (response) {
+      if (response.state === 'SUCCESS') {
+        self.imageStateDOM.html(uploadDone);
+        self.previewImage(response);
+        self.trigger('uploadFileSuccess', response);
+      } else {
+        self.imageStateDOM.html('');
+        msgBox.showTip('请上传5M以内的JPGE,JPG,PNG,GIF等格式的图片文件');
+      }
+    });
+    this.upload.fail(function () {
+      self.imageStateDOM.html('');
       msgBox.showError('上传失败');
     });
     this.on('successBreviary', function (obj) {
@@ -84,6 +125,9 @@ var View = BaseView.extend({
     this.trigger('saveFile');
   },
   changeFile: function () {
+    if (this.upload.state() === 'resolved') {
+      this.initUploadFile();
+    }
     this.imageStateDOM.html(uploadIng);
     this.upload.submit();
   },

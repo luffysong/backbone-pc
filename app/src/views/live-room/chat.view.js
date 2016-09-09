@@ -76,7 +76,7 @@ var View = BaseView.extend({
     Backbone.on('event:roomInfoReady', function (data) {
       if (data) {
         self.roomInfo = data;
-        if (data.status === 2) {
+        if (data.status === 2 && user.isLogined()) {
           self.checkUserCanJoinRoom();
         }
       }
@@ -220,7 +220,6 @@ var View = BaseView.extend({
         return;
       }
     }
-
     switch (msgObj.msgType) {
       case 0: // 文本消息
         msgObj = $.extend(msgObj, {
@@ -244,8 +243,11 @@ var View = BaseView.extend({
         break;
       case 4: //  清屏
         this.elements.msgList.children().remove();
-        msgObj.content = '进行了清屏操作!';
-        msgObj.smallAvatar = '';
+        if (!msgObj.content) {
+          msgObj.content = '管理员进行了清屏操作!';
+          msgObj.nickName = '消息';
+          msgObj.smallAvatar = '';
+        }
         callback(msgObj);
         tempInfo = {
           roomId: self.roomInfo.id,
@@ -265,6 +267,22 @@ var View = BaseView.extend({
           temp.style = {
             fontColor: '#999999'
           };
+          if (!temp.content) {
+            temp.content = '您已经被主播禁言十分钟.';
+          }
+          this.flashAPI.onReady(function () {
+            temp.msgType = 0;
+            this.notifying(temp);
+          });
+          temp.msgType = 3;
+          callback(temp);
+        } else {
+          temp.style = {
+            fontColor: '#999999'
+          };
+          if (!temp.content) {
+            temp.content = msgObj.toUsername + '已经被主播禁言十分钟.';
+          }
           this.flashAPI.onReady(function () {
             temp.msgType = 0;
             this.notifying(temp);
@@ -272,19 +290,32 @@ var View = BaseView.extend({
           temp.msgType = 3;
           callback(temp);
         }
+
         Backbone.trigger('event:forbidUserSendMsg', msgObj);
         break;
       case 8:
-        // this.lockOrUnlock(true);
+        this.lockOrUnlock(true);
+        if (!msgObj.content) {
+          msgObj.content = '管理员已锁屏';
+        }
         callback(msgObj);
         break;
       case 9:
-        // this.lockOrUnlock(false);
+        this.lockOrUnlock(false);
+        if (!msgObj.content) {
+          msgObj.content = '管理员已解屏';
+        }
         callback(msgObj);
         break;
       case 10:
         self.checkUserCanJoinRoom();
+        // if (!msgObj.content) {
+        //   msgObj.content = msgObj.toUsername + '已被管理员踢出！';
+        // }
         callback(msgObj);
+        break;
+      case 11:
+        self.handleController(msgObj);
         break;
       default:
         break;
@@ -345,7 +376,6 @@ var View = BaseView.extend({
       fromAccount: '',
       userId: ''
     }, msg);
-
     msgObj.content = self.filterEmoji(msgObj.content);
     if (msgObj && msgObj.content) {
       var tpl = _.template(this.getMessageTpl());
@@ -414,6 +444,21 @@ var View = BaseView.extend({
       Backbone.trigger('event:currentUserDisableTalk', true);
       var cur = new Date();
       UserInfo.setDisableTalk(user.get('userId'), this.roomInfo.id, cur.getTime() + 10 * 60 * 1000);
+    }
+  },
+  handleController: function (msgObj) {
+    var userId = user.get('userId');
+    if (msgObj.toUser && msgObj.roomControl) {
+      if (msgObj.toUser === '' + userId) {
+        if (msgObj.roomControl === 'true') {
+          msgBox.showTipTime('主播将您设置为场控，5秒后将转到场控页面!', 5000);
+        } else if (msgObj.roomControl === 'false') {
+          msgBox.showTipTime('主播已移除您的场控权限，5秒后将返回聊天室页面!', 5000);
+        }
+        setTimeout(function () {
+          window.location.reload();
+        }, 5000);
+      }
     }
   }
 });

@@ -85,6 +85,10 @@ var View = BaseView.extend({
     this.elements.txtMessage.css('color', color || '#999999');
   },
   sendMsgClick: function () {
+    if (!user.isLogined()) {
+      msgBox.showTip('登录后，可发送消息哟！');
+      return '';
+    }
     var self = this;
     var len = $.trim(this.elements.txtMessage.val()).length;
     if (len < 1) {

@@ -1,0 +1,16 @@
+ {{each data as t}}
+<section class="tag-wrap">
+    <header class="section-header am-cf">
+      <h2 class="am-fl">{{t.title}}</h2>
+      <a href="/channellist.html?list=tags-{{t.id}}" class="am-fr" id="{{t.id}}-link" >
+        MORE>>
+      </a>
+      <span  class="red_line"></span>
+      <span class="tip" >
+          {{t.enTitle}}
+      </span>
+    </header>
+    <div class="viedo-content am-g" id="{{t.id}}-tags">
+    </div>
+</section>
+ {{/each}}

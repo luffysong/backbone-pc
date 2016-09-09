@@ -18,7 +18,11 @@ $a-hover: #690; // 共有样式
 .topBar {
   height: $main-top-bar-height;
   width: 100%;
-  background: $main-top-bar-bg-color;
+  /*background: $main-top-bar-bg-color;*/
+  background: -webkit-linear-gradient(left, #FE5858 , #F857A5); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, #FE5858, #F857A5); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #FE5858, #F857A5); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, #FE5858 , #F857A5); /* 标准的语法 */
   position: fixed;
   top: 0;
   left: 0;
@@ -37,15 +41,26 @@ $a-hover: #690; // 共有样式
     //left: 120px;
     font-size: 14px;
     margin-left: 32px;
+    height: 50px;
+    line-height: 50px;
     .split {
       color: #b2b2b2;
       margin: 0 5px;
     }
     .btn-link {
       color: #fff;
+      height: 50px;
+      width: 80px;
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
       &:hover {
-        color: #adc0fe;
+        background-color:#FD768F;
+        /*color: #adc0fe;*/
       }
+    }
+    .acive_btn{
+      background-color:#FD768F;
     }
   }
   .log {
@@ -77,7 +92,7 @@ $a-hover: #690; // 共有样式
       color: $b2;
     }
     a:hover {
-      color: #27d5bf;
+      color: #F0F0F0;
     }
   }
   .PcMsg {
@@ -88,7 +103,7 @@ $a-hover: #690; // 共有样式
     position: relative;
     min-width: 70px;
     a {
-      color: $b2;
+      color:#FFFFFF;
       float: left;
       line-height: 22px;
       height: 22px;
@@ -177,13 +192,15 @@ $a-hover: #690; // 共有样式
         height: 32px;
         width: 100%;
         line-height: 32px;
-        background: #272727;
+        background: white;
         margin-top: 0;
+        border-bottom: 1px solid #F2F2F2;
       }
       .header-logout:hover,
       a:hover {
-        background: #7991d7;
-        color: #ffffff;
+      /*  background: #7991d7;*/
+        font-weight:600;
+        color: #fc5876;
       }
       .header-logout {
         border: none;

@@ -17,6 +17,7 @@ var Auxiliary = require('auxiliary-additions');
 var URL = Auxiliary.url;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
+var store = base.storage;
 var RoomLongPollingModel = require('../../models/channel/loogpolling.model');
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
@@ -30,7 +31,6 @@ var LiveVideoListModel = require('../../models/channel/live-play.model');
 var AnchorCardView = require('../live-room/anchor-card.view');
 
 var FlashAPI = require('FlashApi');
-var store = base.storage;
 var uiConfirm = require('ui.confirm');
 var msgBox = require('ui.msgBox');
 
@@ -81,24 +81,29 @@ var View = BaseView.extend({
   // 当事件监听器，内部实例初始化完成，模板挂载到文档之后
   ready: function () {
     // 直播页面
-    if (!user.isLogined()) {
-      store.remove('imSig');
-      store.set('signout', 1);
-      msgBox.showTip('请登录后观看直播!');
-      window.location.href = '/login.html';
-    }
+    var self = this;
+    store.remove('imSig');
+    // if (!user.isLogined()) {
+    //   store.remove('imSig');
+    //   store.set('signout', 1);
+    //   msgBox.showTip('请登录后观看直播!');
+    //   window.location.href = '/login.html';
+    // }
     this.defineEventInterface();
 
     this.flashAPI = FlashAPI.sharedInstanceFlashApi({
       el: 'broadCastFlash'
     });
-    // 初始化im
-    this.initWebIM().then(function () {
-      this.renderPage();
-      this.getUserInfo();
-    }.bind(this), function () {
-      this.goBack();
-    }.bind(this));
+    if (user.isLogined()) {
+      this.initWebimAfterLogin();
+    } else {
+      this.initWebIM().then(function () {
+        self.renderPage();
+        self.initFlash();
+      }, function () {
+        self.goBack();
+      });
+    }
   },
   defineEventInterface: function () {
     var self = this;
@@ -118,26 +123,78 @@ var View = BaseView.extend({
       }
     });
   },
+  initFlash: function () {
+    var self = this;
+    var errFn = function () {
+      uiConfirm.show({
+        title: '提示',
+        content: '获取房间数据失败!',
+        okFn: function () {
+          self.goBack();
+        },
+        cancelFn: function () {
+          self.goBack();
+        }
+      });
+    };
+
+    this.getRoomInfo(function (response) {
+      var data = response.data || {};
+      if (response && response.code === '0') {
+        self.videoUrl = {
+          streamName: data.streamName,
+          url: data.url
+        };
+        self.roomInfo = data;
+        self.setRoomBgImg();
+        self.anchorView = new AnchorCardView({
+          share: {
+            url: '/channellive.html?channelId=' + self.channelId,
+            img: data.posterPic || '',
+            title: data.channelName || ''
+          }
+        });
+        self.loopRoomInfo();
+        self.joinRoom();
+        self.getLiveViedoList();
+        if (self.roomInfo) {
+          Backbone.trigger('event:roomInfoReady', self.roomInfo);
+        }
+      } else {
+        errFn();
+      }
+    }, errFn);
+  },
+  initWebimAfterLogin: function () {
+    // 初始化im
+    this.initWebIM().then(function () {
+      this.renderPage();
+      this.getUserInfo();
+    }.bind(this), function () {
+      this.goBack();
+    }.bind(this));
+  },
   fetchUserIMSig: function (groupId) {
     var self = this;
     var defer = imModel.fetchIMUserSig();
 
     defer.then(function (sig) {
-      if (sig.roleType === 2) {
-        uiConfirm.show({
-          title: '请登录',
-          content: '您现在是游客模式,请先登录参与互动!',
-          cancelBtn: false,
-          cancelFn: function () {
-            window.location.href = '/web/login.html';
-          },
-          okFn: function () {
-            window.location.href = '/web/login.html';
-          }
-        });
-      } else {
-        self.userJoinGroup(sig, groupId);
-      }
+      self.removeUserFromGroup(sig, groupId);
+      // if (sig.roleType === 2) {
+      //   uiConfirm.show({
+      //     title: '请登录',
+      //     content: '您现在是游客模式,请先登录参与互动!',
+      //     cancelBtn: false,
+      //     cancelFn: function () {
+      //       window.location.href = '/web/login.html';
+      //     },
+      //     okFn: function () {
+      //       window.location.href = '/web/login.html';
+      //     }
+      //   });
+      // } else {
+      //   self.userJoinGroup(sig, groupId);
+      // }
     });
   },
   userJoinGroup: function (sig, groupId) {
@@ -474,14 +531,16 @@ var View = BaseView.extend({
         if (show) {
           var imGroupid = show.imGroupid;
           self.roomInfo.imGroupid = imGroupid;
+          // if (user.isLogined()) {
           self.fetchUserIMSig(imGroupid);
+          // }
           self.currentChannelShowStatus = self.currentChannelShowStatus || {};
           self.currentChannelShowStatus[show.id] = show.status;
           self.currentChannelShowId = show.id;
 
           var videoData = {
             videoType: 'FANPA_CHANNEL',
-            status: 'LIVE',
+            status: 2,
             url: show.liveStream,
             videoStatus: show.status,
             beginTime: show.beginTime
@@ -536,6 +595,39 @@ var View = BaseView.extend({
           (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) +
           '开始直播');
       }
+    }
+  },
+  removeUserFromGroup: function (sig, groupId) {
+    var self = this;
+    var options = {
+      Member_Account: sig.imIdentifier,
+      Limit: '',
+      Offset: 0
+    };
+    // 先将用户将以前的群组删除;
+    if (sig.anchor === null || sig.anchor !== null) {
+      YYTIMServer.getJoinedGroupListHigh(options, function (res) {
+        if (res.GroupIdList.length > 0) {
+          for (var i = 0; i < res.GroupIdList.length; i++) {
+            var gId = res.GroupIdList[i].GroupId;
+            if (gId) {
+              var p = { GroupId: gId };
+              YYTIMServer.quitGroup(p, function (r) {
+                if (r.ErrorCode === 0) {
+                  console.log(r, '退群成功！');
+                }
+              }, function (r) {
+                if (r.ErrorCode === 10009) {
+                  console.log(r, '主播不能退出群组！');
+                }
+              });
+            }
+          }
+        }
+        self.userJoinGroup(sig, groupId);
+      }, function (res) {
+        console.log(res);
+      });
     }
   }
 });

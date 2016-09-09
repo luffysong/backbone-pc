@@ -2,6 +2,11 @@
    Created by AaronYuan on 4/25/16.
 
 // ^内容区域
+- var complie = htmlWebpackPlugin.options.complieConfig
+- var src = complie.cdn || '/link/'
+script(type="text/javascript",src=src+'webim/json2.js')
+script(type="text/javascript",src=src+'webim/webim.js?v1.5')
+
 #anchorContainerBg.anchor-container.live-room-wrap.has-top-bar.palyback-wrap
     div.header-bg
         //- img(src='../images/anchor-bg.jpg')
@@ -30,6 +35,16 @@
                                 |  顶一下
                         .Clear
                     //.Clear
+                    
+        // 右侧聊天室功能；
+        .fr.aside-right_playback.boderRadTop_5(style='width:300px;height:638px')
+            div.tab-header#channelTab
+                a.chat-list.active(href='javascript:;',data-id='chatList') 聊天区
+            // 聊天界面
+            div.tab-content.tab-content-chat#chatList
+                #anchorCtrlChat
+                // 消息列表
+                #sendMessageWrap.send-msg-wrap.pAll10     
         //- 告白墙 
         div#advertisingWall
         
@@ -50,7 +65,7 @@
                                             div.left-bottom.info
                                                 div.sub-info
                                                     span.icons.chat
-                                                    | {{item.online}}
+                                                    | {{item.bulletCurtain}}
                                                     span.icons.like
                                                     | {{item.assemble}}
                                             div.center.play

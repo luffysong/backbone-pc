@@ -62,7 +62,7 @@
                         div#btnLike.like.am-vertical-align-middle
                             button.btn-like.am-btn-red.am-circle
                                 i
-                            span#txtLikeCount.number 23423423
+                            span#txtLikeCount.number 0
                         div.push.am-vertical-align
                             button#btnTop.btn-push.am-btn-red.am-round
                                 i.am-vertical-align-middle
@@ -80,7 +80,7 @@
                     //.Clear
                     .jcarousel-wrapper.am-fr
                         .jcarousel
-                            ul#gift-items.gift-items
+                            ul#gift-items.gift-items(style='top: 6px;')
                                 // 礼物列表
                                 script#gift-item-tpl(type='text/template').
                                     <% for(var i= 0, len = data.length; i < len; i++) {%>
@@ -94,7 +94,7 @@
             // 留言
             .fr.aside-right(style='width:300px')
                 div.room-notice-wrap
-                    header.boderRadTop_5.am-vertical-align
+                    header.boderRadTop_5.am-vertical-align.theme-room-notice-bar
                         i.icon-voice.am-vertical-align-middle
                         span.title.am-vertical-align-middle 直播公告
                     section.content.am-vertical-align
@@ -208,7 +208,7 @@
                                             div.left-bottom.info
                                                 div.sub-info
                                                     span.icons.chat
-                                                    | {{item.online}}
+                                                    | {{item.bulletCurtain}}
                                                     span.icons.like
                                                     | {{item.assemble}}
                                             div.center.play

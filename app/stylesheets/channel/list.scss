@@ -27,7 +27,7 @@
         color: $main-title-color;
         font-weight: 600;
         &:hover, &.active {
-          color: $main-bg-purple;
+          @include theme-tab-top-color
           &:before {
             display: block;
           }
@@ -38,7 +38,7 @@
           display: none;
           height: 2px;
           width: 100%;
-          background-color: $main-bg-purple;
+          background-color: $main-font-red;
           left: 0;
           bottom: -15px;
         }

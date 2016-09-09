@@ -15,6 +15,11 @@ $main-title-color: #7a7a7a;
 $main-top-bar-bg-color: #4b46a0;
 $index-title-color: #333;
 $main-top-bar-height: 50px;
+// 情人节主题
+//根据不同的主题。定义两个主色调，
+$main-font-red: #fc5876;
+$main-font-hover-red: #fd7b7b;
+//
 body {
   font-size: 14px;
   background: $main-bg-theme-color;
@@ -906,6 +911,18 @@ img {
     background-color: #839ae9;
   }
 }
+// 根据不同的节日定义btn显示不同的主色调;
+.am-btn-red2{
+  background-color: $main-font-red;
+  color: #fff;
+  border-color: $main-font-red;
+  &:active,
+  &:focus,
+  &:hover {
+    color: #fff;
+    background-color: $main-font-hover-red;
+  }
+}
 .am-btn-red {
   background-color: $main-bg-red;
   color: #fff;
@@ -965,4 +982,7 @@ $rgba-color-white: rgba(255, 255, 255, 0);
     background: url("../images/gender_1.png") no-repeat;
     background-position: 1px 0;
   }
+}
+.cnzz_stat_icon{
+  display:none;
 }

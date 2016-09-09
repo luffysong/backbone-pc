@@ -137,7 +137,6 @@
     background-color: $main-bg-light-purple;
     header {
       position: relative;
-      background-color: $main-bg-purple;
       height: 35px;
       padding-left: 10px;
       .title {
@@ -398,40 +397,48 @@
       border-bottom: 1px solid #eee;
       position: relative;
       cursor: pointer;
+      height:63px;
     }
     li:hover {
       background: $main-bg-purple;
       //#01ceb5
-      .visitorName {
+      .visitorName, .time{
         color: #ffffff;
       }
       p {
         color: #bfcefd;
-      }
-      .time{
-        color: #4459a0;
       }
     }
     p {
       width: 235px;
       display: inline-block;
       line-height: 20px;
-      padding-top: 6px;
       padding-left: 5px;
       color: #666;
+      font-family: "微软雅黑","Microsoft Yahei","Microsoft Sans Serif";
     }
     .visitorName {
-      color: #ff6f6e;
+      color: #FF6666;
       margin-right: 7px;
+      margin-left: 5px;
+      font-size:12px;
+      font-family: "微软雅黑","Microsoft Yahei","Microsoft Sans Serif";
     }
     .time {
+      font-family: "微软雅黑","Microsoft Yahei","Microsoft Sans Serif";
       color: #ccc;
+      font-size:12px;
+    }
+    .content{
+      margin-left: 5px;
+      font-family: "微软雅黑","Microsoft Yahei","Microsoft Sans Serif";
+      font-size:12px;
     }
     .controls_forbid_reject {
       display: none;
       position: absolute;
       right: 18px;
-      top: -30px;
+      top: 0px;
       a {
         width: 70px;
         height: 30px;
@@ -446,6 +453,7 @@
   .visitor_avator {
     width: 35px;
     height: 35px;
+    border-radius:100%;
   }
 }
 .errTip {

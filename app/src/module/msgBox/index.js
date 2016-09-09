@@ -247,6 +247,9 @@ module.exports = {
     showTip: function(msgHtml){
         ZENG.msgbox.show(msgHtml, 1, 1000);
     },
+    showTipTime: function(msgHtml, time){
+        ZENG.msgbox.show(msgHtml, 1, time);
+    },
     showOK: function(msgHtml){
         ZENG.msgbox.show(msgHtml, 4, 1000);
     },
@@ -260,4 +263,3 @@ module.exports = {
         ZENG.msgbox.hide(timeout);
     }
 };
-

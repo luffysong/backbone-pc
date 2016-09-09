@@ -87,8 +87,12 @@ var View = BaseView.extend({
     Backbone.on('event:roomInfoReady', function (data) {
       if (data) {
         self.roomInfo = data;
-        self.elements.txtLikeCount.text(data.assemble || 0);
-        self.elements.txtLikeCount.text(data.likeCount || 0);
+        // self.elements.txtLikeCount.text(data.assemble || 0);
+        if (self.elements.txtLikeCount.length > 0) {
+          self.elements.txtLikeCount.html(data.assemble || 0);
+        } else {
+          $('#txtLikeCount').html(data.assemble || 0);
+        }
       }
     });
 
@@ -99,7 +103,11 @@ var View = BaseView.extend({
     });
     Backbone.on('event:updateRoomInfo', function (data) {
       if (data) {
-        self.elements.txtLikeCount.text(data.likeCount || 0);
+        if (self.elements.txtLikeCount.length > 0) {
+          self.elements.txtLikeCount.text(data.likeCount || 0);
+        } else {
+          $('#txtLikeCount').text(data.likeCount || 0);
+        }
       }
     });
     Backbone.on('event:liveShowEnded', function (data) {
@@ -137,7 +145,6 @@ var View = BaseView.extend({
   },
   initGiftList: function () {
     var self = this;
-
     this.giftModel.get(this.giftParams, function (res) {
       if (res && res.code === '0') {
         if (self.giftTpl) {
@@ -162,6 +169,10 @@ var View = BaseView.extend({
     return true;
   },
   giftClick: function (e) {
+    if (!user.isLogined()) {
+      msgBox.showTip('登录后，可向主播送礼哟！');
+      return;
+    }
     var target = e.target;
     if (!this.roomStatusCheck()) {
       return;
@@ -176,7 +187,6 @@ var View = BaseView.extend({
       giftId: target.data('giftid')
     });
   },
-
   sendGift: function (data) {
     var self = this;
     if (this.options.type !== 'channel') {
@@ -213,6 +223,10 @@ var View = BaseView.extend({
   },
   topClick: function () {
     var self = this;
+    if (!user.isLogined()) {
+      msgBox.showTip('登录后，可支持主播哟！');
+      return;
+    }
     if (!this.isNeedPopup) {
       // self.pushPopularity(2);
       self.beforePushPopularity(2);
@@ -298,6 +312,10 @@ var View = BaseView.extend({
 
   lickClick: function () {
     var self = this;
+    if (!user.isLogined()) {
+      msgBox.showTip('登录后，可对主播点赞哟！');
+      return;
+    }
     if (!this.roomStatusCheck()) {
       return;
     }

@@ -1,0 +1,35 @@
+// 情人节主题
+//根据不同的主题。定义两个主色调，
+$main-theme-color: #ff6666;
+$main-theme-hover-color: #fd7b7b;
+// 根据不同的节日定义btn显示不同的主色调;
+// btn包括关注、顶上去、发送、我要告白、发布告白、清屏、锁屏、禁言、踢出、场控
+// 不包括结束直播、开启直播
+.theme-btn-color{
+  background-color: $main-theme-color;
+  color: #fff;
+  &:active,
+  &:focus,
+  &:hover {
+    color: #fff;
+    background-color: $main-theme-hover-color;
+  }
+}
+// 直播公告、
+.theme-room-notice-bar{
+      background-color: $main-theme-color;
+}
+//频道 右侧 tab切换颜色;
+@mixin theme-tab-top{
+  border-top: 5px solid $main-theme-color;
+  background-color: #fff;
+  color: $main-theme-color
+}
+// 频道列表 顶部的tab标签
+@mixin theme-tab-top-color{
+  color: $main-theme-color
+}
+// 特定的文字的颜色
+.theme-spec-font-color{
+  color:$main-theme-color
+}

@@ -24,6 +24,7 @@ var View = BaseView.extend({
   },
   events: {
     'click #btnShowCreate': 'showCreateClicked',
+    'click #gb_btn': 'showCreateClicked',
     'click #btnBacktoList': 'backToList',
     'click .wall-list': 'itemClicked',
     'click #btnSendText': 'sendClicked',
@@ -41,14 +42,12 @@ var View = BaseView.extend({
 
     this.queryParams = {
       deviceinfo: '{"aid": "30001001"}',
-      access_token: user.getWebToken()
+      access_token: user.getWebToken(),
+      sortField: 'TIME'
     };
-
     // 循环接口时间
     this.loopTime = 60 * 1000;
-
     this.listParams = _.extend({}, this.queryParams);
-
     this.pageParams = {
       newList: {
         hasNext: true
@@ -153,12 +152,16 @@ var View = BaseView.extend({
         };
       }
       if (ops && ops.tag === 'first' && _.isArray(res.data.list) && res.data.list.length <= 0) {
-        self.newestListDOM.eq(0).append('<div class="first">快来成为第一个告白的幸运儿</div>');
+        // self.$el.find('.msg-board-wrap').css('background-color', '#fff');
+        self.$el.find('.wall-list').addClass('wall-listBgr');
+        self.newestListDOM.eq(0).append('<div class="gb_btn" id ="gb_btn">我要告白</div>');
+        // self.newestListDOM.eq(0).append('<div class="first">快来成为第一个告白的幸运儿</div>');
       }
     });
   },
   appendToNewestList: function (data) {
     var htmls = this.createItemHtml(data);
+    console.log(htmls);
     this.newestListDOM.eq(0).find('.first').remove();
     this.newestListDOM.eq(0).append(htmls[0]);
     this.newestListDOM.eq(1).append(htmls[1]);
@@ -385,9 +388,10 @@ var View = BaseView.extend({
       if (res && res.code === '0' && res.data.newMsgCount > 0) {
         // self.elements.unReadCnt.text(res.data.newMsgCount).show();
         self.pageParams.newList.hasNext = true;
-
         self.newestListDOM.children().remove();
-        self.renderNewestList();
+        self.renderNewestList({
+          cursor: null
+        });
       }
       setTimeout(function () {
         self.loopGetUnreadCount();
@@ -412,7 +416,7 @@ var View = BaseView.extend({
     var diff = maxHeight - top;
     if (diff < 30 && this.pageParams[tag].hasNext) {
       if (tag === 'newList') {
-        this.renderNewestList(this.pageParams[tag]);
+        this.renderNewestList();
       } else {
         // this.renderHotList(this.pageParams[tag]);
       }

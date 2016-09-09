@@ -35,6 +35,7 @@ var View = BaseView.extend({
   afterMount: function () {
     //  获取findDOMNode DOM Node
     this.elements.showName = this.$el.find('#channelShowName');
+    this.elements.channelShowNum = this.$el.find('#channelShowNum');
     this.elements.videoIds = this.$el.find('#channelVideoList');
     this.elements.startTime = this.$el.find('#channelSHowStartTime');
   },
@@ -62,6 +63,7 @@ var View = BaseView.extend({
   },
   verifyForm: function () {
     var name = $.trim(this.elements.showName.val());
+    var num = $.trim(this.elements.channelShowNum.val());
     var idTxt = $.trim(this.elements.videoIds.val());
     var ids = idTxt.split(/[\s,，]/g);
     var startTime = new Date(this.elements.startTime.val());
@@ -72,16 +74,26 @@ var View = BaseView.extend({
       msgBox.showTip('请输入节目单名称!');
       return false;
     }
+    if (num <= 0 || num >= 6) {
+      msgBox.showTip('请输入大于零并且小于等于5的正整数!');
+      return false;
+    }
     if (ids.length <= 0) {
       msgBox.showTip('请输入有效的视屏编号!');
       return false;
     }
-    if (~~startTime.getDay() <= 0) {
+    if (!this.elements.startTime.val()) {
+      msgBox.showTip('请选择有效时间!');
+      return false;
+    }
+    // 就是选择周一到周日的时间;
+    if (~~startTime.getDay() < 0) {
       msgBox.showTip('请选择开始时间!');
       return false;
     }
     this.formData = {
       showName: name,
+      carouselTimes: num,
       mvIds: '[' + ids.join(',') + ']',
       beginTime: startTime.getTime()
     };
@@ -115,6 +127,7 @@ var View = BaseView.extend({
   },
   resetForm: function () {
     this.elements.showName.val('');
+    this.elements.channelShowNum.val('');
     this.elements.videoIds.val('');
     this.elements.startTime.val('');
   },

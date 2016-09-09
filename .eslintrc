@@ -2,6 +2,7 @@
 	"extends": "airbnb/legacy",
 	"rules": {
     "semi": 2,
+    "no-param-reassign": 0,
     "new-cap": [2, {
       "capIsNewExceptions": [
         "Deferred"

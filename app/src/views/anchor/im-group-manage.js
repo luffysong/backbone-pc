@@ -94,7 +94,8 @@ View.prototype = $.extend(View.prototype, {
       msg: {
         roomId: self.roomInfo.id,
         msgType: 5,
-        userId: userInfo.id
+        userId: userInfo.id,
+        toUsername: userInfo.name
       }
     }, function () {
       msgBox.showOK('已将用户:<b>' + userInfo.name + ' 禁言10分钟.');
@@ -118,7 +119,6 @@ View.prototype = $.extend(View.prototype, {
    */
   removeUserFromRoom: function (data) {
     var self = this;
-
     function okCallback() {
       var options = {
         GroupId: self.roomInfo.imGroupid,

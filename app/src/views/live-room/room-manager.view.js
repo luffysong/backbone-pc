@@ -80,11 +80,11 @@ var View = BaseView.extend({
     var self = this;
     _.each(data, function (item) {
       if (item.roomId === self.roomInfo.id) {
-        self.render();
+        self.render(item.operationRole);
       }
     });
   },
-  render: function () {
+  render: function (role) {
     // this.elements.roomManagerWrap.show();
     // this.elements.sendMessageWrap.hide();
     // if (!this.roomCtrlView) {
@@ -96,7 +96,11 @@ var View = BaseView.extend({
     //     hideCtrl: true // 隐藏场控管理
     //   });
     // }
-    window.location.href = '/assistant.html?roomId=' + this.roomInfo.id;
+    if (role === 1) {
+      window.location.href = '/anchor.html?roomId=' + this.roomInfo.id;
+    } else if (role === 2) {
+      window.location.href = '/assistant.html?roomId=' + this.roomInfo.id;
+    }
   },
   // 控制用户的禁言， 踢出
   renderUserControl: function (msgList) {

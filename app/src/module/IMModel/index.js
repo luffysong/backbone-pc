@@ -68,6 +68,8 @@ var Model = BaseModel.extend({
     token = user.getToken();
     if (token) {
       this.setTokenUrl(token);
+    } else {
+      this.setNoTokenUrl();
     }
     var sigModelPromise = this.executeJSONP(this.imData);
     sigModelPromise.done(function (response) {

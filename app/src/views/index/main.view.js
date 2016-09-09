@@ -8,6 +8,7 @@ var TopBarView = require('TopBarView');
 
 var WonderfulView = require('./wonderful.view');
 var OfficialView = require('./official.view');
+var IndexTags = require('./index-tags.view');
 
 var View = BaseView.extend({
   clientRender: false,
@@ -34,6 +35,12 @@ var View = BaseView.extend({
     this.wonderfulView = new WonderfulView({
       topbar: this.topbar
     });
+
+    // tag列表
+    this.indexTags = new IndexTags({
+      topbar: this.topbar
+    });
+
     // 官方频道
     this.officialView = new OfficialView();
     // this.fanChannelView = new FanChannelView();

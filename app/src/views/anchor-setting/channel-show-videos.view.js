@@ -106,6 +106,13 @@ var View = BaseView.extend({
     return defer.promise();
   },
   createVideoListDom: function (data) {
+    var vIds = '';
+    if (data.length > 0) {
+      _.each(data, function (item) {
+        vIds += item.videoId + ' ';
+      });
+    }
+    _.extend(data, { vIds: vIds });
     var html = this.compileHTML(this.videoItemTpl, {
       data: data
     });
@@ -123,6 +130,8 @@ var View = BaseView.extend({
       var time = new Date(item.beginTime);
       var temp = item;
       temp.beginTimeTxt = BusinessDate.format(time, 'yyyy-MM-dd hh:mm:ss');
+      var t = new Date(item.endTime);
+      temp.endTimeTxt = BusinessDate.format(t, 'yyyy-MM-dd hh:mm:ss');
     });
     var html = this.compileHTML(this.showItemTpl, {
       data: data || []
@@ -131,6 +140,7 @@ var View = BaseView.extend({
   },
   renderShowList: function () {
     this.getShowList().done(function (data) {
+      // 将下面的video绑定到
       this.createShowListDom(data);
     }.bind(this)).fail(function () {
       this.createShowListDom([]);
@@ -145,13 +155,13 @@ var View = BaseView.extend({
     };
     var action = target.data('action');
     if (action) {
-      this.showItemButtonClicked(action, data);
+      this.showItemButtonClicked(e, action, data);
       return false;
     }
     this.showItemRowClicked(tr, data);
     return true;
   },
-  showItemButtonClicked: function (action, data) {
+  showItemButtonClicked: function (e, action, data) {
     var self = this;
     if (action === 'publish') {
       uiConfirm.show({
@@ -168,6 +178,10 @@ var View = BaseView.extend({
         }
       });
       // this.deleteShow(data);
+    } else if (action === 'copy') {
+      this.getVideoList(data.id).done(function (list) {
+        self.clipboard(list);
+      });
     }
   },
   showItemRowClicked: function (tr, data) {
@@ -207,13 +221,16 @@ var View = BaseView.extend({
       if (res && res.code === '0') {
         msgBox.showOK('成功发布该节目单');
         $('tr[data-showid="' + showInfo.id + '"]')
-          .children(':eq(3)').html('<span>已发布</span>');
+          .children(':eq(4)').html('<span>已发布</span>');
       } else {
         msgBox.showError(res.msg || '发布节目单失败，稍后重试');
       }
     }).fail(function () {
       msgBox.showError('发布节目单失败，稍后重试');
     });
+  },
+  clipboard: function () {
+    msgBox.showOK('复制成功');
   }
 });
 

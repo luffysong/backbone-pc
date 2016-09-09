@@ -5,7 +5,13 @@
   <!-- <td>2012-10-01</td> -->
 </tr>
 {{/each}}
-
+<tr>
+  <td colspan="2"  style="text-align: center;">
+    <button class="am-btn am-btn-red am-btn-xs am-round clipboardBtn"
+            data-clipboard-text="{{data.vIds}}" >
+          <i  class=""></i> 复制节目单</button>
+  </td>
+</tr>
 {{if data.length <= 0}}
 <tr>
   <td colspan="3">暂无数据</td>

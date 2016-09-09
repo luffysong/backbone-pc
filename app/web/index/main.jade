@@ -10,7 +10,8 @@ div.index-wrap.am-container
     section.perfect-wrap
         header.section-header.am-cf
             h2.am-fl='精彩饭趴'
-            a(href='/channellist.html').am-fr='查看全部>>'
+            a(href='/channellist.html').am-fr='MORE>>'
+            span.red_line
             span.tip HOT LIVE
         div#wonderfulList.viedo-content.am-g
             // 列表模板
@@ -35,6 +36,14 @@ div.index-wrap.am-container
                                 div.sub-time
                                     | 直播时间: {{item.startTime}}
                             div.center.wait
+                            | {{else if item.status == 3}}                            
+                            div.left-bottom.info
+                                div.sub-info
+                                    span.icons.chat
+                                    | {{item.bulletCurtain}}
+                                    span.icons.like
+                                    | {{item.assemble}}
+                            div.center.play
                             | {{/if}}
                             div.right-top.gradient.boderRadAll_3
                                 span='人气:'
@@ -45,17 +54,23 @@ div.index-wrap.am-container
                             div.title.am-text-truncate='{{item.roomName}}'
                             img.am-circle.avatar(src='{{item.creator.smallAvatar}}')
                             span.name='{{item.creator.nickName}}'
-                        div.am-fr
-                            button.am-btn.am-btn-red.boderRadAll_5(data-roomId='{{item.roomId}}')
-                                i
-                                span='顶上去'
-                    footer.viedo-bg
+                            // 回放的时候没有顶上去
+                        // 
+                        //| {{if item.status == 1 || item.status == 2 }}
+                        //div.am-fr
+                            ///button.am-btn.am-btn-red.boderRadAll_5(data-roomId='{{item.roomId}}')
+                              //  i
+                              //  span='顶上去'
+                        //| {{/if}}
+                    //footer.viedo-bg
                 | {{/each}}
+         
     //官方频道
     section.official-wrap
         header.section-header.am-cf
             h2.am-fl='官方频道'
-            a(href='/channellist.html?list=yyt').am-fr='查看全部>>'
+            a(href='/channellist.html?list=yyt').am-fr='MORE>>'
+            span.red_line
             span.tip='OFFICIAL CHANNEL'
         div#officialList.viedo-content.am-g.am-cf
             //- script#officialAsideTpl(type='text/html')
@@ -90,18 +105,19 @@ div.index-wrap.am-container
                             div.link-hover
                                 //- div.center.play
                             span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
-                        div.anchor-info.am-cf
+                        div.anchor-info.am-cf.middle_bottom
                             div.am-fl
                                 div.title.am-text-truncate='{{channelName}}'
                                 img.am-circle.avatar(src='{{creator.largeAvatar}}')
                                 span.name='{{creator.nickName}}'
-                        footer.viedo-bg
-
+                        //footer.viedo-bg
+                        
     //站子频道
     //section.fan-channel-wrap
         header.section-header.am-cf
             h2.am-fl='站子频道'
-            a(href='/channellist.html').am-fr='查看全部>>'
+            a(href='/channellist.html').am-fr='MORE>>'
+            span.red_line
             span.tip='FAN CHANNEL'
         div.viedo-content.fan-list
             script#fanChannelItemTpl(type='text/html')
@@ -122,7 +138,8 @@ div.index-wrap.am-container
     //section.fan-wrap
         header.section-header.am-cf
             h2.am-fl='入驻站子'
-            a(href='#').am-fr='查看全部>>'
+            a(href='#').am-fr='MORE>>'
+            span.red_line
             span.tip='JOIN FAN STATION'
         div.content.join-fan-wrap
             script#joinFanListTpl(type='text/html')
@@ -133,3 +150,4 @@ div.index-wrap.am-container
                     div.am-text-truncate.name='{{item.desc}}'
                     span.am-btn.am-btn-red.boderRadAll_3 进入TA的直播间
                 | {{/each}}
+div#tagHtml.am-container.index-wrap.tag-index-wrap

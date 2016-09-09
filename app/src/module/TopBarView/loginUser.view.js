@@ -4,16 +4,16 @@ var Backbone = window.Backbone;
 var base = require('base-extend-backbone');
 var BaseView = base.View;
 var storage = base.storage;
+//  var Auxiliary = require('auxiliary-additions');
+//  var cookie = Auxiliary.cookie;
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
 var loginBox = require('loginBox');
 var sginHTML = require('./template/sgin.html');
 var loginedTemp = require('./template/logined.html');
-var win = window;
-var location = win.location;
 var IMModel = require('IMModel');
 var imModel = IMModel.sharedInstanceIMModel();
-var config = require('config');
+// var config = require('config');
 var View = BaseView.extend({
   el: '#loginUser',
   events: {
@@ -70,6 +70,7 @@ var View = BaseView.extend({
           storage.remove('imSig');
           _this.fetchUserInfo();
           _this.trigger('topbar-logined');
+          window.location.reload();
         }
       });
     } else {
@@ -84,7 +85,8 @@ var View = BaseView.extend({
   logoutHandler: function () {
     storage.remove('imSig');
     storage.set('signout', 1);
-    location.href = config.prefix + '/login.html';
+    location.href = 'http://login.yinyuetai.com/logout';
+    // location.href = config.prefix + '/login.html';
   },
   fetchUserInfo: function () {
     var _this = this;

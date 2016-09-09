@@ -87,7 +87,7 @@ var View = BaseView.extend({
         cmd: [{
           saveOriginal: 1,
           op: 'save',
-          plan: 'avatar',
+          plan: 'fanpa',
           belongId: '20634338',
           srcImg: 'img'
         }],

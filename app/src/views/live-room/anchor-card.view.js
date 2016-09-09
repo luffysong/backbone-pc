@@ -152,6 +152,10 @@ var View = BaseView.extend({
   },
   followClickHandler: function () {
     var self = this;
+    if (!user.isLogined()) {
+      msgBox.showTip('登录后，可关注直播哟！');
+      return '';
+    }
     this.followParams.anchorId = this.roomInfo.creator.uid;
     if (this.btnFollow.hasClass('followed')) {
       var promise1 = this.unFollowModel.executeJSONP(self.followParams);

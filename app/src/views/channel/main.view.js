@@ -9,6 +9,7 @@ var _ = require('underscore');
 
 var Auxiliary = require('auxiliary-additions');
 var URL = Auxiliary.url;
+var store = base.storage;
 
 var UserModel = require('UserModel');
 var user = UserModel.sharedInstanceUserModel();
@@ -19,8 +20,10 @@ var PlaybackModel = require('../../models/index/playback.model');
 var ChannelModel = require('../../models/index/channel.model');
 var PushRoom = require('../live-room/push-room');
 var DateTime = require('BusinessDate');
-
 var msgBox = require('ui.msgBox');
+// tag标签列表
+var TagsModel = require('../../models/index/index-tags.model');
+var TagsListModel = require('../../models/index/index-tags-video.model');
 
 var View = BaseView.extend({
   el: '.channelHeader',
@@ -37,7 +40,6 @@ var View = BaseView.extend({
     //  初始化一些自定义属性
     var url = URL.parse(location.href);
     this.listType = url.query.list || '';
-
     this.queryParams = {
       deviceinfo: '{"aid":"30001001"}',
       access_token: user.getWebToken()
@@ -65,7 +67,9 @@ var View = BaseView.extend({
     this.playbackModel = new PlaybackModel();
     this.channelModel = new ChannelModel();
     this.userInfo = new UserInfoModel();
-
+    this.tagModel = new TagsModel();
+    this.tagListModel = new TagsListModel();
+    this.tagsList = new TagsListModel();
     // 当前频道
     this.channelType = 0;
 
@@ -89,6 +93,10 @@ var View = BaseView.extend({
 
     this.viedoItemTpl = $('#viedoItemTpl').html();
 
+    this.tagsObj = $('#tags');
+    this.tagsHtml = require('./template/tags.html');
+    this.tagListTpl = require('./template/tags-list.html');
+    this.tagsHeaderTpl = require('./template/tags-header.html');
     this.allContainerDOM = $('.section');
   },
   ready: function () {
@@ -96,6 +104,7 @@ var View = BaseView.extend({
     var self = this;
     this.currentPage = {};
     this.totalCount = {};
+    this.addTags();
     this.getPageList();
 
     this.renderLivePreViewList();
@@ -107,17 +116,66 @@ var View = BaseView.extend({
     });
     this.renderOfficeVideoList();
     // this.channelType = 0;
-    if (this.listType === 'yyt') {
-      this.channelChanged({
-        target: 'a[data-tag="1"]'
+    setTimeout(function () {
+      if (self.listType === 'yyt') {
+        self.channelChanged({
+          target: 'a[data-tag="1"]'
+        });
+      } else if (self.listType.indexOf('tags') >= 0) {
+        self.channelChanged({
+          target: 'a[data-tag=' + self.listType + ']'
+        });
+      }
+      $('.viedo-content').on('click', function (e) {
+        self.pushRoomHandler(e);
       });
-    }
+    }, 500);
   },
   beforeDestroy: function () {
     //  进入销毁之前,将引用关系设置为null
   },
   destroyed: function () {
     //  销毁之后
+  },
+  addTags: function () {
+    var self = this;
+    this.queryParams = {
+      deviceinfo: '{"aid":"30001001"}',
+      access_token: user.getWebToken(),
+      size: 8,
+      offset: 0
+    };
+    var html = '';
+    var h = '';
+    var promise = this.tagModel.executeJSONP(this.queryParams);
+    promise.done(function (res) {
+      html = self.compileHTML(self.tagsHtml, res);
+      h = self.compileHTML(self.tagsHeaderTpl, res);
+      self.$el.find('.channelNav').append(html);
+      $(h).insertBefore($('.channel-footer'));
+
+      var len = res.data.length;
+      for (var i = len; i--;) {
+        self.addTagsList(res.data[i].id, res.data[i].title, res.data[i].rank);
+      }
+    });
+  },
+  addTagsList: function (tagId, title, rank) {
+    var self = this;
+    var queryParams = {
+      deviceinfo: '{"aid":"30001001"}',
+      access_token: user.getWebToken(),
+      size: 16,
+      offset: 0,
+      tagId: tagId,
+      rank: rank
+    };
+    var html = '';
+    var promise = this.tagsList.executeJSONP(queryParams);
+    promise.done(function (res) {
+      html = self.compileHTML(self.tagListTpl, res);
+      $('#' + tagId + '-tags').html(html);
+    });
   },
   // 渲染热门直播列表
   renderLivePreViewList: function () {
@@ -242,14 +300,25 @@ var View = BaseView.extend({
     var target = $(e.target);
     if (target.attr('data-tag') !== undefined) {
       // this.clearSection();
-      this.channelType = ~~target.attr('data-tag');
-      target.parent().children().removeClass('active');
-      target.addClass('active');
-      this.allContainerDOM.hide();
-      $('.section-' + this.channelType).show();
-      if (this.liveHotSectionDataState) {
-        $('#liveHotSection').hide();
+      if (target.attr('data-tag').indexOf('tags') >= 0) {
+        target.parent().children().removeClass('active');
+        target.addClass('active');
+        $('.section').hide();
+        $('.section-' + target.attr('data-tag')).show();
+        if (this.liveHotSectionDataState) {
+          $('#liveHotSection').hide();
+        }
+      } else {
+        this.channelType = ~~target.attr('data-tag');
+        target.parent().children().removeClass('active');
+        target.addClass('active');
+        $('.section').hide();
+        $('.section-' + this.channelType).show();
+        if (this.liveHotSectionDataState) {
+          $('#liveHotSection').hide();
+        }
       }
+
       // this.getPageList(this.currentPage[this.channelType]);
     }
   },
@@ -264,8 +333,14 @@ var View = BaseView.extend({
   setDefaultChannel: function () {},
   // 顶上去
   pushRoomHandler: function (e) {
-    var target = $(e.target);
+    if (!user.isLogined()) {
+      store.remove('imSig');
+      store.set('signout', 1);
+      msgBox.showTip('登录后，可支持主播哟!');
+      return;
+    }
     var self = this;
+    var target = $(e.target);
     if (!target.hasClass('am-btn')) {
       target = target.parent('.am-btn');
     }

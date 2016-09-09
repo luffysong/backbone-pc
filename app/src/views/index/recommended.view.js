@@ -22,7 +22,8 @@ var View = BaseView.extend({
   },
   events: {
     'click .gotoLiveHome': 'gotoLiveHome',
-    'click #livingList': 'videoListClicked'
+    'click #livingList': 'videoListClicked',
+    'click .hoverBtn': 'gotoLiveHome'
   },
   beforeMount: function () {
     //  初始化一些自定义属性
@@ -51,6 +52,7 @@ var View = BaseView.extend({
     this.elements.videoName = this.$el.find('#viedoName');
     this.elements.btnGoLiveRoom = this.$el.find('#btnGoLiveRoom');
     this.elements.flashWrap = this.$el.find('#topFlash');
+    this.elements.hoverGo2Room = this.$el.find('#hoverGo2Room');
   },
   ready: function () {
     //  初始化
@@ -87,7 +89,8 @@ var View = BaseView.extend({
   },
   // xuanz
   selectedFirstToPlay: function () {
-    var target = this.elements.videoList.find('.item').eq(0);
+    var rnum = this.fRandomBy(0, 4);
+    var target = this.elements.videoList.find('.item').eq(rnum);
     this.videoListClicked({
       target: target
     });
@@ -103,7 +106,7 @@ var View = BaseView.extend({
   // 设置flash
   setFlash: function (video) {
     var videoInfo = video;
-    if (video.status === 'LIVE') {
+    if (video.status === 2 || video.status === 3) {
       // this.FlashApi = FlashApi.sharedInstanceFlashApi({
       this.FlashApi = new FlashApi({
         el: 'topFlash',
@@ -138,13 +141,12 @@ var View = BaseView.extend({
     var id = el.attr('data-id');
     var type = el.attr('data-type');
     var status = el.attr('data-status');
-
     var url = '';
     switch (type) {
       case 'FANPA_ROOM':
         //  处理直播,注意大小写
         url = '/liveroom.html?roomId=';
-        if (status === 'VOD') {
+        if (status === '3') {
           url = '/playback.html?roomId=';
         }
         break;
@@ -185,13 +187,27 @@ var View = BaseView.extend({
         'data-type': video.videoType,
         'data-status': video.status
       });
+      this.elements.hoverGo2Room.attr({
+        'data-id': video.videoId,
+        'data-type': video.videoType,
+        'data-status': video.status
+      });
       this.elements.flashWrap.css({
         'background-image': 'url(' + video.posterPic + ')',
         'background-size': '100%'
       });
+      // 首页不播放视频;
+      // 如果要播放的话，改为 2 或者 3
       this.setFlash(_.extend({
-        isLive: video.status === 'LIVE'
+        isLive: video.status = 2
       }, video));
+    }
+  },
+  fRandomBy: function (under, over) {
+    switch (arguments.length) {
+      case 1: return parseInt(Math.random() * under + 1, 0);
+      case 2: return parseInt(Math.random() * (over - under + 1) + under, 0);
+      default: return 0;
     }
   }
 });

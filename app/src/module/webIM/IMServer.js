@@ -96,7 +96,6 @@ imServer.sendMessage = function (attrs, okFn, errFn) {
  *  attrs.msg.fromAccount
  */
 imServer.sendMsg = function (attrs) {
-  console.log(attrs);
   var defer = $.Deferred();
   var currentSession = webim.MsgStore.sessByTypeId('GROUP', attrs.groupId);
   var random = Math.round(Math.random() * 4294967296); // 消息随机数，用于去重
@@ -116,6 +115,7 @@ imServer.sendMsg = function (attrs) {
   });
   msg.fromAccount = this.im.imIdentifier;
   msg.elems.push(textObj);
+  console.log('红包消息:', msg);
   webim.sendMsg(msg, function (resp) {
     defer.resolve(resp);
   }, function (err) {
@@ -234,9 +234,39 @@ imServer.createIMChatRoom = function (okFn, errFn) {
   var options = {
     Owner_Account: imSig.imIdentifier,
     Type: 'ChatRoom', // Private/Public/ChatRoom
-    Name: '测试聊天室',
+    Name: '饭趴聊天室',
     Notification: '',
     Introduction: '',
+    MemberList: []
+  };
+
+  webim.createGroup(
+    options,
+    function (resp) {
+      if (okFn) {
+        okFn(resp);
+      }
+    },
+    function (err) {
+      if (errFn) {
+        errFn(err);
+      }
+    }
+  );
+};
+
+/**
+ * 创建聊天群
+ */
+imServer.createIMChatRoomLimitMembers = function (okFn, errFn) {
+  var imSig = store.get('imSig');
+  var options = {
+    Owner_Account: imSig.imIdentifier,
+    Type: 'ChatRoom', // Private/Public/ChatRoom
+    Name: '饭趴聊天室',
+    Notification: '',
+    Introduction: '',
+    MaxMemberCount: 5,
     MemberList: []
   };
 
@@ -353,7 +383,6 @@ imServer.modifyGroupInfo = function (options, okFn, errFn) {
  */
 imServer.modifyGroupMember = function (ops) {
   var defer = $.Deferred();
-  console.log(ops);
   var options = _.extend({
     GroupId: '',
     Member_Account: '',
@@ -369,6 +398,44 @@ imServer.modifyGroupMember = function (ops) {
     }
   );
   return defer.promise();
+};
+
+/**
+获取我参加的所有群组
+*/
+imServer.getJoinedGroupListHigh = function (options, okFn, errFn) {
+  webim.getJoinedGroupListHigh(
+    options,
+    function (resp) {
+      if (okFn) {
+        okFn(resp);
+      }
+    },
+    function (err) {
+      if (errFn) {
+        errFn(err);
+      }
+    }
+  );
+};
+
+/**
+  主动退群
+*/
+imServer.quitGroup = function (options, okFn, errFn) {
+  webim.quitGroup(
+    options,
+    function (resp) {
+      if (okFn) {
+        okFn(resp);
+      }
+    },
+    function (err) {
+      if (errFn) {
+        errFn(err);
+      }
+    }
+  );
 };
 
 module.exports = imServer;

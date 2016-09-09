@@ -1,0 +1,63 @@
+
+    {{each data as item}}
+    <div class="item am-u-sm-3">
+      <a href="{{item.status ===3?'/playback.html?roomId=':'/liveroom.html?roomId='}}{{item.videoId}}" class="top-link">
+        <img  src = '{{item.posterPic}}'/>
+        <div class="link-hover">
+          {{if item.status == 2}}
+          <div class="status living">  </div>
+          <div class="left-bottom info">
+            <div class="sub-info">
+              <span class="icons chat"></span>{{item.commentCount}}
+              <span class="icons like"></span>{{item.likeCount}}
+            </div>
+          </div>
+          <div class="center play">
+          </div>
+          {{else if item.status == 1}}
+          <div class='status preview'></div>
+          <div class="left-bottom time">
+            <div class="sub-time">
+               直播时间: {{item.startTime}}
+            </div>
+            <div class="center wait">
+            </div>
+          </div>
+          {{else if item.status == 3}}
+            <div class="left-bottom info">
+              <div class="sub-info">
+                <span class="icons chat"></span>{{item.commentCount}}
+                <span class="icons like"></span>{{item.likeCount}}
+              </div>
+            </div>
+          <div class="center play">
+          </div>
+          {{/if}}
+          <div class="right-top gradient boderRadAll_3">
+            <span class="">人气:</span>
+            <span class="white">{{item.realPopularity}}</span>
+          </div>
+          <footer class="gradient-up">
+          </footer>
+        </div>
+      </a>
+        <div class="anchor-info am-cf">
+          <div class="am-fl">
+            <div class="title_btn am-text-truncate">
+              {{item.videoName}}
+            </div>
+            <img  class='am-circle avatar' src="{{item.creator.smallAvatar}}"/>
+            <span class="name">{{item.creator.nickName}}</span>
+          </div>
+          {{if item.status == 1 || item.status == 2 }}
+          <div class="am-fr">
+              <button data-roomId='{{item.videoId}}' class="am-btn am-btn-red boderRadAll_5 push_btn">
+              <i></i><span>顶上去</span>
+            </button>
+          </div>
+          {{/if}}
+        </div>
+      <!--  <footer class="viedo-bg">
+      </footer>-->
+    </div>
+    {{/each}}

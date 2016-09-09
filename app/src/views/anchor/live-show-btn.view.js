@@ -110,7 +110,7 @@ var View = BaseView.extend({
       return '';
     }
     if (!this.roomInfo.imGroupid) {
-      imServer.createIMChatRoom(function (res) {
+      imServer.createIMChatRoomLimitMembers(function (res) {
         self.roomInfo.imGroupid = res.GroupId;
         self.startLive();
       }, function () {

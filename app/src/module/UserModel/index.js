@@ -263,13 +263,20 @@ var UserModel = BaseModel.extend({
   }
 });
 
-
 var shared = null;
+var reloadChose = false;
+if (cookie.get('token')) {
+  reloadChose = true;
+}
 UserModel.sharedInstanceUserModel = function () {
   if (!shared) {
     shared = new UserModel();
     shared.on('change:userId', function () {
+      if (!reloadChose) {
+        window.location.reload();
+      }
       shared.trigger('login');
+      shared.trigger('logined');
     });
     shared.emit();
   }
